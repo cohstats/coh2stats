@@ -1,0 +1,44 @@
+# Yarn 1.0
+node_modules/
+/.yarnrc
+
+# Yarn 2.0
+/.yarn/
+.pnp.js
+
+# NPM
+.npmrc
+
+# Logs
+*.log
+
+# misc
+.DS_Store
+.env.local
+#.env.development.local
+.env.test.local
+#.env.production.local
+
+
+# Generated code
+**/dist/
+**/tsconfig.tsbuildinfo
+**/build*/
+**/lib/
+
+# Cache
+/.firebase/
+packages/web/.eslintcache
+
+# WebStorm - user-specific stuff
+.idea
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
+
+.vscode
+
+fbexport
+packages/migrations/*.json

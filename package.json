@@ -1,0 +1,14 @@
+{
+  "name": "coh2ladders",
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "version": "0.0.1",
+  "description": "FB Project for COH2 ladders",
+  "main": "index.js",
+  "author": "Petr Vecera",
+  "license": "MIT",
+  "private": true
+}
