@@ -2,6 +2,8 @@
 **/*.js
 **/*.js.map
 
+/lib/
+
 # Except the ESLint config file
 !.eslintrc.js
 
