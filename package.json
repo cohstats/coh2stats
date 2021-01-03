@@ -5,6 +5,9 @@
       "packages/*"
     ]
   },
+  "scripts": {
+    "functions": "yarn workspace @coh2ladders/functions"
+  },
   "version": "0.0.1",
   "description": "FB Project for COH2 ladders",
   "main": "index.js",
