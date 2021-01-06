@@ -3,11 +3,17 @@ const baseUrl = "https://coh2-api.reliclink.com";
 
 const getLadderUrl = (leaderboardID: number, count: number = 40, start: number = 1) => {
     // sortBy 1 means by ranking
-    return baseUrl + `/community/leaderboard/getLeaderBoard2?leaderboard_id=${leaderboardID}&title=coh2&platform=PC_STEAM&sortBy=1&start=${start}&count=${count}`
+    return encodeURI(baseUrl + `/community/leaderboard/getLeaderBoard2?leaderboard_id=${leaderboardID}&title=coh2&platform=PC_STEAM&sortBy=1&start=${start}&count=${count}`);
 }
 
+
+const getRecentMatchHistoryUrl = (profileName: string) => {
+    return encodeURI(baseUrl + `/community/leaderboard/getRecentMatchHistory?title=coh2&profile_names=${profileName}`);
+}
+
+
 /**
- * The names are very
+ * The names are important, can't be changed
  */
 const leaderboardsID = {
     "1v1": {
@@ -54,5 +60,5 @@ const leaderboardsID = {
 }
 
 export {
-    baseUrl, getLadderUrl, leaderboardsID
+    baseUrl, getLadderUrl, leaderboardsID, getRecentMatchHistoryUrl
 }

@@ -5,6 +5,10 @@
   },
   "functions": {
     "source": "packages/functions",
-    "predeploy": "yarn functions build"
+    "predeploy": "yarn functions build",
+    "ignore": [
+      "**/src/**",
+      ""
+    ]
   }
 }

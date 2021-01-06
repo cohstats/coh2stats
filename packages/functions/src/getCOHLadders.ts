@@ -2,12 +2,13 @@ import axios from "axios";
 import * as functions from 'firebase-functions';
 import {firestore} from "firebase-admin";
 
-import {getLadderUrl, leaderboardsID} from "./libs/coh2api";
+import {getLadderUrl, leaderboardsID} from "./libs/coh2-api";
 import {getCurrentDateTimestamp} from "./libs/helpers";
+import {extractTheProfileIDs} from "./libs/ladder-data";
 
 const AMOUNT_OF_LINES = 200; // 200 is max
 
-const getLadderStats = async (leaderboardID: number) => {
+const fetchLadderStats = async (leaderboardID: number): Promise<Record<string, any>> => {
     const response = await axios.get(getLadderUrl(leaderboardID, AMOUNT_OF_LINES));
 
     if (response.status == 200) {
@@ -15,24 +16,10 @@ const getLadderStats = async (leaderboardID: number) => {
         // Do we want to transform the data before we save them?
         delete data["result"]; // We don't need the result
 
-        return data
+        return data;
+    } else {
+        throw `Failed to received the ladder stats, response: ${response} `
     }
-}
-
-
-const extractTheIDs = (data: Record<string, any>) => {
-    const profileIDs = new Set();
-
-    const {statGroups} = data;
-
-    for(const group of statGroups){
-        for(const member in group["members"]){
-            const name = group[member]["name"];
-            profileIDs.add(name);
-        }
-    }
-
-    return profileIDs;
 }
 
 /**
@@ -43,6 +30,8 @@ const extractTheIDs = (data: Record<string, any>) => {
 const getAndSaveAllLadders = async () => {
 
     const currentDateTimeStamp = getCurrentDateTimestamp();
+    let profileIDs = new Set();
+    let totalQueriedPositions = 0;
 
     for (const typeOfGame in leaderboardsID) {
 
@@ -53,8 +42,15 @@ const getAndSaveAllLadders = async () => {
             const id = leaderboardsID[typeOfGame][faction];
             functions.logger.log(`Processing ${typeOfGame} - ${faction}, using leaderBoardID: ${id}`)
 
+            // Total positions we queried on the ladder
+            totalQueriedPositions += AMOUNT_OF_LINES;
+
             try {
-                const data = await getLadderStats(id);
+                const data = await fetchLadderStats(id);
+                const extractedIds = extractTheProfileIDs(data);``
+
+                functions.logger.log(`Extracted ${extractedIds} unique profile IDs`);
+                profileIDs = new Set([...profileIDs, ...extractedIds]);
 
                 const collectionPath = `ladders/${currentDateTimeStamp}/${typeOfGame}`
                 functions.logger.log(`Going to save ${data["statGroups"].length} items to DB collection ${collectionPath} for faction ${faction}`);
@@ -65,6 +61,8 @@ const getAndSaveAllLadders = async () => {
             }
         }
     }
+
+    functions.logger.info(`Finished processing all ladders, extracted ${profileIDs.size} unique player profiles out of ${totalQueriedPositions} positions.`);
 }
 
 // Set max timeout
