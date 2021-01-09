@@ -8,7 +8,7 @@ const getLadderUrl = (leaderboardID: number, count: number = 40, start: number =
 
 
 const getRecentMatchHistoryUrl = (profileName: string) => {
-    return encodeURI(baseUrl + `/community/leaderboard/getRecentMatchHistory?title=coh2&profile_names=${profileName}`);
+    return encodeURI(baseUrl + `/community/leaderboard/getRecentMatchHistory?title=coh2&profile_names=[\"${profileName}\"]`);
 }
 
 

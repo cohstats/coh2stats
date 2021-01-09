@@ -1,5 +1,15 @@
-import {filterOutItems, removeExtraDataFromItems, processSingleMatch} from "../libs/matches/coh2-matches";
-import {singleMatchObject} from "./assets/assets";
+import {
+    filterOutItems,
+    removeExtraDataFromItems,
+    processSingleMatch,
+    extractPlayerIDsInMatch,
+    findProfile,
+    isLastDayMatch
+} from "../../libs/matches/single-match";
+
+import {getHoursOldTimestamp} from "../../libs/helpers";
+
+import {singleMatchObject, profilesArray} from "../assets/assets";
 
 const verifyMatchHistoryItems = (matchObject: Record<string, any>) => {
     expect(matchObject["matchhistoryitems"][0]).toHaveProperty("durabilitytype", undefined);
@@ -20,9 +30,9 @@ describe("filterOutItems", () => {
         expect(clonedObject["matchhistoryitems"].length).toBe(33);
         const modifiedObject = filterOutItems(clonedObject);
         expect(modifiedObject["matchhistoryitems"].length).toBe(24);
-    })
+    });
 
-})
+});
 
 
 describe("removeExtraDataFromItems", () => {
@@ -33,14 +43,14 @@ describe("removeExtraDataFromItems", () => {
 
         verifyMatchHistoryItems(clonedObject);
 
-    })
+    });
 
-})
+});
 
 
-describe("processSingleMatch", () =>{
+describe("processSingleMatch", () => {
 
-    test("Unnecessary items are removed, items are filtered and cleared", () =>{
+    test("Unnecessary items are removed, items are filtered and cleared", () => {
         let clonedSingleMatch = JSON.parse(JSON.stringify(singleMatchObject));
         clonedSingleMatch = processSingleMatch(clonedSingleMatch)
 
@@ -57,7 +67,63 @@ describe("processSingleMatch", () =>{
         expect(clonedSingleMatch).toHaveProperty("startgametime");
         // There is more things we could check
 
+    });
+
+});
+
+describe("extractPlayerIDsInMatch", () => {
+
+    test("IDs are extracted", () => {
+        let clonedSingleMatch = JSON.parse(JSON.stringify(singleMatchObject));
+        const ids = extractPlayerIDsInMatch(clonedSingleMatch)
+        expect(ids).toEqual([1882602, 2604692, 3036689, 3793687]);
+    });
+
+});
+
+describe("findProfile", () => {
+
+    test("Can find the profile", () => {
+        const profile = findProfile(1882602, profilesArray)
+        expect(profile).toMatchObject({
+            profile_id: 1882602,
+            name: '/steam/76561198018329331',
+            alias: 'Ramp',
+            personal_statgroup_id: 2388240,
+            xp: 2711300,
+            level: 71,
+            leaderboardregion_id: 0,
+            country: 'cz'
+        })
+    });
+
+});
+
+
+describe("isLastDayMatch", () => {
+
+    test("The match is not in the last day", () => {
+             expect(isLastDayMatch(singleMatchObject)).toBeFalsy();
+    });
+
+    test("The match is not in the last day", () =>{
+        let clonedSingleMatch = JSON.parse(JSON.stringify(singleMatchObject));
+        clonedSingleMatch["startgametime"] = getHoursOldTimestamp(26);
+
+        expect(isLastDayMatch(clonedSingleMatch)).toBeFalsy()
+
     })
 
-})
 
+    test("The match is in the last day", () =>{
+        let clonedSingleMatch = JSON.parse(JSON.stringify(singleMatchObject));
+        clonedSingleMatch["startgametime"] = getHoursOldTimestamp(24);
+
+        expect(isLastDayMatch(clonedSingleMatch)).toBeTruthy()
+
+        clonedSingleMatch["startgametime"] = getHoursOldTimestamp(1);
+
+        expect(isLastDayMatch(clonedSingleMatch)).toBeTruthy()
+    })
+
+});
