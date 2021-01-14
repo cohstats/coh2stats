@@ -1,7 +1,7 @@
 
 
-const extractTheProfileIDs = (data: Record<string, any>) => {
-    const profileIDs = new Set();
+const extractTheProfileIDs = (data: Record<string, any>): Set<string> => {
+    const profileIDs: Set<string> = new Set();
 
     const {statGroups} = data;
 

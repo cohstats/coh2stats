@@ -6,10 +6,10 @@ import {getLadderUrl, leaderboardsID} from "./libs/coh2-api";
 import {getCurrentDateTimestamp} from "./libs/helpers";
 import {extractTheProfileIDs} from "./libs/ladder-data";
 
-const AMOUNT_OF_LINES = 200; // 200 is max
+const AMOUNT_OF_QUERIED_PLAYERS = 200; // 200 is max
 
 const fetchLadderStats = async (leaderboardID: number): Promise<Record<string, any>> => {
-    const response = await axios.get(getLadderUrl(leaderboardID, AMOUNT_OF_LINES));
+    const response = await axios.get(getLadderUrl(leaderboardID, AMOUNT_OF_QUERIED_PLAYERS));
 
     if (response.status == 200) {
         let data = response.data;
@@ -22,6 +22,29 @@ const fetchLadderStats = async (leaderboardID: number): Promise<Record<string, a
     }
 }
 
+
+const invokeGetPlayerMatches = (profileIds: Array<string>) => {
+    functions.logger.debug(`Going to call request for these profiles ${profileIds}`);
+    axios.post("https://us-central1-coh2-ladders-prod.cloudfunctions.net/getPlayerMatches", {"profileNames": profileIds})
+}
+
+const callGetPlayerMatches = (profileIds: Set<string>) => {
+    const chunkSize = 20;
+    const profileIdsArray = [...profileIds];
+
+    let chunkArray: Array<string> = [];
+
+    for (let i = 0; i < profileIds.size; i++) {
+        chunkArray.push(profileIdsArray[i]);
+        if (i % chunkSize == 0 || i == profileIds.size - 1) {
+            invokeGetPlayerMatches(chunkArray);
+            chunkArray = [];
+        }
+    }
+
+}
+
+
 /**
  * We could do all operations at once and use batch to write it to the DB.
  * But we don't really need to stress the COH API that much. Speed is not factor here
@@ -30,7 +53,7 @@ const fetchLadderStats = async (leaderboardID: number): Promise<Record<string, a
 const getAndSaveAllLadders = async () => {
 
     const currentDateTimeStamp = getCurrentDateTimestamp();
-    let profileIDs = new Set();
+    let profileIDs: Set<string> = new Set();
     let totalQueriedPositions = 0;
 
     for (const typeOfGame in leaderboardsID) {
@@ -43,11 +66,11 @@ const getAndSaveAllLadders = async () => {
             functions.logger.log(`Processing ${typeOfGame} - ${faction}, using leaderBoardID: ${id}`)
 
             // Total positions we queried on the ladder
-            totalQueriedPositions += AMOUNT_OF_LINES;
+            totalQueriedPositions += AMOUNT_OF_QUERIED_PLAYERS;
 
             try {
                 const data = await fetchLadderStats(id);
-                const extractedIds = extractTheProfileIDs(data);``
+                const extractedIds = extractTheProfileIDs(data);
 
                 functions.logger.log(`Extracted ${extractedIds} unique profile IDs`);
                 profileIDs = new Set([...profileIDs, ...extractedIds]);
@@ -61,6 +84,8 @@ const getAndSaveAllLadders = async () => {
             }
         }
     }
+
+    callGetPlayerMatches(profileIDs);
 
     functions.logger.info(`Finished processing all ladders, extracted ${profileIDs.size} unique player profiles out of ${totalQueriedPositions} positions.`);
 }

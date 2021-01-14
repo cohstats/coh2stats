@@ -15,8 +15,8 @@ const db = firestore();
  * Can save at most 500 items. Otherwise it's going to fail due to batch;
  * @param matches
  */
-const saveMatches = async (matches: Array<Record<string, any>>) => {
-    if(matches.length === 0){
+const saveMatches = async (matches: Set<Record<string, any>>) => {
+    if(matches.size === 0){
         return;
     }
 
@@ -28,7 +28,7 @@ const saveMatches = async (matches: Array<Record<string, any>>) => {
     }
 
     await batch.commit();
-    functions.logger.log(`Saved ${matches.length} matches to the DB.`)
+    functions.logger.log(`Saved ${matches.size} matches to the DB.`)
 }
 
 
@@ -42,24 +42,24 @@ const saveMatches = async (matches: Array<Record<string, any>>) => {
 const getPlayerMatches = functions
     // @ts-ignore
     .runWith(runtimeOpts).https.onRequest(async (request, response) => {
-        // Do we want to have any validation here? Who can trigger this function? Hm??
+        // This function should allow only internal GCP traffic on this function - looks like it can't be done via code
 
-        //const profileNames = request.body.text
         functions.logger.log(`Request body ${JSON.stringify(request.body)}`);
 
         const profileNames = request.body["profileNames"];
         functions.logger.log(`Received these profile names ${profileNames}`);
 
-        let matches: Array<Record<string, any>> = [];
+        let matches: Set<Record<string, any>> = new Set();
 
         for(const profileName of profileNames){
             // We don't expect that played would be able to play more than 50 games
-            matches = matches.concat(await getAndPrepareMatchesForPlayer(profileName));
+            const playerMatches = await getAndPrepareMatchesForPlayer(profileName)
+            matches = new Set([...matches, ...playerMatches]);
         }
 
         await saveMatches(matches);
 
-        response.send(`Finished downloading and saving ${matches.length} matches for ${profileNames.length} profiles`);
+        response.send(`Finished downloading and saving ${matches.size} matches for ${profileNames.length} profiles`);
     });
 
 export {
