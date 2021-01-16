@@ -2,7 +2,7 @@ import * as functions from "firebase-functions";
 import {getAndPrepareMatchesForPlayer} from "./libs/matches/matches";
 import {firestore} from "firebase-admin";
 import {getMatchDocRef} from "./fb-paths";
-
+import {DEFAULT_FUNCTIONS_LOCATION, PUBSUB_TOPIC_DOWNLOAD_MATCHES} from "./constants";
 
 const runtimeOpts = {
     timeoutSeconds: 540,
@@ -12,46 +12,53 @@ const runtimeOpts = {
 const db = firestore();
 
 /**
- * Can save at most 500 items. Otherwise it's going to fail due to batch;
+ * Saves matches to the DB using a batch request.
  * @param matches
  */
 const saveMatches = async (matches: Set<Record<string, any>>) => {
-    if(matches.size === 0){
+    if (matches.size === 0) {
         return;
     }
 
-    const batch = db.batch();
+    let batch = db.batch();
+    let counter = 0;
 
-    for(const match of matches){
+    for (const match of matches) {
         const docRef = getMatchDocRef(match.id)
         batch.set(docRef, match);
+        counter++;
+        // We can write at most 500 requests in a single batch
+        if(counter == 498 || matches.size - 1){
+            counter = 0;
+            await batch.commit();
+            batch = db.batch();
+        }
     }
 
-    await batch.commit();
+
     functions.logger.log(`Saved ${matches.size} matches to the DB.`)
 }
 
 
 /**
- * Expected body request:
+ * Expected message:
  *  {
  *      "profileNames": ["/steam/76561198034318060","/steam/76561198812932249"]
  *  }
  *
  */
 const getPlayerMatches = functions
+    .region(DEFAULT_FUNCTIONS_LOCATION)
     // @ts-ignore
-    .runWith(runtimeOpts).https.onRequest(async (request, response) => {
-        // This function should allow only internal GCP traffic on this function - looks like it can't be done via code
+    .runWith(runtimeOpts)
+    .pubsub.topic(PUBSUB_TOPIC_DOWNLOAD_MATCHES).onPublish(async (message) => {
 
-        functions.logger.log(`Request body ${JSON.stringify(request.body)}`);
-
-        const profileNames = request.body["profileNames"];
+        const profileNames = message.json.profileNames;
         functions.logger.log(`Received these profile names ${profileNames}`);
 
         let matches: Set<Record<string, any>> = new Set();
 
-        for(const profileName of profileNames){
+        for (const profileName of profileNames) {
             // We don't expect that played would be able to play more than 50 games
             const playerMatches = await getAndPrepareMatchesForPlayer(profileName)
             matches = new Set([...matches, ...playerMatches]);
@@ -59,7 +66,6 @@ const getPlayerMatches = functions
 
         await saveMatches(matches);
 
-        response.send(`Finished downloading and saving ${matches.size} matches for ${profileNames.length} profiles`);
     });
 
 export {

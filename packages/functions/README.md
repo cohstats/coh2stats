@@ -1,6 +1,21 @@
 ### Database structure
 
-#### Ladders
+#### The stats Data structure
+```
+root /stats/daily/timestamp?/
+
+1v1
+- totalMatches
+- ostheer
+
+```
+
+
+
+#### Ladders data structure
+Question is if we even want to store the ladders in the DB.
+Maybe it just takes a space?
+
 ```
 /ladders/<datetimestamp>/1v1/soviet  
 /ladders/<datetimestamp>/1v1/wehrmacht  
@@ -13,3 +28,5 @@
 /ladders/<datetimestamp>/teamof3...  
 /ladders/<datetimestamp>/teamof4... 
 ```
+
+

@@ -1,12 +1,17 @@
 import axios from "axios";
 import * as functions from 'firebase-functions';
 import {firestore} from "firebase-admin";
+const {PubSub} = require('@google-cloud/pubsub');
 
 import {getLadderUrl, leaderboardsID} from "./libs/coh2-api";
 import {getCurrentDateTimestamp} from "./libs/helpers";
 import {extractTheProfileIDs} from "./libs/ladder-data";
 
+import {DEFAULT_FUNCTIONS_LOCATION, PUBSUB_TOPIC_DOWNLOAD_MATCHES} from "./constants";
+
+const pubSubClient = new PubSub();
 const AMOUNT_OF_QUERIED_PLAYERS = 200; // 200 is max
+const CHUNK_PROFILES_TO_PROCESS = 40; // This specifies how many profiles we can will process in one request
 
 const fetchLadderStats = async (leaderboardID: number): Promise<Record<string, any>> => {
     const response = await axios.get(getLadderUrl(leaderboardID, AMOUNT_OF_QUERIED_PLAYERS));
@@ -23,13 +28,20 @@ const fetchLadderStats = async (leaderboardID: number): Promise<Record<string, a
 }
 
 
-const invokeGetPlayerMatches = (profileIds: Array<string>) => {
-    functions.logger.debug(`Going to call request for these profiles ${profileIds}`);
-    axios.post("https://us-central1-coh2-ladders-prod.cloudfunctions.net/getPlayerMatches", {"profileNames": profileIds})
+const invokeGetPlayerMatches = async (profileIds: Array<string>) => {
+    functions.logger.debug(`Going to publish profiles into PubSub ${profileIds}`);
+    const dataBuffer = Buffer.from(JSON.stringify({"profileNames": profileIds}))
+
+    try {
+        const messageId = await pubSubClient.topic(PUBSUB_TOPIC_DOWNLOAD_MATCHES).publish(dataBuffer);
+        console.log(`Message ${messageId} published.`);
+    } catch (error) {
+        console.error(`Received error while publishing: ${error.message}`);
+    }
 }
 
-const callGetPlayerMatches = (profileIds: Set<string>) => {
-    const chunkSize = 20;
+const callGetPlayerMatches = async (profileIds: Set<string>) => {
+    const chunkSize = CHUNK_PROFILES_TO_PROCESS;
     const profileIdsArray = [...profileIds];
 
     let chunkArray: Array<string> = [];
@@ -37,7 +49,7 @@ const callGetPlayerMatches = (profileIds: Set<string>) => {
     for (let i = 0; i < profileIds.size; i++) {
         chunkArray.push(profileIdsArray[i]);
         if (i % chunkSize == 0 || i == profileIds.size - 1) {
-            invokeGetPlayerMatches(chunkArray);
+            await invokeGetPlayerMatches(chunkArray);
             chunkArray = [];
         }
     }
@@ -85,7 +97,7 @@ const getAndSaveAllLadders = async () => {
         }
     }
 
-    callGetPlayerMatches(profileIDs);
+    await callGetPlayerMatches(profileIDs);
 
     functions.logger.info(`Finished processing all ladders, extracted ${profileIDs.size} unique player profiles out of ${totalQueriedPositions} positions.`);
 }
@@ -100,6 +112,7 @@ const runtimeOpts = {
  * This function downloads all current ladders and saves them to the DB.
  */
 const getCOHLadders = functions
+    .region(DEFAULT_FUNCTIONS_LOCATION)
     // @ts-ignore
     .runWith(runtimeOpts).https.onRequest(async (request, response) => {
         // Do we want to have any validation here? Who can trigger this function? Hm??
