@@ -28,10 +28,13 @@ const saveMatches = async (matches: Set<Record<string, any>>) => {
         batch.set(docRef, match);
         counter++;
         // We can write at most 500 requests in a single batch
-        if(counter == 498 || matches.size - 1){
-            counter = 0;
+        if(counter % 498 == 0 && counter != matches.size){
             await batch.commit();
             batch = db.batch();
+        }
+
+        if(counter == matches.size){
+            await batch.commit();
         }
     }
 
