@@ -6,6 +6,11 @@ const getCurrentDateTimestamp = (): number => {
     return Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()) / 1000;
 }
 
+const getYesterdayDateTimestamp = (): number => {
+    const date = new Date();
+    return Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() - 1) / 1000;
+}
+
 /**
  * Returns the history timestamp. This function can be used
  * for filtering games in the last day for example.
@@ -28,5 +33,6 @@ const convertSteamNameToID = (name: string): string => {
 export {
     convertSteamNameToID,
     getCurrentDateTimestamp,
-    getHoursOldTimestamp
+    getHoursOldTimestamp,
+    getYesterdayDateTimestamp
 }

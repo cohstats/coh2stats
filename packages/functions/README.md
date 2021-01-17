@@ -2,11 +2,28 @@
 
 #### The stats Data structure
 ```
-root /stats/daily/timestamp?/
+root /stats/daily/timestamp?/1v1/
 
-1v1
-- totalMatches
-- ostheer
+TODO: TBD think about a way to store
+the stats data.
+
+stats
+- matchesCount: number
+- wermachtCount: number
+- wermachtWins: number
+- sovietCount: number
+- sovietWins: number
+...
+
+maps
+- name: number
+- name: number
+...
+
+commanders:
+- name: number
+- name: number 
+
 
 ```
 

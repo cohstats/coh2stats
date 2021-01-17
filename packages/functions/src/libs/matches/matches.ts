@@ -23,7 +23,7 @@ const fetchPlayerMatchStats = async (profileName: string): Promise<Record<string
     }
 }
 
-const getAndPrepareMatchesForPlayer = async (profileName: string): Promise<Array<Record<string, any>>> => {
+const getAndPrepareMatchesForPlayer = async (profileName: string): Promise<Array<ProcessedMatch>> => {
     // Monitoring fetching time - the response from the relic server
     const t0 = performance.now();
     const data = await fetchPlayerMatchStats(profileName);

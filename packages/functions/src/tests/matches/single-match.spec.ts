@@ -9,7 +9,7 @@ import {
 
 import {getHoursOldTimestamp} from "../../libs/helpers";
 
-import {singleMatchObject, profilesArray} from "../assets/assets";
+import {singleMatchObjectFromAPI, profilesArray} from "../assets/assets";
 
 const verifyMatchHistoryItems = (matchObject: Record<string, any>) => {
     expect(matchObject["matchhistoryitems"][0]).toHaveProperty("durabilitytype", undefined);
@@ -25,7 +25,7 @@ const verifyMatchHistoryItems = (matchObject: Record<string, any>) => {
 describe("filterOutItems", () => {
 
     test('Items are filtered', () => {
-        const clonedObject = JSON.parse(JSON.stringify(singleMatchObject));
+        const clonedObject = JSON.parse(JSON.stringify(singleMatchObjectFromAPI));
 
         expect(clonedObject["matchhistoryitems"].length).toBe(33);
         const modifiedObject = filterOutItems(clonedObject);
@@ -38,7 +38,7 @@ describe("filterOutItems", () => {
 describe("removeExtraDataFromItems", () => {
 
     test("Unnecessary properties from items are removed", () => {
-        const clonedObject = JSON.parse(JSON.stringify(singleMatchObject));
+        const clonedObject = JSON.parse(JSON.stringify(singleMatchObjectFromAPI));
         removeExtraDataFromItems(clonedObject);
 
         verifyMatchHistoryItems(clonedObject);
@@ -51,7 +51,7 @@ describe("removeExtraDataFromItems", () => {
 describe("processSingleMatch", () => {
 
     test("Unnecessary items are removed, items are filtered and cleared", () => {
-        let clonedSingleMatch = JSON.parse(JSON.stringify(singleMatchObject));
+        let clonedSingleMatch = JSON.parse(JSON.stringify(singleMatchObjectFromAPI));
         clonedSingleMatch = processSingleMatch(clonedSingleMatch)
 
         expect(clonedSingleMatch["matchhistoryitems"].length).toBe(24);
@@ -74,7 +74,7 @@ describe("processSingleMatch", () => {
 describe("extractPlayerIDsInMatch", () => {
 
     test("IDs are extracted", () => {
-        let clonedSingleMatch = JSON.parse(JSON.stringify(singleMatchObject));
+        let clonedSingleMatch = JSON.parse(JSON.stringify(singleMatchObjectFromAPI));
         const ids = extractPlayerIDsInMatch(clonedSingleMatch)
         expect(ids).toEqual([1882602, 2604692, 3036689, 3793687]);
     });
@@ -103,11 +103,11 @@ describe("findProfile", () => {
 describe("isLastDayMatch", () => {
 
     test("The match is not in the last day", () => {
-             expect(isLastDayMatch(singleMatchObject)).toBeFalsy();
+             expect(isLastDayMatch(singleMatchObjectFromAPI)).toBeFalsy();
     });
 
     test("The match is not in the last day", () =>{
-        let clonedSingleMatch = JSON.parse(JSON.stringify(singleMatchObject));
+        let clonedSingleMatch = JSON.parse(JSON.stringify(singleMatchObjectFromAPI));
         clonedSingleMatch["startgametime"] = getHoursOldTimestamp(26);
 
         expect(isLastDayMatch(clonedSingleMatch)).toBeFalsy()
@@ -116,7 +116,7 @@ describe("isLastDayMatch", () => {
 
 
     test("The match is in the last day", () =>{
-        let clonedSingleMatch = JSON.parse(JSON.stringify(singleMatchObject));
+        let clonedSingleMatch = JSON.parse(JSON.stringify(singleMatchObjectFromAPI));
         clonedSingleMatch["startgametime"] = getHoursOldTimestamp(24);
 
         expect(isLastDayMatch(clonedSingleMatch)).toBeTruthy()

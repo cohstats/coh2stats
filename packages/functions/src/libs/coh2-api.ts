@@ -59,6 +59,20 @@ const leaderboardsID = {
 
 }
 
+const raceIds = {
+    0: "wermacht",
+    1: "soviet",
+    2: "wgerman",
+    3: "usf",
+    4: "british"
+}
+
+const resultType = {
+    0: "lose",
+    1: "win"
+}
+
+
 export {
-    baseUrl, getLadderUrl, leaderboardsID, getRecentMatchHistoryUrl
+    baseUrl, getLadderUrl, leaderboardsID, getRecentMatchHistoryUrl, raceIds, resultType
 }
