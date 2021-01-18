@@ -1,3 +1,6 @@
+import {raceIds, resultType} from "../coh2-api";
+
+
 /**
  * FYI: This function doesn't do copy of the stats object - uses reference.
  * Returning stats just to be clear!
@@ -7,8 +10,18 @@
  */
 const analyzeMatch = (match: ProcessedMatch, stats: Record<string, any>) => {
 
-    stats.maps[match.mapname] = stats.maps[match.mapname] + 1 || 0;
+    stats["matchCount"] = stats["matchCount"] + 1 || 1;
+    stats.maps[match.mapname] = stats.maps[match.mapname] + 1 || 1;
 
+    for (let playerRepot of match.matchhistoryreportresults) {
+        if (playerRepot.resulttype == resultType.win) {
+            const faction = raceIds[playerRepot.race_id];
+            stats[faction]["wins"] = stats[faction]["wins"] + 1 || 1;
+        } else {
+            const faction = raceIds[playerRepot.race_id];
+            stats[faction]["losses"] = stats[faction]["losses"] + 1 || 1;
+        }
+    }
 
     return stats;
 }
@@ -19,7 +32,7 @@ const analyzeMatch = (match: ProcessedMatch, stats: Record<string, any>) => {
  * which are from automatch
  * @param matches
  */
-const filterOnlyAutomatch = (matches: Array<ProcessedMatch>) =>{
+const filterOnlyAutomatch = (matches: Array<ProcessedMatch>) => {
     // We could also filter based on the match_type ID but I am not sure
     // about that param
 
@@ -32,16 +45,16 @@ const filterOnlyAutomatch = (matches: Array<ProcessedMatch>) =>{
  * Puts matches by amount of players category.
  * @param matches
  */
-const sortMatchesByType = (matches: Array<ProcessedMatch>): Record<string, any> => {
+const sortMatchesByType = (matches: Array<ProcessedMatch>): Record<string, Array<ProcessedMatch>> => {
     let matchesByMode = {
-        "1v1": <Array<ProcessedMatch>> [],
-        "2v2": <Array<ProcessedMatch>> [],
-        "3v3": <Array<ProcessedMatch>> [],
-        "4v4": <Array<ProcessedMatch>> [],
+        "1v1": <Array<ProcessedMatch>>[],
+        "2v2": <Array<ProcessedMatch>>[],
+        "3v3": <Array<ProcessedMatch>>[],
+        "4v4": <Array<ProcessedMatch>>[],
     }
 
-    for(let match of matches){
-        switch(match.maxplayers) {
+    for (let match of matches) {
+        switch (match.maxplayers) {
             case 2:
                 matchesByMode["1v1"].push(match);
                 break;
@@ -62,29 +75,47 @@ const sortMatchesByType = (matches: Array<ProcessedMatch>): Record<string, any> 
     return matchesByMode;
 }
 
+
+const createStats = (matches: Array<ProcessedMatch>) => {
+    // FYI Stats is used as object reference in all of this code.
+    // not really doing immutability
+    let stats: Record<string, any> = {};
+    // initialize the maps property
+    stats["maps"] = {};
+
+    // initialize the race name property
+    for (const value of Object.values(raceIds)) {
+        stats[value] = {};
+    }
+
+    for (let match of matches) {
+        stats = analyzeMatch(match, stats)
+    }
+    return stats;
+}
+
+/**
+ * In analyze matches we first sort/filter the matches in a way we want
+ * and than we pass them to createStats function which prepares the
+ * stats object for that particular stat type.
+ *
+ * @param matches
+ */
 const analyzeMatches = (matches: Array<ProcessedMatch>) => {
     matches = filterOnlyAutomatch(matches);
     const classifiedMatches = sortMatchesByType(matches);
 
+    let fullStats: Record<string, any> = {};
+
     // This calculates single stats object for types like:
     // "1v1", "2v2", "3v3" etc
-    for(let matchType in classifiedMatches){
-
-
-        // FYI Stats is used as object reference in all of this code
-        // I don't see a reason to do immutability here;
-        let stats: Record<string, any> = {};
-        // initialize the maps property
-        stats["maps"] = {};
-
-        for(let match of classifiedMatches[matchType]){
-            stats = analyzeMatch(match, stats)
-        }
-
-        console.log(stats);
-
+    for (let matchType in classifiedMatches) {
+        fullStats[matchType] = createStats(classifiedMatches[matchType]);
     }
 
+    return fullStats;
+}
 
-
+export {
+    analyzeMatches
 }
