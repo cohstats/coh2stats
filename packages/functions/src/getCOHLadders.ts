@@ -1,13 +1,13 @@
 import axios from "axios";
-import * as functions from 'firebase-functions';
-import {firestore} from "firebase-admin";
-import {PubSub} from "@google-cloud/pubsub";
+import * as functions from "firebase-functions";
+import { firestore } from "firebase-admin";
+import { PubSub } from "@google-cloud/pubsub";
 
-import {getLadderUrl, leaderboardsID} from "./libs/coh2-api";
-import {getCurrentDateTimestamp} from "./libs/helpers";
-import {extractTheProfileIDs} from "./libs/ladder-data";
+import { getLadderUrl, leaderboardsID } from "./libs/coh2-api";
+import { getCurrentDateTimestamp } from "./libs/helpers";
+import { extractTheProfileIDs } from "./libs/ladder-data";
 
-import {DEFAULT_FUNCTIONS_LOCATION, PUBSUB_TOPIC_DOWNLOAD_MATCHES} from "./constants";
+import { DEFAULT_FUNCTIONS_LOCATION, PUBSUB_TOPIC_DOWNLOAD_MATCHES } from "./constants";
 
 const pubSubClient = new PubSub();
 const AMOUNT_OF_QUERIED_PLAYERS = 200; // 200 is max
@@ -25,20 +25,21 @@ const fetchLadderStats = async (leaderboardID: number): Promise<Record<string, a
     } else {
         throw Error(`Failed to received the ladder stats, response: ${response}`);
     }
-}
-
+};
 
 const invokeGetPlayerMatches = async (profileIds: Array<string>) => {
     functions.logger.debug(`Going to publish profiles into PubSub ${profileIds}`);
-    const dataBuffer = Buffer.from(JSON.stringify({"profileNames": profileIds}))
+    const dataBuffer = Buffer.from(JSON.stringify({ profileNames: profileIds }));
 
     try {
-        const messageId = await pubSubClient.topic(PUBSUB_TOPIC_DOWNLOAD_MATCHES).publish(dataBuffer);
+        const messageId = await pubSubClient
+            .topic(PUBSUB_TOPIC_DOWNLOAD_MATCHES)
+            .publish(dataBuffer);
         console.log(`Message ${messageId} published.`);
     } catch (error) {
         console.error(`Received error while publishing: ${error.message}`);
     }
-}
+};
 
 const callGetPlayerMatches = async (profileIds: Set<string>) => {
     const chunkSize = CHUNK_PROFILES_TO_PROCESS;
@@ -53,9 +54,7 @@ const callGetPlayerMatches = async (profileIds: Set<string>) => {
             chunkArray = [];
         }
     }
-
-}
-
+};
 
 /**
  * We could do all operations at once and use batch to write it to the DB.
@@ -63,16 +62,16 @@ const callGetPlayerMatches = async (profileIds: Set<string>) => {
  * so doing it one by one is OK in this case.
  */
 const getAndSaveAllLadders = async () => {
-
     const currentDateTimeStamp = getCurrentDateTimestamp();
     let profileIDs: Set<string> = new Set();
     let totalQueriedPositions = 0;
 
     for (const typeOfGame in leaderboardsID) {
-
         for (const faction in leaderboardsID[typeOfGame]) {
             const id = leaderboardsID[typeOfGame][faction];
-            functions.logger.log(`Processing ${typeOfGame} - ${faction}, using leaderBoardID: ${id}`)
+            functions.logger.log(
+                `Processing ${typeOfGame} - ${faction}, using leaderBoardID: ${id}`,
+            );
 
             // Total positions we queried on the ladder
             totalQueriedPositions += AMOUNT_OF_QUERIED_PLAYERS;
@@ -84,41 +83,41 @@ const getAndSaveAllLadders = async () => {
                 functions.logger.log(`Extracted ${extractedIds} unique profile IDs`);
                 profileIDs = new Set([...profileIDs, ...extractedIds]);
 
-                const collectionPath = `ladders/${currentDateTimeStamp}/${typeOfGame}`
-                functions.logger.log(`Going to save ${data["statGroups"].length} items to DB collection ${collectionPath} for faction ${faction}`);
+                const collectionPath = `ladders/${currentDateTimeStamp}/${typeOfGame}`;
+                functions.logger.log(
+                    `Going to save ${data["statGroups"].length} items to DB collection ${collectionPath} for faction ${faction}`,
+                );
                 await firestore().collection(collectionPath).doc(faction).set(data);
-
             } catch (e) {
-                functions.logger.error(`Failed to process ${typeOfGame} - ${faction}`, e)
+                functions.logger.error(`Failed to process ${typeOfGame} - ${faction}`, e);
             }
         }
     }
 
     await callGetPlayerMatches(profileIDs);
 
-    functions.logger.info(`Finished processing all ladders, extracted ${profileIDs.size} unique player profiles out of ${totalQueriedPositions} positions.`);
-}
+    functions.logger.info(
+        `Finished processing all ladders, extracted ${profileIDs.size} unique player profiles out of ${totalQueriedPositions} positions.`,
+    );
+};
 
 // Set max timeout we can
 const runtimeOpts: Record<string, "256MB" | any> = {
     timeoutSeconds: 540,
-    memory: '256MB'
-}
+    memory: "256MB",
+};
 
 /**
  * This function downloads all current ladders and saves them to the DB.
  */
 const getCOHLadders = functions
     .region(DEFAULT_FUNCTIONS_LOCATION)
-    .runWith(runtimeOpts).https.onRequest(async (request, response) => {
+    .runWith(runtimeOpts)
+    .https.onRequest(async (request, response) => {
         // Do we want to have any validation here? Who can trigger this function? Hm??
 
         await getAndSaveAllLadders();
         response.send("Finished processing the COH ladders");
     });
 
-export {
-    getCOHLadders
-}
-
-
+export { getCOHLadders };

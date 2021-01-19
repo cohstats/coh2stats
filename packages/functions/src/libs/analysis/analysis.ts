@@ -1,5 +1,5 @@
-import {raceIds, resultType} from "../coh2-api";
-import {ProcessedMatch} from "../types";
+import { raceIds, resultType } from "../coh2-api";
+import { ProcessedMatch } from "../types";
 
 /**
  * FYI: This function doesn't do copy of the stats object - uses reference.
@@ -9,7 +9,6 @@ import {ProcessedMatch} from "../types";
  * @param stats
  */
 const analyzeMatch = (match: ProcessedMatch, stats: Record<string, any>) => {
-
     stats["matchCount"] = stats["matchCount"] + 1 || 1;
     stats.maps[match.mapname] = stats.maps[match.mapname] + 1 || 1;
 
@@ -24,8 +23,7 @@ const analyzeMatch = (match: ProcessedMatch, stats: Record<string, any>) => {
     }
 
     return stats;
-}
-
+};
 
 /**
  * We want to do analysis only on the matches
@@ -38,20 +36,22 @@ const filterOnlyAutomatch = (matches: Array<ProcessedMatch>) => {
 
     return matches.filter((match: ProcessedMatch) => {
         return match["description"] == "AUTOMATCH";
-    })
-}
+    });
+};
 
 /**
  * Puts matches by amount of players category.
  * @param matches
  */
-const sortMatchesByType = (matches: Array<ProcessedMatch>): Record<string, Array<ProcessedMatch>> => {
+const sortMatchesByType = (
+    matches: Array<ProcessedMatch>,
+): Record<string, Array<ProcessedMatch>> => {
     const matchesByMode = {
         "1v1": [] as Array<ProcessedMatch>,
         "2v2": [] as Array<ProcessedMatch>,
         "3v3": [] as Array<ProcessedMatch>,
         "4v4": [] as Array<ProcessedMatch>,
-    }
+    };
 
     for (const match of matches) {
         switch (match.maxplayers) {
@@ -66,15 +66,16 @@ const sortMatchesByType = (matches: Array<ProcessedMatch>): Record<string, Array
                 break;
             case 8:
                 matchesByMode["4v4"].push(match);
-                break
+                break;
             default:
-                console.error(`Found match with not implemented max players: ${match.maxplayers}, ${match}`);
+                console.error(
+                    `Found match with not implemented max players: ${match.maxplayers}, ${match}`,
+                );
         }
     }
 
     return matchesByMode;
-}
-
+};
 
 const createStats = (matches: Array<ProcessedMatch>) => {
     // FYI Stats is used as object reference in all of this code.
@@ -89,10 +90,10 @@ const createStats = (matches: Array<ProcessedMatch>) => {
     }
 
     for (const match of matches) {
-        stats = analyzeMatch(match, stats)
+        stats = analyzeMatch(match, stats);
     }
     return stats;
-}
+};
 
 /**
  * In analyze matches we first sort/filter the matches in a way we want
@@ -114,8 +115,6 @@ const analyzeMatches = (matches: Array<ProcessedMatch>): Record<string, any> => 
     }
 
     return fullStats;
-}
+};
 
-export {
-    analyzeMatches
-}
+export { analyzeMatches };

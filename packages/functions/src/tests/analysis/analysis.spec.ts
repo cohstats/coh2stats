@@ -1,17 +1,18 @@
-import {analyzeMatches} from "../../libs/analysis/analysis";
-import {singleMatchObjectAfterTransform} from "../assets/assets";
-
+import { analyzeMatches } from "../../libs/analysis/analysis";
+import { singleMatchObjectAfterTransform } from "../assets/assets";
 
 describe("analyzeMatches", () => {
-
     test("Correctly counts", () => {
-
         const copiedMatch = JSON.parse(JSON.stringify(singleMatchObjectAfterTransform));
 
         copiedMatch.mapname = "rails_and_metal";
         copiedMatch.maxplayers = 4;
 
-        const matches = [singleMatchObjectAfterTransform, singleMatchObjectAfterTransform, copiedMatch];
+        const matches = [
+            singleMatchObjectAfterTransform,
+            singleMatchObjectAfterTransform,
+            copiedMatch,
+        ];
 
         const result = analyzeMatches(matches);
 
@@ -20,7 +21,5 @@ describe("analyzeMatches", () => {
         expect(result["2v2"].matchCount).toBe(1);
 
         //console.log(result)
-
-    })
-
-})
+    });
+});
