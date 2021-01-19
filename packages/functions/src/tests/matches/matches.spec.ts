@@ -6,10 +6,9 @@ import {
 describe("getAndPrepareMatches", () => {
 
     // This tests makes live API call, so keep it disabled
-    xtest("It works - debugging purposes", async () => {
+    test.skip("It works - debugging purposes", async () => {
 
-        let result;
-        result = await getAndPrepareMatchesForPlayer("/steam/76561198034318060")
+        const result = await getAndPrepareMatchesForPlayer("/steam/76561198034318060")
 
         console.log(result[0])
 

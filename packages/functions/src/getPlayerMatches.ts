@@ -4,7 +4,7 @@ import {firestore} from "firebase-admin";
 import {getMatchDocRef} from "./fb-paths";
 import {DEFAULT_FUNCTIONS_LOCATION, PUBSUB_TOPIC_DOWNLOAD_MATCHES} from "./constants";
 
-const runtimeOpts = {
+const runtimeOpts: Record<string, "256MB" | any> = {
     timeoutSeconds: 540,
     memory: '256MB'
 }
@@ -52,7 +52,6 @@ const saveMatches = async (matches: Set<Record<string, any>>) => {
  */
 const getPlayerMatches = functions
     .region(DEFAULT_FUNCTIONS_LOCATION)
-    // @ts-ignore
     .runWith(runtimeOpts)
     .pubsub.topic(PUBSUB_TOPIC_DOWNLOAD_MATCHES).onPublish(async (message) => {
 

@@ -2,9 +2,8 @@ import axios from "axios";
 import {getRecentMatchHistoryUrl} from "../coh2-api";
 import {prepareMatchDBObject, isLastDayMatch} from "./single-match";
 
-const {
-    performance,
-} = require('perf_hooks');
+import {performance} from "perf_hooks";
+import {ProcessedMatch} from "../types";
 
 
 const fetchPlayerMatchStats = async (profileName: string): Promise<Record<string, any>> => {
@@ -13,13 +12,16 @@ const fetchPlayerMatchStats = async (profileName: string): Promise<Record<string
     const response = await axios.get(url);
 
     if (response.status == 200 && response.data["result"]["message"] == "SUCCESS") {
-        let data = response.data;
+        const data = response.data;
         // Do we want to transform the data before we save them?
         delete data["result"]; // We don't need the result
 
         return data;
     } else {
-        throw `Failed to received the player stats stats, response: ${response} `
+        throw Object.assign(
+            new Error("Failed to received the player stats stats"),
+            {response}
+        );
     }
 }
 

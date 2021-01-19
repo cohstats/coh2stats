@@ -16,7 +16,7 @@ const getYesterdayDateTimestamp = (): number => {
  * for filtering games in the last day for example.
  * @param hours How many hours in history we want to go.
  */
-const getHoursOldTimestamp = (hours: number = 25): number => {
+const getHoursOldTimestamp = (hours = 25): number => {
     return (Date.now()/1000) - (hours *60*60);
 }
 

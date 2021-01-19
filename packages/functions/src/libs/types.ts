@@ -10,10 +10,27 @@ interface ProcessedMatch {
     description: string;
     startgametime: number;
     completiontime: number;
-    matchhistoryreportresults: Array<Record<string, any>>;
+    matchhistoryreportresults: Array<PlayerReport>;
     matchhistoryitems: Array<Record<string, any>>;
     profile_ids: Array<number>;
     steam_ids: Array<string>;
 }
 
 
+/**
+ * This is the object inside matchhistoryreportresults
+ */
+interface PlayerReport {
+    matchhistory_id: number,
+    profile_id: number,
+    resulttype: number,
+    teamid: number,
+    race_id: number,
+    counters: string,
+    profile: Record<string, any>
+}
+
+export {
+    ProcessedMatch,
+    PlayerReport
+}

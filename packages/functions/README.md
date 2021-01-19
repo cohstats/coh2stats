@@ -13,18 +13,14 @@ stats
 - wermachtWins: number
 - sovietCount: number
 - sovietWins: number
-...
-
-maps
-- name: number
-- name: number
-...
-
-commanders:
-- name: number
-- name: number 
-
-
+- maps: {
+    "mapname": number
+    ...
+}
+- commanders: {
+    "name": number
+    "name": number
+}
 ```
 
 

@@ -1,5 +1,5 @@
 import {raceIds, resultType} from "../coh2-api";
-
+import {ProcessedMatch} from "../types";
 
 /**
  * FYI: This function doesn't do copy of the stats object - uses reference.
@@ -13,7 +13,7 @@ const analyzeMatch = (match: ProcessedMatch, stats: Record<string, any>) => {
     stats["matchCount"] = stats["matchCount"] + 1 || 1;
     stats.maps[match.mapname] = stats.maps[match.mapname] + 1 || 1;
 
-    for (let playerRepot of match.matchhistoryreportresults) {
+    for (const playerRepot of match.matchhistoryreportresults) {
         if (playerRepot.resulttype == resultType.win) {
             const faction = raceIds[playerRepot.race_id];
             stats[faction]["wins"] = stats[faction]["wins"] + 1 || 1;
@@ -46,14 +46,14 @@ const filterOnlyAutomatch = (matches: Array<ProcessedMatch>) => {
  * @param matches
  */
 const sortMatchesByType = (matches: Array<ProcessedMatch>): Record<string, Array<ProcessedMatch>> => {
-    let matchesByMode = {
-        "1v1": <Array<ProcessedMatch>>[],
-        "2v2": <Array<ProcessedMatch>>[],
-        "3v3": <Array<ProcessedMatch>>[],
-        "4v4": <Array<ProcessedMatch>>[],
+    const matchesByMode = {
+        "1v1": [] as Array<ProcessedMatch>,
+        "2v2": [] as Array<ProcessedMatch>,
+        "3v3": [] as Array<ProcessedMatch>,
+        "4v4": [] as Array<ProcessedMatch>,
     }
 
-    for (let match of matches) {
+    for (const match of matches) {
         switch (match.maxplayers) {
             case 2:
                 matchesByMode["1v1"].push(match);
@@ -88,7 +88,7 @@ const createStats = (matches: Array<ProcessedMatch>) => {
         stats[value] = {};
     }
 
-    for (let match of matches) {
+    for (const match of matches) {
         stats = analyzeMatch(match, stats)
     }
     return stats;
@@ -101,15 +101,15 @@ const createStats = (matches: Array<ProcessedMatch>) => {
  *
  * @param matches
  */
-const analyzeMatches = (matches: Array<ProcessedMatch>) => {
+const analyzeMatches = (matches: Array<ProcessedMatch>): Record<string, any> => {
     matches = filterOnlyAutomatch(matches);
     const classifiedMatches = sortMatchesByType(matches);
 
-    let fullStats: Record<string, any> = {};
+    const fullStats: Record<string, any> = {};
 
     // This calculates single stats object for types like:
     // "1v1", "2v2", "3v3" etc
-    for (let matchType in classifiedMatches) {
+    for (const matchType in classifiedMatches) {
         fullStats[matchType] = createStats(classifiedMatches[matchType]);
     }
 

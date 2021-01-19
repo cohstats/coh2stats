@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as functions from 'firebase-functions';
 import {firestore} from "firebase-admin";
-const {PubSub} = require('@google-cloud/pubsub');
+import {PubSub} from "@google-cloud/pubsub";
 
 import {getLadderUrl, leaderboardsID} from "./libs/coh2-api";
 import {getCurrentDateTimestamp} from "./libs/helpers";
@@ -17,13 +17,13 @@ const fetchLadderStats = async (leaderboardID: number): Promise<Record<string, a
     const response = await axios.get(getLadderUrl(leaderboardID, AMOUNT_OF_QUERIED_PLAYERS));
 
     if (response.status == 200) {
-        let data = response.data;
+        const data = response.data;
         // Do we want to transform the data before we save them?
         delete data["result"]; // We don't need the result
 
         return data;
     } else {
-        throw `Failed to received the ladder stats, response: ${response} `
+        throw Error(`Failed to received the ladder stats, response: ${response}`);
     }
 }
 
@@ -70,10 +70,7 @@ const getAndSaveAllLadders = async () => {
 
     for (const typeOfGame in leaderboardsID) {
 
-        // WTF is this shit?
-        // @ts-ignore
         for (const faction in leaderboardsID[typeOfGame]) {
-            // @ts-ignore
             const id = leaderboardsID[typeOfGame][faction];
             functions.logger.log(`Processing ${typeOfGame} - ${faction}, using leaderBoardID: ${id}`)
 
@@ -102,8 +99,8 @@ const getAndSaveAllLadders = async () => {
     functions.logger.info(`Finished processing all ladders, extracted ${profileIDs.size} unique player profiles out of ${totalQueriedPositions} positions.`);
 }
 
-// Set max timeout
-const runtimeOpts = {
+// Set max timeout we can
+const runtimeOpts: Record<string, "256MB" | any> = {
     timeoutSeconds: 540,
     memory: '256MB'
 }
@@ -113,7 +110,6 @@ const runtimeOpts = {
  */
 const getCOHLadders = functions
     .region(DEFAULT_FUNCTIONS_LOCATION)
-    // @ts-ignore
     .runWith(runtimeOpts).https.onRequest(async (request, response) => {
         // Do we want to have any validation here? Who can trigger this function? Hm??
 

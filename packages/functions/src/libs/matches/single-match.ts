@@ -1,4 +1,5 @@
 import {getHoursOldTimestamp, convertSteamNameToID} from "../helpers";
+import {ProcessedMatch} from "../types";
 
 /**
  * We want to filter out items we don't need to store.
@@ -7,8 +8,9 @@ import {getHoursOldTimestamp, convertSteamNameToID} from "../helpers";
  *
  * @param singleMatchData
  */
-const filterOutItems = (singleMatchData: Record<string, any>) => {
+const filterOutItems = (singleMatchData: Record<string, any>): Record<string, any> => {
     singleMatchData["matchhistoryitems"] = singleMatchData["matchhistoryitems"].filter((item: Record<string, any>) => {
+
         return item["itemlocation_id"] == 3 || item["itemlocation_id"] == 4;
     });
     return singleMatchData;
@@ -19,8 +21,8 @@ const filterOutItems = (singleMatchData: Record<string, any>) => {
  *
  * @param singleMatchData
  */
-const removeExtraDataFromItems = (singleMatchData: Record<string, any>) => {
-    for(const item of singleMatchData["matchhistoryitems"]){
+const removeExtraDataFromItems = (singleMatchData: Record<string, any>): Record<string, any> => {
+    for (const item of singleMatchData["matchhistoryitems"]) {
         delete item["durabilitytype"];
         delete item["durability"];
         delete item["metadata"];
@@ -31,7 +33,7 @@ const removeExtraDataFromItems = (singleMatchData: Record<string, any>) => {
 }
 
 
-const processSingleMatch = (singleMatchData: Record<string, any>) => {
+const processSingleMatch = (singleMatchData: Record<string, any>): Record<string, any> => {
     // delete fields we don't need to track
     delete singleMatchData["options"]; // Don't know what this field does, probably don't need it
     delete singleMatchData["slotinfo"]; // Don't know what this field does, probably don't need it
@@ -60,9 +62,9 @@ const isLastDayMatch = (singleMatchData: Record<string, any>): boolean => {
  * Also removes unnecessary data in the player report.
  * @param singleMatchData
  */
-const extractPlayerIDsInMatch = (singleMatchData: Record<string, any>) => {
+const extractPlayerIDsInMatch = (singleMatchData: Record<string, any>): Array<number> => {
     const playerIds = [];
-    for( const player of singleMatchData["matchhistoryreportresults"]){
+    for (const player of singleMatchData["matchhistoryreportresults"]) {
         playerIds.push(player["profile_id"]);
         // Also delete these 2 fields we don't need them
         delete player["xpgained"]
@@ -76,7 +78,7 @@ const extractPlayerIDsInMatch = (singleMatchData: Record<string, any>) => {
  * @param profileId
  * @param profiles
  */
-const findProfile = (profileId:number , profiles: Array<object>): Record<string, any> | undefined => {
+const findProfile = (profileId: number, profiles: Array<Record<string, any>>): Record<string, any> | undefined => {
     return profiles.find((profile: Record<string, any>) => {
         return profile["profile_id"] == profileId
     })
@@ -92,10 +94,10 @@ const findProfile = (profileId:number , profiles: Array<object>): Record<string,
  * @param singleMatchObject
  * @param profiles
  */
-const transformProfilesInMatch = (singleMatchObject: Record<string, any>, profiles: Array<object>): Array<string> => {
+const transformProfilesInMatch = (singleMatchObject: Record<string, any>, profiles: Array<Record<string, any>>): Array<string> => {
     const steamIDs = []
 
-    for(const playerResult of singleMatchObject["matchhistoryreportresults"]) {
+    for (const playerResult of singleMatchObject["matchhistoryreportresults"]) {
         const profile = findProfile(playerResult["profile_id"], profiles);
         playerResult["profile"] = profile;
         steamIDs.push(convertSteamNameToID(profile?.name));
@@ -110,7 +112,7 @@ const transformProfilesInMatch = (singleMatchObject: Record<string, any>, profil
  * @param singleMatchData
  * @param profiles
  */
-const prepareMatchDBObject = (singleMatchData: Record<string, any>, profiles: Array<object>) => {
+const prepareMatchDBObject = (singleMatchData: Record<string, any>, profiles: Array<Record<string, any>>): ProcessedMatch => {
     const profileIDs = extractPlayerIDsInMatch(singleMatchData);
 
     // Do all the transformations on the single match object
@@ -120,7 +122,7 @@ const prepareMatchDBObject = (singleMatchData: Record<string, any>, profiles: Ar
     singleMatchData["profile_ids"] = profileIDs;
     singleMatchData["steam_ids"] = steamIDs;
 
-    return singleMatchData;
+    return singleMatchData as ProcessedMatch;
 }
 
 

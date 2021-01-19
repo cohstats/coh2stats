@@ -37,6 +37,9 @@ describe("filterOutItems", () => {
 
 describe("removeExtraDataFromItems", () => {
 
+
+    /* eslint-disable jest/expect-expect */
+    // Verification is done in the function ^^
     test("Unnecessary properties from items are removed", () => {
         const clonedObject = JSON.parse(JSON.stringify(singleMatchObjectFromAPI));
         removeExtraDataFromItems(clonedObject);
@@ -74,7 +77,7 @@ describe("processSingleMatch", () => {
 describe("extractPlayerIDsInMatch", () => {
 
     test("IDs are extracted", () => {
-        let clonedSingleMatch = JSON.parse(JSON.stringify(singleMatchObjectFromAPI));
+        const clonedSingleMatch = JSON.parse(JSON.stringify(singleMatchObjectFromAPI));
         const ids = extractPlayerIDsInMatch(clonedSingleMatch)
         expect(ids).toEqual([1882602, 2604692, 3036689, 3793687]);
     });
@@ -106,8 +109,8 @@ describe("isLastDayMatch", () => {
              expect(isLastDayMatch(singleMatchObjectFromAPI)).toBeFalsy();
     });
 
-    test("The match is not in the last day", () =>{
-        let clonedSingleMatch = JSON.parse(JSON.stringify(singleMatchObjectFromAPI));
+    test("The match is not in the last day after 26 hours", () =>{
+        const clonedSingleMatch = JSON.parse(JSON.stringify(singleMatchObjectFromAPI));
         clonedSingleMatch["startgametime"] = getHoursOldTimestamp(26);
 
         expect(isLastDayMatch(clonedSingleMatch)).toBeFalsy()
@@ -116,7 +119,7 @@ describe("isLastDayMatch", () => {
 
 
     test("The match is in the last day", () =>{
-        let clonedSingleMatch = JSON.parse(JSON.stringify(singleMatchObjectFromAPI));
+        const clonedSingleMatch = JSON.parse(JSON.stringify(singleMatchObjectFromAPI));
         clonedSingleMatch["startgametime"] = getHoursOldTimestamp(24);
 
         expect(isLastDayMatch(clonedSingleMatch)).toBeTruthy()
