@@ -26,8 +26,8 @@ GCP services to be used:
 -   GCP Storage - For storing extra data
 
 ### Crawler process
-
-<div style="width: 640px; height: 480px; margin: 10px; position: relative;"><iframe allowfullscreen frameborder="0" style="width:640px; height:480px" src="https://lucid.app/documents/embeddedchart/ec7ffc19-50c4-4104-bcf9-287e2af3ac62" id="NDO7etCci.Z5"></iframe></div>
+<!--- Doesn't work locally, only on GithHub -->
+<iframe allowfullscreen frameborder="0" style="width:640px; height:480px" src="https://lucid.app/documents/embeddedchart/ec7ffc19-50c4-4104-bcf9-287e2af3ac62" id="NDO7etCci.Z5"></iframe>
 
 Crawler process is set to run every day. There is a huge amount of data
 so we need to do it everyday to avoid big stress on the Relic API.
