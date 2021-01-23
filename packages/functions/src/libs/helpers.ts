@@ -38,24 +38,30 @@ const convertSteamNameToID = (name: string): string => {
  * @param masterObject
  * @param newObject
  */
-const sumValuesOfObjects = (
-    masterObject: Record<string, Record<string, any> | number>,
-    newObject: Record<string, Record<string, any> | number>,
-): Record<string, any> => {
+type TmpDict<T> = Record<string, T | number>;
+interface StatDict extends TmpDict<StatDict> {}
+
+const sumValuesOfObjects = (masterObject: StatDict, newObject: StatDict): StatDict => {
     for (const key in newObject) {
-        if (Object.prototype.hasOwnProperty.call(masterObject, key)) {
-            if (masterObject[key] instanceof Object) {
-                // @ts-ignore
-                masterObject[key] = sumValuesOfObjects(masterObject[key], newObject[key]);
+        // Also in master object => merge
+        if (key in masterObject) {
+            const masterValue = masterObject[key];
+            const newValue = newObject[key];
+            // Both are numbers
+            if (typeof masterValue === "number" && typeof newValue === "number") {
+                masterObject[key] = masterValue + newValue;
+                // Both are Objects
+            } else if (typeof masterValue !== "number" && typeof newValue !== "number") {
+                masterObject[key] = sumValuesOfObjects(masterValue, newValue);
+                // Something is wrong
             } else {
-                // @ts-ignore
-                masterObject[key] = masterObject[key] + newObject[key];
+                console.error("Mismatched types in summing the stats!", newObject);
             }
+            // Not in master object => put new
         } else {
             masterObject[key] = newObject[key];
         }
     }
-
     return masterObject;
 };
 

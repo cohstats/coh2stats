@@ -20,6 +20,6 @@ describe("analyzeMatches", () => {
 
         expect(result["2v2"].matchCount).toBe(1);
 
-        //console.log(result)
+        console.log(result)
     });
 });

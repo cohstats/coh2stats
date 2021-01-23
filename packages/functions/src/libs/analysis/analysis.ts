@@ -1,4 +1,4 @@
-import { raceIds, resultType } from "../coh2-api";
+import {matchItemsLocation, raceIds, resultType} from "../coh2-api";
 import { ProcessedMatch } from "../types";
 
 /**
@@ -12,13 +12,23 @@ const analyzeMatch = (match: ProcessedMatch, stats: Record<string, any>) => {
     stats["matchCount"] = stats["matchCount"] + 1 || 1;
     stats.maps[match.mapname] = stats.maps[match.mapname] + 1 || 1;
 
-    for (const playerRepot of match.matchhistoryreportresults) {
-        if (playerRepot.resulttype == resultType.win) {
-            const faction = raceIds[playerRepot.race_id];
+    // Analysis for
+    for (const playerReport of match.matchhistoryreportresults) {
+        if (playerReport.resulttype == resultType.win) {
+            const faction = raceIds[playerReport.race_id];
             stats[faction]["wins"] = stats[faction]["wins"] + 1 || 1;
         } else {
-            const faction = raceIds[playerRepot.race_id];
+            const faction = raceIds[playerReport.race_id];
             stats[faction]["losses"] = stats[faction]["losses"] + 1 || 1;
+        }
+    }
+
+    // Analysis of commanders and intel bulletins
+    for (const itemReport of match.matchhistoryitems){
+        if(itemReport.itemlocation_id == matchItemsLocation.commanders ){
+            stats["commanders"][itemReport["itemdefinition_id"]] = stats["commanders"][itemReport["itemdefinition_id"]] +1 || 1;
+        } else if(itemReport.itemlocation_id == matchItemsLocation.intelBulletins){
+            stats["intelBulletins"][itemReport["itemdefinition_id"]] = stats["intelBulletins"][itemReport["itemdefinition_id"]] +1 || 1;
         }
     }
 
@@ -83,6 +93,8 @@ const createStats = (matches: Array<ProcessedMatch>) => {
     let stats: Record<string, any> = {};
     // initialize the maps property
     stats["maps"] = {};
+    stats["commanders"] = {};
+    stats["intelBulletins"] = {};
 
     // initialize the race name property
     for (const value of Object.values(raceIds)) {
