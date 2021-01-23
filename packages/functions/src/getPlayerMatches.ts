@@ -64,6 +64,7 @@ const getPlayerMatches = functions
             matches = new Set([...matches, ...playerMatches]);
         }
 
+        // TODO: Do analysis on the matches
         await saveMatches(matches);
     });
 

@@ -32,10 +32,13 @@ const saveAnalysis = async (
     }
 };
 
-const analyzeAndSaveMatches = (matches: Array<ProcessedMatch>, dateTimeStamp: number): Promise<void> => {
+const analyzeAndSaveMatchStats = (
+    matches: Array<ProcessedMatch>,
+    dateTimeStamp: number,
+): Promise<void> => {
     const stats = analyzeMatches(matches);
 
     return saveAnalysis(stats, dateTimeStamp);
 };
 
-export { analyzeAndSaveMatches };
+export { analyzeAndSaveMatchStats };
