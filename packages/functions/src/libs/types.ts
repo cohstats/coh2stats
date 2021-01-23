@@ -29,4 +29,7 @@ interface PlayerReport {
     profile: Record<string, any>;
 }
 
-export { ProcessedMatch, PlayerReport };
+type TmpDict<T> = Record<string, T | number>;
+type StatDict = TmpDict<StatDict>;
+
+export { ProcessedMatch, PlayerReport, StatDict };

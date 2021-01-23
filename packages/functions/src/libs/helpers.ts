@@ -1,3 +1,5 @@
+import { StatDict } from "./types";
+
 /**
  * Returns timestamp for current DATE(without time) in UTC
  */
@@ -38,8 +40,6 @@ const convertSteamNameToID = (name: string): string => {
  * @param masterObject
  * @param newObject
  */
-type TmpDict<T> = Record<string, T | number>;
-interface StatDict extends TmpDict<StatDict> {}
 
 const sumValuesOfObjects = (masterObject: StatDict, newObject: StatDict): StatDict => {
     for (const key in newObject) {

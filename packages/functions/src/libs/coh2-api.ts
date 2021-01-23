@@ -76,7 +76,15 @@ const resultType = {
 
 const matchItemsLocation = {
     commanders: 3,
-    intelBulletins: 4
-}
+    intelBulletins: 4,
+};
 
-export { baseUrl, getLadderUrl, leaderboardsID, getRecentMatchHistoryUrl, raceIds, resultType, matchItemsLocation };
+export {
+    baseUrl,
+    getLadderUrl,
+    leaderboardsID,
+    getRecentMatchHistoryUrl,
+    raceIds,
+    resultType,
+    matchItemsLocation,
+};

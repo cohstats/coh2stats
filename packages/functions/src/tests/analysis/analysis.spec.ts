@@ -1,4 +1,4 @@
-import { analyzeMatches } from "../../libs/analysis/analysis";
+import { analyzeMatches } from "../../libs/analysis/match-analysis";
 import { singleMatchObjectAfterTransform } from "../assets/assets";
 
 describe("analyzeMatches", () => {
@@ -20,6 +20,6 @@ describe("analyzeMatches", () => {
 
         expect(result["2v2"].matchCount).toBe(1);
 
-        console.log(result)
+        console.log(result);
     });
 });
