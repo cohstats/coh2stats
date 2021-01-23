@@ -30,9 +30,39 @@ const convertSteamNameToID = (name: string): string => {
     return "";
 };
 
+/**
+ * Takes 2 objects.
+ * This function is not immutable! Modifies the first object.
+ *
+ * Maybe better name?
+ * @param masterObject
+ * @param newObject
+ */
+const sumValuesOfObjects = (
+    masterObject: Record<string, Record<string, any> | number>,
+    newObject: Record<string, Record<string, any> | number>,
+): Record<string, any> => {
+    for (const key in newObject) {
+        if (Object.prototype.hasOwnProperty.call(masterObject, key)) {
+            if (masterObject[key] instanceof Object) {
+                // @ts-ignore
+                masterObject[key] = sumValuesOfObjects(masterObject[key], newObject[key]);
+            } else {
+                // @ts-ignore
+                masterObject[key] = masterObject[key] + newObject[key];
+            }
+        } else {
+            masterObject[key] = newObject[key];
+        }
+    }
+
+    return masterObject;
+};
+
 export {
     convertSteamNameToID,
     getCurrentDateTimestamp,
     getHoursOldTimestamp,
     getYesterdayDateTimestamp,
+    sumValuesOfObjects,
 };

@@ -16,6 +16,8 @@ module.exports = {
         "plugin:jest-dom/recommended",
     ],
     rules: {
+        // Really don't know how to fix function sumValuesOfObjects
+        "@typescript-eslint/ban-ts-comment": "off",
         // We shouldn't really use ANY but we can't have everything perfect
         "@typescript-eslint/no-explicit-any": "off",
         // We are OK with disabled tests

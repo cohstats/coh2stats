@@ -26,6 +26,7 @@ GCP services to be used:
 -   GCP Storage - For storing extra data
 
 ### Crawler process
+
 Diagram:
 https://lucid.app/documents/embeddedchart/ec7ffc19-50c4-4104-bcf9-287e2af3ac62
 
