@@ -1,3 +1,6 @@
+/**
+ * FYI: We should not run any tests in cloud. We should have tests in emulators.
+ */
 import * as functions from "firebase-functions";
 import { DEFAULT_FUNCTIONS_LOCATION } from "./constants";
 import { firestore } from "firebase-admin";

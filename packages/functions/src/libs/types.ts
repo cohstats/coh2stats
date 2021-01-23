@@ -30,6 +30,6 @@ interface PlayerReport {
 }
 
 type TmpDict<T> = Record<string, T | number>;
-type StatDict = TmpDict<StatDict>;
+interface StatDict extends TmpDict<StatDict> {}
 
 export { ProcessedMatch, PlayerReport, StatDict };
