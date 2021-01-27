@@ -12,7 +12,12 @@ const getStatsDocRef = (
     timestamp: string | number,
     type: "daily" | "weekly",
 ): DocumentReference<DocumentData> => {
-    return db.collection(`stats/${type}/`).doc(`${timestamp}`);
+    // We need to follow pattern collection/doc/collection/doc
+    return db.collection(`stats`).doc(`${type}`).collection(`${timestamp}`).doc("stats");
 };
 
-export { getMatchDocRef, getStatsDocRef };
+const getGlobalStatsDocRef = (): DocumentReference<DocumentData> => {
+    return db.collection(`stats`).doc(`global`);
+};
+
+export { getMatchDocRef, getStatsDocRef, getGlobalStatsDocRef };

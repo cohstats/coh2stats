@@ -20,6 +20,8 @@ module.exports = {
         "@typescript-eslint/ban-ts-comment": "off",
         // We shouldn't really use ANY but we can't have everything perfect
         "@typescript-eslint/no-explicit-any": "off",
+        // We kinda need interface not type
+        "@typescript-eslint/no-empty-interface": "off",
         // We are OK with disabled tests
         "jest/no-disabled-tests": "off",
         // In fact we are OK with == instead of === as we aren't sure if
