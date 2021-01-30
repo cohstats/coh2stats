@@ -8,6 +8,10 @@ const getMatchDocRef = (matchId: string | number): DocumentReference<DocumentDat
     return db.collection("matches").doc(`${matchId}`);
 };
 
+const getMatchStatsDocRef = (): DocumentReference<DocumentData> => {
+    return db.collection("matches").doc("stats");
+};
+
 const getStatsDocRef = (
     timestamp: string | number,
     type: "daily" | "weekly",
@@ -20,4 +24,4 @@ const getGlobalStatsDocRef = (): DocumentReference<DocumentData> => {
     return db.collection(`stats`).doc(`global`);
 };
 
-export { getMatchDocRef, getStatsDocRef, getGlobalStatsDocRef };
+export { getMatchDocRef, getStatsDocRef, getGlobalStatsDocRef, getMatchStatsDocRef };

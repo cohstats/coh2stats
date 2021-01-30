@@ -4,6 +4,7 @@ import { analyzeMatches } from "./match-analysis";
 import * as functions from "firebase-functions";
 import { firestore } from "firebase-admin";
 import { sumValuesOfObjects } from "../helpers";
+import { globallyAnalyzedMatches } from "../global-data";
 
 const db = firestore();
 
@@ -35,14 +36,15 @@ const saveAnalysis = async (
     }
 };
 
-const analyzeAndSaveMatchStats = (
+const analyzeAndSaveMatchStats = async (
     matches: Array<ProcessedMatch>,
     dateTimeStamp: number,
 ): Promise<void> => {
     functions.logger.log(`Stats - analyzing ${matches.length} matches.`);
     const stats = analyzeMatches(matches);
     functions.logger.log(`Stats analyzed, going to save them.`);
-    return saveAnalysis(stats, dateTimeStamp);
+    await globallyAnalyzedMatches(matches.length);
+    await saveAnalysis(stats, dateTimeStamp);
 };
 
 export { analyzeAndSaveMatchStats };
