@@ -1,6 +1,6 @@
-import React, { FC } from 'react';
-import { Button } from 'antd';
-import './App.css';
+import React, { FC } from "react";
+import { Button } from "antd";
+import "./App.css";
 
 const App: FC = () => (
     <div className="App">

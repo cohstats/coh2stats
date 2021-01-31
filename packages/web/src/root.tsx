@@ -24,34 +24,30 @@ import type { History } from "history";
 // import { Loading } from "./components";
 
 interface Props {
-  store: AppStore;
-  history: History;
+    store: AppStore;
+    history: History;
 }
 const Root: React.FC<Props> = ({ store, history }) => (
-  <Provider store={store}>
-      <ReactReduxFirebaseProvider
-        firebase={firebase}
-        config={config.rrfConfig}
-        dispatch={store.dispatch}
-        createFirestoreInstance={createFirestoreInstance}
-      >
-        <ConnectedRouter history={history}>
-              <React.StrictMode>
-                <Switch>
-                  <Route path={"/login"}>
-                    LOGIN
-                  </Route>
-                  <Route path="/" exact>
-                    <App/>
-                  </Route>
-                  <Route>
-                    NOT FOUND
-                  </Route>
-                </Switch>
-              </React.StrictMode>
-        </ConnectedRouter>
-      </ReactReduxFirebaseProvider>
-  </Provider>
+    <Provider store={store}>
+        <ReactReduxFirebaseProvider
+            firebase={firebase}
+            config={config.rrfConfig}
+            dispatch={store.dispatch}
+            createFirestoreInstance={createFirestoreInstance}
+        >
+            <ConnectedRouter history={history}>
+                <React.StrictMode>
+                    <Switch>
+                        <Route path={"/login"}>LOGIN</Route>
+                        <Route path="/" exact>
+                            <App />
+                        </Route>
+                        <Route>NOT FOUND</Route>
+                    </Switch>
+                </React.StrictMode>
+            </ConnectedRouter>
+        </ReactReduxFirebaseProvider>
+    </Provider>
 );
 
 export default Root;

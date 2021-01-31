@@ -13,10 +13,7 @@ export interface FirebaseConfig {
 /**
  * Get current firebase config
  */
-const firebase = (): FirebaseConfig =>
-    JSON.parse(
-        (process.env.REACT_APP_FIREBASE_CONFIG) || "{}",
-    );
+const firebase = (): FirebaseConfig => JSON.parse(process.env.REACT_APP_FIREBASE_CONFIG || "{}");
 
 const firebaseFunctions = {
     location: "us-east4",
@@ -28,8 +25,10 @@ const rrfConfig: Partial<ReactReduxFirebaseConfig> = {
     useFirestoreForProfile: true,
 };
 
-export default {
+const config = {
     firebase,
     rrfConfig,
     firebaseFunctions,
 };
+
+export default config;

@@ -15,7 +15,6 @@ const firestore = firebase.firestore;
 const initializeApp = firebase.initializeApp;
 const app = firebase.app;
 
-
 const useEmulators = process.env.REACT_APP_EMULATOR && process.env.REACT_APP_EMULATOR !== "false";
 
 /**
@@ -62,10 +61,12 @@ const setUserId = (id: string): void => analytics().setUserId(id);
  */
 const resetUserId = (): void => setUserId("");
 
-export default {
+const firebaseExport = {
     init,
     functions,
     logEvent,
     setUserId,
     resetUserId,
 };
+
+export default firebaseExport;
