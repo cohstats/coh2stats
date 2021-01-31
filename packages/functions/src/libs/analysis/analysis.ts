@@ -4,7 +4,7 @@ import { analyzeMatches } from "./match-analysis";
 import * as functions from "firebase-functions";
 import { firestore } from "firebase-admin";
 import { sumValuesOfObjects } from "../helpers";
-import { globallyAnalyzedMatches } from "../global-data";
+import { globallyAnalyzedMatches } from "../global-stats";
 
 const db = firestore();
 

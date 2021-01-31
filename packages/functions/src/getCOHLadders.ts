@@ -80,7 +80,7 @@ const getAndSaveAllLadders = async () => {
                 const data = await fetchLadderStats(id);
                 const extractedIds = extractTheProfileIDs(data);
 
-                functions.logger.log(`Extracted ${extractedIds} unique profile IDs`);
+                functions.logger.log(`Extracted ${extractedIds.size} unique profile IDs`);
                 profileIDs = new Set([...profileIDs, ...extractedIds]);
 
                 const collectionPath = `ladders/${currentDateTimeStamp}/${typeOfGame}`;

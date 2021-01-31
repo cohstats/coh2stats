@@ -25,7 +25,7 @@ const runTest = functions
             console.log("No matching documents.");
             return;
         }
-        console.log("fund documents: ", snapshot.size);
+        console.log("Found documents: ", snapshot.size);
 
         const result: Array<ProcessedMatch> = [];
 

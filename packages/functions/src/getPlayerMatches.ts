@@ -1,10 +1,8 @@
 import * as functions from "firebase-functions";
 import { getAndPrepareMatchesForPlayer } from "./libs/matches/matches";
 import { firestore } from "firebase-admin";
-import { getMatchDocRef, getMatchStatsDocRef } from "./fb-paths";
+import { getGlobalStatsDocRef, getMatchDocRef } from "./fb-paths";
 import { DEFAULT_FUNCTIONS_LOCATION, PUBSUB_TOPIC_DOWNLOAD_MATCHES } from "./constants";
-import { analyzeAndSaveMatchStats } from "./libs/analysis/analysis";
-import { getCurrentDateTimestamp } from "./libs/helpers";
 import { ProcessedMatch } from "./libs/types";
 
 const runtimeOpts: Record<string, "256MB" | any> = {
@@ -23,7 +21,7 @@ const saveMatches = async (matches: Set<Record<string, any>>) => {
         return;
     }
 
-    const matchStatsRef = getMatchStatsDocRef();
+    const matchStatsRef = getGlobalStatsDocRef();
     const increment = firestore.FieldValue.increment(matches.size);
 
     let batch = db.batch();
@@ -32,7 +30,6 @@ const saveMatches = async (matches: Set<Record<string, any>>) => {
     for (const match of matches) {
         const docRef = getMatchDocRef(match.id);
         batch.set(docRef, match);
-        batch.set(matchStatsRef, { matchCount: increment }, { merge: true });
         counter++;
         // We can write at most 500 requests in a single batch
         if (counter % 498 == 0 && counter != matches.size) {
@@ -41,6 +38,7 @@ const saveMatches = async (matches: Set<Record<string, any>>) => {
         }
 
         if (counter == matches.size) {
+            batch.set(matchStatsRef, { matchCount: increment }, { merge: true });
             await batch.commit();
         }
     }
@@ -72,8 +70,12 @@ const getPlayerMatches = functions
         }
 
         await saveMatches(matches);
-        const matchesAsArray = [...matches];
-        await analyzeAndSaveMatchStats(matchesAsArray, getCurrentDateTimestamp());
+        /**
+         * Warning: We can't do analysis here because we might process duplicated matches.
+         * Why is that? Because this function has only matches for a specific players (from which
+         * it removes duplicates) but the match can be already processed because the same match
+         * is processed by each player who played in that match!
+         */
     });
 
 export { getPlayerMatches };

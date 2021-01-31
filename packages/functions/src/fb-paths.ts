@@ -9,7 +9,7 @@ const getMatchDocRef = (matchId: string | number): DocumentReference<DocumentDat
 };
 
 const getMatchStatsDocRef = (): DocumentReference<DocumentData> => {
-    return db.collection("matches").doc("stats");
+    return db.collection("stats").doc("matchStats");
 };
 
 const getStatsDocRef = (
