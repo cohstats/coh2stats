@@ -5,9 +5,9 @@ import { ProcessedMatch } from "./libs/types";
 import { getYesterdayDateTimeStampInterval, printUTCTime } from "./libs/helpers";
 import { analyzeAndSaveMatchStats } from "./libs/analysis/analysis";
 
-const runtimeOpts: Record<string, "256MB" | any> = {
+const runtimeOpts: Record<string, "1GB" | any> = {
     timeoutSeconds: 540,
-    memory: "256MB",
+    memory: "1GB",
 };
 
 const runAnalysis = functions
