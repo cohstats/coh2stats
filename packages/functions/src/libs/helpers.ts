@@ -2,6 +2,10 @@ import { StatDict } from "./types";
 
 /**
  * Returns timestamp for current DATE(without time) in UTC
+ *
+ * Btw for the timestamps it might be useful to introduce some library but we really do just simple
+ * timestamps in UTC, we are not gonna do any transformation between timezones and such
+ * so it's not necessary to add libs.
  */
 const getCurrentDateTimestamp = (): number => {
     const date = new Date();
@@ -11,6 +15,23 @@ const getCurrentDateTimestamp = (): number => {
 const getYesterdayDateTimestamp = (): number => {
     const date = new Date();
     return Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() - 1) / 1000;
+};
+
+const getYesterdayDateTimeStampInterval = (): Record<string, number> => {
+    const date = new Date();
+    return getDateTimeStampInterval(date.getUTCDate() - 1);
+};
+
+const getDateTimeStampInterval = (day: number): Record<string, number> => {
+    const date = new Date();
+    // Do not add ms to avoid floating point!
+    const start = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), day, 0, 0, 0) / 1000;
+    const end = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), day, 23, 59, 59) / 1000;
+
+    return {
+        start,
+        end,
+    };
 };
 
 /**
@@ -71,4 +92,5 @@ export {
     getHoursOldTimestamp,
     getYesterdayDateTimestamp,
     sumValuesOfObjects,
+    getYesterdayDateTimeStampInterval,
 };

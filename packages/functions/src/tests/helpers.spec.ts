@@ -1,4 +1,8 @@
-import { convertSteamNameToID, sumValuesOfObjects } from "../libs/helpers";
+import {
+    convertSteamNameToID,
+    getYesterdayDateTimeStampInterval,
+    sumValuesOfObjects,
+} from "../libs/helpers";
 
 describe("convertSteamNameToID", () => {
     test("Is correctly converted", () => {
@@ -114,5 +118,13 @@ describe("sumValuesOfObjects", () => {
                 kolo: 10,
             },
         });
+    });
+});
+
+describe("getYesterdayDateTimeStampInterval", () => {
+    test("Returns value", () => {
+        const timestamps = getYesterdayDateTimeStampInterval();
+        expect(timestamps).toHaveProperty("start");
+        expect(timestamps).toHaveProperty("end");
     });
 });
