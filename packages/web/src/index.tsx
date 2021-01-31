@@ -1,17 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { createBrowserHistory } from "history";
 
-ReactDOM.render(
+import store from "./store";
+
+import './index.css';
+import {firebase} from "./firebase";
+import Root from "./root";
+
+// Initialize Firebase
+firebase.init();
+
+const history = createBrowserHistory();
+
+// Redux store with persistor
+export const appStore = store.configure(history);
+
+const renderApp = (): void => ReactDOM.render(
   <React.StrictMode>
-    <App />
+      <Root store={appStore} history={history} />
   </React.StrictMode>,
   document.getElementById('root')
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+// Hot reload
+if (process.env.NODE_ENV !== "production" && module.hot) {
+    module.hot.accept("./root", renderApp);
+}
+
+// Render our app
+renderApp();
