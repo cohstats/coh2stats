@@ -44,6 +44,14 @@ const getHoursOldTimestamp = (hours = 25): number => {
 };
 
 /**
+ * Maybe I should have imported some lib for datetime :Facepalm:
+ * @param timestamp
+ */
+const printUTCTime = (timestamp: number): string => {
+    return `${new Date(timestamp * 1000)}`;
+};
+
+/**
  * Extracts just the string ID from the steam name used in the results of API.
  * @param name In format "/steam/76561198131099369"
  */
@@ -93,4 +101,5 @@ export {
     getYesterdayDateTimestamp,
     sumValuesOfObjects,
     getYesterdayDateTimeStampInterval,
+    printUTCTime,
 };
