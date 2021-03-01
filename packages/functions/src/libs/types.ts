@@ -3,6 +3,7 @@
  * and modified. Aka it's not the RAW match data from the API.
  */
 interface ProcessedMatch {
+    id: number;
     creator_profile_id: number;
     mapname: string;
     maxplayers: number;

@@ -16,13 +16,13 @@ const db = firestore();
  * Saves matches to the DB using a batch request.
  * @param matches
  */
-const saveMatches = async (matches: Set<Record<string, any>>) => {
-    if (matches.size === 0) {
+const saveMatches = async (matches: Array<ProcessedMatch>) => {
+    if (matches.length === 0) {
         return;
     }
 
     const matchStatsRef = getGlobalStatsDocRef();
-    const increment = firestore.FieldValue.increment(matches.size);
+    const increment = firestore.FieldValue.increment(matches.length);
 
     let batch = db.batch();
     let counter = 0;
@@ -32,18 +32,19 @@ const saveMatches = async (matches: Set<Record<string, any>>) => {
         batch.set(docRef, match);
         counter++;
         // We can write at most 500 requests in a single batch
-        if (counter % 498 == 0 && counter != matches.size) {
+        if (counter % 498 == 0 && counter != matches.length) {
             await batch.commit();
             batch = db.batch();
         }
 
-        if (counter == matches.size) {
+        if (counter == matches.length) {
+            // Match count is not accurate / we can't detect re-writes during batch write
             batch.set(matchStatsRef, { matchCount: increment }, { merge: true });
             await batch.commit();
         }
     }
 
-    functions.logger.log(`Saved ${matches.size} matches to the DB.`);
+    functions.logger.info(`Saved ${matches.length} matches to the DB.`);
 };
 
 /**
@@ -61,15 +62,24 @@ const getPlayerMatches = functions
         const profileNames = message.json.profileNames;
         functions.logger.log(`Received these profile names ${profileNames}`);
 
-        let matches: Set<ProcessedMatch> = new Set();
+        let matches: Record<string, any> = {};
+        let duplicatesCounter = 0;
 
         for (const profileName of profileNames) {
-            // We don't expect that played would be able to play more than 50 games
             const playerMatches = await getAndPrepareMatchesForPlayer(profileName);
-            matches = new Set([...matches, ...playerMatches]);
+
+            for(const match of playerMatches){
+                if(Object.prototype.hasOwnProperty.call(matches, match.id)){
+                    duplicatesCounter++;
+                } else {
+                    matches[match.id] = match;
+                }
+            }
         }
 
-        await saveMatches(matches);
+        functions.logger.info(`Skipped ${duplicatesCounter} duplicated matches.`);
+
+        await saveMatches(Object.values(matches));
         /**
          * Warning: We can't do analysis here because we might process duplicated matches.
          * Why is that? Because this function has only matches for a specific players (from which
