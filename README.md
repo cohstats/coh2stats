@@ -25,6 +25,13 @@ GCP services to be used:
 -   [GCP Pub/Sub](https://cloud.google.com/pubsub/docs/overview) - For messaging between the functions
 -   GCP Storage - For storing extra data
 
+Thing to consider:
+
+-   There is a large amount of matches, we store them in the FireStore, however
+    once you store the match. You don't do any changes to it, therefore it would be
+    better to store them in the [BigQuery](https://cloud.google.com/bigquery/) where
+    we could run our analysis more easily and it would be Faster and Cheaper.
+
 ### Crawler process
 
 Diagram:
@@ -85,13 +92,12 @@ This saves us DB reads and writes.
 
 We remove any extra fields we don't care about.
 
-##### 6. TODO: Matches are put trough the analysis
-
-TODO: Do analysis on the matches so we don't need to READ them
-from the DB when we already have them.
-
-##### 7. Matches are saved to the DB
+##### 6. Matches are saved to the DB
 
 All matches are saved in the FireStore under collection /matches
 The ID of the document is the ID of the match which ensures nothing
 can be duplicated.
+
+##### 7. Analysis is run
+
+We can get matches for particular day and run analysis on them.
