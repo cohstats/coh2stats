@@ -11,7 +11,7 @@ import { DEFAULT_FUNCTIONS_LOCATION, PUBSUB_TOPIC_DOWNLOAD_MATCHES } from "./con
 
 const pubSubClient = new PubSub();
 const AMOUNT_OF_QUERIED_PLAYERS = 200; // 200 is max
-const CHUNK_PROFILES_TO_PROCESS = 40; // This specifies how many profiles we can will process in one request
+const CHUNK_PROFILES_TO_PROCESS = 80; // This specifies how many profiles we can will process in one request
 
 const fetchLadderStats = async (leaderboardID: number): Promise<Record<string, any>> => {
     const response = await axios.get(getLadderUrl(leaderboardID, AMOUNT_OF_QUERIED_PLAYERS));

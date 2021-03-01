@@ -77,9 +77,10 @@ const getPlayerMatches = functions
             }
         }
 
-        functions.logger.info(`Skipped ${duplicatesCounter} duplicated matches.`);
+        const matchesArray = Object.values(matches);
+        functions.logger.info(`Skipped ${duplicatesCounter}/${matchesArray.length + duplicatesCounter} matches as duplicates.`);
 
-        await saveMatches(Object.values(matches));
+        await saveMatches(matchesArray);
         /**
          * Warning: We can't do analysis here because we might process duplicated matches.
          * Why is that? Because this function has only matches for a specific players (from which
