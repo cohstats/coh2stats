@@ -11,7 +11,7 @@ import { DEFAULT_FUNCTIONS_LOCATION, PUBSUB_TOPIC_DOWNLOAD_MATCHES } from "./con
 
 const pubSubClient = new PubSub();
 const AMOUNT_OF_QUERIED_PLAYERS = 200; // 200 is max
-const CHUNK_PROFILES_TO_PROCESS = 80; // This specifies how many profiles we can will process in one request
+const CHUNK_PROFILES_TO_PROCESS = 100; // This specifies how many profiles we will send to the que in one message
 
 const fetchLadderStats = async (leaderboardID: number): Promise<Record<string, any>> => {
     const response = await axios.get(getLadderUrl(leaderboardID, AMOUNT_OF_QUERIED_PLAYERS));
@@ -28,7 +28,7 @@ const fetchLadderStats = async (leaderboardID: number): Promise<Record<string, a
 };
 
 const invokeGetPlayerMatches = async (profileIds: Array<string>) => {
-    functions.logger.debug(`Going to publish profiles into PubSub ${profileIds}`);
+    functions.logger.debug(`Going to publish ${profileIds.length} profiles into PubSub ${profileIds}`);
     const dataBuffer = Buffer.from(JSON.stringify({ profileNames: profileIds }));
 
     try {
