@@ -34,6 +34,7 @@ const saveMatches = async (matches: Array<ProcessedMatch>) => {
         // We can write at most 500 requests in a single batch
         if (counter % 498 == 0 && counter != matches.length) {
             await batch.commit();
+            functions.logger.info(`Saving batch of ${counter} matches to the DB.`);
             batch = db.batch();
         }
 
@@ -41,6 +42,8 @@ const saveMatches = async (matches: Array<ProcessedMatch>) => {
             // Match count is not accurate / we can't detect re-writes during batch write
             batch.set(matchStatsRef, { matchCount: increment }, { merge: true });
             await batch.commit();
+            functions.logger.info(`Saving batch of ${counter} matches to the DB.`);
+
         }
     }
 
