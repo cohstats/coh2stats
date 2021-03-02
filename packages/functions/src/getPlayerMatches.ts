@@ -5,9 +5,9 @@ import { getGlobalStatsDocRef, getMatchDocRef } from "./fb-paths";
 import { DEFAULT_FUNCTIONS_LOCATION, PUBSUB_TOPIC_DOWNLOAD_MATCHES } from "./constants";
 import { ProcessedMatch } from "./libs/types";
 
-const runtimeOpts: Record<string, "256MB" | any> = {
+const runtimeOpts: Record<string, "512MB" | any> = {
     timeoutSeconds: 540,
-    memory: "256MB",
+    memory: "512MB",
 };
 
 const db = firestore();
