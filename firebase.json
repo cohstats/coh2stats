@@ -6,6 +6,6 @@
     "functions": {
         "source": "packages/functions",
         "predeploy": "yarn functions build",
-        "ignore": ["**/src/**", ""]
+        "ignore": ["**/src/**", "", "**/node_modules/**"]
     }
 }
