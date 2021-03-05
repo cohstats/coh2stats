@@ -79,123 +79,95 @@ const matchItemsLocation = {
     intelBulletins: 4,
 };
 
-const wermachCommandersIDs = [
-    6116,
-    6118,
-    6117,
-    7554,
-    5568,
-    5570,
-    5571,
-    5927,
-    7538,
-    7541,
-    7537,
-    7540,
-    6905,
-    258891,
-    7249,
-    7539,
-    5572,
-    5573,
-    5930,
-    5921,
-    5928,
-    5929,
-    452454,
-];
-const sovietCommandersIDs = [
-    6120,
-    6121,
-    6119,
-    186229,
-    452461,
-    5926,
-    5922,
-    5575,
-    451588,
-    5576,
-    5924,
-    5578,
-    5579,
-    5580,
-    7546,
-    7246,
-    7543,
-    258974,
-    7544,
-    7542,
-    7545,
-    7247,
-    5923,
-    5925,
-];
-const wgermanCommandersIDs = [
-    450495,
-    186419,
-    450496,
-    257800,
-    450494,
-    259929,
-    452452,
-    186418,
-    259657,
-    451591,
-    186417,
-    347076,
-];
-const usfCommandersIDs = [
-    186413,
-    186415,
-    451587,
-    450483,
-    450482,
-    186414,
-    260696,
-    254449,
-    261335,
-    450479,
-    452456,
-    18369,
-];
-const britishCommandersIDs = [
-    450553,
-    450074,
-    450073,
-    450075,
-    452455,
-    450554,
-    450268,
-    450243,
-    450286,
-];
+const commanderIDsToRaces: Record<number, string> = {
+    186413: "usf",
+    186415: "usf",
+    451587: "usf",
+    450483: "usf",
+    450482: "usf",
+    186414: "usf",
+    260696: "usf",
+    254449: "usf",
+    261335: "usf",
+    450479: "usf",
+    452456: "usf",
+    18369: "usf",
+    450553: "british",
+    450074: "british",
+    450073: "british",
+    450075: "british",
+    452455: "british",
+    450554: "british",
+    450268: "british",
+    450243: "british",
+    450286: "british",
+    6116: "wermacht",
+    6118: "wermacht",
+    6117: "wermacht",
+    7554: "wermacht",
+    5568: "wermacht",
+    5570: "wermacht",
+    5571: "wermacht",
+    5927: "wermacht",
+    7538: "wermacht",
+    7541: "wermacht",
+    7537: "wermacht",
+    7540: "wermacht",
+    6905: "wermacht",
+    258891: "wermacht",
+    7249: "wermacht",
+    7539: "wermacht",
+    5572: "wermacht",
+    5573: "wermacht",
+    5930: "wermacht",
+    5921: "wermacht",
+    5928: "wermacht",
+    5929: "wermacht",
+    452454: "wermacht",
+    6120: "soviet",
+    6121: "soviet",
+    6119: "soviet",
+    186229: "soviet",
+    452461: "soviet",
+    5926: "soviet",
+    5922: "soviet",
+    5575: "soviet",
+    451588: "soviet",
+    5576: "soviet",
+    5924: "soviet",
+    5578: "soviet",
+    5579: "soviet",
+    5580: "soviet",
+    7546: "soviet",
+    7246: "soviet",
+    7543: "soviet",
+    258974: "soviet",
+    7544: "soviet",
+    7542: "soviet",
+    7545: "soviet",
+    7247: "soviet",
+    5923: "soviet",
+    5925: "soviet",
+    450495: "wgerman",
+    186419: "wgerman",
+    450496: "wgerman",
+    257800: "wgerman",
+    450494: "wgerman",
+    259929: "wgerman",
+    452452: "wgerman",
+    186418: "wgerman",
+    259657: "wgerman",
+    451591: "wgerman",
+    186417: "wgerman",
+    347076: "wgerman",
+};
 
 /**
  * Commander can be only for single race.
  * @param commanderId
  */
 const getCommanderRace = (commanderId: number): string => {
-    if (wermachCommandersIDs.includes(commanderId)) {
-        return "wermacht";
-    }
-    if (sovietCommandersIDs.includes(commanderId)) {
-        return "soviet";
-    }
-
-    if (wgermanCommandersIDs.includes(commanderId)) {
-        return "wgerman";
-    }
-
-    if (usfCommandersIDs.includes(commanderId)) {
-        return "usf";
-    }
-
-    if (britishCommandersIDs.includes(commanderId)) {
-        return "british";
-    }
-
-    console.error(`Found commander id which is not assigned to any faction ${commanderId}`);
-    return "unknown";
+    return commanderIDsToRaces[commanderId];
 };
 
 export {
