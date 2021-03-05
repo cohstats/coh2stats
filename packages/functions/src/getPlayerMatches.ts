@@ -42,8 +42,7 @@ const saveMatches = async (matches: Array<ProcessedMatch>) => {
             // Match count is not accurate / we can't detect re-writes during batch write
             batch.set(matchStatsRef, { matchCount: increment }, { merge: true });
             await batch.commit();
-            functions.logger.info(`Saving batch of ${counter} matches to the DB.`);
-
+            functions.logger.info(`Saving batch of ${counter % 498} matches to the DB.`);
         }
     }
 
@@ -65,14 +64,14 @@ const getPlayerMatches = functions
         const profileNames = message.json.profileNames;
         functions.logger.log(`Received these profile names ${profileNames}`);
 
-        let matches: Record<string, any> = {};
+        const matches: Record<string, any> = {};
         let duplicatesCounter = 0;
 
         for (const profileName of profileNames) {
             const playerMatches = await getAndPrepareMatchesForPlayer(profileName);
 
-            for(const match of playerMatches){
-                if(Object.prototype.hasOwnProperty.call(matches, match.id)){
+            for (const match of playerMatches) {
+                if (Object.prototype.hasOwnProperty.call(matches, match.id)) {
                     duplicatesCounter++;
                 } else {
                     matches[match.id] = match;
@@ -81,7 +80,11 @@ const getPlayerMatches = functions
         }
 
         const matchesArray = Object.values(matches);
-        functions.logger.info(`Skipped ${duplicatesCounter}/${matchesArray.length + duplicatesCounter} matches as duplicates.`);
+        functions.logger.info(
+            `Skipped ${duplicatesCounter}/${
+                matchesArray.length + duplicatesCounter
+            } matches as duplicates.`,
+        );
 
         await saveMatches(matchesArray);
         /**

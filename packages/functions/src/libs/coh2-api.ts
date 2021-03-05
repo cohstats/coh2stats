@@ -79,12 +79,132 @@ const matchItemsLocation = {
     intelBulletins: 4,
 };
 
+const wermachCommandersIDs = [
+    6116,
+    6118,
+    6117,
+    7554,
+    5568,
+    5570,
+    5571,
+    5927,
+    7538,
+    7541,
+    7537,
+    7540,
+    6905,
+    258891,
+    7249,
+    7539,
+    5572,
+    5573,
+    5930,
+    5921,
+    5928,
+    5929,
+    452454,
+];
+const sovietCommandersIDs = [
+    6120,
+    6121,
+    6119,
+    186229,
+    452461,
+    5926,
+    5922,
+    5575,
+    451588,
+    5576,
+    5924,
+    5578,
+    5579,
+    5580,
+    7546,
+    7246,
+    7543,
+    258974,
+    7544,
+    7542,
+    7545,
+    7247,
+    5923,
+    5925,
+];
+const wgermanCommandersIDs = [
+    450495,
+    186419,
+    450496,
+    257800,
+    450494,
+    259929,
+    452452,
+    186418,
+    259657,
+    451591,
+    186417,
+    347076,
+];
+const usfCommandersIDs = [
+    186413,
+    186415,
+    451587,
+    450483,
+    450482,
+    186414,
+    260696,
+    254449,
+    261335,
+    450479,
+    452456,
+    18369,
+];
+const britishCommandersIDs = [
+    450553,
+    450074,
+    450073,
+    450075,
+    452455,
+    450554,
+    450268,
+    450243,
+    450286,
+];
+
+/**
+ * Commander can be only for single race.
+ * @param commanderId
+ */
+const getCommanderRace = (commanderId: number): string => {
+    if (wermachCommandersIDs.includes(commanderId)) {
+        return "wermacht";
+    }
+    if (sovietCommandersIDs.includes(commanderId)) {
+        return "soviet";
+    }
+
+    if (wgermanCommandersIDs.includes(commanderId)) {
+        return "wgerman";
+    }
+
+    if (usfCommandersIDs.includes(commanderId)) {
+        return "usf";
+    }
+
+    if (britishCommandersIDs.includes(commanderId)) {
+        return "british";
+    }
+
+    console.error(`Found commander id which is not assigned to any faction ${commanderId}`);
+    return "unknown";
+};
+
 export {
     baseUrl,
     getLadderUrl,
     leaderboardsID,
     getRecentMatchHistoryUrl,
     raceIds,
+    getCommanderRace,
     resultType,
     matchItemsLocation,
 };

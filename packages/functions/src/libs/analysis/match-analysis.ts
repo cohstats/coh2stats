@@ -1,4 +1,4 @@
-import { matchItemsLocation, raceIds, resultType } from "../coh2-api";
+import { getCommanderRace, matchItemsLocation, raceIds, resultType } from "../coh2-api";
 import { ProcessedMatch } from "../types";
 
 /**
@@ -26,8 +26,10 @@ const analyzeMatch = (match: ProcessedMatch, stats: Record<string, any>) => {
     // Analysis of commanders and intel bulletins
     for (const itemReport of match.matchhistoryitems) {
         if (itemReport.itemlocation_id == matchItemsLocation.commanders) {
-            stats["commanders"][itemReport["itemdefinition_id"]] =
-                stats["commanders"][itemReport["itemdefinition_id"]] + 1 || 1;
+            const raceName = getCommanderRace(itemReport["itemdefinition_id"]);
+
+            stats["commanders"][raceName][itemReport["itemdefinition_id"]] =
+                stats["commanders"][raceName][itemReport["itemdefinition_id"]] + 1 || 1;
         } else if (itemReport.itemlocation_id == matchItemsLocation.intelBulletins) {
             stats["intelBulletins"][itemReport["itemdefinition_id"]] =
                 stats["intelBulletins"][itemReport["itemdefinition_id"]] + 1 || 1;
@@ -95,7 +97,13 @@ const createStats = (matches: Array<ProcessedMatch>) => {
     let stats: Record<string, any> = {};
     // initialize the maps property
     stats["maps"] = {};
-    stats["commanders"] = {};
+    stats["commanders"] = {
+        wermacht: {},
+        soviet: {},
+        wgerman: {},
+        usf: {},
+        british: {},
+    };
     stats["intelBulletins"] = {};
 
     // initialize the race name property

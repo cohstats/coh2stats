@@ -65,7 +65,7 @@ We send the player Steam IDs as a messages to the que called `"download-matches"
 Each message has array of IDs. The current chunk is set to X.
 ~~TODO: Experiment with the best chunk size.~~ We want the chunk size
 to be pretty big because we can filter the duplicates only in
-one chunk. (We filter the rest when we hit the DB but we want to 
+one chunk. (We filter the rest when we hit the DB but we want to
 avoid unnecessary writes to the DB)
 
 ##### 4. Pub/Sub que `"download-matches"` is consumed

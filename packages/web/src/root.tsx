@@ -39,7 +39,7 @@ const Root: React.FC<Props> = ({ store, history }) => (
                 <React.StrictMode>
                     <Switch>
                         <Route path={"/login"}>LOGIN</Route>
-                        <Route path="/" exact>
+                        <Route path="/">
                             <App />
                         </Route>
                         <Route>NOT FOUND</Route>

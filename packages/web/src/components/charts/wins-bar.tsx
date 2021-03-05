@@ -3,11 +3,11 @@ import React from "react";
 
 export const WinsChart = (data: Record<string, any>) => {
     const chartData = [
-        { ...{ faction: "british", ...data["british"] } },
-        { ...{ faction: "soviet", ...data["soviet"] } },
-        { ...{ faction: "usf", ...data["usf"] } },
-        { ...{ faction: "wermacht", ...data["wermacht"] } },
-        { ...{ faction: "wgerman", ...data["wgerman"] } },
+        { ...{ faction: "British", ...data["british"] } },
+        { ...{ faction: "Soviet", ...data["soviet"] } },
+        { ...{ faction: "USF", ...data["usf"] } },
+        { ...{ faction: "Wermacht", ...data["wermacht"] } },
+        { ...{ faction: "WGerman", ...data["wgerman"] } },
     ];
 
     return (
