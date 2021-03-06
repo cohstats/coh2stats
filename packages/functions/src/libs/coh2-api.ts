@@ -167,7 +167,12 @@ const commanderIDsToRaces: Record<number, string> = {
  * @param commanderId
  */
 const getCommanderRace = (commanderId: number): string => {
-    return commanderIDsToRaces[commanderId];
+    if (Object.prototype.hasOwnProperty.call(commanderIDsToRaces, commanderId)) {
+        return commanderIDsToRaces[commanderId];
+    } else {
+        console.error(`Unknown commanderID ${commanderId}`);
+        return "unknown";
+    }
 };
 
 export {

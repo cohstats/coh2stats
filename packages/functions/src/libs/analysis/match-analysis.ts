@@ -103,6 +103,7 @@ const createStats = (matches: Array<ProcessedMatch>) => {
         wgerman: {},
         usf: {},
         british: {},
+        unknown: {},
     };
     stats["intelBulletins"] = {};
 
