@@ -17,7 +17,7 @@ const App: React.FC = () => {
             doc: "daily",
             subcollections: [
                 {
-                    collection: "1614470400",
+                    collection: "1614902400",
                     doc: "stats",
                 },
             ],

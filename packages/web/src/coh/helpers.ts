@@ -1,4 +1,4 @@
-const commanderIDsToNames = {
+const commanderIDsToNames: Record<number, string> = {
     186413: "usf_airborne_company",
     186415: "usf_armor_company",
     451587: "usf_armor_company_devm_edition",
@@ -81,4 +81,28 @@ const commanderIDsToNames = {
     347076: "pm_battles_hard",
 };
 
-export { commanderIDsToNames };
+const convertCommanderIDToName = (commanderID: number): string =>{
+    if (Object.prototype.hasOwnProperty.call(commanderIDsToNames, commanderID)){
+        return commanderIDsToNames[commanderID];
+    } else {
+        // In case we don't know the commander number
+        return `${commanderID}`
+    }
+}
+
+
+const sortArrayOfObjectsByTheirPropertyValue = (
+    mapsData: Array<Record<string, string>>,
+): Array<Record<string, string>> => {
+    return mapsData.sort((a, b) => {
+        if (a.value < b.value) {
+            return -1;
+        }
+        if (a.value > b.value) {
+            return 1;
+        }
+        return 0;
+    });
+};
+
+export { convertCommanderIDToName, sortArrayOfObjectsByTheirPropertyValue};

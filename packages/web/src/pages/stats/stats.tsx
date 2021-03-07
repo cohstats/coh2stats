@@ -6,6 +6,7 @@ import { MapBarChart } from "../../components/charts/maps-bar";
 import { WinsChart } from "../../components/charts/wins-bar";
 import { WinRateChart } from "../../components/charts/winRate-bar";
 import { useHistory, useParams } from "react-router";
+import {CommandersBarChart} from "../../components/charts/commanders-bar";
 
 const Stats: React.FC = () => {
     const isLoading = useLoading("stats");
@@ -28,6 +29,8 @@ const Stats: React.FC = () => {
     const onTypeRadioChange = (e: RadioChangeEvent) => {
         push(`/stats/daily/424234/${e.target?.value}`);
     };
+
+
 
     return (
         <>
@@ -54,9 +57,8 @@ const Stats: React.FC = () => {
                 <Col span={24}>{MapBarChart(maps)}</Col>
             </Row>
             <Row>
-                <Col span={8}>col-8</Col>
-                <Col span={8}>col-8</Col>
-                <Col span={8}>col-8</Col>
+                <Col span={24}>{CommandersBarChart(specificData["commanders"]["british"])}</Col>
+
             </Row>
             <Row>
                 <Col span={6}>col-6</Col>
