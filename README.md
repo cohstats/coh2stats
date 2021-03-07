@@ -32,6 +32,24 @@ Thing to consider:
     better to store them in the [BigQuery](https://cloud.google.com/bigquery/) where
     we could run our analysis more easily and it would be Faster and Cheaper.
 
+### Development
+
+The repository is yarn workspace. Use `yarn` to manage this.
+Do `yarn install` to install dependencies.
+  
+To start local web dev:
+`yarn web start`
+build:
+`yarn web build`
+
+
+To build the functions:
+`yarn functions build`
+
+To run the tests on functions:
+`yarn functions test`
+
+
 ### Crawler process
 
 Diagram:
