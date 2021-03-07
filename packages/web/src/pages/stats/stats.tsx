@@ -57,7 +57,7 @@ const Stats: React.FC = () => {
                 <Col span={24}>{MapBarChart(maps)}</Col>
             </Row>
             <Row>
-                <Col span={24}>{CommandersBarChart(specificData["commanders"]["british"])}</Col>
+                <Col span={24}>{CommandersBarChart(specificData["commanders"]["wermacht"])}</Col>
 
             </Row>
             <Row>
