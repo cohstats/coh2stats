@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# Made by ramp
 import os
 import json
 import xml.etree.ElementTree as ET
@@ -194,7 +195,7 @@ textList = textList.set_index('textID')
 
 BulletinPath = COH_BULLETIN_PATH
 # output data placed here
-myBulletinData = list()
+myBulletinData = {}
 # prepare paths for all files
 xmlPath = list()
 # save all paths to to list xmlPath
@@ -206,11 +207,24 @@ for root, dirs, files in os.walk(BulletinPath):
 for recordPath in xmlPath:
     recordData = parseBulletinRecord(recordPath)
     if recordData is not None:    #only append valid data
-        myBulletinData.append(recordData)
+        myBulletinData[recordData["serverID"]] = recordData
 
 # various format of data
 myBulletinFrames = pd.DataFrame(myBulletinData)
 myJsonBulletin = json.dumps(myBulletinData)
+
+with open('bulletinData.json', 'w', encoding='utf-8') as f:
+    json.dump(myBulletinData, f, ensure_ascii=False, indent=4)
+
+
+# Prepare the server data for Intel Bulletin
+bulletinServerData = {}
+
+for key in myBulletinData.keys():
+    bulletinServerData[key] = myBulletinData[key]["races"]
+
+with open('bulletinServerData.json', 'w', encoding='utf-8') as f:
+    json.dump(bulletinServerData, f, ensure_ascii=False, indent=4)
 
 # /////////////////////////////////////////////////////////////////////////
 # //////////////// commander data
@@ -234,8 +248,19 @@ for recordPath in xmlPath:
 myCommanderFrames = pd.DataFrame(myCommanderData)
 myCommanderJson = json.dumps(myCommanderData)
 
-with open('data.json', 'w', encoding='utf-8') as f:
+with open('commanderData.json', 'w', encoding='utf-8') as f:
     json.dump(myCommanderData, f, ensure_ascii=False, indent=4)
 
 
+# Prepare the server data for Intel Bulletin
+commanderServerData = {}
 
+for key in myCommanderData.keys():
+    if len(myCommanderData[key]["races"]):
+        commanderServerData[key] = myCommanderData[key]["races"][0]
+    else:
+        commanderServerData[key] = "unknown"
+
+
+with open('commanderServerData.json', 'w', encoding='utf-8') as f:
+    json.dump(commanderServerData, f, ensure_ascii=False, indent=4)

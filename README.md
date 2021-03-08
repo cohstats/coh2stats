@@ -36,19 +36,17 @@ Thing to consider:
 
 The repository is yarn workspace. Use `yarn` to manage this.
 Do `yarn install` to install dependencies.
-  
+
 To start local web dev:
 `yarn web start`
 build:
 `yarn web build`
-
 
 To build the functions:
 `yarn functions build`
 
 To run the tests on functions:
 `yarn functions test`
-
 
 ### Crawler process
 

@@ -1,20 +1,23 @@
 import { ResponsiveBar } from "@nivo/bar";
 import React from "react";
-import {convertCommanderIDToName, sortArrayOfObjectsByTheirPropertyValue} from "../../coh/helpers";
-
+import {
+    convertCommanderIDToName,
+    sortArrayOfObjectsByTheirPropertyValue,
+} from "../../coh/helpers";
 
 export const CommandersBarChart = (commanders: Record<number, number>) => {
-
     const simpleMapsData = [];
 
-    for(const [key, value] of Object.entries(commanders)){
+    for (const [key, value] of Object.entries(commanders)) {
         simpleMapsData.push({
-            commanderName: convertCommanderIDToName(key as unknown as number),
-            value: value
+            commanderName: convertCommanderIDToName((key as unknown) as number),
+            value: value,
         });
     }
 
-    const mapsData = sortArrayOfObjectsByTheirPropertyValue(simpleMapsData as unknown as Array<Record<string, string>>);
+    const mapsData = sortArrayOfObjectsByTheirPropertyValue(
+        (simpleMapsData as unknown) as Array<Record<string, string>>,
+    );
 
     return (
         <ResponsiveBar
