@@ -5,7 +5,7 @@ import "./App.css";
 import { useFirestoreConnect } from "react-redux-firebase";
 import Stats from "./pages/stats";
 import { Route, Router, Switch } from "react-router-dom";
-import {RampComponent} from "./components/wip-ramp/commanders";
+import { RampComponent } from "./components/wip-ramp/commanders";
 
 const { Header, Footer, Content } = Layout;
 

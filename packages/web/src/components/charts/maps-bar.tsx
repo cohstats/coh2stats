@@ -1,7 +1,6 @@
 import { ResponsiveBar } from "@nivo/bar";
 import React from "react";
-import {sortArrayOfObjectsByTheirPropertyValue} from "../../coh/helpers";
-
+import { sortArrayOfObjectsByTheirPropertyValue } from "../../coh/helpers";
 
 export const MapBarChart = (maps: Record<string, number>) => {
     // TODO: REWORK THIS SHIT
