@@ -106,8 +106,7 @@ def parseCommanderRecord(xmlPath):
     for xmlAbility in xmlResult:
         ability = {}
         # get ability reference for details
-        ability['reference'] = (xmlAbility.attrib['value'])
-        details = parseAbilityDetails(ability['reference'])
+        details = parseAbilityDetails(xmlAbility.attrib['value'])
         ability['name'] = details['name']
         ability['description'] = details['description']
 
@@ -219,7 +218,7 @@ myJsonBulletin = json.dumps(myBulletinData)
 
 commanderPath = COH_COMMANDER_PATH
 # output data placed here
-myCommanderData = list()
+myCommanderData = {}
 # prepare paths for all files
 xmlPath = list()
 for root, dirs, files in os.walk(commanderPath):
@@ -228,14 +227,15 @@ for root, dirs, files in os.walk(commanderPath):
 
 # make a list of all commander records
 for recordPath in xmlPath:
-    myCommanderData.append(parseCommanderRecord(recordPath))
+    commander = parseCommanderRecord(recordPath)
+    myCommanderData[commander["serverID"]] = commander
 
 # various format of data
 myCommanderFrames = pd.DataFrame(myCommanderData)
 myCommanderJson = json.dumps(myCommanderData)
 
-
-
+with open('data.json', 'w', encoding='utf-8') as f:
+    json.dump(myCommanderData, f, ensure_ascii=False, indent=4)
 
 
 
