@@ -1,8 +1,10 @@
 import React from "react";
 import { Card, Col, Row, Image, List, Divider, Avatar, Descriptions, Badge } from "antd";
-import background from "/resources/commanderImage/placeholder.svg";
+import myBgnd from "/resources/commanderImage/placeholder.svg";
 import { ClockCircleOutlined } from "@ant-design/icons";
+
 export const RampComponent = () => {
+
     let myData = {
         serverID: "186415",
         commanderName: "Armor Company",
@@ -46,7 +48,7 @@ export const RampComponent = () => {
 
     function ImageDemo() {
         return (
-            <Image width={150} preview={false} src="/resources/commanderImage/placeholder.svg" />
+            <Image width={100} height={130} preview={false} src="/resources/commanderImage/placeholder.svg" />
         );
     }
 
@@ -64,17 +66,28 @@ export const RampComponent = () => {
         }
     }
 
+    const divStyle = {
+        margin: '10px'
+    };
+
+
+
     return (
         <>
-            <Row gutter={[16, 16]}>
-                <Col span={24}></Col>
+            <Row gutter={[32, 32]}>
+                <Col span={24}>
+                </Col>
             </Row>
 
-            <Row>
+            <Row gutter={[16, 8]}>
                 <Col span={2}></Col>
                 <Col span={4}></Col>
-                <Col span={2}>
-                    <ImageDemo />
+                <Col flex="100px">
+
+
+                    <div>
+                    <img src="https://www.coh2.org/uploads/hosting/okw_icons/OKW_Special_Operations.jpg" width="100" height="130" />
+                    </div>
                 </Col>
                 <Col span={10}>
                     <Descriptions title={myData.commanderName}>
@@ -84,7 +97,7 @@ export const RampComponent = () => {
                 <Col span={6}></Col>
             </Row>
             <Divider />
-            <Row>
+            <Row gutter={[16, 8]}>
                 <Col span={6}></Col>
                 <Col span={12}>
                     <List
@@ -101,7 +114,7 @@ export const RampComponent = () => {
                                                     shape="square"
                                                     size={64}
                                                 />
-                                                <Badge count={0} showZero offset={[0, -32]}>
+                                                <Badge count={5} overflowCount={999} showZero offset={[0, -32]}>
                                                     <a href="#" className="head-example" />
                                                 </Badge>
                                             </div>

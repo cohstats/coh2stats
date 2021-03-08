@@ -37,7 +37,7 @@ const App: React.FC = () => {
                 <div className="App">
                     <Layout className="layout">
                         <Header>
-                            <Title>Company of Heroes 2 Logs and Statistics</Title>
+                            <Title >Company of Heroes 2 Logs and Statistics</Title>
                         </Header>
                         <Content>
                             <Stats />
@@ -50,7 +50,8 @@ const App: React.FC = () => {
                 <div className="App">
                     <Layout className="layout">
                         <Header>
-                            <Title>Company of Heroes 2 Logs and Statistics</Title>
+                            {/* ellipsis=true to prevent text overflowing on the next line when window width is too low */}
+                            <Title ellipsis={true} style={{ textAlign: "left"}}>Company of Heroes 2 Logs and Statistics</Title> 
                         </Header>
                         <Content>
                             <RampComponent />
