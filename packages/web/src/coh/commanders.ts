@@ -1,4 +1,5 @@
 import * as allCommandersJSON from "./data/commanderData.json";
+import { CommanderData, RaceName } from "./types";
 const allCommanders: Record<string, any> = (allCommandersJSON as Record<string, any>)["default"];
 
 const convertCommanderIDToName = (commanderID: number): string => {
@@ -10,17 +11,15 @@ const convertCommanderIDToName = (commanderID: number): string => {
     }
 };
 
-const getCommanderData = (commanderID: string): Record<string, any> => {
+const getCommanderData = (commanderID: string): CommanderData | null => {
     if (Object.prototype.hasOwnProperty.call(allCommanders, commanderID)) {
         return allCommanders[commanderID];
     } else {
-        return {};
+        return null;
     }
 };
 
-const getCommanderByRaces = (
-    raceName: "wermacht" | "usf" | "soviet" | "wgerman" | "british",
-): Array<Record<string, any>> => {
+const getCommanderByRaces = (raceName: RaceName): Array<CommanderData> => {
     return Object.values(allCommanders).filter((commanderData) => {
         return commanderData["races"][0] == raceName;
     });

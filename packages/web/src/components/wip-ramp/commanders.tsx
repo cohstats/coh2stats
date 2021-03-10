@@ -58,7 +58,7 @@ export const RampComponent = () => {
     }
 
     function ImageRace() {
-        if ((myData.races[0] = "usf")) {
+        if (myData && myData.races[0] == "usf") {
             return <Image width={350} preview={false} src="/resources/us-forces.png" />;
         } else {
             return (
@@ -74,7 +74,7 @@ export const RampComponent = () => {
     function toCapital(textIn: String) {
         return textIn.toUpperCase();
     }
-    if (Object.keys(myData).length === 0 && myData.constructor === Object) {
+    if (!myData) {
         return (
             <>
                 <h1>Commander ID {commanderID} was not found.</h1>

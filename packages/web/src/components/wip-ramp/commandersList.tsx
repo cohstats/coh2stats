@@ -17,15 +17,14 @@ import myBgnd from "/resources/commanderImage/placeholder.svg";
 import { ClockCircleOutlined } from "@ant-design/icons";
 import { getCommanderByRaces, getCommanderData } from "../../coh/commanders";
 import { useParams } from "react-router";
+import { CommanderData, RaceName } from "../../coh/types";
 
 export const CommandersList = () => {
     const { race } = useParams<{
         race: string;
     }>();
 
-    let myData = getCommanderByRaces(
-        race as "wermacht" | "usf" | "soviet" | "wgerman" | "british",
-    );
+    let myData = getCommanderByRaces(race as RaceName);
     myData = myData.filter((commanderData) => {
         return (
             commanderData["commanderName"] != "undefined" &&
@@ -33,7 +32,7 @@ export const CommandersList = () => {
         );
     });
 
-    if (Object.keys(myData).length === 0 && myData.constructor === Object) {
+    if (myData.length === 0) {
         return (
             <>
                 <h1>Race {race} here was not found.</h1>
@@ -50,7 +49,7 @@ export const CommandersList = () => {
                         <List
                             itemLayout="horizontal"
                             dataSource={myData}
-                            renderItem={(item: Record<string, any>) => (
+                            renderItem={(item) => (
                                 <div>
                                     <List.Item>
                                         <List.Item.Meta
