@@ -1,0 +1,2340 @@
+{
+    "186413": {
+        "serverID": "186413",
+        "commanderName": "Airborne Company",
+        "description": "Focus your strategy around Allied air superiority. Deploy elite infantry units from the air and support them with weapon drops from cargo planes. If the enemy deploys heavy armor, call in a P-47 Thunderbolt to strafe the target.",
+        "races": [
+            "usf"
+        ],
+        "abilities": [
+            {
+                "name": "Paratroopers",
+                "description": "Paratroopers are elite infantry that are often deployed behind enemy lines to tackle key objectives and sow confusion."
+            },
+            {
+                "name": "Paradrop M1 57mm Anti-Tank Gun",
+                "description": "Paradrop in a M1 57mm Anti-Tank Gun to the battlefield that can be manned by allied infantry. This weapon is effective against armored vehicles."
+            },
+            {
+                "name": "Paradrop .50cal M2HB Heavy Machine Gun",
+                "description": "Paradrop in a .50cal M2HB Heavy Machine Gun to the battlefield that can be manned by allied infantry. This weapon is effective against massed infantry when setup in a defensive position."
+            },
+            {
+                "name": "P-47 Rocket Strike",
+                "description": "A P-47 Thunderbolt will attack vehicles in the targeted area with its 5\" High Velocity Aircraft Rockets."
+            },
+            {
+                "name": "Pathfinders",
+                "description": "Pathfinders can be deployed to the battlefield. Pathfinders are scout infantry who are powerful at long range and make it safer for troops to paradrop."
+            }
+        ]
+    },
+    "186415": {
+        "serverID": "186415",
+        "commanderName": "Armor Company",
+        "description": "Overwhelm the enemy with elite American armored vehicles and supporting infantry. Assault engineers can clear fortifications to allow vehicles to advance, while Sherman Bulldozers can be used to setup a roadblock or defensive line. The enemy’s strongpoints can be bombarded with 240mm artillery prior to an attack.",
+        "races": [
+            "usf"
+        ],
+        "abilities": [
+            {
+                "name": "M10 'Wolverine' Tank Destroyer",
+                "description": "Deploy an M10 Tank Destroyer. The 'Wolverine's'' 3 inch main gun is effective against all but the heaviest enemy armored vehicles. Effective vs tanks and vehicles."
+            },
+            {
+                "name": "105mm Bulldozer Sherman",
+                "description": "An M4A3 Sherman Bulldozer tank equipped with a 105mm howitzer for engaging infantry and structures can be called into the battlefield."
+            },
+            {
+                "name": "Assault Engineers",
+                "description": "An Assault Engineer Squad with short range sub machine guns can be ordered in to the battlefield."
+            },
+            {
+                "name": "240mm Howitzer Barrage",
+                "description": "Call in a 240mm Howitzer barrage to level the target area."
+            },
+            {
+                "name": "Elite Vehicle Crews Upgrade",
+                "description": "Vehicle crews are upgraded with Thompson submachine guns, increased repair speeds and earn veterancy at an increased rate."
+            }
+        ]
+    },
+    "451587": {
+        "serverID": "451587",
+        "commanderName": "Armor Company - DevM Edition",
+        "description": "Overwhelm the enemy with elite American armored vehicles and supporting infantry. Assault engineers can clear fortifications to allow vehicles to advance, while Sherman Bulldozers can be used to setup a roadblock or defensive line. The enemy’s strongpoints can be bombarded with 240mm artillery prior to an attack.",
+        "races": [
+            "usf"
+        ],
+        "abilities": [
+            {
+                "name": "M10 'Wolverine' Tank Destroyer",
+                "description": "Deploy an M10 Tank Destroyer. The 'Wolverine's'' 3 inch main gun is effective against all but the heaviest enemy armored vehicles. Effective vs tanks and vehicles."
+            },
+            {
+                "name": "105mm Bulldozer Sherman",
+                "description": "An M4A3 Sherman Bulldozer tank equipped with a 105mm howitzer for engaging infantry and structures can be called into the battlefield."
+            },
+            {
+                "name": "Assault Engineers",
+                "description": "An Assault Engineer Squad with short range sub machine guns can be ordered in to the battlefield."
+            },
+            {
+                "name": "240mm Howitzer Barrage",
+                "description": "Call in a 240mm Howitzer barrage to level the target area."
+            },
+            {
+                "name": "Elite Vehicle Crews Upgrade",
+                "description": "Vehicle crews are upgraded with Thompson submachine guns, increased repair speeds and earn veterancy at an increased rate."
+            }
+        ]
+    },
+    "450483": {
+        "serverID": "450483",
+        "commanderName": "undefined",
+        "description": "undefined",
+        "races": [],
+        "abilities": []
+    },
+    "450482": {
+        "serverID": "450482",
+        "commanderName": "Heavy Cavalry Company",
+        "description": "Rifleman are equipped with extra utility to help strengthen forward positions. Utilize off map smoke to create avenues of attack. Elite Ranger troops are also available for deployment to help assault forward positions alongside the fierce M26 Pershing Heavy Tank. The combination of infantry and vehicles will allow your army to coordinate its attacks at a higher capacity.",
+        "races": [
+            "usf"
+        ],
+        "abilities": [
+            {
+                "name": "Riflemen Field Defenses",
+                "description": "Riflemen are trained to build Fighting Positions, lay sandbags for cover, and plant mines."
+            },
+            {
+                "name": "Off Map Smoke Barrage",
+                "description": "Saturate target area with Smoke M89 shells to disrupt sight-lines."
+            },
+            {
+                "name": "Rangers",
+                "description": "Rangers are a highly trained elite unit that specializes in marksmanship and frontline assault."
+            },
+            {
+                "name": "Combined Arms",
+                "description": "Nearby infantry and vehicles coordinate to improve the effectiveness of one another."
+            },
+            {
+                "name": "M26 Pershing Heavy Tank",
+                "description": "M26 Pershing can be deployed to the battlefield. This unit is effective against all targets."
+            }
+        ]
+    },
+    "186414": {
+        "serverID": "186414",
+        "commanderName": "Infantry Company",
+        "description": "Infantry combined with artillery support, hold the enemy in place while bombarding them to dust. Advanced weapons such as the M1919A6 help infantry to hold the line while mobile artillery units move into place to break the attack. When the enemy is locked down, time on target artillery can rapidly destroy them.",
+        "races": [
+            "usf"
+        ],
+        "abilities": [
+            {
+                "name": "M7B1 'Priest' Howitzer Motor Carriage",
+                "description": "Deploy a M7B1 'Priest' Howitzer Motor Carriage. This mobile artillery unit is effective against static positions from range."
+            },
+            {
+                "name": "Time on Target Artillery Barrage",
+                "description": "Calls down a coordinated artillery barrage on the target location. The shells land in quick succession."
+            },
+            {
+                "name": "M21 Mortar Half-track",
+                "description": "An M21 Mortar Half-track can be ordered in to the battlefield. This mobile artillery unit is strong against static infantry at range."
+            },
+            {
+                "name": "M1919A6 Light Machine Gun",
+                "description": "Provides access to the M1919A6 Light Machine Gun at the base."
+            },
+            {
+                "name": "Riflemen Field Defenses",
+                "description": "Riflemen are trained to build Fighting Positions, lay sandbags for cover, and plant mines."
+            }
+        ]
+    },
+    "260696": {
+        "serverID": "260696",
+        "commanderName": "Mechanized Company",
+        "description": "Light vehicles provide valuable support to advancing American infantry units. Take advantage of a wide range of light US vehicles while upgraded Shermans engage the opposition. Heavy artillery can be used to destroy infantry or provide a support role against enemy vehicles.",
+        "races": [
+            "usf"
+        ],
+        "abilities": [
+            {
+                "name": "M21 Mortar Half-track",
+                "description": "An M21 Mortar Half-track can be ordered in to the battlefield. This mobile artillery unit is strong against static infantry at range."
+            },
+            {
+                "name": "Combined Arms",
+                "description": "Nearby infantry and vehicles coordinate to improve the effectiveness of one another."
+            },
+            {
+                "name": "Cavalry Riflemen",
+                "description": "Cavalry Riflemen can be dispatched to the battlefield. This versatile unit is armed for close-quarters combat."
+            },
+            {
+                "name": "(PASSIVE) Mechanized Groups",
+                "description": "A WC51 Jeep and M3 Assault Halftrack can be deployed from the Barracks."
+            },
+            {
+                "name": "Reserve Armor",
+                "description": "M4A3 Sherman Medium Tanks can be equipped with bulldozers. The powerful M4A3(76) Sherman tank can be requisitioned from the Battalion Command Post."
+            }
+        ]
+    },
+    "254449": {
+        "serverID": "254449",
+        "commanderName": "Recon Support Company",
+        "description": "Focused on intelligence and reconnaissance, this Company Commander relies on its ability to observe enemy movement and react quickly. This agile Commander will provide vital enemy intel using Pathfinders while also being able to swiftly respond with light operational support in the form of M8 Greyhounds and Airdropped Combat Groups.",
+        "races": [
+            "usf"
+        ],
+        "abilities": [
+            {
+                "name": "M8 Greyhound",
+                "description": "A M8 Greyhound can be deployed to the battlefield. This fast, lightly armored vehicle is effective against infantry."
+            },
+            {
+                "name": "Airdropped Combat Group",
+                "description": "A Paratrooper Support Squad and an M1 75mm Pack Howitzer gun can be paradropped into the battlefield. These specialized Paratroopers can specialize in long range firepower or anti-tank tactics through their weapon upgrades."
+            },
+            {
+                "name": "I&R Pathfinders",
+                "description": "A squad of I&R Pathfinders can be deployed to the battlefield. These I&R Pathfinders are authorized to call down artillery barrages."
+            },
+            {
+                "name": "M83 Cluster Mines",
+                "description": "M83 cluster bombs are scattered over the target area. Each cluster bomb is equipped with an anti-handling device and will detonate on impact."
+            },
+            {
+                "name": "Raid Tactics",
+                "description": "Light Vehicles can rapidly capture territory and increases the sight range of infantry"
+            }
+        ]
+    },
+    "261335": {
+        "serverID": "261335",
+        "commanderName": "Rifle Company",
+        "description": "The Rifleman is the backbone of the American army emphasizing the American doctrine of versatility and individual firepower. Rear Echelons will have access to more versatile weapon packages. Mobile vehicles and a smokescreen can be used to support the riflemen advance.",
+        "races": [
+            "usf"
+        ],
+        "abilities": [
+            {
+                "name": "Advanced Infantry Equipment",
+                "description": "Riflemen squads are equipped with flares while Rear Echelon squads can be upgraded with a flamethrower."
+            },
+            {
+                "name": "M4A3E8 Sherman 'Easy Eight'",
+                "description": "A M4A3E8 Sherman 'Easy Eight' can be deployed to the battlefield. This unit is effective against all targets."
+            },
+            {
+                "name": "White Phosphorous Smoke Barrage",
+                "description": "A white phosphorous smoke barrage is fired at the target area. This will obscure the sight of units and damage infantry over time."
+            },
+            {
+                "name": "Fire Up!",
+                "description": "Rifleman will now be able to move at maximum speed for a period of time."
+            },
+            {
+                "name": "Riflemen Field Defenses",
+                "description": "Riflemen are trained to build Fighting Positions, lay sandbags for cover, and plant mines."
+            }
+        ]
+    },
+    "450479": {
+        "serverID": "450479",
+        "commanderName": "Tactical Support Company",
+        "description": "Coordinate your army with aerial support to help maneuver through the battlefield. Advance weapons such as the M1919A6 and the M5 Halftrack help infantry to hold the line while mobile artillery units move into place to break the attack.",
+        "races": [
+            "usf"
+        ],
+        "abilities": [
+            {
+                "name": "M1919A6 Light Machine Gun",
+                "description": "Provides access to the M1919A6 Light Machine Gun at the base."
+            },
+            {
+                "name": "M5 Half-track Transport",
+                "description": "Deploy a M5 Half-track to the battlefield. The open-topped M5 is spacious enough to carry two squads, and its .50cal machine gun provides good firepower."
+            },
+            {
+                "name": "P47 Recon Run",
+                "description": "Available planes will fly a high speed loiter of the targeted area."
+            },
+            {
+                "name": "P47 Strafing Run",
+                "description": "P47 will strafe the target location. Damaging and suppressing infantry."
+            },
+            {
+                "name": "M4 Sherman Calliope",
+                "description": "An upgraded version of the M4 Sherman, the Sherman Calliope has a mounted rocket projector rack on top of its existing turret. Designed to lay down a barrage of deadly fire."
+            }
+        ]
+    },
+    "452456": {
+        "serverID": "452456",
+        "commanderName": "Urban Assault Company",
+        "description": "Overwhelm the enemy with forces specialized in aggressive urban combat. Line infantry receive urban equipment packages, while elite units such as Rangers and Sherman Calliopes inflict heavy casualties on enemy positions.",
+        "races": [
+            "usf"
+        ],
+        "abilities": [
+            {
+                "name": "Urban Assault Kits",
+                "description": "Rear Echelon squads can be upgraded with Rifle Grenade Launchers while Riflemen are equipped with incendiary devices."
+            },
+            {
+                "name": "Cover to Cover",
+                "description": "Smoke drops on the target position and all infantry in the vicinity move with increased speed."
+            },
+            {
+                "name": "Rangers",
+                "description": "Rangers are a highly trained elite unit that specializes in marksmanship and frontline assault."
+            },
+            {
+                "name": "M4A3 Sherman Assault Package",
+                "description": "M4A3 Shermans can upgraded with a dozer blade that increases durability. Shermans can also fire white phosphorous shells to disrupt enemy positions."
+            },
+            {
+                "name": "M4 Sherman Calliope",
+                "description": "An upgraded version of the M4 Sherman, the Sherman Calliope has a mounted rocket projector rack on top of its existing turret. Designed to lay down a barrage of deadly fire."
+            }
+        ]
+    },
+    "18369": {
+        "serverID": "18369",
+        "commanderName": "Persistent Mode Airborne",
+        "description": "undefined",
+        "races": [
+            "usf"
+        ],
+        "abilities": [
+            {
+                "name": "undefined",
+                "description": "undefined"
+            }
+        ]
+    },
+    "450553": {
+        "serverID": "450553",
+        "commanderName": "Advanced Emplacement Regiment",
+        "description": "This Regiment provides strong benefits to Emplacements and promotes defensive play. Utilize Infantry Sections to build defensive structures of your choice. Activate “Counter Battery” on any of your artillery based buildings to combat against any forms of siege attack you may encounter.  Upgrade your defensive structures for increase durability and improved utility.  Precision Barrage is available to call in to disrupt enemy formations.",
+        "races": [
+            "british"
+        ],
+        "abilities": [
+            {
+                "name": "Defensive Operations",
+                "description": "Infantry Sections now have the ability to construct emplacements and repair buildings."
+            },
+            {
+                "name": "Counter Battery",
+                "description": "Available 25-pounder howitzers and Mortar Pits will now have access to the “Counter Battery\" Ability."
+            },
+            {
+                "name": "Improved Fortification",
+                "description": "Emplacements and Forward Assemblies will now have access to the “Improved Fortification” upgrade."
+            },
+            {
+                "name": "Advanced Assembly",
+                "description": "Forward Assemblies will now have access to the “Advance Assembly” upgrade. Once researched, the assembly will dispatch royal engineers to repair."
+            },
+            {
+                "name": "Precision Barrage",
+                "description": "Calls down a coordinated artillery barrage on the target location."
+            }
+        ]
+    },
+    "450074": {
+        "serverID": "450074",
+        "commanderName": "Royal Artillery Regiment",
+        "description": "Focused on reconnaissance and long range firepower the Royal Artillery Regiment caters to those who want to eradicate the enemy from a distance. Abilities are focused around locating the enemy and then deploying powerful ordinance to destroy them.",
+        "races": [
+            "british"
+        ],
+        "abilities": [
+            {
+                "name": "Early Warning",
+                "description": "Nearby artillery batteries fire flares periodically over enemy frontline territories revealing the area."
+            },
+            {
+                "name": "Concentration Barrage",
+                "description": "Order all available 25-pounder howitzers in the British Army HQ to quickly fire at the targeted location."
+            },
+            {
+                "name": "Command Detachment “Valentine”",
+                "description": "Allows for the deployment of the Mk. XI Valentine Command Tank to the battlefield."
+            },
+            {
+                "name": "Artillery Support Group “Sexton”",
+                "description": "Deploy a Sexton Self-Propelled Artillery to the battlefield."
+            },
+            {
+                "name": "Perimeter Overwatch",
+                "description": "Orders all available 25-pounder howitzers in the British Army HQ to overwatch friendly territory for a set duration."
+            }
+        ]
+    },
+    "450073": {
+        "serverID": "450073",
+        "commanderName": "Commando Regiment",
+        "description": "Commando Regiments provide numerous opportunities for hit and run attacks and striking the enemy’s most vulnerable points. Smoke Raids can be used to disrupt enemy supply lines before ordering a direct assault with grenades. Mortar and air support can provide cover for advancing troops while glider-borne commandos drop in behind the lines.",
+        "races": [
+            "british"
+        ],
+        "abilities": [
+            {
+                "name": "Mortar Cover",
+                "description": "Nearby teams of light mortars will automatically attack enemies in the target area with a mix of high-explosive and white phosphorous shells. After a period of time flares will be dropped into the area."
+            },
+            {
+                "name": "Commando Glider Insertion",
+                "description": "Deploy a Glider with a Commando squad to the target location. The Glider can reinforce nearby infantry squads."
+            },
+            {
+                "name": "Smoke Raid Operation",
+                "description": "A smoke barrage will occur at the target position while infantry are masked by smoke grenades allowing them to hide in cover. Hostile territory will be neutralized quickly during this action."
+            },
+            {
+                "name": "Assault",
+                "description": "Infantry squads move more quickly and have better attack. Recon planes will flyover frontline enemy territories."
+            },
+            {
+                "name": "Air Supremacy Operation",
+                "description": "A recon plane will be sent ahead before being followed up by attack planes. Heavy bombers will then deliver their payload over the target area."
+            }
+        ]
+    },
+    "450075": {
+        "serverID": "450075",
+        "commanderName": "Royal Engineer Regiment",
+        "description": "Royal Engineer Regiments provide benefits to vehicles and structures and the means to clear enemy positions. Command Vehicles can be designated to provide support to nearby units while vehicles and emplacements can repair themselves. Incendiary Mortars and a Churchill AVRE team can be used to eradicate fortifications.",
+        "races": [
+            "british"
+        ],
+        "abilities": [
+            {
+                "name": "Demolition Specialists “AVRE”",
+                "description": "Deploy a Churchill AVRE tank armed with a powerful Petard Mortar."
+            },
+            {
+                "name": "M2 Flamethrower",
+                "description": "Royal engineers can be upgraded with a flamethrower."
+            },
+            {
+                "name": "Anti-Building Flame Mortar Support",
+                "description": "The target area will be steadily bombarded by 9.75-inch flame mortar rounds that are devastating to ambient structures."
+            },
+            {
+                "name": "Designate Command Vehicle",
+                "description": "Designate a target vehicle as a Command Vehicle. The Command Vehicle will improve nearby units and increase the recharge rates of commander abilities."
+            },
+            {
+                "name": "Vehicle Crew Repairs",
+                "description": "Target damaged vehicle will stop and be rapidly repaired by its crew. The vehicle will be covered by a smoke barrage while repairing."
+            }
+        ]
+    },
+    "452455": {
+        "serverID": "452455",
+        "commanderName": "Lend Lease Assault Regiment",
+        "description": "Hit hard and fast by utilizing a range of Lend-Leased American equipment such as Thompsons SMGs, 81mm Mortars, M5 Half-tracks and M10 Achillies Tank Destroyers.",
+        "races": [
+            "british"
+        ],
+        "abilities": [
+            {
+                "name": "Assault Infantry Sections",
+                "description": "Infantry Sections equipped with Assault Packages."
+            },
+            {
+                "name": "M1 81mm Mortar Team",
+                "description": "Highly mobile mortar teams provide effective indirect fire support on the battlefield."
+            },
+            {
+                "name": "M5 Half-track",
+                "description": "Transports and reinforces infantry squads. Can be upgraded with an M45 Quad mount Anti-Air gun."
+            },
+            {
+                "name": "M10 'Achillies' Tank Destroyer",
+                "description": "Deploy an M10 Tank Destroyer. The 'Achilles' 3 inch main gun is effective against all but the heaviest enemy armored vehicles. Effective vs tanks and vehicles."
+            },
+            {
+                "name": "Vehicle Crew Repairs",
+                "description": "Target damaged vehicle will stop and be rapidly repaired by its crew. The vehicle will be covered by a smoke barrage while repairing."
+            }
+        ]
+    },
+    "450554": {
+        "serverID": "450554",
+        "commanderName": "Mobile Assault Regiment",
+        "description": "This Regiment provides numerous opportunities to carry out aggressive plays. Utilize flamethrowers on the royal engineer to clear out garrisoned positions. Create advantageous scenarios by attacking behind enemy lines with Commandos. Advance Cover Combat will allow your infantry sections to make aggressive attacks in open areas of the map. The Land Mattress rocket artillery will help you dislodge entrenched positions. Activate Vehicle Crew Repair to reduce the time it takes to repair damaged vehicles.",
+        "races": [
+            "british"
+        ],
+        "abilities": [
+            {
+                "name": "M2 Flamethrower",
+                "description": "Royal engineers can be upgraded with a flamethrower."
+            },
+            {
+                "name": "Infiltration Commandos",
+                "description": "Elite infiltration troops who are experts at disrupting enemy supply lines. Infiltration Commandos can be deployed from any ambient building."
+            },
+            {
+                "name": "Advanced Cover Combat",
+                "description": "Infantry sections will get an improved cover bonus while fighting in cover and will receive their regular cover bonus out of cover."
+            },
+            {
+                "name": "Vehicle Crew Repairs",
+                "description": "Target damaged vehicle will stop and be rapidly repaired by its crew. The vehicle will be covered by a smoke barrage while repairing."
+            },
+            {
+                "name": "Land Mattress",
+                "description": "Deploy a Land Mattress rocket artillery."
+            }
+        ]
+    },
+    "450268": {
+        "serverID": "450268",
+        "commanderName": "Tactical Support Regiment",
+        "description": "Tactical Support Regiments help out behind the lines, improving existing units and providing fire support to allies. Designate a Command Vehicle to improve nearby forces or use air support to provide equipment to frontline troops. Artillery can cover advancing troops while recovery teams gather resources from vehicle wrecks. A Forward Observation Post can be used to provide rapid responses to nearby threats.",
+        "races": [
+            "british"
+        ],
+        "abilities": [
+            {
+                "name": "Field Recovery Operation",
+                "description": "Dispatch a Royal Engineer Recovery squad who can salvage vehicle wrecks for resources. When dispatched, flares will be fired over vehicle wrecks that are in the target area."
+            },
+            {
+                "name": "Designate Command Vehicle",
+                "description": "Designate a target vehicle as a Command Vehicle. The Command Vehicle will improve nearby units and increase the recharge rates of commander abilities."
+            },
+            {
+                "name": "Vanguard Operation “Crocodile”",
+                "description": "Nearby batteries will fire a quick illumination shot to the target area while a Churchill Crocodile is deployed to the field."
+            },
+            {
+                "name": "Air Resupply Operation",
+                "description": "Air support will automatically drop medical and weapon supply crates on targeted friendly territories. Infantry units will move and reinforce faster in friendly territory."
+            },
+            {
+                "name": "Forward Observation Post",
+                "description": "Designate an occupied ambient building or Forward Assembly as a Forward Observation Post. These positions can direct special air and artillery strike abilities"
+            }
+        ]
+    },
+    "450243": {
+        "serverID": "450243",
+        "commanderName": "Vanguard Operations Regiment",
+        "description": "The Vanguard Operations Regiment utilizes a mixed force of air and ground support to maintain a strong frontline presence. Launch the Forward Logistics Glider to provide early field support, advance quickly with the Raid Operation, and call for Strafing Support to maintain air supremacy. Finally, the potent Vanguard Operations Crocodile can be deployed in order to make the decisive thrust into enemy territory.",
+        "races": [
+            "british"
+        ],
+        "abilities": [
+            {
+                "name": "Raid Operation",
+                "description": "Allows all your infantry and British vehicles to capture points quickly. Use this to break through enemy lines."
+            },
+            {
+                "name": "Forward Logistics Glider",
+                "description": "Deploy a Forward Glider Headquarters. The headquarters can deploy frontline team weapons, medics, and act as a retreat point."
+            },
+            {
+                "name": "Vehicle Crew Repairs",
+                "description": "Target damaged vehicle will stop and be rapidly repaired by its crew. The vehicle will be covered by a smoke barrage while repairing."
+            },
+            {
+                "name": "Strafing Support",
+                "description": "Two Hawker Typhoons target the designated area with rockets and machine guns."
+            },
+            {
+                "name": "Vanguard Operation “Crocodile”",
+                "description": "Nearby batteries will fire a quick illumination shot to the target area while a Churchill Crocodile is deployed to the field."
+            }
+        ]
+    },
+    "450286": {
+        "serverID": "450286",
+        "commanderName": "Special Weapons Regiment",
+        "description": "The versatile Special Weapons Regiment values combined arms and well-coordinated tactics. Infantry Sections are granted optional anti-tank upgrades and provided with powerful anti-armor grenades. Resupply Half-tracks and Typhoon strafing runs grant your infantry more staying power on the front lines. Use improved Coordinated Fire and devastating Crocodile flamethrower tanks to finish off your foes.",
+        "races": [
+            "british"
+        ],
+        "abilities": [
+            {
+                "name": "Vanguard Operation “Crocodile”",
+                "description": "Nearby batteries will fire a quick illumination shot to the target area while a Churchill Crocodile is deployed to the field."
+            },
+            {
+                "name": "Tank Hunters Infantry Section",
+                "description": "Tank Hunter Infantry Sections can be deployed. They are equipped with Boys AT Rifles and can detect nearby vehicles. They also have access to anti-vehicle HEAT grenades."
+            },
+            {
+                "name": "Resupply Half-track",
+                "description": "Dispatch a Resupply M3 Half-track. This unique Half-track can reinforce units and deploy weapons on the frontline."
+            },
+            {
+                "name": "Hold The Line!",
+                "description": "Infantry units in friendly territories gain increased defense. After a period of time, Hawker Typhoons strafe enemies on the frontlines with rockets and machineguns."
+            },
+            {
+                "name": "Concentrated Fire Operation",
+                "description": "Heavy supporting artillery will fire at the target location."
+            }
+        ]
+    },
+    "6116": {
+        "serverID": "6116",
+        "commanderName": "Blitzkrieg Doctrine",
+        "description": "The Blitzkrieg doctrine stressed combined operations; aircraft supporting armor which in turn should exploit breakthroughs won by infantry.",
+        "races": [
+            "wermacht"
+        ],
+        "abilities": [
+            {
+                "name": "Command Tank",
+                "description": "A command tank that improves nearby forces can be deployed to the battlefield."
+            },
+            {
+                "name": "Panzer Tactician",
+                "description": "All armored vehicles use their equipped smoke dischargers to prevent themselves from being seen."
+            },
+            {
+                "name": "Stuka Close Air Support",
+                "description": "A Stuka JU-87 will patrol the designated area, targeting enemy units with heavy 37mm cannons."
+            },
+            {
+                "name": "Reconnaissance Overflight",
+                "description": "Available aircraft will make a reconnaissance pass on the targeted location to reveal enemy forces."
+            },
+            {
+                "name": "Tactical Movement",
+                "description": "All infantry are ordered to move at their fastest available speed for the duration of the ability. Does not affect anti-tank gun squads."
+            }
+        ]
+    },
+    "6118": {
+        "serverID": "6118",
+        "commanderName": "German Infantry Doctrine",
+        "description": "The Infantry doctrine focuses on numerous infantry units supported by artillery to advance on enemy positions. Officers can support rapid infantry pushes while light artillery can quickly react to enemy strongpoints.",
+        "races": [
+            "wermacht"
+        ],
+        "abilities": [
+            {
+                "name": "Fragmentation Bomb",
+                "description": "High-explosive fragmentation bombs are dropped on the target location."
+            },
+            {
+                "name": "Veteran Squad Leaders",
+                "description": "Infantry squads can be upgraded with veteran squad leaders and training to improve combat effectiveness."
+            },
+            {
+                "name": "Stormtroopers",
+                "description": "Elite infiltration troops who are experts at disrupting enemy supply lines. These units can be deployed from any ambient building."
+            },
+            {
+                "name": "Assault and Hold",
+                "description": "Infantry are given the order to launch a rapid assault. Units will capture territory more quickly and fire more accurately."
+            },
+            {
+                "name": "Sd.Kfz. 250/1 Half-track",
+                "description": "The Sd.Kfz. 250/1 can be deployed from the Kampfgruppe Headquarters to provide infantry support."
+            }
+        ]
+    },
+    "6117": {
+        "serverID": "6117",
+        "commanderName": "German Mechanized Doctrine",
+        "description": "Mechanized forces had a tremendous amount of organic firepower including artillery and mobile mortars to smash enemy defenses.",
+        "races": [
+            "wermacht"
+        ],
+        "abilities": [
+            {
+                "name": "Command Tank",
+                "description": "A command tank that improves nearby forces can be deployed to the battlefield."
+            },
+            {
+                "name": "Smoke Bombs",
+                "description": "Large smoke pots are dropped on the battlefield, blocking line of sight."
+            },
+            {
+                "name": "Mechanized Grenadier Group",
+                "description": "Deploys a Grenadier LMG squad in a 250 halftrack to the battlefield."
+            },
+            {
+                "name": "Spotting Scope",
+                "description": "Vehicles can be equipped with spotting scopes that allow them to see farther when stationary."
+            },
+            {
+                "name": "leFH 18 Artillery",
+                "description": "This light 10.5cm Field Howitzer doesn't have the destructive power of some Soviet artillery, but it counters with a good rate of fire and reasonably long range."
+            }
+        ]
+    },
+    "7554": {
+        "serverID": "7554",
+        "commanderName": "Close Air Support Doctrine",
+        "description": "Close Air Support can provide cover for frontline engagements by utilizing the powerful weapons of the versatile JU-87 and its destructive power.",
+        "races": [
+            "wermacht"
+        ],
+        "abilities": [
+            {
+                "name": "Stuka Reconnaissance Pass",
+                "description": "Available aircraft will make a reconnaissance pass on the targeted location to reveal enemy forces."
+            },
+            {
+                "name": "Stuka JU-87D Anti-Infantry Strafe",
+                "description": "Stuka JU-87D will strafe the target location with its powerful 7.92mm MG 17 machine guns."
+            },
+            {
+                "name": "Stuka JU-87 Anti-Tank Strafe",
+                "description": "Stuka JU-87 will strafe the target location with its powerful 37mm cannons."
+            },
+            {
+                "name": "Supply Drop Zone",
+                "description": "Cargo planes will fly over a designated Fuel or Munitions point, dropping off resource crates that can be recovered by infantry."
+            },
+            {
+                "name": "Stuka Bombing Strike",
+                "description": "A JU-87D Stuka will dive in and drop a 50kg bomb on the target location. Capture points are neutralized if hit."
+            }
+        ]
+    },
+    "5568": {
+        "serverID": "5568",
+        "commanderName": "Assault Support Doctrine",
+        "description": "Support an aggressive strategy; use supply trucks to augment your munitions or fuel resources, support local attacks with the Artillery Field Officer, shatter enemy infantry attacks with air support, and take the fight to the enemy with the famous Tiger heavy tank.",
+        "races": [
+            "wermacht"
+        ],
+        "abilities": [
+            {
+                "name": "Cargo Truck",
+                "description": "An Opel Blitz supply truck can ensure a greater return of resources from owned territories."
+            },
+            {
+                "name": "Artillery Field Officer",
+                "description": "An Artillery Field Officer can be deployed to the battlefield. The officer can call in heavy mortar support and his retinue are armed with MP40 submachine guns for short-range combat."
+            },
+            {
+                "name": "Strafing Run",
+                "description": "The JU-87D will use its two MG-17 machine guns to target enemy infantry and suppress them."
+            },
+            {
+                "name": "Tiger Tank",
+                "description": "Allows the requisition of the Tiger Heavy Tank to the battlefield."
+            },
+            {
+                "name": "Fragmentation Bomb",
+                "description": "High-explosive fragmentation bombs are dropped on the target location."
+            }
+        ]
+    },
+    "5570": {
+        "serverID": "5570",
+        "commanderName": "Festung Armor Doctrine",
+        "description": "A hard hitting defensive strategy; deploy hard hitting artillery options, use smoke to protect your vehicles  and mask movement, provide more capability by deploying a Command Tank, and destroy enemies from long range with the powerful Pak43 anti-tank gun.",
+        "races": [
+            "wermacht"
+        ],
+        "abilities": [
+            {
+                "name": "Panzer Tactician",
+                "description": "All armored vehicles use their equipped smoke dischargers to prevent themselves from being seen."
+            },
+            {
+                "name": "Pak 43 Emplacement",
+                "description": "Pioneers and Sturmpioneers are able to construct powerful Pak 43 88mm anti-tank emplacements."
+            },
+            {
+                "name": "Hull Down",
+                "description": "Pioneers, Grenadiers and Panzer Grenadiers are able to set German armor in an immobile Hull Down position, increasing defenses and damage."
+            },
+            {
+                "name": "Command Tank",
+                "description": "A command tank that improves nearby forces can be deployed to the battlefield."
+            },
+            {
+                "name": "Railway Artillery Support",
+                "description": "Off-map railway artillery will fire three large caliber shells at the designated target."
+            }
+        ]
+    },
+    "5571": {
+        "serverID": "5571",
+        "commanderName": "Festung Support Doctrine",
+        "description": "Support a defensive strategy; control space with artillery to establish a strong front line. Le FH 18 10.5cm howtizers, 250/7 mortar half-tracks, and pre-sited Sector Artillery deny map control to the enemy, while relief infantry can replace any losses.",
+        "races": [
+            "wermacht"
+        ],
+        "abilities": [
+            {
+                "name": "Smoke Bombs",
+                "description": "Large smoke pots are dropped on the battlefield, blocking line of sight."
+            },
+            {
+                "name": "SdKfz 250/7 Mortar Half-track",
+                "description": "The SdKfz 250/7 Mortar Half-track with its 8cm mortar can provide vital battlefield support for infantry forces."
+            },
+            {
+                "name": "Relief Infantry",
+                "description": "Command releases reserve infantry to replace losses suffered during combat. Forces will be replaced with Osttruppen infantry."
+            },
+            {
+                "name": "Sector Artillery",
+                "description": "Enemy units entering a targeted sector are barraged with 10.5cm artillery."
+            },
+            {
+                "name": "leFH 18 Artillery",
+                "description": "This light 10.5cm Field Howitzer doesn't have the destructive power of some Soviet artillery, but it counters with a good rate of fire and reasonably long range."
+            }
+        ]
+    },
+    "5927": {
+        "serverID": "5927",
+        "commanderName": "Fortified Armor Doctrine",
+        "description": "Enhance the survivability of your tanks and vehicles; defensive smoke, the ability to go hull-down, and a Panzer IV Command Tank ensure your vehicles can live longer and fight harder, while Spotting Scopes and aerial recon allow you to see threats and engage them at long range wiith the Elefant Heavy Tank Destroyer.it",
+        "races": [
+            "wermacht"
+        ],
+        "abilities": [
+            {
+                "name": "Panzer Tactician",
+                "description": "All armored vehicles use their equipped smoke dischargers to prevent themselves from being seen."
+            },
+            {
+                "name": "Hull Down",
+                "description": "Pioneers, Grenadiers and Panzer Grenadiers are able to set German armor in an immobile Hull Down position, increasing defenses and damage."
+            },
+            {
+                "name": "Elefant Tank Destroyer",
+                "description": "Allows the requisition of the Elefant Tank Destroyer to the battlefield."
+            },
+            {
+                "name": "Command Tank",
+                "description": "A command tank that improves nearby forces can be deployed to the battlefield."
+            },
+            {
+                "name": "Reconnaissance Overflight",
+                "description": "Available aircraft will make a reconnaissance pass on the targeted location to reveal enemy forces."
+            }
+        ]
+    },
+    "7538": {
+        "serverID": "7538",
+        "commanderName": "Luftwaffe Supply Doctrine",
+        "description": "The Luftwaffe Supply doctrine utilizes the German Air Force in a support role for the ground troops. Ju52 cargo planes can deliver valuable resources and medical supplies to troops on the ground, while Stuka bombers will provide reconnaissance and destructive power against static positions.",
+        "races": [
+            "wermacht"
+        ],
+        "abilities": [
+            {
+                "name": "Air-Dropped Medical Supplies",
+                "description": "Paradrop medical supplies at a target area. Heals and inspires nearby units when picked up."
+            },
+            {
+                "name": "Supply Drop Zone",
+                "description": "Cargo planes will fly over a designated Fuel or Munitions point, dropping off resource crates that can be recovered by infantry."
+            },
+            {
+                "name": "Reconnaissance Overflight",
+                "description": "Available aircraft will make a reconnaissance pass on the targeted location to reveal enemy forces."
+            },
+            {
+                "name": "Incendiary Bombing Run",
+                "description": "A Stuka will drop incendiary bombs on the target location."
+            },
+            {
+                "name": "Stuka Bombing Strike",
+                "description": "A JU-87D Stuka will dive in and drop a 50kg bomb on the target location. Capture points are neutralized if hit."
+            }
+        ]
+    },
+    "7541": {
+        "serverID": "7541",
+        "commanderName": "Defensive Doctrine (Community)",
+        "description": "This doctrine provides additional defensive gameplay options. Additional structures can be created to slow the advance of the enemy, while powerful defensive weapons such as the Pak 43 and Sector Artillery will crush any breakthroughs.",
+        "races": [
+            "wermacht"
+        ],
+        "abilities": [
+            {
+                "name": "Sector Artillery",
+                "description": "Enemy units entering a targeted sector are barraged with 10.5cm artillery."
+            },
+            {
+                "name": "Pak 43 Emplacement",
+                "description": "Pioneers and Sturmpioneers are able to construct powerful Pak 43 88mm anti-tank emplacements."
+            },
+            {
+                "name": "Defensive Fortifications",
+                "description": "Allows infantry to construct sandbags, barbed wire and trenches while Pioneers can now also construct tank traps and concrete bunkers."
+            },
+            {
+                "name": "Osttruppen Squad",
+                "description": "Deploy weak but numerous Osttruppen infantry to the battlefield."
+            },
+            {
+                "name": "StuG III Ausf. E Assault Gun",
+                "description": "Allows the requestion of the StuG III Ausf. E Assault Gun onto the battlefield."
+            }
+        ]
+    },
+    "7537": {
+        "serverID": "7537",
+        "commanderName": "Elite Troops Doctrine",
+        "description": "Utilizing the best trained and equipped units in the German Army, this doctrine focuses on high quality troops and vehicles. You and your allies units can be trained to have a higher level of veteran status, using the quality of your forces to overpower raw numbers. When the battle has reached its tipping point, an elite Tiger Ace can be deployed to turn the tide.",
+        "races": [
+            "wermacht"
+        ],
+        "abilities": [
+            {
+                "name": "Stormtroopers",
+                "description": "Elite infiltration troops who are experts at disrupting enemy supply lines. These units can be deployed from any ambient building."
+            },
+            {
+                "name": "Jaeger Light Infantry Upgrade",
+                "description": "Grenadiers, Panzergrenadiers, and Stormtroopers can be upgraded with this package which provides them with G43 rifles and includes training in interrogation."
+            },
+            {
+                "name": "Panzer Tactician",
+                "description": "All armored vehicles use their equipped smoke dischargers to prevent themselves from being seen."
+            },
+            {
+                "name": "Tiger Ace",
+                "description": "High command sends in a legendary Tiger Ace. Only one is available at a time. Available once the Heavy Panzer Korps is deployed."
+            },
+            {
+                "name": "Model 24 Stun Grenades",
+                "description": "Grenadiers, Panzergrenadiers, and Stormtroopers can throw Model 24 stun grenades, which will stun enemy infantry."
+            }
+        ]
+    },
+    "7540": {
+        "serverID": "7540",
+        "commanderName": "Encirclement Doctrine",
+        "description": "Combine stealth and mobility to outflank the enemy and destroy them. Stormtroopers can be deployed to scout ahead or cut off the enemies supply lines, while vehicles and air support can be utilized to complete the encirclement. With the enemy surrounded, Crush the Pocket will concentrate firepower to eradicate them.",
+        "races": [
+            "wermacht"
+        ],
+        "abilities": [
+            {
+                "name": "Breakthrough",
+                "description": "Slightly improves the speed of all vehicle units and allows them to capture points very rapidly."
+            },
+            {
+                "name": "Break Supply Line",
+                "description": "Send in a Stuka bomber to neutralize a targeted point with a precision strike, causing the territory to shift into a neutral state."
+            },
+            {
+                "name": "Ambush Training",
+                "description": "Infantry units are now capable of sprinting for a short period of time. Grenadiers, Panzergrenadiers or HMGs can be upgraded with better camouflage, concealing them in cover and deep snow."
+            },
+            {
+                "name": "Close the Pocket",
+                "description": "Artillery zeros in on isolated enemy units to destroy them. Automatically attacks all cut off enemy territories and frontline territories."
+            },
+            {
+                "name": "Stormtroopers",
+                "description": "Elite infiltration troops who are experts at disrupting enemy supply lines. These units can be deployed from any ambient building."
+            }
+        ]
+    },
+    "6905": {
+        "serverID": "6905",
+        "commanderName": "Mechanized Assault Doctrine",
+        "description": "Speed and firepower are utilized to their fullest in a doctrine that focuses on keeping immense pressure on the enemy. Assault Grenadiers allow for early attacks on enemy strongpoints, follow up with an elite mechanized assault group and infantry support StuG III Ausf. E Assault Gun. Finish the enemy with the fearsome Tiger PzKpfw VI Heavy Tank.",
+        "races": [
+            "wermacht"
+        ],
+        "abilities": [
+            {
+                "name": "Tiger Tank",
+                "description": "Allows the requisition of the Tiger Heavy Tank to the battlefield."
+            },
+            {
+                "name": "Light Artillery Barrage",
+                "description": "A light artillery barrage from nearby 7.5 cm le.IG 18 infantry support guns can scatter enemy forces."
+            },
+            {
+                "name": "StuG III Ausf. E Assault Gun",
+                "description": "Allows the requestion of the StuG III Ausf. E Assault Gun onto the battlefield."
+            },
+            {
+                "name": "Assault Grenadiers",
+                "description": "Deploy Assault Grenadiers equipped with MP40 submachineguns and Model 24 grenades."
+            },
+            {
+                "name": "Mechanized Assault Group",
+                "description": "Deploys a Panzer Grenadier squad in a 250 halftrack to the battlefield."
+            }
+        ]
+    },
+    "258891": {
+        "serverID": "258891",
+        "commanderName": "Mobile Defense Doctrine",
+        "description": "A commander reassigned from the western front, bringing the experience and tactics from the western theatre to the battle in the east. Use a number of mobile units in conjunction with a defensive strategy to quickly react to enemy breakthroughs.",
+        "races": [
+            "wermacht"
+        ],
+        "abilities": [
+            {
+                "name": "Panzer Tactician",
+                "description": "All armored vehicles use their equipped smoke dischargers to prevent themselves from being seen."
+            },
+            {
+                "name": "Command Tank",
+                "description": "A command tank that improves nearby forces can be deployed to the battlefield."
+            },
+            {
+                "name": "Counterattack Tactics",
+                "description": "Infantry units are trained to retake territory quickly. Neutral territory is captured more rapidly while active."
+            },
+            {
+                "name": "Osttruppen Reserves",
+                "description": "Deploy reserves of Osttruppen previously stationed on the Western Front. These units vary in equipment."
+            },
+            {
+                "name": "Sdkfz 234 'Puma' Armored Car",
+                "description": "Dispatch a Sdkfz 234 'Puma' Armored Car to the battlefield."
+            }
+        ]
+    },
+    "7249": {
+        "serverID": "7249",
+        "commanderName": "Osttruppen Doctrine",
+        "description": "Utilize Germany’s allies as support infantry to shore up defenses on the line. Combine these support infantry with experienced German Officers and resources to break enemy attacks and hold valuable ground.",
+        "races": [
+            "wermacht"
+        ],
+        "abilities": [
+            {
+                "name": "Railway Artillery Support",
+                "description": "Off-map railway artillery will fire three large caliber shells at the designated target."
+            },
+            {
+                "name": "Artillery Field Officer",
+                "description": "An Artillery Field Officer can be deployed to the battlefield. The officer can call in heavy mortar support and his retinue are armed with MP40 submachine guns for short-range combat."
+            },
+            {
+                "name": "Osttruppen Squad",
+                "description": "Deploy weak but numerous Osttruppen infantry to the battlefield."
+            },
+            {
+                "name": "Entrenching Tools",
+                "description": "Infantry squads can build sandbags for cover, lay barbed wire and can dig trenches in friendly territory."
+            },
+            {
+                "name": "Supply Drop",
+                "description": "A cargo plane will fly over the designated area and deliver a small amount of fuel and munitions. The crates also contain an MG34 and a Pak 40 that can be manned by infantry."
+            }
+        ]
+    },
+    "7539": {
+        "serverID": "7539",
+        "commanderName": "Urban Assault Doctrine",
+        "description": "A doctrine designed to break even the most hardened defenses and to improve combat in urban environments. Urban Assault Panzergrenadier’s can clear out buildings and demolish fortifications while being supported by a forward headquarters. For the most dug in defenders, Heinkel He 111 bombers can be dispatched to flatten a target area.",
+        "races": [
+            "wermacht"
+        ],
+        "abilities": [
+            {
+                "name": "Urban Assault Panzergrenadiers",
+                "description": "Deploy Urban Assault Panzergrenadiers equipped with flamethrowers and satchel charges, ideal for clearing buildings."
+            },
+            {
+                "name": "Forward Supply Station",
+                "description": "Allows ambient buildings to be converted into a Forward Supply Station. This depot will allow infantry to reinforce and automatically repair nearby vehicles."
+            },
+            {
+                "name": "Munitions Blitz",
+                "description": "High Command dispatches emergency munitions immediately, but manpower income will be reduced over time."
+            },
+            {
+                "name": "Incendiary Mortar Barrage",
+                "description": "Allow mortar squads to fire incendiary shells at the target area."
+            },
+            {
+                "name": "Strategic Bombing",
+                "description": "Send in Heinkel He 111 bombers to level the target area. This bombing run has a very wide scatter area and can be cast without vision of the target."
+            }
+        ]
+    },
+    "5572": {
+        "serverID": "5572",
+        "commanderName": "Jaeger Armor Doctrine",
+        "description": "Find your enemy and attack them; Aerial reconnaissance and increased vision range on your tanks allows you to spot the enemy. Demolish enemy tanks with Stuka strafing runs or destroy them at range with the deadly Elefant Heavy Tank Destroyer.",
+        "races": [
+            "wermacht"
+        ],
+        "abilities": [
+            {
+                "name": "Half-track Riegel 43 Anti-Tank Mine",
+                "description": "Allows the SdKfz 251 to lay Riegel-43 heavy anti-tank mine."
+            },
+            {
+                "name": "Reconnaissance Overflight",
+                "description": "Available aircraft will make a reconnaissance pass on the targeted location to reveal enemy forces."
+            },
+            {
+                "name": "Spotting Scope",
+                "description": "Vehicles can be equipped with spotting scopes that allow them to see farther when stationary."
+            },
+            {
+                "name": "Stuka Bombing Strike",
+                "description": "A JU-87D Stuka will dive in and drop a 50kg bomb on the target location. Capture points are neutralized if hit."
+            },
+            {
+                "name": "Elefant Tank Destroyer",
+                "description": "Allows the requisition of the Elefant Tank Destroyer to the battlefield."
+            }
+        ]
+    },
+    "5573": {
+        "serverID": "5573",
+        "commanderName": "Jaeger Infantry Doctrine",
+        "description": "Build a strategy on aggressive infantry and battlefield awareness; support fast and mobile infantry attacks with Stuka  Close Air Support. Use light artillery to defend against counter attacks or blast a hole through enemy lines.",
+        "races": [
+            "wermacht"
+        ],
+        "abilities": [
+            {
+                "name": "Ambush Training",
+                "description": "Infantry units are now capable of sprinting for a short period of time. Grenadiers, Panzergrenadiers or HMGs can be upgraded with better camouflage, concealing them in cover and deep snow."
+            },
+            {
+                "name": "Stuka Close Air Support",
+                "description": "A Stuka JU-87 will patrol the designated area, targeting enemy units with heavy 37mm cannons."
+            },
+            {
+                "name": "Jaeger Light Infantry Upgrade",
+                "description": "Grenadiers, Panzergrenadiers, and Stormtroopers can be upgraded with this package which provides them with G43 rifles and includes training in interrogation."
+            },
+            {
+                "name": "Jaeger Command Squad",
+                "description": "A veteran Jaeger unit is dispatched to provide support. This is a powerful combat unit that can provide support to other units in the field."
+            },
+            {
+                "name": "Light Artillery Barrage",
+                "description": "A light artillery barrage from nearby 7.5 cm le.IG 18 infantry support guns can scatter enemy forces."
+            }
+        ]
+    },
+    "5930": {
+        "serverID": "5930",
+        "commanderName": "Joint Operations Doctrine",
+        "description": "Stressing the mutual support of air reconnaissance and artillery, the Joint Operations Doctrine allows you to identify targets and rapidly bring a variety of light and heavy artillery options to bear.",
+        "races": [
+            "wermacht"
+        ],
+        "abilities": [
+            {
+                "name": "Reconnaissance Overflight",
+                "description": "Available aircraft will make a reconnaissance pass on the targeted location to reveal enemy forces."
+            },
+            {
+                "name": "Pak 43 Emplacement",
+                "description": "Pioneers and Sturmpioneers are able to construct powerful Pak 43 88mm anti-tank emplacements."
+            },
+            {
+                "name": "Light Artillery Barrage",
+                "description": "A light artillery barrage from nearby 7.5 cm le.IG 18 infantry support guns can scatter enemy forces."
+            },
+            {
+                "name": "Artillery Field Officer",
+                "description": "An Artillery Field Officer can be deployed to the battlefield. The officer can call in heavy mortar support and his retinue are armed with MP40 submachine guns for short-range combat."
+            },
+            {
+                "name": "leFH 18 Artillery",
+                "description": "This light 10.5cm Field Howitzer doesn't have the destructive power of some Soviet artillery, but it counters with a good rate of fire and reasonably long range."
+            }
+        ]
+    },
+    "5921": {
+        "serverID": "5921",
+        "commanderName": "Lightning War Doctrine",
+        "description": "Blitzkrieg, or Lightning War stressed the use of all arms of combat. Aircraft provide close air support to heavy armor driving into enemy territory, all made possible by exploiting breakthroughs won by infantry and artillery.",
+        "races": [
+            "wermacht"
+        ],
+        "abilities": [
+            {
+                "name": "Stuka Close Air Support",
+                "description": "A Stuka JU-87 will patrol the designated area, targeting enemy units with heavy 37mm cannons."
+            },
+            {
+                "name": "Jaeger Light Infantry Upgrade",
+                "description": "Grenadiers, Panzergrenadiers, and Stormtroopers can be upgraded with this package which provides them with G43 rifles and includes training in interrogation."
+            },
+            {
+                "name": "Tactical Movement",
+                "description": "All infantry are ordered to move at their fastest available speed for the duration of the ability. Does not affect anti-tank gun squads."
+            },
+            {
+                "name": "Relief Infantry",
+                "description": "Command releases reserve infantry to replace losses suffered during combat. Forces will be replaced with Osttruppen infantry."
+            },
+            {
+                "name": "Tiger Tank",
+                "description": "Allows the requisition of the Tiger Heavy Tank to the battlefield."
+            }
+        ]
+    },
+    "5928": {
+        "serverID": "5928",
+        "commanderName": "Spearhead Doctrine",
+        "description": "Armor provides the spearhead, piercing enemy lines and driving deep into their territory. Tiger tanks absorb punishment and focus, while bombing destroys enemy defenses and 250/7 mortar half-tracks keep infantry at bay.",
+        "races": [
+            "wermacht"
+        ],
+        "abilities": [
+            {
+                "name": "Panzer Tactician",
+                "description": "All armored vehicles use their equipped smoke dischargers to prevent themselves from being seen."
+            },
+            {
+                "name": "SdKfz 250/7 Mortar Half-track",
+                "description": "The SdKfz 250/7 Mortar Half-track with its 8cm mortar can provide vital battlefield support for infantry forces."
+            },
+            {
+                "name": "Reconnaissance Overflight",
+                "description": "Available aircraft will make a reconnaissance pass on the targeted location to reveal enemy forces."
+            },
+            {
+                "name": "Tiger Tank",
+                "description": "Allows the requisition of the Tiger Heavy Tank to the battlefield."
+            },
+            {
+                "name": "Fragmentation Bomb",
+                "description": "High-explosive fragmentation bombs are dropped on the target location."
+            }
+        ]
+    },
+    "5929": {
+        "serverID": "5929",
+        "commanderName": "Storm Doctrine",
+        "description": "Overwhelm your opponent with artillery and concentrated bombing. Tactical Movement allows your infantry to rapidly engage the enemy, while camouflage training allows troops to ambush counter-attacking enemies.",
+        "races": [
+            "wermacht"
+        ],
+        "abilities": [
+            {
+                "name": "Ambush Training",
+                "description": "Infantry units are now capable of sprinting for a short period of time. Grenadiers, Panzergrenadiers or HMGs can be upgraded with better camouflage, concealing them in cover and deep snow."
+            },
+            {
+                "name": "Half-track Riegel 43 Anti-Tank Mine",
+                "description": "Allows the SdKfz 251 to lay Riegel-43 heavy anti-tank mine."
+            },
+            {
+                "name": "Smoke Bombs",
+                "description": "Large smoke pots are dropped on the battlefield, blocking line of sight."
+            },
+            {
+                "name": "Stuka Bombing Strike",
+                "description": "A JU-87D Stuka will dive in and drop a 50kg bomb on the target location. Capture points are neutralized if hit."
+            },
+            {
+                "name": "leFH 18 Artillery",
+                "description": "This light 10.5cm Field Howitzer doesn't have the destructive power of some Soviet artillery, but it counters with a good rate of fire and reasonably long range."
+            }
+        ]
+    },
+    "452454": {
+        "serverID": "452454",
+        "commanderName": "Strategic Reserves Doctrine",
+        "description": "Call upon elite, mobile reserves to engage critical threats. Mobile reconnaissance units can locate hostile forces, allowing retaliation with assault troops and elite armor.",
+        "races": [
+            "wermacht"
+        ],
+        "abilities": [
+            {
+                "name": "Assault Grenadiers",
+                "description": "Deploy Assault Grenadiers equipped with MP40 submachineguns and Model 24 grenades."
+            },
+            {
+                "name": "Breakthrough Equipment",
+                "description": "Pioneers can be upgraded with special packages to clear obstacles, while Panzergrenadiers are granted Model 24 Smoke Grenades."
+            },
+            {
+                "name": "Mobile Observation Posts",
+                "description": "SdKfz. 251 Half-tracks are capable of camouflaging themselves and acting as an observation post to scout for hostile units."
+            },
+            {
+                "name": "Tiger Ace",
+                "description": "High command sends in a legendary Tiger Ace. Only one is available at a time. Available once the Heavy Panzer Korps is deployed."
+            },
+            {
+                "name": "Panzer IV Ausf. J",
+                "description": "The Panzer IV J variant can be built from the HQ once either Support Armor Korps or Heavy Panzer Korps have been deployed."
+            }
+        ]
+    },
+    "6120": {
+        "serverID": "6120",
+        "commanderName": "Soviet Combined Arms Army",
+        "description": "Soviet Armies promoted a doctrine of supporting combat arms - elite infantry, air corps reconnaissance and bombing, divisional artillery,and armored divisions created versatile forces.",
+        "races": [
+            "soviet"
+        ],
+        "abilities": [
+            {
+                "name": "ML-20 152mm Gun-Howitzer",
+                "description": "The powerful 152mm ML-20 Gun-Howitzer can be built by Combat Engineers. Its shells can reach vast areas of the battlefield."
+            },
+            {
+                "name": "IL-2 Precision Bombing Strike",
+                "description": "The IL-2 will make a high-speed bombing run, clustering four FAB-50 50kg bombs into the target area."
+            },
+            {
+                "name": "Recon Overflight",
+                "description": "Available planes will fly a high speed loiter of the targeted area."
+            },
+            {
+                "name": "Anti-Tank Gun Ambush Tactics",
+                "description": "All mobile anti-tank gun crews can hide their weapon and camouflage themselves."
+            },
+            {
+                "name": "Guards Rifle Infantry",
+                "description": "Special Command Troops can be deployed to the battlefield equipped with PTRS anti-tank rifles."
+            }
+        ]
+    },
+    "6121": {
+        "serverID": "6121",
+        "commanderName": "Soviet Reserve Army",
+        "description": "Constituted to replace massive losses suffered during the first months of the war and with the need to feed forces into the endless churn of battle, these armies are focused more on infantry.",
+        "races": [
+            "soviet"
+        ],
+        "abilities": [
+            {
+                "name": "ML-20 152mm Gun-Howitzer",
+                "description": "The powerful 152mm ML-20 Gun-Howitzer can be built by Combat Engineers. Its shells can reach vast areas of the battlefield."
+            },
+            {
+                "name": "Conscript Assault Package Upgrade",
+                "description": "Unlocks an upgrade package on Conscripts that replace three of their rifles with PPSh-41 Submachine Guns for better short-range firepower and the Hit the Dirt ability for improved combat tactics."
+            },
+            {
+                "name": "Partisan Tank Hunters",
+                "description": "Anti Vehicle Partisans are irregular military units who excel at destroying vehicles behind the lines."
+            },
+            {
+                "name": "Rapid Conscription",
+                "description": "Command releases reserve Conscript squads to replace combat losses suffered while the ability is active."
+            },
+            {
+                "name": "Conscript Repair Kit",
+                "description": "Demonstrating pure ingenuity, Conscripts can repair any damaged structure, vehicle, or bridge."
+            }
+        ]
+    },
+    "6119": {
+        "serverID": "6119",
+        "commanderName": "Soviet Shock Army",
+        "description": "Shock Armies were heavily stacked with heavy weapons and a much greater number of short-range sub machine guns to crush the defensive lines of the enemy.",
+        "races": [
+            "soviet"
+        ],
+        "abilities": [
+            {
+                "name": "Shock Troops",
+                "description": "Special Command Troops can be deployed to the battlefield. Click and select location to deploy."
+            },
+            {
+                "name": "ML-20 152mm Gun-Howitzer",
+                "description": "The powerful 152mm ML-20 Gun-Howitzer can be built by Combat Engineers. Its shells can reach vast areas of the battlefield."
+            },
+            {
+                "name": "IL-2 Sturmovik Attacks",
+                "description": "IL-2 Sturmovik will loiter over the battlefield, strafing targets of opportunity with its powerful 23mm cannons."
+            },
+            {
+                "name": "Conscript Assault Package Upgrade",
+                "description": "Unlocks an upgrade package on Conscripts that replace three of their rifles with PPSh-41 Submachine Guns for better short-range firepower and the Hit the Dirt ability for improved combat tactics."
+            },
+            {
+                "name": "HM-38 120mm Mortar Squad",
+                "description": "The heavy HM-38 120mm mortar squad can be ordered in to the battlefield. Effective against static targets and infantry."
+            }
+        ]
+    },
+    "186229": {
+        "serverID": "186229",
+        "commanderName": "Advanced Warfare Tactics",
+        "description": "Gain vital intelligence and exploit enemy movements with PPSH equipped conscripts and the most powerful incarnation of the vaunted T-34 tank armed with a hard hitting 85mm cannon.",
+        "races": [
+            "soviet"
+        ],
+        "abilities": [
+            {
+                "name": "T-34/85 Medium Tank",
+                "description": "A T-34/85, with a powerful 85mm gun, can be requisitioned for the battlefield."
+            },
+            {
+                "name": "Radio Intercept",
+                "description": "Intercepts enemy radio transmissions providing valuable intel on enemy actions."
+            },
+            {
+                "name": "IL-2 Sturmovik Strafing Run",
+                "description": "Il-2 Sturmovik will strafe the target location with its powerful 23mm cannons."
+            },
+            {
+                "name": "Conscript Assault Package Upgrade",
+                "description": "Unlocks an upgrade package on Conscripts that replace three of their rifles with PPSh-41 Submachine Guns for better short-range firepower and the Hit the Dirt ability for improved combat tactics."
+            },
+            {
+                "name": "Conscript Repair Kit",
+                "description": "Demonstrating pure ingenuity, Conscripts can repair any damaged structure, vehicle, or bridge."
+            }
+        ]
+    },
+    "452461": {
+        "serverID": "452461",
+        "commanderName": "Airborne Troops Tactics",
+        "description": "Employ VDV airbourne tactics to supply infantry, paradrop elite guards troops, establish forward postions, and call in devastating air support.",
+        "races": [
+            "soviet"
+        ],
+        "abilities": [
+            {
+                "name": "Weapons Crate Drop",
+                "description": "Drops a crate that can be picked up by infantry. Arms infantry with SVT rifles. Penal squads receive PPSh-41 SMGs."
+            },
+            {
+                "name": "DShK HMG Paradrop",
+                "description": "Paradrop in a DShK HMG to the battlefield that can be manned by allied infantry. This weapon is effective against massed infantry when setup in a defensive postion."
+            },
+            {
+                "name": "Airborne Rally Points",
+                "description": "Airborne Guards and Engineers can construct Airborne Rally Points that allow for on field reinforcement and can detect nearby enemies."
+            },
+            {
+                "name": "Airbourne Guards Troops",
+                "description": "Guards Airborne Troops who have previously infiltrated the battelfield by airdrop can be requisitioned. Can be upgraded for short or long range combat."
+            },
+            {
+                "name": "IL-2 Anti-Tank Rocket Run",
+                "description": "A IL-2 will barrage the target area with a number of rockets that are deadly to vehicles."
+            }
+        ]
+    },
+    "5926": {
+        "serverID": "5926",
+        "commanderName": "Anti-Infantry Tactics",
+        "description": "Kill or drive off your enemy’s vital infantry forces; shock troops provide short-range attack power while artillery and the fearsome flamethrower equipped KV-8 are terribly effective against infantry.",
+        "races": [
+            "soviet"
+        ],
+        "abilities": [
+            {
+                "name": "Shock Troops",
+                "description": "Special Command Troops can be deployed to the battlefield. Click and select location to deploy."
+            },
+            {
+                "name": "Recon Overflight",
+                "description": "Available planes will fly a high speed loiter of the targeted area."
+            },
+            {
+                "name": "Incendiary Artillery Barrage",
+                "description": "Areas of the map can be bombarded with incendiary rounds to burn infantry and deny access."
+            },
+            {
+                "name": "Fear Propaganda Artillery",
+                "description": "Airburst propaganda leaflets make targeted soldiers question the morality of their actions."
+            },
+            {
+                "name": "KV-8 Flamethrower Tank",
+                "description": "KV-8 Flamethrower tanks can be ordered to the battlefield from the Mechanized Armor Kampaneya. This tank excels against infantry and light vehicles."
+            }
+        ]
+    },
+    "5922": {
+        "serverID": "5922",
+        "commanderName": "Conscripts Support Tactics",
+        "description": "Build strategies around your core conscript soldiers; more effectively trained and heavily armed conscripts are resilient under MG fire, can repair supporting heavy armor, and will have their losses in combat replaced.",
+        "races": [
+            "soviet"
+        ],
+        "abilities": [
+            {
+                "name": "KV-1 Heavy Tank",
+                "description": "A KV-1 Heavy Tank can be ordered in to the battlefield."
+            },
+            {
+                "name": "Conscript Repair Kit",
+                "description": "Demonstrating pure ingenuity, Conscripts can repair any damaged structure, vehicle, or bridge."
+            },
+            {
+                "name": "Conscript Assault Package Upgrade",
+                "description": "Unlocks an upgrade package on Conscripts that replace three of their rifles with PPSh-41 Submachine Guns for better short-range firepower and the Hit the Dirt ability for improved combat tactics."
+            },
+            {
+                "name": "Rapid Conscription",
+                "description": "Command releases reserve Conscript squads to replace combat losses suffered while the ability is active."
+            },
+            {
+                "name": "Incendiary Artillery Barrage",
+                "description": "Areas of the map can be bombarded with incendiary rounds to burn infantry and deny access."
+            }
+        ]
+    },
+    "5575": {
+        "serverID": "5575",
+        "commanderName": "Guard Motor Coordination Tactics",
+        "description": "Guard Armies were issued better weapons like the improved T-34/85 with its more potent gun and heavy 120mm mortar. Improved training and knowledge allows crews to repair their own vehicles.",
+        "races": [
+            "soviet"
+        ],
+        "abilities": [
+            {
+                "name": "Guards Rifle Infantry",
+                "description": "Special Command Troops can be deployed to the battlefield equipped with PTRS anti-tank rifles."
+            },
+            {
+                "name": "HM-38 120mm Mortar Squad",
+                "description": "The heavy HM-38 120mm mortar squad can be ordered in to the battlefield. Effective against static targets and infantry."
+            },
+            {
+                "name": "Mark Vehicle",
+                "description": "Targeted vehicle is subject to an increase in focused fire from nearby opponents."
+            },
+            {
+                "name": "T-34/85 Medium Tank",
+                "description": "A T-34/85, with a powerful 85mm gun, can be requisitioned for the battlefield."
+            },
+            {
+                "name": "Vehicle Crew Repair Training",
+                "description": "Vehicle crews gain an ability to repair battlefield damage on their vehicles once they leave combat."
+            }
+        ]
+    },
+    "451588": {
+        "serverID": "451588",
+        "commanderName": "Guard Motor Coordination Tactics - VonIvan Edition",
+        "description": "Guard Armies were issued better weapons like the improved T-34/85 with its more potent gun and heavy 120mm mortar. Improved training and knowledge allows crews to repair their own vehicles.",
+        "races": [
+            "soviet"
+        ],
+        "abilities": [
+            {
+                "name": "Guards Rifle Infantry",
+                "description": "Special Command Troops can be deployed to the battlefield equipped with PTRS anti-tank rifles."
+            },
+            {
+                "name": "HM-38 120mm Mortar Squad",
+                "description": "The heavy HM-38 120mm mortar squad can be ordered in to the battlefield. Effective against static targets and infantry."
+            },
+            {
+                "name": "Mark Vehicle",
+                "description": "Targeted vehicle is subject to an increase in focused fire from nearby opponents."
+            },
+            {
+                "name": "T-34/85 Medium Tank",
+                "description": "A T-34/85, with a powerful 85mm gun, can be requisitioned for the battlefield."
+            },
+            {
+                "name": "Vehicle Crew Repair Training",
+                "description": "Vehicle crews gain an ability to repair battlefield damage on their vehicles once they leave combat."
+            }
+        ]
+    },
+    "5576": {
+        "serverID": "5576",
+        "commanderName": "Guard Rifle Combined Arms Tactics",
+        "description": "Guard Armies were underpinned by versatile infantry. Providing short-range SMGs to conscripts boosts infantry combat capabilities while IL-2 aircraft, KV-1 heavy tanks, and 152mm howitzers pulverize a variety of enemy types.",
+        "races": [
+            "soviet"
+        ],
+        "abilities": [
+            {
+                "name": "Guards Rifle Infantry",
+                "description": "Special Command Troops can be deployed to the battlefield equipped with PTRS anti-tank rifles."
+            },
+            {
+                "name": "KV-1 Heavy Tank",
+                "description": "A KV-1 Heavy Tank can be ordered in to the battlefield."
+            },
+            {
+                "name": "Conscript Assault Package Upgrade",
+                "description": "Unlocks an upgrade package on Conscripts that replace three of their rifles with PPSh-41 Submachine Guns for better short-range firepower and the Hit the Dirt ability for improved combat tactics."
+            },
+            {
+                "name": "IL-2 Sturmovik Attacks",
+                "description": "IL-2 Sturmovik will loiter over the battlefield, strafing targets of opportunity with its powerful 23mm cannons."
+            },
+            {
+                "name": "ML-20 152mm Gun-Howitzer",
+                "description": "The powerful 152mm ML-20 Gun-Howitzer can be built by Combat Engineers. Its shells can reach vast areas of the battlefield."
+            }
+        ]
+    },
+    "5924": {
+        "serverID": "5924",
+        "commanderName": "Mechanized Support Tactics",
+        "description": "Support armored operations; Guards Troops and camouflaged anti-tank guns can screen the flanks of armored columns while IL-2 ground attack aircraft strafe ground troops. Deliver the final blow with heavy assault guns to neutralize fortifications and hard targets from afar.",
+        "races": [
+            "soviet"
+        ],
+        "abilities": [
+            {
+                "name": "Guards Rifle Infantry",
+                "description": "Special Command Troops can be deployed to the battlefield equipped with PTRS anti-tank rifles."
+            },
+            {
+                "name": "Anti-Tank Gun Ambush Tactics",
+                "description": "All mobile anti-tank gun crews can hide their weapon and camouflage themselves."
+            },
+            {
+                "name": "Mark Vehicle",
+                "description": "Targeted vehicle is subject to an increase in focused fire from nearby opponents."
+            },
+            {
+                "name": "IL-2 Precision Bombing Strike",
+                "description": "The IL-2 will make a high-speed bombing run, clustering four FAB-50 50kg bombs into the target area."
+            },
+            {
+                "name": "ISU-152 Heavy Assault Gun",
+                "description": "The powerful ISU-152 Heavy Assault Gun can be deployed to the battlefield."
+            }
+        ]
+    },
+    "5578": {
+        "serverID": "5578",
+        "commanderName": "NKVD Rifle Disruption Tactics",
+        "description": "Use the intel gathering capabilities of the army within an army; NKVD code breakers can track enemy orders while a Commissar can oversee frontline operations and inspire nearby troops.",
+        "races": [
+            "soviet"
+        ],
+        "abilities": [
+            {
+                "name": "Radio Intercept",
+                "description": "Intercepts enemy radio transmissions providing valuable intel on enemy actions."
+            },
+            {
+                "name": "KV-8 Flamethrower Tank",
+                "description": "KV-8 Flamethrower tanks can be ordered to the battlefield from the Mechanized Armor Kampaneya. This tank excels against infantry and light vehicles."
+            },
+            {
+                "name": "Scorched Earth Policy",
+                "description": "Engineers can place traps on friendly points that prevents them from being captured, but denies resource generation when triggered."
+            },
+            {
+                "name": "Commissar Command Squad",
+                "description": "A Commissar and his retinue are dispatched to the front to support and motivate troops."
+            },
+            {
+                "name": "Anti-Tank Overwatch",
+                "description": "Artillery will be called in to destroy hostile tanks within the target zone. The longer a vehicle is visible, the more intense the barrage will be."
+            }
+        ]
+    },
+    "5579": {
+        "serverID": "5579",
+        "commanderName": "Shock Motor Heavy Tactics",
+        "description": "Shock armies are equipped with heavy breakthrough weapons; durable Shock Troops and ISU-152 heavy assault guns can break enemy lines while special training helps identify enemy tanks. Request IL-2s to neutralize pockets of infantry.",
+        "races": [
+            "soviet"
+        ],
+        "abilities": [
+            {
+                "name": "ISU-152 Heavy Assault Gun",
+                "description": "The powerful ISU-152 Heavy Assault Gun can be deployed to the battlefield."
+            },
+            {
+                "name": "IL-2 Precision Bombing Strike",
+                "description": "The IL-2 will make a high-speed bombing run, clustering four FAB-50 50kg bombs into the target area."
+            },
+            {
+                "name": "Conscript Repair Kit",
+                "description": "Demonstrating pure ingenuity, Conscripts can repair any damaged structure, vehicle, or bridge."
+            },
+            {
+                "name": "Armored Vehicle Detection",
+                "description": "Conscripts and elite infantry are able to detect enemy vehicles at about double their sight range due to the vehicle's particular noise signatures."
+            },
+            {
+                "name": "Shock Troops",
+                "description": "Special Command Troops can be deployed to the battlefield. Click and select location to deploy."
+            }
+        ]
+    },
+    "5580": {
+        "serverID": "5580",
+        "commanderName": "Shock Rifle Frontline Tactics",
+        "description": "Engage enemy heavy tanks and troops; IS-2 Heavy Tanks and KV-8 flamethrowers can engage heavily defended locations along with sub machine gun armed Shock Troops. Aggressive action is backstopped by camouflage anti-tank guns.",
+        "races": [
+            "soviet"
+        ],
+        "abilities": [
+            {
+                "name": "Shock Troops",
+                "description": "Special Command Troops can be deployed to the battlefield. Click and select location to deploy."
+            },
+            {
+                "name": "KV-8 Flamethrower Tank",
+                "description": "KV-8 Flamethrower tanks can be ordered to the battlefield from the Mechanized Armor Kampaneya. This tank excels against infantry and light vehicles."
+            },
+            {
+                "name": "Anti-Tank Gun Ambush Tactics",
+                "description": "All mobile anti-tank gun crews can hide their weapon and camouflage themselves."
+            },
+            {
+                "name": "Incendiary Artillery Barrage",
+                "description": "Areas of the map can be bombarded with incendiary rounds to burn infantry and deny access."
+            },
+            {
+                "name": "IS-2 Heavy Tank",
+                "description": "An IS-2 Heavy Tank can be deployed to the battlefield."
+            }
+        ]
+    },
+    "7546": {
+        "serverID": "7546",
+        "commanderName": "Defensive Tactics (Community)",
+        "description": "This doctrine provides additional defensive gameplay options. Additional structures can be used to slow the advance of the enemy, while the advanced DShK machinegun and light M-42 AT gun provide valuable fire support.",
+        "races": [
+            "soviet"
+        ],
+        "abilities": [
+            {
+                "name": "DShK 38 Heavy Machine Gun",
+                "description": "Special DShK 38 Heavy Machine Gun can be deployed to the battlefield. Click and select location for deployment."
+            },
+            {
+                "name": "Advanced Fortifications",
+                "description": "Vehicle blocking Tank Traps and PMD-6 anti-personnel mines can be constructed by Combat Engineers."
+            },
+            {
+                "name": "Anti-Tank Overwatch",
+                "description": "Artillery will be called in to destroy hostile tanks within the target zone. The longer a vehicle is visible, the more intense the barrage will be."
+            },
+            {
+                "name": "HM-38 120mm Mortar Squad",
+                "description": "The heavy HM-38 120mm mortar squad can be ordered in to the battlefield. Effective against static targets and infantry."
+            },
+            {
+                "name": "M-42 45mm AT Gun",
+                "description": "Special light M-42 45mm AT Gun can be deployed to the battlefield. Click and select location to deploy."
+            }
+        ]
+    },
+    "7246": {
+        "serverID": "7246",
+        "commanderName": "Counterattack Tactics",
+        "description": "This doctrine allows you to strike back at the enemy with overwhelming firepower. Use a recon plane to pinpoint the enemy weak-points before attacking with the combined firepower of assault infantry, heavy tanks and the B-4 203mm super heavy artillery.",
+        "races": [
+            "soviet"
+        ],
+        "abilities": [
+            {
+                "name": "KV-1 Heavy Tank",
+                "description": "A KV-1 Heavy Tank can be ordered in to the battlefield."
+            },
+            {
+                "name": "Recon Overflight",
+                "description": "Available planes will fly a high speed loiter of the targeted area."
+            },
+            {
+                "name": "Shock Troops",
+                "description": "Special Command Troops can be deployed to the battlefield. Click and select location to deploy."
+            },
+            {
+                "name": "B-4 203mm Howitzer",
+                "description": "The B-4 203mm Howitzer can be built by Combat Engineers. It fires a single devastating shot and can be used for direct fire against vehicles."
+            },
+            {
+                "name": "For Mother Russia",
+                "description": "All infantry and team weapon units on the map gain increased combat effectiveness and infantry run at increased speed."
+            }
+        ]
+    },
+    "7543": {
+        "serverID": "7543",
+        "commanderName": "Soviet Industry Tactics",
+        "description": "Use the might of the Soviet Union’s vast industries to overwhelm the enemy with vehicles. Support your tanks with advanced repair stations and repair crews before crushing the enemy with the formidable Kliment Voroshilov KV-2 Heavy Assault Tank.",
+        "races": [
+            "soviet"
+        ],
+        "abilities": [
+            {
+                "name": "Allied Supply Drop",
+                "description": "A cargo plane will deliver available fuel to the target location, varying in amount based on availability. The cargo plane is highly vulnerable to anti-air units."
+            },
+            {
+                "name": "KV-2 Heavy Assault Tank",
+                "description": "A KV-2 Heavy Assault Tank can be ordered in to the battlefield."
+            },
+            {
+                "name": "Repair Station",
+                "description": "Allows engineers to build an immobile repair station which sends out engineers to repair nearby vehicles."
+            },
+            {
+                "name": "Vehicle Crew Repair Training",
+                "description": "Vehicle crews gain an ability to repair battlefield damage on their vehicles once they leave combat."
+            },
+            {
+                "name": "KV-8 Flamethrower Tank",
+                "description": "KV-8 Flamethrower tanks can be ordered to the battlefield from the Mechanized Armor Kampaneya. This tank excels against infantry and light vehicles."
+            }
+        ]
+    },
+    "258974": {
+        "serverID": "258974",
+        "commanderName": "Lend Lease Tactics",
+        "description": "Taking the weapons from the Western Powers and combine them with Soviet tenacity to form a formidable force. Utilize resources delivered from the west to fuel vehicle production, and then overwhelm the enemy with imported Sherman tanks.",
+        "races": [
+            "soviet"
+        ],
+        "abilities": [
+            {
+                "name": "DShK 38 Heavy Machine Gun",
+                "description": "Special DShK 38 Heavy Machine Gun can be deployed to the battlefield. Click and select location for deployment."
+            },
+            {
+                "name": "Conscript Repair Kit",
+                "description": "Demonstrating pure ingenuity, Conscripts can repair any damaged structure, vehicle, or bridge."
+            },
+            {
+                "name": "M4C Sherman",
+                "description": "New vehicle - 76mm M4C Sherman Medium Tank. Available for deployment at the Mechanized Armor Kampaneya."
+            },
+            {
+                "name": "M5 Half-track Assault Group",
+                "description": "Dispatch a M5 halftrack full of Guard Assault Troops armed with PPSh submachine guns and SVT rifles."
+            },
+            {
+                "name": "Allied Supply Drop",
+                "description": "A cargo plane will deliver available fuel to the target location, varying in amount based on availability. The cargo plane is highly vulnerable to anti-air units."
+            }
+        ]
+    },
+    "7544": {
+        "serverID": "7544",
+        "commanderName": "Not One Step Back Tactics",
+        "description": "Defend the Motherland at all costs. This doctrine provides a number of abilities that give access to more units and improve the defense of existing units, while making it more difficult to withdraw.",
+        "races": [
+            "soviet"
+        ],
+        "abilities": [
+            {
+                "name": "No Retreat No Surrender!",
+                "description": "Command musters all available assets to increase resource income, but retreating is no longer possible."
+            },
+            {
+                "name": "Manpower Blitz",
+                "description": "High Command dispatches emergency manpower immediately, but manpower income will be reduced over time."
+            },
+            {
+                "name": "Hold the Line!",
+                "description": "All soviet units will gain large offensive and defensive boosts, but be unable to move."
+            },
+            {
+                "name": "Scorched Earth Policy",
+                "description": "Engineers can place traps on friendly points that prevents them from being captured, but denies resource generation when triggered."
+            },
+            {
+                "name": "Commissar Squad",
+                "description": "High command allows the dispatch of Soviet Commissars, units who inspire nearby infantry."
+            }
+        ]
+    },
+    "7542": {
+        "serverID": "7542",
+        "commanderName": "Partisan Tactics",
+        "description": "The Soviet armed forces coordinate with local partisan groups to improve operations behind enemy lines. Utilize unique Partisan squads to harass the enemy and take out key targets, while local spies and the soviet air force provide information on enemy movement.",
+        "races": [
+            "soviet"
+        ],
+        "abilities": [
+            {
+                "name": "Partisan Troops",
+                "description": "Partisans are irregular military units who excel at destroying targets of opportunity behind the lines."
+            },
+            {
+                "name": "Partisan Tank Hunters",
+                "description": "Anti Vehicle Partisans are irregular military units who excel at destroying vehicles behind the lines."
+            },
+            {
+                "name": "Spy Network",
+                "description": "Using underground infiltration units, temporarily reveal all enemy units on the mini-map."
+            },
+            {
+                "name": "Mark Vehicle",
+                "description": "Targeted vehicle is subject to an increase in focused fire from nearby opponents."
+            },
+            {
+                "name": "Radio Intercept",
+                "description": "Intercepts enemy radio transmissions providing valuable intel on enemy actions."
+            }
+        ]
+    },
+    "7545": {
+        "serverID": "7545",
+        "commanderName": "Tank Hunter Tactics",
+        "description": "Disable enemy tanks and armored vehicles more easily with a variety of upgrades and abilities to support existing AT options. ML-20s can shell the enemy from afar and when that fails IL-2 planes can deliver a devastating anti-tank bombing run.",
+        "races": [
+            "soviet"
+        ],
+        "abilities": [
+            {
+                "name": "Tank Hunter Ambush Tactics",
+                "description": "All mobile anti-tank gun crews and armored vehicles can camouflage themselves to avoid detection."
+            },
+            {
+                "name": "IL-2 PTAB Anti-Tank Bombing Run",
+                "description": "Drops a multitude of smaller anti-tank bombs over a wide area."
+            },
+            {
+                "name": "ML-20 152mm Gun-Howitzer",
+                "description": "The powerful 152mm ML-20 Gun-Howitzer can be built by Combat Engineers. Its shells can reach vast areas of the battlefield."
+            },
+            {
+                "name": "PMD-6M Light Anti-Vehicle Mines",
+                "description": "Allows Combat Engineers and Conscripts to build cheap and quick to place anti-vehicle mines that will temporarily stop vehicles."
+            },
+            {
+                "name": "Conscript PTRS Package",
+                "description": "Conscripts can be upgraded with Tank Hunter Packages to improve their potency against armored vehicles."
+            }
+        ]
+    },
+    "7247": {
+        "serverID": "7247",
+        "commanderName": "Urban Defense Tactics",
+        "description": "Focused on defending dense urban centers with extreme resilience, this doctrine offers additional means to fight in tight spaces. Forward Headquarters will offer a frontline staging ground to support nearby troops, while traps and incendiary artillery slow the enemy advance.",
+        "races": [
+            "soviet"
+        ],
+        "abilities": [
+            {
+                "name": "Shock Troops",
+                "description": "Special Command Troops can be deployed to the battlefield. Click and select location to deploy."
+            },
+            {
+                "name": "M-42 45mm AT Gun",
+                "description": "Special light M-42 45mm AT Gun can be deployed to the battlefield. Click and select location to deploy."
+            },
+            {
+                "name": "Forward Headquarters",
+                "description": "Designate a Forward HQ or build a field camp. These structures can provide nearby infantry units with medical attention, reinforce understrength units, and inspiration in combat."
+            },
+            {
+                "name": "Booby Trap Territory",
+                "description": "A trap can be placed on a point that will automatically attack enemy units who try to capture that territory."
+            },
+            {
+                "name": "KV-2 Heavy Assault Tank",
+                "description": "A KV-2 Heavy Assault Tank can be ordered in to the battlefield."
+            }
+        ]
+    },
+    "5923": {
+        "serverID": "5923",
+        "commanderName": "Armored Assault Tactics",
+        "description": "Heavy and mobile armored warfare; mix the power of the IS-2 Heavy Tank with the mobility of the T-34/85 for armored versatility. Air power can destroy enemy forces identified arriving on the battlefield.",
+        "races": [
+            "soviet"
+        ],
+        "abilities": [
+            {
+                "name": "Radio Intercept",
+                "description": "Intercepts enemy radio transmissions providing valuable intel on enemy actions."
+            },
+            {
+                "name": "Vehicle Crew Repair Training",
+                "description": "Vehicle crews gain an ability to repair battlefield damage on their vehicles once they leave combat."
+            },
+            {
+                "name": "IS-2 Heavy Tank",
+                "description": "An IS-2 Heavy Tank can be deployed to the battlefield."
+            },
+            {
+                "name": "T-34/85 Medium Tank",
+                "description": "A T-34/85, with a powerful 85mm gun, can be requisitioned for the battlefield."
+            },
+            {
+                "name": "IL-2 Sturmovik Attacks",
+                "description": "IL-2 Sturmovik will loiter over the battlefield, strafing targets of opportunity with its powerful 23mm cannons."
+            }
+        ]
+    },
+    "5925": {
+        "serverID": "5925",
+        "commanderName": "Terror Tactics",
+        "description": "Terror – to cause fear. Short-range Shock Troops, flamethrower-equipped KV-8 tanks, 152mm heavy artillery, morale-sapping propaganda, and 50kg bombs delivered by the IL-2; scared yet?",
+        "races": [
+            "soviet"
+        ],
+        "abilities": [
+            {
+                "name": "Shock Troops",
+                "description": "Special Command Troops can be deployed to the battlefield. Click and select location to deploy."
+            },
+            {
+                "name": "IL-2 Precision Bombing Strike",
+                "description": "The IL-2 will make a high-speed bombing run, clustering four FAB-50 50kg bombs into the target area."
+            },
+            {
+                "name": "Fear Propaganda Artillery",
+                "description": "Airburst propaganda leaflets make targeted soldiers question the morality of their actions."
+            },
+            {
+                "name": "KV-8 Flamethrower Tank",
+                "description": "KV-8 Flamethrower tanks can be ordered to the battlefield from the Mechanized Armor Kampaneya. This tank excels against infantry and light vehicles."
+            },
+            {
+                "name": "ML-20 152mm Gun-Howitzer",
+                "description": "The powerful 152mm ML-20 Gun-Howitzer can be built by Combat Engineers. Its shells can reach vast areas of the battlefield."
+            }
+        ]
+    },
+    "450495": {
+        "serverID": "450495",
+        "commanderName": "Overwatch Doctrine",
+        "description": "Utilize advance field reconnaissance to coordinate your army positioning. Territory that you are in control of will be rigged with flares to send early warning from enemy attacks. Coordinate battles within friendly territory to gain a tactical advantage. A Goliath also available for deployment to help dislodge forward defenses as well as aerial Stukas are prepared to assault any position.",
+        "races": [
+            "wgerman"
+        ],
+        "abilities": [
+            {
+                "name": "For The Fatherland!",
+                "description": "Infantry in friendly territory will recieve a defensive bonus and movement speed increase for the duration of the ability."
+            },
+            {
+                "name": "Sector Assault",
+                "description": "Stukas will automatically recon and attack enemy units in the designated area."
+            },
+            {
+                "name": "Early Warning Systems",
+                "description": "Advanced systems in the form of warning flares and sWS receivers are available for use. Goliaths now available and can demolish enemy fortifications from a safe distance."
+            },
+            {
+                "name": "leFH 18 Artillery",
+                "description": "This light 10.5cm Field Howitzer doesn't have the destructive power of some Soviet artillery, but it counters with a good rate of fire and reasonably long range."
+            },
+            {
+                "name": "Jaeger Light Infantry Recon Squad",
+                "description": "A Jaeger Light Infantry Recon Squad can be deployed to the battlefield. This small squad is ideal for recon and scavenging resources."
+            }
+        ]
+    },
+    "186419": {
+        "serverID": "186419",
+        "commanderName": "Breakthrough Doctrine",
+        "description": "Break through the enemy line with heavy armor and elite infantry support. Panzerfusiliers will recon the enemy position while the \"Jagdtiger\" Panzerjäger Tiger Ausf. B Heavy Tank Destroyer crushes the enemy armor allowing infantry to advance.",
+        "races": [
+            "wgerman"
+        ],
+        "abilities": [
+            {
+                "name": "Assault Artillery",
+                "description": "Barrages the target zone with high explosive shells followed by a smokescreen to cover the advance."
+            },
+            {
+                "name": "Breakthrough Tactics",
+                "description": "Infantry units are trained to push through enemy lines more quickly. Enemy territory is neutralized quickly."
+            },
+            {
+                "name": "Panzerfüsiliers",
+                "description": "Panzerfüsiliers can be deployed to the battlefield. These versatile troops can fulfill a number of battlefield roles through their upgrades."
+            },
+            {
+                "name": "Jagdtiger Panzerjäger Tiger Ausf. B",
+                "description": "The intimidating \"Jagdtiger\" Panzerjäger Tiger Ausf. B with its 128mm PaK 44 can be deployed to the battlefield. This unit has immense range and damage against vehicles."
+            },
+            {
+                "name": "Sturm Offizier",
+                "description": "Deploy an Sturm Offizier and his Obersoldaten bodyguard. This front-line combat officer improves has a number of abilities to weaken the enemy and support nearby troops."
+            }
+        ]
+    },
+    "450496": {
+        "serverID": "450496",
+        "commanderName": "undefined",
+        "description": "undefined",
+        "races": [],
+        "abilities": []
+    },
+    "257800": {
+        "serverID": "257800",
+        "commanderName": "Elite Armored Doctrine",
+        "description": "Use superior equipment and experienced crewmen to augment your armored forces. Plan your tactics with upgraded scout cars or recover your armor with an Emergency Repair. Use the Sturmtiger to spearhead the assault.",
+        "races": [
+            "wgerman"
+        ],
+        "abilities": [
+            {
+                "name": "Sd.KFz. 221",
+                "description": "The Sd.Kfz. 221 is a fast scout car armed with a machine gun to engage infantry targets."
+            },
+            {
+                "name": "Emergency Repairs",
+                "description": "Vehicle crews gain the ability to repair critical damage on their vehicles. The crew is very vulnerable during this repair procedure."
+            },
+            {
+                "name": "Panzer Commander",
+                "description": "The Panzer IV, Panther, & King Tiger can be upgraded with a Panzer Commander that can survey the battlefield and call in coordinated artillery strikes."
+            },
+            {
+                "name": "High Explosive Anti-Tank (HEAT) Shells",
+                "description": "Tanks are now issued HEAT ammunition for increased penetration."
+            },
+            {
+                "name": "Sturmtiger",
+                "description": "The Sturmmörserwagen 606/4 mit 38cm RW 61, more commonly known as the Sturmtiger, is an assault vehicle capable of firing a 376kg rocket-assisted shell devastating to enemy force concentrations or structures."
+            }
+        ]
+    },
+    "450494": {
+        "serverID": "450494",
+        "commanderName": "Feuersturm Doctrine",
+        "description": "Assault enemy positions with upgraded infantry supported by trucks that keep units supplied with critical munitions. Call in an off-map rocket barrage which will bombard the area with multiple 280mm rocket artillery before deploying the Flammpanzer 38 to clear out remaining resistance.",
+        "races": [
+            "wgerman"
+        ],
+        "abilities": [
+            {
+                "name": "Assault Package",
+                "description": "Sturmpioneers can upgrade to Flammenwerfer 35 Flamethrower while Volksgrenadiers can be equipped with MP40s and a variety of grenades."
+            },
+            {
+                "name": "Incendiary Munitions",
+                "description": "Le.IG 18s are given incendiary rounds to saturate target zones with fire."
+            },
+            {
+                "name": "Opel Blitz Truck",
+                "description": "An Opel Blitz is dispatched to the target area. This lightly protected truck is capable of supplying troops with munitions while carrying and reinforcing infantry on the field."
+            },
+            {
+                "name": "Flammpanzer 38 'Hetzer'",
+                "description": "The Flammpanzer 38 is a Jagdpanzer 38 modified with a Keobe flamethrower in place of the main gun."
+            },
+            {
+                "name": "Rocket Barrage",
+                "description": "Call in an Off-map Barrage of devastating 280mm Rockets to target area."
+            }
+        ]
+    },
+    "259929": {
+        "serverID": "259929",
+        "commanderName": "Fortifications Doctrine",
+        "description": "Hold back the enemy at all costs with heavy defensive structures. Infantry can construct advanced defensive buildings. Heavy weapons such as the Pak43 and leFH 18 can be combined with zeroing artillery to zone out and eradicate breakthroughs.",
+        "races": [
+            "wgerman"
+        ],
+        "abilities": [
+            {
+                "name": "Field Defenses",
+                "description": "Volksgrenadiers can build minefields and bunkers."
+            },
+            {
+                "name": "Pak 43 Emplacement",
+                "description": "Pioneers and Sturmpioneers are able to construct powerful Pak 43 88mm anti-tank emplacements."
+            },
+            {
+                "name": "Zeroing Artillery",
+                "description": "Automatically attacks visible enemy units in the target area. Artillery rate of fire ramps up the longer the target is visible."
+            },
+            {
+                "name": "leFH 18 Artillery",
+                "description": "This light 10.5cm Field Howitzer doesn't have the destructive power of some Soviet artillery, but it counters with a good rate of fire and reasonably long range."
+            },
+            {
+                "name": "Heavy Fortifications",
+                "description": "Sturmpioneers can construct Tank Traps, Flak Emplacements, and Trenches."
+            }
+        ]
+    },
+    "452452": {
+        "serverID": "452452",
+        "commanderName": "Grand Offensive Doctrine",
+        "description": "Command all out assaults with elite infantry units, air reconnaissance, and devastating armored command elements, including the Pzkfw VI Tiger Ausf. E.",
+        "races": [
+            "wgerman"
+        ],
+        "abilities": [
+            {
+                "name": "Panzerfüsiliers",
+                "description": "Panzerfüsiliers can be deployed to the battlefield. These versatile troops can fulfill a number of battlefield roles through their upgrades."
+            },
+            {
+                "name": "Stuka Smoke Drop",
+                "description": "Large smoke pots are dropped on the battlefield, blocking line of sight."
+            },
+            {
+                "name": "Infrared StG44 Package",
+                "description": "Obersoldaten squads can be upgraded with StG44's equipped with infrared scopes. These special weapons are powerful against enemy units in cover, and in medium range combat."
+            },
+            {
+                "name": "Panzer Commander",
+                "description": "The Panzer IV, Panther, & King Tiger can be upgraded with a Panzer Commander that can survey the battlefield and call in coordinated artillery strikes."
+            },
+            {
+                "name": "Tiger Tank",
+                "description": "Excellent armor and an even better gun. The Tiger can tackle any foe on the battlefield. Available once Schwerer Panzer Headquarters is deployed."
+            }
+        ]
+    },
+    "186418": {
+        "serverID": "186418",
+        "commanderName": "Luftwaffe Ground Forces Doctrine",
+        "description": "Supporting forces of the Luftwaffe will fight on the ground alongside the army. Recon enemy positions and set up heavy fortifications and flak emplacements while using the elite Fallschirmjäger to flank and destroy. Use an airborne assault to hold key enemy territories.",
+        "races": [
+            "wgerman"
+        ],
+        "abilities": [
+            {
+                "name": "Fallschirmjäger",
+                "description": "Fallschirmjäger can be deployed to the battlefield. These elite infantry units are excellent against infantry at all ranges."
+            },
+            {
+                "name": "Stuka Smoke Reconnaissance",
+                "description": "Available aircraft will make a reconnaissance pass on the targeted location to reveal enemy forces and drop smoke at the target area."
+            },
+            {
+                "name": "Valiant Assault",
+                "description": "Inspire mobile infantry troops to move quickly and attack more effectively."
+            },
+            {
+                "name": "Heavy Fortifications",
+                "description": "Sturmpioneers can construct Tank Traps, Flak Emplacements, and Trenches."
+            },
+            {
+                "name": "Airborne Assault",
+                "description": "Two JU-87 Stukas will strafe and suppress infantry then patrol the area, targeting enemy vehicles with heavy 37mm cannons. Fallschirmjager squads may be reinforced anywhere on the battlefield."
+            }
+        ]
+    },
+    "259657": {
+        "serverID": "259657",
+        "commanderName": "Scavenge Doctrine",
+        "description": "Gather whatever resources you can from the battlefield and defeated enemies. Troops are trained to be more thorough in their salvage operations while infiltrating light infantry can disrupt enemy supplies and lay traps. With a large amount of resources stockpiled, more devastating artillery can be deployed on the enemy strongpoints.",
+        "races": [
+            "wgerman"
+        ],
+        "abilities": [
+            {
+                "name": "Infiltration Tactics",
+                "description": "Infantry who are kept out of combat for long periods of time will gain the ability to surprise assault, allowing them to use a special grenade ability."
+            },
+            {
+                "name": "Thorough Salvage",
+                "description": "Salvaging will take more time, but also yields munitions resource."
+            },
+            {
+                "name": "105mm Howitzer Barrage",
+                "description": "A barrage of 105mm artillery shells will be fired at the target location. The number of shells fired depends on your current stored munitions."
+            },
+            {
+                "name": "Jaeger Light Infantry Recon Squad",
+                "description": "A Jaeger Light Infantry Recon Squad can be deployed to the battlefield. This small squad is ideal for recon and scavenging resources."
+            },
+            {
+                "name": "Flakpanzer IV Ostwind",
+                "description": "The Flakpanzer IV Ostwind can be deployed to the battlefield. This unit is effective against infantry and aircraft."
+            }
+        ]
+    },
+    "451591": {
+        "serverID": "451591",
+        "commanderName": "Scavenge Doctrine - Jesulin Edition",
+        "description": "Gather whatever resources you can from the battlefield and defeated enemies. Troops are trained to be more thorough in their salvage operations while infiltrating light infantry can disrupt enemy supplies and lay traps. With a large amount of resources stockpiled, more devastating artillery can be deployed on the enemy strongpoints.",
+        "races": [
+            "wgerman"
+        ],
+        "abilities": [
+            {
+                "name": "Infiltration Tactics",
+                "description": "Infantry who are kept out of combat for long periods of time will gain the ability to surprise assault, allowing them to use a special grenade ability."
+            },
+            {
+                "name": "Thorough Salvage",
+                "description": "Salvaging will take more time, but also yields munitions resource."
+            },
+            {
+                "name": "105mm Howitzer Barrage",
+                "description": "A barrage of 105mm artillery shells will be fired at the target location. The number of shells fired depends on your current stored munitions."
+            },
+            {
+                "name": "Jaeger Light Infantry Recon Squad",
+                "description": "A Jaeger Light Infantry Recon Squad can be deployed to the battlefield. This small squad is ideal for recon and scavenging resources."
+            },
+            {
+                "name": "Flakpanzer IV Ostwind",
+                "description": "The Flakpanzer IV Ostwind can be deployed to the battlefield. This unit is effective against infantry and aircraft."
+            }
+        ]
+    },
+    "186417": {
+        "serverID": "186417",
+        "commanderName": "Special Operations Doctrine",
+        "description": "Use stealth and surprise to catch the enemy off guard and defeat the before they can react. Units can hide themselves from the enemy until they are ready to strike. When attacking, combine a Panther PzKpfw V Command Tank with a grenade assault.",
+        "races": [
+            "wgerman"
+        ],
+        "abilities": [
+            {
+                "name": "Artillery Flares",
+                "description": "Flares are fired at the target location, revealing the area."
+            },
+            {
+                "name": "Infiltration Tactics",
+                "description": "Infantry who are kept out of combat for long periods of time will gain the ability to surprise assault, allowing them to use a special grenade ability."
+            },
+            {
+                "name": "Radio Silence",
+                "description": "When activated, all units are hidden on the enemy mini-map."
+            },
+            {
+                "name": "Panther Command Tank",
+                "description": "An elite panther leader can be deployed to the battle, improves the sight and movement of vehicles."
+            },
+            {
+                "name": "Infrared StG44 Package",
+                "description": "Obersoldaten squads can be upgraded with StG44's equipped with infrared scopes. These special weapons are powerful against enemy units in cover, and in medium range combat."
+            }
+        ]
+    },
+    "347076": {
+        "serverID": "347076",
+        "commanderName": "undefined",
+        "description": "undefined",
+        "races": [
+            "wgerman"
+        ],
+        "abilities": [
+            {
+                "name": "Fallschirmjäger",
+                "description": "Fallschirmjäger can be deployed to the battlefield. These elite infantry units are excellent against infantry at all ranges."
+            },
+            {
+                "name": "MG42 Heavy Machine Gun Team",
+                "description": "A MG42 Heavy Machine Gun Team can be deployed to the battlefield. This weapon is effective at suppressing massed infantry."
+            },
+            {
+                "name": "Panzerfüsiliers",
+                "description": "Panzerfüsiliers can be deployed to the battlefield. These versatile troops can fulfill a number of battlefield roles through their upgrades."
+            },
+            {
+                "name": "Flakpanzer IV Ostwind",
+                "description": "The Flakpanzer IV Ostwind can be deployed to the battlefield. This unit is effective against infantry and aircraft."
+            },
+            {
+                "name": "Jagdtiger Panzerjäger Tiger Ausf. B",
+                "description": "The intimidating \"Jagdtiger\" Panzerjäger Tiger Ausf. B with its 128mm PaK 44 can be deployed to the battlefield. This unit has immense range and damage against vehicles."
+            }
+        ]
+    }
+}

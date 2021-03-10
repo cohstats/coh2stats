@@ -1,9 +1,9 @@
 import { ResponsiveBar } from "@nivo/bar";
 import React from "react";
 import {
-    convertCommanderIDToName,
     sortArrayOfObjectsByTheirPropertyValue,
 } from "../../coh/helpers";
+import {convertCommanderIDToName} from "../../coh/commanders";
 
 export const CommandersBarChart = (commanders: Record<number, number>) => {
     const simpleMapsData = [];
