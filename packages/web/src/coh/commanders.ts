@@ -10,18 +10,20 @@ const convertCommanderIDToName = (commanderID: number): string => {
     }
 };
 
-const getCommanderData = (commanderID: number): Record<string, any> => {
+const getCommanderData = (commanderID: string): Record<string, any> => {
     if (Object.prototype.hasOwnProperty.call(allCommanders, commanderID)) {
         return allCommanders[commanderID];
     } else {
         return {};
     }
-}
+};
 
-const getCommanderByRaces = (raceName: "wermacht" | "usf" | "soviet" | "wgerman" | "british"): Array<Record<string, any>> => {
-    return Object.values(allCommanders).filter(commanderData => {
+const getCommanderByRaces = (
+    raceName: "wermacht" | "usf" | "soviet" | "wgerman" | "british",
+): Array<Record<string, any>> => {
+    return Object.values(allCommanders).filter((commanderData) => {
         return commanderData["races"][0] == raceName;
-    })
-}
+    });
+};
 
-export {convertCommanderIDToName, getCommanderData, getCommanderByRaces}
+export { convertCommanderIDToName, getCommanderData, getCommanderByRaces };

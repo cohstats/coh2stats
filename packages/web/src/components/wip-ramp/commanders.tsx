@@ -1,52 +1,59 @@
 import React from "react";
-import { Card, Col, Row, Image, List, Divider, Avatar, Descriptions, Badge } from "antd";
-import background from "/resources/commanderImage/placeholder.svg";
+import {
+    Card,
+    Col,
+    Row,
+    Image,
+    List,
+    Divider,
+    Avatar,
+    Descriptions,
+    Badge,
+    Space,
+    Breadcrumb,
+    Menu,
+} from "antd";
+import myBgnd from "/resources/commanderImage/placeholder.svg";
 import { ClockCircleOutlined } from "@ant-design/icons";
+import { getCommanderData } from "../../coh/commanders";
+import { useParams } from "react-router";
+
 export const RampComponent = () => {
-    let myData = {
-        serverID: "186415",
-        commanderName: "Armor Company",
-        description:
-            "Overwhelm the enemy with elite American armored vehicles and supporting infantry. Assault engineers can clear fortifications to allow vehicles to advance, while Sherman Bulldozers can be used to setup a roadblock or defensive line. The enemy\u2019s strongpoints can be bombarded with 240mm artillery prior to an attack.",
-        races: ["usf"],
-        abilities: [
-            {
-                reference: "commander_ability\\aef\\commander\\ability\\m10_deploy_clone",
-                name: "M10 'Wolverine' Tank Destroyer",
-                description:
-                    "Deploy an M10 Tank Destroyer. The 'Wolverine's'' 3 inch main gun is effective against all but the heaviest enemy armored vehicles. Effective vs tanks and vehicles.",
-            },
-            {
-                reference:
-                    "commander_ability\\aef\\commander\\ability\\sherman_bulldozer_dispatch",
-                name: "105mm Bulldozer Sherman",
-                description:
-                    "An M4A3 Sherman Bulldozer tank equipped with a 105mm howitzer for engaging infantry and structures can be called into the battlefield.",
-            },
-            {
-                reference:
-                    "commander_ability\\aef\\commander\\ability\\assault_engineer_dispatch",
-                name: "Assault Engineers",
-                description:
-                    "An Assault Engineer Squad with short range sub machine guns can be ordered in to the battlefield.",
-            },
-            {
-                reference: "commander_ability\\aef\\commander\\ability\\siege_240mm_artillery",
-                name: "240mm Howitzer Barrage",
-                description: "Call in a 240mm Howitzer barrage to level the target area.",
-            },
-            {
-                reference: "commander_ability\\aef\\commander\\passive\\elite_vehicle_crews",
-                name: "Elite Vehicle Crews Upgrade",
-                description:
-                    "Vehicle crews are upgraded with Thompson submachine guns, increased repair speeds and earn veterancy at an increased rate.",
-            },
-        ],
-    };
+    const { race, commanderID } = useParams<{
+        race: string;
+        commanderID: string;
+    }>();
+
+    const myData = getCommanderData(commanderID);
+
+    const menu = (
+        <Menu>
+            <Menu.Item>
+                <a target="_blank" rel="noopener noreferrer" href="USA">
+                    US Army
+                </a>
+            </Menu.Item>
+            <Menu.Item>
+                <a target="_blank" rel="noopener noreferrer" href="Wehrmacht">
+                    Wehrmacht
+                </a>
+            </Menu.Item>
+            <Menu.Item>
+                <a target="_blank" rel="noopener noreferrer" href="Soviet">
+                    Soviet
+                </a>
+            </Menu.Item>
+        </Menu>
+    );
 
     function ImageDemo() {
         return (
-            <Image width={150} preview={false} src="/resources/commanderImage/placeholder.svg" />
+            <Image
+                width={100}
+                height={130}
+                preview={false}
+                src="/resources/commanderImage/placeholder.svg"
+            />
         );
     }
 
@@ -64,59 +71,86 @@ export const RampComponent = () => {
         }
     }
 
+    function toCapital(textIn: String) {
+        return textIn.toUpperCase();
+    }
+    if (Object.keys(myData).length === 0 && myData.constructor === Object) {
+        return (
+            <>
+                <h1>Commander ID {commanderID} was not found.</h1>
+            </>
+        );
+    }
+
     return (
         <>
-            <Row gutter={[16, 16]}>
-                <Col span={24}></Col>
-            </Row>
-
-            <Row>
-                <Col span={2}></Col>
-                <Col span={4}></Col>
-                <Col span={2}>
-                    <ImageDemo />
-                </Col>
-                <Col span={10}>
-                    <Descriptions title={myData.commanderName}>
-                        <Descriptions.Item>{myData.description}</Descriptions.Item>
-                    </Descriptions>
-                </Col>
-                <Col span={6}></Col>
-            </Row>
-            <Divider />
-            <Row>
-                <Col span={6}></Col>
-                <Col span={12}>
-                    <List
-                        itemLayout="horizontal"
-                        dataSource={myData.abilities}
-                        renderItem={(item) => (
-                            <div>
-                                <List.Item>
-                                    <List.Item.Meta
-                                        avatar={
-                                            <div>
-                                                <Avatar
-                                                    src="/resources/commanderImage/placeholder.svg"
-                                                    shape="square"
-                                                    size={64}
-                                                />
-                                                <Badge count={0} showZero offset={[0, -32]}>
-                                                    <a href="#" className="head-example" />
-                                                </Badge>
-                                            </div>
-                                        }
-                                        title={<a href="https://ant.design">{item.name}</a>}
-                                        description={item.description}
-                                    />
-                                </List.Item>
-                            </div>
-                        )}
-                    />
-                </Col>
+            <div>
+                <Row>
+                    <Col span={6}></Col>
+                    <Col style={{ padding: "2vh" }} span={12}></Col>
+                    <Col span={6}></Col>
+                </Row>
+                <Row>
+                    <Col span={2}></Col>
+                    <Col span={4}></Col>
+                    <Col style={{ padding: "0px 20px 0px 0px" }} flex="100px">
+                        <img
+                            src="https://www.coh2.org/uploads/hosting/okw_icons/OKW_Special_Operations.jpg"
+                            width="130"
+                            height="169"
+                        />
+                        <h2 style={{ textAlign: "center", margin: "-5px 0px 0px 0px" }}>
+                            {myData.races[0].toUpperCase()}
+                        </h2>
+                    </Col>
+                    <Col span={10}>
+                        <h1>{myData.commanderName}</h1>
+                        <Descriptions>
+                            <Descriptions.Item>{myData.description}</Descriptions.Item>
+                        </Descriptions>
+                    </Col>
+                    <Col span={6}></Col>
+                </Row>
                 <Divider />
-                <Col span={6}></Col>
-            </Row>
+                <Row>
+                    <Col span={6}></Col>
+                    <Col span={12}>
+                        <List
+                            itemLayout="horizontal"
+                            dataSource={myData.abilities}
+                            renderItem={(item: Record<string, any>) => (
+                                <div>
+                                    <List.Item>
+                                        <List.Item.Meta
+                                            avatar={
+                                                <div>
+                                                    <Avatar
+                                                        src="/resources/commanderImage/placeholder.svg"
+                                                        shape="square"
+                                                        size={64}
+                                                    />
+                                                    <Badge
+                                                        count={5}
+                                                        overflowCount={999}
+                                                        showZero
+                                                        offset={[0, -32]}
+                                                    >
+                                                        <a href="#" className="head-example" />
+                                                    </Badge>
+                                                </div>
+                                            }
+                                            title={item.name}
+                                            description={item.description}
+                                        />
+                                    </List.Item>
+                                </div>
+                            )}
+                        />
+                    </Col>
+                    <Divider />
+                    <Col span={6}></Col>
+                </Row>
+            </div>
         </>
     );
 };
