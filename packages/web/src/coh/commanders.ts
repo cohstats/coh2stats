@@ -10,7 +10,7 @@ const convertCommanderIDToName = (commanderID: number): string => {
     }
 };
 
-const getCommanderData = (commanderID: number): Record<string, any> => {
+const getCommanderData = (commanderID: string): Record<string, any> => {
     if (Object.prototype.hasOwnProperty.call(allCommanders, commanderID)) {
         return allCommanders[commanderID];
     } else {

@@ -6,7 +6,8 @@ import { useFirestoreConnect } from "react-redux-firebase";
 import Stats from "./pages/stats";
 import { Route, Router, Switch } from "react-router-dom";
 import { RampComponent } from "./components/wip-ramp/commanders";
-
+import { CommandersList } from "./components/wip-ramp/commandersList";
+import { RacePicker } from "./components/wip-ramp/racePicker";
 const { Header, Footer, Content } = Layout;
 
 const App: React.FC = () => {
@@ -60,6 +61,37 @@ const App: React.FC = () => {
                     </Layout>
                 </div>
             </Route>
+
+            <Route path={"/commanders/:race"}>
+                <div className="App">
+                    <Layout className="layout">
+                        <Header>
+                            {/* ellipsis=true to prevent text overflowing on the next line when window width is too low */}
+                            <Title ellipsis={true} style={{ textAlign: "left"}}>Company of Heroes 2 Logs and Statistics</Title> 
+                        </Header>
+                        <Content>
+                            <CommandersList />
+                        </Content>
+                        <Footer style={{ textAlign: "center" }}>Footer</Footer>
+                    </Layout>
+                </div>
+            </Route>
+
+            <Route path={"/commanders"}>
+                <div className="App">
+                    <Layout className="layout">
+                        <Header>
+                            {/* ellipsis=true to prevent text overflowing on the next line when window width is too low */}
+                            <Title ellipsis={true} style={{ textAlign: "left"}}>Company of Heroes 2 Logs and Statistics</Title> 
+                        </Header>
+                        <Content>
+                            <RacePicker />
+                        </Content>
+                        <Footer style={{ textAlign: "center" }}>Footer</Footer>
+                    </Layout>
+                </div>
+            </Route>
+
         </Switch>
     );
 };
