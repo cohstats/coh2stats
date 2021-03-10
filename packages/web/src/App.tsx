@@ -46,7 +46,7 @@ const App: React.FC = () => {
                     </Layout>
                 </div>
             </Route>
-            <Route path={"/ramp/"}>
+            <Route path={"/commanders/:race/:commanderID"}>
                 <div className="App">
                     <Layout className="layout">
                         <Header>

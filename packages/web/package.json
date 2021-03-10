@@ -6,7 +6,8 @@
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
-        "eject": "react-scripts eject"
+        "eject": "react-scripts eject",
+        "deploy": "firebase deploy --only hosting"
     },
     "dependencies": {
         "@nivo/bar": "^0.67.0",

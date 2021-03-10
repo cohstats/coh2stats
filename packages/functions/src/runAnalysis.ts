@@ -10,10 +10,16 @@ const runtimeOpts: Record<string, "1GB" | any> = {
     memory: "1GB",
 };
 
+/**
+ * This functions is run everyday at 3 AM, exactly 1 hour after getting all the matches.
+ * It's necessary that this function runs later than getting and saving the matches.
+ */
 const runAnalysis = functions
     .region(DEFAULT_FUNCTIONS_LOCATION)
     .runWith(runtimeOpts)
-    .https.onRequest(async (request, response) => {
+    .pubsub.schedule("0 3 * * *")
+    .timeZone("Etc/UTC")
+    .onRun(async (_) => {
         const { start, end } = getYesterdayDateTimeStampInterval();
 
         const matches: Array<ProcessedMatch> = [];
@@ -27,7 +33,7 @@ const runAnalysis = functions
             matches.push(doc.data() as ProcessedMatch);
         });
 
-        functions.logger.log(
+        functions.logger.info(
             `Retrieved ${matches.length} matches which started between ${printUTCTime(
                 start,
             )}, ${start} and ${printUTCTime(end)}, ${end} for analysis.`,
@@ -35,8 +41,7 @@ const runAnalysis = functions
 
         await analyzeAndSaveMatchStats(matches, start);
 
-        functions.logger.log(`Analysis for the date ${printUTCTime(start)} finished.`);
-        response.send("Finished analysis");
+        functions.logger.info(`Analysis for the date ${printUTCTime(start)} finished.`);
     });
 
 export { runAnalysis };

@@ -1,0 +1,59 @@
+name: Run tests
+on:
+    pull_request:
+
+jobs:
+    lint:
+        name: Prettier
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout Repo
+              uses: actions/checkout@master
+            - name: Setup Node
+              uses: actions/setup-node@master
+              with:
+                  node-version: "10.x"
+
+            - name: Get yarn cache directory path
+              id: yarn-cache-dir-path
+              run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+
+            - uses: actions/cache@v2
+              id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+              with:
+                  path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+                  key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+                  restore-keys: |
+                      ${{ runner.os }}-yarn-
+            - name: Install Web Project
+              run: yarn install
+            - name: Check the code
+              run: |
+                  yarn lint:prettier
+    test:
+        name: Function Tests
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout Repo
+              uses: actions/checkout@master
+            - name: Setup Node
+              uses: actions/setup-node@master
+              with:
+                  node-version: "10.x"
+
+            - name: Get yarn cache directory path
+              id: yarn-cache-dir-path
+              run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+
+            - uses: actions/cache@v2
+              id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+              with:
+                  path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+                  key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+                  restore-keys: |
+                      ${{ runner.os }}-yarn-
+            - name: Install Web Project
+              run: yarn install
+            - name: Check the code
+              run: |
+                  yarn functions test

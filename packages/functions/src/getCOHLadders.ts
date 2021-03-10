@@ -11,7 +11,7 @@ import { DEFAULT_FUNCTIONS_LOCATION, PUBSUB_TOPIC_DOWNLOAD_MATCHES } from "./con
 
 const pubSubClient = new PubSub();
 const AMOUNT_OF_QUERIED_PLAYERS = 200; // 200 is max
-const CHUNK_PROFILES_TO_PROCESS = 300; // This specifies how many profiles we will send to the que in one message
+const CHUNK_PROFILES_TO_PROCESS = 700; // This specifies how many profiles we will send to the que in one message
 
 const fetchLadderStats = async (leaderboardID: number): Promise<Record<string, any>> => {
     const response = await axios.get(getLadderUrl(leaderboardID, AMOUNT_OF_QUERIED_PLAYERS));
@@ -115,11 +115,13 @@ const runtimeOpts: Record<string, "256MB" | any> = {
 const getCOHLadders = functions
     .region(DEFAULT_FUNCTIONS_LOCATION)
     .runWith(runtimeOpts)
-    .https.onRequest(async (request, response) => {
+    .pubsub.schedule("0 2 * * *")
+    .timeZone("Etc/UTC")
+    .onRun(async (_) => {
         // Do we want to have any validation here? Who can trigger this function? Hm??
 
         await getAndSaveAllLadders();
-        response.send("Finished processing the COH ladders");
+        functions.logger.info("Finished processing the COH ladders");
     });
 
 export { getCOHLadders };

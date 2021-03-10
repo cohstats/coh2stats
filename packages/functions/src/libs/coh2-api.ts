@@ -1,6 +1,9 @@
 import * as commanderIDsToRacesJSON from "./data/commanderServerData.json";
 
+import * as bulletinIDsToRacesJSON from "./data/bulletinServerData.json";
+
 const commanderIDsToRaces: Record<string, string> = commanderIDsToRacesJSON;
+const bulletinIDsToRaces: Record<string, Array<string>> = bulletinIDsToRacesJSON;
 
 /**
  * Commander can be only for single race.
@@ -13,6 +16,20 @@ const getCommanderRace = (commanderId: number): string => {
         // We are logging this so we can catch this on the BE
         console.error(`Unknown commanderID ${commanderId}`);
         return "unknown";
+    }
+};
+
+/**
+ * Returns the array of possible races using this bulletin
+ * @param bulletinID
+ */
+const getIntelBulletinRace = (bulletinID: number | string): Array<string> => {
+    if (Object.prototype.hasOwnProperty.call(bulletinIDsToRaces, bulletinID)) {
+        return bulletinIDsToRaces[bulletinID];
+    } else {
+        // We are logging this so we can catch this on the BE
+        console.error(`Unknown intelBulletinID ${bulletinID}`);
+        return [];
     }
 };
 
@@ -104,6 +121,7 @@ export {
     getRecentMatchHistoryUrl,
     raceIds,
     getCommanderRace,
+    getIntelBulletinRace,
     resultType,
     matchItemsLocation,
 };
