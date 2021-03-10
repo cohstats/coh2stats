@@ -38,7 +38,7 @@ const App: React.FC = () => {
                 <div className="App">
                     <Layout className="layout">
                         <Header>
-                            <Title >Company of Heroes 2 Logs and Statistics</Title>
+                            <Title>Company of Heroes 2 Logs and Statistics</Title>
                         </Header>
                         <Content>
                             <Stats />
@@ -52,7 +52,9 @@ const App: React.FC = () => {
                     <Layout className="layout">
                         <Header>
                             {/* ellipsis=true to prevent text overflowing on the next line when window width is too low */}
-                            <Title ellipsis={true} style={{ textAlign: "left"}}>Company of Heroes 2 Logs and Statistics</Title> 
+                            <Title ellipsis={true} style={{ textAlign: "left" }}>
+                                Company of Heroes 2 Logs and Statistics
+                            </Title>
                         </Header>
                         <Content>
                             <RampComponent />
@@ -67,7 +69,9 @@ const App: React.FC = () => {
                     <Layout className="layout">
                         <Header>
                             {/* ellipsis=true to prevent text overflowing on the next line when window width is too low */}
-                            <Title ellipsis={true} style={{ textAlign: "left"}}>Company of Heroes 2 Logs and Statistics</Title> 
+                            <Title ellipsis={true} style={{ textAlign: "left" }}>
+                                Company of Heroes 2 Logs and Statistics
+                            </Title>
                         </Header>
                         <Content>
                             <CommandersList />
@@ -82,7 +86,9 @@ const App: React.FC = () => {
                     <Layout className="layout">
                         <Header>
                             {/* ellipsis=true to prevent text overflowing on the next line when window width is too low */}
-                            <Title ellipsis={true} style={{ textAlign: "left"}}>Company of Heroes 2 Logs and Statistics</Title> 
+                            <Title ellipsis={true} style={{ textAlign: "left" }}>
+                                Company of Heroes 2 Logs and Statistics
+                            </Title>
                         </Header>
                         <Content>
                             <RacePicker />
@@ -91,7 +97,6 @@ const App: React.FC = () => {
                     </Layout>
                 </div>
             </Route>
-
         </Switch>
     );
 };

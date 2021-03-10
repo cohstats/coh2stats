@@ -3,9 +3,7 @@
         "serverID": "186413",
         "commanderName": "Airborne Company",
         "description": "Focus your strategy around Allied air superiority. Deploy elite infantry units from the air and support them with weapon drops from cargo planes. If the enemy deploys heavy armor, call in a P-47 Thunderbolt to strafe the target.",
-        "races": [
-            "usf"
-        ],
+        "races": ["usf"],
         "abilities": [
             {
                 "name": "Paratroopers",
@@ -33,9 +31,7 @@
         "serverID": "186415",
         "commanderName": "Armor Company",
         "description": "Overwhelm the enemy with elite American armored vehicles and supporting infantry. Assault engineers can clear fortifications to allow vehicles to advance, while Sherman Bulldozers can be used to setup a roadblock or defensive line. The enemy’s strongpoints can be bombarded with 240mm artillery prior to an attack.",
-        "races": [
-            "usf"
-        ],
+        "races": ["usf"],
         "abilities": [
             {
                 "name": "M10 'Wolverine' Tank Destroyer",
@@ -63,9 +59,7 @@
         "serverID": "451587",
         "commanderName": "Armor Company - DevM Edition",
         "description": "Overwhelm the enemy with elite American armored vehicles and supporting infantry. Assault engineers can clear fortifications to allow vehicles to advance, while Sherman Bulldozers can be used to setup a roadblock or defensive line. The enemy’s strongpoints can be bombarded with 240mm artillery prior to an attack.",
-        "races": [
-            "usf"
-        ],
+        "races": ["usf"],
         "abilities": [
             {
                 "name": "M10 'Wolverine' Tank Destroyer",
@@ -100,9 +94,7 @@
         "serverID": "450482",
         "commanderName": "Heavy Cavalry Company",
         "description": "Rifleman are equipped with extra utility to help strengthen forward positions. Utilize off map smoke to create avenues of attack. Elite Ranger troops are also available for deployment to help assault forward positions alongside the fierce M26 Pershing Heavy Tank. The combination of infantry and vehicles will allow your army to coordinate its attacks at a higher capacity.",
-        "races": [
-            "usf"
-        ],
+        "races": ["usf"],
         "abilities": [
             {
                 "name": "Riflemen Field Defenses",
@@ -130,9 +122,7 @@
         "serverID": "186414",
         "commanderName": "Infantry Company",
         "description": "Infantry combined with artillery support, hold the enemy in place while bombarding them to dust. Advanced weapons such as the M1919A6 help infantry to hold the line while mobile artillery units move into place to break the attack. When the enemy is locked down, time on target artillery can rapidly destroy them.",
-        "races": [
-            "usf"
-        ],
+        "races": ["usf"],
         "abilities": [
             {
                 "name": "M7B1 'Priest' Howitzer Motor Carriage",
@@ -160,9 +150,7 @@
         "serverID": "260696",
         "commanderName": "Mechanized Company",
         "description": "Light vehicles provide valuable support to advancing American infantry units. Take advantage of a wide range of light US vehicles while upgraded Shermans engage the opposition. Heavy artillery can be used to destroy infantry or provide a support role against enemy vehicles.",
-        "races": [
-            "usf"
-        ],
+        "races": ["usf"],
         "abilities": [
             {
                 "name": "M21 Mortar Half-track",
@@ -190,9 +178,7 @@
         "serverID": "254449",
         "commanderName": "Recon Support Company",
         "description": "Focused on intelligence and reconnaissance, this Company Commander relies on its ability to observe enemy movement and react quickly. This agile Commander will provide vital enemy intel using Pathfinders while also being able to swiftly respond with light operational support in the form of M8 Greyhounds and Airdropped Combat Groups.",
-        "races": [
-            "usf"
-        ],
+        "races": ["usf"],
         "abilities": [
             {
                 "name": "M8 Greyhound",
@@ -220,9 +206,7 @@
         "serverID": "261335",
         "commanderName": "Rifle Company",
         "description": "The Rifleman is the backbone of the American army emphasizing the American doctrine of versatility and individual firepower. Rear Echelons will have access to more versatile weapon packages. Mobile vehicles and a smokescreen can be used to support the riflemen advance.",
-        "races": [
-            "usf"
-        ],
+        "races": ["usf"],
         "abilities": [
             {
                 "name": "Advanced Infantry Equipment",
@@ -250,9 +234,7 @@
         "serverID": "450479",
         "commanderName": "Tactical Support Company",
         "description": "Coordinate your army with aerial support to help maneuver through the battlefield. Advance weapons such as the M1919A6 and the M5 Halftrack help infantry to hold the line while mobile artillery units move into place to break the attack.",
-        "races": [
-            "usf"
-        ],
+        "races": ["usf"],
         "abilities": [
             {
                 "name": "M1919A6 Light Machine Gun",
@@ -280,9 +262,7 @@
         "serverID": "452456",
         "commanderName": "Urban Assault Company",
         "description": "Overwhelm the enemy with forces specialized in aggressive urban combat. Line infantry receive urban equipment packages, while elite units such as Rangers and Sherman Calliopes inflict heavy casualties on enemy positions.",
-        "races": [
-            "usf"
-        ],
+        "races": ["usf"],
         "abilities": [
             {
                 "name": "Urban Assault Kits",
@@ -310,9 +290,7 @@
         "serverID": "18369",
         "commanderName": "Persistent Mode Airborne",
         "description": "undefined",
-        "races": [
-            "usf"
-        ],
+        "races": ["usf"],
         "abilities": [
             {
                 "name": "undefined",
@@ -324,9 +302,7 @@
         "serverID": "450553",
         "commanderName": "Advanced Emplacement Regiment",
         "description": "This Regiment provides strong benefits to Emplacements and promotes defensive play. Utilize Infantry Sections to build defensive structures of your choice. Activate “Counter Battery” on any of your artillery based buildings to combat against any forms of siege attack you may encounter.  Upgrade your defensive structures for increase durability and improved utility.  Precision Barrage is available to call in to disrupt enemy formations.",
-        "races": [
-            "british"
-        ],
+        "races": ["british"],
         "abilities": [
             {
                 "name": "Defensive Operations",
@@ -354,9 +330,7 @@
         "serverID": "450074",
         "commanderName": "Royal Artillery Regiment",
         "description": "Focused on reconnaissance and long range firepower the Royal Artillery Regiment caters to those who want to eradicate the enemy from a distance. Abilities are focused around locating the enemy and then deploying powerful ordinance to destroy them.",
-        "races": [
-            "british"
-        ],
+        "races": ["british"],
         "abilities": [
             {
                 "name": "Early Warning",
@@ -384,9 +358,7 @@
         "serverID": "450073",
         "commanderName": "Commando Regiment",
         "description": "Commando Regiments provide numerous opportunities for hit and run attacks and striking the enemy’s most vulnerable points. Smoke Raids can be used to disrupt enemy supply lines before ordering a direct assault with grenades. Mortar and air support can provide cover for advancing troops while glider-borne commandos drop in behind the lines.",
-        "races": [
-            "british"
-        ],
+        "races": ["british"],
         "abilities": [
             {
                 "name": "Mortar Cover",
@@ -414,9 +386,7 @@
         "serverID": "450075",
         "commanderName": "Royal Engineer Regiment",
         "description": "Royal Engineer Regiments provide benefits to vehicles and structures and the means to clear enemy positions. Command Vehicles can be designated to provide support to nearby units while vehicles and emplacements can repair themselves. Incendiary Mortars and a Churchill AVRE team can be used to eradicate fortifications.",
-        "races": [
-            "british"
-        ],
+        "races": ["british"],
         "abilities": [
             {
                 "name": "Demolition Specialists “AVRE”",
@@ -444,9 +414,7 @@
         "serverID": "452455",
         "commanderName": "Lend Lease Assault Regiment",
         "description": "Hit hard and fast by utilizing a range of Lend-Leased American equipment such as Thompsons SMGs, 81mm Mortars, M5 Half-tracks and M10 Achillies Tank Destroyers.",
-        "races": [
-            "british"
-        ],
+        "races": ["british"],
         "abilities": [
             {
                 "name": "Assault Infantry Sections",
@@ -474,9 +442,7 @@
         "serverID": "450554",
         "commanderName": "Mobile Assault Regiment",
         "description": "This Regiment provides numerous opportunities to carry out aggressive plays. Utilize flamethrowers on the royal engineer to clear out garrisoned positions. Create advantageous scenarios by attacking behind enemy lines with Commandos. Advance Cover Combat will allow your infantry sections to make aggressive attacks in open areas of the map. The Land Mattress rocket artillery will help you dislodge entrenched positions. Activate Vehicle Crew Repair to reduce the time it takes to repair damaged vehicles.",
-        "races": [
-            "british"
-        ],
+        "races": ["british"],
         "abilities": [
             {
                 "name": "M2 Flamethrower",
@@ -504,9 +470,7 @@
         "serverID": "450268",
         "commanderName": "Tactical Support Regiment",
         "description": "Tactical Support Regiments help out behind the lines, improving existing units and providing fire support to allies. Designate a Command Vehicle to improve nearby forces or use air support to provide equipment to frontline troops. Artillery can cover advancing troops while recovery teams gather resources from vehicle wrecks. A Forward Observation Post can be used to provide rapid responses to nearby threats.",
-        "races": [
-            "british"
-        ],
+        "races": ["british"],
         "abilities": [
             {
                 "name": "Field Recovery Operation",
@@ -534,9 +498,7 @@
         "serverID": "450243",
         "commanderName": "Vanguard Operations Regiment",
         "description": "The Vanguard Operations Regiment utilizes a mixed force of air and ground support to maintain a strong frontline presence. Launch the Forward Logistics Glider to provide early field support, advance quickly with the Raid Operation, and call for Strafing Support to maintain air supremacy. Finally, the potent Vanguard Operations Crocodile can be deployed in order to make the decisive thrust into enemy territory.",
-        "races": [
-            "british"
-        ],
+        "races": ["british"],
         "abilities": [
             {
                 "name": "Raid Operation",
@@ -564,9 +526,7 @@
         "serverID": "450286",
         "commanderName": "Special Weapons Regiment",
         "description": "The versatile Special Weapons Regiment values combined arms and well-coordinated tactics. Infantry Sections are granted optional anti-tank upgrades and provided with powerful anti-armor grenades. Resupply Half-tracks and Typhoon strafing runs grant your infantry more staying power on the front lines. Use improved Coordinated Fire and devastating Crocodile flamethrower tanks to finish off your foes.",
-        "races": [
-            "british"
-        ],
+        "races": ["british"],
         "abilities": [
             {
                 "name": "Vanguard Operation “Crocodile”",
@@ -594,9 +554,7 @@
         "serverID": "6116",
         "commanderName": "Blitzkrieg Doctrine",
         "description": "The Blitzkrieg doctrine stressed combined operations; aircraft supporting armor which in turn should exploit breakthroughs won by infantry.",
-        "races": [
-            "wermacht"
-        ],
+        "races": ["wermacht"],
         "abilities": [
             {
                 "name": "Command Tank",
@@ -624,9 +582,7 @@
         "serverID": "6118",
         "commanderName": "German Infantry Doctrine",
         "description": "The Infantry doctrine focuses on numerous infantry units supported by artillery to advance on enemy positions. Officers can support rapid infantry pushes while light artillery can quickly react to enemy strongpoints.",
-        "races": [
-            "wermacht"
-        ],
+        "races": ["wermacht"],
         "abilities": [
             {
                 "name": "Fragmentation Bomb",
@@ -654,9 +610,7 @@
         "serverID": "6117",
         "commanderName": "German Mechanized Doctrine",
         "description": "Mechanized forces had a tremendous amount of organic firepower including artillery and mobile mortars to smash enemy defenses.",
-        "races": [
-            "wermacht"
-        ],
+        "races": ["wermacht"],
         "abilities": [
             {
                 "name": "Command Tank",
@@ -684,9 +638,7 @@
         "serverID": "7554",
         "commanderName": "Close Air Support Doctrine",
         "description": "Close Air Support can provide cover for frontline engagements by utilizing the powerful weapons of the versatile JU-87 and its destructive power.",
-        "races": [
-            "wermacht"
-        ],
+        "races": ["wermacht"],
         "abilities": [
             {
                 "name": "Stuka Reconnaissance Pass",
@@ -714,9 +666,7 @@
         "serverID": "5568",
         "commanderName": "Assault Support Doctrine",
         "description": "Support an aggressive strategy; use supply trucks to augment your munitions or fuel resources, support local attacks with the Artillery Field Officer, shatter enemy infantry attacks with air support, and take the fight to the enemy with the famous Tiger heavy tank.",
-        "races": [
-            "wermacht"
-        ],
+        "races": ["wermacht"],
         "abilities": [
             {
                 "name": "Cargo Truck",
@@ -744,9 +694,7 @@
         "serverID": "5570",
         "commanderName": "Festung Armor Doctrine",
         "description": "A hard hitting defensive strategy; deploy hard hitting artillery options, use smoke to protect your vehicles  and mask movement, provide more capability by deploying a Command Tank, and destroy enemies from long range with the powerful Pak43 anti-tank gun.",
-        "races": [
-            "wermacht"
-        ],
+        "races": ["wermacht"],
         "abilities": [
             {
                 "name": "Panzer Tactician",
@@ -774,9 +722,7 @@
         "serverID": "5571",
         "commanderName": "Festung Support Doctrine",
         "description": "Support a defensive strategy; control space with artillery to establish a strong front line. Le FH 18 10.5cm howtizers, 250/7 mortar half-tracks, and pre-sited Sector Artillery deny map control to the enemy, while relief infantry can replace any losses.",
-        "races": [
-            "wermacht"
-        ],
+        "races": ["wermacht"],
         "abilities": [
             {
                 "name": "Smoke Bombs",
@@ -804,9 +750,7 @@
         "serverID": "5927",
         "commanderName": "Fortified Armor Doctrine",
         "description": "Enhance the survivability of your tanks and vehicles; defensive smoke, the ability to go hull-down, and a Panzer IV Command Tank ensure your vehicles can live longer and fight harder, while Spotting Scopes and aerial recon allow you to see threats and engage them at long range wiith the Elefant Heavy Tank Destroyer.it",
-        "races": [
-            "wermacht"
-        ],
+        "races": ["wermacht"],
         "abilities": [
             {
                 "name": "Panzer Tactician",
@@ -834,9 +778,7 @@
         "serverID": "7538",
         "commanderName": "Luftwaffe Supply Doctrine",
         "description": "The Luftwaffe Supply doctrine utilizes the German Air Force in a support role for the ground troops. Ju52 cargo planes can deliver valuable resources and medical supplies to troops on the ground, while Stuka bombers will provide reconnaissance and destructive power against static positions.",
-        "races": [
-            "wermacht"
-        ],
+        "races": ["wermacht"],
         "abilities": [
             {
                 "name": "Air-Dropped Medical Supplies",
@@ -864,9 +806,7 @@
         "serverID": "7541",
         "commanderName": "Defensive Doctrine (Community)",
         "description": "This doctrine provides additional defensive gameplay options. Additional structures can be created to slow the advance of the enemy, while powerful defensive weapons such as the Pak 43 and Sector Artillery will crush any breakthroughs.",
-        "races": [
-            "wermacht"
-        ],
+        "races": ["wermacht"],
         "abilities": [
             {
                 "name": "Sector Artillery",
@@ -894,9 +834,7 @@
         "serverID": "7537",
         "commanderName": "Elite Troops Doctrine",
         "description": "Utilizing the best trained and equipped units in the German Army, this doctrine focuses on high quality troops and vehicles. You and your allies units can be trained to have a higher level of veteran status, using the quality of your forces to overpower raw numbers. When the battle has reached its tipping point, an elite Tiger Ace can be deployed to turn the tide.",
-        "races": [
-            "wermacht"
-        ],
+        "races": ["wermacht"],
         "abilities": [
             {
                 "name": "Stormtroopers",
@@ -924,9 +862,7 @@
         "serverID": "7540",
         "commanderName": "Encirclement Doctrine",
         "description": "Combine stealth and mobility to outflank the enemy and destroy them. Stormtroopers can be deployed to scout ahead or cut off the enemies supply lines, while vehicles and air support can be utilized to complete the encirclement. With the enemy surrounded, Crush the Pocket will concentrate firepower to eradicate them.",
-        "races": [
-            "wermacht"
-        ],
+        "races": ["wermacht"],
         "abilities": [
             {
                 "name": "Breakthrough",
@@ -954,9 +890,7 @@
         "serverID": "6905",
         "commanderName": "Mechanized Assault Doctrine",
         "description": "Speed and firepower are utilized to their fullest in a doctrine that focuses on keeping immense pressure on the enemy. Assault Grenadiers allow for early attacks on enemy strongpoints, follow up with an elite mechanized assault group and infantry support StuG III Ausf. E Assault Gun. Finish the enemy with the fearsome Tiger PzKpfw VI Heavy Tank.",
-        "races": [
-            "wermacht"
-        ],
+        "races": ["wermacht"],
         "abilities": [
             {
                 "name": "Tiger Tank",
@@ -984,9 +918,7 @@
         "serverID": "258891",
         "commanderName": "Mobile Defense Doctrine",
         "description": "A commander reassigned from the western front, bringing the experience and tactics from the western theatre to the battle in the east. Use a number of mobile units in conjunction with a defensive strategy to quickly react to enemy breakthroughs.",
-        "races": [
-            "wermacht"
-        ],
+        "races": ["wermacht"],
         "abilities": [
             {
                 "name": "Panzer Tactician",
@@ -1014,9 +946,7 @@
         "serverID": "7249",
         "commanderName": "Osttruppen Doctrine",
         "description": "Utilize Germany’s allies as support infantry to shore up defenses on the line. Combine these support infantry with experienced German Officers and resources to break enemy attacks and hold valuable ground.",
-        "races": [
-            "wermacht"
-        ],
+        "races": ["wermacht"],
         "abilities": [
             {
                 "name": "Railway Artillery Support",
@@ -1044,9 +974,7 @@
         "serverID": "7539",
         "commanderName": "Urban Assault Doctrine",
         "description": "A doctrine designed to break even the most hardened defenses and to improve combat in urban environments. Urban Assault Panzergrenadier’s can clear out buildings and demolish fortifications while being supported by a forward headquarters. For the most dug in defenders, Heinkel He 111 bombers can be dispatched to flatten a target area.",
-        "races": [
-            "wermacht"
-        ],
+        "races": ["wermacht"],
         "abilities": [
             {
                 "name": "Urban Assault Panzergrenadiers",
@@ -1074,9 +1002,7 @@
         "serverID": "5572",
         "commanderName": "Jaeger Armor Doctrine",
         "description": "Find your enemy and attack them; Aerial reconnaissance and increased vision range on your tanks allows you to spot the enemy. Demolish enemy tanks with Stuka strafing runs or destroy them at range with the deadly Elefant Heavy Tank Destroyer.",
-        "races": [
-            "wermacht"
-        ],
+        "races": ["wermacht"],
         "abilities": [
             {
                 "name": "Half-track Riegel 43 Anti-Tank Mine",
@@ -1104,9 +1030,7 @@
         "serverID": "5573",
         "commanderName": "Jaeger Infantry Doctrine",
         "description": "Build a strategy on aggressive infantry and battlefield awareness; support fast and mobile infantry attacks with Stuka  Close Air Support. Use light artillery to defend against counter attacks or blast a hole through enemy lines.",
-        "races": [
-            "wermacht"
-        ],
+        "races": ["wermacht"],
         "abilities": [
             {
                 "name": "Ambush Training",
@@ -1134,9 +1058,7 @@
         "serverID": "5930",
         "commanderName": "Joint Operations Doctrine",
         "description": "Stressing the mutual support of air reconnaissance and artillery, the Joint Operations Doctrine allows you to identify targets and rapidly bring a variety of light and heavy artillery options to bear.",
-        "races": [
-            "wermacht"
-        ],
+        "races": ["wermacht"],
         "abilities": [
             {
                 "name": "Reconnaissance Overflight",
@@ -1164,9 +1086,7 @@
         "serverID": "5921",
         "commanderName": "Lightning War Doctrine",
         "description": "Blitzkrieg, or Lightning War stressed the use of all arms of combat. Aircraft provide close air support to heavy armor driving into enemy territory, all made possible by exploiting breakthroughs won by infantry and artillery.",
-        "races": [
-            "wermacht"
-        ],
+        "races": ["wermacht"],
         "abilities": [
             {
                 "name": "Stuka Close Air Support",
@@ -1194,9 +1114,7 @@
         "serverID": "5928",
         "commanderName": "Spearhead Doctrine",
         "description": "Armor provides the spearhead, piercing enemy lines and driving deep into their territory. Tiger tanks absorb punishment and focus, while bombing destroys enemy defenses and 250/7 mortar half-tracks keep infantry at bay.",
-        "races": [
-            "wermacht"
-        ],
+        "races": ["wermacht"],
         "abilities": [
             {
                 "name": "Panzer Tactician",
@@ -1224,9 +1142,7 @@
         "serverID": "5929",
         "commanderName": "Storm Doctrine",
         "description": "Overwhelm your opponent with artillery and concentrated bombing. Tactical Movement allows your infantry to rapidly engage the enemy, while camouflage training allows troops to ambush counter-attacking enemies.",
-        "races": [
-            "wermacht"
-        ],
+        "races": ["wermacht"],
         "abilities": [
             {
                 "name": "Ambush Training",
@@ -1254,9 +1170,7 @@
         "serverID": "452454",
         "commanderName": "Strategic Reserves Doctrine",
         "description": "Call upon elite, mobile reserves to engage critical threats. Mobile reconnaissance units can locate hostile forces, allowing retaliation with assault troops and elite armor.",
-        "races": [
-            "wermacht"
-        ],
+        "races": ["wermacht"],
         "abilities": [
             {
                 "name": "Assault Grenadiers",
@@ -1284,9 +1198,7 @@
         "serverID": "6120",
         "commanderName": "Soviet Combined Arms Army",
         "description": "Soviet Armies promoted a doctrine of supporting combat arms - elite infantry, air corps reconnaissance and bombing, divisional artillery,and armored divisions created versatile forces.",
-        "races": [
-            "soviet"
-        ],
+        "races": ["soviet"],
         "abilities": [
             {
                 "name": "ML-20 152mm Gun-Howitzer",
@@ -1314,9 +1226,7 @@
         "serverID": "6121",
         "commanderName": "Soviet Reserve Army",
         "description": "Constituted to replace massive losses suffered during the first months of the war and with the need to feed forces into the endless churn of battle, these armies are focused more on infantry.",
-        "races": [
-            "soviet"
-        ],
+        "races": ["soviet"],
         "abilities": [
             {
                 "name": "ML-20 152mm Gun-Howitzer",
@@ -1344,9 +1254,7 @@
         "serverID": "6119",
         "commanderName": "Soviet Shock Army",
         "description": "Shock Armies were heavily stacked with heavy weapons and a much greater number of short-range sub machine guns to crush the defensive lines of the enemy.",
-        "races": [
-            "soviet"
-        ],
+        "races": ["soviet"],
         "abilities": [
             {
                 "name": "Shock Troops",
@@ -1374,9 +1282,7 @@
         "serverID": "186229",
         "commanderName": "Advanced Warfare Tactics",
         "description": "Gain vital intelligence and exploit enemy movements with PPSH equipped conscripts and the most powerful incarnation of the vaunted T-34 tank armed with a hard hitting 85mm cannon.",
-        "races": [
-            "soviet"
-        ],
+        "races": ["soviet"],
         "abilities": [
             {
                 "name": "T-34/85 Medium Tank",
@@ -1404,9 +1310,7 @@
         "serverID": "452461",
         "commanderName": "Airborne Troops Tactics",
         "description": "Employ VDV airbourne tactics to supply infantry, paradrop elite guards troops, establish forward postions, and call in devastating air support.",
-        "races": [
-            "soviet"
-        ],
+        "races": ["soviet"],
         "abilities": [
             {
                 "name": "Weapons Crate Drop",
@@ -1434,9 +1338,7 @@
         "serverID": "5926",
         "commanderName": "Anti-Infantry Tactics",
         "description": "Kill or drive off your enemy’s vital infantry forces; shock troops provide short-range attack power while artillery and the fearsome flamethrower equipped KV-8 are terribly effective against infantry.",
-        "races": [
-            "soviet"
-        ],
+        "races": ["soviet"],
         "abilities": [
             {
                 "name": "Shock Troops",
@@ -1464,9 +1366,7 @@
         "serverID": "5922",
         "commanderName": "Conscripts Support Tactics",
         "description": "Build strategies around your core conscript soldiers; more effectively trained and heavily armed conscripts are resilient under MG fire, can repair supporting heavy armor, and will have their losses in combat replaced.",
-        "races": [
-            "soviet"
-        ],
+        "races": ["soviet"],
         "abilities": [
             {
                 "name": "KV-1 Heavy Tank",
@@ -1494,9 +1394,7 @@
         "serverID": "5575",
         "commanderName": "Guard Motor Coordination Tactics",
         "description": "Guard Armies were issued better weapons like the improved T-34/85 with its more potent gun and heavy 120mm mortar. Improved training and knowledge allows crews to repair their own vehicles.",
-        "races": [
-            "soviet"
-        ],
+        "races": ["soviet"],
         "abilities": [
             {
                 "name": "Guards Rifle Infantry",
@@ -1524,9 +1422,7 @@
         "serverID": "451588",
         "commanderName": "Guard Motor Coordination Tactics - VonIvan Edition",
         "description": "Guard Armies were issued better weapons like the improved T-34/85 with its more potent gun and heavy 120mm mortar. Improved training and knowledge allows crews to repair their own vehicles.",
-        "races": [
-            "soviet"
-        ],
+        "races": ["soviet"],
         "abilities": [
             {
                 "name": "Guards Rifle Infantry",
@@ -1554,9 +1450,7 @@
         "serverID": "5576",
         "commanderName": "Guard Rifle Combined Arms Tactics",
         "description": "Guard Armies were underpinned by versatile infantry. Providing short-range SMGs to conscripts boosts infantry combat capabilities while IL-2 aircraft, KV-1 heavy tanks, and 152mm howitzers pulverize a variety of enemy types.",
-        "races": [
-            "soviet"
-        ],
+        "races": ["soviet"],
         "abilities": [
             {
                 "name": "Guards Rifle Infantry",
@@ -1584,9 +1478,7 @@
         "serverID": "5924",
         "commanderName": "Mechanized Support Tactics",
         "description": "Support armored operations; Guards Troops and camouflaged anti-tank guns can screen the flanks of armored columns while IL-2 ground attack aircraft strafe ground troops. Deliver the final blow with heavy assault guns to neutralize fortifications and hard targets from afar.",
-        "races": [
-            "soviet"
-        ],
+        "races": ["soviet"],
         "abilities": [
             {
                 "name": "Guards Rifle Infantry",
@@ -1614,9 +1506,7 @@
         "serverID": "5578",
         "commanderName": "NKVD Rifle Disruption Tactics",
         "description": "Use the intel gathering capabilities of the army within an army; NKVD code breakers can track enemy orders while a Commissar can oversee frontline operations and inspire nearby troops.",
-        "races": [
-            "soviet"
-        ],
+        "races": ["soviet"],
         "abilities": [
             {
                 "name": "Radio Intercept",
@@ -1644,9 +1534,7 @@
         "serverID": "5579",
         "commanderName": "Shock Motor Heavy Tactics",
         "description": "Shock armies are equipped with heavy breakthrough weapons; durable Shock Troops and ISU-152 heavy assault guns can break enemy lines while special training helps identify enemy tanks. Request IL-2s to neutralize pockets of infantry.",
-        "races": [
-            "soviet"
-        ],
+        "races": ["soviet"],
         "abilities": [
             {
                 "name": "ISU-152 Heavy Assault Gun",
@@ -1674,9 +1562,7 @@
         "serverID": "5580",
         "commanderName": "Shock Rifle Frontline Tactics",
         "description": "Engage enemy heavy tanks and troops; IS-2 Heavy Tanks and KV-8 flamethrowers can engage heavily defended locations along with sub machine gun armed Shock Troops. Aggressive action is backstopped by camouflage anti-tank guns.",
-        "races": [
-            "soviet"
-        ],
+        "races": ["soviet"],
         "abilities": [
             {
                 "name": "Shock Troops",
@@ -1704,9 +1590,7 @@
         "serverID": "7546",
         "commanderName": "Defensive Tactics (Community)",
         "description": "This doctrine provides additional defensive gameplay options. Additional structures can be used to slow the advance of the enemy, while the advanced DShK machinegun and light M-42 AT gun provide valuable fire support.",
-        "races": [
-            "soviet"
-        ],
+        "races": ["soviet"],
         "abilities": [
             {
                 "name": "DShK 38 Heavy Machine Gun",
@@ -1734,9 +1618,7 @@
         "serverID": "7246",
         "commanderName": "Counterattack Tactics",
         "description": "This doctrine allows you to strike back at the enemy with overwhelming firepower. Use a recon plane to pinpoint the enemy weak-points before attacking with the combined firepower of assault infantry, heavy tanks and the B-4 203mm super heavy artillery.",
-        "races": [
-            "soviet"
-        ],
+        "races": ["soviet"],
         "abilities": [
             {
                 "name": "KV-1 Heavy Tank",
@@ -1764,9 +1646,7 @@
         "serverID": "7543",
         "commanderName": "Soviet Industry Tactics",
         "description": "Use the might of the Soviet Union’s vast industries to overwhelm the enemy with vehicles. Support your tanks with advanced repair stations and repair crews before crushing the enemy with the formidable Kliment Voroshilov KV-2 Heavy Assault Tank.",
-        "races": [
-            "soviet"
-        ],
+        "races": ["soviet"],
         "abilities": [
             {
                 "name": "Allied Supply Drop",
@@ -1794,9 +1674,7 @@
         "serverID": "258974",
         "commanderName": "Lend Lease Tactics",
         "description": "Taking the weapons from the Western Powers and combine them with Soviet tenacity to form a formidable force. Utilize resources delivered from the west to fuel vehicle production, and then overwhelm the enemy with imported Sherman tanks.",
-        "races": [
-            "soviet"
-        ],
+        "races": ["soviet"],
         "abilities": [
             {
                 "name": "DShK 38 Heavy Machine Gun",
@@ -1824,9 +1702,7 @@
         "serverID": "7544",
         "commanderName": "Not One Step Back Tactics",
         "description": "Defend the Motherland at all costs. This doctrine provides a number of abilities that give access to more units and improve the defense of existing units, while making it more difficult to withdraw.",
-        "races": [
-            "soviet"
-        ],
+        "races": ["soviet"],
         "abilities": [
             {
                 "name": "No Retreat No Surrender!",
@@ -1854,9 +1730,7 @@
         "serverID": "7542",
         "commanderName": "Partisan Tactics",
         "description": "The Soviet armed forces coordinate with local partisan groups to improve operations behind enemy lines. Utilize unique Partisan squads to harass the enemy and take out key targets, while local spies and the soviet air force provide information on enemy movement.",
-        "races": [
-            "soviet"
-        ],
+        "races": ["soviet"],
         "abilities": [
             {
                 "name": "Partisan Troops",
@@ -1884,9 +1758,7 @@
         "serverID": "7545",
         "commanderName": "Tank Hunter Tactics",
         "description": "Disable enemy tanks and armored vehicles more easily with a variety of upgrades and abilities to support existing AT options. ML-20s can shell the enemy from afar and when that fails IL-2 planes can deliver a devastating anti-tank bombing run.",
-        "races": [
-            "soviet"
-        ],
+        "races": ["soviet"],
         "abilities": [
             {
                 "name": "Tank Hunter Ambush Tactics",
@@ -1914,9 +1786,7 @@
         "serverID": "7247",
         "commanderName": "Urban Defense Tactics",
         "description": "Focused on defending dense urban centers with extreme resilience, this doctrine offers additional means to fight in tight spaces. Forward Headquarters will offer a frontline staging ground to support nearby troops, while traps and incendiary artillery slow the enemy advance.",
-        "races": [
-            "soviet"
-        ],
+        "races": ["soviet"],
         "abilities": [
             {
                 "name": "Shock Troops",
@@ -1944,9 +1814,7 @@
         "serverID": "5923",
         "commanderName": "Armored Assault Tactics",
         "description": "Heavy and mobile armored warfare; mix the power of the IS-2 Heavy Tank with the mobility of the T-34/85 for armored versatility. Air power can destroy enemy forces identified arriving on the battlefield.",
-        "races": [
-            "soviet"
-        ],
+        "races": ["soviet"],
         "abilities": [
             {
                 "name": "Radio Intercept",
@@ -1974,9 +1842,7 @@
         "serverID": "5925",
         "commanderName": "Terror Tactics",
         "description": "Terror – to cause fear. Short-range Shock Troops, flamethrower-equipped KV-8 tanks, 152mm heavy artillery, morale-sapping propaganda, and 50kg bombs delivered by the IL-2; scared yet?",
-        "races": [
-            "soviet"
-        ],
+        "races": ["soviet"],
         "abilities": [
             {
                 "name": "Shock Troops",
@@ -2004,9 +1870,7 @@
         "serverID": "450495",
         "commanderName": "Overwatch Doctrine",
         "description": "Utilize advance field reconnaissance to coordinate your army positioning. Territory that you are in control of will be rigged with flares to send early warning from enemy attacks. Coordinate battles within friendly territory to gain a tactical advantage. A Goliath also available for deployment to help dislodge forward defenses as well as aerial Stukas are prepared to assault any position.",
-        "races": [
-            "wgerman"
-        ],
+        "races": ["wgerman"],
         "abilities": [
             {
                 "name": "For The Fatherland!",
@@ -2034,9 +1898,7 @@
         "serverID": "186419",
         "commanderName": "Breakthrough Doctrine",
         "description": "Break through the enemy line with heavy armor and elite infantry support. Panzerfusiliers will recon the enemy position while the \"Jagdtiger\" Panzerjäger Tiger Ausf. B Heavy Tank Destroyer crushes the enemy armor allowing infantry to advance.",
-        "races": [
-            "wgerman"
-        ],
+        "races": ["wgerman"],
         "abilities": [
             {
                 "name": "Assault Artillery",
@@ -2071,9 +1933,7 @@
         "serverID": "257800",
         "commanderName": "Elite Armored Doctrine",
         "description": "Use superior equipment and experienced crewmen to augment your armored forces. Plan your tactics with upgraded scout cars or recover your armor with an Emergency Repair. Use the Sturmtiger to spearhead the assault.",
-        "races": [
-            "wgerman"
-        ],
+        "races": ["wgerman"],
         "abilities": [
             {
                 "name": "Sd.KFz. 221",
@@ -2101,9 +1961,7 @@
         "serverID": "450494",
         "commanderName": "Feuersturm Doctrine",
         "description": "Assault enemy positions with upgraded infantry supported by trucks that keep units supplied with critical munitions. Call in an off-map rocket barrage which will bombard the area with multiple 280mm rocket artillery before deploying the Flammpanzer 38 to clear out remaining resistance.",
-        "races": [
-            "wgerman"
-        ],
+        "races": ["wgerman"],
         "abilities": [
             {
                 "name": "Assault Package",
@@ -2131,9 +1989,7 @@
         "serverID": "259929",
         "commanderName": "Fortifications Doctrine",
         "description": "Hold back the enemy at all costs with heavy defensive structures. Infantry can construct advanced defensive buildings. Heavy weapons such as the Pak43 and leFH 18 can be combined with zeroing artillery to zone out and eradicate breakthroughs.",
-        "races": [
-            "wgerman"
-        ],
+        "races": ["wgerman"],
         "abilities": [
             {
                 "name": "Field Defenses",
@@ -2161,9 +2017,7 @@
         "serverID": "452452",
         "commanderName": "Grand Offensive Doctrine",
         "description": "Command all out assaults with elite infantry units, air reconnaissance, and devastating armored command elements, including the Pzkfw VI Tiger Ausf. E.",
-        "races": [
-            "wgerman"
-        ],
+        "races": ["wgerman"],
         "abilities": [
             {
                 "name": "Panzerfüsiliers",
@@ -2191,9 +2045,7 @@
         "serverID": "186418",
         "commanderName": "Luftwaffe Ground Forces Doctrine",
         "description": "Supporting forces of the Luftwaffe will fight on the ground alongside the army. Recon enemy positions and set up heavy fortifications and flak emplacements while using the elite Fallschirmjäger to flank and destroy. Use an airborne assault to hold key enemy territories.",
-        "races": [
-            "wgerman"
-        ],
+        "races": ["wgerman"],
         "abilities": [
             {
                 "name": "Fallschirmjäger",
@@ -2221,9 +2073,7 @@
         "serverID": "259657",
         "commanderName": "Scavenge Doctrine",
         "description": "Gather whatever resources you can from the battlefield and defeated enemies. Troops are trained to be more thorough in their salvage operations while infiltrating light infantry can disrupt enemy supplies and lay traps. With a large amount of resources stockpiled, more devastating artillery can be deployed on the enemy strongpoints.",
-        "races": [
-            "wgerman"
-        ],
+        "races": ["wgerman"],
         "abilities": [
             {
                 "name": "Infiltration Tactics",
@@ -2251,9 +2101,7 @@
         "serverID": "451591",
         "commanderName": "Scavenge Doctrine - Jesulin Edition",
         "description": "Gather whatever resources you can from the battlefield and defeated enemies. Troops are trained to be more thorough in their salvage operations while infiltrating light infantry can disrupt enemy supplies and lay traps. With a large amount of resources stockpiled, more devastating artillery can be deployed on the enemy strongpoints.",
-        "races": [
-            "wgerman"
-        ],
+        "races": ["wgerman"],
         "abilities": [
             {
                 "name": "Infiltration Tactics",
@@ -2281,9 +2129,7 @@
         "serverID": "186417",
         "commanderName": "Special Operations Doctrine",
         "description": "Use stealth and surprise to catch the enemy off guard and defeat the before they can react. Units can hide themselves from the enemy until they are ready to strike. When attacking, combine a Panther PzKpfw V Command Tank with a grenade assault.",
-        "races": [
-            "wgerman"
-        ],
+        "races": ["wgerman"],
         "abilities": [
             {
                 "name": "Artillery Flares",
@@ -2311,9 +2157,7 @@
         "serverID": "347076",
         "commanderName": "undefined",
         "description": "undefined",
-        "races": [
-            "wgerman"
-        ],
+        "races": ["wgerman"],
         "abilities": [
             {
                 "name": "Fallschirmjäger",

@@ -1,4 +1,3 @@
-
 const sortArrayOfObjectsByTheirPropertyValue = (
     mapsData: Array<Record<string, string>>,
 ): Array<Record<string, string>> => {
@@ -13,4 +12,4 @@ const sortArrayOfObjectsByTheirPropertyValue = (
     });
 };
 
-export {sortArrayOfObjectsByTheirPropertyValue };
+export { sortArrayOfObjectsByTheirPropertyValue };
