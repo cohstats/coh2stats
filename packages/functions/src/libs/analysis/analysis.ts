@@ -8,6 +8,14 @@ import { globallyAnalyzedMatches } from "../global-stats";
 
 const db = firestore();
 
+/**
+ * Save analysis does UPDATE on analysis file. It doesn't overwrite it!
+ * Be careful when running day analysis again and again.
+ * Consider changing this to re-write.
+ * @param stats
+ * @param timestamp
+ * @param statType
+ */
 const saveAnalysis = async (
     stats: Record<string, any>,
     timestamp: number,
