@@ -1,15 +1,15 @@
 import { Bar } from "@nivo/bar";
 import React from "react";
 import { sortArrayOfObjectsByTheirPropertyValue } from "../../coh/helpers";
-import { convertCommanderIDToName } from "../../coh/commanders";
+import { convertBulletinIDToName } from "../../coh/bulletins";
+import { Card } from "antd";
 
-export const CommandersBarChart = (commanders: Record<number, number>) => {
+export const BulletinsBarChart = (bulletins: Record<number, number>) => {
     const simpleMapsData = [];
 
-    for (const [key, value] of Object.entries(commanders)) {
+    for (const [key, value] of Object.entries(bulletins)) {
         simpleMapsData.push({
-            commanderName: convertCommanderIDToName(key),
-            commanderId: key,
+            bulletinName: convertBulletinIDToName(key),
             value: value,
         });
     }
@@ -18,16 +18,17 @@ export const CommandersBarChart = (commanders: Record<number, number>) => {
         (simpleMapsData as unknown) as Array<Record<string, string>>,
     );
 
+    // We have to use Bar chart instead of ResponsiveBar or it's not gonna render properly
     return (
         <Bar
             height={800}
             width={800}
-            margin={{ top: 0, right: 20, bottom: 40, left: 180 }}
+            margin={{ top: 0, right: 20, bottom: 40, left: 220 }}
             // @ts-ignore
             data={mapsData as data[] | undefined}
             layout={"horizontal"}
             keys={["value"]}
-            indexBy="commanderName"
+            indexBy="bulletinName"
             colors={{ scheme: "nivo" }}
             colorBy={"index"}
             animate={false}
@@ -45,11 +46,6 @@ export const CommandersBarChart = (commanders: Record<number, number>) => {
                 tickRotation: 0,
                 legendPosition: "middle",
                 legendOffset: -40,
-            }}
-            onClick={(event) => {
-                // TODO: Fix this
-                const cmId = event.data["commanderId"];
-                window.open(`${window.location.hostname}/commanders/usf/${cmId}`);
             }}
         />
     );

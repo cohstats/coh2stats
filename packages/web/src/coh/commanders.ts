@@ -2,7 +2,7 @@ import * as allCommandersJSON from "./data/commanderData.json";
 import { CommanderData, RaceName } from "./types";
 const allCommanders: Record<string, any> = (allCommandersJSON as Record<string, any>)["default"];
 
-const convertCommanderIDToName = (commanderID: number): string => {
+const convertCommanderIDToName = (commanderID: string): string => {
     if (Object.prototype.hasOwnProperty.call(allCommanders, commanderID)) {
         return allCommanders[commanderID]["commanderName"];
     } else {

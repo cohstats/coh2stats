@@ -1,10 +1,12 @@
-name: Run tests
+name: Run Function tests
 on:
     pull_request:
+        paths:
+            - packages/functions/**
 
 jobs:
-    lint:
-        name: Prettier
+    test:
+        name: Function Tests
         runs-on: ubuntu-latest
         steps:
             - name: Checkout Repo
@@ -29,4 +31,4 @@ jobs:
               run: yarn install
             - name: Check the code
               run: |
-                  yarn lint:prettier
+                  yarn functions test

@@ -3,7 +3,7 @@ import { Typography } from "antd";
 import { Layout } from "antd";
 import "./App.css";
 import { useFirestoreConnect } from "react-redux-firebase";
-import Stats from "./pages/stats";
+import StatsDetails from "./pages/stats";
 import { Route, Router, Switch } from "react-router-dom";
 import { RampComponent } from "./components/wip-ramp/commanders";
 import { CommandersList } from "./components/wip-ramp/commandersList";
@@ -19,7 +19,7 @@ const App: React.FC = () => {
             doc: "daily",
             subcollections: [
                 {
-                    collection: "1614902400",
+                    collection: "1615334400",
                     doc: "stats",
                 },
             ],
@@ -34,14 +34,14 @@ const App: React.FC = () => {
 
     return (
         <Switch>
-            <Route path={"/stats/:frequency/:timestamp/:type"}>
+            <Route path={"/stats/:frequency/:timestamp/:type/:race"}>
                 <div className="App">
                     <Layout className="layout">
                         <Header>
                             <Title>Company of Heroes 2 Logs and Statistics</Title>
                         </Header>
                         <Content>
-                            <Stats />
+                            <StatsDetails />
                         </Content>
                         <Footer style={{ textAlign: "center" }}>Footer</Footer>
                     </Layout>

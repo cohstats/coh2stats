@@ -1,4 +1,4 @@
-import { ResponsiveBar } from "@nivo/bar";
+import { Bar } from "@nivo/bar";
 import React from "react";
 
 export const WinsChart = (data: Record<string, any>) => {
@@ -11,10 +11,10 @@ export const WinsChart = (data: Record<string, any>) => {
     ];
 
     return (
-        <ResponsiveBar
+        <Bar
             height={500}
             width={500}
-            margin={{ top: 20, right: 80, bottom: 40, left: 40 }}
+            margin={{ top: 10, right: 80, bottom: 40, left: 30 }}
             // @ts-ignore
             data={chartData as data[] | undefined}
             layout={"vertical"}
