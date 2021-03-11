@@ -20,11 +20,7 @@ import { useHistory, useParams } from "react-router";
 import { CommanderData, RaceName } from "../../coh/types";
 import { push } from "connected-react-router";
 
-
-
-
 export const CommandersList = () => {
-
     const { push } = useHistory();
 
     const { race } = useParams<{
@@ -38,8 +34,6 @@ export const CommandersList = () => {
             commanderData["description"] != "undefined"
         );
     });
-
-
 
     function getRaceBackground(activeRace: RaceName) {
         switch (activeRace) {
@@ -74,15 +68,14 @@ export const CommandersList = () => {
         );
     }
 
-
-    function onCommanderClick( myServerID : string ) { 
-        console.log(myServerID)
-        console.log(`commanders/${race}/${myServerID}`)
+    function onCommanderClick(myServerID: string) {
+        console.log(myServerID);
+        console.log(`commanders/${race}/${myServerID}`);
         push(`${race}/${myServerID}`);
-      }
+    }
 
-      let styleCursorPointer = {
-        cursor: "pointer"
+    let styleCursorPointer = {
+        cursor: "pointer",
     };
 
     return (
@@ -99,8 +92,12 @@ export const CommandersList = () => {
                                     <List.Item>
                                         <List.Item.Meta
                                             avatar={
-                                                
-                                                <div style={styleCursorPointer} onClick={() => onCommanderClick(item.serverID)} >
+                                                <div
+                                                    style={styleCursorPointer}
+                                                    onClick={() =>
+                                                        onCommanderClick(item.serverID)
+                                                    }
+                                                >
                                                     <Avatar
                                                         src="/resources/commanderImage/placeholder.svg"
                                                         shape="square"
@@ -108,11 +105,16 @@ export const CommandersList = () => {
                                                     />
                                                 </div>
                                             }
-                                            
                                             title={
-                                                <div style={styleCursorPointer} onClick={() => onCommanderClick(item.serverID)}  > 
-                                                {item.commanderName}
-                                                </div>}
+                                                <div
+                                                    style={styleCursorPointer}
+                                                    onClick={() =>
+                                                        onCommanderClick(item.serverID)
+                                                    }
+                                                >
+                                                    {item.commanderName}
+                                                </div>
+                                            }
                                             description={item.description}
                                         />
                                     </List.Item>
