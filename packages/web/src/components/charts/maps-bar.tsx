@@ -1,4 +1,4 @@
-import { ResponsiveBar } from "@nivo/bar";
+import { Bar } from "@nivo/bar";
 import React from "react";
 import { sortArrayOfObjectsByTheirPropertyValue } from "../../coh/helpers";
 
@@ -15,10 +15,10 @@ export const MapBarChart = (maps: Record<string, number>) => {
     mapsData = sortArrayOfObjectsByTheirPropertyValue(mapsData);
 
     return (
-        <ResponsiveBar
+        <Bar
             height={600}
             width={1100}
-            margin={{ top: 20, right: 20, bottom: 40, left: 220 }}
+            margin={{ top: 0, right: 0, bottom: 40, left: 200 }}
             // @ts-ignore
             data={mapsData as data[] | undefined}
             layout={"horizontal"}
