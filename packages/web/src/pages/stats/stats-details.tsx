@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Card, Tabs, Radio, RadioChangeEvent, Tooltip, Space } from "antd";
+import { Row, Card, Radio, RadioChangeEvent, Space } from "antd";
 import { useData, useLoading } from "../../firebase";
 import { Loading } from "../../components/loading";
 import { MapBarChart } from "../../components/charts/maps-bar";
@@ -10,6 +10,7 @@ import { CommandersBarChart } from "../../components/charts/commanders-bar";
 import { BulletinsBarChart } from "../../components/charts/bulletins-bar";
 import { Helper } from "../../components/helper";
 import Title from "antd/es/typography/Title";
+import routes from "../../routes";
 
 const StatsDetails: React.FC = () => {
   const isLoading = useLoading("stats");
@@ -34,20 +35,17 @@ const StatsDetails: React.FC = () => {
     );
   }
 
-  console.log(data);
-  console.log(type);
-
   const specificData: Record<string, any> = data[type];
   console.log(specificData);
 
   const maps: Record<string, number> = specificData["maps"];
 
   const onTypeRadioChange = (e: RadioChangeEvent) => {
-    push(`/stats/${frequency}/${timestamp}/${e.target?.value}/${race}`);
+    push(routes.fullStatsDetails(frequency, timestamp, e.target?.value, race));
   };
 
   const onRaceRadioChange = (e: RadioChangeEvent) => {
-    push(`/stats/${frequency}/${timestamp}/${type}/${e.target?.value}`);
+    push(routes.fullStatsDetails(frequency, timestamp, type, e.target?.value));
   };
 
   return (

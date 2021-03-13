@@ -1,24 +1,9 @@
 import React from "react";
-import {
-  Card,
-  Col,
-  Row,
-  Image,
-  List,
-  Divider,
-  Avatar,
-  Descriptions,
-  Badge,
-  Space,
-  Breadcrumb,
-  Menu,
-} from "antd";
-import myBgnd from "/resources/commanderImage/placeholder.svg";
-import { ClockCircleOutlined } from "@ant-design/icons";
+import { Col, Row, List, Avatar } from "antd";
 import { getCommanderByRaces, getCommanderData } from "../../coh/commanders";
 import { useHistory, useParams } from "react-router";
 import { CommanderData, RaceName } from "../../coh/types";
-import { push } from "connected-react-router";
+import routes from "../../routes";
 
 export const CommandersList = () => {
   const { push } = useHistory();
@@ -50,7 +35,7 @@ export const CommandersList = () => {
         return "https://pbs.twimg.com/media/BpDH_NpCYAI1YE2.png";
     }
   }
-  var divStyle = {
+  const divStyle = {
     backgroundImage: "url(" + getRaceBackground(race as RaceName) + ")",
     backgroundRepeat: "no-repeat",
     backgroundSize: "400px",
@@ -67,10 +52,8 @@ export const CommandersList = () => {
     );
   }
 
-  function onCommanderClick(myServerID: string) {
-    console.log(myServerID);
-    console.log(`commanders/${race}/${myServerID}`);
-    push(`${race}/${myServerID}`);
+  function onCommanderClick(CommanderServerID: string) {
+    push(routes.commanderByID(race, CommanderServerID));
   }
 
   let styleCursorPointer = {
@@ -78,48 +61,47 @@ export const CommandersList = () => {
   };
 
   return (
-    <>
-      <div style={divStyle}>
-        <Row>
-          <Col span={6}></Col>
-          <Col span={12}>
-            <List
-              itemLayout="horizontal"
-              dataSource={myData}
-              renderItem={(item) => (
-                <div>
-                  <List.Item>
-                    <List.Item.Meta
-                      avatar={
-                        <div
-                          style={styleCursorPointer}
-                          onClick={() => onCommanderClick(item.serverID)}
-                        >
-                          <Avatar
-                            src="/resources/commanderImage/placeholder.svg"
-                            shape="square"
-                            size={64}
-                          />
-                        </div>
-                      }
-                      title={
-                        <div
-                          style={styleCursorPointer}
-                          onClick={() => onCommanderClick(item.serverID)}
-                        >
-                          {item.commanderName}
-                        </div>
-                      }
-                      description={item.description}
-                    />
-                  </List.Item>
-                </div>
-              )}
-            />
-          </Col>
-          <Col span={6}> </Col>
-        </Row>
-      </div>
-    </>
+    <div style={divStyle}>
+      <Row>
+        <Col span={6} />
+        <Col span={12}>
+          <List
+            itemLayout="horizontal"
+            dataSource={myData}
+            style={{ paddingTop: 50 }}
+            renderItem={(item) => (
+              <div>
+                <List.Item>
+                  <List.Item.Meta
+                    avatar={
+                      <div
+                        style={styleCursorPointer}
+                        onClick={() => onCommanderClick(item.serverID)}
+                      >
+                        <Avatar
+                          src="/resources/commanderImage/placeholder.svg"
+                          shape="square"
+                          size={64}
+                        />
+                      </div>
+                    }
+                    title={
+                      <div
+                        style={styleCursorPointer}
+                        onClick={() => onCommanderClick(item.serverID)}
+                      >
+                        {item.commanderName}
+                      </div>
+                    }
+                    description={item.description}
+                  />
+                </List.Item>
+              </div>
+            )}
+          />
+        </Col>
+        <Col span={6} />
+      </Row>
+    </div>
   );
 };

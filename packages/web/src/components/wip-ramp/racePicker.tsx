@@ -1,23 +1,9 @@
 import React from "react";
-import {
-  Card,
-  Col,
-  Row,
-  Image,
-  List,
-  Divider,
-  Avatar,
-  Descriptions,
-  Badge,
-  Space,
-  Breadcrumb,
-  Menu,
-} from "antd";
-import myBgnd from "/resources/commanderImage/placeholder.svg";
-import { ClockCircleOutlined } from "@ant-design/icons";
-import { getCommanderByRaces, getCommanderData } from "../../coh/commanders";
-import { useHistory, useParams } from "react-router";
+import { Col, Row } from "antd";
+
+import { useHistory } from "react-router";
 import { RaceName } from "../../coh/types";
+import routes from "../../routes";
 
 export const RacePicker = () => {
   const { push } = useHistory();
@@ -30,8 +16,8 @@ export const RacePicker = () => {
     cursor: "pointer",
   };
 
-  function onRaceClick(myRace: RaceName) {
-    push(`commanders/${myRace}`);
+  function onRaceClick(race: RaceName) {
+    push(routes.commanderList(race));
   }
 
   return (

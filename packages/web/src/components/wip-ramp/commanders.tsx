@@ -1,26 +1,10 @@
 import React from "react";
-import {
-  Card,
-  Col,
-  Row,
-  Image,
-  List,
-  Divider,
-  Avatar,
-  Descriptions,
-  Badge,
-  Space,
-  Breadcrumb,
-  Menu,
-} from "antd";
-import myBgnd from "/resources/commanderImage/placeholder.svg";
-import { ClockCircleOutlined } from "@ant-design/icons";
+import { Col, Row, Image, List, Divider, Avatar, Descriptions, Badge, Menu } from "antd";
 import { getCommanderData } from "../../coh/commanders";
 import { useParams } from "react-router";
 
-export const RampComponent = () => {
-  const { race, commanderID } = useParams<{
-    race: string;
+export const CommanderDetails = () => {
+  const { commanderID } = useParams<{
     commanderID: string;
   }>();
 
@@ -138,7 +122,6 @@ export const RampComponent = () => {
               )}
             />
           </Col>
-          <Divider />
           <Col span={6}></Col>
         </Row>
       </div>

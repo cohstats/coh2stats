@@ -1,6 +1,6 @@
 import React from "react";
 import { Footer } from "antd/lib/layout/layout";
-import { Divider, Image } from "antd";
+import { Divider } from "antd";
 
 export const MainFooter: React.FC = () => {
   return (

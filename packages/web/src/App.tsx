@@ -4,11 +4,13 @@ import { Layout } from "antd";
 import "./App.css";
 import { useFirestoreConnect } from "react-redux-firebase";
 import { Redirect, Route, Router, Switch } from "react-router-dom";
-import { RampComponent } from "./components/wip-ramp/commanders";
+import { CommanderDetails } from "./components/wip-ramp/commanders";
 import { CommandersList } from "./components/wip-ramp/commandersList";
 import { RacePicker } from "./components/wip-ramp/racePicker";
 import Stats from "./pages/stats";
-import { MainFooter } from "./components/MainFooter";
+import { MainFooter } from "./components/main-footer";
+import routes from "./routes";
+import { MainHeader } from "./components/main-header";
 
 const { Header, Footer, Content } = Layout;
 
@@ -26,22 +28,7 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <Layout className="layout">
-        <Header>
-          {/*CoH2*/}
-          {/*<Title style={{display: "inline"}}>CoH 2 Logs & Stats</Title>*/}
-          <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["2"]}>
-            <Menu.Item key="1">Stats</Menu.Item>
-            <Menu.Item disabled={true} key="2">
-              Players
-            </Menu.Item>
-            <Menu.Item disabled={true} key="2">
-              Matches
-            </Menu.Item>
-            <Menu.Item key="3">Commanders</Menu.Item>
-            <Menu.Item key="4">Intel Bulletins</Menu.Item>
-            <Menu.Item key="5">About</Menu.Item>
-          </Menu>
-        </Header>
+        <MainHeader />
         <Content>
           <Switch>
             <Route path={"/stats/:frequency/:timestamp"}>
@@ -50,13 +37,13 @@ const App: React.FC = () => {
             <Route path={"/stats"}>
               <Redirect to={"/stats/"} />
             </Route>
-            <Route path={"/commanders/:race/:commanderID"}>
-              <RampComponent />
+            <Route path={routes.commanderByID()}>
+              <CommanderDetails />
             </Route>
-            <Route path={"/commanders/:race"}>
+            <Route path={routes.commanderList()}>
               <CommandersList />
             </Route>
-            <Route path={"/commanders"}>
+            <Route path={routes.commanderBase()}>
               <RacePicker />
             </Route>
           </Switch>
