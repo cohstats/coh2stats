@@ -1,13 +1,15 @@
 import React from "react";
-import { Typography } from "antd";
+import { Menu, Row, Typography } from "antd";
 import { Layout } from "antd";
 import "./App.css";
 import { useFirestoreConnect } from "react-redux-firebase";
-import StatsDetails from "./pages/stats";
-import { Route, Router, Switch } from "react-router-dom";
+import { Redirect, Route, Router, Switch } from "react-router-dom";
 import { RampComponent } from "./components/wip-ramp/commanders";
 import { CommandersList } from "./components/wip-ramp/commandersList";
 import { RacePicker } from "./components/wip-ramp/racePicker";
+import Stats from "./pages/stats";
+import { MainFooter } from "./components/MainFooter";
+
 const { Header, Footer, Content } = Layout;
 
 const App: React.FC = () => {
@@ -16,88 +18,53 @@ const App: React.FC = () => {
     useFirestoreConnect([
         {
             collection: "stats",
-            doc: "daily",
-            subcollections: [
-                {
-                    collection: "1615334400",
-                    doc: "stats",
-                },
-            ],
-            storeAs: "stats",
-        },
-        {
-            collection: "stats",
             doc: "global",
             storeAs: "globalStats",
         },
     ]);
 
     return (
-        <Switch>
-            <Route path={"/stats/:frequency/:timestamp/:type/:race"}>
-                <div className="App">
-                    <Layout className="layout">
-                        <Header>
-                            <Title>Company of Heroes 2 Logs and Statistics</Title>
-                        </Header>
-                        <Content>
-                            <StatsDetails />
-                        </Content>
-                        <Footer style={{ textAlign: "center" }}>Footer</Footer>
-                    </Layout>
-                </div>
-            </Route>
-            <Route path={"/commanders/:race/:commanderID"}>
-                <div className="App">
-                    <Layout className="layout">
-                        <Header>
-                            {/* ellipsis=true to prevent text overflowing on the next line when window width is too low */}
-                            <Title ellipsis={true} style={{ textAlign: "left" }}>
-                                Company of Heroes 2 Logs and Statistics
-                            </Title>
-                        </Header>
-                        <Content>
+        <div className="App">
+            <Layout className="layout">
+                <Header>
+                    {/*CoH2*/}
+                    {/*<Title style={{display: "inline"}}>CoH 2 Logs & Stats</Title>*/}
+                    <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["2"]}>
+                        <Menu.Item key="1">Stats</Menu.Item>
+                        <Menu.Item disabled={true} key="2">
+                            Players
+                        </Menu.Item>
+                        <Menu.Item disabled={true} key="2">
+                            Matches
+                        </Menu.Item>
+                        <Menu.Item key="3">Commanders</Menu.Item>
+                        <Menu.Item key="4">Intel Bulletins</Menu.Item>
+                        <Menu.Item key="5">About</Menu.Item>
+                    </Menu>
+                </Header>
+                <Content>
+                    <Switch>
+                        <Route path={"/stats/:frequency/:timestamp"}>
+                            <Stats />
+                        </Route>
+                        <Route path={"/stats"}>
+                            <Redirect to={"/stats/"} />
+                        </Route>
+                        <Route path={"/commanders/:race/:commanderID"}>
                             <RampComponent />
-                        </Content>
-                        <Footer style={{ textAlign: "center" }}>Footer</Footer>
-                    </Layout>
-                </div>
-            </Route>
-
-            <Route path={"/commanders/:race"}>
-                <div className="App">
-                    <Layout className="layout">
-                        <Header>
-                            {/* ellipsis=true to prevent text overflowing on the next line when window width is too low */}
-                            <Title ellipsis={true} style={{ textAlign: "left" }}>
-                                Company of Heroes 2 Logs and Statistics
-                            </Title>
-                        </Header>
-                        <Content>
+                        </Route>
+                        <Route path={"/commanders/:race"}>
                             <CommandersList />
-                        </Content>
-                        <Footer style={{ textAlign: "center" }}>Footer</Footer>
-                    </Layout>
-                </div>
-            </Route>
+                        </Route>
 
-            <Route path={"/commanders"}>
-                <div className="App">
-                    <Layout className="layout">
-                        <Header>
-                            {/* ellipsis=true to prevent text overflowing on the next line when window width is too low */}
-                            <Title ellipsis={true} style={{ textAlign: "left" }}>
-                                Company of Heroes 2 Logs and Statistics
-                            </Title>
-                        </Header>
-                        <Content>
+                        <Route path={"/commanders"}>
                             <RacePicker />
-                        </Content>
-                        <Footer style={{ textAlign: "center" }}>Footer</Footer>
-                    </Layout>
-                </div>
-            </Route>
-        </Switch>
+                        </Route>
+                    </Switch>
+                </Content>
+                <MainFooter />
+            </Layout>
+        </div>
     );
 };
 

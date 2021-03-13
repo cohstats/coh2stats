@@ -21,7 +21,7 @@ export const CommandersBarChart = (commanders: Record<number, number>) => {
     return (
         <Bar
             height={800}
-            width={800}
+            width={750}
             margin={{ top: 0, right: 20, bottom: 40, left: 180 }}
             // @ts-ignore
             data={mapsData as data[] | undefined}

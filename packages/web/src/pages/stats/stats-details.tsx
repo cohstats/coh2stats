@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Card, Tabs, Radio, RadioChangeEvent, Tooltip } from "antd";
+import { Row, Col, Card, Tabs, Radio, RadioChangeEvent, Tooltip, Space } from "antd";
 import { useData, useLoading } from "../../firebase";
 import { Loading } from "../../components/loading";
 import { MapBarChart } from "../../components/charts/maps-bar";
@@ -25,17 +25,29 @@ const StatsDetails: React.FC = () => {
 
     if (isLoading) return <Loading />;
 
+    if (!data) {
+        return (
+            <Title level={4}>
+                We are currently not tracking any records for the {`${frequency}`} stats on
+                timestamp {`${timestamp}`}.
+            </Title>
+        );
+    }
+
     console.log(data);
+    console.log(type);
 
     const specificData: Record<string, any> = data[type];
+    console.log(specificData);
+
     const maps: Record<string, number> = specificData["maps"];
 
     const onTypeRadioChange = (e: RadioChangeEvent) => {
-        push(`/stats/daily/424234/${e.target?.value}/${race}`);
+        push(`/stats/${frequency}/${timestamp}/${e.target?.value}/${race}`);
     };
 
     const onRaceRadioChange = (e: RadioChangeEvent) => {
-        push(`/stats/daily/424234/${type}/${e.target?.value}`);
+        push(`/stats/${frequency}/${timestamp}/${type}/${e.target?.value}`);
     };
 
     return (
@@ -48,7 +60,9 @@ const StatsDetails: React.FC = () => {
                     size={"large"}
                     style={{ padding: 20 }}
                 >
-                    <Radio.Button value="general">General </Radio.Button>
+                    <Radio.Button disabled={true} value="general">
+                        General{" "}
+                    </Radio.Button>
                     <Radio.Button value="1v1">1 vs 1</Radio.Button>
                     <Radio.Button value="2v2">2 vs 2</Radio.Button>
                     <Radio.Button value="3v3">3 vs 3</Radio.Button>
@@ -61,26 +75,19 @@ const StatsDetails: React.FC = () => {
                 </Title>
             </Row>
             <Row justify={"center"}>
-                <Col span={12}>
+                <Space size={"large"}>
                     <Card title={`Games Played ${type}`} style={{ width: 550, height: 600 }}>
                         {WinsChart(specificData)}
                     </Card>
-                </Col>
-
-                <Col span={12}>
                     <Card title={`Winrate ${type}`} style={{ width: 550, height: 600 }}>
                         {WinRateChart(specificData)}
                     </Card>
-                </Col>
+                </Space>
             </Row>
-            <Row align="middle">
-                <Col span={1} />
-                <Col span={22}>
-                    <Card title={`Maps ${type}`} style={{ width: 1200, height: 700 }}>
-                        {MapBarChart(maps)}
-                    </Card>
-                </Col>
-                <Col span={1} />
+            <Row justify={"center"}>
+                <Card title={`Maps ${type}`} style={{ width: 1200, height: 700 }}>
+                    {MapBarChart(maps)}
+                </Card>
             </Row>
             <Row justify={"center"}>
                 <Radio.Group
@@ -98,8 +105,7 @@ const StatsDetails: React.FC = () => {
                 </Radio.Group>
             </Row>
             <Row justify={"center"}>
-                <Col span={1} />
-                <Col span={11}>
+                <Space size={"large"}>
                     <Card
                         title={
                             <span>
@@ -114,20 +120,18 @@ const StatsDetails: React.FC = () => {
                                 {` ${type} - ${race}`}
                             </span>
                         }
-                        style={{ width: 850, height: 900 }}
+                        style={{ width: 800, height: 900 }}
                     >
                         {CommandersBarChart(specificData["commanders"][race])}
                     </Card>
-                </Col>
-                <Col span={11}>
+
                     <Card
                         title={`Intel Bulletins  ${type} - ${race}`}
-                        style={{ width: 850, height: 900 }}
+                        style={{ width: 800, height: 900 }}
                     >
                         {BulletinsBarChart(specificData["intelBulletins"][race])}
                     </Card>
-                </Col>
-                <Col span={1} />
+                </Space>
             </Row>
         </>
     );
