@@ -94,7 +94,7 @@ describe("isLastDayMatch", () => {
 
   test("The match is not in the last day after 26 hours", () => {
     const clonedSingleMatch = JSON.parse(JSON.stringify(singleMatchObjectFromAPI));
-    clonedSingleMatch["startgametime"] = getHoursOldTimestamp(26);
+    clonedSingleMatch["startgametime"] = getHoursOldTimestamp(49);
 
     expect(isLastDayMatch(clonedSingleMatch)).toBeFalsy();
   });
@@ -102,10 +102,6 @@ describe("isLastDayMatch", () => {
   test("The match is in the last day", () => {
     const clonedSingleMatch = JSON.parse(JSON.stringify(singleMatchObjectFromAPI));
     clonedSingleMatch["startgametime"] = getHoursOldTimestamp(24);
-
-    expect(isLastDayMatch(clonedSingleMatch)).toBeTruthy();
-
-    clonedSingleMatch["startgametime"] = getHoursOldTimestamp(1);
 
     expect(isLastDayMatch(clonedSingleMatch)).toBeTruthy();
   });

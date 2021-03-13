@@ -10,8 +10,13 @@ import { extractTheProfileIDs } from "./libs/ladder-data";
 import { DEFAULT_FUNCTIONS_LOCATION, PUBSUB_TOPIC_DOWNLOAD_MATCHES } from "./constants";
 
 const pubSubClient = new PubSub();
-const AMOUNT_OF_QUERIED_PLAYERS = 200; // 200 is max
-const CHUNK_PROFILES_TO_PROCESS = 900; // This specifies how many profiles we will send to the que in one message
+const AMOUNT_OF_QUERIED_PLAYERS = 200; // 200 is max/
+const CHUNK_PROFILES_TO_PROCESS = 1000; // This specifies how many profiles we will send to the que in one message
+/** CHUNK_PROFILES_TO_PROCESS
+ * The chunk of 1k seems to be ideal, the time it takes to process those profiles ~6 minutes.
+ * The timeout of the CF is 9 minutes. This gives us ~30% service degradation buffer.
+ * The memory needed for this is ~400MB / CF, the limit is 512 MB.
+ */
 
 const fetchLadderStats = async (leaderboardID: number): Promise<Record<string, any>> => {
   const response = await axios.get(getLadderUrl(leaderboardID, AMOUNT_OF_QUERIED_PLAYERS));

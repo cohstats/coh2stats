@@ -1,4 +1,4 @@
-import { getHoursOldTimestamp, convertSteamNameToID } from "../helpers";
+import { convertSteamNameToID, getYesterdayDateTimeStampInterval } from "../helpers";
 import { ProcessedMatch } from "../types";
 
 /**
@@ -53,7 +53,9 @@ const processSingleMatch = (singleMatchData: Record<string, any>): Record<string
  * @param singleMatchData
  */
 const isLastDayMatch = (singleMatchData: Record<string, any>): boolean => {
-  return singleMatchData["startgametime"] > getHoursOldTimestamp(25);
+  const { start, end } = getYesterdayDateTimeStampInterval();
+
+  return singleMatchData["startgametime"] > start && singleMatchData["startgametime"] < end;
 };
 
 /**

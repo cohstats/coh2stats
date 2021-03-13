@@ -3,6 +3,7 @@ import StatsDetails from "./stats-details";
 import { Route, Switch } from "react-router-dom";
 import { useParams } from "react-router";
 import { useFirestoreConnect } from "react-redux-firebase";
+import routes from "../../routes";
 import { DatePicker, Row, Select, Space, TimePicker } from "antd";
 
 const Stats: React.FC = () => {
@@ -36,7 +37,7 @@ const Stats: React.FC = () => {
 
   return (
     <Switch>
-      <Route path={"/stats/:frequency/:timestamp/:type/:race"}>
+      <Route path={routes.fullStatsDetails()}>
         <Space>
           <Select value={type} onChange={setType} style={{ width: 100 }} size={"large"}>
             <Option value="daily">Daily</Option>
