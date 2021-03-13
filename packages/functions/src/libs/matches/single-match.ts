@@ -9,12 +9,12 @@ import { ProcessedMatch } from "../types";
  * @param singleMatchData
  */
 const filterOutItems = (singleMatchData: Record<string, any>): Record<string, any> => {
-    singleMatchData["matchhistoryitems"] = singleMatchData["matchhistoryitems"].filter(
-        (item: Record<string, any>) => {
-            return item["itemlocation_id"] == 3 || item["itemlocation_id"] == 4;
-        },
-    );
-    return singleMatchData;
+  singleMatchData["matchhistoryitems"] = singleMatchData["matchhistoryitems"].filter(
+    (item: Record<string, any>) => {
+      return item["itemlocation_id"] == 3 || item["itemlocation_id"] == 4;
+    },
+  );
+  return singleMatchData;
 };
 
 /**
@@ -23,27 +23,27 @@ const filterOutItems = (singleMatchData: Record<string, any>): Record<string, an
  * @param singleMatchData
  */
 const removeExtraDataFromItems = (singleMatchData: Record<string, any>): Record<string, any> => {
-    for (const item of singleMatchData["matchhistoryitems"]) {
-        delete item["durabilitytype"];
-        delete item["durability"];
-        delete item["metadata"];
-        delete item["matchhistory_id"]; // We don't need because the object is nested under the match itself
-    }
+  for (const item of singleMatchData["matchhistoryitems"]) {
+    delete item["durabilitytype"];
+    delete item["durability"];
+    delete item["metadata"];
+    delete item["matchhistory_id"]; // We don't need because the object is nested under the match itself
+  }
 
-    return singleMatchData;
+  return singleMatchData;
 };
 
 const processSingleMatch = (singleMatchData: Record<string, any>): Record<string, any> => {
-    // delete fields we don't need to track
-    delete singleMatchData["options"]; // Don't know what this field does, probably don't need it
-    delete singleMatchData["slotinfo"]; // Don't know what this field does, probably don't need it
-    delete singleMatchData["observertotal"]; // We don't care about this
-    delete singleMatchData["matchurls"]; // Don't know, don't care
+  // delete fields we don't need to track
+  delete singleMatchData["options"]; // Don't know what this field does, probably don't need it
+  delete singleMatchData["slotinfo"]; // Don't know what this field does, probably don't need it
+  delete singleMatchData["observertotal"]; // We don't care about this
+  delete singleMatchData["matchurls"]; // Don't know, don't care
 
-    singleMatchData = filterOutItems(singleMatchData);
-    singleMatchData = removeExtraDataFromItems(singleMatchData);
+  singleMatchData = filterOutItems(singleMatchData);
+  singleMatchData = removeExtraDataFromItems(singleMatchData);
 
-    return singleMatchData;
+  return singleMatchData;
 };
 
 /**
@@ -53,7 +53,7 @@ const processSingleMatch = (singleMatchData: Record<string, any>): Record<string
  * @param singleMatchData
  */
 const isLastDayMatch = (singleMatchData: Record<string, any>): boolean => {
-    return singleMatchData["startgametime"] > getHoursOldTimestamp(25);
+  return singleMatchData["startgametime"] > getHoursOldTimestamp(25);
 };
 
 /**
@@ -62,16 +62,16 @@ const isLastDayMatch = (singleMatchData: Record<string, any>): boolean => {
  * @param singleMatchData
  */
 const extractPlayerIDsInMatch = (singleMatchData: Record<string, any>): Array<number> => {
-    const playerIds = [];
+  const playerIds = [];
 
-    for (const player of singleMatchData["matchhistoryreportresults"]) {
-        playerIds.push(player["profile_id"]);
-        // Also delete these 2 fields we don't need them
-        delete player["xpgained"];
-        delete player["matchstartdate"];
-    }
+  for (const player of singleMatchData["matchhistoryreportresults"]) {
+    playerIds.push(player["profile_id"]);
+    // Also delete these 2 fields we don't need them
+    delete player["xpgained"];
+    delete player["matchstartdate"];
+  }
 
-    return playerIds;
+  return playerIds;
 };
 
 /**
@@ -80,12 +80,12 @@ const extractPlayerIDsInMatch = (singleMatchData: Record<string, any>): Array<nu
  * @param profiles
  */
 const findProfile = (
-    profileId: number,
-    profiles: Array<Record<string, any>>,
+  profileId: number,
+  profiles: Array<Record<string, any>>,
 ): Record<string, any> | undefined => {
-    return profiles.find((profile: Record<string, any>) => {
-        return profile["profile_id"] == profileId;
-    });
+  return profiles.find((profile: Record<string, any>) => {
+    return profile["profile_id"] == profileId;
+  });
 };
 
 /**
@@ -99,18 +99,18 @@ const findProfile = (
  * @param profiles
  */
 const transformProfilesInMatch = (
-    singleMatchObject: Record<string, any>,
-    profiles: Array<Record<string, any>>,
+  singleMatchObject: Record<string, any>,
+  profiles: Array<Record<string, any>>,
 ): Array<string> => {
-    const steamIDs = [];
+  const steamIDs = [];
 
-    for (const playerResult of singleMatchObject["matchhistoryreportresults"]) {
-        const profile = findProfile(playerResult["profile_id"], profiles);
-        playerResult["profile"] = profile;
-        steamIDs.push(convertSteamNameToID(profile?.name));
-    }
+  for (const playerResult of singleMatchObject["matchhistoryreportresults"]) {
+    const profile = findProfile(playerResult["profile_id"], profiles);
+    playerResult["profile"] = profile;
+    steamIDs.push(convertSteamNameToID(profile?.name));
+  }
 
-    return steamIDs;
+  return steamIDs;
 };
 
 /***
@@ -120,28 +120,28 @@ const transformProfilesInMatch = (
  * @param profiles
  */
 const prepareMatchDBObject = (
-    singleMatchData: Record<string, any>,
-    profiles: Array<Record<string, any>>,
+  singleMatchData: Record<string, any>,
+  profiles: Array<Record<string, any>>,
 ): ProcessedMatch => {
-    const profileIDs = extractPlayerIDsInMatch(singleMatchData);
+  const profileIDs = extractPlayerIDsInMatch(singleMatchData);
 
-    // Do all the transformations on the single match object
-    singleMatchData = processSingleMatch(singleMatchData);
-    const steamIDs = transformProfilesInMatch(singleMatchData, profiles);
+  // Do all the transformations on the single match object
+  singleMatchData = processSingleMatch(singleMatchData);
+  const steamIDs = transformProfilesInMatch(singleMatchData, profiles);
 
-    // This is important we are storing profile IDs on the main object so we can filter in DB based on this
-    singleMatchData["profile_ids"] = profileIDs;
-    singleMatchData["steam_ids"] = steamIDs;
+  // This is important we are storing profile IDs on the main object so we can filter in DB based on this
+  singleMatchData["profile_ids"] = profileIDs;
+  singleMatchData["steam_ids"] = steamIDs;
 
-    return singleMatchData as ProcessedMatch;
+  return singleMatchData as ProcessedMatch;
 };
 
 export {
-    filterOutItems,
-    removeExtraDataFromItems,
-    processSingleMatch,
-    isLastDayMatch,
-    extractPlayerIDsInMatch,
-    prepareMatchDBObject,
-    findProfile,
+  filterOutItems,
+  removeExtraDataFromItems,
+  processSingleMatch,
+  isLastDayMatch,
+  extractPlayerIDsInMatch,
+  prepareMatchDBObject,
+  findProfile,
 };

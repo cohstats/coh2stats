@@ -1,15 +1,15 @@
 {
-    "compilerOptions": {
-        "module": "commonjs",
-        "noImplicitReturns": true,
-        "noUnusedLocals": true,
-        "outDir": "lib",
-        "sourceMap": false,
-        "strict": true,
-        "target": "es2017",
-        "resolveJsonModule": true
-    },
-    "compileOnSave": true,
-    "include": ["src"],
-    "exclude": ["node_modules", "**/*.spec.ts", "**/tests/assets/**"]
+  "compilerOptions": {
+    "module": "commonjs",
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "outDir": "lib",
+    "sourceMap": false,
+    "strict": true,
+    "target": "es2017",
+    "resolveJsonModule": true
+  },
+  "compileOnSave": true,
+  "include": ["src"],
+  "exclude": ["node_modules", "**/*.spec.ts", "**/tests/assets/**"]
 }

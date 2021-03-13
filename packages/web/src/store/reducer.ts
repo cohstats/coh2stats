@@ -10,24 +10,24 @@ import type { History } from "history";
 import type { RouterState } from "connected-react-router";
 
 interface UserProfile {
-    name: string;
+  name: string;
 }
 export interface AppState {
-    // React Router
-    readonly router: RouterState;
+  // React Router
+  readonly router: RouterState;
 
-    // Firebase
-    readonly firestore: FirestoreReducer.Reducer;
-    readonly firebase: FirebaseReducer.Reducer<UserProfile>;
+  // Firebase
+  readonly firestore: FirestoreReducer.Reducer;
+  readonly firebase: FirebaseReducer.Reducer<UserProfile>;
 }
 
 export type RootReducer = Reducer<AppState, Action>;
 
 const rootReducer = (history: History): RootReducer =>
-    combineReducers<AppState>({
-        router: connectRouter(history),
-        firebase: firebaseReducer,
-        firestore: firestoreReducer as Reducer,
-    });
+  combineReducers<AppState>({
+    router: connectRouter(history),
+    firebase: firebaseReducer,
+    firestore: firestoreReducer as Reducer,
+  });
 
 export default rootReducer;

@@ -3,12 +3,12 @@ import { Tooltip } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 
 interface IProps {
-    text: string;
+  text: string;
 }
 export const Helper: React.FC<IProps> = ({ text }) => {
-    return (
-        <Tooltip title={text}>
-            <QuestionCircleOutlined />
-        </Tooltip>
-    );
+  return (
+    <Tooltip title={text}>
+      <QuestionCircleOutlined />
+    </Tooltip>
+  );
 };

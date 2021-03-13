@@ -17,16 +17,16 @@ const history = createBrowserHistory();
 export const appStore = store.configure(history);
 
 const renderApp = (): void =>
-    ReactDOM.render(
-        <React.StrictMode>
-            <Root store={appStore} history={history} />
-        </React.StrictMode>,
-        document.getElementById("root"),
-    );
+  ReactDOM.render(
+    <React.StrictMode>
+      <Root store={appStore} history={history} />
+    </React.StrictMode>,
+    document.getElementById("root"),
+  );
 
 // Hot reload
 if (process.env.NODE_ENV !== "production" && module.hot) {
-    module.hot.accept("./root", renderApp);
+  module.hot.accept("./root", renderApp);
 }
 
 // Render our app

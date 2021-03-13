@@ -21,23 +21,23 @@ const useEmulators = process.env.REACT_APP_EMULATOR && process.env.REACT_APP_EMU
  * Initialize Firebase
  */
 const init = (): void => {
-    initializeApp(config.firebase());
-    analytics();
-    performance();
-    const db = firestore();
-    const fn = functions();
+  initializeApp(config.firebase());
+  analytics();
+  performance();
+  const db = firestore();
+  const fn = functions();
 
-    if (useEmulators) {
-        db.settings({ host: "localhost:8080", ssl: false });
-        fn.useFunctionsEmulator("http://localhost:5001");
-    }
+  if (useEmulators) {
+    db.settings({ host: "localhost:8080", ssl: false });
+    fn.useFunctionsEmulator("http://localhost:5001");
+  }
 };
 
 /**
  * Instance of the FB functions
  */
 export const functions = (): firebase.functions.Functions =>
-    app().functions(useEmulators ? undefined : config.firebaseFunctions.location);
+  app().functions(useEmulators ? undefined : config.firebaseFunctions.location);
 
 /**
  * Log analytics event
@@ -46,7 +46,7 @@ export const functions = (): firebase.functions.Functions =>
  * @param params parameters of the event
  */
 const logEvent = (name: string, params?: Record<string, string | boolean>): void => {
-    analytics().logEvent(name, params);
+  analytics().logEvent(name, params);
 };
 
 /**
@@ -62,11 +62,11 @@ const setUserId = (id: string): void => analytics().setUserId(id);
 const resetUserId = (): void => setUserId("");
 
 const firebaseExport = {
-    init,
-    functions,
-    logEvent,
-    setUserId,
-    resetUserId,
+  init,
+  functions,
+  logEvent,
+  setUserId,
+  resetUserId,
 };
 
 export default firebaseExport;

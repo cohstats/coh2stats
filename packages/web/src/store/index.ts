@@ -1,7 +1,7 @@
 import configure from "./configure";
 
 const defaultConfigure = {
-    configure,
+  configure,
 };
 
 export default defaultConfigure;

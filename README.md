@@ -13,24 +13,24 @@ The project is created in Google Cloud with usage of Firebase.
 The main language of the project is set to be JavaScript. Which will
 be used on both FE and BE.
 
--   FE - JavaScript, React
--   BE - Serverless JS
--   DB - FireStore (NoSQL DB)
+- FE - JavaScript, React
+- BE - Serverless JS
+- DB - FireStore (NoSQL DB)
 
 GCP services to be used:
 
--   Firebase Hosting - For hosting the website
--   Firebase Firestore - NoSQL Database
--   Firebase Cloud functions - Is the main backend for crawling and data processing
--   [GCP Pub/Sub](https://cloud.google.com/pubsub/docs/overview) - For messaging between the functions
--   GCP Storage - For storing extra data
+- Firebase Hosting - For hosting the website
+- Firebase Firestore - NoSQL Database
+- Firebase Cloud functions - Is the main backend for crawling and data processing
+- [GCP Pub/Sub](https://cloud.google.com/pubsub/docs/overview) - For messaging between the functions
+- GCP Storage - For storing extra data
 
 Thing to consider:
 
--   There is a large amount of matches, we store them in the FireStore, however
-    once you store the match. You don't do any changes to it, therefore it would be
-    better to store them in the [BigQuery](https://cloud.google.com/bigquery/) where
-    we could run our analysis more easily and it would be Faster and Cheaper.
+- There is a large amount of matches, we store them in the FireStore, however
+  once you store the match. You don't do any changes to it, therefore it would be
+  better to store them in the [BigQuery](https://cloud.google.com/bigquery/) where
+  we could run our analysis more easily and it would be Faster and Cheaper.
 
 ### Development
 

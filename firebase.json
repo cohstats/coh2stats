@@ -1,68 +1,68 @@
 {
-    "firestore": {
-        "rules": "firestore.rules",
-        "indexes": "firestore.indexes.json"
-    },
-    "functions": {
-        "source": "packages/functions",
-        "predeploy": "yarn functions build",
-        "ignore": ["**/src/**", "", "**/node_modules/**"]
-    },
-    "hosting": {
-        "public": "packages/web/build",
-        "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-        "rewrites": [
-            {
-                "source": "**",
-                "destination": "/index.html"
-            }
-        ],
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "functions": {
+    "source": "packages/functions",
+    "predeploy": "yarn functions build",
+    "ignore": ["**/src/**", "", "**/node_modules/**"]
+  },
+  "hosting": {
+    "public": "packages/web/build",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ],
+    "headers": [
+      {
+        "source": "**/*.@(css|js|map)",
         "headers": [
-            {
-                "source": "**/*.@(css|js|map)",
-                "headers": [
-                    {
-                        "key": "Cache-Control",
-                        "value": "public, max-age=31536000"
-                    }
-                ]
-            },
-            {
-                "source": "**/*.@(jpg|jpeg|gif|png|ico|webp|svg)",
-                "headers": [
-                    {
-                        "key": "Cache-Control",
-                        "value": "public, max-age=31536000"
-                    }
-                ]
-            },
-            {
-                "source": "/service-worker.js",
-                "headers": [
-                    {
-                        "key": "Cache-Control",
-                        "value": "no-cache"
-                    }
-                ]
-            },
-            {
-                "source": "/firebase-messaging-sw.js",
-                "headers": [
-                    {
-                        "key": "Cache-Control",
-                        "value": "no-cache"
-                    }
-                ]
-            },
-            {
-                "source": "/index.html",
-                "headers": [
-                    {
-                        "key": "Cache-Control",
-                        "value": "no-cache"
-                    }
-                ]
-            }
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=31536000"
+          }
         ]
-    }
+      },
+      {
+        "source": "**/*.@(jpg|jpeg|gif|png|ico|webp|svg)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=31536000"
+          }
+        ]
+      },
+      {
+        "source": "/service-worker.js",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
+        ]
+      },
+      {
+        "source": "/firebase-messaging-sw.js",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
+        ]
+      },
+      {
+        "source": "/index.html",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
+        ]
+      }
+    ]
+  }
 }
