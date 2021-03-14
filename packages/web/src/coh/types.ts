@@ -1,5 +1,7 @@
 interface CommanderData {
   serverID: string;
+  iconSmall: string;
+  iconlarge: string;
   commanderName: string;
   description: string;
   races: Array<string>;

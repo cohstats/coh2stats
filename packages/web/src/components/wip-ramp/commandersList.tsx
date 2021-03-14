@@ -1,8 +1,8 @@
 import React from "react";
 import { Col, Row, List, Avatar } from "antd";
-import { getCommanderByRaces, getCommanderData } from "../../coh/commanders";
+import { getCommanderByRaces } from "../../coh/commanders";
 import { useHistory, useParams } from "react-router";
-import { CommanderData, RaceName } from "../../coh/types";
+import { RaceName } from "../../coh/types";
 import routes from "../../routes";
 
 export const CommandersList = () => {
@@ -15,30 +15,15 @@ export const CommandersList = () => {
   let myData = getCommanderByRaces(race as RaceName);
   myData = myData.filter((commanderData) => {
     return (
-      commanderData["commanderName"] != "undefined" && commanderData["description"] != "undefined"
+      commanderData["commanderName"] !== "undefined" &&
+      commanderData["description"] !== "undefined"
     );
   });
 
-  function getRaceBackground(activeRace: RaceName) {
-    switch (activeRace) {
-      case "wermacht":
-        return "https://coh2index.com/static/images/Icons_factions_faction_german_192.png";
-      case "wgerman":
-        return "https://coh2index.com/static/images/Icons_factions_faction_west_german_192.png";
-      case "soviet":
-        return "https://coh2index.com/static/images/Icons_factions_faction_soviet_192.png";
-      case "british":
-        return "https://coh2index.com/static/images/Icons_factions_faction_british_192.png";
-      case "usf":
-        return "https://coh2index.com/static/images/Icons_factions_faction_aef_192.png";
-      default:
-        return "https://pbs.twimg.com/media/BpDH_NpCYAI1YE2.png";
-    }
-  }
   const divStyle = {
-    backgroundImage: "url(" + getRaceBackground(race as RaceName) + ")",
+    backgroundImage: "url(/resources/generalIcons/" + race + ".png)",
     backgroundRepeat: "no-repeat",
-    backgroundSize: "400px",
+    backgroundSize: "350px",
     backgroundPosition: "left top",
     backgroundBlendMode: "overlay",
     backgroundColor: "rgba(255,255,255,0.8)",
@@ -79,10 +64,11 @@ export const CommandersList = () => {
                         onClick={() => onCommanderClick(item.serverID)}
                       >
                         <Avatar
-                          src="/resources/commanderImage/placeholder.svg"
+                          src={"/resources/exportedIcons/" + item.iconSmall + ".png"}
                           shape="square"
                           size={64}
                         />
+                        {console.log(item)}
                       </div>
                     }
                     title={

@@ -1,6 +1,6 @@
 import React from "react";
 import { Header } from "antd/lib/layout/layout";
-import {Divider, Image, Menu, Space} from "antd";
+import { Divider, Image, Menu, Space } from "antd";
 import routes from "../routes";
 import { useHistory, useRouteMatch } from "react-router";
 
@@ -25,7 +25,9 @@ export const MainHeader: React.FC = () => {
   return (
     <Header>
       <Space direction={"horizontal"} size={"large"}>
-        <div style={{color: "whitesmoke", fontSize: "large", fontFamily: "sans-serif" }}>CoH 2 Logs & Stats</div>
+        <div style={{ color: "whitesmoke", fontSize: "large", fontFamily: "sans-serif" }}>
+          CoH 2 Logs & Stats
+        </div>
         <Menu theme="dark" mode="horizontal" defaultSelectedKeys={[currentPath]}>
           <Menu.Item key={routes.statsBase()} onClick={onMenuClick}>
             Stats
@@ -43,7 +45,6 @@ export const MainHeader: React.FC = () => {
           <Menu.Item key="5">About</Menu.Item>
         </Menu>
       </Space>
-
     </Header>
   );
 };
