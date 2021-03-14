@@ -1,22 +1,20 @@
 import React from "react";
-import { Menu, Row, Typography } from "antd";
 import { Layout } from "antd";
 import "./App.css";
 import { useFirestoreConnect } from "react-redux-firebase";
-import { Redirect, Route, Router, Switch } from "react-router-dom";
-import { CommanderDetails } from "./components/wip-ramp/commanders";
-import { CommandersList } from "./components/wip-ramp/commandersList";
-import { RacePicker } from "./components/wip-ramp/racePicker";
+import { Route, Switch } from "react-router-dom";
+import { CommanderDetails } from "./pages/commanders/commanders";
+import { CommandersList } from "./pages/commanders/commandersList";
+import { RacePicker } from "./pages/commanders/racePicker";
 import Stats from "./pages/stats";
 import { MainFooter } from "./components/main-footer";
 import routes from "./routes";
 import { MainHeader } from "./components/main-header";
+import About from "./pages/about";
 
-const { Header, Footer, Content } = Layout;
+const { Content } = Layout;
 
 const App: React.FC = () => {
-  const { Title } = Typography;
-
   useFirestoreConnect([
     {
       collection: "stats",
@@ -35,7 +33,7 @@ const App: React.FC = () => {
               <Stats />
             </Route>
             <Route path={"/stats"}>
-              <Redirect to={"/stats/"} />
+              <Stats />
             </Route>
             <Route path={routes.commanderByID()}>
               <CommanderDetails />
@@ -45,6 +43,9 @@ const App: React.FC = () => {
             </Route>
             <Route path={routes.commanderBase()}>
               <RacePicker />
+            </Route>
+            <Route path={routes.aboutBase()}>
+              <About />
             </Route>
           </Switch>
         </Content>

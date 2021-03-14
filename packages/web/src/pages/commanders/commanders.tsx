@@ -2,7 +2,6 @@ import React from "react";
 import { Col, Row, List, Divider, Avatar, Descriptions, Badge } from "antd";
 import { getCommanderData } from "../../coh/commanders";
 import { useParams } from "react-router";
-import { RaceName } from "../../coh/types";
 
 export const CommanderDetails = () => {
   const { commanderID } = useParams<{

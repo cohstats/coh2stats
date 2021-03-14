@@ -4,7 +4,7 @@ const statsBase = () => {
 
 const fullStatsDetails = (
   frequency = ":frequency",
-  timestamp = ":timestamp",
+  timestamp: string | number = ":timestamp",
   type = ":type",
   race = ":race",
 ): string => {
@@ -24,12 +24,17 @@ const commanderByID = (race = ":race", commanderID = ":commanderID") => {
   return `${commanderList(race)}/${commanderID}`;
 };
 
+const aboutBase = () => {
+  return "/about";
+};
+
 const routes = {
   statsBase,
   fullStatsDetails,
   commanderBase,
   commanderList,
   commanderByID,
+  aboutBase,
 };
 
 export default routes;

@@ -11,6 +11,7 @@ import { BulletinsBarChart } from "../../components/charts/bulletins-bar";
 import { Helper } from "../../components/helper";
 import Title from "antd/es/typography/Title";
 import routes from "../../routes";
+import { validStatsTypes } from "../../coh/types";
 
 const StatsDetails: React.FC = () => {
   const isLoading = useLoading("stats");
@@ -28,15 +29,23 @@ const StatsDetails: React.FC = () => {
 
   if (!data) {
     return (
-      <Title level={4}>
+      <Title level={4} style={{ display: "flex", textAlign: "center", justifyContent: "center" }}>
         We are currently not tracking any records for the {`${frequency}`} stats on timestamp{" "}
-        {`${timestamp}`}.
+        {`${timestamp}`}. <br />
+        The statistics are run after the end of the day/week/month ~2AM UTC time.
+      </Title>
+    );
+  }
+
+  if (!validStatsTypes.includes(type) || !data[type]) {
+    return (
+      <Title level={4}>
+        Unknown stats type {`${type}`}, valid values are {`${validStatsTypes}`}
       </Title>
     );
   }
 
   const specificData: Record<string, any> = data[type];
-  console.log(specificData);
 
   const maps: Record<string, number> = specificData["maps"];
 
@@ -56,7 +65,7 @@ const StatsDetails: React.FC = () => {
           buttonStyle="solid"
           onChange={onTypeRadioChange}
           size={"large"}
-          style={{ padding: 20 }}
+          style={{ paddingBottom: 10 }}
         >
           <Radio.Button disabled={true} value="general">
             General{" "}
@@ -67,10 +76,14 @@ const StatsDetails: React.FC = () => {
           <Radio.Button value="4v4">4 vs 4</Radio.Button>
         </Radio.Group>
       </Row>
-      <Row justify={"center"}>
-        <Title level={4}>
-          Amount of games for this analysis {`${specificData["matchCount"]}`}
-        </Title>
+      <Row justify={"center"} style={{ paddingBottom: 20 }}>
+        <div style={{ textAlign: "center" }}>
+          <span style={{ fontSize: 20, fontWeight: 600 }}>
+            Amount of games for this analysis {`${specificData["matchCount"]}`}
+          </span>
+          <br />
+          <span>These are just games from top 200 players, see about page for more info.</span>
+        </div>
       </Row>
       <Row justify={"center"}>
         <Space size={"large"}>
@@ -83,7 +96,7 @@ const StatsDetails: React.FC = () => {
         </Space>
       </Row>
       <Row justify={"center"}>
-        <Card title={`Maps ${type}`} style={{ width: 1200, height: 700 }}>
+        <Card title={`Maps ${type}`} style={{ width: 1200, height: 700, marginTop: 20 }}>
           {MapBarChart(maps)}
         </Card>
       </Row>

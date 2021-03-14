@@ -14,7 +14,11 @@ export const MainFooter: React.FC = () => {
       <br />
       © 2021 COH2logs.com
       <br />
-      <a href={"https://github.com/petrvecera/coh2ladders"} target="_blank">
+      <a
+        href={"https://github.com/petrvecera/coh2ladders"}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <img width={30} height={30} src={"/resources/github-dark.png"} alt={"GitHub Logo"} />
       </a>
       <br />

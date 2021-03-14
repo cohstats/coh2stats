@@ -2,7 +2,6 @@ import { Bar } from "@nivo/bar";
 import React from "react";
 import { sortArrayOfObjectsByTheirPropertyValue } from "../../coh/helpers";
 import { convertBulletinIDToName } from "../../coh/bulletins";
-import { Card } from "antd";
 
 export const BulletinsBarChart = (bulletins: Record<number, number>) => {
   const simpleMapsData = [];

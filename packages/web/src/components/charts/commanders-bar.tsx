@@ -49,7 +49,7 @@ export const CommandersBarChart = (commanders: Record<number, number>) => {
       onClick={(event) => {
         // TODO: Fix this
         const cmId = event.data["commanderId"];
-        window.open(`${window.location.hostname}/commanders/usf/${cmId}`);
+        window.open(`${window.location.host}/commanders/usf/${cmId}`);
       }}
     />
   );

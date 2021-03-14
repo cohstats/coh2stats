@@ -17,5 +17,9 @@ interface IntelBulletinData {
 }
 
 type RaceName = "wermacht" | "usf" | "soviet" | "wgerman" | "british";
+const validRaceNames = ["wermacht", "usf", "soviet", "wgerman", "british"];
+
+const validStatsTypes = ["1v1", "2v2", "3v3", "4v4", "general"];
 
 export type { CommanderData, IntelBulletinData, RaceName };
+export { validRaceNames, validStatsTypes };
