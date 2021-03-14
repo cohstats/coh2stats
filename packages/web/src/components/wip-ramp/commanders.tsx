@@ -1,7 +1,8 @@
 import React from "react";
-import { Col, Row, Image, List, Divider, Avatar, Descriptions, Badge, Menu } from "antd";
+import { Col, Row, List, Divider, Avatar, Descriptions, Badge } from "antd";
 import { getCommanderData } from "../../coh/commanders";
 import { useParams } from "react-router";
+import { RaceName } from "../../coh/types";
 
 export const CommanderDetails = () => {
   const { commanderID } = useParams<{
@@ -10,50 +11,19 @@ export const CommanderDetails = () => {
 
   const myData = getCommanderData(commanderID);
 
-  const menu = (
-    <Menu>
-      <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="USA">
-          US Army
-        </a>
-      </Menu.Item>
-      <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="Wehrmacht">
-          Wehrmacht
-        </a>
-      </Menu.Item>
-      <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="Soviet">
-          Soviet
-        </a>
-      </Menu.Item>
-    </Menu>
-  );
+  const { race } = useParams<{
+    race: string;
+  }>();
 
-  function ImageDemo() {
-    return (
-      <Image
-        width={100}
-        height={130}
-        preview={false}
-        src="/resources/commanderImage/placeholder.svg"
-      />
-    );
-  }
+  const divStyle = {
+    backgroundImage: "url(/resources/generalIcons/" + race + ".png)",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "350px",
+    backgroundPosition: "left top",
+    backgroundBlendMode: "overlay",
+    backgroundColor: "rgba(255,255,255,0.8)",
+  };
 
-  function ImageRace() {
-    if (myData && myData.races[0] == "usf") {
-      return <Image width={350} preview={false} src="/resources/us-forces.png" />;
-    } else {
-      return (
-        <Image width={150} preview={false} src="/resources/commanderImage/placeholder.svg" />
-      );
-    }
-  }
-
-  function toCapital(textIn: String) {
-    return textIn.toUpperCase();
-  }
   if (!myData) {
     return (
       <>
@@ -64,7 +34,7 @@ export const CommanderDetails = () => {
 
   return (
     <>
-      <div>
+      <div style={divStyle}>
         <Row>
           <Col span={6}></Col>
           <Col style={{ padding: "2vh" }} span={12}></Col>
@@ -75,13 +45,11 @@ export const CommanderDetails = () => {
           <Col span={4}></Col>
           <Col style={{ padding: "0px 20px 0px 0px" }} flex="100px">
             <img
-              src="https://www.coh2.org/uploads/hosting/okw_icons/OKW_Special_Operations.jpg"
+              src={"/resources/exportedIcons/" + myData.iconlarge + ".png"}
               width="130"
               height="169"
             />
-            <h2 style={{ textAlign: "center", margin: "-5px 0px 0px 0px" }}>
-              {myData.races[0].toUpperCase()}
-            </h2>
+            <h2 style={{ textAlign: "center", margin: "-5px 0px 0px 0px" }}>{myData.races[0]}</h2>
           </Col>
           <Col span={10}>
             <h1>{myData.commanderName}</h1>
@@ -91,10 +59,11 @@ export const CommanderDetails = () => {
           </Col>
           <Col span={6}></Col>
         </Row>
-        <Divider />
+
         <Row>
           <Col span={6}></Col>
           <Col span={12}>
+            <Divider />
             <List
               itemLayout="horizontal"
               dataSource={myData.abilities}
@@ -104,12 +73,13 @@ export const CommanderDetails = () => {
                     <List.Item.Meta
                       avatar={
                         <div>
+                          {console.log("/resources/exportedIcons/" + item.icon + ".png")}
                           <Avatar
-                            src="/resources/commanderImage/placeholder.svg"
+                            src={"/resources/exportedIcons/" + item.icon + ".png"}
                             shape="square"
                             size={64}
                           />
-                          <Badge count={5} overflowCount={999} showZero offset={[0, -32]}>
+                          <Badge count={0} overflowCount={999} showZero offset={[0, -32]}>
                             <a href="#" className="head-example" />
                           </Badge>
                         </div>

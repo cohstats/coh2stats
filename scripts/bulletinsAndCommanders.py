@@ -61,6 +61,14 @@ def parseAbilityDetails(referenceXml):
     except:
         abilityDetails['description'] = 'undefined'
         print('Cannot find a localized TMX entry for file ' + xmlPath  + ' -> ' + str(textIndex))
+        
+   # look for ability icon
+    abilityIcon = xmlroot.findall(".//*icon")
+    try:
+        abilityDetails['icon'] = (abilityIcon[0].attrib['value'])
+    except:
+        print('Cannot find Icon for ' + xmlPath)
+        abilityDetails['icon'] = 'undefined'
 
 
     return abilityDetails
@@ -101,6 +109,13 @@ def parseCommanderRecord(xmlPath):
         myRaceList.append(translateRaceID(sRaceIn))
     myCommanderRecord['races'] = myRaceList
 
+    # look for icons
+    iconSmall = xmlroot.findall(".//*icon/[@name='icon']")
+    myCommanderRecord['iconSmall'] = iconSmall[0].attrib['value']
+    
+    iconlarge = xmlroot.findall(".//*icon/[@name='icon_secondary']")
+    myCommanderRecord['iconlarge'] = iconlarge[0].attrib['value']
+    
     # look for commander_ability
     xmlResult = xmlroot.findall(".//*[@name='commander_ability']")
     myAbilitiesList = []
@@ -110,9 +125,11 @@ def parseCommanderRecord(xmlPath):
         details = parseAbilityDetails(xmlAbility.attrib['value'])
         ability['name'] = details['name']
         ability['description'] = details['description']
-
+        try:
+            ability['icon'] = details['icon']
+        except:
+            print('Ability icon not found')            
         myAbilitiesList.append(ability)
-
 
     myCommanderRecord['abilities'] = myAbilitiesList
 
@@ -162,7 +179,7 @@ def parseBulletinRecord(xmlPath):
 
     # look for icon path
     xmlResult = xmlroot.findall(".//*[@name='icon']")
-    myBulletinRecord['IconPath'] = xmlResult[0].attrib['value']
+    myBulletinRecord['icon'] = xmlResult[0].attrib['value']
 
 
     # look for assigned races
@@ -239,7 +256,7 @@ for root, dirs, files in os.walk(commanderPath):
     for file in files:
         xmlPath.append((root+'/'+file).replace('\\','/'))
 
-# make a list of all commander records
+# make a dict of all commander records
 for recordPath in xmlPath:
     commander = parseCommanderRecord(recordPath)
     myCommanderData[commander["serverID"]] = commander

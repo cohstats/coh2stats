@@ -1,0 +1,434 @@
+{
+    "48": {
+        "bitmapFormat": "13",
+        "characterId": "589872",
+        "exportName": "BoBDialogs_Dossier_Divider_880x24",
+        "fileName": "CoH2UI_I442.tga",
+        "targetHeight": "2048",
+        "targetWidth": "2024",
+        "type": "DefineExternalImage2"
+    },
+    "49": {
+        "bitmapFormat": "13",
+        "characterId": "589873",
+        "exportName": "Titles_Dossier_MissionIntroduction_672x100",
+        "fileName": "CoH2UI_I41.tga",
+        "targetHeight": "2048",
+        "targetWidth": "2048",
+        "type": "DefineExternalImage2"
+    },
+    "50": {
+        "bitmapFormat": "13",
+        "characterId": "589874",
+        "exportName": "Rewards_loot_debris_09",
+        "fileName": "CoH2UI_I37B.tga",
+        "targetHeight": "2048",
+        "targetWidth": "1980",
+        "type": "DefineExternalImage2"
+    },
+    "51": {
+        "bitmapFormat": "13",
+        "characterId": "589875",
+        "exportName": "Titles_Dialogue_Frame_732x104",
+        "fileName": "CoH2UI_I36.tga",
+        "targetHeight": "2048",
+        "targetWidth": "2048",
+        "type": "DefineExternalImage2"
+    },
+    "52": {
+        "bitmapFormat": "13",
+        "characterId": "589876",
+        "exportName": "Titles_SteelRope_460x16",
+        "fileName": "CoH2UI_I47.tga",
+        "targetHeight": "2048",
+        "targetWidth": "2036",
+        "type": "DefineExternalImage2"
+    },
+    "53": {
+        "bitmapFormat": "13",
+        "characterId": "589877",
+        "exportName": "Tooltips_Tooltip_Title_560x116",
+        "fileName": "CoH2UI_I20A.tga",
+        "targetHeight": "2048",
+        "targetWidth": "2040",
+        "type": "DefineExternalImage2"
+    },
+    "54": {
+        "bitmapFormat": "13",
+        "characterId": "589878",
+        "exportName": "Rewards_parafurl_03",
+        "fileName": "CoH2UI_I34B.tga",
+        "targetHeight": "2044",
+        "targetWidth": "2040",
+        "type": "DefineExternalImage2"
+    },
+    "55": {
+        "bitmapFormat": "13",
+        "characterId": "589879",
+        "exportName": "Campaign_SavedGames_Metamap",
+        "fileName": "CoH2UI_IA00.tga",
+        "targetHeight": "2044",
+        "targetWidth": "1968",
+        "type": "DefineExternalImage2"
+    },
+    "56": {
+        "bitmapFormat": "13",
+        "characterId": "589880",
+        "exportName": "Titles_Soviet_Star",
+        "fileName": "CoH2UI_I42.tga",
+        "targetHeight": "2048",
+        "targetWidth": "2036",
+        "type": "DefineExternalImage2"
+    },
+    "57": {
+        "bitmapFormat": "13",
+        "characterId": "589881",
+        "exportName": "Titles_Objective_Update_Primary_108x108",
+        "fileName": "CoH2UI_I16.tga",
+        "targetHeight": "2048",
+        "targetWidth": "2016",
+        "type": "DefineExternalImage2"
+    },
+    "58": {
+        "bitmapFormat": "13",
+        "characterId": "589882",
+        "exportName": "Rewards_parafurl_21",
+        "fileName": "CoH2UI_I356.tga",
+        "targetHeight": "2048",
+        "targetWidth": "2032",
+        "type": "DefineExternalImage2"
+    },
+    "59": {
+        "bitmapFormat": "13",
+        "characterId": "2107",
+        "exportName": "Store_inset_frame_tile",
+        "fileName": "CoH2UI_I83B.tga",
+        "targetHeight": "36",
+        "targetWidth": "36",
+        "type": "DefineExternalImage2"
+    },
+    "60": {
+        "bitmapFormat": "13",
+        "characterId": "589884",
+        "exportName": "GameOver_flare3",
+        "fileName": "CoH2UI_I261.tga",
+        "targetHeight": "2048",
+        "targetWidth": "2024",
+        "type": "DefineExternalImage2"
+    },
+    "61": {
+        "bitmapFormat": "13",
+        "characterId": "589885",
+        "exportName": "Dialogs_Paper_1",
+        "fileName": "CoH2UI_I171.tga",
+        "targetHeight": "2048",
+        "targetWidth": "2044",
+        "type": "DefineExternalImage2"
+    },
+    "62": {
+        "bitmapFormat": "13",
+        "characterId": "589886",
+        "exportName": "COH2HUDStyles_064x064_ButtonCooldown_Cap",
+        "fileName": "CoH2UI_I23D.tga",
+        "targetHeight": "2048",
+        "targetWidth": "2048",
+        "type": "DefineExternalImage2"
+    },
+    "63": {
+        "bitmapFormat": "13",
+        "characterId": "589887",
+        "exportName": "Store_commander_portrait_background",
+        "fileName": "CoH2UI_I8B.tga",
+        "targetHeight": "2048",
+        "targetWidth": "1888",
+        "type": "DefineExternalImage2"
+    },
+    "64": {
+        "bitmapFormat": "13",
+        "characterId": "589888",
+        "exportName": "Home_Structure_Home_328x192",
+        "fileName": "CoH2UI_IB21.tga",
+        "targetHeight": "2048",
+        "targetWidth": "1908",
+        "type": "DefineExternalImage2"
+    },
+    "67": {
+        "bitmapFormat": "13",
+        "characterId": "589891",
+        "exportName": "Rewards_matchcard_loadout_holder",
+        "fileName": "CoH2UI_I688.tga",
+        "targetHeight": "2048",
+        "targetWidth": "2016",
+        "type": "DefineExternalImage2"
+    },
+    "68": {
+        "bitmapFormat": "13",
+        "characterId": "589892",
+        "exportName": "ToWMaps_Arrow_Red_1",
+        "fileName": "CoH2UI_I993.tga",
+        "targetHeight": "2048",
+        "targetWidth": "2016",
+        "type": "DefineExternalImage2"
+    },
+    "69": {
+        "bitmapFormat": "13",
+        "characterId": "589893",
+        "exportName": "Dialogs_faction_soviet_128",
+        "fileName": "CoH2UI_I38D.tga",
+        "targetHeight": "2048",
+        "targetWidth": "2016",
+        "type": "DefineExternalImage2"
+    },
+    "70": {
+        "bitmapFormat": "13",
+        "characterId": "589894",
+        "exportName": "GameList_Structure_328x120",
+        "fileName": "CoH2UI_I8DF.tga",
+        "targetHeight": "2048",
+        "targetWidth": "2016",
+        "type": "DefineExternalImage2"
+    },
+    "72": {
+        "bitmapFormat": "13",
+        "characterId": "589896",
+        "exportName": "BoBGameOver_Medal_Gold_85x116",
+        "fileName": "CoH2UI_I272.tga",
+        "targetHeight": "2036",
+        "targetWidth": "2016",
+        "type": "DefineExternalImage2"
+    },
+    "73": {
+        "bitmapFormat": "13",
+        "characterId": "589897",
+        "exportName": "BoBCompanyCard_BOB_steel_strip",
+        "fileName": "CoH2UI_I2F8.tga",
+        "targetHeight": "2048",
+        "targetWidth": "2016",
+        "type": "DefineExternalImage2"
+    },
+    "74": {
+        "bitmapFormat": "13",
+        "characterId": "589898",
+        "exportName": "Titles_Radio_100x100",
+        "fileName": "CoH2UI_I39.tga",
+        "targetHeight": "2048",
+        "targetWidth": "1864",
+        "type": "DefineExternalImage2"
+    },
+    "75": {
+        "bitmapFormat": "13",
+        "characterId": "589899",
+        "exportName": "Titles_Radio_Wave_100x100",
+        "fileName": "CoH2UI_I3A.tga",
+        "targetHeight": "2048",
+        "targetWidth": "1892",
+        "type": "DefineExternalImage2"
+    },
+    "76": {
+        "bitmapFormat": "13",
+        "characterId": "589900",
+        "exportName": "COH2StylesMisc_Dropdown_Neutral_Wide",
+        "fileName": "CoH2UI_I466.tga",
+        "targetHeight": "2048",
+        "targetWidth": "1968",
+        "type": "DefineExternalImage2"
+    },
+    "77": {
+        "bitmapFormat": "13",
+        "characterId": "589901",
+        "exportName": "Titles_Feature_Box_880x96",
+        "fileName": "CoH2UI_I3.tga",
+        "targetHeight": "2048",
+        "targetWidth": "2008",
+        "type": "DefineExternalImage2"
+    },
+    "78": {
+        "bitmapFormat": "13",
+        "characterId": "589902",
+        "exportName": "Rewards_loot_debris_03",
+        "fileName": "CoH2UI_I36F.tga",
+        "targetHeight": "2048",
+        "targetWidth": "1932",
+        "type": "DefineExternalImage2"
+    },
+    "79": {
+        "bitmapFormat": "13",
+        "characterId": "589903",
+        "exportName": "Titles_Shine_Angle_160x160",
+        "fileName": "CoH2UI_I1A.tga",
+        "targetHeight": "2048",
+        "targetWidth": "2040",
+        "type": "DefineExternalImage2"
+    },
+    "80": {
+        "bitmapFormat": "13",
+        "characterId": "589904",
+        "exportName": "Dialogs_Dossier_Warning_486x148",
+        "fileName": "CoH2UI_I384.tga",
+        "targetHeight": "2048",
+        "targetWidth": "2024",
+        "type": "DefineExternalImage2"
+    },
+    "81": {
+        "bitmapFormat": "13",
+        "characterId": "589905",
+        "exportName": "BoBTooltips_Button_Customizer_Unselected_84x84",
+        "fileName": "CoH2UI_I54.tga",
+        "targetHeight": "2048",
+        "targetWidth": "2016",
+        "type": "DefineExternalImage2"
+    },
+    "82": {
+        "bitmapFormat": "13",
+        "characterId": "589906",
+        "exportName": "BoBCompanyCard_Star_Frame_Large_68x68",
+        "fileName": "CoH2UI_IA4.tga",
+        "targetHeight": "2048",
+        "targetWidth": "2048",
+        "type": "DefineExternalImage2"
+    },
+    "83": {
+        "bitmapFormat": "13",
+        "characterId": "589907",
+        "exportName": "Icons_commander_recon_mode_toggle_on",
+        "fileName": "CoH2UI_I2DCB.tga",
+        "targetHeight": "2044",
+        "targetWidth": "1848",
+        "type": "DefineExternalImage2"
+    },
+    "84": {
+        "bitmapFormat": "13",
+        "characterId": "589908",
+        "exportName": "Icons_swatches_swatch_soviet_0022_summer_heavy",
+        "fileName": "CoH2UI_I2477.tga",
+        "targetHeight": "2044",
+        "targetWidth": "1848",
+        "type": "DefineExternalImage2"
+    },
+    "86": {
+        "bitmapFormat": "13",
+        "characterId": "2902",
+        "exportName": "COH2SeasonalStyles_HUD_Summer_Bridge_Left_nopack",
+        "fileName": "CoH2UI_IB56.tga",
+        "targetHeight": "228",
+        "targetWidth": "36",
+        "type": "DefineExternalImage2"
+    },
+    "66": {
+        "bitmapFormat": "13",
+        "characterId": "589890",
+        "exportName": "BoBCompanyCard_BOB_Ability_Button_Neutral",
+        "fileName": "CoH2UI_I9E.tga",
+        "targetHeight": "2048",
+        "targetWidth": "2040",
+        "type": "DefineExternalImage2"
+    },
+    "85": {
+        "bitmapFormat": "13",
+        "characterId": "589909",
+        "exportName": "Titles_Objective_Mark_Completed_Large_72x60",
+        "fileName": "CoH2UI_I27.tga",
+        "targetHeight": "2048",
+        "targetWidth": "2012",
+        "type": "DefineExternalImage2"
+    },
+    "65": {
+        "bitmapFormat": "13",
+        "characterId": "589889",
+        "exportName": "COH2StylesMisc_Loading_Bullet_Strip_412x56",
+        "fileName": "CoH2UI_I38B.tga",
+        "targetHeight": "2048",
+        "targetWidth": "2040",
+        "type": "DefineExternalImage2"
+    },
+    "71": {
+        "bitmapFormat": "13",
+        "characterId": "589895",
+        "exportName": "Rewards_Difficulty_Medium_116x116",
+        "fileName": "CoH2UI_I15F.tga",
+        "targetHeight": "2040",
+        "targetWidth": "2016",
+        "type": "DefineExternalImage2"
+    },
+    "127": {
+        "bitmapFormat": "13",
+        "characterId": "383",
+        "exportName": "COH2SeasonalStyles_HUD_Summer_Bridge_Right_nopack",
+        "fileName": "CoH2UI_I17F.tga",
+        "targetHeight": "228",
+        "targetWidth": "36",
+        "type": "DefineExternalImage2"
+    },
+    "24": {
+        "bitmapFormat": "13",
+        "characterId": "1816",
+        "exportName": "COH2SeasonalStyles_TaskbarBridgeLeftCap_nopack",
+        "fileName": "CoH2UI_I718.tga",
+        "targetHeight": "228",
+        "targetWidth": "36",
+        "type": "DefineExternalImage2"
+    },
+    "26": {
+        "bitmapFormat": "13",
+        "characterId": "1818",
+        "exportName": "COH2SeasonalStyles_TaskbarBridgeLeftJoin_nopack",
+        "fileName": "CoH2UI_I71A.tga",
+        "targetHeight": "236",
+        "targetWidth": "1",
+        "type": "DefineExternalImage2"
+    },
+    "28": {
+        "bitmapFormat": "13",
+        "characterId": "1820",
+        "exportName": "COH2SeasonalStyles_TaskbarBridgeCenter_nopack",
+        "fileName": "CoH2UI_I71C.tga",
+        "targetHeight": "228",
+        "targetWidth": "744",
+        "type": "DefineExternalImage2"
+    },
+    "30": {
+        "bitmapFormat": "13",
+        "characterId": "1822",
+        "exportName": "COH2SeasonalStyles_TaskbarBridgeRightJoin_nopack",
+        "fileName": "CoH2UI_I71E.tga",
+        "targetHeight": "236",
+        "targetWidth": "1",
+        "type": "DefineExternalImage2"
+    },
+    "32": {
+        "bitmapFormat": "13",
+        "characterId": "1824",
+        "exportName": "COH2SeasonalStyles_TaskbarBridgeRightCap_nopack",
+        "fileName": "CoH2UI_I720.tga",
+        "targetHeight": "228",
+        "targetWidth": "36",
+        "type": "DefineExternalImage2"
+    },
+    "34": {
+        "bitmapFormat": "13",
+        "characterId": "1826",
+        "exportName": "COH2SeasonalStyles_TaskbarBridgeExtensionTile_nopack",
+        "fileName": "CoH2UI_I722.tga",
+        "targetHeight": "228",
+        "targetWidth": "36",
+        "type": "DefineExternalImage2"
+    },
+    "181": {
+        "bitmapFormat": "13",
+        "characterId": "3509",
+        "exportName": "COH2SeasonalStyles_HUD_Summer_Taskbar_nopack",
+        "fileName": "CoH2UI_IDB5.tga",
+        "targetHeight": "228",
+        "targetWidth": "744",
+        "type": "DefineExternalImage2"
+    },
+    "129": {
+        "bitmapFormat": "13",
+        "characterId": "6017",
+        "exportName": "COH2SeasonalStyles_HUD_Summer_Bridge_Tile_nopack",
+        "fileName": "CoH2UI_I1781.tga",
+        "targetHeight": "228",
+        "targetWidth": "36",
+        "type": "DefineExternalImage2"
+    }
+}
