@@ -14,7 +14,7 @@
     "lint": "run-s lint:*",
     "lint:eslint": "eslint packages/**/*.{ts,tsx,js}",
     "lint:prettier": "prettier --check .",
-    "react-spring-issue-1078": "find node_modules -path \\*@react-spring/\\*/package.json -exec sed -i.bak 's/\"sideEffects\": false/\"sideEffects\": true/g' {} +",
+    "react-spring-issue-1078": "find node_modules -path \\*@react-spring/\\*/package.json -exec sed -i.bak 's/\"sideEffects\": false/\"sideEffects\": true/g' {} +"
   },
   "version": "0.0.1",
   "description": "FB Project for COH2 ladders",

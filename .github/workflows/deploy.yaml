@@ -3,6 +3,8 @@ on:
   push:
     tags:
       - v*
+    branches:
+      - master
 
 env:
   FB_PROJECT: coh2-ladders-prod
