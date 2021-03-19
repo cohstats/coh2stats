@@ -3,6 +3,8 @@ on:
   push:
     tags:
       - v*
+    paths-ignore:
+      - packages/functions/**
 
 env:
   FB_PROJECT: coh2-ladders-prod
