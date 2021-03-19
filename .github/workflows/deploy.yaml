@@ -34,6 +34,6 @@ jobs:
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN_CI_PROD}}
         run: |
-          yarn global add firebase-tools
+          yarn add firebase-tools -W
           firebase use $FB_PROJECT --token $FIREBASE_TOKEN
           firebase deploy --only $FB_HOSTING --token $FIREBASE_TOKEN -m "CI deploy ${{ steps.get_version.outputs.VERSION }}" --non-interactive
