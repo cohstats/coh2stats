@@ -26,12 +26,12 @@ jobs:
         run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
       - name: Install Deps
         run: yarn install
-      - name: Install FB Tools
-        run: yarn global add firebase-tools
       - name: Fix the bug ISSUE 1078
         run: yarn run "react-spring-issue-1078"
       - name: Build the app
         run: CI=false yarn web build
+      - name: Install FB Tools
+        run: yarn global add firebase-tools
       - name: Deploy to Firebase
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN_CI_PROD}}
