@@ -30,11 +30,10 @@ jobs:
         run: yarn run "react-spring-issue-1078"
       - name: Build the app
         run: CI=false yarn web build
-      - name: Install FB Tools
-        run: yarn global add firebase-tools
       - name: Deploy to Firebase
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN_CI_PROD}}
         run: |
+          yarn global add firebase-tools
           firebase use $FB_PROJECT --token $FIREBASE_TOKEN
           firebase deploy --only $FB_HOSTING --token $FIREBASE_TOKEN -m "CI deploy ${{ steps.get_version.outputs.VERSION }}" --non-interactive
