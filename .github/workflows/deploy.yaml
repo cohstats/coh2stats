@@ -1,0 +1,39 @@
+name: Build and Deploy Web Production
+on:
+  push:
+    tags:
+      - v*
+
+env:
+  FB_PROJECT: coh2-ladders-prod
+  FB_HOSTING: hosting:coh2-ladders-prod
+
+jobs:
+  build-deploy-web:
+    name: Deploy Web Prod
+    needs: build-web
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - name: Setup Node
+        uses: actions/setup-node@master
+        with:
+          node-version: '10.x'
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+      - name: Install Deps
+        run: yarn install
+      - name: Install FB Tools
+        run: yarn global add firebase-tools
+      - name: Fix the bug ISSUE 1078
+        run: yarn run "react-spring-issue-1078"
+      - name: Build the app
+        run: yarn web build
+      - name: Deploy to Firebase
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN_CI_PROD}}
+        run: |
+          firebase use $FB_PROJECT --token $FIREBASE_TOKEN
+          firebase deploy --only $FB_HOSTING --token $FIREBASE_TOKEN -m "CI deploy ${{ steps.get_version.outputs.VERSION }}" --non-interactive
