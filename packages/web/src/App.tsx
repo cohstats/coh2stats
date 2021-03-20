@@ -6,6 +6,7 @@ import { Route, Switch } from "react-router-dom";
 import { CommanderDetails } from "./pages/commanders/commanders";
 import { CommandersList } from "./pages/commanders/commandersList";
 import { RacePicker } from "./pages/commanders/racePicker";
+import { BulletinList } from "./pages/commanders/bulletinList";
 import Stats from "./pages/stats";
 import { MainFooter } from "./components/main-footer";
 import routes from "./routes";
@@ -46,6 +47,9 @@ const App: React.FC = () => {
             </Route>
             <Route path={routes.aboutBase()}>
               <About />
+            </Route>
+            <Route path={"/bulletin"}>
+            <BulletinList />
             </Route>
           </Switch>
         </Content>

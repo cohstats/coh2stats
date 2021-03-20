@@ -13,6 +13,7 @@ interface IntelBulletinData {
   bulletinName: string;
   descriptionShort: string;
   descriptionLong: string;
+  icon : string;
   races: Array<string>;
 }
 

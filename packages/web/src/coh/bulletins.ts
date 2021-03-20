@@ -28,4 +28,8 @@ const getBulletinsByRaces = (raceName: RaceName): Array<IntelBulletinData> => {
   });
 };
 
-export { convertBulletinIDToName, getBulletinData, getBulletinsByRaces };
+const getAllBulletins = (): Array<IntelBulletinData> => {
+  return Object.values(bulletinsData)
+};
+
+export { convertBulletinIDToName, getBulletinData, getBulletinsByRaces, getAllBulletins };
