@@ -89,7 +89,9 @@ avoid unnecessary writes to the DB)
 The que is consumed by cloud functions `getPlayerMatches`.
 The main benefit of the que is that any service of our application
 can send a message into it. Making sure the match is saved.
-Only 2-3 instances of the function are allowed. To slow down the processing.
+~~Only 2-3 instances of the function are allowed. To slow down the processing.~~
+We had to limit it to 1 function. We were getting errors "Too many requests"
+from the API.
 
 The function takes the array of the IDs and downloads the matches
 of each player in sequence (again not to stress the API).
@@ -102,10 +104,8 @@ The process takes around 25 minutes.
 
 ##### 5. Matches are filtered and modified
 
-We filter matches only for the last 25 hours.
-Because the crawler runs every day we can keep only last 25 hours matches.
-1 hour is extra to give us overtime while the functions are running.
-
+We filter matches only from the previous day (The API returns all player matches).
+We try to filter any duplicated matches (1 match is shown that many times as it has players).
 This is designed not to do extra writes to the DB with the data we already have.
 This saves us DB reads and writes.
 

@@ -10,7 +10,7 @@ export const MainFooter: React.FC = () => {
       <br />
       The data display here are not accurate and do not represent the actual state of the game.
       <br />
-      See about page for more info.
+      See <a href={"/about"}>about page</a> for more info.
       <br />
       © 2021 COH2logs.com
       <br />

@@ -9,7 +9,7 @@ const runtimeOpts: Record<string, "512MB" | any> = {
   timeoutSeconds: 540,
   memory: "512MB",
   // we need to lower the amount of instances due to - too many requests
-  maxInstances: 1
+  maxInstances: 1,
 };
 
 const db = firestore();
