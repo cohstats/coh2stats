@@ -140,8 +140,7 @@ export const BulletinList = () => {
     <>
       <div>
         <Row justify="center" style={{ padding: "10px" }}>
-          <Col xs={20} lg={12}>
-          </Col>
+          <Col xs={20} lg={12}></Col>
         </Row>
         <Row justify="center" style={{ padding: "10px" }}>
           <Col xs={20} lg={12}>
