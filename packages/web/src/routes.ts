@@ -28,6 +28,10 @@ const aboutBase = () => {
   return "/about";
 };
 
+const bulletinsBase = () => {
+  return "/bulletins";
+};
+
 const routes = {
   statsBase,
   fullStatsDetails,
@@ -35,6 +39,7 @@ const routes = {
   commanderList,
   commanderByID,
   aboutBase,
+  bulletinsBase,
 };
 
 export default routes;
