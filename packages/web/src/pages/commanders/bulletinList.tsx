@@ -15,8 +15,6 @@ export const BulletinList = () => {
   // prepare bulletin data
   let [bulletinData, setStateBulletinData] = useState(getAllBulletins());
 
-
-
   function tableColumnTextFilterConfig<T>(): ColumnType<T> {
     const searchInputHolder: { current: Input | null } = { current: null };
     return {
@@ -28,12 +26,12 @@ export const BulletinList = () => {
               placeholder={"Search bulletin name"}
               value={selectedKeys[0]}
               onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-              onPressEnter={() => confirm({closeDropdown : false})}
+              onPressEnter={() => confirm({ closeDropdown: false })}
               style={{ width: 188, marginBottom: 8, display: "block" }}
             />
             <Button
               type="primary"
-              onClick= {() => confirm({closeDropdown : true})}
+              onClick={() => confirm({ closeDropdown: true })}
               icon={<SearchOutlined />}
               size="small"
               style={{ width: 90, marginRight: 8 }}
@@ -57,9 +55,6 @@ export const BulletinList = () => {
     };
   }
 
-
-
-
   // prepare table header
   const TableColumns: ColumnsType<IntelBulletinData> = [
     {
@@ -69,7 +64,11 @@ export const BulletinList = () => {
       render: (_text: any, record: any) => {
         return (
           <div>
-            <img src={"/resources/exportedIcons/" + record.icon + ".png"} height="64px" alt={record.icon} />
+            <img
+              src={"/resources/exportedIcons/" + record.icon + ".png"}
+              height="64px"
+              alt={record.icon}
+            />
           </div>
         );
       },
@@ -136,7 +135,6 @@ export const BulletinList = () => {
       ),
     },
   ];
-
 
   return (
     <>
