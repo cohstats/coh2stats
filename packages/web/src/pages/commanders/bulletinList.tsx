@@ -15,6 +15,21 @@ export const BulletinList = () => {
   // prepare bulletin data
   let [bulletinData, setStateBulletinData] = useState(getAllBulletins());
 
+// search through provided bulletin data
+bulletinData.map((sortedbulletinItem) => {
+  // if a bulletin belongs to more then 1 race, sort the races alphabetically
+  if (sortedbulletinItem.races.length > 1){
+    sortedbulletinItem.races.sort((a, b) => {
+      return a.localeCompare(b);
+    })
+  }
+})
+  // sort alphabetically by the first race
+  bulletinData.sort((a, b) => {
+    console.log(a.races)
+    return a.races[0].localeCompare(b.races[0]);
+  });
+
   function tableColumnTextFilterConfig<T>(): ColumnType<T> {
     const searchInputHolder: { current: Input | null } = { current: null };
     return {
@@ -81,7 +96,7 @@ export const BulletinList = () => {
       onFilter: (value: any, record: IntelBulletinData) =>
         record.bulletinName.toLowerCase().includes(value.toLowerCase()) === true,
       sorter: (a: IntelBulletinData, b: IntelBulletinData) =>
-        a.bulletinName.length - b.bulletinName.length,
+        a.bulletinName.localeCompare(b.bulletinName),
     },
     {
       title: "Description",
@@ -115,7 +130,7 @@ export const BulletinList = () => {
         },
       ],
       onFilter: (value: any, record: IntelBulletinData) => record.races.indexOf(value) !== -1,
-      sorter: (a: IntelBulletinData, b: IntelBulletinData) => a.races.length - b.races.length,
+      sorter: (a: IntelBulletinData, b: IntelBulletinData) => (a.races.length - b.races.length),
       render: (tags: any[]) => (
         <>
           <Space>
@@ -140,10 +155,10 @@ export const BulletinList = () => {
     <>
       <div>
         <Row justify="center" style={{ padding: "10px" }}>
-          <Col xs={20} lg={12}></Col>
+          <Col xs={20} xxl={12}></Col>
         </Row>
         <Row justify="center" style={{ padding: "10px" }}>
-          <Col xs={20} lg={12}>
+          <Col xs={20} xxl={12}>
             <Table
               columns={TableColumns}
               pagination={{
