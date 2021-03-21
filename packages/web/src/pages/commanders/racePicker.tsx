@@ -30,29 +30,29 @@ export const RacePicker = () => {
         <Row justify="center" style={{ padding: "20px" }}>
           <Col flex="none">
             <div onClick={() => onRaceClick("wermacht")} style={myCenterStyle}>
-              <img style={myCenterStyle} src={getRaceImage("wermacht")} width="inherit" />
+              <img style={myCenterStyle} src={getRaceImage("wermacht")} alt="wermacht" />
             </div>
           </Col>
           <Col flex="none">
             <div onClick={() => onRaceClick("wgerman")} style={myCenterStyle}>
-              <img style={myCenterStyle} src={getRaceImage("wgerman")} />
+              <img style={myCenterStyle} src={getRaceImage("wgerman")} alt="wgerman" />
             </div>
           </Col>
         </Row>
         <Row justify="center" style={{ padding: "20px" }}>
           <Col flex="none">
             <div onClick={() => onRaceClick("soviet")} style={myCenterStyle}>
-              <img style={myCenterStyle} src={getRaceImage("soviet")} />
+              <img style={myCenterStyle} src={getRaceImage("soviet")} alt="soviet" />
             </div>
           </Col>
           <Col flex="none">
             <div onClick={() => onRaceClick("british")} style={myCenterStyle}>
-              <img style={myCenterStyle} src={getRaceImage("british")} />
+              <img style={myCenterStyle} src={getRaceImage("british")} alt="british" />
             </div>
           </Col>
           <Col flex="none">
             <div onClick={() => onRaceClick("usf")} style={myCenterStyle}>
-              <img style={myCenterStyle} src={getRaceImage("usf")} />
+              <img style={myCenterStyle} src={getRaceImage("usf")} alt="usf" />
             </div>
           </Col>
         </Row>
