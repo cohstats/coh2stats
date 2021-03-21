@@ -141,9 +141,6 @@ export const BulletinList = () => {
       <div>
         <Row justify="center" style={{ padding: "10px" }}>
           <Col xs={20} lg={12}>
-            <div>
-              <Search placeholder="Search by bulletin name" />
-            </div>
           </Col>
         </Row>
         <Row justify="center" style={{ padding: "10px" }}>
