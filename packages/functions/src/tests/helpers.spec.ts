@@ -128,3 +128,13 @@ describe("getYesterdayDateTimeStampInterval", () => {
     expect(timestamps).toHaveProperty("end");
   });
 });
+
+describe('getDateTimeStampsInRange',  () => {
+
+  test("Returns the value", () => {
+
+    getDateTimeStampsInRange()
+
+  });
+
+});

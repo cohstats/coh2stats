@@ -1,4 +1,5 @@
 import { StatDict } from "./types";
+import eachDayOfInterval from 'date-fns/eachDayOfInterval'
 
 /**
  * Returns timestamp for current DATE(without time) in UTC
@@ -61,6 +62,17 @@ const convertSteamNameToID = (name: string): string => {
   return "";
 };
 
+const getDateTimeStampsInRange = (startDate: Date, endDate: Date) => {
+  return getDatesInRange(startDate, endDate)
+}
+
+const getDatesInRange = (startDate: Date, endDate: Date): Array<Date> => {
+  return eachDayOfInterval({
+    start: startDate,
+    end: endDate
+  })
+}
+
 /**
  * Takes 2 objects.
  * This function is not immutable! Modifies the first object.
@@ -102,4 +114,5 @@ export {
   sumValuesOfObjects,
   getYesterdayDateTimeStampInterval,
   printUTCTime,
+  getDateTimeStampsInRange
 };
