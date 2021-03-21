@@ -1,6 +1,6 @@
 import React from "react";
 import { Header } from "antd/lib/layout/layout";
-import { Divider, Image, Menu, Space } from "antd";
+import { Menu, Space } from "antd";
 import routes from "../routes";
 import { useHistory, useRouteMatch } from "react-router";
 

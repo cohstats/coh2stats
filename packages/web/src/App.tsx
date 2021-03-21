@@ -49,7 +49,7 @@ const App: React.FC = () => {
               <About />
             </Route>
             <Route path={"/bulletin"}>
-            <BulletinList />
+              <BulletinList />
             </Route>
           </Switch>
         </Content>

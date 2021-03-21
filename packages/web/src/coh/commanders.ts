@@ -21,7 +21,7 @@ const getCommanderData = (commanderID: string): CommanderData | null => {
 
 const getCommanderByRaces = (raceName: RaceName): Array<CommanderData> => {
   return Object.values(allCommanders).filter((commanderData) => {
-    return commanderData["races"][0] == raceName;
+    return commanderData["races"][0] === raceName;
   });
 };
 
