@@ -48,7 +48,7 @@ const App: React.FC = () => {
             <Route path={routes.aboutBase()}>
               <About />
             </Route>
-            <Route path={"/bulletin"}>
+            <Route path={routes.bulletinsBase()}>
               <BulletinList />
             </Route>
           </Switch>

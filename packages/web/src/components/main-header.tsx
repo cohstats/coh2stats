@@ -19,7 +19,11 @@ export const MainHeader: React.FC = () => {
     path: routes.aboutBase(),
   });
 
-  let pathMatch = commandersMatch || statsMatch || aboutMatch;
+  const bulletinsMatch = useRouteMatch({
+    path: routes.bulletinsBase(),
+  });
+
+  let pathMatch = commandersMatch || statsMatch || aboutMatch || bulletinsMatch;
   const currentPath = pathMatch?.path || "";
 
   const onMenuClick = (item: Record<string, any>) => {
@@ -57,7 +61,9 @@ export const MainHeader: React.FC = () => {
           <Menu.Item key={routes.commanderBase()} onClick={onMenuClick}>
             Commanders
           </Menu.Item>
-          <Menu.Item key="4">Intel Bulletins</Menu.Item>
+          <Menu.Item key={routes.bulletinsBase()} onClick={onMenuClick}>
+            Intel Bulletins
+          </Menu.Item>
           <Menu.Item key={routes.aboutBase()} onClick={onMenuClick}>
             About
           </Menu.Item>
