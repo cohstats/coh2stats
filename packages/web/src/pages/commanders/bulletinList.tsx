@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Table, Tag, Space, Col, Row, Input, Button } from "antd";
 
-import { useHistory } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { IntelBulletinData } from "../../coh/types";
 import routes from "../../routes";
 import { getAllBulletins } from "../../coh/bulletins";
@@ -15,18 +15,17 @@ export const BulletinList = () => {
   // prepare bulletin data
   let [bulletinData, setStateBulletinData] = useState(getAllBulletins());
 
-// search through provided bulletin data
-bulletinData.map((sortedbulletinItem) => {
-  // if a bulletin belongs to more then 1 race, sort the races alphabetically
-  if (sortedbulletinItem.races.length > 1){
-    sortedbulletinItem.races.sort((a, b) => {
-      return a.localeCompare(b);
-    })
-  }
-})
+  // search through provided bulletin data
+  bulletinData.map((sortedbulletinItem) => {
+    // if a bulletin belongs to more then 1 race, sort the races alphabetically
+    if (sortedbulletinItem.races.length > 1) {
+      sortedbulletinItem.races.sort((a, b) => {
+        return a.localeCompare(b);
+      });
+    }
+  });
   // sort alphabetically by the first race
   bulletinData.sort((a, b) => {
-    console.log(a.races)
     return a.races[0].localeCompare(b.races[0]);
   });
 
@@ -130,7 +129,7 @@ bulletinData.map((sortedbulletinItem) => {
         },
       ],
       onFilter: (value: any, record: IntelBulletinData) => record.races.indexOf(value) !== -1,
-      sorter: (a: IntelBulletinData, b: IntelBulletinData) => (a.races.length - b.races.length),
+      sorter: (a: IntelBulletinData, b: IntelBulletinData) => a.races.length - b.races.length,
       render: (tags: any[]) => (
         <>
           <Space>

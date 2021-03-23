@@ -63,7 +63,7 @@ export const MainHeader: React.FC = () => {
           </Menu.Item>
           <Menu.Item key={routes.bulletinsBase()} onClick={onMenuClick}>
             Intel Bulletins
-            </Menu.Item>
+          </Menu.Item>
           <Menu.Item key={routes.aboutBase()} onClick={onMenuClick}>
             About
           </Menu.Item>
