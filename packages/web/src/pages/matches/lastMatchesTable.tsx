@@ -1,19 +1,51 @@
-import React from "react";
 import { Col, Row, Space, Table, Tag } from "antd";
-
-import { useHistory } from "react-router";
 import { RaceName } from "../../coh/types";
-import routes from "../../routes";
-import { singleMatchObjectAfterTransform, singleMatchObjectAfterTransformAxis } from "./testMatch";
+import {
+  singleMatchObjectAfterTransform,
+  singleMatchObjectAfterTransform2v2,
+  singleMatchObjectAfterTransformAxis,
+} from "./testMatch";
+
 import { ColumnsType } from "antd/lib/table";
 
 export const LastMatchesTable = () => {
-  let matchRecords = [singleMatchObjectAfterTransform, singleMatchObjectAfterTransformAxis];
+  let matchRecords = [
+    singleMatchObjectAfterTransform,
+    singleMatchObjectAfterTransformAxis,
+    singleMatchObjectAfterTransform2v2,
+  ];
 
   function getMatchDuration(startTime: number, endTime: number) {
     return new Date((endTime - startTime) * 1000).toISOString().substr(11, 8); //return duration in HH:MM:SS format
   }
 
+  function formatMatchTime(startTime: number) {
+    const hourMillis = 3600 * 1000; // one day in a miliseconds range
+    let difference = Date.now() - startTime * 1000; // start match vs NOW time difference in miliseconds
+    const options: Intl.DateTimeFormatOptions = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
+
+    let timeDifference = "";
+
+    if (difference < hourMillis) {
+      timeDifference = new Date(difference).toISOString().substr(14, 2) + " minutes ago";
+    } else if (difference < hourMillis * 24) {
+      timeDifference =
+        new Date(difference).toISOString().substr(11, 2) +
+        " hours " +
+        new Date(difference).toISOString().substr(14, 2) +
+        " minutes ago";
+    } else if (difference < hourMillis * 128) {
+      timeDifference = new Date(difference).toISOString().substr(9, 1) + " days ago";
+    } else {
+      timeDifference = new Date(startTime * 1000).toLocaleDateString("en-US", options);
+    }
+    return timeDifference; //return duration in HH:MM:SS format
+  }
 
   const raceIds: Record<number, RaceName> = {
     0: "wermacht",
@@ -23,53 +55,59 @@ export const LastMatchesTable = () => {
     4: "british",
   };
 
-  function getMatchPlayersByFaction(reportedPlayerResults: Array<any>, faction: "axis" | "allies") {
-
-    let factions = []
-    for (let key in reportedPlayerResults) { // loop thru all players
+  function getMatchPlayersByFaction(
+    reportedPlayerResults: Array<any>,
+    faction: "axis" | "allies",
+  ) {
+    let factions = [];
+    // loop thru all players
+    for (let myKey in reportedPlayerResults) {
       switch (faction) {
+        // search for all axis players
         case "axis":
-          if (reportedPlayerResults[key].race_id == 0 || reportedPlayerResults[key].race_id == 2 ) // search for all axis players
-          {
-              factions.push(reportedPlayerResults[key])
+          if (
+            reportedPlayerResults[myKey].race_id === 0 ||
+            reportedPlayerResults[myKey].race_id === 2
+          ) {
+            factions.push(reportedPlayerResults[myKey]);
           }
           break;
+        // search for allies players
         case "allies":
-          if (reportedPlayerResults[key].race_id !== 0 && reportedPlayerResults[key].race_id !== 2 ) // search for allies players
-          {
-              factions.push(reportedPlayerResults[key])
+          if (
+            reportedPlayerResults[myKey].race_id !== 0 &&
+            reportedPlayerResults[myKey].race_id !== 2
+          ) {
+            factions.push(reportedPlayerResults[myKey]);
           }
           break;
       }
-    }  
-    console.log(factions)
-    return factions
+    }
+    return factions;
   }
-
 
   function getMatchResult(reportedPlayerResults: Array<any>) {
     let winner: string = "";
     let color = "geekblue";
 
-    for (let key in reportedPlayerResults) { // loop thru all players
-      if (reportedPlayerResults[key].resulttype == 1) {
-        // find a winner
-        if (reportedPlayerResults[key].race_id == 0 || reportedPlayerResults[key].race_id == 2) {
-          // if its a axis player by race
+    // loop thru all players
+    for (let myKey2 in reportedPlayerResults) {
+      // find a winner
+      if (reportedPlayerResults[myKey2].resulttype === 1) {
+        // if its a axis player by race
+        if (
+          reportedPlayerResults[myKey2].race_id === 0 ||
+          reportedPlayerResults[myKey2].race_id === 2
+        ) {
           winner = "Axis victory"; // return axis victory
           color = "volcano";
-        } 
-        else {
+        } else {
           winner = "Allies victory"; // else return allies victory
         }
         break;
       }
     }
-    return (
-      <Tag color={color} key={winner}>
-        {winner.toUpperCase()}
-      </Tag>
-    );
+    return <Tag color={color}>{winner.toUpperCase()}</Tag>;
   }
 
   const formatMatchtypeID = (matchType: number): string => {
@@ -98,27 +136,56 @@ export const LastMatchesTable = () => {
     return `../resources/generalIcons/${race}.png`;
   }
 
-
-
   const columns: ColumnsType<any> = [
     {
       title: "Match ID",
       dataIndex: "id",
-      key: "id" ,
+      key: "id",
+      render: (_text: any, record: any) => {
+        return (
+          <>
+            <div>{record.id}</div>
+            <div>
+              {" "}
+              <sub> {formatMatchTime(record.startgametime)} </sub>
+            </div>
+          </>
+        );
+      },
     },
 
     {
       title: "Mode",
       dataIndex: "matchtype_id",
-      key: "matchtype_id" ,
-
+      key: "matchtype_id",
+      filters: [
+        {
+          text: "1 v 1",
+          value: "1",
+        },
+        {
+          text: "2 v 2",
+          value: "2",
+        },
+        {
+          text: "3 v 3",
+          value: "3",
+        },
+        {
+          text: "4 v 4",
+          value: "4",
+        },
+      ],
+      onFilter: (value: any, record: any) => record.matchtype_id === value,
       render: (_text: any, record: any) => {
         return (
-          <p>
-            {" "}
-            {formatMatchtypeID(record.matchtype_id)}
-            <sub> {record.description.toLowerCase()} </sub>
-          </p>
+          <>
+            <div>{formatMatchtypeID(record.matchtype_id)}</div>
+            <div>
+              {" "}
+              <sub> {record.description.toLowerCase()} </sub>
+            </div>
+          </>
         );
       },
     },
@@ -126,17 +193,17 @@ export const LastMatchesTable = () => {
     {
       title: "Map",
       dataIndex: "mapname",
-      key: "mapname" ,
+      key: "mapname",
+      responsive: ["lg"],
       render: (_text: any, record: any) => {
-        return (
-          <p> {record.mapname} </p>
-        );
+        return <p> {record.mapname} </p>;
       },
     },
 
     {
       title: "Result",
-      key: "result" ,
+      dataIndex: "result",
+      key: "result",
       render: (_text: any, record: any) => {
         return <p>{getMatchResult(record.matchhistoryreportresults)}</p>;
       },
@@ -144,53 +211,47 @@ export const LastMatchesTable = () => {
 
     {
       title: "Match duration",
-      key: "matchuration" ,
+      dataIndex: "matchduration",
+      key: "matchduration",
       render: (_text: any, record: any) => {
+        formatMatchTime(record.startgametime);
         return <p>{getMatchDuration(record.startgametime, record.completiontime)}</p>;
       },
     },
 
     {
       title: "Axis Players",
-      key: "axisplayers" ,
+      dataIndex: "axisplayers",
+      key: "axisplayers",
+      responsive: ["xl"],
       render: (_text: any, record: any) => {
-        let axisPlayers =  getMatchPlayersByFaction(record.matchhistoryreportresults,"axis")
-        
-        return (
-          <div>
-          <img
-            src={getRaceImage(raceIds[axisPlayers[0].race_id])}
-            height="64px"
-            alt={record.icon}
-          />
-        </div>
-        )  ;
+        let axisPlayers = getMatchPlayersByFaction(record.matchhistoryreportresults, "axis");
+
+        let Images = axisPlayers.map((player) => {
+          return (
+            <img src={getRaceImage(raceIds[player.race_id])} height="48px" alt={player.race_id} />
+          );
+        });
+        return <Space>{Images}</Space>;
       },
     },
 
-
     {
       title: "Allies Players",
+      dataIndex: "alliesplayers",
       key: "alliesplayers",
-      dataIndex: "matchhistoryreportresults",
-      render: (tags: any[]) => (
-        <>
-          <Space>
-            {tags.map((tag) => {
-             
-             let axisPlayers =  getMatchPlayersByFaction(tags,"axis")
+      responsive: ["xl"],
+      render: (_text: any, record: any) => {
+        let axisPlayers = getMatchPlayersByFaction(record.matchhistoryreportresults, "allies");
 
-              return (
-                <Tag>
-                  {tag.race_id}
-                </Tag>
-              );
-            })}
-          </Space>
-        </>
-      ),
+        let Images = axisPlayers.map((player) => {
+          return (
+            <img src={getRaceImage(raceIds[player.race_id])} height="48px" alt={player.race_id} />
+          );
+        });
+        return <Space>{Images}</Space>;
       },
-    
+    },
   ];
 
   return (
