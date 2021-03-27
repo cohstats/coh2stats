@@ -12,6 +12,7 @@ import { MainFooter } from "./components/main-footer";
 import routes from "./routes";
 import { MainHeader } from "./components/main-header";
 import About from "./pages/about";
+import { LastMatchesTable } from "./pages/matches/lastMatchesTable";
 
 const { Content } = Layout;
 
@@ -50,6 +51,9 @@ const App: React.FC = () => {
             </Route>
             <Route path={routes.bulletinsBase()}>
               <BulletinList />
+            </Route>
+            <Route path={"/test"}>
+              <LastMatchesTable />
             </Route>
           </Switch>
         </Content>
