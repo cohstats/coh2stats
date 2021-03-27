@@ -146,7 +146,6 @@ export const LastMatchesTable = () => {
           <>
             <div>{record.id}</div>
             <div>
-              {" "}
               <sub> {formatMatchTime(record.startgametime)} </sub>
             </div>
           </>
@@ -182,7 +181,6 @@ export const LastMatchesTable = () => {
           <>
             <div>{formatMatchtypeID(record.matchtype_id)}</div>
             <div>
-              {" "}
               <sub> {record.description.toLowerCase()} </sub>
             </div>
           </>
@@ -214,7 +212,6 @@ export const LastMatchesTable = () => {
       dataIndex: "matchduration",
       key: "matchduration",
       render: (_text: any, record: any) => {
-        formatMatchTime(record.startgametime);
         return <p>{getMatchDuration(record.startgametime, record.completiontime)}</p>;
       },
     },
