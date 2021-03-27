@@ -1,5 +1,5 @@
 import { getStatsDocRef } from "../../fb-paths";
-import { ProcessedMatch, StatDict } from "../types";
+import { frequencyType, ProcessedMatch, StatDict } from "../types";
 import { analyzeMatches } from "./match-analysis";
 import * as functions from "firebase-functions";
 import { firestore } from "firebase-admin";
@@ -19,8 +19,8 @@ const db = firestore();
 const saveAnalysis = async (
   stats: Record<string, any>,
   timestamp: number,
-  statType: "daily" = "daily",
-) => {
+  statType: frequencyType = "daily",
+): Promise<void> => {
   const statRef = getStatsDocRef(timestamp, statType);
   try {
     // This stat object will be updated in parallel based on how many
@@ -55,4 +55,4 @@ const analyzeAndSaveMatchStats = async (
   await saveAnalysis(stats, dateTimeStamp);
 };
 
-export { analyzeAndSaveMatchStats };
+export { analyzeAndSaveMatchStats, saveAnalysis };

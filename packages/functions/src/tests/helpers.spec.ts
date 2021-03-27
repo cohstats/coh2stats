@@ -1,5 +1,7 @@
 import {
   convertSteamNameToID,
+  getDateTimeStampsInRange,
+  getLastWeekTimeStamps,
   getYesterdayDateTimeStampInterval,
   sumValuesOfObjects,
 } from "../libs/helpers";
@@ -126,5 +128,33 @@ describe("getYesterdayDateTimeStampInterval", () => {
     const timestamps = getYesterdayDateTimeStampInterval();
     expect(timestamps).toHaveProperty("start");
     expect(timestamps).toHaveProperty("end");
+  });
+});
+
+describe("getDateTimeStampsInRange", () => {
+  test("Returns the value", () => {
+    const result = getDateTimeStampsInRange(
+      new Date(Date.UTC(2021, 2, 15)),
+      new Date(Date.UTC(2021, 2, 21)),
+    );
+    expect(result.length).toBe(7);
+
+    // we can't match object because in windows we can't set the timezone to UTC in nodejs, FU nodejs
+    // expect(result).toMatchObject([
+    //   1615680000,
+    //   1615766400,
+    //   1615852800,
+    //   1615939200,
+    //   1616025600,
+    //   1616112000,
+    //   1616198400,
+    // ]);
+  });
+});
+
+describe("getLastWeekTimeStamps", () => {
+  test("Returns 7 values", () => {
+    const result = getLastWeekTimeStamps();
+    expect(result.length).toBe(7);
   });
 });
