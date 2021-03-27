@@ -1,4 +1,5 @@
 import { firestore } from "firebase-admin";
+import { frequencyType } from "./libs/types";
 import DocumentReference = firestore.DocumentReference;
 import DocumentData = firestore.DocumentData;
 import CollectionReference = firestore.CollectionReference;
@@ -15,7 +16,7 @@ const getMatchCollectionRef = (): CollectionReference<DocumentData> => {
 
 const getStatsDocRef = (
   timestamp: string | number,
-  type: "daily" | "weekly",
+  type: frequencyType,
 ): DocumentReference<DocumentData> => {
   // We need to follow pattern collection/doc/collection/doc
   return db.collection(`stats`).doc(`${type}`).collection(`${timestamp}`).doc("stats");

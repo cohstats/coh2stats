@@ -23,6 +23,7 @@ const fetchPlayerMatchStats = async (profileName: string): Promise<Record<string
 
 const getAndPrepareMatchesForPlayer = async (
   profileName: string,
+  filterLastDayOnly = true,
 ): Promise<Array<ProcessedMatch>> => {
   // Monitoring fetching time - the response from the relic server
   const t0 = performance.now();
@@ -32,13 +33,20 @@ const getAndPrepareMatchesForPlayer = async (
   const allMatches = data["matchHistoryStats"];
   const profiles = data["profiles"];
 
-  // Now filter out the old matches, we need to keep the daily writes to the DB low
-  let matches = allMatches.filter((match: Record<string, any>) => isLastDayMatch(match));
-  console.log(
-    `Player ${profileName} fetched ${allMatches.length} matches in ${
-      (t1 - t0) | 0
-    } ms. From which ${matches.length} happened in the last 25 hours`,
-  );
+  let logMessage = `Player ${profileName} fetched ${allMatches.length} matches in ${
+    (t1 - t0) | 0
+  } ms.`;
+
+  let matches;
+  if (filterLastDayOnly) {
+    // Now filter out the old matches, we need to keep the daily writes to the DB low
+    matches = allMatches.filter((match: Record<string, any>) => isLastDayMatch(match));
+    logMessage += `From which ${matches.length} happened in the last 25 hours.`;
+  } else {
+    matches = allMatches;
+  }
+
+  console.log(logMessage);
 
   // Transform the match objects, this removes unnecessary data, preparers additional information in single match object
   matches = matches.map((match: Record<string, any>) => prepareMatchDBObject(match, profiles));

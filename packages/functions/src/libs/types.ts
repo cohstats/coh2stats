@@ -33,4 +33,54 @@ interface PlayerReport {
 type TmpDict<T> = Record<string, T | number>;
 interface StatDict extends TmpDict<StatDict> {}
 
-export { ProcessedMatch, PlayerReport, StatDict };
+type frequencyType = "daily" | "week" | "month" | "quarter" | "year";
+
+interface SpecificStatsForType {
+  british: {
+    losses: number;
+    wins: number;
+  };
+  soviet: {
+    losses: number;
+    wins: number;
+  };
+  wermacht: {
+    losses: number;
+    wins: number;
+  };
+  usf: {
+    losses: number;
+    wins: number;
+  };
+  wgerman: {
+    losses: number;
+    wins: number;
+  };
+  matchCount: number;
+  maps: Record<string, number>;
+  commanders: {
+    british: Record<string, number>;
+    soviet: Record<string, number>;
+    usf: Record<string, number>;
+    wermacht: Record<string, number>;
+    wgerman: Record<string, number>;
+    unknown: Record<string, number>;
+  };
+  intelBulletins: {
+    british: Record<string, number>;
+    soviet: Record<string, number>;
+    usf: Record<string, number>;
+    wermacht: Record<string, number>;
+    wgerman: Record<string, number>;
+    unknown: Record<string, number>;
+  };
+}
+
+interface FullStatInterface {
+  "1v1": SpecificStatsForType;
+  "2v2": SpecificStatsForType;
+  "3v3": SpecificStatsForType;
+  "4v4": SpecificStatsForType;
+}
+
+export { ProcessedMatch, PlayerReport, StatDict, frequencyType, FullStatInterface };
