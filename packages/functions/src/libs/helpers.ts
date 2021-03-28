@@ -1,14 +1,13 @@
 import { StatDict } from "./types";
+import { eachDayOfInterval, endOfWeek, startOfWeek } from "date-fns";
+
+process.env.TZ = "utc";
 
 /**
  * Returns timestamp for current DATE(without time) in UTC
- *
- * Btw for the timestamps it might be useful to introduce some library but we really do just simple
- * timestamps in UTC, we are not gonna do any transformation between timezones and such
- * so it's not necessary to add libs.
+ * Date-fns includes the time - so we don't want to use it in this case
  */
-const getCurrentDateTimestamp = (): number => {
-  const date = new Date();
+const getCurrentDateTimestamp = (date = new Date()): number => {
   return Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()) / 1000;
 };
 
@@ -62,6 +61,57 @@ const convertSteamNameToID = (name: string): string => {
 };
 
 /**
+ * WARNING: This functions works only on Monday! :D
+ * Expects UTC timezone! The cloud functions are set to run in UTC! But
+ * it could be used elsewhere so count with this.
+ */
+const getLastWeekTimeStamps = (): Array<number> => {
+  // WARNING: This shit doesn't work on Windows
+  // https://github.com/nodejs/node/issues/4230
+  // set utc just to be SURE startOfWeek works correctly
+  process.env.TZ = "utc";
+
+  const yesterday = getYesterdayDateTimestamp() * 1000;
+  return getWeekTimeStamps(yesterday);
+};
+
+/**
+ * WARNING: This functions works only on Monday! :D
+ * Expects UTC timezone! The cloud functions are set to run in UTC! But
+ * it could be used elsewhere so count with this.
+ */
+const getWeekTimeStamps = (date: Date | number): Array<number> => {
+  return getDateTimeStampsInRange(
+    startOfWeek(date, { weekStartsOn: 1 }),
+    endOfWeek(date, { weekStartsOn: 1 }),
+  );
+};
+
+const getStartOfTheWeek = (date: Date | number): Date => {
+  process.env.TZ = "utc";
+  return startOfWeek(date, { weekStartsOn: 1 });
+};
+
+/**
+ *
+ * @param startDate
+ * @param endDate
+ */
+const getDateTimeStampsInRange = (
+  startDate: Date | number,
+  endDate: Date | number,
+): Array<number> => {
+  return getDatesInRange(startDate, endDate).map((date) => getCurrentDateTimestamp(date));
+};
+
+const getDatesInRange = (startDate: Date | number, endDate: Date | number): Array<Date> => {
+  return eachDayOfInterval({
+    start: startDate,
+    end: endDate,
+  });
+};
+
+/**
  * Takes 2 objects.
  * This function is not immutable! Modifies the first object.
  *
@@ -70,7 +120,10 @@ const convertSteamNameToID = (name: string): string => {
  * @param newObject
  */
 
-const sumValuesOfObjects = (masterObject: StatDict, newObject: StatDict): StatDict => {
+const sumValuesOfObjects = (
+  masterObject: StatDict | Record<string, any>,
+  newObject: StatDict,
+): StatDict => {
   for (const key in newObject) {
     // Also in master object => merge
     if (key in masterObject) {
@@ -102,4 +155,8 @@ export {
   sumValuesOfObjects,
   getYesterdayDateTimeStampInterval,
   printUTCTime,
+  getDateTimeStampsInRange,
+  getLastWeekTimeStamps,
+  getWeekTimeStamps,
+  getStartOfTheWeek,
 };
