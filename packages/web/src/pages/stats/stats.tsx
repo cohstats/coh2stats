@@ -6,7 +6,11 @@ import { useFirestoreConnect } from "react-redux-firebase";
 import routes from "../../routes";
 import { ConfigProvider, Select, Space } from "antd";
 import DatePicker from "../../components/date-picker";
-import {convertDateToDayTimestamp, getStartOfTheWeek, getYesterdayDateTimestamp} from "../../helpers";
+import {
+  convertDateToDayTimestamp,
+  getStartOfTheWeek,
+  getYesterdayDateTimestamp,
+} from "../../helpers";
 import { validRaceNames, validStatsTypes } from "../../coh/types";
 import enGB from "antd/lib/locale/en_GB";
 
@@ -40,7 +44,11 @@ const Stats: React.FC = () => {
 
   const settableFrequently = frequency ? frequency : "daily";
   const [datePickerType, setDatePickerType] = useState(settableFrequently as DatePickerType);
-  const [dateValue, setDateValue] = useState( timestamp ? new Date(parseInt(timestamp) * 1000) : new Date(getYesterdayDateTimestamp()*1000));
+  const [dateValue, setDateValue] = useState(
+    timestamp
+      ? new Date(parseInt(timestamp) * 1000)
+      : new Date(getYesterdayDateTimestamp() * 1000),
+  );
 
   function disabledDate(current: Date) {
     // we started logging Monday 8.3.2021
@@ -92,20 +100,19 @@ const Stats: React.FC = () => {
         raceToLoad,
       ),
     );
-  }, [datePickerType, dateValue])
-
+  }, [datePickerType, dateValue, push]);
 
   const onDatePickerTypeSelect = (value: DatePickerType) => {
-    if(value === "week"){
+    if (value === "week") {
       setDateValue(new Date(getStartOfTheWeek(dateValue)));
     }
 
-    setDatePickerType(value)
-  }
+    setDatePickerType(value);
+  };
 
   const onDateSelect = (value: string) => {
     let actualDate: string | Date = value;
-    if(datePickerType === "week"){
+    if (datePickerType === "week") {
       actualDate = getStartOfTheWeek(value);
     }
 

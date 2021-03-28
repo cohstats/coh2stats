@@ -14,9 +14,14 @@ const convertDateToMonthTimestamp = (dateInput: string | Date) => {
 };
 
 const getStartOfTheWeek = (dateInput: string | Date) => {
-  const date = new Date(dateInput)
+  const date = new Date(dateInput);
   const diff = date.getUTCDate() - date.getUTCDay() + (date.getUTCDay() === 0 ? -6 : 1);
-  return  new Date(date.setUTCDate(diff));
-}
+  return new Date(date.setUTCDate(diff));
+};
 
-export { getYesterdayDateTimestamp, convertDateToDayTimestamp, convertDateToMonthTimestamp, getStartOfTheWeek };
+export {
+  getYesterdayDateTimestamp,
+  convertDateToDayTimestamp,
+  convertDateToMonthTimestamp,
+  getStartOfTheWeek,
+};
