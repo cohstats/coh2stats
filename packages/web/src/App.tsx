@@ -12,11 +12,9 @@ import { MainFooter } from "./components/main-footer";
 import routes from "./routes";
 import { MainHeader } from "./components/main-header";
 import About from "./pages/about";
-<<<<<<< HEAD
-import { LastMatchesTable } from "./pages/matches/lastMatchesTable";
-=======
 import Playground from "./pages/playground";
->>>>>>> 743146ae8a680659012f0fe1468e3135edd6aca1
+import { LastMatchesTable } from "./pages/matches/lastMatchesTable";
+import LastMatchesTableRelic from "./pages/matches/lastMatchesTableRelic";
 
 const { Content } = Layout;
 
@@ -56,13 +54,14 @@ const App: React.FC = () => {
             <Route path={routes.bulletinsBase()}>
               <BulletinList />
             </Route>
-<<<<<<< HEAD
             <Route path={"/test"}>
               <LastMatchesTable />
-=======
+            </Route>
+            <Route path={"/testrelic"}>
+              <LastMatchesTableRelic />
+            </Route>
             <Route path={"/playground"}>
               <Playground />
->>>>>>> 743146ae8a680659012f0fe1468e3135edd6aca1
             </Route>
           </Switch>
         </Content>

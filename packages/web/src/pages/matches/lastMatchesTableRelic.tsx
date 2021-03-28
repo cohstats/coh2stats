@@ -1,4 +1,4 @@
-import { Col, Row, Space, Table, Tag } from "antd";
+import { Col, Row, Space, Table } from "antd";
 import {
   singleMatchObjectAfterTransform,
   singleMatchObjectAfterTransform2v2,
@@ -14,13 +14,43 @@ import {
   getRaceImage,
   raceIds,
 } from "./tableFunctions";
+import React, { useEffect, useState } from "react";
+import { firebase } from "../../firebase";
 
-export const LastMatchesTable = () => {
-  let matchRecords = [
-    singleMatchObjectAfterTransform,
-    singleMatchObjectAfterTransformAxis,
-    singleMatchObjectAfterTransform2v2,
-  ];
+const LastMatchesTableRelic: React.FC = () => {
+  // the componet can be in 3 states
+  // error - something went wrong
+  // loading -- we are still loading the data
+  // loaded -- we have the date in the matches
+
+  const [error, setError] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [matches, setMatches] = useState([]);
+
+  useEffect(() => {
+    // FYI this is special trick, anonymous function which is directly called - we need cos of compiler
+    (async () => {
+      // prepare the payload - you can modify the ID but it has to be in this format
+      const payLoad = { profileName: "/steam/76561198034318060" };
+
+      // prepare the CF
+      const getMatchesFromRelic = firebase.functions().httpsCallable("getPlayerMatchesFromRelic");
+
+      try {
+        // call the CF
+        const matches = await getMatchesFromRelic(payLoad);
+        // we have the data let's save it into the state
+        console.log(matches.data["playerMatches"]);
+
+        setIsLoaded(true);
+        setMatches(matches.data["playerMatches"]);
+      } catch (e) {
+        setError(e);
+      }
+    })();
+  }, []);
+
+  let matchRecords = matches;
 
   const columns: ColumnsType<any> = [
     {
@@ -145,27 +175,35 @@ export const LastMatchesTable = () => {
     },
   ];
 
-  return (
-    <>
-      <Row>
-        <Col span={2}></Col>
-        <Col span={20}>
-          <h1> Recent matches </h1>
-        </Col>
-        <Col span={2}></Col>
-      </Row>
-      <Row>
-        <Col span={2}></Col>
-        <Col span={20}>
-          <Table
-            columns={columns}
-            dataSource={matchRecords}
-            rowKey={(record) => record.id}
-            size="middle"
-          />
-        </Col>
-        <Col span={2}></Col>
-      </Row>
-    </>
-  );
+  if (error) {
+    return <div>Error: {error}</div>;
+  } else if (!isLoaded) {
+    return <div>Loading...</div>;
+  } else {
+    return (
+      <>
+        <Row>
+          <Col span={2}></Col>
+          <Col span={20}>
+            <h1> Recent matches </h1>
+          </Col>
+          <Col span={2}></Col>
+        </Row>
+        <Row>
+          <Col span={2}></Col>
+          <Col span={20}>
+            <Table
+              columns={columns}
+              dataSource={matchRecords}
+              rowKey={(record) => record.id}
+              size="middle"
+            />
+          </Col>
+          <Col span={2}></Col>
+        </Row>
+      </>
+    );
+  }
 };
+
+export default LastMatchesTableRelic;
