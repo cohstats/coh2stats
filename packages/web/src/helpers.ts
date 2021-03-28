@@ -13,4 +13,4 @@ const convertDateToMonthTimestamp = (dateInput: string) => {
   return Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), 1) / 1000;
 };
 
-export { getYesterdayDateTimestamp, convertDateToDayTimestamp };
+export { getYesterdayDateTimestamp, convertDateToDayTimestamp, convertDateToMonthTimestamp };

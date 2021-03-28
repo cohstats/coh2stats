@@ -12,6 +12,7 @@ import { MainFooter } from "./components/main-footer";
 import routes from "./routes";
 import { MainHeader } from "./components/main-header";
 import About from "./pages/about";
+import Playground from "./pages/playground";
 
 const { Content } = Layout;
 
@@ -48,8 +49,11 @@ const App: React.FC = () => {
             <Route path={routes.aboutBase()}>
               <About />
             </Route>
-            <Route path={"/bulletin"}>
+            <Route path={routes.bulletinsBase()}>
               <BulletinList />
+            </Route>
+            <Route path={"/playground"}>
+              <Playground />
             </Route>
           </Switch>
         </Content>
