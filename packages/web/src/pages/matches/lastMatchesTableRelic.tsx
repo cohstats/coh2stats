@@ -101,6 +101,7 @@ const LastMatchesTableRelic: React.FC = () => {
             </div>
           </>
         );
+        
       },
     },
 
