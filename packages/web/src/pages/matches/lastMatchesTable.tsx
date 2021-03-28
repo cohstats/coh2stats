@@ -175,7 +175,7 @@ export const LastMatchesTable = () => {
           value: "4",
         },
       ],
-      onFilter: (value: any, record: any) => record.matchtype_id === value,
+      onFilter: (value: any, record: any) => record.matchtype_id == value,
       render: (_text: any, record: any) => {
         return (
           <>
@@ -218,15 +218,19 @@ export const LastMatchesTable = () => {
 
     {
       title: "Axis Players",
-      dataIndex: "axisplayers",
-      key: "axisplayers",
+
       responsive: ["xl"],
       render: (_text: any, record: any) => {
         let axisPlayers = getMatchPlayersByFaction(record.matchhistoryreportresults, "axis");
 
         let Images = axisPlayers.map((player) => {
           return (
-            <img src={getRaceImage(raceIds[player.race_id])} height="48px" alt={player.race_id} />
+            <img
+              key={player.profile_id}
+              src={getRaceImage(raceIds[player.race_id])}
+              height="48px"
+              alt={player.race_id}
+            />
           );
         });
         return <Space>{Images}</Space>;
@@ -235,15 +239,19 @@ export const LastMatchesTable = () => {
 
     {
       title: "Allies Players",
-      dataIndex: "alliesplayers",
-      key: "alliesplayers",
+
       responsive: ["xl"],
       render: (_text: any, record: any) => {
-        let axisPlayers = getMatchPlayersByFaction(record.matchhistoryreportresults, "allies");
+        let alliesPlayers = getMatchPlayersByFaction(record.matchhistoryreportresults, "allies");
 
-        let Images = axisPlayers.map((player) => {
+        let Images = alliesPlayers.map((player) => {
           return (
-            <img src={getRaceImage(raceIds[player.race_id])} height="48px" alt={player.race_id} />
+            <img
+              key={player.profile_id}
+              src={getRaceImage(raceIds[player.race_id])}
+              height="48px"
+              alt={player.race_id}
+            />
           );
         });
         return <Space>{Images}</Space>;
@@ -263,7 +271,12 @@ export const LastMatchesTable = () => {
       <Row>
         <Col span={2}></Col>
         <Col span={20}>
-          <Table columns={columns} dataSource={matchRecords} size="middle" />
+          <Table
+            columns={columns}
+            dataSource={matchRecords}
+            rowKey={(record) => record.id}
+            size="middle"
+          />
         </Col>
         <Col span={2}></Col>
       </Row>
