@@ -1,7 +1,12 @@
 import { Bar } from "@nivo/bar";
 import React from "react";
 import { sortArrayOfObjectsByTheirPropertyValue } from "../../coh/helpers";
-import { convertBulletinIDToName } from "../../coh/bulletins";
+import {
+  convertBulletinIDToName,
+  getBulletinData,
+  getBulletinIconPath,
+} from "../../coh/bulletins";
+import { Avatar } from "antd";
 
 export const BulletinsBarChart = (bulletins: Record<number, number>) => {
   const simpleMapsData = [];
@@ -10,12 +15,38 @@ export const BulletinsBarChart = (bulletins: Record<number, number>) => {
     simpleMapsData.push({
       bulletinName: convertBulletinIDToName(key),
       value: value,
+      bulletinId: key,
     });
   }
 
   const mapsData = sortArrayOfObjectsByTheirPropertyValue(
     (simpleMapsData as unknown) as Array<Record<string, string>>,
   );
+
+  const toolTipFunction = (toolTipData: Record<string, any>) => {
+    const bulletinData = getBulletinData(toolTipData.data.bulletinId);
+    if (!bulletinData) return <div></div>;
+
+    const iconPath = getBulletinIconPath(bulletinData?.icon);
+
+    return (
+      <div>
+        <Avatar
+          size={54}
+          shape="square"
+          src={iconPath}
+          style={{ display: "inline-block", verticalAlign: "top" }}
+        />
+        <div style={{ display: "inline-block", paddingLeft: 5, maxWidth: 500 }}>
+          <b>
+            {bulletinData.bulletinName} - {toolTipData.value}{" "}
+          </b>
+          <br />
+          {bulletinData.descriptionShort}
+        </div>
+      </div>
+    );
+  };
 
   // We have to use Bar chart instead of ResponsiveBar or it's not gonna render properly
   return (
@@ -31,6 +62,7 @@ export const BulletinsBarChart = (bulletins: Record<number, number>) => {
       colors={{ scheme: "nivo" }}
       colorBy={"index"}
       animate={false}
+      tooltip={toolTipFunction}
       axisBottom={{
         tickSize: 5,
         tickPadding: 5,

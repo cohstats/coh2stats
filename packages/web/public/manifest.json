@@ -1,21 +1,11 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "COH2 Stats",
+  "name": "Company of Heroes 2 Statistics and Logs",
   "icons": [
     {
-      "src": "logoCoh.png",
+      "src": "logoTrans.png",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/png"
-    },
-    {
-      "src": "logoCoh.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "logoCoh.png",
-      "type": "image/png",
-      "sizes": "512x512"
     }
   ],
   "start_url": ".",

@@ -25,4 +25,8 @@ const getCommanderByRaces = (raceName: RaceName): Array<CommanderData> => {
   });
 };
 
-export { convertCommanderIDToName, getCommanderData, getCommanderByRaces };
+const getCommanderIconPath = (name: string): string => {
+  return `/resources/exportedIcons/${name}.png`;
+};
+
+export { convertCommanderIDToName, getCommanderData, getCommanderByRaces, getCommanderIconPath };

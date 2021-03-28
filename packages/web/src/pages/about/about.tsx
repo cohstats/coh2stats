@@ -1,8 +1,19 @@
 import React from "react";
 import { Typography } from "antd";
+import { useData, useLoading } from "../../firebase";
+import { Loading } from "../../components/loading";
 const { Title, Link, Text } = Typography;
 
 const About: React.FC = () => {
+  const isLoading = useLoading("globalStats");
+  const data: Record<string, any> = useData("globalStats");
+
+  let analyzedMatches = <Loading />;
+
+  if (!isLoading) {
+    analyzedMatches = data["analyzedMatches"];
+  }
+
   return (
     <div style={{ textAlign: "center", maxWidth: 900, margin: "0 auto" }}>
       <Title level={2} style={{ paddingTop: 15 }} id={"crawler"}>
@@ -39,6 +50,9 @@ const About: React.FC = () => {
       The amount of data with some types of games is really a problem. You can see that winrate
       each day can really fluctuate by tens of % if the amount of games is under 1k for the given
       date.
+      <br />
+      <br />
+      <b>So far analyzed {analyzedMatches} matches.</b>
       <Title level={2} style={{ paddingTop: 15 }}>
         Bugs, ideas and contribution
       </Title>

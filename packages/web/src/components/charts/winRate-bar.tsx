@@ -19,7 +19,7 @@ export const WinRateChart = (data: Record<string, any>) => {
   return (
     <Bar
       height={500}
-      width={500}
+      width={550}
       margin={{ top: 0, right: 30, bottom: 40, left: 70 }}
       // @ts-ignore
       data={chartData as data[] | undefined}
