@@ -34,6 +34,11 @@ const About: React.FC = () => {
       <br />
       But we are processing the best 4% so it might not represent the majority of the games.
       However it's still good insight into the top games. So you might get inspired.
+      <br />
+      <br />
+      The amount of data with some types of games is really a problem. You can see that winrate
+      each day can really fluctuate by tens of % if the amount of games is under 1k for the given
+      date.
       <Title level={2} style={{ paddingTop: 15 }}>
         Bugs, ideas and contribution
       </Title>

@@ -12,7 +12,7 @@ export const MainFooter: React.FC = () => {
       <br />
       See <a href={"/about"}>about page</a> for more info.
       <br />
-      © 2021 COH2logs.com
+      © 2021 COH2stats.com
       <br />
       <a
         href={"https://github.com/petrvecera/coh2ladders"}

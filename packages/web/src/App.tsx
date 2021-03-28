@@ -33,7 +33,7 @@ const App: React.FC = () => {
         <MainHeader />
         <Content>
           <Switch>
-            <Route path={"/stats/:frequency/:timestamp"}>
+            <Route path={routes.fullStatsDetails()}>
               <Stats />
             </Route>
             <Route path={"/stats"}>
