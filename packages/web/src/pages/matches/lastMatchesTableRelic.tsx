@@ -26,12 +26,17 @@ const LastMatchesTableRelic: React.FC = () => {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [matches, setMatches] = useState([]);
+  const [profileID, setProfileID] = useState("/steam/76561198034318060");
+  const [playerAlias, setPlayerAlias] = useState("unknown player alias");
 
   useEffect(() => {
     // FYI this is special trick, anonymous function which is directly called - we need cos of compiler
     (async () => {
       // prepare the payload - you can modify the ID but it has to be in this format
       const payLoad = { profileName: "/steam/76561198034318060" };
+      setProfileID(payLoad["profileName"]);
+      console.log(payLoad);
+      console.log(profileID);
 
       // prepare the CF
       const getMatchesFromRelic = firebase.functions().httpsCallable("getPlayerMatchesFromRelic");
@@ -44,6 +49,7 @@ const LastMatchesTableRelic: React.FC = () => {
 
         setIsLoaded(true);
         setMatches(matches.data["playerMatches"]);
+        setPlayerAlias(getAliasFromSteamID(profileID, matches.data["playerMatches"][0]));
       } catch (e) {
         setError(e);
       }
@@ -52,11 +58,42 @@ const LastMatchesTableRelic: React.FC = () => {
 
   let matchRecords = matches;
 
+/**
+ * Returns string in format playerAllias, COUNTRY
+ * param steamId is steamID in relic api call format, example "/steam/76561198034318060" 
+ * param matchRecord is a single record from array returned by relic api
+ */
+ function getAliasFromSteamID(steamId: string, matchRecord: any) {
+  let alias = "unknown";
+  let profileId = 0;
+  console.log("SEARCHING "+ steamId)
+  for (let index in matchRecord.steam_ids) {
+    if (steamId.includes(matchRecord.steam_ids[index])) {
+      profileId = matchRecord.profile_ids[index];
+      console.log("FOUND " + profileId)
+      for (let temp in matchRecord.matchhistoryreportresults) {
+        if ((matchRecord.matchhistoryreportresults[temp]["profile_id"] = profileId)) {
+          alias =
+            matchRecord.matchhistoryreportresults[temp].profile.alias +
+            ", " +
+            matchRecord.matchhistoryreportresults[temp].profile.country.toUpperCase();
+        }
+        break;
+      }
+      break;
+    }
+  }
+
+  return alias;
+}
+
   const columns: ColumnsType<any> = [
     {
       title: "Match ID",
       dataIndex: "id",
       key: "id",
+      defaultSortOrder: "descend",
+      sorter: (a, b) => a.startgametime - b.startgametime,
       render: (_text: any, record: any) => {
         return (
           <>
@@ -185,7 +222,7 @@ const LastMatchesTableRelic: React.FC = () => {
         <Row>
           <Col span={2}></Col>
           <Col span={20}>
-            <h1> Recent matches </h1>
+            <h1> Recent matches for player {playerAlias} </h1>
           </Col>
           <Col span={2}></Col>
         </Row>

@@ -59,24 +59,24 @@ export function getMatchPlayersByFaction(
 ) {
   let factions = [];
   // loop thru all players
-  for (let myKey in reportedPlayerResults) {
+  for (let index in reportedPlayerResults) {
     switch (faction) {
       // search for all axis players
       case "axis":
         if (
-          reportedPlayerResults[myKey].race_id === 0 ||
-          reportedPlayerResults[myKey].race_id === 2
+          reportedPlayerResults[index].race_id === 0 ||
+          reportedPlayerResults[index].race_id === 2
         ) {
-          factions.push(reportedPlayerResults[myKey]);
+          factions.push(reportedPlayerResults[index]);
         }
         break;
       // search for allies players
       case "allies":
         if (
-          reportedPlayerResults[myKey].race_id !== 0 &&
-          reportedPlayerResults[myKey].race_id !== 2
+          reportedPlayerResults[index].race_id !== 0 &&
+          reportedPlayerResults[index].race_id !== 2
         ) {
-          factions.push(reportedPlayerResults[myKey]);
+          factions.push(reportedPlayerResults[index]);
         }
         break;
     }
@@ -92,13 +92,13 @@ export function getMatchResult(reportedPlayerResults: Array<any>) {
   let color = "geekblue";
 
   // loop thru all players
-  for (let myKey2 in reportedPlayerResults) {
+  for (let index in reportedPlayerResults) {
     // find a winner
-    if (reportedPlayerResults[myKey2].resulttype === 1) {
+    if (reportedPlayerResults[index].resulttype === 1) {
       // if its a axis player by race
       if (
-        reportedPlayerResults[myKey2].race_id === 0 ||
-        reportedPlayerResults[myKey2].race_id === 2
+        reportedPlayerResults[index].race_id === 0 ||
+        reportedPlayerResults[index].race_id === 2
       ) {
         winner = "Axis victory"; // return axis victory
         color = "volcano";
@@ -146,3 +146,4 @@ export const raceIds: Record<number, RaceName> = {
   3: "usf",
   4: "british",
 };
+
