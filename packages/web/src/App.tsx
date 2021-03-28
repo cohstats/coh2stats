@@ -13,6 +13,8 @@ import routes from "./routes";
 import { MainHeader } from "./components/main-header";
 import About from "./pages/about";
 import Playground from "./pages/playground";
+import { LastMatchesTable } from "./pages/matches/lastMatchesTable";
+import LastMatchesTableRelic from "./pages/matches/lastMatchesTableRelic";
 
 const { Content } = Layout;
 
@@ -31,7 +33,7 @@ const App: React.FC = () => {
         <MainHeader />
         <Content>
           <Switch>
-            <Route path={"/stats/:frequency/:timestamp"}>
+            <Route path={routes.fullStatsDetails()}>
               <Stats />
             </Route>
             <Route path={"/stats"}>
@@ -51,6 +53,12 @@ const App: React.FC = () => {
             </Route>
             <Route path={routes.bulletinsBase()}>
               <BulletinList />
+            </Route>
+            <Route path={"/test"}>
+              <LastMatchesTable />
+            </Route>
+            <Route path={"/testrelic"}>
+              <LastMatchesTableRelic />
             </Route>
             <Route path={"/playground"}>
               <Playground />

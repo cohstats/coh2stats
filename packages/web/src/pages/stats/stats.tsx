@@ -6,7 +6,11 @@ import { useFirestoreConnect } from "react-redux-firebase";
 import routes from "../../routes";
 import { ConfigProvider, Select, Space } from "antd";
 import DatePicker from "../../components/date-picker";
-import { convertDateToDayTimestamp, getYesterdayDateTimestamp } from "../../helpers";
+import {
+  convertDateToDayTimestamp,
+  getStartOfTheWeek,
+  getYesterdayDateTimestamp,
+} from "../../helpers";
 import { validRaceNames, validStatsTypes } from "../../coh/types";
 import enGB from "antd/lib/locale/en_GB";
 
@@ -40,6 +44,11 @@ const Stats: React.FC = () => {
 
   const settableFrequently = frequency ? frequency : "daily";
   const [datePickerType, setDatePickerType] = useState(settableFrequently as DatePickerType);
+  const [dateValue, setDateValue] = useState(
+    timestamp
+      ? new Date(parseInt(timestamp) * 1000)
+      : new Date(getYesterdayDateTimestamp() * 1000),
+  );
 
   function disabledDate(current: Date) {
     // we started logging Monday 8.3.2021
@@ -60,7 +69,7 @@ const Stats: React.FC = () => {
           picker={pickerType}
           onChange={onChange}
           allowClear={false}
-          defaultValue={new Date(parseInt(timestamp) * 1000)}
+          defaultValue={dateValue}
           disabledDate={disabledDate}
           size={"large"}
         />
@@ -68,7 +77,10 @@ const Stats: React.FC = () => {
     );
   }
 
-  const onDateSelect = (value: string) => {
+  // I am not really sure about this workflow with useEffect and state for handling this
+  // form. I feel like it's not optimal, something is wrong and there is definitely
+  // better solution.
+  React.useEffect(() => {
     let typeToLoad = "4v4";
     let raceToLoad = "wermacht";
 
@@ -83,11 +95,28 @@ const Stats: React.FC = () => {
     push(
       routes.fullStatsDetails(
         datePickerType,
-        convertDateToDayTimestamp(value).toString(),
+        convertDateToDayTimestamp(dateValue).toString(),
         typeToLoad,
         raceToLoad,
       ),
     );
+  }, [datePickerType, dateValue, push]);
+
+  const onDatePickerTypeSelect = (value: DatePickerType) => {
+    if (value === "week") {
+      setDateValue(new Date(getStartOfTheWeek(dateValue)));
+    }
+
+    setDatePickerType(value);
+  };
+
+  const onDateSelect = (value: string) => {
+    let actualDate: string | Date = value;
+    if (datePickerType === "week") {
+      actualDate = getStartOfTheWeek(value);
+    }
+
+    setDateValue(new Date(actualDate));
   };
 
   return (
@@ -98,7 +127,7 @@ const Stats: React.FC = () => {
         >
           <Select
             value={datePickerType}
-            onChange={setDatePickerType}
+            onChange={onDatePickerTypeSelect}
             style={{ width: 100 }}
             size={"large"}
           >
