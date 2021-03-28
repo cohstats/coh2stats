@@ -1,4 +1,4 @@
-import { Col, Row, Space, Table } from "antd";
+import { Col, Row, Space, Table, Tooltip } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import {
   formatMatchTime,
@@ -42,7 +42,13 @@ const LastMatchesTableRelic: React.FC = () => {
 
         setIsLoaded(true);
         // filter out invalid data provided by relic, and sort it descending with game start
-        setMatches(matches.data["playerMatches"].filter((match: any) => (match.description != "SESSION_MATCH_KEY") && (match.matchtype_id != 7)).sort((a: any, b: any) => b.startgametime - a.startgametime));
+        setMatches(
+          matches.data["playerMatches"]
+            .filter(
+              (match: any) => match.description != "SESSION_MATCH_KEY" && match.matchtype_id != 7,
+            )
+            .sort((a: any, b: any) => b.startgametime - a.startgametime),
+        );
         setPlayerAlias(getAliasFromSteamID(profileID, matches.data["playerMatches"][0]));
       } catch (e) {
         setError(e);
@@ -52,21 +58,23 @@ const LastMatchesTableRelic: React.FC = () => {
 
   let matchRecords = matches;
 
-
   function isPlayerVictorious(matchRecord: any): boolean {
-
-    let resultItem = matchRecord.matchhistoryreportresults.filter((result: any) => (result.profile.name == profileID));
-    console.log(resultItem[0])
+    let resultItem = matchRecord.matchhistoryreportresults.filter(
+      (result: any) => result.profile.name == profileID,
+    );
     if (resultItem[0].resulttype == 1) {
-      console.log("victory")
-      return true
-    }
-    else {
-      console.log("defeat")
-      return false
+      return true;
+    } else {
+      return false;
     }
   }
 
+  function getPlayerMatchHistoryResult(matchRecord: any) {
+    let player = matchRecord.matchhistoryreportresults.filter(
+      (result: any) => result.profile.name == profileID,
+    );
+    return player[0];
+  }
 
   /**
    * Returns string in format playerAllias, COUNTRY
@@ -104,15 +112,24 @@ const LastMatchesTableRelic: React.FC = () => {
       key: "id",
       sorter: (a, b) => a.startgametime - b.startgametime,
       render: (_text: any, record: any) => {
+        let player = getPlayerMatchHistoryResult(record);
         return (
           <>
-            <div>{record.id}</div>
+            <div>
+              <Tooltip title={player.profile.alias} key={player.profile.alias}>
+                <img
+                  key={player.profile_id}
+                  src={getRaceImage(raceIds[player.race_id])}
+                  height="48px"
+                  alt={player.race_id}
+                />
+              </Tooltip>
+            </div>
             <div>
               <sub> {formatMatchTime(record.startgametime)} </sub>
             </div>
           </>
         );
-
       },
     },
 
@@ -188,12 +205,14 @@ const LastMatchesTableRelic: React.FC = () => {
 
         let Images = axisPlayers.map((player) => {
           return (
-            <img
-              key={player.profile_id}
-              src={getRaceImage(raceIds[player.race_id])}
-              height="48px"
-              alt={player.race_id}
-            />
+            <Tooltip title={player.profile.alias} key={player.profile.alias}>
+              <img
+                key={player.profile_id}
+                src={getRaceImage(raceIds[player.race_id])}
+                height="48px"
+                alt={player.race_id}
+              />
+            </Tooltip>
           );
         });
         return <Space>{Images}</Space>;
@@ -209,12 +228,14 @@ const LastMatchesTableRelic: React.FC = () => {
 
         let Images = alliesPlayers.map((player) => {
           return (
-            <img
-              key={player.profile_id}
-              src={getRaceImage(raceIds[player.race_id])}
-              height="48px"
-              alt={player.race_id}
-            />
+            <Tooltip title={player.profile.alias} key={player.profile.alias}>
+              <img
+                key={player.profile_id}
+                src={getRaceImage(raceIds[player.race_id])}
+                height="48px"
+                alt={player.race_id}
+              />
+            </Tooltip>
           );
         });
         return <Space>{Images}</Space>;
