@@ -87,10 +87,10 @@ const StatsDetails: React.FC = () => {
       </Row>
       <Row justify={"center"}>
         <Space size={"large"}>
-          <Card title={`Games Played ${type}`} style={{ width: 550, height: 600 }}>
+          <Card title={`Games Played ${type}`} style={{ width: 585, height: 600 }}>
             {WinsChart(specificData)}
           </Card>
-          <Card title={`Winrate ${type}`} style={{ width: 550, height: 600 }}>
+          <Card title={`Winrate ${type}`} style={{ width: 585, height: 600 }}>
             {WinRateChart(specificData)}
           </Card>
         </Space>

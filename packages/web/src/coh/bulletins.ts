@@ -32,4 +32,14 @@ const getAllBulletins = (): Array<IntelBulletinData> => {
   return Object.values(bulletinsData);
 };
 
-export { convertBulletinIDToName, getBulletinData, getBulletinsByRaces, getAllBulletins };
+const getBulletinIconPath = (name: string): string => {
+  return `/resources/exportedIcons/${name}.png`;
+};
+
+export {
+  convertBulletinIDToName,
+  getBulletinData,
+  getBulletinsByRaces,
+  getAllBulletins,
+  getBulletinIconPath,
+};

@@ -1,17 +1,12 @@
 import React, { useState } from "react";
 import { Table, Tag, Space, Col, Row, Input, Button } from "antd";
 
-import { useHistory, useParams } from "react-router";
 import { IntelBulletinData } from "../../coh/types";
-import routes from "../../routes";
-import { getAllBulletins } from "../../coh/bulletins";
+import { getAllBulletins, getBulletinIconPath } from "../../coh/bulletins";
 import { ColumnsType, ColumnType } from "antd/lib/table";
-import Search from "antd/lib/input/Search";
 import { SearchOutlined } from "@ant-design/icons";
 
 export const BulletinList = () => {
-  const { push } = useHistory();
-
   // prepare bulletin data
   let [bulletinData, setStateBulletinData] = useState(getAllBulletins());
 
@@ -78,11 +73,7 @@ export const BulletinList = () => {
       render: (_text: any, record: any) => {
         return (
           <div>
-            <img
-              src={"/resources/exportedIcons/" + record.icon + ".png"}
-              height="64px"
-              alt={record.icon}
-            />
+            <img src={getBulletinIconPath(record.icon)} height="64px" alt={record.name} />
           </div>
         );
       },
@@ -93,7 +84,7 @@ export const BulletinList = () => {
       key: "bulletinName",
       ...tableColumnTextFilterConfig<IntelBulletinData>(),
       onFilter: (value: any, record: IntelBulletinData) =>
-        record.bulletinName.toLowerCase().includes(value.toLowerCase()) === true,
+        record.bulletinName.toLowerCase().includes(value.toLowerCase()),
       sorter: (a: IntelBulletinData, b: IntelBulletinData) =>
         a.bulletinName.localeCompare(b.bulletinName),
     },

@@ -1,9 +1,17 @@
 import { Bar } from "@nivo/bar";
 import React from "react";
 import { sortArrayOfObjectsByTheirPropertyValue } from "../../coh/helpers";
-import { convertCommanderIDToName } from "../../coh/commanders";
+import {
+  convertCommanderIDToName,
+  getCommanderData,
+  getCommanderIconPath,
+} from "../../coh/commanders";
+import { Avatar } from "antd";
+import routes from "../../routes";
+import { useHistory } from "react-router";
 
 export const CommandersBarChart = (commanders: Record<number, number>) => {
+  const { push } = useHistory();
   const simpleMapsData = [];
 
   for (const [key, value] of Object.entries(commanders)) {
@@ -18,6 +26,31 @@ export const CommandersBarChart = (commanders: Record<number, number>) => {
     (simpleMapsData as unknown) as Array<Record<string, string>>,
   );
 
+  const toolTipFunction = (toolTipData: Record<string, any>) => {
+    const commanderData = getCommanderData(toolTipData.data.commanderId);
+    if (!commanderData) return <div></div>;
+
+    const iconPath = getCommanderIconPath(commanderData?.iconSmall);
+
+    return (
+      <div>
+        <Avatar
+          size={54}
+          shape="square"
+          src={iconPath}
+          style={{ display: "inline-block", verticalAlign: "top" }}
+        />
+        <div style={{ display: "inline-block", paddingLeft: 5, maxWidth: 500 }}>
+          <b>
+            {commanderData.commanderName} - {toolTipData.value}{" "}
+          </b>
+          <br />
+          <i>Click for more info ...</i>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <Bar
       height={800}
@@ -31,6 +64,7 @@ export const CommandersBarChart = (commanders: Record<number, number>) => {
       colors={{ scheme: "nivo" }}
       colorBy={"index"}
       animate={false}
+      tooltip={toolTipFunction}
       axisBottom={{
         tickSize: 5,
         tickPadding: 5,
@@ -47,9 +81,9 @@ export const CommandersBarChart = (commanders: Record<number, number>) => {
         legendOffset: -40,
       }}
       onClick={(event) => {
-        // TODO: Fix this
-        const cmId = event.data["commanderId"];
-        window.open(`${window.location.host}/commanders/usf/${cmId}`);
+        const commanderId: string = event.data["commanderId"] as string;
+        const commanderData = getCommanderData(commanderId);
+        push(routes.commanderByID(commanderData?.races[0], commanderId));
       }}
     />
   );

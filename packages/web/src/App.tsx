@@ -2,7 +2,7 @@ import React from "react";
 import { Layout } from "antd";
 import "./App.css";
 import { useFirestoreConnect } from "react-redux-firebase";
-import { Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import { CommanderDetails } from "./pages/commanders/commanders";
 import { CommandersList } from "./pages/commanders/commandersList";
 import { RacePicker } from "./pages/commanders/racePicker";
@@ -33,6 +33,9 @@ const App: React.FC = () => {
         <MainHeader />
         <Content>
           <Switch>
+            <Route path={"/"} exact={true}>
+              <Redirect to="/stats" />
+            </Route>
             <Route path={routes.fullStatsDetails()}>
               <Stats />
             </Route>

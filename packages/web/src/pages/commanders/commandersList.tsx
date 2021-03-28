@@ -1,6 +1,6 @@
 import React from "react";
 import { Col, Row, List, Avatar } from "antd";
-import { getCommanderByRaces } from "../../coh/commanders";
+import { getCommanderByRaces, getCommanderIconPath } from "../../coh/commanders";
 import { useHistory, useParams } from "react-router";
 import { RaceName } from "../../coh/types";
 import routes from "../../routes";
@@ -64,7 +64,7 @@ export const CommandersList = () => {
                         onClick={() => onCommanderClick(item.serverID)}
                       >
                         <Avatar
-                          src={"/resources/exportedIcons/" + item.iconSmall + ".png"}
+                          src={getCommanderIconPath(item.iconSmall)}
                           shape="square"
                           size={64}
                         />
