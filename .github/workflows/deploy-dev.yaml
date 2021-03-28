@@ -1,14 +1,14 @@
-name: Build and Deploy Web - PRODUCTION
+name: Build and Deploy Web - DEV
 on:
   push:
-    tags:
-      - v*
+    branches:
+      - master
     paths-ignore:
       - packages/functions/**
 
 env:
   FB_PROJECT: coh2-ladders-prod
-  FB_HOSTING: hosting:coh2-ladders-prod
+  FB_HOSTING: hosting:coh2-ladders-dev
 
 jobs:
   build-deploy-web:

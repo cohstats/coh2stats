@@ -1,5 +1,17 @@
 {
   "projects": {
     "default": "coh2-ladders-prod"
+  },
+  "targets": {
+    "coh2-ladders-prod": {
+      "hosting": {
+        "coh2-ladders-prod": [
+          "coh2-ladders-prod"
+        ],
+        "coh2-ladders-dev": [
+          "coh2-ladders-dev"
+        ]
+      }
+    }
   }
 }
