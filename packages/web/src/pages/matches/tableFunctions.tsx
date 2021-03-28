@@ -118,16 +118,16 @@ export const formatMatchtypeID = (matchType: number): string => {
   let formattedMatchType: string;
   switch (matchType) {
     case 1:
-      formattedMatchType = "1 v 1 ";
+      formattedMatchType = "1 vs 1 ";
       break;
     case 2:
-      formattedMatchType = "2 v 2 ";
+      formattedMatchType = "2 vs 2 ";
       break;
     case 3:
-      formattedMatchType = "3 v 3 ";
+      formattedMatchType = "3 vs 3 ";
       break;
     case 4:
-      formattedMatchType = "4 v 4 ";
+      formattedMatchType = "4 vs 4 ";
       break;
     default:
       formattedMatchType = "unknown";
