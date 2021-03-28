@@ -1,9 +1,4 @@
 import { Col, Row, Space, Table } from "antd";
-import {
-  singleMatchObjectAfterTransform,
-  singleMatchObjectAfterTransform2v2,
-  singleMatchObjectAfterTransformAxis,
-} from "./testMatch";
 import { ColumnsType } from "antd/lib/table";
 import {
   formatMatchTime,
@@ -14,6 +9,7 @@ import {
   getRaceImage,
   raceIds,
 } from "./tableFunctions";
+import "./tableStyle.css";
 import React, { useEffect, useState } from "react";
 import { firebase } from "../../firebase";
 
@@ -45,8 +41,8 @@ const LastMatchesTableRelic: React.FC = () => {
         console.log(matches.data["playerMatches"]);
 
         setIsLoaded(true);
-        // filter out invalid data provided by relic
-        setMatches(matches.data["playerMatches"].filter((match: any) => (match.description != "SESSION_MATCH_KEY") && (match.matchtype_id != 7)));
+        // filter out invalid data provided by relic, and sort it descending with game start
+        setMatches(matches.data["playerMatches"].filter((match: any) => (match.description != "SESSION_MATCH_KEY") && (match.matchtype_id != 7)).sort((a: any, b: any) => b.startgametime - a.startgametime));
         setPlayerAlias(getAliasFromSteamID(profileID, matches.data["playerMatches"][0]));
       } catch (e) {
         setError(e);
@@ -56,10 +52,26 @@ const LastMatchesTableRelic: React.FC = () => {
 
   let matchRecords = matches;
 
+
+  function isPlayerVictorious(matchRecord: any): boolean {
+
+    let resultItem = matchRecord.matchhistoryreportresults.filter((result: any) => (result.profile.name == profileID));
+    console.log(resultItem[0])
+    if (resultItem[0].resulttype == 1) {
+      console.log("victory")
+      return true
+    }
+    else {
+      console.log("defeat")
+      return false
+    }
+  }
+
+
   /**
    * Returns string in format playerAllias, COUNTRY
-   * param steamId is steamID in relic api call format, example "/steam/76561198034318060"
-   * param matchRecord is a single record from array returned by relic api
+   * @param steamId is steamID in relic api call format, example "/steam/76561198034318060"
+   * @param matchRecord is a single record from array returned by relic api
    */
   function getAliasFromSteamID(steamId: string, matchRecord: any) {
     let alias = "unknown";
@@ -90,7 +102,6 @@ const LastMatchesTableRelic: React.FC = () => {
       title: "Match ID",
       dataIndex: "id",
       key: "id",
-      defaultSortOrder: "descend",
       sorter: (a, b) => a.startgametime - b.startgametime,
       render: (_text: any, record: any) => {
         return (
@@ -101,7 +112,7 @@ const LastMatchesTableRelic: React.FC = () => {
             </div>
           </>
         );
-        
+
       },
     },
 
@@ -237,6 +248,7 @@ const LastMatchesTableRelic: React.FC = () => {
               dataSource={matchRecords}
               rowKey={(record) => record.id}
               size="middle"
+              rowClassName={(record) => (isPlayerVictorious(record) ? "green" : "red")}
             />
           </Col>
           <Col span={2}></Col>
