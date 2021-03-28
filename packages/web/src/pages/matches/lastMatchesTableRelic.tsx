@@ -35,9 +35,6 @@ const LastMatchesTableRelic: React.FC = () => {
       // prepare the payload - you can modify the ID but it has to be in this format
       const payLoad = { profileName: "/steam/76561198034318060" };
       setProfileID(payLoad["profileName"]);
-      console.log(payLoad);
-      console.log(profileID);
-
       // prepare the CF
       const getMatchesFromRelic = firebase.functions().httpsCallable("getPlayerMatchesFromRelic");
 
@@ -48,7 +45,8 @@ const LastMatchesTableRelic: React.FC = () => {
         console.log(matches.data["playerMatches"]);
 
         setIsLoaded(true);
-        setMatches(matches.data["playerMatches"]);
+        // filter out invalid data provided by relic
+        setMatches(matches.data["playerMatches"].filter((match: any) => (match.description != "SESSION_MATCH_KEY") && (match.matchtype_id != 7)));
         setPlayerAlias(getAliasFromSteamID(profileID, matches.data["playerMatches"][0]));
       } catch (e) {
         setError(e);
@@ -58,34 +56,34 @@ const LastMatchesTableRelic: React.FC = () => {
 
   let matchRecords = matches;
 
-/**
- * Returns string in format playerAllias, COUNTRY
- * param steamId is steamID in relic api call format, example "/steam/76561198034318060" 
- * param matchRecord is a single record from array returned by relic api
- */
- function getAliasFromSteamID(steamId: string, matchRecord: any) {
-  let alias = "unknown";
-  let profileId = 0;
-  console.log("SEARCHING "+ steamId)
-  for (let index in matchRecord.steam_ids) {
-    if (steamId.includes(matchRecord.steam_ids[index])) {
-      profileId = matchRecord.profile_ids[index];
-      console.log("FOUND " + profileId)
-      for (let temp in matchRecord.matchhistoryreportresults) {
-        if ((matchRecord.matchhistoryreportresults[temp]["profile_id"] = profileId)) {
-          alias =
-            matchRecord.matchhistoryreportresults[temp].profile.alias +
-            ", " +
-            matchRecord.matchhistoryreportresults[temp].profile.country.toUpperCase();
+  /**
+   * Returns string in format playerAllias, COUNTRY
+   * param steamId is steamID in relic api call format, example "/steam/76561198034318060"
+   * param matchRecord is a single record from array returned by relic api
+   */
+  function getAliasFromSteamID(steamId: string, matchRecord: any) {
+    let alias = "unknown";
+    let profileId = 0;
+    console.log("SEARCHING " + steamId);
+    for (let index in matchRecord.steam_ids) {
+      if (steamId.includes(matchRecord.steam_ids[index])) {
+        profileId = matchRecord.profile_ids[index];
+        console.log("FOUND " + profileId);
+        for (let temp in matchRecord.matchhistoryreportresults) {
+          if ((matchRecord.matchhistoryreportresults[temp]["profile_id"] = profileId)) {
+            alias =
+              matchRecord.matchhistoryreportresults[temp].profile.alias +
+              ", " +
+              matchRecord.matchhistoryreportresults[temp].profile.country.toUpperCase();
+          }
+          break;
         }
         break;
       }
-      break;
     }
-  }
 
-  return alias;
-}
+    return alias;
+  }
 
   const columns: ColumnsType<any> = [
     {
@@ -230,6 +228,10 @@ const LastMatchesTableRelic: React.FC = () => {
           <Col span={2}></Col>
           <Col span={20}>
             <Table
+              pagination={{
+                defaultPageSize: 60,
+                pageSizeOptions: ["10", "20", "40", "60", "100", "200"],
+              }}
               columns={columns}
               dataSource={matchRecords}
               rowKey={(record) => record.id}

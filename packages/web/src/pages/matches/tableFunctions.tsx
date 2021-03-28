@@ -146,4 +146,3 @@ export const raceIds: Record<number, RaceName> = {
   3: "usf",
   4: "british",
 };
-
