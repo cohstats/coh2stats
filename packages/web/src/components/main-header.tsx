@@ -48,7 +48,12 @@ export const MainHeader: React.FC = () => {
         >
           CoH 2 Logs & Stats
         </div>
-        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={[currentPath]}>
+        <Menu
+          theme="dark"
+          mode="horizontal"
+          selectedKeys={[currentPath]}
+          defaultSelectedKeys={[currentPath]}
+        >
           <Menu.Item key={routes.statsBase()} onClick={onMenuClick}>
             Stats
           </Menu.Item>

@@ -27,7 +27,8 @@ const About: React.FC = () => {
       etc). This gives us 5200(~3000 unique) top players for the given day. We than proceed with
       analysing/saving their matches for the given day. This gives us ~4000 matches / day.
       <br />
-      And we are tracking only auto-match games which are against players (filter out vs AI games).
+      And we are tracking only auto-match games which are against players (filter out vs AI
+      games).
       <br />
       More technical description of this process can be found{" "}
       <Link href="https://github.com/petrvecera/coh2ladders#crawler-process" target="_blank">
@@ -52,9 +53,11 @@ const About: React.FC = () => {
       <br />
       <br />
       <b>So far analyzed {analyzedMatches} matches.</b>
-      <Title level={2} style={{ paddingTop: 15 }}>
-        Bugs, ideas and contribution
-      </Title>
+      <a href={"#bugs"}>
+        <Title level={2} style={{ paddingTop: 15 }} id={"bugs"}>
+          Bugs, ideas and contribution
+        </Title>
+      </a>
       This project is completely open source, head over to the{" "}
       <Link href="https://github.com/petrvecera/coh2ladders" target="_blank">
         GitHub Repo
@@ -80,9 +83,11 @@ const About: React.FC = () => {
       <Link href="https://www.coh2.org/user/112252/pagep" target="_blank">
         at the forums.
       </Link>
-      <Title level={2} style={{ paddingTop: 15 }}>
-        Future functionality
-      </Title>
+      <a href={"#future"}>
+        <Title level={2} style={{ paddingTop: 15 }} id={"future"}>
+          Future functionality
+        </Title>
+      </a>
       <Text strong>Match overview</Text>
       <br />
       We would like to add much better match overview. Relic stores much more data for each match
@@ -105,9 +110,11 @@ const About: React.FC = () => {
       There is huge amount of things we could improve everywhere. The stats charts possibilities
       are limitless. We definitely want to add analysis based on each map. To see if some maps are
       better for different race. If you have any ideas feel free to suggest them.
-      <Title level={2} style={{ paddingTop: 15 }}>
-        Donations and support
-      </Title>
+      <a href={"#donations"}>
+        <Title level={2} style={{ paddingTop: 15 }} id={"donations"}>
+          Donations and support
+        </Title>
+      </a>
       We are able to support the basic hosting, domain and statistics/info functionality from our
       own pocket. This will rank up for tens of dollars per year. Plus we don't charge anything
       for our time.
