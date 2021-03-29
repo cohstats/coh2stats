@@ -4,6 +4,7 @@ import { DEFAULT_FUNCTIONS_LOCATION } from "./constants";
 import { ProcessedMatch } from "./libs/types";
 import { getYesterdayDateTimeStampInterval, printUTCTime } from "./libs/helpers";
 import { analyzeAndSaveMatchStats } from "./libs/analysis/analysis";
+import { analysisChecker } from "./libs/analysis/analysis-checker";
 
 const runtimeOpts: Record<string, "1GB" | any> = {
   timeoutSeconds: 540,
@@ -40,6 +41,8 @@ const runAnalysis = functions
     );
 
     await analyzeAndSaveMatchStats(matches, start);
+
+    await analysisChecker();
 
     functions.logger.info(`Analysis for the date ${printUTCTime(start)} finished.`);
   });

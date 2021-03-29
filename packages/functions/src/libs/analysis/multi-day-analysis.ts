@@ -1,8 +1,6 @@
 import { getStatsDocRef } from "../../fb-paths";
-// import { ProcessedMatch, StatDict } from "../types";
-// import { analyzeMatches } from "./match-analysis";
 import * as functions from "firebase-functions";
-// import { firestore } from "firebase-admin";
+
 import {
   getCurrentDateTimestamp,
   getStartOfTheWeek,
@@ -11,9 +9,6 @@ import {
 } from "../helpers";
 import { saveAnalysis } from "./analysis";
 import { frequencyType, StatDict } from "../types";
-// import { globallyAnalyzedMatches } from "../global-stats";
-
-// const db = firestore();
 
 /**
  * TODO: Implement other frequency types

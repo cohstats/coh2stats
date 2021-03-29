@@ -12,9 +12,9 @@ import { MainFooter } from "./components/main-footer";
 import routes from "./routes";
 import { MainHeader } from "./components/main-header";
 import About from "./pages/about";
-import Playground from "./pages/playground";
 import { LastMatchesTable } from "./pages/matches/lastMatchesTable";
 import LastMatchesTableRelic from "./pages/matches/lastMatchesTableRelic";
+import SearchPlayground from "./pages/playground/search-playground";
 
 const { Content } = Layout;
 
@@ -64,7 +64,7 @@ const App: React.FC = () => {
               <LastMatchesTableRelic />
             </Route>
             <Route path={"/playground"}>
-              <Playground />
+              <SearchPlayground />
             </Route>
           </Switch>
         </Content>

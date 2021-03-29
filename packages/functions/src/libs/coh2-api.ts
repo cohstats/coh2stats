@@ -50,6 +50,10 @@ const getRecentMatchHistoryUrl = (profileName: string): string => {
   );
 };
 
+const getPlayerSearchUrl = (name: string): string => {
+  return encodeURI(baseUrl + `/community/leaderboard/GetPersonalStat?title=coh2&search=${name}`);
+};
+
 /**
  * The names are important, can't be changed
  */
@@ -124,4 +128,5 @@ export {
   getIntelBulletinRace,
   resultType,
   matchItemsLocation,
+  getPlayerSearchUrl,
 };

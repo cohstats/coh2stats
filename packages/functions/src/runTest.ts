@@ -22,7 +22,7 @@ const runTest = functions
   .runWith(runtimeOpts)
   .https.onRequest(async (request, response) => {
     try {
-      await runAndSaveMultiDayAnalysis(new Date(2021, 2, 12));
+      await runAndSaveMultiDayAnalysis(new Date(2021, 2, 28));
     } catch (e) {
       console.log(e);
     }

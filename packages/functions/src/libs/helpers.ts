@@ -76,7 +76,6 @@ const getLastWeekTimeStamps = (): Array<number> => {
 };
 
 /**
- * WARNING: This functions works only on Monday! :D
  * Expects UTC timezone! The cloud functions are set to run in UTC! But
  * it could be used elsewhere so count with this.
  */
@@ -111,6 +110,10 @@ const getDatesInRange = (startDate: Date | number, endDate: Date | number): Arra
   });
 };
 
+const isMonday = (date: Date): boolean => {
+  return date.getUTCDay() === 1;
+};
+
 /**
  * Takes 2 objects.
  * This function is not immutable! Modifies the first object.
@@ -119,7 +122,6 @@ const getDatesInRange = (startDate: Date | number, endDate: Date | number): Arra
  * @param masterObject
  * @param newObject
  */
-
 const sumValuesOfObjects = (
   masterObject: StatDict | Record<string, any>,
   newObject: StatDict,
@@ -159,4 +161,5 @@ export {
   getLastWeekTimeStamps,
   getWeekTimeStamps,
   getStartOfTheWeek,
+  isMonday,
 };
