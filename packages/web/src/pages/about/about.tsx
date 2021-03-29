@@ -27,8 +27,7 @@ const About: React.FC = () => {
       etc). This gives us 5200(~3000 unique) top players for the given day. We than proceed with
       analysing/saving their matches for the given day. This gives us ~4000 matches / day.
       <br />
-      And we are tracking only auto-match games. However you can play auto-match on custom maps
-      too.
+      And we are tracking only auto-match games which are against players (filter out vs AI games).
       <br />
       More technical description of this process can be found{" "}
       <Link href="https://github.com/petrvecera/coh2ladders#crawler-process" target="_blank">

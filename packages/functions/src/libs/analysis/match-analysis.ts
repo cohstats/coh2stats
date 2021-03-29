@@ -50,16 +50,16 @@ const analyzeMatch = (match: ProcessedMatch, stats: Record<string, any>) => {
 };
 
 /**
- * We want to do analysis only on the matches
- * which are from automatch
+ * We want to do analysis only on the matches are from automatch without AI
  * @param matches
  */
-const filterOnlyAutomatch = (matches: Array<ProcessedMatch>) => {
+const filterOnlyAutomatchVsPlayers = (matches: Array<ProcessedMatch>) => {
   // We could also filter based on the match_type ID but I am not sure
   // about that param
 
   return matches.filter((match: ProcessedMatch) => {
-    return match["description"] == "AUTOMATCH";
+    // Match type_id 5+ is automatch vs AI
+    return match["description"] == "AUTOMATCH" && match["matchtype_id"] < 5;
   });
 };
 
@@ -143,7 +143,7 @@ const createStats = (matches: Array<ProcessedMatch>) => {
  * @param matches
  */
 const analyzeMatches = (matches: Array<ProcessedMatch>): Record<string, any> => {
-  matches = filterOnlyAutomatch(matches);
+  matches = filterOnlyAutomatchVsPlayers(matches);
   const classifiedMatches = sortMatchesByType(matches);
 
   const fullStats: Record<string, any> = {};
