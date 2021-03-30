@@ -12,3 +12,6 @@ typings/
 
 # Node.js dependency directory
 node_modules/
+
+# ignore the env file
+.runtimeconfig.json
