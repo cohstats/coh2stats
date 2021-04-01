@@ -32,6 +32,18 @@ Thing to consider:
   better to store them in the [BigQuery](https://cloud.google.com/bigquery/) where
   we could run our analysis more easily and it would be Faster and Cheaper.
 
+### CI/CD
+
+Only web package is automatically deploy. Cloud functions
+need to be done manually for now.
+#### Prod
+
+Tagged versions are automatically deployed to `<add url>`
+
+#### Dev
+`master` branch is automatically deployed to https://coh2-ladders-dev.web.app/
+
+
 ### Development
 
 The repository is yarn workspace. Use `yarn` to manage this.

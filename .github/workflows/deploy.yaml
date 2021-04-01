@@ -29,7 +29,9 @@ jobs:
       - name: Fix the bug ISSUE 1078
         run: yarn run "react-spring-issue-1078"
       - name: Build the app
-        run: CI=false yarn web build
+        run: |
+          export NODE_OPTIONS=--max_old_space_size=4096
+          CI=false yarn web build
       - name: Deploy to Firebase
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN_CI_PROD}}
