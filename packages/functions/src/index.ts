@@ -8,3 +8,4 @@ export { runTest } from "./runTest";
 export { runAnalysis } from "./runAnalysis";
 export { getPlayerMatchesFromRelic } from "./getPlayerMatchesRelic";
 export { searchPlayersOnRelic } from "./searchPlayersRelic";
+export { searchPlayers } from "./searchPlayers";

@@ -15,6 +15,7 @@ import About from "./pages/about";
 import { LastMatchesTable } from "./pages/matches/lastMatchesTable";
 import LastMatchesTableRelic from "./pages/matches/lastMatchesTableRelic";
 import SearchPlayground from "./pages/playground/search-playground";
+import CustomSearch from "./pages/search";
 
 const { Content } = Layout;
 
@@ -56,6 +57,12 @@ const App: React.FC = () => {
             </Route>
             <Route path={routes.bulletinsBase()}>
               <BulletinList />
+            </Route>
+            <Route path={routes.searchWithParam()}>
+              <CustomSearch />
+            </Route>
+            <Route path={routes.searchBase()}>
+              <CustomSearch />
             </Route>
             <Route path={"/test"}>
               <LastMatchesTable />

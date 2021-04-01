@@ -1,27 +1,11 @@
 ### Database structure
 
-#### The stats Data structure
+####
+
+Env variable for functions
 
 ```
-root /stats/daily/timestamp?/1v1/
-
-TODO: TBD think about a way to store
-the stats data.
-
-stats
-- matchesCount: number
-- wermachtCount: number
-- wermachtWins: number
-- sovietCount: number
-- sovietWins: number
-- maps: {
-    "mapname": number
-    ...
-}
-- commanders: {
-    "name": number
-    "name": number
-}
+firebase functions:config:set env."steam_api_key"=""
 ```
 
 #### Ladders data structure

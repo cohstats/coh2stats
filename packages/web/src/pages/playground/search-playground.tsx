@@ -11,12 +11,12 @@ const SearchPlayground: React.FC = () => {
     setIsLoading(true);
 
     const payLoad = { name: value };
-    const searchPlayersOnRelic = firebase.functions().httpsCallable("searchPlayersOnRelic");
+    const searchPlayersOnRelic = firebase.functions().httpsCallable("searchPlayers");
 
     try {
       const { data } = await searchPlayersOnRelic(payLoad);
-      console.log(data.statGroups);
-      setPlayerGroups(data.statGroups);
+      console.log(data);
+      setPlayerGroups(data);
     } catch (e) {
       console.error(e);
     } finally {

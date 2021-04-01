@@ -4,7 +4,7 @@ import { runAndSaveMultiDayAnalysis } from "./multi-day-analysis";
 /**
  * This functions checks and runs multi-day analysis
  */
-const analysisChecker = async () => {
+const analysisChecker = async (): Promise<void> => {
   const date = new Date();
   if (isMonday(date)) {
     await runAndSaveMultiDayAnalysis(new Date(getYesterdayDateTimestamp() * 1000), "week");

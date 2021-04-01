@@ -32,6 +32,14 @@ const bulletinsBase = () => {
   return "/bulletins";
 };
 
+const searchBase = () => {
+  return "/search";
+};
+
+const searchWithParam = (param = ":searchParam") => {
+  return `${searchBase()}/${param}`;
+};
+
 const routes = {
   statsBase,
   fullStatsDetails,
@@ -40,6 +48,8 @@ const routes = {
   commanderByID,
   aboutBase,
   bulletinsBase,
+  searchBase,
+  searchWithParam,
 };
 
 export default routes;
