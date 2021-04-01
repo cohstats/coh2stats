@@ -31,4 +31,7 @@ const config = {
   firebaseFunctions,
 };
 
+// The date when we exported the data for the bulletins and commanders
+export const commanderAndBulletinDate = "28 March 2021";
+
 export default config;

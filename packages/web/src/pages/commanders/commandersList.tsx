@@ -4,6 +4,7 @@ import { getCommanderByRaces, getCommanderIconPath } from "../../coh/commanders"
 import { useHistory, useParams } from "react-router";
 import { RaceName } from "../../coh/types";
 import routes from "../../routes";
+import { ExportDate } from "../../components/export-date";
 
 export const CommandersList = () => {
   const { push } = useHistory();
@@ -85,6 +86,7 @@ export const CommandersList = () => {
               </div>
             )}
           />
+          <ExportDate typeOfData={"Commander"} />
         </Col>
         <Col span={6} />
       </Row>

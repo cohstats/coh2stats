@@ -5,6 +5,7 @@ import { IntelBulletinData } from "../../coh/types";
 import { getAllBulletins, getBulletinIconPath } from "../../coh/bulletins";
 import { ColumnsType, ColumnType } from "antd/lib/table";
 import { SearchOutlined } from "@ant-design/icons";
+import { ExportDate } from "../../components/export-date";
 
 export const BulletinList = () => {
   // prepare bulletin data
@@ -165,6 +166,7 @@ export const BulletinList = () => {
               dataSource={bulletinData}
             />
           </Col>
+          <ExportDate typeOfData={"Intel bulletins"} />
         </Row>
       </div>
     </>
