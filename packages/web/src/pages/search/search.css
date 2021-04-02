@@ -1,0 +1,9 @@
+div.player {
+  background-color: white;
+  border: 0.1em solid #fafafa;
+  cursor: pointer;
+}
+
+div.player:hover {
+  background-color: #fafafa;
+}

@@ -165,8 +165,8 @@ export const BulletinList = () => {
               }}
               dataSource={bulletinData}
             />
+            <ExportDate typeOfData={"Intel bulletins"} />
           </Col>
-          <ExportDate typeOfData={"Intel bulletins"} />
         </Row>
       </div>
     </>
