@@ -36,13 +36,14 @@ Thing to consider:
 
 Only web package is automatically deploy. Cloud functions
 need to be done manually for now.
+
 #### Prod
 
 Tagged versions are automatically deployed to `<add url>`
 
 #### Dev
-`master` branch is automatically deployed to https://coh2-ladders-dev.web.app/
 
+`master` branch is automatically deployed to https://coh2-ladders-dev.web.app/
 
 ### Development
 
@@ -59,6 +60,9 @@ To build the functions:
 
 To run the tests on functions:
 `yarn functions test`
+
+To run beautifier and linting:
+`yarn fix`
 
 ### Crawler process
 

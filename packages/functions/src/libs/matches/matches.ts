@@ -17,7 +17,7 @@ const fetchPlayerMatchStats = async (profileName: string): Promise<Record<string
 
     return data;
   } else {
-    throw Object.assign(new Error("Failed to received the player stats stats"), { response });
+    throw Object.assign(new Error("Failed to received the player stats"), { response });
   }
 };
 

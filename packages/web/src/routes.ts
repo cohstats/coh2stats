@@ -40,6 +40,14 @@ const searchWithParam = (param = ":searchParam") => {
   return `${searchBase()}/${param}`;
 };
 
+const matchesBase = () => {
+  return "/matches";
+};
+
+const playerMatches = (steamId = ":steamid") => {
+  return `${matchesBase()}/player/${steamId}`;
+};
+
 const routes = {
   statsBase,
   fullStatsDetails,
@@ -50,6 +58,7 @@ const routes = {
   bulletinsBase,
   searchBase,
   searchWithParam,
+  playerMatches,
 };
 
 export default routes;

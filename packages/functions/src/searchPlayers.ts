@@ -13,7 +13,7 @@ const runtimeOpts: Record<string, "128MB" | any> = {
 const playerSearchOnRelic = async (name: string): Promise<Array<Record<string, any>>> => {
   const response = await axios.get(getPlayerSearchUrl(name));
   // return only single players group
-  if (response.data["statGroups"]) {
+  if (response.data["statGroups"] != undefined) {
     return response.data["statGroups"].filter((statGroup: Record<string, any>) => {
       return statGroup.type == 1;
     });
