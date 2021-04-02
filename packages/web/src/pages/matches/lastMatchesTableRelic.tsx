@@ -91,7 +91,7 @@ const LastMatchesTableRelic: React.FC = () => {
         );
         console.log(matches)
         let localAlias = getAliasFromSteamID(loadedMatches[0]);
-        setPlayerAlias("dummymymyymym");
+        setPlayerAlias(localAlias);
 
 
         setIsLoaded(true);
@@ -180,8 +180,12 @@ const LastMatchesTableRelic: React.FC = () => {
    * @param matchRecord is a single record from array returned by relic api
    */
   function getAliasFromSteamID( matchRecord: any) {
-    console.log(matchRecord)
-   return 'result.profile.name';
+    
+    let resultItem = matchRecord.matchhistoryreportresults.filter(
+      (result: any) => result.profile.name == profileID,
+    );
+  console.log(matchRecord)
+   return resultItem[0].profile.name;
   }
 
   const columns: ColumnsType<any> = [
