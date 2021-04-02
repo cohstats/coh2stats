@@ -3,19 +3,108 @@ import { firebase } from "../../firebase";
 import Search from "antd/es/input/Search";
 import { useHistory, useParams } from "react-router";
 import routes from "../../routes";
+import { Avatar, Empty, Space } from "antd";
+// @ts-ignore
+import ReactCountryFlag from "react-country-flag";
+
+import "./search.css";
+import { History } from "history";
+
+type userAPIObject = Record<"steamProfile" | "relicProfile", Record<string, any>>;
+
+const userCard = (
+  userObject: userAPIObject,
+  push: {
+    (path: string, state?: unknown): void;
+    (location: History.LocationDescriptor<unknown>): void;
+    (arg0: string): void;
+  },
+) => {
+  const steamProfile = userObject.steamProfile;
+  const relicProfile = userObject.relicProfile;
+
+  const relicProfileMember = relicProfile["members"][0];
+  const playerName = relicProfileMember["alias"];
+  const countryCode = relicProfileMember["country"];
+  const xp = relicProfileMember["xp"];
+
+  const onProfileClick = (steamId: string) => {
+    push(routes.playerMatches(steamId));
+  };
+
+  return (
+    <div
+      key={steamProfile["steamid"]}
+      className={"player"}
+      onClick={() => {
+        onProfileClick(steamProfile["steamid"]);
+      }}
+    >
+      <Avatar
+        size={45}
+        shape="square"
+        src={steamProfile["avatarmedium"]}
+        style={{ display: "inline-block", verticalAlign: "top" }}
+      />
+      <div style={{ display: "inline-block", paddingLeft: 5, width: 180, textAlign: "left" }}>
+        <ReactCountryFlag
+          countryCode={countryCode}
+          svg
+          style={{
+            width: "1.5em",
+            height: "1.5em",
+            paddingRight: 5,
+          }}
+          title={countryCode}
+        />
+        <b>
+          {playerName}
+          <br />
+          XP:
+        </b>{" "}
+        {xp.toLocaleString()}
+      </div>
+    </div>
+  );
+};
 
 const CustomSearch: React.FC = () => {
   const { push } = useHistory();
 
+  // We should use normal query params and not / in the path
   const { searchParam } = useParams<{
     searchParam: string;
   }>();
 
   const [error, setError] = useState("");
   const [loading, setIsLoading] = useState(false);
-  const [searchData, setSearchData] = useState([]);
+  const [searchData, setSearchData] = useState<JSX.Element | undefined>(undefined);
 
   useEffect(() => {
+    const buildSearchResults = (data: Record<string, any>): JSX.Element => {
+      if (Object.entries(data).length === 0) {
+        return (
+          <div>
+            <Empty
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+              description={`No user profile with name ${searchParam} found`}
+            />
+          </div>
+        );
+      } else {
+        const userCards = [];
+        for (const value of Object.values(data)) {
+          userCards.push(userCard(value, push));
+        }
+
+        return (
+          <Space wrap size={10} style={{ maxWidth: 720 }}>
+            {userCards}
+          </Space>
+        );
+      }
+    };
+
     (async () => {
       if (searchParam) {
         setIsLoading(true);
@@ -25,7 +114,10 @@ const CustomSearch: React.FC = () => {
 
         try {
           const { data } = await searchPlayers(payLoad);
-          setSearchData(data);
+          const foundProfiles: Record<string, any> = data["foundProfiles"];
+          const resultHtml = buildSearchResults(foundProfiles);
+
+          setSearchData(resultHtml);
         } catch (e) {
           console.error(e);
           setError("Error occurred during the search.");
@@ -50,11 +142,12 @@ const CustomSearch: React.FC = () => {
         placeholder="Exact Steam account name"
         defaultValue={searchParam}
         onSearch={onSearch}
-        style={{ width: 300, padding: 20 }}
+        style={{ width: 320, padding: 20 }}
         loading={loading}
         enterButton
+        allowClear
       />
-      <div>{JSON.stringify(searchData)}</div>
+      <div>{searchData}</div>
     </div>
   );
 };

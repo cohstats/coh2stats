@@ -2,7 +2,6 @@ import React from "react";
 import { Col, Row, List, Divider, Avatar, Descriptions, Badge } from "antd";
 import { getCommanderData, getCommanderIconPath } from "../../coh/commanders";
 import { useParams } from "react-router";
-import { commanderAndBulletinDate } from "../../config";
 import { ExportDate } from "../../components/export-date";
 
 export const CommanderDetails = () => {

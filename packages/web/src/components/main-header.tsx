@@ -3,6 +3,7 @@ import { Header } from "antd/lib/layout/layout";
 import { Menu, Space } from "antd";
 import routes from "../routes";
 import { useHistory, useRouteMatch } from "react-router";
+import { PlayerSearchInput } from "./header-search";
 
 export const MainHeader: React.FC = () => {
   const { push } = useHistory();
@@ -63,6 +64,9 @@ export const MainHeader: React.FC = () => {
           <Menu.Item disabled={true} key="9" onClick={onMenuClick}>
             Matches
           </Menu.Item>
+          <Menu.Item disabled={true} key="11" onClick={onMenuClick}>
+            Leaderboards
+          </Menu.Item>
           <Menu.Item key={routes.commanderBase()} onClick={onMenuClick}>
             Commanders
           </Menu.Item>
@@ -73,6 +77,7 @@ export const MainHeader: React.FC = () => {
             About
           </Menu.Item>
         </Menu>
+        <PlayerSearchInput />
       </Space>
     </Header>
   );

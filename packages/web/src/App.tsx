@@ -14,8 +14,8 @@ import { MainHeader } from "./components/main-header";
 import About from "./pages/about";
 import { LastMatchesTable } from "./pages/matches/lastMatchesTable";
 import LastMatchesTableRelic from "./pages/matches/lastMatchesTableRelic";
-import SearchPlayground from "./pages/playground/search-playground";
 import CustomSearch from "./pages/search";
+import { BetaVersion } from "./components/beta-version";
 
 const { Content } = Layout;
 
@@ -70,13 +70,11 @@ const App: React.FC = () => {
             <Route path={"/matches/player/:steamid"}>
               <LastMatchesTableRelic />
             </Route>
-            <Route path={"/playground"}>
-              <SearchPlayground />
-            </Route>
           </Switch>
         </Content>
         <MainFooter />
       </Layout>
+      <BetaVersion />
     </div>
   );
 };

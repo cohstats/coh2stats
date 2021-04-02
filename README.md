@@ -61,6 +61,9 @@ To build the functions:
 To run the tests on functions:
 `yarn functions test`
 
+To run beautifier and linting:
+`yarn fix`
+
 ### Crawler process
 
 Diagram:

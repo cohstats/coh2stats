@@ -7,11 +7,13 @@ import store from "./store";
 import "./index.css";
 import { firebase } from "./firebase";
 import Root from "./root";
+import analytics from "./analytics";
 
 // Initialize Firebase
 firebase.init();
 
 const history = createBrowserHistory();
+history.listen(analytics.pageView);
 
 // Redux store with persistor
 export const appStore = store.configure(history);

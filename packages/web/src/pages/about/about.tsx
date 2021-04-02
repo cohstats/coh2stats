@@ -53,6 +53,36 @@ const About: React.FC = () => {
       <br />
       <br />
       <b>So far analyzed {analyzedMatches} matches.</b>
+      <a href={"#future"}>
+        <Title level={2} style={{ paddingTop: 15 }} id={"future"}>
+          Future functionality
+        </Title>
+      </a>
+      As you can see lot of features and functionality is not finished right now. Feel free to
+      vote/discuss on the forums about the priority of each feature.
+      <br />
+      <Text strong>Match overview</Text>
+      <br />
+      We would like to add much better match overview. Relic stores much more data for each match
+      that it's shown. We are able to get this data and we would like to display much better match
+      overview which would include the map, player average rankings and more info.
+      <br />
+      Also the players would have possibility to request their matches to be stored (so not only
+      the top 4%).
+      <br />
+      <br />
+      <Text strong>Players overview</Text>
+      <br />
+      We would like to give better player overview. For example track their record how good they
+      are playing on each map. Maybe add percentile to their rank because each mode has different
+      amount of players and ranked positions.
+      <br />
+      <br />
+      <Text strong>Other</Text>
+      <br />
+      There is huge amount of things we could improve everywhere. The stats charts possibilities
+      are limitless. We definitely want to add analysis based on each map. To see if some maps are
+      better for different race. If you have any ideas feel free to suggest them.
       <a href={"#bugs"}>
         <Title level={2} style={{ paddingTop: 15 }} id={"bugs"}>
           Bugs, ideas and contribution
@@ -83,33 +113,6 @@ const About: React.FC = () => {
       <Link href="https://www.coh2.org/user/112252/pagep" target="_blank">
         at the forums.
       </Link>
-      <a href={"#future"}>
-        <Title level={2} style={{ paddingTop: 15 }} id={"future"}>
-          Future functionality
-        </Title>
-      </a>
-      <Text strong>Match overview</Text>
-      <br />
-      We would like to add much better match overview. Relic stores much more data for each match
-      that it's shown. We are able to get this data and we would like to display much better match
-      overview which would include the map, player average rankings and more info.
-      <br />
-      Also the players would have possibility to request their matches to be stored (so not only
-      the top 4%).
-      <br />
-      <br />
-      <Text strong>Players overview</Text>
-      <br />
-      We would like to give better player overview. For example track their record how good they
-      are playing on each map. Maybe add percentile to their rank because each mode has different
-      amount of players and ranked positions.
-      <br />
-      <br />
-      <Text strong>Other</Text>
-      <br />
-      There is huge amount of things we could improve everywhere. The stats charts possibilities
-      are limitless. We definitely want to add analysis based on each map. To see if some maps are
-      better for different race. If you have any ideas feel free to suggest them.
       <a href={"#donations"}>
         <Title level={2} style={{ paddingTop: 15 }} id={"donations"}>
           Donations and support
