@@ -28,7 +28,7 @@ const LastMatchesTableRelic: React.FC = () => {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [loadedMatches, setLoadedMatches] = useState([]);
-  const [profileID, setProfileID] = useState("/steam/"+steamid);
+  const [profileID, setProfileID] = useState("/steam/" + steamid);
   const [playerAlias, setPlayerAlias] = useState("unknown player alias");
 
   const [playerMaps, setPlayerMaps] = useState([
@@ -65,7 +65,7 @@ const LastMatchesTableRelic: React.FC = () => {
     // FYI this is special trick, anonymous function which is directly called - we need cos of compiler
     (async () => {
       // prepare the payload - you can modify the ID but it has to be in this format
-      const payLoad = { profileName: "/steam/"+steamid };
+      const payLoad = { profileName: "/steam/" + steamid };
       setProfileID(payLoad["profileName"]);
       // prepare the CF
       const getMatchesFromRelic = firebase.functions().httpsCallable("getPlayerMatchesFromRelic");
@@ -76,14 +76,15 @@ const LastMatchesTableRelic: React.FC = () => {
         // we have the data let's save it into the state
         console.log(matches.data["playerMatches"]);
 
-        
-
         // filter out invalid data provided by relic, and sort it descending with game start
         let localLoadedMatches = matches.data["playerMatches"]
-        .filter(
-          (match: any) => match.description != "SESSION_MATCH_KEY" && match.matchtype_id != 7 && match.matchhistoryreportresults.length != 0,
-        )
-        .sort((a: any, b: any) => b.completiontime - a.completiontime);
+          .filter(
+            (match: any) =>
+              match.description != "SESSION_MATCH_KEY" &&
+              match.matchtype_id != 7 &&
+              match.matchhistoryreportresults.length != 0,
+          )
+          .sort((a: any, b: any) => b.completiontime - a.completiontime);
 
         // set state variable loaded matches
         setLoadedMatches(localLoadedMatches);
@@ -94,7 +95,6 @@ const LastMatchesTableRelic: React.FC = () => {
         setPlayerAlias(localAlias);
 
         setIsLoaded(true);
-
       } catch (e) {
         setError(e);
       }
@@ -107,7 +107,7 @@ const LastMatchesTableRelic: React.FC = () => {
     let resultItem = matchRecord.matchhistoryreportresults.filter(
       (result: any) => result.profile.name == profileID,
     );
-    console.log(resultItem)
+    console.log(resultItem);
     if (resultItem[0].resulttype == 1) {
       return true;
     } else {
@@ -128,15 +128,15 @@ const LastMatchesTableRelic: React.FC = () => {
       return (
         <Col span={6}>
           <Space>
-         <div style={{ fontSize: 16 }}>
-            <img
-              key={player.profile_id}
-              src={getRaceImage(raceIds[player.race_id])}
-              height="32px"
-              alt={player.race_id}
-            />
-            {player.profile.alias}
-          </div>
+            <div style={{ fontSize: 16 }}>
+              <img
+                key={player.profile_id}
+                src={getRaceImage(raceIds[player.race_id])}
+                height="32px"
+                alt={player.race_id}
+              />
+              {player.profile.alias}
+            </div>
           </Space>
         </Col>
       );
@@ -147,15 +147,15 @@ const LastMatchesTableRelic: React.FC = () => {
       return (
         <Col span={6}>
           <Space>
-          <div style={{ fontSize: 16 }}>
-            <img
-              key={player.profile_id}
-              src={getRaceImage(raceIds[player.race_id])}
-              height="32px"
-              alt={player.race_id}
-            />
-            {player.profile.alias}
-          </div>
+            <div style={{ fontSize: 16 }}>
+              <img
+                key={player.profile_id}
+                src={getRaceImage(raceIds[player.race_id])}
+                height="32px"
+                alt={player.race_id}
+              />
+              {player.profile.alias}
+            </div>
           </Space>
         </Col>
       );
@@ -163,13 +163,9 @@ const LastMatchesTableRelic: React.FC = () => {
 
     return (
       <div>
-        <Row>
-          {Axis}
-        </Row>
+        <Row>{Axis}</Row>
         <Divider></Divider>
-        <Row>
-          {allies}
-        </Row>
+        <Row>{allies}</Row>
       </div>
     );
   }
@@ -179,12 +175,11 @@ const LastMatchesTableRelic: React.FC = () => {
    * @param steamId is steamID in relic api call format, example "/steam/76561198034318060"
    * @param matchRecord is a single record from array returned by relic api
    */
-  function getAliasFromSteamID( matchRecord: any) {
-    
+  function getAliasFromSteamID(matchRecord: any) {
     let resultItem = matchRecord.matchhistoryreportresults.filter(
-      (result: any) => result.profile.name == "/steam/"+steamid,
+      (result: any) => result.profile.name == "/steam/" + steamid,
     );
-   return resultItem[0].profile.alias + ", " + resultItem[0].profile.country.toUpperCase();
+    return resultItem[0].profile.alias + ", " + resultItem[0].profile.country.toUpperCase();
   }
 
   const columns: ColumnsType<any> = [
