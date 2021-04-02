@@ -1,6 +1,10 @@
 .red {
-  background-color: rgba(117, 0, 0, 0.16);
+  background-color: rgba(170, 0, 0, 0.16);
 }
 .green {
-  background-color: rgba(0, 128, 0, 0.16);
+  background-color: rgba(0, 170, 0, 0.16);
+}
+
+.ant-table-tbody > tr.ant-table-row:hover > td {
+  background: rgba(170, 170, 170, 0.3);
 }

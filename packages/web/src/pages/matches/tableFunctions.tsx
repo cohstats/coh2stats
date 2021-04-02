@@ -12,21 +12,33 @@ export function getMatchDuration(startTime: number, endTime: number) {
  * Returns src of <img> tag for each race
  */
 export function getRaceImage(race: RaceName) {
-  return `../resources/generalIcons/${race}.png`;
+  return `/resources/generalIcons/${race}.png`;
+}
+
+/**
+ * Returns human readable mapname
+ * TODO FINISH THIS / mapping of ugly relic mapname to a pretty mapname
+ */
+export function formatMapName(mapname: any) {
+  return mapname.toUpperCase();
 }
 
 /**
  * Returns string based on how much time elapsed from the match start
+ *
  * Time < 1 Hour      returns MM minutes ago
+ *
  * Time < 1 Day       returns HH hours MM minutes ago
+ *
  * Time < 5 Days      returns X days ago
+ *
  * Time > 5 days      returns en-US locale date
  */
 export function formatMatchTime(startTime: number) {
   const hourMillis = 3600 * 1000; // one day in a miliseconds range
   let difference = Date.now() - startTime * 1000; // start match vs NOW time difference in miliseconds
   const options: Intl.DateTimeFormatOptions = {
-    weekday: "long",
+    //weekday: "long",
     year: "numeric",
     month: "long",
     day: "numeric",
@@ -37,11 +49,7 @@ export function formatMatchTime(startTime: number) {
   if (difference < hourMillis) {
     timeDifference = new Date(difference).toISOString().substr(14, 2) + " minutes ago";
   } else if (difference < hourMillis * 24) {
-    timeDifference =
-      new Date(difference).toISOString().substr(11, 2) +
-      " hours " +
-      new Date(difference).toISOString().substr(14, 2) +
-      " minutes ago";
+    timeDifference = new Date(difference).toISOString().substr(11, 2) + " hours ago";
   } else if (difference < hourMillis * 128) {
     timeDifference = new Date(difference).toISOString().substr(9, 1) + " days ago";
   } else {
@@ -89,7 +97,7 @@ export function getMatchPlayersByFaction(
  */
 export function getMatchResult(reportedPlayerResults: Array<any>) {
   let winner: string = "";
-  let color = "geekblue";
+  let color = "#108ee9";
 
   // loop thru all players
   for (let index in reportedPlayerResults) {
@@ -101,7 +109,7 @@ export function getMatchResult(reportedPlayerResults: Array<any>) {
         reportedPlayerResults[index].race_id === 2
       ) {
         winner = "Axis victory"; // return axis victory
-        color = "volcano";
+        color = "#f50";
       } else {
         winner = "Allies victory"; // else return allies victory
       }
