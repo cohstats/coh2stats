@@ -27,7 +27,7 @@ const LastMatchesTableRelic: React.FC = () => {
 
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [matches, setMatches] = useState([]);
+  const [loadedMatches, setLoadedMatches] = useState([]);
   const [profileID, setProfileID] = useState("/steam/"+steamid);
   const [playerAlias, setPlayerAlias] = useState("unknown player alias");
 
@@ -81,23 +81,28 @@ const LastMatchesTableRelic: React.FC = () => {
 
         setPlayerMaps(getPlayerMapListFilter(matches.data["playerMatches"]));
 
-        setIsLoaded(true);
         // filter out invalid data provided by relic, and sort it descending with game start
-        setMatches(
+        setLoadedMatches(
           matches.data["playerMatches"]
             .filter(
               (match: any) => match.description != "SESSION_MATCH_KEY" && match.matchtype_id != 7,
             )
             .sort((a: any, b: any) => b.startgametime - a.startgametime),
         );
-        setPlayerAlias(getAliasFromSteamID(matches.data["playerMatches"][0]));
+        console.log(matches)
+        let localAlias = getAliasFromSteamID(loadedMatches[0]);
+        setPlayerAlias("dummymymyymym");
+
+
+        setIsLoaded(true);
+
       } catch (e) {
         setError(e);
       }
     })();
   }, []);
 
-  let matchRecords = matches;
+  let matchRecords = loadedMatches;
 
   function isPlayerVictorious(matchRecord: any): boolean {
     let resultItem = matchRecord.matchhistoryreportresults.filter(
@@ -175,10 +180,8 @@ const LastMatchesTableRelic: React.FC = () => {
    * @param matchRecord is a single record from array returned by relic api
    */
   function getAliasFromSteamID( matchRecord: any) {
-    getPlayerMatchHistoryResult(matchRecord)
-  
-
-    return "fsdfsd";
+    console.log(matchRecord)
+   return 'result.profile.name';
   }
 
   const columns: ColumnsType<any> = [
