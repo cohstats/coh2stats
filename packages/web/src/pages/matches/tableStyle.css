@@ -1,10 +1,23 @@
 .red {
-  background-color: rgba(170, 0, 0, 0.16);
+  background-color: rgba(170, 0, 0, 0.19);
 }
 .green {
-  background-color: rgba(0, 170, 0, 0.16);
+  background-color: rgba(0, 170, 0, 0.19);
+}
+
+.lightred {
+  background-color: rgba(170, 0, 0, 0.08);
+}
+.lightgreen {
+  background-color: rgba(0, 170, 0, 0.08);
 }
 
 .ant-table-tbody > tr.ant-table-row:hover > td {
   background: rgba(170, 170, 170, 0.3);
 }
+
+.ant-table-tbody > tr.ant-table-expanded-row > td
+{
+  background: unset;
+}
+

@@ -93,6 +93,7 @@ export const BulletinList = () => {
       title: "Description",
       dataIndex: "descriptionShort",
       key: "descriptionShort",
+      responsive: ["md"],
     },
     {
       title: "Races",
@@ -158,7 +159,7 @@ export const BulletinList = () => {
               }}
               rowKey={(record) => record.serverID}
               expandable={{
-                expandedRowRender: (record) => <p>{record.descriptionLong}</p>,
+                expandedRowRender: (record) => <div><b>{record.descriptionShort}</b><p>{record.descriptionLong}</p></div>,
                 rowExpandable: (record) => record.descriptionLong.length !== 0,
                 expandRowByClick: true,
                 expandIconColumnIndex: -1,

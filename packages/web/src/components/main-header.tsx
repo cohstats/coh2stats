@@ -1,9 +1,10 @@
 import React from "react";
 import { Header } from "antd/lib/layout/layout";
-import { Menu, Space } from "antd";
+import { Col, Menu, Row, Space } from "antd";
 import routes from "../routes";
 import { useHistory, useRouteMatch } from "react-router";
 import { PlayerSearchInput } from "./header-search";
+import { Typography, Switch } from 'antd';
 
 export const MainHeader: React.FC = () => {
   const { push } = useHistory();
@@ -36,8 +37,10 @@ export const MainHeader: React.FC = () => {
   };
 
   return (
-    <Header>
-      <Space direction={"horizontal"} size={"large"}>
+    
+    <Header style={{height: "auto"}}>
+      <Row>
+        <Col span={12}>
         <div
           onClick={onTitleClick}
           style={{
@@ -45,10 +48,18 @@ export const MainHeader: React.FC = () => {
             fontSize: "x-large",
             fontFamily: "sans-serif",
             cursor: "pointer",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
           }}
         >
           CoH 2 Logs & Stats
         </div>
+        </Col>
+        <Col span={12}><PlayerSearchInput /></Col>
+        </Row>
+        <Row>
+          <Col span={24}>
         <Menu
           theme="dark"
           mode="horizontal"
@@ -77,8 +88,12 @@ export const MainHeader: React.FC = () => {
             About
           </Menu.Item>
         </Menu>
-        <PlayerSearchInput />
-      </Space>
+        </Col>
+        </Row>
+        
+        
+
     </Header>
+    
   );
 };

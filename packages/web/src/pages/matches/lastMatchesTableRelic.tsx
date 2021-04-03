@@ -107,7 +107,6 @@ const LastMatchesTableRelic: React.FC = () => {
     let resultItem = matchRecord.matchhistoryreportresults.filter(
       (result: any) => result.profile.name == profileID,
     );
-    console.log(resultItem);
     if (resultItem[0].resulttype == 1) {
       return true;
     } else {
@@ -358,6 +357,7 @@ const LastMatchesTableRelic: React.FC = () => {
                 rowExpandable: (record) => true,
                 expandRowByClick: true,
                 expandIconColumnIndex: -1,
+                expandedRowClassName : (record) =>  (isPlayerVictorious(record) ? "lightgreen" : "lightred"),
               }}
             />
           </Col>

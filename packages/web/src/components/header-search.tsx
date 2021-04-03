@@ -10,9 +10,9 @@ export const PlayerSearchInput: React.FC = () => {
 
   return (
     <Search
-      placeholder="Exact Steam account name"
+      placeholder="Player name"
       onSearch={onSearch}
-      style={{ width: 240, verticalAlign: "middle" }}
+      style={{ width: "90%", verticalAlign: "middle" }}
       enterButton
     />
   );
