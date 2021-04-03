@@ -159,7 +159,12 @@ export const BulletinList = () => {
               }}
               rowKey={(record) => record.serverID}
               expandable={{
-                expandedRowRender: (record) => <div><b>{record.descriptionShort}</b><p>{record.descriptionLong}</p></div>,
+                expandedRowRender: (record) => (
+                  <div>
+                    <b>{record.descriptionShort}</b>
+                    <p>{record.descriptionLong}</p>
+                  </div>
+                ),
                 rowExpandable: (record) => record.descriptionLong.length !== 0,
                 expandRowByClick: true,
                 expandIconColumnIndex: -1,

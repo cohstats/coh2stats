@@ -16,8 +16,6 @@
   background: rgba(170, 170, 170, 0.3);
 }
 
-.ant-table-tbody > tr.ant-table-expanded-row > td
-{
+.ant-table-tbody > tr.ant-table-expanded-row > td {
   background: unset;
 }
-

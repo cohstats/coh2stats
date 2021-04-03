@@ -50,12 +50,15 @@ export const CommanderDetails = () => {
                   height="auto"
                   alt={myData.commanderName}
                 />
-                <h2 style={{ textAlign: "center", margin: "-5px 0px 0px 0px" }}>{myData.races[0]}</h2>
+                <h2 style={{ textAlign: "center", margin: "-5px 0px 0px 0px" }}>
+                  {myData.races[0]}
+                </h2>
               </Col>
               <Col span={1}></Col>
               <Col xs={20} xl={17}>
                 <h1>{myData.commanderName}</h1>
-                {myData.description}</Col>
+                {myData.description}
+              </Col>
             </Row>
           </Col>
         </Row>

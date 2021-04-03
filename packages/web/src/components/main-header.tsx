@@ -4,7 +4,7 @@ import { Col, Menu, Row, Space } from "antd";
 import routes from "../routes";
 import { useHistory, useRouteMatch } from "react-router";
 import { PlayerSearchInput } from "./header-search";
-import { Typography, Switch } from 'antd';
+import { Typography, Switch } from "antd";
 
 export const MainHeader: React.FC = () => {
   const { push } = useHistory();
@@ -37,63 +37,60 @@ export const MainHeader: React.FC = () => {
   };
 
   return (
-    
-    <Header style={{height: "auto"}}>
+    <Header style={{ height: "auto" }}>
       <Row>
         <Col span={12}>
-        <div
-          onClick={onTitleClick}
-          style={{
-            color: "whitesmoke",
-            fontSize: "x-large",
-            fontFamily: "sans-serif",
-            cursor: "pointer",
-            whiteSpace: "nowrap",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-          }}
-        >
-          CoH 2 Logs & Stats
-        </div>
+          <div
+            onClick={onTitleClick}
+            style={{
+              color: "whitesmoke",
+              fontSize: "x-large",
+              fontFamily: "sans-serif",
+              cursor: "pointer",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+          >
+            CoH 2 Logs & Stats
+          </div>
         </Col>
-        <Col span={12}><PlayerSearchInput /></Col>
-        </Row>
-        <Row>
-          <Col span={24}>
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          selectedKeys={[currentPath]}
-          defaultSelectedKeys={[currentPath]}
-        >
-          <Menu.Item key={routes.statsBase()} onClick={onMenuClick}>
-            Stats
-          </Menu.Item>
-          <Menu.Item disabled={true} key="8" onClick={onMenuClick}>
-            Players
-          </Menu.Item>
-          <Menu.Item disabled={true} key="9" onClick={onMenuClick}>
-            Matches
-          </Menu.Item>
-          <Menu.Item disabled={true} key="11" onClick={onMenuClick}>
-            Leaderboards
-          </Menu.Item>
-          <Menu.Item key={routes.commanderBase()} onClick={onMenuClick}>
-            Commanders
-          </Menu.Item>
-          <Menu.Item key={routes.bulletinsBase()} onClick={onMenuClick}>
-            Intel Bulletins
-          </Menu.Item>
-          <Menu.Item key={routes.aboutBase()} onClick={onMenuClick}>
-            About
-          </Menu.Item>
-        </Menu>
+        <Col span={12}>
+          <PlayerSearchInput />
         </Col>
-        </Row>
-        
-        
-
+      </Row>
+      <Row>
+        <Col span={24}>
+          <Menu
+            theme="dark"
+            mode="horizontal"
+            selectedKeys={[currentPath]}
+            defaultSelectedKeys={[currentPath]}
+          >
+            <Menu.Item key={routes.statsBase()} onClick={onMenuClick}>
+              Stats
+            </Menu.Item>
+            <Menu.Item disabled={true} key="8" onClick={onMenuClick}>
+              Players
+            </Menu.Item>
+            <Menu.Item disabled={true} key="9" onClick={onMenuClick}>
+              Matches
+            </Menu.Item>
+            <Menu.Item disabled={true} key="11" onClick={onMenuClick}>
+              Leaderboards
+            </Menu.Item>
+            <Menu.Item key={routes.commanderBase()} onClick={onMenuClick}>
+              Commanders
+            </Menu.Item>
+            <Menu.Item key={routes.bulletinsBase()} onClick={onMenuClick}>
+              Intel Bulletins
+            </Menu.Item>
+            <Menu.Item key={routes.aboutBase()} onClick={onMenuClick}>
+              About
+            </Menu.Item>
+          </Menu>
+        </Col>
+      </Row>
     </Header>
-    
   );
 };

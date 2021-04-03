@@ -124,10 +124,9 @@ const About: React.FC = () => {
       <br />
       <br />
       The original idea was to give unlimited match history for each player. Because this is
-      something which Relic with their "Recent Matches" doesn't support (They track
-      only last 10 games for each mode for each player). However when we started
-      working on this project, we greatly underestimated the amount of data which is produced
-      every day.
+      something which Relic with their "Recent Matches" doesn't support (They track only last 10
+      games for each mode for each player). However when we started working on this project, we
+      greatly underestimated the amount of data which is produced every day.
       <br />
       We are tracking merely 120k matches and the DB holding this has up to 4GB already (as of
       writing this page). We are guessing COH2 to have ~100k matches/day.

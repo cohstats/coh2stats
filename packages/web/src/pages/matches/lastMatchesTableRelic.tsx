@@ -1,4 +1,4 @@
-import { Col, Divider, Row, Space, Table, Tooltip } from "antd";
+import { Button, Col, Divider, Row, Space, Table, Tooltip } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import {
   formatMapName,
@@ -125,46 +125,54 @@ const LastMatchesTableRelic: React.FC = () => {
     let axisPlayers = getMatchPlayersByFaction(record.matchhistoryreportresults, "axis");
     let Axis = axisPlayers.map((player) => {
       return (
-        <Col span={6}>
+        <div key={player.profile_id} style={{ fontSize: 16, margin: "5px" }}>
           <Space>
-            <div style={{ fontSize: 16 }}>
-              <img
-                key={player.profile_id}
-                src={getRaceImage(raceIds[player.race_id])}
-                height="32px"
-                alt={player.race_id}
-              />
-              {player.profile.alias}
-            </div>
+            <img
+              key={player.profile_id}
+              src={getRaceImage(raceIds[player.race_id])}
+              height="32px"
+              alt={player.race_id}
+            />
+            <a key={player.profile_id + "link"} href={player.profile.name.match(/\d+/g)}>
+              {player.profile.alias}{" "}
+            </a>
+            <br></br>
           </Space>
-        </Col>
+        </div>
       );
     });
 
     let alliesPlayers = getMatchPlayersByFaction(record.matchhistoryreportresults, "allies");
     let allies = alliesPlayers.map((player) => {
       return (
-        <Col span={6}>
+        <div key={player.profile_id} style={{ fontSize: 16, margin: "5px" }}>
           <Space>
-            <div style={{ fontSize: 16 }}>
-              <img
-                key={player.profile_id}
-                src={getRaceImage(raceIds[player.race_id])}
-                height="32px"
-                alt={player.race_id}
-              />
-              {player.profile.alias}
-            </div>
+            <img
+              key={player.profile_id}
+              src={getRaceImage(raceIds[player.race_id])}
+              height="32px"
+              alt={player.race_id}
+            />
+            <a key={player.profile_id + "link"} href={player.profile.name.match(/\d+/g)}>
+              {player.profile.alias}{" "}
+            </a>
+            <br></br>
           </Space>
-        </Col>
+        </div>
       );
     });
 
     return (
       <div>
-        <Row>{Axis}</Row>
-        <Divider></Divider>
-        <Row>{allies}</Row>
+        <Row justify="space-between" key={1}>
+          <Col span={8}>{Axis}</Col>
+          <Col span={8}> {allies}</Col>
+        </Row>
+        <Row justify="center">
+          <a>
+            <b>View match details</b>
+          </a>
+        </Row>
       </div>
     );
   }
@@ -335,7 +343,11 @@ const LastMatchesTableRelic: React.FC = () => {
         <Row>
           <Col span={2}></Col>
           <Col span={20}>
-            <h1> Recent matches for player {playerAlias} </h1>
+            <h1>
+              {" "}
+              Recent matches for player: <br></br>
+              <b>{playerAlias}</b>{" "}
+            </h1>
           </Col>
           <Col span={2}></Col>
         </Row>
@@ -357,7 +369,8 @@ const LastMatchesTableRelic: React.FC = () => {
                 rowExpandable: (record) => true,
                 expandRowByClick: true,
                 expandIconColumnIndex: -1,
-                expandedRowClassName : (record) =>  (isPlayerVictorious(record) ? "lightgreen" : "lightred"),
+                expandedRowClassName: (record) =>
+                  isPlayerVictorious(record) ? "lightgreen" : "lightred",
               }}
             />
           </Col>
