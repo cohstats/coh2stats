@@ -67,7 +67,7 @@ const App: React.FC = () => {
             <Route path={"/test"}>
               <LastMatchesTable />
             </Route>
-            <Route path={"/testrelic"}>
+            <Route path={"/matches/player/:steamid"}>
               <LastMatchesTableRelic />
             </Route>
           </Switch>

@@ -1,6 +1,7 @@
-import { Col, Row, Space, Table, Tooltip } from "antd";
+import { Col, Divider, Row, Space, Table, Tooltip } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import {
+  formatMapName,
   formatMatchTime,
   formatMatchtypeID,
   getMatchDuration,
@@ -12,6 +13,7 @@ import {
 import "./tableStyle.css";
 import React, { useEffect, useState } from "react";
 import { firebase } from "../../firebase";
+import { useParams } from "react-router";
 
 const LastMatchesTableRelic: React.FC = () => {
   // the componet can be in 3 states
@@ -19,17 +21,51 @@ const LastMatchesTableRelic: React.FC = () => {
   // loading -- we are still loading the data
   // loaded -- we have the date in the matches
 
+  const { steamid } = useParams<{
+    steamid: string;
+  }>();
+
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [matches, setMatches] = useState([]);
-  const [profileID, setProfileID] = useState("/steam/76561198034318060");
+  const [loadedMatches, setLoadedMatches] = useState([]);
+  const [profileID, setProfileID] = useState("/steam/" + steamid);
   const [playerAlias, setPlayerAlias] = useState("unknown player alias");
+
+  const [playerMaps, setPlayerMaps] = useState([
+    {
+      text: "8p_redball_express",
+      value: "8p_redball_express",
+    },
+  ]);
+
+  // returns a filter setting for player maps
+  function getPlayerMapListFilter(matches: any) {
+    let mapSet = new Set();
+    let filterSettings: any[] = [];
+    for (let index in matches) {
+      mapSet.add(matches[index].mapname);
+    }
+
+    // sort maps alphabetically
+    let sortedMapsArray = Array.from(mapSet).sort((a: any, b: any) => {
+      return a.localeCompare(b);
+    });
+
+    // create filter style
+    for (let index in sortedMapsArray) {
+      filterSettings[index] = {
+        text: formatMapName(sortedMapsArray[index]),
+        value: sortedMapsArray[index],
+      };
+    }
+    return filterSettings;
+  }
 
   useEffect(() => {
     // FYI this is special trick, anonymous function which is directly called - we need cos of compiler
     (async () => {
       // prepare the payload - you can modify the ID but it has to be in this format
-      const payLoad = { profileName: "/steam/76561198034318060" };
+      const payLoad = { profileName: "/steam/" + steamid };
       setProfileID(payLoad["profileName"]);
       // prepare the CF
       const getMatchesFromRelic = firebase.functions().httpsCallable("getPlayerMatchesFromRelic");
@@ -40,28 +76,38 @@ const LastMatchesTableRelic: React.FC = () => {
         // we have the data let's save it into the state
         console.log(matches.data["playerMatches"]);
 
-        setIsLoaded(true);
         // filter out invalid data provided by relic, and sort it descending with game start
-        setMatches(
-          matches.data["playerMatches"]
-            .filter(
-              (match: any) => match.description != "SESSION_MATCH_KEY" && match.matchtype_id != 7,
-            )
-            .sort((a: any, b: any) => b.startgametime - a.startgametime),
-        );
-        setPlayerAlias(getAliasFromSteamID(profileID, matches.data["playerMatches"][0]));
+        let localLoadedMatches = matches.data["playerMatches"]
+          .filter(
+            (match: any) =>
+              match.description != "SESSION_MATCH_KEY" &&
+              match.matchtype_id != 7 &&
+              match.matchhistoryreportresults.length != 0,
+          )
+          .sort((a: any, b: any) => b.completiontime - a.completiontime);
+
+        // set state variable loaded matches
+        setLoadedMatches(localLoadedMatches);
+        // set state variable for map filter options
+        setPlayerMaps(getPlayerMapListFilter(localLoadedMatches));
+        // set play alias
+        let localAlias = getAliasFromSteamID(localLoadedMatches[0]);
+        setPlayerAlias(localAlias);
+
+        setIsLoaded(true);
       } catch (e) {
         setError(e);
       }
     })();
   }, []);
 
-  let matchRecords = matches;
+  let matchRecords = loadedMatches;
 
   function isPlayerVictorious(matchRecord: any): boolean {
     let resultItem = matchRecord.matchhistoryreportresults.filter(
       (result: any) => result.profile.name == profileID,
     );
+    console.log(resultItem);
     if (resultItem[0].resulttype == 1) {
       return true;
     } else {
@@ -76,33 +122,64 @@ const LastMatchesTableRelic: React.FC = () => {
     return player[0];
   }
 
+  function renderExpandedMatch(record: any) {
+    let axisPlayers = getMatchPlayersByFaction(record.matchhistoryreportresults, "axis");
+    let Axis = axisPlayers.map((player) => {
+      return (
+        <Col span={6}>
+          <Space>
+            <div style={{ fontSize: 16 }}>
+              <img
+                key={player.profile_id}
+                src={getRaceImage(raceIds[player.race_id])}
+                height="32px"
+                alt={player.race_id}
+              />
+              {player.profile.alias}
+            </div>
+          </Space>
+        </Col>
+      );
+    });
+
+    let alliesPlayers = getMatchPlayersByFaction(record.matchhistoryreportresults, "allies");
+    let allies = alliesPlayers.map((player) => {
+      return (
+        <Col span={6}>
+          <Space>
+            <div style={{ fontSize: 16 }}>
+              <img
+                key={player.profile_id}
+                src={getRaceImage(raceIds[player.race_id])}
+                height="32px"
+                alt={player.race_id}
+              />
+              {player.profile.alias}
+            </div>
+          </Space>
+        </Col>
+      );
+    });
+
+    return (
+      <div>
+        <Row>{Axis}</Row>
+        <Divider></Divider>
+        <Row>{allies}</Row>
+      </div>
+    );
+  }
+
   /**
    * Returns string in format playerAllias, COUNTRY
    * @param steamId is steamID in relic api call format, example "/steam/76561198034318060"
    * @param matchRecord is a single record from array returned by relic api
    */
-  function getAliasFromSteamID(steamId: string, matchRecord: any) {
-    let alias = "unknown";
-    let profileId = 0;
-    console.log("SEARCHING " + steamId);
-    for (let index in matchRecord.steam_ids) {
-      if (steamId.includes(matchRecord.steam_ids[index])) {
-        profileId = matchRecord.profile_ids[index];
-        console.log("FOUND " + profileId);
-        for (let temp in matchRecord.matchhistoryreportresults) {
-          if ((matchRecord.matchhistoryreportresults[temp]["profile_id"] = profileId)) {
-            alias =
-              matchRecord.matchhistoryreportresults[temp].profile.alias +
-              ", " +
-              matchRecord.matchhistoryreportresults[temp].profile.country.toUpperCase();
-          }
-          break;
-        }
-        break;
-      }
-    }
-
-    return alias;
+  function getAliasFromSteamID(matchRecord: any) {
+    let resultItem = matchRecord.matchhistoryreportresults.filter(
+      (result: any) => result.profile.name == "/steam/" + steamid,
+    );
+    return resultItem[0].profile.alias + ", " + resultItem[0].profile.country.toUpperCase();
   }
 
   const columns: ColumnsType<any> = [
@@ -110,7 +187,7 @@ const LastMatchesTableRelic: React.FC = () => {
       title: "Match ID",
       dataIndex: "id",
       key: "id",
-      sorter: (a, b) => a.startgametime - b.startgametime,
+      sorter: (a, b) => a.completiontime - b.completiontime,
       render: (_text: any, record: any) => {
         let player = getPlayerMatchHistoryResult(record);
         return (
@@ -126,7 +203,7 @@ const LastMatchesTableRelic: React.FC = () => {
               </Tooltip>
             </div>
             <div>
-              <sub> {formatMatchTime(record.startgametime)} </sub>
+              <sub> {formatMatchTime(record.completiontime)} </sub>
             </div>
           </>
         );
@@ -139,19 +216,19 @@ const LastMatchesTableRelic: React.FC = () => {
       key: "matchtype_id",
       filters: [
         {
-          text: "1 v 1",
+          text: "1 vs 1",
           value: "1",
         },
         {
-          text: "2 v 2",
+          text: "2 vs 2",
           value: "2",
         },
         {
-          text: "3 v 3",
+          text: "3 vs 3",
           value: "3",
         },
         {
-          text: "4 v 4",
+          text: "4 vs 4",
           value: "4",
         },
       ],
@@ -159,8 +236,8 @@ const LastMatchesTableRelic: React.FC = () => {
       render: (_text: any, record: any) => {
         return (
           <>
-            <div>{formatMatchtypeID(record.matchtype_id)}</div>
-            <div>
+            <div style={{ textAlign: "center" }}>
+              <div>{formatMatchtypeID(record.matchtype_id)}</div>
               <sub> {record.description.toLowerCase()} </sub>
             </div>
           </>
@@ -172,6 +249,8 @@ const LastMatchesTableRelic: React.FC = () => {
       title: "Map",
       dataIndex: "mapname",
       key: "mapname",
+      filters: playerMaps,
+      onFilter: (value: any, record: any) => record.mapname == value,
       responsive: ["lg"],
       render: (_text: any, record: any) => {
         return <p> {record.mapname} </p>;
@@ -183,7 +262,11 @@ const LastMatchesTableRelic: React.FC = () => {
       dataIndex: "result",
       key: "result",
       render: (_text: any, record: any) => {
-        return <p>{getMatchResult(record.matchhistoryreportresults)}</p>;
+        return (
+          <div style={{ textAlign: "center" }}>
+            {getMatchResult(record.matchhistoryreportresults)}
+          </div>
+        );
       },
     },
 
@@ -270,6 +353,12 @@ const LastMatchesTableRelic: React.FC = () => {
               rowKey={(record) => record.id}
               size="middle"
               rowClassName={(record) => (isPlayerVictorious(record) ? "green" : "red")}
+              expandable={{
+                expandedRowRender: (record) => renderExpandedMatch(record),
+                rowExpandable: (record) => true,
+                expandRowByClick: true,
+                expandIconColumnIndex: -1,
+              }}
             />
           </Col>
           <Col span={2}></Col>
