@@ -4,6 +4,7 @@ import { prepareMatchDBObject, isLastDayMatch } from "./single-match";
 
 import { performance } from "perf_hooks";
 import { ProcessedMatch } from "../types";
+import * as functions from "firebase-functions";
 
 const fetchPlayerMatchStats = async (profileName: string): Promise<Record<string, any>> => {
   const url = getRecentMatchHistoryUrl(profileName);
@@ -16,6 +17,11 @@ const fetchPlayerMatchStats = async (profileName: string): Promise<Record<string
     delete data["result"]; // We don't need the result
 
     return data;
+  } else if (response.data["result"]["message"] == "UNREGISTERED_PROFILE_NAME") {
+    functions.logger.error(`Tried to get matches for non existing player name ${profileName}`);
+    throw Object.assign(new Error("Tried to fetch matches for UNREGISTERED_PROFILE_NAME"), {
+      response,
+    });
   } else {
     throw Object.assign(new Error("Failed to received the player stats"), { response });
   }

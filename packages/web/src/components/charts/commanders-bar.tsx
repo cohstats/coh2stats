@@ -8,10 +8,15 @@ import {
 } from "../../coh/commanders";
 import { Avatar } from "antd";
 import routes from "../../routes";
-import { useHistory } from "react-router";
+import type { History } from "history";
 
-export const CommandersBarChart = (commanders: Record<number, number>) => {
-  const { push } = useHistory();
+export const CommandersBarChart = (
+  commanders: Record<number, number>,
+  push: {
+    (path: string, state?: unknown): void;
+    (location: History.LocationDescriptor<unknown>): void;
+  },
+) => {
   const simpleMapsData = [];
 
   for (const [key, value] of Object.entries(commanders)) {
