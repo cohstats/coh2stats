@@ -1,4 +1,4 @@
-import { Col, Divider, Row, Space, Table, Tooltip } from "antd";
+import { Button, Col, Divider, Row, Space, Table, Tooltip, Typography } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import {
   formatMapName,
@@ -9,13 +9,17 @@ import {
   getMatchResult,
   getRaceImage,
   raceIds,
+  getAliasFromSteamID,
 } from "./tableFunctions";
 import "./tableStyle.css";
 import React, { useEffect, useState } from "react";
 import { firebase } from "../../firebase";
 import { useParams } from "react-router";
+import { Loading } from "../../components/loading";
 
 const LastMatchesTableRelic: React.FC = () => {
+  const { Text } = Typography;
+
   // the componet can be in 3 states
   // error - something went wrong
   // loading -- we are still loading the data
@@ -91,7 +95,7 @@ const LastMatchesTableRelic: React.FC = () => {
         // set state variable for map filter options
         setPlayerMaps(getPlayerMapListFilter(localLoadedMatches));
         // set play alias
-        let localAlias = getAliasFromSteamID(localLoadedMatches[0]);
+        let localAlias = getAliasFromSteamID(localLoadedMatches[0], steamid);
         setPlayerAlias(localAlias);
 
         setIsLoaded(true);
@@ -107,7 +111,6 @@ const LastMatchesTableRelic: React.FC = () => {
     let resultItem = matchRecord.matchhistoryreportresults.filter(
       (result: any) => result.profile.name == profileID,
     );
-    console.log(resultItem);
     if (resultItem[0].resulttype == 1) {
       return true;
     } else {
@@ -126,60 +129,62 @@ const LastMatchesTableRelic: React.FC = () => {
     let axisPlayers = getMatchPlayersByFaction(record.matchhistoryreportresults, "axis");
     let Axis = axisPlayers.map((player) => {
       return (
-        <Col span={6}>
+        <div key={player.profile_id} style={{ fontSize: 16, margin: "5px" }}>
           <Space>
-            <div style={{ fontSize: 16 }}>
-              <img
-                key={player.profile_id}
-                src={getRaceImage(raceIds[player.race_id])}
-                height="32px"
-                alt={player.race_id}
-              />
-              {player.profile.alias}
-            </div>
+            <img
+              key={player.profile_id}
+              src={getRaceImage(raceIds[player.race_id])}
+              height="32px"
+              alt={player.race_id}
+            />
+            <a key={player.profile_id + "link"} href={player.profile.name.match(/\d+/g)}>
+              {player.profile.alias}{" "}
+            </a>
+            <br></br>
           </Space>
-        </Col>
+        </div>
       );
     });
 
     let alliesPlayers = getMatchPlayersByFaction(record.matchhistoryreportresults, "allies");
     let allies = alliesPlayers.map((player) => {
       return (
-        <Col span={6}>
+        <div key={player.profile_id} style={{ fontSize: 16, margin: "5px" }}>
           <Space>
-            <div style={{ fontSize: 16 }}>
-              <img
-                key={player.profile_id}
-                src={getRaceImage(raceIds[player.race_id])}
-                height="32px"
-                alt={player.race_id}
-              />
-              {player.profile.alias}
-            </div>
+            <img
+              key={player.profile_id}
+              src={getRaceImage(raceIds[player.race_id])}
+              height="32px"
+              alt={player.race_id}
+            />
+            <a key={player.profile_id + "link"} href={player.profile.name.match(/\d+/g)}>
+              {player.profile.alias}{" "}
+            </a>
+            <br></br>
           </Space>
-        </Col>
+        </div>
       );
     });
 
     return (
       <div>
-        <Row>{Axis}</Row>
-        <Divider></Divider>
-        <Row>{allies}</Row>
+        <Row justify="end" key={1}>
+          <Col span={7} />
+          <Col span={4}>{Axis}</Col>
+          <Col span={2} />
+          <Col span={4}>{allies}</Col>
+          <Col span={7} />
+          <Col />
+        </Row>
+        <Row justify="center">
+          <a>
+            <Text disabled>
+              <b>View match details</b>
+            </Text>
+          </a>
+        </Row>
       </div>
     );
-  }
-
-  /**
-   * Returns string in format playerAllias, COUNTRY
-   * @param steamId is steamID in relic api call format, example "/steam/76561198034318060"
-   * @param matchRecord is a single record from array returned by relic api
-   */
-  function getAliasFromSteamID(matchRecord: any) {
-    let resultItem = matchRecord.matchhistoryreportresults.filter(
-      (result: any) => result.profile.name == "/steam/" + steamid,
-    );
-    return resultItem[0].profile.alias + ", " + resultItem[0].profile.country.toUpperCase();
   }
 
   const columns: ColumnsType<any> = [
@@ -329,20 +334,25 @@ const LastMatchesTableRelic: React.FC = () => {
   if (error) {
     return <div>Error: {error}</div>;
   } else if (!isLoaded) {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
   } else {
     return (
       <>
-        <Row>
-          <Col span={2}></Col>
-          <Col span={20}>
-            <h1> Recent matches for player {playerAlias} </h1>
+        <Row justify="center">
+          <Col xs={24} xl={18}>
+            <h1>
+              {" "}
+              Recent matches for player: <br></br>
+              <b>{playerAlias}</b>{" "}
+            </h1>
           </Col>
-          <Col span={2}></Col>
         </Row>
-        <Row>
-          <Col span={2}></Col>
-          <Col span={20}>
+        <Row justify="center">
+          <Col xs={24} xl={18}>
             <Table
               pagination={{
                 defaultPageSize: 60,
@@ -358,10 +368,11 @@ const LastMatchesTableRelic: React.FC = () => {
                 rowExpandable: (record) => true,
                 expandRowByClick: true,
                 expandIconColumnIndex: -1,
+                expandedRowClassName: (record) =>
+                  isPlayerVictorious(record) ? "lightgreen" : "lightred",
               }}
             />
           </Col>
-          <Col span={2}></Col>
         </Row>
       </>
     );

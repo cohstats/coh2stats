@@ -48,9 +48,8 @@ export const CommandersList = () => {
 
   return (
     <div style={divStyle}>
-      <Row>
-        <Col span={6} />
-        <Col span={12}>
+      <Row justify="center">
+        <Col xs={20} xxl={12}>
           <List
             itemLayout="horizontal"
             dataSource={myData}
@@ -88,7 +87,6 @@ export const CommandersList = () => {
           />
           <ExportDate typeOfData={"Commander"} />
         </Col>
-        <Col span={6} />
       </Row>
     </div>
   );

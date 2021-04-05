@@ -36,7 +36,8 @@ export const MainHeader: React.FC = () => {
   };
 
   return (
-    <Header>
+    <Header style={{ height: "auto" }}>
+      <PlayerSearchInput />
       <Space direction={"horizontal"} size={"large"}>
         <div
           onClick={onTitleClick}
@@ -77,7 +78,6 @@ export const MainHeader: React.FC = () => {
             About
           </Menu.Item>
         </Menu>
-        <PlayerSearchInput />
       </Space>
     </Header>
   );

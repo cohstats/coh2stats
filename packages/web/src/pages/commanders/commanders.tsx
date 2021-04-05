@@ -40,30 +40,31 @@ export const CommanderDetails = () => {
           <Col style={{ padding: "2vh" }} span={12} />
           <Col span={6} />
         </Row>
-        <Row>
-          <Col span={2} />
-          <Col span={4} />
-          <Col style={{ padding: "0px 20px 0px 0px" }} flex="100px">
-            <img
-              src={getCommanderIconPath(myData.iconlarge)}
-              width="130"
-              height="169"
-              alt={myData.commanderName}
-            />
-            <h2 style={{ textAlign: "center", margin: "-5px 0px 0px 0px" }}>{myData.races[0]}</h2>
+        <Row justify="center">
+          <Col xs={20} xl={12}>
+            <Row>
+              <Col flex="100px">
+                <img
+                  src={getCommanderIconPath(myData.iconlarge)}
+                  width="auto"
+                  height="auto"
+                  alt={myData.commanderName}
+                />
+                <h2 style={{ textAlign: "center", margin: "-5px 0px 0px 0px" }}>
+                  {myData.races[0]}
+                </h2>
+              </Col>
+              <Col span={1}></Col>
+              <Col xs={20} xl={17}>
+                <h1>{myData.commanderName}</h1>
+                {myData.description}
+              </Col>
+            </Row>
           </Col>
-          <Col span={10}>
-            <h1>{myData.commanderName}</h1>
-            <Descriptions>
-              <Descriptions.Item>{myData.description}</Descriptions.Item>
-            </Descriptions>
-          </Col>
-          <Col span={6} />
         </Row>
 
-        <Row>
-          <Col span={6} />
-          <Col span={12}>
+        <Row justify="center">
+          <Col xs={20} xl={12}>
             <Divider />
             <List
               itemLayout="horizontal"
@@ -93,7 +94,6 @@ export const CommanderDetails = () => {
             />
             <ExportDate typeOfData={"Commander"} />
           </Col>
-          <Col span={6} />
         </Row>
       </div>
     </>

@@ -21,7 +21,7 @@ export const RacePicker = () => {
   }
 
   function getRaceImage(race: RaceName) {
-    return `../resources/generalIcons/${race}.png`;
+    return `/resources/generalIcons/${race}.png`;
   }
 
   return (

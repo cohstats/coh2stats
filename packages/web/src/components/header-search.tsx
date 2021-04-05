@@ -9,11 +9,18 @@ export const PlayerSearchInput: React.FC = () => {
   };
 
   return (
-    <Search
-      placeholder="Exact Steam account name"
-      onSearch={onSearch}
-      style={{ width: 240, verticalAlign: "middle" }}
-      enterButton
-    />
+    <div
+      style={{
+        position: "relative",
+        float: "right",
+      }}
+    >
+      <Search
+        placeholder="Player name"
+        onSearch={onSearch}
+        style={{ width: "100%", verticalAlign: "middle" }}
+        enterButton
+      />
+    </div>
   );
 };
