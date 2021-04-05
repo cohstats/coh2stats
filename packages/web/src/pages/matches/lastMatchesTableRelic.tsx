@@ -9,6 +9,7 @@ import {
   getMatchResult,
   getRaceImage,
   raceIds,
+  getAliasFromSteamID,
 } from "./tableFunctions";
 import "./tableStyle.css";
 import React, { useEffect, useState } from "react";
@@ -91,7 +92,7 @@ const LastMatchesTableRelic: React.FC = () => {
         // set state variable for map filter options
         setPlayerMaps(getPlayerMapListFilter(localLoadedMatches));
         // set play alias
-        let localAlias = getAliasFromSteamID(localLoadedMatches[0]);
+        let localAlias = getAliasFromSteamID(localLoadedMatches[0], steamid);
         setPlayerAlias(localAlias);
 
         setIsLoaded(true);
@@ -175,18 +176,6 @@ const LastMatchesTableRelic: React.FC = () => {
         </Row>
       </div>
     );
-  }
-
-  /**
-   * Returns string in format playerAllias, COUNTRY
-   * @param steamId is steamID in relic api call format, example "/steam/76561198034318060"
-   * @param matchRecord is a single record from array returned by relic api
-   */
-  function getAliasFromSteamID(matchRecord: any) {
-    let resultItem = matchRecord.matchhistoryreportresults.filter(
-      (result: any) => result.profile.name == "/steam/" + steamid,
-    );
-    return resultItem[0].profile.alias + ", " + resultItem[0].profile.country.toUpperCase();
   }
 
   const columns: ColumnsType<any> = [
