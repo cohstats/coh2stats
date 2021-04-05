@@ -36,7 +36,7 @@ export const MainHeader: React.FC = () => {
   };
 
   return (
-    <Header style={{ height: "auto", padding: "0px 0px 0px 50px" }}>
+    <Header style={{ height: "auto", padding: "10px 10px 0px 40px" }}>
       <PlayerSearchInput />
       <Space direction={"horizontal"} size={"large"}>
         <div
