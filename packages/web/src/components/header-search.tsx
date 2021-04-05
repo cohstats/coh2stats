@@ -18,7 +18,7 @@ export const PlayerSearchInput: React.FC = () => {
       <Search
         placeholder="Player name"
         onSearch={onSearch}
-        style={{ width: "100%", verticalAlign: "top" }}
+        style={{ width: "100%", verticalAlign: "middle" }}
         enterButton
       />
     </div>

@@ -1,4 +1,4 @@
-import { Button, Col, Divider, Row, Space, Table, Tooltip } from "antd";
+import { Button, Col, Divider, Row, Space, Table, Tooltip, Typography } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import {
   formatMapName,
@@ -15,8 +15,11 @@ import "./tableStyle.css";
 import React, { useEffect, useState } from "react";
 import { firebase } from "../../firebase";
 import { useParams } from "react-router";
+import { Loading } from "../../components/loading";
 
 const LastMatchesTableRelic: React.FC = () => {
+  const { Text } = Typography;
+
   // the componet can be in 3 states
   // error - something went wrong
   // loading -- we are still loading the data
@@ -165,13 +168,19 @@ const LastMatchesTableRelic: React.FC = () => {
 
     return (
       <div>
-        <Row justify="space-between" key={1}>
-          <Col span={8}>{Axis}</Col>
-          <Col span={8}> {allies}</Col>
+        <Row justify="end" key={1}>
+          <Col span={7} />
+          <Col span={4}>{Axis}</Col>
+          <Col span={2} />
+          <Col span={4}>{allies}</Col>
+          <Col span={7} />
+          <Col />
         </Row>
         <Row justify="center">
           <a>
-            <b>View match details</b>
+            <Text disabled>
+              <b>View match details</b>
+            </Text>
           </a>
         </Row>
       </div>
@@ -325,7 +334,11 @@ const LastMatchesTableRelic: React.FC = () => {
   if (error) {
     return <div>Error: {error}</div>;
   } else if (!isLoaded) {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
   } else {
     return (
       <>
