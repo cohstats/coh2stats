@@ -9,11 +9,18 @@ export const PlayerSearchInput: React.FC = () => {
   };
 
   return (
-    <Search
-      placeholder="Player name"
-      onSearch={onSearch}
-      style={{ width: "90%", verticalAlign: "middle" }}
-      enterButton
-    />
+    <div
+      style={{
+        position: "relative",
+        float: "right",
+      }}
+    >
+      <Search
+        placeholder="Player name"
+        onSearch={onSearch}
+        style={{ width: "100%", verticalAlign: "top" }}
+        enterButton
+      />
+    </div>
   );
 };
