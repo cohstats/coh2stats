@@ -329,20 +329,17 @@ const LastMatchesTableRelic: React.FC = () => {
   } else {
     return (
       <>
-        <Row>
-          <Col span={2}></Col>
-          <Col span={20}>
+        <Row justify="center">
+          <Col xs={24} xl={18}>
             <h1>
               {" "}
               Recent matches for player: <br></br>
               <b>{playerAlias}</b>{" "}
             </h1>
           </Col>
-          <Col span={2}></Col>
         </Row>
-        <Row>
-          <Col span={2}></Col>
-          <Col span={20}>
+        <Row justify="center">
+          <Col xs={24} xl={18}>
             <Table
               pagination={{
                 defaultPageSize: 60,
@@ -363,7 +360,6 @@ const LastMatchesTableRelic: React.FC = () => {
               }}
             />
           </Col>
-          <Col span={2}></Col>
         </Row>
       </>
     );
