@@ -133,7 +133,7 @@ const StatsDetails: React.FC = () => {
             }
             style={{ width: 800, height: 900 }}
           >
-            {CommandersBarChart(specificData["commanders"][race])}
+            {CommandersBarChart(specificData["commanders"][race], push)}
           </Card>
 
           <Card title={`Intel Bulletins  ${type} - ${race}`} style={{ width: 800, height: 900 }}>
