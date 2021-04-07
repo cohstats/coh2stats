@@ -141,7 +141,7 @@ const About: React.FC = () => {
       <br />
       If you would like to give financial support, you can do so. <br />
       100% of donations will go towards this project costs <br />
-      Please write your nickname into the note which would be mentioned bellow.
+      In case you want to be mentioned on the site, write your nickname into the payment note.
       <br />
       <Donation />
       <br />
