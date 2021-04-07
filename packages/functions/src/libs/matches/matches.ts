@@ -47,12 +47,12 @@ const getAndPrepareMatchesForPlayer = async (
   if (filterLastDayOnly) {
     // Now filter out the old matches, we need to keep the daily writes to the DB low
     matches = allMatches.filter((match: Record<string, any>) => isLastDayMatch(match));
-    logMessage += `From which ${matches.length} happened in the last 25 hours.`;
+    logMessage += `From which ${matches.length} happened yesterday.`;
   } else {
     matches = allMatches;
   }
 
-  console.log(logMessage);
+  functions.logger.debug(logMessage);
 
   // Transform the match objects, this removes unnecessary data, preparers additional information in single match object
   matches = matches.map((match: Record<string, any>) => prepareMatchDBObject(match, profiles));

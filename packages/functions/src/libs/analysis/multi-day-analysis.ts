@@ -3,6 +3,8 @@ import * as functions from "firebase-functions";
 
 import {
   getCurrentDateTimestamp,
+  getMonthTimeStamps,
+  getStartOfTheMonth,
   getStartOfTheWeek,
   getWeekTimeStamps,
   sumValuesOfObjects,
@@ -16,18 +18,24 @@ import { frequencyType, StatDict } from "../types";
  * @param frequency
  */
 const getTimeStamps = (date: Date | number, frequency: frequencyType) => {
-  if (frequency === "week") {
-    return getWeekTimeStamps(date);
-  } else {
-    throw Object.assign(new Error("Not implemented frequency type"), { frequency });
+  switch (frequency) {
+    case "week":
+      return getWeekTimeStamps(date);
+    case "month":
+      return getMonthTimeStamps(date);
+    default:
+      throw Object.assign(new Error("Not implemented frequency type"), { frequency });
   }
 };
 
 const getSaveTimeStamp = (date: Date | number, frequency: frequencyType) => {
-  if (frequency === "week") {
-    return getCurrentDateTimestamp(getStartOfTheWeek(date));
-  } else {
-    throw Object.assign(new Error("Not implemented frequency type"), { frequency });
+  switch (frequency) {
+    case "week":
+      return getCurrentDateTimestamp(getStartOfTheWeek(date));
+    case "month":
+      return getCurrentDateTimestamp(getStartOfTheMonth(date));
+    default:
+      throw Object.assign(new Error("Not implemented frequency type"), { frequency });
   }
 };
 

@@ -8,8 +8,9 @@ import { ConfigProvider, Select, Space } from "antd";
 import DatePicker from "../../components/date-picker";
 import {
   convertDateToDayTimestamp,
+  convertDateToStartOfMonth,
+  getPreviousWeekTimeStamp,
   getStartOfTheWeek,
-  getYesterdayDateTimestamp,
 } from "../../helpers";
 import { validRaceNames, validStatsTypes } from "../../coh/types";
 import enGB from "antd/lib/locale/en_GB";
@@ -42,12 +43,12 @@ const Stats: React.FC = () => {
     },
   ]);
 
-  const settableFrequently = frequency ? frequency : "daily";
+  const settableFrequently = frequency ? frequency : "week";
   const [datePickerType, setDatePickerType] = useState(settableFrequently as DatePickerType);
   const [dateValue, setDateValue] = useState(
     timestamp
       ? new Date(parseInt(timestamp) * 1000)
-      : new Date(getYesterdayDateTimestamp() * 1000),
+      : new Date(getPreviousWeekTimeStamp() * 1000),
   );
 
   function disabledDate(current: Date) {
@@ -104,7 +105,9 @@ const Stats: React.FC = () => {
 
   const onDatePickerTypeSelect = (value: DatePickerType) => {
     if (value === "week") {
-      setDateValue(new Date(getStartOfTheWeek(dateValue)));
+      setDateValue(getStartOfTheWeek(dateValue));
+    } else if (value === "month") {
+      setDateValue(convertDateToStartOfMonth(dateValue));
     }
 
     setDatePickerType(value);
@@ -112,8 +115,11 @@ const Stats: React.FC = () => {
 
   const onDateSelect = (value: string) => {
     let actualDate: string | Date = value;
+
     if (datePickerType === "week") {
       actualDate = getStartOfTheWeek(value);
+    } else if (datePickerType === "month") {
+      actualDate = convertDateToStartOfMonth(value);
     }
 
     setDateValue(new Date(actualDate));
@@ -133,9 +139,7 @@ const Stats: React.FC = () => {
           >
             <Option value="daily">Daily</Option>
             <Option value="week">Week</Option>
-            <Option disabled={true} value="month">
-              Month
-            </Option>
+            <Option value="month">Month</Option>
             <Option disabled={true} value="quarter">
               Quarter
             </Option>
@@ -149,7 +153,7 @@ const Stats: React.FC = () => {
       </Route>
       <Route path={"/stats/"}>
         <Redirect
-          to={routes.fullStatsDetails("daily", getYesterdayDateTimestamp(), "4v4", "wermacht")}
+          to={routes.fullStatsDetails("week", getPreviousWeekTimeStamp(), "4v4", "wermacht")}
         />
       </Route>
     </Switch>

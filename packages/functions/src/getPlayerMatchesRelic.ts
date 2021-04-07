@@ -26,9 +26,19 @@ const getPlayerMatchesFromRelic = functions
       );
     }
 
-    const playerMatches = await getAndPrepareMatchesForPlayer(data.profileName, false);
-
-    return { playerMatches };
+    try {
+      const playerMatches = await getAndPrepareMatchesForPlayer(data.profileName, false);
+      return { playerMatches };
+    } catch (e) {
+      if (e.message === "Tried to fetch matches for UNREGISTERED_PROFILE_NAME") {
+        throw new functions.https.HttpsError(
+          "invalid-argument",
+          'Tried to fetch matches for UNREGISTERED_PROFILE_NAME"}',
+        );
+      } else {
+        throw e;
+      }
+    }
   });
 
 export { getPlayerMatchesFromRelic };

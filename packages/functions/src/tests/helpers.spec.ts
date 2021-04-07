@@ -2,6 +2,7 @@ import {
   convertSteamNameToID,
   getDateTimeStampsInRange,
   getLastWeekTimeStamps,
+  getMonthTimeStamps,
   getYesterdayDateTimeStampInterval,
   sumValuesOfObjects,
 } from "../libs/helpers";
@@ -156,5 +157,12 @@ describe("getLastWeekTimeStamps", () => {
   test("Returns 7 values", () => {
     const result = getLastWeekTimeStamps();
     expect(result.length).toBe(7);
+  });
+});
+
+describe("getMonthTimeStamps", () => {
+  test("Returns correct timestamps", () => {
+    const result = getMonthTimeStamps(new Date(2021, 2));
+    expect(result.length).toBe(31);
   });
 });
