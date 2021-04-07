@@ -4,6 +4,7 @@ import Search from "antd/es/input/Search";
 import { useHistory, useParams } from "react-router";
 import routes from "../../routes";
 import { Avatar, Empty, Space } from "antd";
+import analytics from "../../analytics";
 // @ts-ignore
 import ReactCountryFlag from "react-country-flag";
 
@@ -108,6 +109,8 @@ const CustomSearch: React.FC = () => {
     (async () => {
       if (searchParam) {
         setIsLoading(true);
+
+        analytics.searchUsed(searchParam);
 
         const payLoad = { name: searchParam };
         const searchPlayers = firebase.functions().httpsCallable("searchPlayers");

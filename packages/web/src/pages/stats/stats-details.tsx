@@ -82,7 +82,9 @@ const StatsDetails: React.FC = () => {
             Amount of games for this analysis {`${specificData["matchCount"]}`}
           </span>
           <br />
-          <span>These are just games where top 200 player was involved, see about page for more info.</span>
+          <span>
+            These are just games where top 200 player was involved, see about page for more info.
+          </span>
         </div>
       </Row>
       <Row justify={"center"}>

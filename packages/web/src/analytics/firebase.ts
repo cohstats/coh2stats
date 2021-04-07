@@ -38,10 +38,15 @@ const pageView = (location: Location): void => {
   events.pageView(location);
 };
 
+const searchUsed = (term: string): void => {
+  firebase.logEvent("search_used", { term: term });
+};
+
 const firebaseObject = {
   login,
   logout,
   pageView,
+  searchUsed,
 };
 
 export default firebaseObject;
