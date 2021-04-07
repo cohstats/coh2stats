@@ -2,6 +2,7 @@ import React from "react";
 import { Typography } from "antd";
 import { useData, useLoading } from "../../firebase";
 import { Loading } from "../../components/loading";
+import { Donation } from "../../components/donations";
 const { Title, Link, Text } = Typography;
 
 const About: React.FC = () => {
@@ -138,11 +139,11 @@ const About: React.FC = () => {
       <br />
       <br />
       <br />
-      If you would like to give $ support, you can do so HERE|TODO ADD SOME DONATION|
+      If you would like to give financial support, you can do so. <br />
+      100% of donations will go towards this project costs <br />
+      Please write your nickname into the note which would be mentioned bellow.
       <br />
-      100% of donations will go towards this project costs
-      <br />
-      <br />
+      <Donation />
       <br />
       Past donations:
     </div>

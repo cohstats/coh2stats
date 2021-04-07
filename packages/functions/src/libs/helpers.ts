@@ -1,5 +1,5 @@
 import { StatDict } from "./types";
-import { eachDayOfInterval, endOfWeek, startOfWeek } from "date-fns";
+import { eachDayOfInterval, endOfWeek, startOfWeek, startOfMonth, endOfMonth } from "date-fns";
 
 process.env.TZ = "utc";
 
@@ -86,6 +86,15 @@ const getWeekTimeStamps = (date: Date | number): Array<number> => {
   );
 };
 
+const getMonthTimeStamps = (date: Date | number): Array<number> => {
+  return getDateTimeStampsInRange(startOfMonth(date), endOfMonth(date));
+};
+
+const getStartOfTheMonth = (date: Date | number): Date => {
+  process.env.TZ = "utc";
+  return startOfMonth(date);
+};
+
 const getStartOfTheWeek = (date: Date | number): Date => {
   process.env.TZ = "utc";
   return startOfWeek(date, { weekStartsOn: 1 });
@@ -161,5 +170,7 @@ export {
   getLastWeekTimeStamps,
   getWeekTimeStamps,
   getStartOfTheWeek,
+  getMonthTimeStamps,
+  getStartOfTheMonth,
   isMonday,
 };

@@ -9,6 +9,10 @@ const analysisChecker = async (): Promise<void> => {
   if (isMonday(date)) {
     await runAndSaveMultiDayAnalysis(new Date(getYesterdayDateTimestamp() * 1000), "week");
   }
+
+  if (date.getDate() === 1) {
+    await runAndSaveMultiDayAnalysis(new Date(getYesterdayDateTimestamp() * 1000), "month");
+  }
 };
 
 export { analysisChecker };
