@@ -1,22 +1,24 @@
 import React from "react";
-import { Col, Row, List, Divider, Avatar, Descriptions, Badge } from "antd";
+import { Col, Row, List, Divider, Avatar, Badge } from "antd";
 import { getCommanderData, getCommanderIconPath } from "../../coh/commanders";
 import { useParams } from "react-router";
 import { ExportDate } from "../../components/export-date";
+import firebase from "../../analytics";
+import { getExportedIconPath, getGeneralIconPath } from "../../coh/helpers";
 
 export const CommanderDetails = () => {
   const { commanderID } = useParams<{
     commanderID: string;
   }>();
 
-  const myData = getCommanderData(commanderID);
+  const commanderData = getCommanderData(commanderID);
 
   const { race } = useParams<{
     race: string;
   }>();
 
   const divStyle = {
-    backgroundImage: "url(/resources/generalIcons/" + race + ".png)",
+    backgroundImage: `url(${getGeneralIconPath(race)})`,
     backgroundRepeat: "no-repeat",
     backgroundSize: "350px",
     backgroundPosition: "left top",
@@ -24,13 +26,20 @@ export const CommanderDetails = () => {
     backgroundColor: "rgba(255,255,255,0.8)",
   };
 
-  if (!myData) {
+  if (!commanderData) {
     return (
       <>
         <h1>Commander ID {commanderID} was not found.</h1>
       </>
     );
   }
+
+  // Set page title
+  if (!document.title.includes(commanderData.commanderName)) {
+    document.title = `${document.title} - ${commanderData.commanderName}`;
+  }
+
+  firebase.commanderDisplayed(commanderData.commanderName, commanderData.races[0]);
 
   return (
     <>
@@ -45,19 +54,19 @@ export const CommanderDetails = () => {
             <Row>
               <Col flex="100px">
                 <img
-                  src={getCommanderIconPath(myData.iconlarge)}
+                  src={getCommanderIconPath(commanderData.iconlarge)}
                   width="auto"
                   height="auto"
-                  alt={myData.commanderName}
+                  alt={commanderData.commanderName}
                 />
                 <h2 style={{ textAlign: "center", margin: "-5px 0px 0px 0px" }}>
-                  {myData.races[0]}
+                  {commanderData.races[0]}
                 </h2>
               </Col>
-              <Col span={1}></Col>
+              <Col span={1} />
               <Col xs={20} xl={17}>
-                <h1>{myData.commanderName}</h1>
-                {myData.description}
+                <h1>{commanderData.commanderName}</h1>
+                {commanderData.description}
               </Col>
             </Row>
           </Col>
@@ -68,18 +77,14 @@ export const CommanderDetails = () => {
             <Divider />
             <List
               itemLayout="horizontal"
-              dataSource={myData.abilities}
+              dataSource={commanderData.abilities}
               renderItem={(item: Record<string, any>) => (
                 <div>
                   <List.Item>
                     <List.Item.Meta
                       avatar={
                         <div>
-                          <Avatar
-                            src={"/resources/exportedIcons/" + item.icon + ".png"}
-                            shape="square"
-                            size={64}
-                          />
+                          <Avatar src={getExportedIconPath(item.icon)} shape="square" size={64} />
                           <Badge count={0} overflowCount={999} showZero offset={[0, -32]}>
                             <a href="#" className="head-example" />
                           </Badge>

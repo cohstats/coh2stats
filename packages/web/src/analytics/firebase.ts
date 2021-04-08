@@ -39,7 +39,15 @@ const pageView = (location: Location): void => {
 };
 
 const searchUsed = (term: string): void => {
-  firebase.logEvent("search_used", { term: term });
+  firebase.logEvent("search", { term: term });
+};
+
+const commanderDisplayed = (commanderName: string, commanderRace: string): void => {
+  firebase.logEvent("commanders", { commanderName, commanderRace });
+};
+
+const bulletinsDisplayed = (): void => {
+  firebase.logEvent("bulletins");
 };
 
 const firebaseObject = {
@@ -47,6 +55,8 @@ const firebaseObject = {
   logout,
   pageView,
   searchUsed,
+  commanderDisplayed,
+  bulletinsDisplayed,
 };
 
 export default firebaseObject;

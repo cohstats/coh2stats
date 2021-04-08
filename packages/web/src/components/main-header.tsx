@@ -5,6 +5,26 @@ import routes from "../routes";
 import { useHistory, useRouteMatch } from "react-router";
 import { PlayerSearchInput } from "./header-search";
 
+const pageTitleSwitch = (path: string) => {
+  const baseTitle = "COH2";
+
+  let setTitle = "COH2 Statistics";
+
+  switch (path) {
+    case routes.commanderBase():
+      setTitle = `${baseTitle} Commanders`;
+      break;
+    case routes.statsBase():
+      setTitle = `${baseTitle} Statistics and Charts`;
+      break;
+    case routes.bulletinsBase():
+      setTitle = `${baseTitle} Bulletins`;
+      break;
+  }
+
+  document.title = setTitle;
+};
+
 export const MainHeader: React.FC = () => {
   const { push } = useHistory();
 
@@ -26,6 +46,7 @@ export const MainHeader: React.FC = () => {
 
   let pathMatch = commandersMatch || statsMatch || aboutMatch || bulletinsMatch;
   const currentPath = pathMatch?.path || "";
+  pageTitleSwitch(currentPath);
 
   const onMenuClick = (item: Record<string, any>) => {
     push(item.key);

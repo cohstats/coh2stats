@@ -25,7 +25,7 @@ const About: React.FC = () => {
       <br />
       <br />
       We are currently crawling top 200 positions from all kinds of COH2 leaderboards (1v1,2v2
-      etc). This gives us 5200(~3000 unique) top players for the given day. We than proceed with
+      etc). This gives us 5200(~3000 unique) top players for the given day. We then proceed with
       analysing/saving their matches for the given day. This gives us ~4000 matches / day.
       <br />
       And we are tracking only auto-match games which are against players (filter out vs AI
@@ -105,7 +105,10 @@ const About: React.FC = () => {
       <br />
       <br />
       For any discussion, ideas or anything else. Head over to the coh2.org{" "}
-      <Link href="https://www.coh2.org/topic/107278/coh2-global-stats" target="_blank">
+      <Link
+        href="https://www.coh2.org/topic/108057/coh2stats-com-match-and-player-statistics-2-0"
+        target="_blank"
+      >
         forums topic
       </Link>
       .

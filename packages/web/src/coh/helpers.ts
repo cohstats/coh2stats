@@ -12,4 +12,12 @@ const sortArrayOfObjectsByTheirPropertyValue = (
   });
 };
 
-export { sortArrayOfObjectsByTheirPropertyValue };
+const getExportedIconPath = (name: string): string => {
+  return `/resources/exportedIcons/${name}.png`;
+};
+
+const getGeneralIconPath = (name: string): string => {
+  return `/resources/generalIcons/${name}.png`;
+};
+
+export { sortArrayOfObjectsByTheirPropertyValue, getExportedIconPath, getGeneralIconPath };

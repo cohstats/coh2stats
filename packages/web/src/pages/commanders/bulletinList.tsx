@@ -6,16 +6,19 @@ import { getAllBulletins, getBulletinIconPath } from "../../coh/bulletins";
 import { ColumnsType, ColumnType } from "antd/lib/table";
 import { SearchOutlined } from "@ant-design/icons";
 import { ExportDate } from "../../components/export-date";
+import firebase from "../../analytics";
 
 export const BulletinList = () => {
-  // prepare bulletin data
-  let [bulletinData, setStateBulletinData] = useState(getAllBulletins());
+  // Prepare bulletin data
+  const bulletinData = getAllBulletins();
+
+  firebase.bulletinsDisplayed();
 
   // search through provided bulletin data
-  bulletinData.map((sortedbulletinItem) => {
+  bulletinData.map((sortedBulletinItem) => {
     // if a bulletin belongs to more then 1 race, sort the races alphabetically
-    if (sortedbulletinItem.races.length > 1) {
-      sortedbulletinItem.races.sort((a, b) => {
+    if (sortedBulletinItem.races.length > 1) {
+      sortedBulletinItem.races.sort((a, b) => {
         return a.localeCompare(b);
       });
     }
@@ -65,7 +68,7 @@ export const BulletinList = () => {
     };
   }
 
-  // prepare table header
+  // Prepare table header
   const TableColumns: ColumnsType<IntelBulletinData> = [
     {
       title: "Icon",
@@ -147,7 +150,7 @@ export const BulletinList = () => {
     <>
       <div>
         <Row justify="center" style={{ padding: "10px" }}>
-          <Col xs={20} xxl={12}></Col>
+          <Col xs={20} xxl={12} />
         </Row>
         <Row justify="center" style={{ padding: "10px" }}>
           <Col xs={20} xxl={12}>
