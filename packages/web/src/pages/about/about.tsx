@@ -83,7 +83,7 @@ const About: React.FC = () => {
       <br />
       There is huge amount of things we could improve everywhere. The stats charts possibilities
       are limitless. We definitely want to add analysis based on each map. To see if some maps are
-      better for different race. If you have any ideas feel free to suggest them.
+      better for different factions. If you have any ideas feel free to suggest them.
       <a href={"#bugs"}>
         <Title level={2} style={{ paddingTop: 15 }} id={"bugs"}>
           Bugs, ideas and contribution
