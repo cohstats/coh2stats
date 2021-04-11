@@ -39,7 +39,7 @@ need to be done manually for now.
 
 #### Prod
 
-Tagged versions are automatically deployed to `<add url>`
+Tagged versions are automatically deployed to https://coh2stats.com/
 
 #### Dev
 

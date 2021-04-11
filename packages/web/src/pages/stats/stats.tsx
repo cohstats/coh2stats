@@ -7,6 +7,7 @@ import routes from "../../routes";
 import { ConfigProvider, Select, Space } from "antd";
 import DatePicker from "../../components/date-picker";
 import {
+  capitalize,
   convertDateToDayTimestamp,
   convertDateToStartOfMonth,
   getPreviousWeekTimeStamp,
@@ -108,7 +109,7 @@ const Stats: React.FC = () => {
   React.useEffect(() => {
     // Set page title
     if (!document.title.includes(type) || !document.title.includes(race)) {
-      document.title = `${statsBase} - ${race} - ${type}`;
+      document.title = `${statsBase} - ${capitalize(race)} - ${type}`;
     }
   }, [type, race]);
 
