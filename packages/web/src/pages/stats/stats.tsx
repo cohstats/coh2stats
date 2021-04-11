@@ -105,14 +105,6 @@ const Stats: React.FC = () => {
     );
   }, [datePickerType, dateValue, push]);
 
-  // Page title
-  React.useEffect(() => {
-    // Set page title
-    if (!document.title.includes(type) || !document.title.includes(race)) {
-      document.title = `${statsBase} - ${capitalize(race)} - ${type}`;
-    }
-  }, [type, race]);
-
   const onDatePickerTypeSelect = (value: DatePickerType) => {
     if (value === "week") {
       setDateValue(getStartOfTheWeek(dateValue));

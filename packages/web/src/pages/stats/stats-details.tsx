@@ -12,6 +12,8 @@ import { Helper } from "../../components/helper";
 import Title from "antd/es/typography/Title";
 import routes from "../../routes";
 import { validStatsTypes } from "../../coh/types";
+import { statsBase } from "../../titles";
+import { capitalize } from "../../helpers";
 
 const StatsDetails: React.FC = () => {
   const isLoading = useLoading("stats");
@@ -24,6 +26,14 @@ const StatsDetails: React.FC = () => {
     type: string;
     race: string;
   }>();
+
+  // Page title
+  React.useEffect(() => {
+    // Set page title
+    if (!document.title.includes(type) || !document.title.includes(race)) {
+      document.title = `${statsBase} - ${capitalize(race)} - ${type}`;
+    }
+  }, [type, race]);
 
   if (isLoading) return <Loading />;
 
