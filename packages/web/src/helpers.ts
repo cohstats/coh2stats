@@ -31,6 +31,10 @@ const getPreviousWeekTimeStamp = () => {
   return convertDateToDayTimestamp(getStartOfTheWeek(previousWeek));
 };
 
+const capitalize = (s: string) => {
+  return s.charAt(0).toUpperCase() + s.slice(1);
+};
+
 export {
   getYesterdayDateTimestamp,
   convertDateToDayTimestamp,
@@ -38,4 +42,5 @@ export {
   getStartOfTheWeek,
   convertDateToStartOfMonth,
   getPreviousWeekTimeStamp,
+  capitalize,
 };

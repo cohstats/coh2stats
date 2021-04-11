@@ -88,9 +88,9 @@ const StatsDetails: React.FC = () => {
         </div>
       </Row>
       <Row justify={"center"}>
-        <Space size={"large"}>
+        <Space size={"large"} wrap>
           <Card title={`Games Played ${type}`} style={{ width: 585, height: 600 }}>
-            {WinsChart(specificData)}
+            <WinsChart data={specificData} />
           </Card>
           <Card title={`Winrate ${type}`} style={{ width: 585, height: 600 }}>
             {WinRateChart(specificData)}
@@ -118,7 +118,7 @@ const StatsDetails: React.FC = () => {
         </Radio.Group>
       </Row>
       <Row justify={"center"}>
-        <Space size={"large"}>
+        <Space size={"large"} wrap>
           <Card
             title={
               <span>

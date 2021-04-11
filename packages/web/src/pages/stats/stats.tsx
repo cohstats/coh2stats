@@ -16,6 +16,7 @@ import { validRaceNames, validStatsTypes } from "../../coh/types";
 import enGB from "antd/lib/locale/en_GB";
 
 import { isBefore, isAfter } from "date-fns";
+import { statsBase } from "../../titles";
 
 type DatePickerType = "time" | "date" | "week" | "month" | "quarter" | "year" | undefined;
 
@@ -102,6 +103,14 @@ const Stats: React.FC = () => {
       ),
     );
   }, [datePickerType, dateValue, push]);
+
+  // Page title
+  React.useEffect(() => {
+    // Set page title
+    if (!document.title.includes(type) || !document.title.includes(race)) {
+      document.title = `${statsBase} - ${race} - ${type}`;
+    }
+  }, [type, race]);
 
   const onDatePickerTypeSelect = (value: DatePickerType) => {
     if (value === "week") {

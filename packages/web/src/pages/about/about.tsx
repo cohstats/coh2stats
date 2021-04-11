@@ -148,7 +148,9 @@ const About: React.FC = () => {
       <br />
       <Donation />
       <br />
-      Past donations:
+      <b>Past donations:</b>
+      <br />
+      gunther09
     </div>
   );
 };

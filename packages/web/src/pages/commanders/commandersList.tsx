@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Col, Row, List, Avatar } from "antd";
 import { getCommanderByRaces, getCommanderIconPath } from "../../coh/commanders";
 import { useHistory, useParams } from "react-router";
 import { RaceName } from "../../coh/types";
 import routes from "../../routes";
 import { ExportDate } from "../../components/export-date";
+import { commanderBase } from "../../titles";
+import { capitalize } from "../../helpers";
 
 export const CommandersList = () => {
   const { push } = useHistory();
@@ -12,6 +14,10 @@ export const CommandersList = () => {
   const { race } = useParams<{
     race: string;
   }>();
+
+  useEffect(() => {
+    document.title = `${commanderBase} - ${capitalize(race)}`;
+  }, [race]);
 
   let myData = getCommanderByRaces(race as RaceName);
   myData = myData.filter((commanderData) => {

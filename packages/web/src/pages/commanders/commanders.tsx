@@ -5,6 +5,7 @@ import { useParams } from "react-router";
 import { ExportDate } from "../../components/export-date";
 import firebase from "../../analytics";
 import { getExportedIconPath, getGeneralIconPath } from "../../coh/helpers";
+import { commanderBase } from "../../titles";
 
 export const CommanderDetails = () => {
   const { commanderID } = useParams<{
@@ -35,9 +36,7 @@ export const CommanderDetails = () => {
   }
 
   // Set page title
-  if (!document.title.includes(commanderData.commanderName)) {
-    document.title = `${document.title} - ${commanderData.commanderName}`;
-  }
+  document.title = `${commanderBase} - ${commanderData.commanderName}`;
 
   firebase.commanderDisplayed(commanderData.commanderName, commanderData.races[0]);
 

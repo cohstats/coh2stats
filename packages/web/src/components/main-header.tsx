@@ -4,25 +4,23 @@ import { Menu, Space } from "antd";
 import routes from "../routes";
 import { useHistory, useRouteMatch } from "react-router";
 import { PlayerSearchInput } from "./header-search";
+import { aboutBase, bulletinsBase, commanderBase } from "../titles";
 
 const pageTitleSwitch = (path: string) => {
-  const baseTitle = "COH2";
-
-  let setTitle = "COH2 Statistics";
-
   switch (path) {
     case routes.commanderBase():
-      setTitle = `${baseTitle} Commanders`;
+      document.title = commanderBase;
       break;
     case routes.statsBase():
-      setTitle = `${baseTitle} Statistics and Charts`;
+      // we are setting up this in the stats page component
       break;
     case routes.bulletinsBase():
-      setTitle = `${baseTitle} Bulletins`;
+      document.title = bulletinsBase;
+      break;
+    case routes.aboutBase():
+      document.title = aboutBase;
       break;
   }
-
-  document.title = setTitle;
 };
 
 export const MainHeader: React.FC = () => {

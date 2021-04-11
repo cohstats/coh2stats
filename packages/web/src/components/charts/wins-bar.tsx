@@ -1,7 +1,11 @@
 import { Bar } from "@nivo/bar";
 import React from "react";
 
-export const WinsChart = (data: Record<string, any>) => {
+interface IProps {
+  data: Record<string, any>;
+}
+
+export const WinsChart: React.FC<IProps> = ({ data }) => {
   const chartData = [
     { ...{ faction: "British", ...data["british"] } },
     { ...{ faction: "Soviet", ...data["soviet"] } },
