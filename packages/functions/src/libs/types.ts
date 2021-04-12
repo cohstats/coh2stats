@@ -103,7 +103,26 @@ interface SteamApiPlayerInterface {
   loccountrycode: string;
 }
 
+type RaceNameInLadders = "wehrmacht" | "usf" | "soviet" | "wgerman" | "british";
+const validRaceNamesInLadders: Array<RaceNameInLadders> = [
+  "wehrmacht",
+  "usf",
+  "soviet",
+  "wgerman",
+  "british",
+];
+
+const validStatsTypes = ["1v1", "2v2", "3v3", "4v4", "general"];
+
+type TypeOfLadder = "1v1" | "2v2" | "3v3" | "4v4" | "team2" | "team3" | "team4";
+const validLadderTypes = ["1v1", "2v2", "3v3", "4v4", "team2", "team3", "team4"];
+
 export {
+  RaceNameInLadders,
+  TypeOfLadder,
+  validRaceNamesInLadders,
+  validStatsTypes,
+  validLadderTypes,
   ProcessedMatch,
   PlayerReport,
   StatDict,

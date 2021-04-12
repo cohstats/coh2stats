@@ -9,7 +9,8 @@ import { DEFAULT_FUNCTIONS_LOCATION } from "./constants";
 // import { getLastWeekTimeStamps } from "./libs/helpers";
 // import { runAndSaveMultiDayAnalysis } from "./libs/analysis/multi-day-analysis";
 // import { getSteamPlayerSummaries } from "./libs/steam-api";
-import { runAndSaveMultiDayAnalysis } from "./libs/analysis/multi-day-analysis";
+// import { runAndSaveMultiDayAnalysis } from "./libs/analysis/multi-day-analysis";
+import { getAllNameIDsInLadderType } from "./libs/ladder-data";
 // import {getYesterdayDateTimestamp} from "./libs/helpers";
 // import { ProcessedMatch } from "./libs/types";
 
@@ -27,7 +28,9 @@ const runTest = functions
     // const result = await getSteamPlayerSummaries(["76561197960435530", "76561198034318060"]);
     // console.log(result);
 
-    await runAndSaveMultiDayAnalysis(new Date(2021, 2, 25), "week");
+    // await runAndSaveMultiDayAnalysis(new Date(2021, 2, 25), "week");
+
+    await getAllNameIDsInLadderType(1617494400, "1v1");
 
     response.send("Finished running test functions");
   });

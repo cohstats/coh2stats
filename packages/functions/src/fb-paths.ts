@@ -1,5 +1,5 @@
 import { firestore } from "firebase-admin";
-import { frequencyType } from "./libs/types";
+import { frequencyType, RaceNameInLadders, TypeOfLadder } from "./libs/types";
 import DocumentReference = firestore.DocumentReference;
 import DocumentData = firestore.DocumentData;
 import CollectionReference = firestore.CollectionReference;
@@ -26,4 +26,18 @@ const getGlobalStatsDocRef = (): DocumentReference<DocumentData> => {
   return db.collection(`stats`).doc(`global`);
 };
 
-export { getMatchDocRef, getStatsDocRef, getGlobalStatsDocRef, getMatchCollectionRef };
+const getLadderDocRef = (
+  timestamp: string | number,
+  type: TypeOfLadder,
+  race: RaceNameInLadders,
+) => {
+  return db.collection("ladders").doc(`${timestamp}`).collection(type).doc(race);
+};
+
+export {
+  getMatchDocRef,
+  getStatsDocRef,
+  getGlobalStatsDocRef,
+  getMatchCollectionRef,
+  getLadderDocRef,
+};
