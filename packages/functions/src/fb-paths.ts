@@ -22,6 +22,26 @@ const getStatsDocRef = (
   return db.collection(`stats`).doc(`${type}`).collection(`${timestamp}`).doc("stats");
 };
 
+const getTopStatsDocRef = (
+  timestamp: string | number,
+  type: frequencyType,
+): DocumentReference<DocumentData> => {
+  // We need to follow pattern collection/doc/collection/doc
+  return db.collection(`stats`).doc(`${type}`).collection(`${timestamp}`).doc("topStats");
+};
+
+const getTopLadderUniquePlayersDocRef = (
+  timestamp: string | number,
+  type: frequencyType,
+): DocumentReference<DocumentData> => {
+  // We need to follow pattern collection/doc/collection/doc
+  return db
+    .collection(`stats`)
+    .doc(`${type}`)
+    .collection(`${timestamp}`)
+    .doc("topUniquePlayersAmount");
+};
+
 const getGlobalStatsDocRef = (): DocumentReference<DocumentData> => {
   return db.collection(`stats`).doc(`global`);
 };
@@ -29,8 +49,8 @@ const getGlobalStatsDocRef = (): DocumentReference<DocumentData> => {
 const getLadderDocRef = (
   timestamp: string | number,
   type: TypeOfLadder,
-  race: RaceNameInLadders,
-) => {
+  race: RaceNameInLadders | "allies" | "axis",
+): DocumentReference<DocumentData> => {
   return db.collection("ladders").doc(`${timestamp}`).collection(type).doc(race);
 };
 
@@ -40,4 +60,6 @@ export {
   getGlobalStatsDocRef,
   getMatchCollectionRef,
   getLadderDocRef,
+  getTopStatsDocRef,
+  getTopLadderUniquePlayersDocRef,
 };

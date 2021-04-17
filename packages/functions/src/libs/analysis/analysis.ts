@@ -1,10 +1,11 @@
-import { getStatsDocRef } from "../../fb-paths";
+import { getStatsDocRef, getTopStatsDocRef } from "../../fb-paths";
 import { frequencyType, ProcessedMatch, StatDict } from "../types";
-import { analyzeMatches } from "./match-analysis";
+import { analyzeMatches, analyzeTopMatches } from "./match-analysis";
 import * as functions from "firebase-functions";
 import { firestore } from "firebase-admin";
 import { sumValuesOfObjects } from "../helpers";
-import { globallyAnalyzedMatches } from "../global-stats";
+import { globallyAnalyzedMatches, globallyAnalyzedTopMatches } from "../global-stats";
+import { getLadderNameIDsForTimestamp } from "../ladder-data";
 
 const db = firestore();
 
@@ -44,6 +45,24 @@ const saveAnalysis = async (
   }
 };
 
+const saveTopAnalysis = async (
+  stats: Record<string, any>,
+  timestamp: number | string,
+  statType: frequencyType = "daily",
+): Promise<void> => {
+  const topStatsDocRef = getTopStatsDocRef(timestamp, statType);
+  try {
+    await topStatsDocRef.set(stats);
+  } catch (e) {
+    functions.logger.error(
+      `Failed to save top Stats analysis stats into ${topStatsDocRef.path}`,
+      timestamp,
+      stats,
+      e,
+    );
+  }
+};
+
 const analyzeAndSaveMatchStats = async (
   matches: Array<ProcessedMatch>,
   dateTimeStamp: number,
@@ -55,4 +74,21 @@ const analyzeAndSaveMatchStats = async (
   await saveAnalysis(stats, dateTimeStamp);
 };
 
-export { analyzeAndSaveMatchStats, saveAnalysis };
+const analyzeAndSaveTopMatchStats = async (
+  matches: Array<ProcessedMatch>,
+  dateTimeStamp: number,
+): Promise<void> => {
+  // Top ladder IDS
+  const ladderIDs = await getLadderNameIDsForTimestamp(dateTimeStamp);
+  functions.logger.log(
+    `Stats - analyzing ${matches.length} matches as TOP analysis for timestamp ${dateTimeStamp}.`,
+  );
+
+  const stats = analyzeTopMatches(matches, ladderIDs);
+  await saveTopAnalysis(stats, dateTimeStamp);
+  await globallyAnalyzedTopMatches(matches.length);
+
+  functions.logger.log(`Stats analyzed, going to save them.`);
+};
+
+export { analyzeAndSaveMatchStats, saveAnalysis, analyzeAndSaveTopMatchStats };

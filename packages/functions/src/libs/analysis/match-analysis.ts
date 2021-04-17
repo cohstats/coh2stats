@@ -5,7 +5,7 @@ import {
   raceIds,
   resultType,
 } from "../coh2-api";
-import { ProcessedMatch } from "../types";
+import { ProcessedMatch, steamIDsInLadderInterface } from "../types";
 
 /**
  * FYI: This function doesn't do copy of the stats object - uses reference.
@@ -63,12 +63,24 @@ const filterOnlyAutomatchVsPlayers = (matches: Array<ProcessedMatch>) => {
   });
 };
 
+const areMatchPlayersInLadder = (match: ProcessedMatch, ladder: Array<string>) => {
+  for (const playerSteamID of match.steam_ids) {
+    if (!ladder.includes(playerSteamID)) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
 /**
  * Puts matches by amount of players category.
  * @param matches
+ * @param ladderIDs
  */
 const sortMatchesByType = (
   matches: Array<ProcessedMatch>,
+  ladderIDs: steamIDsInLadderInterface | null = null,
 ): Record<string, Array<ProcessedMatch>> => {
   const matchesByMode = {
     "1v1": [] as Array<ProcessedMatch>,
@@ -77,19 +89,29 @@ const sortMatchesByType = (
     "4v4": [] as Array<ProcessedMatch>,
   };
 
+  const decider = (match: ProcessedMatch, type: "1v1" | "2v2" | "3v3" | "4v4") => {
+    if (ladderIDs) {
+      if (areMatchPlayersInLadder(match, ladderIDs[type])) {
+        matchesByMode[type].push(match);
+      }
+    } else {
+      matchesByMode[type].push(match);
+    }
+  };
+
   for (const match of matches) {
     switch (match.maxplayers) {
       case 2:
-        matchesByMode["1v1"].push(match);
+        decider(match, "1v1");
         break;
       case 4:
-        matchesByMode["2v2"].push(match);
+        decider(match, "2v2");
         break;
       case 6:
-        matchesByMode["3v3"].push(match);
+        decider(match, "3v3");
         break;
       case 8:
-        matchesByMode["4v4"].push(match);
+        decider(match, "4v4");
         break;
       default:
         console.error(
@@ -157,4 +179,22 @@ const analyzeMatches = (matches: Array<ProcessedMatch>): Record<string, any> => 
   return fullStats;
 };
 
-export { analyzeMatches };
+const analyzeTopMatches = (
+  matches: Array<ProcessedMatch>,
+  ladderNameIDs: steamIDsInLadderInterface,
+): Record<string, any> => {
+  matches = filterOnlyAutomatchVsPlayers(matches);
+  const classifiedMatches = sortMatchesByType(matches, ladderNameIDs);
+
+  const fullStats: Record<string, any> = {};
+
+  // This calculates single stats object for types like:
+  // "1v1", "2v2", "3v3" etc
+  for (const matchType in classifiedMatches) {
+    fullStats[matchType] = createStats(classifiedMatches[matchType]);
+  }
+
+  return fullStats;
+};
+
+export { analyzeMatches, analyzeTopMatches };
