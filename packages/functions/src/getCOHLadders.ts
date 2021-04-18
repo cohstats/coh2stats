@@ -1,9 +1,7 @@
 import * as functions from "firebase-functions";
 
 import { DEFAULT_FUNCTIONS_LOCATION } from "./constants";
-import {getAndSaveAllLadders} from "./libs/ladders/ladders";
-
-
+import { getAndSaveAllLadders } from "./libs/ladders/ladders";
 
 // Set max timeout we can
 const runtimeOpts: Record<string, "256MB" | any> = {

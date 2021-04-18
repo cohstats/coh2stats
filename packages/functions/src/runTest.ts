@@ -5,11 +5,11 @@
 import * as functions from "firebase-functions";
 import { DEFAULT_FUNCTIONS_LOCATION } from "./constants";
 
-import {getYesterdayDateTimeStampInterval, printUTCTime} from "./libs/helpers";
-import {ProcessedMatch} from "./libs/types";
-import {getMatchCollectionRef} from "./fb-paths";
-import {analyzeAndSaveMatchStats, analyzeAndSaveTopMatchStats} from "./libs/analysis/analysis";
-import {analysisChecker} from "./libs/analysis/analysis-checker";
+import { getYesterdayDateTimeStampInterval, printUTCTime } from "./libs/helpers";
+import { ProcessedMatch } from "./libs/types";
+import { getMatchCollectionRef } from "./fb-paths";
+import { analyzeAndSaveMatchStats, analyzeAndSaveTopMatchStats } from "./libs/analysis/analysis";
+import { analysisChecker } from "./libs/analysis/analysis-checker";
 
 // const db = firestore();
 

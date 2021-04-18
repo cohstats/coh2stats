@@ -1,11 +1,11 @@
-import {getCurrentDateTimestamp} from "../helpers";
-import {getLadderUrl, leaderboardsID} from "../coh2-api";
+import { getCurrentDateTimestamp } from "../helpers";
+import { getLadderUrl, leaderboardsID } from "../coh2-api";
 import * as functions from "firebase-functions";
-import {extractTheProfileIDs} from "./ladder-data";
-import {firestore} from "firebase-admin";
+import { extractTheProfileIDs } from "./ladder-data";
+import { firestore } from "firebase-admin";
 import axios from "axios";
-import {PUBSUB_TOPIC_DOWNLOAD_MATCHES} from "../../constants";
-import {PubSub} from "@google-cloud/pubsub";
+import { PUBSUB_TOPIC_DOWNLOAD_MATCHES } from "../../constants";
+import { PubSub } from "@google-cloud/pubsub";
 
 const pubSubClient = new PubSub();
 const AMOUNT_OF_QUERIED_PLAYERS = 200; // 200 is max/
@@ -15,9 +15,6 @@ const CHUNK_PROFILES_TO_PROCESS = 1000; // This specifies how many profiles we w
  * The timeout of the CF is 9 minutes. This gives us ~30% service degradation buffer.
  * The memory needed for this is ~400MB / CF, the limit is 512 MB.
  */
-
-
-
 
 const fetchLadderStats = async (leaderboardID: number): Promise<Record<string, any>> => {
   const response = await axios.get(getLadderUrl(leaderboardID, AMOUNT_OF_QUERIED_PLAYERS));
@@ -61,7 +58,6 @@ const callGetPlayerMatches = async (profileIds: Set<string>) => {
     }
   }
 };
-
 
 /**
  * We could do all operations at once and use batch to write it to the DB.
@@ -108,7 +104,4 @@ const getAndSaveAllLadders = async () => {
   );
 };
 
-
-export {
-  getAndSaveAllLadders
-}
+export { getAndSaveAllLadders };

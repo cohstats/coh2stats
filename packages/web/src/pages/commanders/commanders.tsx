@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Col, Row, List, Divider, Avatar, Badge } from "antd";
 import { getCommanderData, getCommanderIconPath } from "../../coh/commanders";
 import { useParams } from "react-router";
@@ -11,6 +11,11 @@ export const CommanderDetails = () => {
   const { commanderID } = useParams<{
     commanderID: string;
   }>();
+
+  // We want to scroll top when we go to this page from the stats page
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const commanderData = getCommanderData(commanderID);
 

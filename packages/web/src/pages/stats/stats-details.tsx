@@ -14,11 +14,19 @@ import routes from "../../routes";
 import { validStatsTypes } from "../../coh/types";
 import { statsBase } from "../../titles";
 import { capitalize } from "../../helpers";
+import { useLocation } from "react-router-dom";
+
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
 
 const StatsDetails: React.FC = () => {
   const isLoading = useLoading("stats");
   const data: Record<string, any> = useData("stats");
   const { push } = useHistory();
+  const query = useQuery();
+  const statsSource: string | null = query.get("statsSource") ? query.get("statsSource") : "";
+  const sourceIsAll = statsSource !== "top200";
 
   const { frequency, timestamp, type, race } = useParams<{
     frequency: string;
@@ -60,11 +68,19 @@ const StatsDetails: React.FC = () => {
   const maps: Record<string, number> = specificData["maps"];
 
   const onTypeRadioChange = (e: RadioChangeEvent) => {
-    push(routes.fullStatsDetails(frequency, timestamp, e.target?.value, race));
+    push({
+      pathname: routes.fullStatsDetails(frequency, timestamp, e.target?.value, race),
+      // TODO: Fix this, we should not use it like this
+      search: `?statsSource=${statsSource}`,
+    });
   };
 
   const onRaceRadioChange = (e: RadioChangeEvent) => {
-    push(routes.fullStatsDetails(frequency, timestamp, type, e.target?.value));
+    push({
+      pathname: routes.fullStatsDetails(frequency, timestamp, type, e.target?.value),
+      // TODO: Fix this, we should not use it like this
+      search: `?statsSource=${statsSource}`,
+    });
   };
 
   return (
@@ -93,7 +109,9 @@ const StatsDetails: React.FC = () => {
           </span>
           <br />
           <span>
-            These are just games where top 200 player was involved, see about page for more info.
+            {sourceIsAll
+              ? "This does not include all games which were played. See about page to understand the scope."
+              : ""}
           </span>
         </div>
       </Row>
