@@ -4,12 +4,17 @@ import {
   TypeOfLadder,
   validLadderNonTeamTypes,
   validRaceNamesInLadders,
-} from "./types";
-import { getLadderDocRef, getTopLadderUniquePlayersDocRef } from "../fb-paths";
-import { convertSteamNameToID } from "./helpers";
+} from "../types";
+import { getLadderDocRef, getTopLadderUniquePlayersDocRef } from "../../fb-paths";
+import { convertSteamNameToID } from "../helpers";
 import * as functions from "firebase-functions";
 
-const extractTheProfileIDs = (data: Record<string, any>): Set<string> => {
+/**
+ * Returns either "/steam/76561198131099369" or "76561198131099369"
+ * @param data
+ * @param convertToNumberOnly
+ */
+const extractTheProfileIDs = (data: Record<string, any>, convertToNumberOnly  = false): Set<string> => {
   const profileIDs: Set<string> = new Set();
 
   const { statGroups } = data;
@@ -17,7 +22,11 @@ const extractTheProfileIDs = (data: Record<string, any>): Set<string> => {
   for (const group of statGroups) {
     for (const member of group["members"]) {
       const name = member["name"];
-      profileIDs.add(convertSteamNameToID(name));
+      if(convertToNumberOnly){
+        profileIDs.add(convertSteamNameToID(name));
+      } else {
+        profileIDs.add(name);
+      }
     }
   }
 
@@ -41,7 +50,7 @@ const getAllNameIDsInLadderType = async (timestamp: string | number, type: TypeO
       const ladderData = (
         await getLadder(timestamp, type, factionName as RaceNameInLadders)
       ).data();
-      const extractedIds = extractTheProfileIDs(ladderData ? ladderData : { statGroups: [] });
+      const extractedIds = extractTheProfileIDs(ladderData ? ladderData : { statGroups: [] }, true);
       functions.logger.debug(
         `Extracting ladder player IDs for ${type} - ${factionName}. Found ${extractedIds.size} unique players`,
       );

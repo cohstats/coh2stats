@@ -4,21 +4,14 @@
  */
 import * as functions from "firebase-functions";
 import { DEFAULT_FUNCTIONS_LOCATION } from "./constants";
-import { firestore } from "firebase-admin";
-// import { analyzeAndSaveMatchStats } from "./libs/analysis/analysis";
-// import { getLastWeekTimeStamps } from "./libs/helpers";
-// import { runAndSaveMultiDayAnalysis } from "./libs/analysis/multi-day-analysis";
-// import { getSteamPlayerSummaries } from "./libs/steam-api";
-// import { runAndSaveMultiDayAnalysis } from "./libs/analysis/multi-day-analysis";
-import { getLadderNameIDsForTimestamp } from "./libs/ladder-data";
-import { getYesterdayDateTimestamp } from "./libs/helpers";
-import { ProcessedMatch } from "./libs/types";
-import { getMatchCollectionRef } from "./fb-paths";
-import { analyzeTopMatches } from "./libs/analysis/match-analysis";
-// import {getYesterdayDateTimestamp} from "./libs/helpers";
-// import { ProcessedMatch } from "./libs/types";
 
-const db = firestore();
+import {getYesterdayDateTimeStampInterval, printUTCTime} from "./libs/helpers";
+import {ProcessedMatch} from "./libs/types";
+import {getMatchCollectionRef} from "./fb-paths";
+import {analyzeAndSaveMatchStats, analyzeAndSaveTopMatchStats} from "./libs/analysis/analysis";
+import {analysisChecker} from "./libs/analysis/analysis-checker";
+
+// const db = firestore();
 
 const runtimeOpts: Record<string, "1GB" | any> = {
   timeoutSeconds: 540,
@@ -29,38 +22,32 @@ const runTest = functions
   .region(DEFAULT_FUNCTIONS_LOCATION)
   .runWith(runtimeOpts)
   .https.onRequest(async (request, response) => {
-    // const result = await getSteamPlayerSummaries(["76561197960435530", "76561198034318060"]);
-    // console.log(result);
-
-    // await runAndSaveMultiDayAnalysis(new Date(2021, 2, 25), "week");
-
-    // const { start, end } = getYesterdayDateTimeStampInterval();
+    const { start, end } = getYesterdayDateTimeStampInterval();
 
     const matches: Array<ProcessedMatch> = [];
 
     const snapshot = await getMatchCollectionRef()
-      .where("startgametime", ">=", 1618080715)
-      .where("startgametime", "<=", 1618519935)
+      .where("startgametime", ">=", start)
+      .where("startgametime", "<=", end)
       .get();
 
     snapshot.forEach((doc) => {
       matches.push(doc.data() as ProcessedMatch);
     });
 
-    const timestamp = getYesterdayDateTimestamp();
+    functions.logger.info(
+      `Retrieved ${matches.length} matches which started between ${printUTCTime(
+        start,
+      )}, ${start} and ${printUTCTime(end)}, ${end} for analysis.`,
+    );
 
-    const ladderIDs = await getLadderNameIDsForTimestamp(timestamp);
+    await analyzeAndSaveMatchStats(matches, start);
 
-    console.log(`got ${matches.length} matches, for timestamp ${timestamp}`);
+    await analyzeAndSaveTopMatchStats(matches, start);
 
-    const stats = analyzeTopMatches(matches, ladderIDs);
+    await analysisChecker();
 
-    await db
-      .collection("stats")
-      .doc("daily")
-      .collection(`${timestamp}`)
-      .doc("topStats")
-      .set(stats);
+    functions.logger.info(`Analysis for the date ${printUTCTime(start)} finished.`);
 
     response.send("Finished running test functions");
   });

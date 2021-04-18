@@ -5,7 +5,7 @@ import * as functions from "firebase-functions";
 import { firestore } from "firebase-admin";
 import { sumValuesOfObjects } from "../helpers";
 import { globallyAnalyzedMatches, globallyAnalyzedTopMatches } from "../global-stats";
-import { getLadderNameIDsForTimestamp } from "../ladder-data";
+import { getLadderNameIDsForTimestamp } from "../ladders/ladder-data";
 
 const db = firestore();
 
