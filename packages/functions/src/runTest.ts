@@ -5,7 +5,7 @@
 import * as functions from "firebase-functions";
 import { DEFAULT_FUNCTIONS_LOCATION } from "./constants";
 
-import {getDateTimeStampInterval, printUTCTime} from "./libs/helpers";
+import { getDateTimeStampInterval, printUTCTime } from "./libs/helpers";
 import { ProcessedMatch } from "./libs/types";
 import { getMatchCollectionRef } from "./fb-paths";
 import { analyzeAndSaveTopMatchStats } from "./libs/analysis/analysis";
@@ -21,8 +21,7 @@ const runTest = functions
   .region(DEFAULT_FUNCTIONS_LOCATION)
   .runWith(runtimeOpts)
   .https.onRequest(async (request, response) => {
-
-    for(let i = 1; i < 17; i++){
+    for (let i = 1; i < 17; i++) {
       const { start, end } = getDateTimeStampInterval(i);
 
       const matches: Array<ProcessedMatch> = [];
