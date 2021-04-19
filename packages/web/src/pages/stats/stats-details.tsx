@@ -83,7 +83,7 @@ const StatsDetails: React.FC = () => {
     });
   };
 
-  const subTitle = () => {
+  const subTitle = (() => {
     if (sourceIsAll) {
       return "This does not include all games which were played. See about page to understand the scope.";
     } else {
@@ -92,7 +92,7 @@ const StatsDetails: React.FC = () => {
       }
     }
     return "";
-  };
+  })();
 
   return (
     <>

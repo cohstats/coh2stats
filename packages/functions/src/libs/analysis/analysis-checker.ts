@@ -13,7 +13,11 @@ const analysisChecker = async (): Promise<void> => {
 
   if (date.getDate() === 1) {
     await runAndSaveMultiDayAnalysis(new Date(getYesterdayDateTimestamp() * 1000), "month");
-    await runAndSaveMultiDayAnalysis(new Date(getYesterdayDateTimestamp() * 1000), "month", "top");
+    await runAndSaveMultiDayAnalysis(
+      new Date(getYesterdayDateTimestamp() * 1000),
+      "month",
+      "top",
+    );
   }
 };
 
