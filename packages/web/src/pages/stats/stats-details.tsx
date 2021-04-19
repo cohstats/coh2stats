@@ -83,6 +83,17 @@ const StatsDetails: React.FC = () => {
     });
   };
 
+  const subTitle = () => {
+    if (sourceIsAll) {
+      return "This does not include all games which were played. See about page to understand the scope.";
+    } else {
+      if (specificData["matchCount"] < 2000) {
+        return "This analysis has low amount of matches. The results might not be precise.";
+      }
+    }
+    return "";
+  };
+
   return (
     <>
       <Row justify={"center"}>
@@ -108,11 +119,7 @@ const StatsDetails: React.FC = () => {
             Amount of games for this analysis {`${specificData["matchCount"]}`}
           </span>
           <br />
-          <span>
-            {sourceIsAll
-              ? "This does not include all games which were played. See about page to understand the scope."
-              : ""}
-          </span>
+          <span>{subTitle}</span>
         </div>
       </Row>
       <Row justify={"center"}>

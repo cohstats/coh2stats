@@ -21,8 +21,7 @@ const getYesterdayDateTimeStampInterval = (): Record<string, number> => {
   return getDateTimeStampInterval(date.getUTCDate() - 1);
 };
 
-const getDateTimeStampInterval = (day: number): Record<string, number> => {
-  const date = new Date();
+const getDateTimeStampInterval = (day: number, date = new Date()): Record<string, number> => {
   // Do not add ms to avoid floating point!
   const start = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), day, 0, 0, 0) / 1000;
   const end = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), day, 23, 59, 59) / 1000;

@@ -1,4 +1,4 @@
-import { getStatsDocRef } from "../../fb-paths";
+import { getStatsDocRef, getTopStatsDocRef } from "../../fb-paths";
 import * as functions from "firebase-functions";
 
 import {
@@ -9,7 +9,7 @@ import {
   getWeekTimeStamps,
   sumValuesOfObjects,
 } from "../helpers";
-import { saveAnalysis } from "./analysis";
+import { saveAnalysis, saveTopAnalysis } from "./analysis";
 import { frequencyType, StatDict } from "../types";
 
 /**
@@ -42,10 +42,11 @@ const getSaveTimeStamp = (date: Date | number, frequency: frequencyType) => {
 const runAndSaveMultiDayAnalysis = async (
   date: Date | number,
   frequency: frequencyType = "week",
+  type: "normal" | "top" = "normal",
 ): Promise<void> => {
   const eachDate = getTimeStamps(date, frequency);
   functions.logger.log(
-    `Stats - ${frequency} analysis for date ${date} started - have ${eachDate.length} dates.`,
+    `Stats - ${frequency} ${type} analysis for date ${date} started - have ${eachDate.length} dates.`,
   );
 
   const allDocs: Record<
@@ -55,7 +56,11 @@ const runAndSaveMultiDayAnalysis = async (
 
   for (const timeStamp of eachDate) {
     // We need to keep the timestamp
-    allDocs[timeStamp] = await getStatsDocRef(timeStamp, "daily").get();
+    if (type === "top") {
+      allDocs[timeStamp] = await getTopStatsDocRef(timeStamp, "daily").get();
+    } else {
+      allDocs[timeStamp] = await getStatsDocRef(timeStamp, "daily").get();
+    }
   }
 
   if (!allDocs) {
@@ -85,9 +90,15 @@ const runAndSaveMultiDayAnalysis = async (
   }
 
   const saveTimeStamp = getSaveTimeStamp(date, frequency);
-  await saveAnalysis(finalMultiDayStats, saveTimeStamp, frequency);
+
+  if (type === "top") {
+    await saveTopAnalysis(finalMultiDayStats, saveTimeStamp, frequency);
+  } else {
+    await saveAnalysis(finalMultiDayStats, saveTimeStamp, frequency);
+  }
+
   functions.logger.log(
-    `Stats - ${frequency} analysis for date ${date} finished, saved under ${saveTimeStamp}`,
+    `Stats - ${frequency} ${type} analysis for date ${date} finished, saved under ${saveTimeStamp}`,
   );
 };
 

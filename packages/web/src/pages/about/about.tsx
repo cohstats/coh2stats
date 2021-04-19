@@ -99,14 +99,18 @@ const About: React.FC = () => {
         </i>
       </Paragraph>
       <Paragraph>
+        In future we might also change this statistics to be top % and not top 200 rank because
+        each faction has different amount of players which might affect the calculations.
+        <br />
+        It's also questionable if this approach is the right one for team games. The amount of
+        matches this produces is extremely low.
+      </Paragraph>
+      <Paragraph>
         <Title level={5}>Difference between top 200 and regular stats?</Title>
         The regular analysis takes matches from top 200 players as base input too. However the
         difference is that regular analysis does not care about the other players. In regular
         analysis you could have one team be top 200 and other team rank 2000. Or in 4v4, only 1
         player from the match could be top 200 and other players might be much lower skill.
-        <br />
-        In future we might also change this statistics to be top % and not top 200 rank because
-        each faction has different amount of players which might affect the calculations.
       </Paragraph>
       <b>So far analyzed {analyzedTopMatches} matches.</b>
       <a href={"#future"}>

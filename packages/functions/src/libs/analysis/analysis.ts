@@ -96,4 +96,4 @@ const analyzeAndSaveTopMatchStats = async (
   functions.logger.log(`Stats analyzed, going to save them.`);
 };
 
-export { analyzeAndSaveMatchStats, saveAnalysis, analyzeAndSaveTopMatchStats };
+export { analyzeAndSaveMatchStats, saveAnalysis, saveTopAnalysis, analyzeAndSaveTopMatchStats };
