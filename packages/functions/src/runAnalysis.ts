@@ -3,7 +3,7 @@ import { getMatchCollectionRef } from "./fb-paths";
 import { DEFAULT_FUNCTIONS_LOCATION } from "./constants";
 import { ProcessedMatch } from "./libs/types";
 import { getYesterdayDateTimeStampInterval, printUTCTime } from "./libs/helpers";
-import { analyzeAndSaveMatchStats } from "./libs/analysis/analysis";
+import { analyzeAndSaveMatchStats, analyzeAndSaveTopMatchStats } from "./libs/analysis/analysis";
 import { analysisChecker } from "./libs/analysis/analysis-checker";
 
 const runtimeOpts: Record<string, "1GB" | any> = {
@@ -41,6 +41,8 @@ const runAnalysis = functions
     );
 
     await analyzeAndSaveMatchStats(matches, start);
+
+    await analyzeAndSaveTopMatchStats(matches, start);
 
     await analysisChecker();
 

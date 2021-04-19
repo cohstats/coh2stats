@@ -1,5 +1,7 @@
 # COH2 CHARTS, STATS, LEADERBOARDS
 
+## https://coh2stats.com/
+
 This project is set to create new usage charts for the game COH2.
 The author of the game doesn't provide any global statistics.  
 http://www.companyofheroes.com/leaderboards

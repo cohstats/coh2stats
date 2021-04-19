@@ -1,5 +1,5 @@
 import { firestore } from "firebase-admin";
-import { frequencyType } from "./libs/types";
+import { frequencyType, RaceNameInLadders, TypeOfLadder } from "./libs/types";
 import DocumentReference = firestore.DocumentReference;
 import DocumentData = firestore.DocumentData;
 import CollectionReference = firestore.CollectionReference;
@@ -22,8 +22,44 @@ const getStatsDocRef = (
   return db.collection(`stats`).doc(`${type}`).collection(`${timestamp}`).doc("stats");
 };
 
+const getTopStatsDocRef = (
+  timestamp: string | number,
+  type: frequencyType,
+): DocumentReference<DocumentData> => {
+  // We need to follow pattern collection/doc/collection/doc
+  return db.collection(`stats`).doc(`${type}`).collection(`${timestamp}`).doc("topStats");
+};
+
+const getTopLadderUniquePlayersDocRef = (
+  timestamp: string | number,
+  type: frequencyType,
+): DocumentReference<DocumentData> => {
+  // We need to follow pattern collection/doc/collection/doc
+  return db
+    .collection(`stats`)
+    .doc(`${type}`)
+    .collection(`${timestamp}`)
+    .doc("topUniquePlayersAmount");
+};
+
 const getGlobalStatsDocRef = (): DocumentReference<DocumentData> => {
   return db.collection(`stats`).doc(`global`);
 };
 
-export { getMatchDocRef, getStatsDocRef, getGlobalStatsDocRef, getMatchCollectionRef };
+const getLadderDocRef = (
+  timestamp: string | number,
+  type: TypeOfLadder,
+  race: RaceNameInLadders | "allies" | "axis",
+): DocumentReference<DocumentData> => {
+  return db.collection("ladders").doc(`${timestamp}`).collection(type).doc(race);
+};
+
+export {
+  getMatchDocRef,
+  getStatsDocRef,
+  getGlobalStatsDocRef,
+  getMatchCollectionRef,
+  getLadderDocRef,
+  getTopStatsDocRef,
+  getTopLadderUniquePlayersDocRef,
+};

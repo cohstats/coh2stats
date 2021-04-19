@@ -4,30 +4,47 @@
  */
 import * as functions from "firebase-functions";
 import { DEFAULT_FUNCTIONS_LOCATION } from "./constants";
-// import { firestore } from "firebase-admin";
-// import { analyzeAndSaveMatchStats } from "./libs/analysis/analysis";
-// import { getLastWeekTimeStamps } from "./libs/helpers";
-// import { runAndSaveMultiDayAnalysis } from "./libs/analysis/multi-day-analysis";
-// import { getSteamPlayerSummaries } from "./libs/steam-api";
-import { runAndSaveMultiDayAnalysis } from "./libs/analysis/multi-day-analysis";
-// import {getYesterdayDateTimestamp} from "./libs/helpers";
-// import { ProcessedMatch } from "./libs/types";
+
+import { getDateTimeStampInterval, printUTCTime } from "./libs/helpers";
+import { ProcessedMatch } from "./libs/types";
+import { getMatchCollectionRef } from "./fb-paths";
+import { analyzeAndSaveTopMatchStats } from "./libs/analysis/analysis";
 
 // const db = firestore();
 
-const runtimeOpts: Record<string, "256MB" | any> = {
+const runtimeOpts: Record<string, "1GB" | any> = {
   timeoutSeconds: 540,
-  memory: "256MB",
+  memory: "1GB",
 };
 
 const runTest = functions
   .region(DEFAULT_FUNCTIONS_LOCATION)
   .runWith(runtimeOpts)
   .https.onRequest(async (request, response) => {
-    // const result = await getSteamPlayerSummaries(["76561197960435530", "76561198034318060"]);
-    // console.log(result);
+    for (let i = 1; i < 17; i++) {
+      const { start, end } = getDateTimeStampInterval(i);
 
-    await runAndSaveMultiDayAnalysis(new Date(2021, 2, 25), "week");
+      const matches: Array<ProcessedMatch> = [];
+
+      const snapshot = await getMatchCollectionRef()
+        .where("startgametime", ">=", start)
+        .where("startgametime", "<=", end)
+        .get();
+
+      snapshot.forEach((doc) => {
+        matches.push(doc.data() as ProcessedMatch);
+      });
+
+      functions.logger.info(
+        `Retrieved ${matches.length} matches which started between ${printUTCTime(
+          start,
+        )}, ${start} and ${printUTCTime(end)}, ${end} for analysis.`,
+      );
+
+      await analyzeAndSaveTopMatchStats(matches, start);
+
+      functions.logger.info(`Analysis for the date ${printUTCTime(start)} finished.`);
+    }
 
     response.send("Finished running test functions");
   });

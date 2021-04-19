@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import StatsDetails from "./stats-details";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch, useLocation } from "react-router-dom";
 import { useHistory, useParams } from "react-router";
 import { useFirestoreConnect } from "react-redux-firebase";
 import routes from "../../routes";
-import { ConfigProvider, Select, Space } from "antd";
+import { ConfigProvider, Select, Space, Radio, Typography } from "antd";
 import DatePicker from "../../components/date-picker";
 import {
-  capitalize,
   convertDateToDayTimestamp,
   convertDateToStartOfMonth,
   getPreviousWeekTimeStamp,
@@ -17,9 +16,14 @@ import { validRaceNames, validStatsTypes } from "../../coh/types";
 import enGB from "antd/lib/locale/en_GB";
 
 import { isBefore, isAfter } from "date-fns";
-import { statsBase } from "../../titles";
+import { Helper } from "../../components/helper";
+const { Link } = Typography;
 
 type DatePickerType = "time" | "date" | "week" | "month" | "quarter" | "year" | undefined;
+
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
 
 const Stats: React.FC = () => {
   const { frequency, timestamp, type, race } = useParams<{
@@ -31,6 +35,15 @@ const Stats: React.FC = () => {
   const { push } = useHistory();
   const { Option } = Select;
 
+  const query = useQuery();
+
+  const statsSourceQuery = query.get("statsSource");
+
+  let statDocToBeLoaded = "stats";
+  if (statsSourceQuery === "top200") {
+    statDocToBeLoaded = "topStats";
+  }
+
   useFirestoreConnect([
     {
       collection: "stats",
@@ -38,7 +51,7 @@ const Stats: React.FC = () => {
       subcollections: [
         {
           collection: timestamp,
-          doc: "stats",
+          doc: statDocToBeLoaded,
         },
       ],
       storeAs: "stats",
@@ -47,6 +60,7 @@ const Stats: React.FC = () => {
 
   const settableFrequently = frequency ? frequency : "week";
   const [datePickerType, setDatePickerType] = useState(settableFrequently as DatePickerType);
+  const [statsSource, setStatsSource] = useState(statsSourceQuery ? statsSourceQuery : "all");
   const [dateValue, setDateValue] = useState(
     timestamp
       ? new Date(parseInt(timestamp) * 1000)
@@ -86,6 +100,12 @@ const Stats: React.FC = () => {
   React.useEffect(() => {
     let typeToLoad = "4v4";
     let raceToLoad = "wermacht";
+    let searchValue = "";
+
+    if (statsSource) {
+      // We should not use it like this
+      searchValue = `?statsSource=${statsSource}`;
+    }
 
     if (validStatsTypes.includes(type)) {
       typeToLoad = type;
@@ -95,15 +115,16 @@ const Stats: React.FC = () => {
       raceToLoad = race;
     }
 
-    push(
-      routes.fullStatsDetails(
+    push({
+      pathname: routes.fullStatsDetails(
         datePickerType,
         convertDateToDayTimestamp(dateValue).toString(),
         typeToLoad,
         raceToLoad,
       ),
-    );
-  }, [datePickerType, dateValue, push]);
+      search: searchValue,
+    });
+  }, [datePickerType, dateValue, push, statsSource]);
 
   const onDatePickerTypeSelect = (value: DatePickerType) => {
     if (value === "week") {
@@ -125,6 +146,17 @@ const Stats: React.FC = () => {
     }
 
     setDateValue(new Date(actualDate));
+  };
+
+  const onStatsSourceChange = (e: any) => {
+    const {
+      target: { value },
+    } = e;
+    if (value) {
+      setStatsSource(value);
+    } else {
+      setStatsSource("all");
+    }
   };
 
   return (
@@ -150,6 +182,38 @@ const Stats: React.FC = () => {
             </Option>
           </Select>
           <PickerWithType type={datePickerType} onChange={onDateSelect} />
+          Ranking:
+          <Radio.Group onChange={onStatsSourceChange} value={statsSource}>
+            <Radio value={"all"}>
+              All*{" "}
+              <Helper
+                text={
+                  <>
+                    This does not include all games played. Please see{" "}
+                    <Link href={"/about"} target="_blank">
+                      about page
+                    </Link>{" "}
+                    to fully understand which matches are included in this statistics.
+                  </>
+                }
+              />
+            </Radio>
+            <Radio value={"top200"}>
+              Top 200{" "}
+              <Helper
+                text={
+                  <>
+                    Includes only matches where all players have at least rank 200 for that
+                    particular mode. For example 1v1, 2v2, 3v3, 4v4. See{" "}
+                    <Link href={"/about#top200"} target="_blank">
+                      about page
+                    </Link>{" "}
+                    to fully understand which matches are included in this statistics.
+                  </>
+                }
+              />{" "}
+            </Radio>
+          </Radio.Group>
         </Space>
         <StatsDetails />
       </Route>

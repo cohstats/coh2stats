@@ -5,6 +5,7 @@ import routes from "../routes";
 import { useHistory, useRouteMatch } from "react-router";
 import { PlayerSearchInput } from "./header-search";
 import { aboutBase, bulletinsBase, commanderBase } from "../titles";
+import SubMenu from "antd/es/menu/SubMenu";
 
 const pageTitleSwitch = (path: string) => {
   switch (path) {
@@ -93,9 +94,17 @@ export const MainHeader: React.FC = () => {
           <Menu.Item key={routes.bulletinsBase()} onClick={onMenuClick}>
             Intel Bulletins
           </Menu.Item>
-          <Menu.Item key={routes.aboutBase()} onClick={onMenuClick}>
-            About
-          </Menu.Item>
+          <SubMenu key={routes.aboutBase()} title={"About"}>
+            <Menu.Item key={routes.aboutBase()} onClick={onMenuClick}>
+              About
+            </Menu.Item>
+            <Menu.Item key={`${routes.aboutBase()}#bugs`} onClick={onMenuClick}>
+              Contribution
+            </Menu.Item>
+            <Menu.Item key={`${routes.aboutBase()}#donations`} onClick={onMenuClick}>
+              Donation
+            </Menu.Item>
+          </SubMenu>
         </Menu>
       </Space>
     </Header>
