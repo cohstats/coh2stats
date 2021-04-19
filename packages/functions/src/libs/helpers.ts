@@ -165,6 +165,7 @@ export {
   getYesterdayDateTimestamp,
   sumValuesOfObjects,
   getYesterdayDateTimeStampInterval,
+  getDateTimeStampInterval,
   printUTCTime,
   getDateTimeStampsInRange,
   getLastWeekTimeStamps,

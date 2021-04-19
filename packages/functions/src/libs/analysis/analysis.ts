@@ -86,7 +86,12 @@ const analyzeAndSaveTopMatchStats = async (
 
   const stats = analyzeTopMatches(matches, ladderIDs);
   await saveTopAnalysis(stats, dateTimeStamp);
-  await globallyAnalyzedTopMatches(matches.length);
+  await globallyAnalyzedTopMatches(
+    stats["1v1"]["matchCount"] +
+      stats["2v2"]["matchCount"] +
+      stats["3v3"]["matchCount"] +
+      stats["4v4"]["matchCount"],
+  );
 
   functions.logger.log(`Stats analyzed, going to save them.`);
 };

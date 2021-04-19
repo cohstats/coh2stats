@@ -5,11 +5,10 @@
 import * as functions from "firebase-functions";
 import { DEFAULT_FUNCTIONS_LOCATION } from "./constants";
 
-import { getYesterdayDateTimeStampInterval, printUTCTime } from "./libs/helpers";
+import {getDateTimeStampInterval, printUTCTime} from "./libs/helpers";
 import { ProcessedMatch } from "./libs/types";
 import { getMatchCollectionRef } from "./fb-paths";
-import { analyzeAndSaveMatchStats, analyzeAndSaveTopMatchStats } from "./libs/analysis/analysis";
-import { analysisChecker } from "./libs/analysis/analysis-checker";
+import { analyzeAndSaveTopMatchStats } from "./libs/analysis/analysis";
 
 // const db = firestore();
 
@@ -22,32 +21,31 @@ const runTest = functions
   .region(DEFAULT_FUNCTIONS_LOCATION)
   .runWith(runtimeOpts)
   .https.onRequest(async (request, response) => {
-    const { start, end } = getYesterdayDateTimeStampInterval();
 
-    const matches: Array<ProcessedMatch> = [];
+    for(let i = 1; i < 17; i++){
+      const { start, end } = getDateTimeStampInterval(i);
 
-    const snapshot = await getMatchCollectionRef()
-      .where("startgametime", ">=", start)
-      .where("startgametime", "<=", end)
-      .get();
+      const matches: Array<ProcessedMatch> = [];
 
-    snapshot.forEach((doc) => {
-      matches.push(doc.data() as ProcessedMatch);
-    });
+      const snapshot = await getMatchCollectionRef()
+        .where("startgametime", ">=", start)
+        .where("startgametime", "<=", end)
+        .get();
 
-    functions.logger.info(
-      `Retrieved ${matches.length} matches which started between ${printUTCTime(
-        start,
-      )}, ${start} and ${printUTCTime(end)}, ${end} for analysis.`,
-    );
+      snapshot.forEach((doc) => {
+        matches.push(doc.data() as ProcessedMatch);
+      });
 
-    await analyzeAndSaveMatchStats(matches, start);
+      functions.logger.info(
+        `Retrieved ${matches.length} matches which started between ${printUTCTime(
+          start,
+        )}, ${start} and ${printUTCTime(end)}, ${end} for analysis.`,
+      );
 
-    await analyzeAndSaveTopMatchStats(matches, start);
+      await analyzeAndSaveTopMatchStats(matches, start);
 
-    await analysisChecker();
-
-    functions.logger.info(`Analysis for the date ${printUTCTime(start)} finished.`);
+      functions.logger.info(`Analysis for the date ${printUTCTime(start)} finished.`);
+    }
 
     response.send("Finished running test functions");
   });
