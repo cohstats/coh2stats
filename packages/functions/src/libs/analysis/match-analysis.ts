@@ -23,7 +23,7 @@ const analyzeMatch = (match: ProcessedMatch, stats: Record<string, any>) => {
     if (playerReport.resulttype == resultType.win) {
       const faction = raceIds[playerReport.race_id];
       stats[faction]["wins"] = stats[faction]["wins"] + 1 || 1;
-    } else {
+    } else if(playerReport.resulttype == resultType.lose) {
       const faction = raceIds[playerReport.race_id];
       stats[faction]["losses"] = stats[faction]["losses"] + 1 || 1;
     }
