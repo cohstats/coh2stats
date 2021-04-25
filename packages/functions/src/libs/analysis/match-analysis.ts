@@ -23,7 +23,7 @@ const analyzeMatch = (match: ProcessedMatch, stats: Record<string, any>) => {
     if (playerReport.resulttype == resultType.win) {
       const faction = raceIds[playerReport.race_id];
       stats[faction]["wins"] = stats[faction]["wins"] + 1 || 1;
-    } else if(playerReport.resulttype == resultType.lose) {
+    } else if (playerReport.resulttype == resultType.lose) {
       const faction = raceIds[playerReport.race_id];
       stats[faction]["losses"] = stats[faction]["losses"] + 1 || 1;
     }
@@ -51,6 +51,7 @@ const analyzeMatch = (match: ProcessedMatch, stats: Record<string, any>) => {
 
 /**
  * We want to do analysis only on the matches are from automatch without AI
+ * and games which ended with win or lose, other result types are ignored
  * @param matches
  */
 const filterOnlyAutomatchVsPlayers = (matches: Array<ProcessedMatch>) => {
@@ -58,8 +59,15 @@ const filterOnlyAutomatchVsPlayers = (matches: Array<ProcessedMatch>) => {
   // about that param
 
   return matches.filter((match: ProcessedMatch) => {
+    // The result of the match must be win/lose
+    const regularMatch = match.matchhistoryreportresults.every((playerReport) => {
+      return (
+        playerReport.resulttype == resultType.win || playerReport.resulttype == resultType.lose
+      );
+    });
+
     // Match type_id 5+ is automatch vs AI
-    return match["description"] == "AUTOMATCH" && match["matchtype_id"] < 5;
+    return match["description"] == "AUTOMATCH" && match["matchtype_id"] < 5 && regularMatch;
   });
 };
 

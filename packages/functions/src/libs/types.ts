@@ -119,7 +119,7 @@ const validLadderNonTeamTypes = ["1v1", "2v2", "3v3", "4v4"];
 const validLadderTypes = ["1v1", "2v2", "3v3", "4v4", "team2", "team3", "team4"];
 
 interface steamIDsInLadderInterface {
-  "1v1": Array<string>;
+  "1v1": Array<string>; //string is in the format of just number  ( does not include /steam/)
   "2v2": Array<string>;
   "3v3": Array<string>;
   "4v4": Array<string>;
