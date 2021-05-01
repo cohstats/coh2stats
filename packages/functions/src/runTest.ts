@@ -5,12 +5,11 @@
 import * as functions from "firebase-functions";
 import { DEFAULT_FUNCTIONS_LOCATION } from "./constants";
 
-// import {runAndSaveMultiDayAnalysis} from "./libs/analysis/multi-day-analysis";
-// import {getDateTimeStampInterval, printUTCTime} from "./libs/helpers";
-// import {getMatchCollectionRef} from "./fb-paths";
-// import {ProcessedMatch} from "./libs/types";
-// import {analyzeAndSaveTopMatchStats} from "./libs/analysis/analysis";
-import { runAndSaveMultiDayAnalysis } from "./libs/analysis/multi-day-analysis";
+//import {runAndSaveMultiDayAnalysis} from "./libs/analysis/multi-day-analysis";
+import { getDateTimeStampInterval, printUTCTime } from "./libs/helpers";
+import { getMatchCollectionRef } from "./fb-paths";
+import { ProcessedMatch } from "./libs/types";
+import { analyzeAndSaveTopMatchStats } from "./libs/analysis/analysis";
 
 // const db = firestore();
 
@@ -23,32 +22,32 @@ const runTest = functions
   .region(DEFAULT_FUNCTIONS_LOCATION)
   .runWith(runtimeOpts)
   .https.onRequest(async (request, response) => {
-    await runAndSaveMultiDayAnalysis(new Date(2021, 2, 12), "month", "top");
+    // await runAndSaveMultiDayAnalysis(new Date(2021, 2, 12), "month", "top");
 
-    // for (let i = 23; i < 32; i++) {
-    //   const { start, end } = getDateTimeStampInterval(i, new Date(2021,2));
-    //
-    //   const matches: Array<ProcessedMatch> = [];
-    //
-    //   const snapshot = await getMatchCollectionRef()
-    //     .where("startgametime", ">=", start)
-    //     .where("startgametime", "<=", end)
-    //     .get();
-    //
-    //   snapshot.forEach((doc) => {
-    //     matches.push(doc.data() as ProcessedMatch);
-    //   });
-    //
-    //   functions.logger.info(
-    //     `Retrieved ${matches.length} matches which started between ${printUTCTime(
-    //       start,
-    //     )}, ${start} and ${printUTCTime(end)}, ${end} for analysis.`,
-    //   );
-    //
-    //   await analyzeAndSaveTopMatchStats(matches, start);
-    //
-    //   functions.logger.info(`Analysis for the date ${printUTCTime(start)} finished.`);
-    // }
+    for (let i = 1; i < 2; i++) {
+      const { start, end } = getDateTimeStampInterval(i, new Date(2021, 3));
+
+      const matches: Array<ProcessedMatch> = [];
+
+      const snapshot = await getMatchCollectionRef()
+        .where("startgametime", ">=", start)
+        .where("startgametime", "<=", end)
+        .get();
+
+      snapshot.forEach((doc) => {
+        matches.push(doc.data() as ProcessedMatch);
+      });
+
+      functions.logger.info(
+        `Retrieved ${matches.length} matches which started between ${printUTCTime(
+          start,
+        )}, ${start} and ${printUTCTime(end)}, ${end} for analysis.`,
+      );
+
+      await analyzeAndSaveTopMatchStats(matches, start);
+
+      functions.logger.info(`Analysis for the date ${printUTCTime(start)} finished.`);
+    }
 
     response.send("Finished running test functions");
   });

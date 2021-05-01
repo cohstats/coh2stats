@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Header } from "antd/lib/layout/layout";
-import { Menu, Space } from "antd";
+import { Badge, Menu, Space, Tooltip } from "antd";
 import routes from "../routes";
 import { useHistory, useRouteMatch } from "react-router";
 import { PlayerSearchInput } from "./header-search";
 import { aboutBase, bulletinsBase, commanderBase } from "../titles";
 import SubMenu from "antd/es/menu/SubMenu";
+import { firebase, useData, useLoading } from "../firebase";
 
 const pageTitleSwitch = (path: string) => {
   switch (path) {
@@ -26,6 +27,22 @@ const pageTitleSwitch = (path: string) => {
 
 export const MainHeader: React.FC = () => {
   const { push } = useHistory();
+  const isOnlinePlayersLoading = useLoading("onlinePlayers");
+  const onlinePlayersData: Record<string, any> = useData("onlinePlayers");
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const triggerDBUpdate = firebase
+          .functions()
+          .httpsCallable("triggerNumberOfOnlinePlayers");
+        await triggerDBUpdate();
+      } catch (e) {
+        // We are just triggering the update we don't care about the
+        // error. Btw it can fail in case the function is already running.
+      }
+    })();
+  }, []);
 
   const commandersMatch = useRouteMatch({
     path: routes.commanderBase(),
@@ -57,7 +74,39 @@ export const MainHeader: React.FC = () => {
 
   return (
     <Header style={{ height: "auto" }}>
-      <PlayerSearchInput />
+      <div
+        style={{
+          position: "relative",
+          float: "right",
+        }}
+      >
+        <Space direction={"horizontal"} size={"small"}>
+          {!isOnlinePlayersLoading && (
+            <Tooltip
+              title={`Amount of online Steam players in game Company of Heroes 2 as of  ${new Date(
+                onlinePlayersData["timeStamp"] * 1000,
+              ).toLocaleString()}`}
+            >
+              <span
+                style={{
+                  color: "#f0f2f5",
+                }}
+              >
+                Ingame players
+              </span>
+
+              <Badge
+                className="site-badge-count-109"
+                count={onlinePlayersData["onlinePlayers"]}
+                style={{ backgroundColor: "#52c41a", boxShadow: "0 0 0 0", marginLeft: 10 }}
+                overflowCount={99999}
+              />
+            </Tooltip>
+          )}
+
+          <PlayerSearchInput />
+        </Space>
+      </div>
       <Space direction={"horizontal"} size={"large"}>
         <div
           onClick={onTitleClick}

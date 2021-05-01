@@ -66,7 +66,7 @@ const callGetPlayerMatches = async (profileIds: Set<string>) => {
  *
  * This also triggers match downloads
  */
-const getAndSaveAllLadders = async () => {
+const getAndSaveAllLadders = async (): Promise<void> => {
   const currentDateTimeStamp = getCurrentDateTimestamp();
   let profileIDs: Set<string> = new Set();
   let totalQueriedPositions = 0;

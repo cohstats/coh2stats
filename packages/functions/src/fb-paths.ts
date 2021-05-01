@@ -30,6 +30,10 @@ const getTopStatsDocRef = (
   return db.collection(`stats`).doc(`${type}`).collection(`${timestamp}`).doc("topStats");
 };
 
+const getOnlinePlayersDocRef = (): DocumentReference<DocumentData> => {
+  return db.collection(`stats`).doc(`onlinePlayers`);
+};
+
 const getTopLadderUniquePlayersDocRef = (
   timestamp: string | number,
   type: frequencyType,
@@ -62,4 +66,5 @@ export {
   getLadderDocRef,
   getTopStatsDocRef,
   getTopLadderUniquePlayersDocRef,
+  getOnlinePlayersDocRef,
 };

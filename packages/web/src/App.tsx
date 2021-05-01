@@ -26,6 +26,11 @@ const App: React.FC = () => {
       doc: "global",
       storeAs: "globalStats",
     },
+    {
+      collection: "stats",
+      doc: "onlinePlayers",
+      storeAs: "onlinePlayers",
+    },
   ]);
 
   return (

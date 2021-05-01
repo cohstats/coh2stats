@@ -24,10 +24,10 @@ const About: React.FC = () => {
   useMountEffect(() => {
     const hash = window.location.hash;
     console.log("scrolling", hash, donationsRef);
-    if (hash == "#donations" && donationsRef) {
+    if (hash === "#donations" && donationsRef) {
       // @ts-ignore
       donationsRef.current.scrollIntoView();
-    } else if (hash == "#bugs" && donationsRef) {
+    } else if (hash === "#bugs" && donationsRef) {
       // @ts-ignore
       contributionRef.current.scrollIntoView();
     }
