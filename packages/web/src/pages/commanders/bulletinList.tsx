@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Table, Tag, Space, Col, Row, Input, Button } from "antd";
 
 import { IntelBulletinData } from "../../coh/types";
