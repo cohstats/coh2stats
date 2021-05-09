@@ -108,6 +108,17 @@ const raceIds: Record<number, string> = {
   4: "british",
 };
 
+const raceIdsShortCuts: Record<number, string> = {
+  0: "W",
+  1: "S",
+  2: "O", // west-german or oberkommando
+  3: "U",
+  4: "B",
+};
+
+const axisRaceIds = [0, 2];
+const alliesRaceIds = [1, 3, 4];
+
 const resultType = {
   lose: 0,
   win: 1,
@@ -119,6 +130,9 @@ const matchItemsLocation = {
 };
 
 export {
+  axisRaceIds,
+  alliesRaceIds,
+  raceIdsShortCuts,
   baseUrl,
   getLadderUrl,
   leaderboardsID,

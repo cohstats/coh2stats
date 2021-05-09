@@ -9,7 +9,7 @@ import { DEFAULT_FUNCTIONS_LOCATION } from "./constants";
 import { getDateTimeStampInterval, printUTCTime } from "./libs/helpers";
 import { getMatchCollectionRef } from "./fb-paths";
 import { ProcessedMatch } from "./libs/types";
-import { analyzeAndSaveTopMatchStats } from "./libs/analysis/analysis";
+import { analyzeAndSaveMatchStats, analyzeAndSaveTopMatchStats } from "./libs/analysis/analysis";
 
 // const db = firestore();
 
@@ -24,8 +24,10 @@ const runTest = functions
   .https.onRequest(async (request, response) => {
     // await runAndSaveMultiDayAnalysis(new Date(2021, 2, 12), "month", "top");
 
-    for (let i = 1; i < 2; i++) {
-      const { start, end } = getDateTimeStampInterval(i, new Date(2021, 3));
+    for (let i = 1; i < 9; i++) {
+      functions.logger.info("Start analysis for one day");
+
+      const { start, end } = getDateTimeStampInterval(i);
 
       const matches: Array<ProcessedMatch> = [];
 
@@ -44,9 +46,10 @@ const runTest = functions
         )}, ${start} and ${printUTCTime(end)}, ${end} for analysis.`,
       );
 
+      await analyzeAndSaveMatchStats(matches, start);
       await analyzeAndSaveTopMatchStats(matches, start);
 
-      functions.logger.info(`Analysis for the date ${printUTCTime(start)} finished.`);
+      functions.logger.info("Finished analysis for one day");
     }
 
     response.send("Finished running test functions");

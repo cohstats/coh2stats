@@ -82,6 +82,7 @@ const runAndSaveMultiDayAnalysis = async (
           delete docData[key].intelBulletins;
           delete docData[key].commanders;
           delete docData[key].maps;
+          delete docData[key].factionMatrix;
         }
       }
 
