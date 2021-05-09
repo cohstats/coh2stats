@@ -6,6 +6,7 @@ import {
   resultType,
 } from "../coh2-api";
 import { ProcessedMatch, steamIDsInLadderInterface } from "../types";
+import { addFactionMatrixAnalysisToStats } from "./composition";
 
 /**
  * FYI: This function doesn't do copy of the stats object - uses reference.
@@ -161,6 +162,7 @@ const createStats = (matches: Array<ProcessedMatch>) => {
 
   for (const match of matches) {
     stats = analyzeMatch(match, stats);
+    stats = addFactionMatrixAnalysisToStats(match, stats);
   }
   return stats;
 };
