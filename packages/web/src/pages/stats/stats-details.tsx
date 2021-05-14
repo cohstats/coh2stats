@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Card, Radio, RadioChangeEvent, Space } from "antd";
+import { Row, Card, Radio, RadioChangeEvent, Space, Typography } from "antd";
 import { useData, useLoading } from "../../firebase";
 import { Loading } from "../../components/loading";
 import { MapBarChart } from "../../components/charts/maps-bar";
@@ -9,12 +9,14 @@ import { useHistory, useParams } from "react-router";
 import { CommandersBarChart } from "../../components/charts/commanders-bar";
 import { BulletinsBarChart } from "../../components/charts/bulletins-bar";
 import { Helper } from "../../components/helper";
-import Title from "antd/es/typography/Title";
 import routes from "../../routes";
 import { validStatsTypes } from "../../coh/types";
 import { statsBase } from "../../titles";
 import { capitalize } from "../../helpers";
 import { useLocation } from "react-router-dom";
+import { FactionVsFactionCard } from "./factions";
+
+const { Title, Text } = Typography;
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -83,17 +85,6 @@ const StatsDetails: React.FC = () => {
     });
   };
 
-  const subTitle = (() => {
-    if (sourceIsAll) {
-      return "This does not include all games which were played. See about page to understand the scope.";
-    } else {
-      if (specificData["matchCount"] < 2000) {
-        return "This analysis has low amount of matches. The results might not be precise.";
-      }
-    }
-    return "";
-  })();
-
   return (
     <>
       <Row justify={"center"}>
@@ -119,18 +110,39 @@ const StatsDetails: React.FC = () => {
             Amount of games for this analysis {`${specificData["matchCount"]}`}
           </span>
           <br />
-          <span>{subTitle}</span>
+          <span>
+            {sourceIsAll && (
+              <>
+                This does not include all games which were played. See about page to understand
+                the scope
+                <br />
+              </>
+            )}
+            {specificData["matchCount"] < 2000 && (
+              <>
+                This analysis has <Text strong>low amount of matches</Text>. The results might not
+                be precise.
+              </>
+            )}
+          </span>
         </div>
       </Row>
       <Row justify={"center"}>
         <Space size={"large"} wrap>
-          <Card title={`Games Played ${type}`} style={{ width: 585, height: 600 }}>
+          <Card title={`Games Played ${type}`} style={{ width: 485, height: 500 }}>
             <WinsChart data={specificData} />
           </Card>
-          <Card title={`Winrate ${type}`} style={{ width: 585, height: 600 }}>
+          <Card title={`Winrate ${type}`} style={{ width: 485, height: 500 }}>
             {WinRateChart(specificData)}
           </Card>
         </Space>
+      </Row>
+      <Row justify={"center"}>
+        <FactionVsFactionCard
+          title={`Team composition matrix ${type}`}
+          data={specificData}
+          style={{ marginTop: 20 }}
+        />
       </Row>
       <Row justify={"center"}>
         <Card title={`Maps ${type}`} style={{ width: 1200, height: 700, marginTop: 20 }}>

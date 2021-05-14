@@ -8,18 +8,18 @@ const calculateWinRate = (data: { wins: number; losses: number }) => {
 };
 
 export const WinRateChart = (data: Record<string, any>) => {
-  const chartData = [
-    { ...{ faction: "British", ...calculateWinRate(data["british"]) } },
-    { ...{ faction: "Soviet", ...calculateWinRate(data["soviet"]) } },
-    { ...{ faction: "USF", ...calculateWinRate(data["usf"]) } },
-    { ...{ faction: "Wermacht", ...calculateWinRate(data["wermacht"]) } },
+  let chartData = [
     { ...{ faction: "WGerman", ...calculateWinRate(data["wgerman"]) } },
+    { ...{ faction: "Wermacht", ...calculateWinRate(data["wermacht"]) } },
+    { ...{ faction: "USF", ...calculateWinRate(data["usf"]) } },
+    { ...{ faction: "Soviet", ...calculateWinRate(data["soviet"]) } },
+    { ...{ faction: "British", ...calculateWinRate(data["british"]) } },
   ];
 
   return (
     <Bar
-      height={500}
-      width={550}
+      height={400}
+      width={450}
       margin={{ top: 0, right: 30, bottom: 40, left: 70 }}
       // @ts-ignore
       data={chartData as data[] | undefined}
