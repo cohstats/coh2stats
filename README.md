@@ -47,6 +47,17 @@ Tagged versions are automatically deployed to https://coh2stats.com/
 
 `master` branch is automatically deployed to https://coh2-ladders-dev.web.app/
 
+### Env variables
+
+Env variables for the functions are deployed manually - not integrated in the CI/CD.
+See `config.ts`
+
+```javascript
+const config = firebaseConfig().env;
+```
+
+See https://firebase.google.com/docs/functions/config-env for more info.
+
 ### Development
 
 The repository is yarn workspace. Use `yarn` to manage this.
