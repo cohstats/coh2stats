@@ -39,11 +39,11 @@ const getSaveTimeStamp = (date: Date | number, frequency: frequencyType) => {
   }
 };
 
-const runAndSaveMultiDayAnalysis = async (
+const generateMultiDayAnalysis = async (
   date: Date | number,
   frequency: frequencyType = "week",
   type: "normal" | "top" = "normal",
-): Promise<void> => {
+): Promise<Record<string, any>> => {
   const eachDate = getTimeStamps(date, frequency);
   functions.logger.log(
     `Stats - ${frequency} ${type} analysis for date ${date} started - have ${eachDate.length} dates.`,
@@ -68,6 +68,11 @@ const runAndSaveMultiDayAnalysis = async (
     throw Object.assign(new Error("Not found any daily stats for"), { eachDate });
   }
 
+  if (eachDate.length !== Object.keys(allDocs).length) {
+    functions.logger.warn(`We received different amount of docs than generate timestamps
+    we have ${eachDate.length} timestamp but ${Object.keys(allDocs).length} docs.`);
+  }
+
   const finalMultiDayStats: Record<string, any> = { days: {} };
 
   for (const [timeStamp, doc] of Object.entries(allDocs)) {
@@ -76,19 +81,33 @@ const runAndSaveMultiDayAnalysis = async (
 
       sumValuesOfObjects(finalMultiDayStats, docData as StatDict);
 
-      if (docData) {
-        for (const key of Object.keys(docData)) {
+      const docCopy = JSON.parse(JSON.stringify(docData));
+
+      if (docCopy) {
+        for (const key of Object.keys(docCopy)) {
           // We don't need to keep ib and commanders for each day
-          delete docData[key].intelBulletins;
-          delete docData[key].commanders;
-          delete docData[key].maps;
-          delete docData[key].factionMatrix;
+          delete docCopy[key].intelBulletins;
+          delete docCopy[key].commanders;
+          delete docCopy[key].maps;
+          delete docCopy[key].factionMatrix;
         }
       }
 
-      finalMultiDayStats.days[timeStamp] = docData;
+      finalMultiDayStats.days[timeStamp] = docCopy;
+    } else {
+      functions.logger.warn(`Doc missing ${doc} for timestamp ${timeStamp}`);
     }
   }
+
+  return finalMultiDayStats;
+};
+
+const runAndSaveMultiDayAnalysis = async (
+  date: Date | number,
+  frequency: frequencyType = "week",
+  type: "normal" | "top" = "normal",
+): Promise<void> => {
+  const finalMultiDayStats = await generateMultiDayAnalysis(date, frequency, type);
 
   const saveTimeStamp = getSaveTimeStamp(date, frequency);
 
@@ -103,4 +122,4 @@ const runAndSaveMultiDayAnalysis = async (
   );
 };
 
-export { runAndSaveMultiDayAnalysis };
+export { runAndSaveMultiDayAnalysis, generateMultiDayAnalysis };
