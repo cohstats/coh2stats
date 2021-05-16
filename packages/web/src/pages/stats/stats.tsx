@@ -104,7 +104,7 @@ const Stats: React.FC = () => {
 
     if (statsSource) {
       // We should not use it like this
-      searchValue = `?statsSource=${statsSource}`;
+      searchValue = `?${new URLSearchParams({ statsSource: statsSource }).toString()}`;
     }
 
     if (validStatsTypes.includes(type)) {

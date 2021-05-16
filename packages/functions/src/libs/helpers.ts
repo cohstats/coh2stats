@@ -125,6 +125,7 @@ const isMonday = (date: Date): boolean => {
 /**
  * Takes 2 objects.
  * This function is not immutable! Modifies the first object.
+ * btw this was bullshit it should have been immutable!!
  *
  * Maybe better name?
  * @param masterObject

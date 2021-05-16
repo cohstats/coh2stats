@@ -16,8 +16,8 @@ export const WinsChart: React.FC<IProps> = ({ data }) => {
 
   return (
     <Bar
-      height={500}
-      width={550}
+      height={400}
+      width={450}
       margin={{ top: 10, right: 80, bottom: 40, left: 40 }}
       // @ts-ignore
       data={chartData as data[] | undefined}

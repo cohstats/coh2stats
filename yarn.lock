@@ -1681,6 +1681,17 @@
     react-spring "9.1.2"
     resize-observer-polyfill "^1.5.1"
 
+"@nivo/heatmap@^0.69.1":
+  version "0.69.1"
+  resolved "https://registry.yarnpkg.com/@nivo/heatmap/-/heatmap-0.69.1.tgz#baf2f509425513015bcf01bc8c2217573ccfc777"
+  integrity sha512-2L3etX29jVCazitoKepx3G+2W+jU0LTuXdhuN9g49TnMbWHhA9TjA/dXTHe3xzsosgWX7MVeqNmGCuvUJeD6Sw==
+  dependencies:
+    "@nivo/axes" "0.69.1"
+    "@nivo/colors" "0.69.0"
+    "@nivo/tooltip" "0.69.0"
+    d3-scale "^3.2.3"
+    react-spring "9.1.2"
+
 "@nivo/legends@0.69.0":
   version "0.69.0"
   resolved "https://registry.yarnpkg.com/@nivo/legends/-/legends-0.69.0.tgz#af4423d0485c0e4c65c531386bd59a8b78c17a6c"
