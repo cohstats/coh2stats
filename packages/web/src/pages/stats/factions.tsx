@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 import { Card, Empty, Radio } from "antd";
 import { HeatMapChart } from "../../components/charts/factions-heatmap";
 import { Helper } from "../../components/helper";
+import { useQuery } from "../../helpers";
 
 interface IProps {
   data: Record<string, any>;
@@ -21,8 +22,12 @@ const extractFactionString = (factionString: string): Record<string, string> => 
 export const FactionVsFactionCard: React.FC<IProps> = ({ title, data, style }) => {
   const factionData: Record<string, Record<string, number>> = data["factionMatrix"];
 
+  // We should use useMemo for these values, there is lot of iterations which are recalculated "unnecessary"
   const keysForHeatMapSet: Set<string> = new Set();
   const factionDataByKey: Record<string, Record<string, any>> = {};
+
+  // const query = useQuery();
+  // const statsSourceQuery = query.get("statsSource");
 
   const [factionWinRate, setFactionWinRate] = React.useState("axis");
   const [heatmapValues, setHeatmapValues] = React.useState("winRate");
@@ -52,12 +57,32 @@ export const FactionVsFactionCard: React.FC<IProps> = ({ title, data, style }) =
       } else {
         let winRate: number = value["wins"] / (value["wins"] + value["losses"]);
         if (factionWinRate === "axis") {
-          return winRate.toPrecision(2);
+          return winRate.toFixed(2);
         } else {
-          return (1 - winRate).toPrecision(2);
+          return (1 - winRate).toFixed(2);
         }
       }
     })();
+  }
+
+  // Add total summary for axis (on the right side of the heatmap)
+  if (factionWinRate === "axis") {
+    keysForHeatMapSet.add("sum");
+    for (const [key, arrayOfValues] of Object.entries(factionDataByKey)) {
+      let sumCounter = 0;
+      const valuesOfArray = Object.values(arrayOfValues);
+      for (const singleValue of valuesOfArray) {
+        if (!isNaN(parseFloat(singleValue))) {
+          sumCounter += parseFloat(singleValue);
+        }
+      }
+      if (heatmapValues === "winRate") {
+        sumCounter /= valuesOfArray.length;
+        factionDataByKey[key]["sum"] = sumCounter.toFixed(2);
+      } else {
+        factionDataByKey[key]["sum"] = sumCounter;
+      }
+    }
   }
 
   // Transform for the heatmap
@@ -78,6 +103,33 @@ export const FactionVsFactionCard: React.FC<IProps> = ({ title, data, style }) =
     return 0;
   });
   const keysForHeatMap = [...keysForHeatMapSet].sort();
+
+  // Allies are added after transformation cos it's easier (on the bottom side of the heatmap)
+  if (factionWinRate === "allies") {
+    const finalSumForAllies: Record<string, any> = {};
+
+    for (const oneLine of dataForHeatmap) {
+      for (const [key, value] of Object.entries(oneLine)) {
+        const numValue = parseFloat(value);
+        if (!isNaN(numValue)) {
+          finalSumForAllies[key] = parseFloat(finalSumForAllies[key]) + numValue || numValue;
+        }
+      }
+    }
+
+    if (heatmapValues === "winRate") {
+      for (const [key, value] of Object.entries(finalSumForAllies)) {
+        const numValue = parseFloat(value);
+        if (!isNaN(numValue)) {
+          // -1 because we have leftAxis there
+          finalSumForAllies[key] = (numValue / dataForHeatmap.length).toFixed(2);
+        }
+      }
+    }
+
+    finalSumForAllies["leftAxis"] = "sum";
+    dataForHeatmap.push(finalSumForAllies);
+  }
 
   const menu = (
     <>

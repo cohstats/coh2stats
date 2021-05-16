@@ -1,3 +1,5 @@
+import { useLocation } from "react-router-dom";
+
 const getYesterdayDateTimestamp = (): number => {
   const date = new Date();
   return Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() - 1) / 1000;
@@ -35,6 +37,10 @@ const capitalize = (s: string) => {
   return s.charAt(0).toUpperCase() + s.slice(1);
 };
 
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
 export {
   getYesterdayDateTimestamp,
   convertDateToDayTimestamp,
@@ -43,4 +49,5 @@ export {
   convertDateToStartOfMonth,
   getPreviousWeekTimeStamp,
   capitalize,
+  useQuery,
 };

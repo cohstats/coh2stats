@@ -61,7 +61,7 @@ export const HeatMapChart: React.FC<IProps> = ({ data, keys, width, height }) =>
       motionStiffness={80}
       motionDamping={9}
       hoverTarget="cell"
-      cellHoverOthersOpacity={0.25}
+      cellHoverOthersOpacity={0.5}
     />
   );
 };
