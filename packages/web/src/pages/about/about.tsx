@@ -182,24 +182,24 @@ const About: React.FC = () => {
             Donations and support
           </Title>
         </a>
-        We are able to support the basic hosting, domain and statistics/info functionality from
-        our own pocket. This will rank up for tens of dollars per year. Plus we don't charge
-        anything for our time.
-        <br />
-        <br />
-        The original idea was to give unlimited match history for each player. Because this is
-        something which Relic with their "Recent Matches" doesn't support (They track only last 10
-        games for each mode for each player). However when we started working on this project, we
-        greatly underestimated the amount of data which is produced every day.
-        <br />
-        We are tracking merely 120k matches and the DB holding this has up to 4GB already (as of
-        writing this page). We are guessing COH2 to have ~50k matches/day.
-        <br />
+        <Paragraph>
+          We are able to support the basic hosting, domain and statistics/info functionality from
+          our own pocket. This will rank up for tens of dollars per year. Plus we don't charge
+          anything for our time.
+        </Paragraph>
+        <Paragraph>
+          The original idea was to give unlimited match history for each player. Because this is
+          something which Relic with their "Recent Matches" doesn't support (They track only last
+          10 games for each mode for each player). However when we started working on this
+          project, we greatly underestimated the amount of data which is produced every day.
+          <br />
+          We are tracking around 300k matches and the DB holding this has up to 10GB already (as
+          of 16/May/2021). We are guessing COH2 to have ~50k matches/day.
+        </Paragraph>
         We are still planning to deliver advanced match overview which would bring more
         functionality and better insight into your past games. But we will most likely not be able
         to hold more matches than relic already does because of the increased cost without some
         kind of income (donations/ads?).
-        <br />
         <br />
         <br />
         If you would like to give financial support, you can do so. <br />
@@ -209,6 +209,8 @@ const About: React.FC = () => {
         <Donation />
         <br />
         <b>Past donations:</b>
+        <br />
+        ayy_howzit_braddah
         <br />
         gunther09
       </div>
