@@ -73,9 +73,10 @@ const CustomSearch: React.FC = () => {
   const { push } = useHistory();
 
   // We should use normal query params and not / in the path
-  const { searchParam } = useParams<{
-    searchParam: string;
-  }>();
+  const { searchParam } =
+    useParams<{
+      searchParam: string;
+    }>();
 
   const [error, setError] = useState("");
   const [loading, setIsLoading] = useState(false);

@@ -28,7 +28,7 @@ export const CommandersBarChart = (
   }
 
   const mapsData = sortArrayOfObjectsByTheirPropertyValue(
-    (simpleMapsData as unknown) as Array<Record<string, string>>,
+    simpleMapsData as unknown as Array<Record<string, string>>,
   );
 
   const toolTipFunction = (toolTipData: Record<string, any>) => {

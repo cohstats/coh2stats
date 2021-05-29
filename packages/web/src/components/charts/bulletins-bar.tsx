@@ -25,7 +25,7 @@ export const BulletinsBarChart: React.FC<IProps> = ({ bulletins }) => {
     }
 
     return sortArrayOfObjectsByTheirPropertyValue(
-      (simpleBulletinData as unknown) as Array<Record<string, string>>,
+      simpleBulletinData as unknown as Array<Record<string, string>>,
     );
   }, [bulletins]);
 

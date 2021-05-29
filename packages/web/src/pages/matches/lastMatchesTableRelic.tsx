@@ -25,9 +25,10 @@ const LastMatchesTableRelic: React.FC = () => {
   // loading -- we are still loading the data
   // loaded -- we have the date in the matches
 
-  const { steamid } = useParams<{
-    steamid: string;
-  }>();
+  const { steamid } =
+    useParams<{
+      steamid: string;
+    }>();
 
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);

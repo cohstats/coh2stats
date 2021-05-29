@@ -17,7 +17,7 @@ export const MapBarChart: React.FC<IProps> = ({ maps }) => {
       },
     );
     return sortArrayOfObjectsByTheirPropertyValue(
-      (mapsDataUnsorted as unknown) as Array<Record<string, string>>,
+      mapsDataUnsorted as unknown as Array<Record<string, string>>,
     );
   }, [maps]);
 

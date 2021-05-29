@@ -11,9 +11,10 @@ import { capitalize } from "../../helpers";
 export const CommandersList = () => {
   const { push } = useHistory();
 
-  const { race } = useParams<{
-    race: string;
-  }>();
+  const { race } =
+    useParams<{
+      race: string;
+    }>();
 
   useEffect(() => {
     document.title = `${commanderBase} - ${capitalize(race)}`;
