@@ -1,5 +1,5 @@
 import { Bar } from "@nivo/bar";
-import React from "react";
+import React, { useMemo } from "react";
 
 const calculateWinRate = (data: { wins: number; losses: number }) => {
   return {
@@ -7,14 +7,20 @@ const calculateWinRate = (data: { wins: number; losses: number }) => {
   };
 };
 
-export const WinRateChart = (data: Record<string, any>) => {
-  let chartData = [
-    { ...{ faction: "WGerman", ...calculateWinRate(data["wgerman"]) } },
-    { ...{ faction: "Wermacht", ...calculateWinRate(data["wermacht"]) } },
-    { ...{ faction: "USF", ...calculateWinRate(data["usf"]) } },
-    { ...{ faction: "Soviet", ...calculateWinRate(data["soviet"]) } },
-    { ...{ faction: "British", ...calculateWinRate(data["british"]) } },
-  ];
+interface IProps {
+  data: Record<string, any>;
+}
+
+export const WinRateChart: React.FC<IProps> = ({ data }) => {
+  const chartData = useMemo(() => {
+    return [
+      { ...{ faction: "WGerman", ...calculateWinRate(data["wgerman"]) } },
+      { ...{ faction: "Wermacht", ...calculateWinRate(data["wermacht"]) } },
+      { ...{ faction: "USF", ...calculateWinRate(data["usf"]) } },
+      { ...{ faction: "Soviet", ...calculateWinRate(data["soviet"]) } },
+      { ...{ faction: "British", ...calculateWinRate(data["british"]) } },
+    ];
+  }, [data]);
 
   return (
     <Bar
