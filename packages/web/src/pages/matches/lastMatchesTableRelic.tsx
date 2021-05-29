@@ -1,4 +1,4 @@
-import { Button, Col, Divider, Row, Space, Table, Tooltip, Typography } from "antd";
+import { Col, Row, Space, Table, Tooltip, Typography } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import {
   formatMapName,

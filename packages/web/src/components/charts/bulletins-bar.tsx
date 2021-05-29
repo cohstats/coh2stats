@@ -1,5 +1,5 @@
 import { Bar } from "@nivo/bar";
-import React from "react";
+import React, { useMemo } from "react";
 import { sortArrayOfObjectsByTheirPropertyValue } from "../../coh/helpers";
 import {
   convertBulletinIDToName,
@@ -8,20 +8,26 @@ import {
 } from "../../coh/bulletins";
 import { Avatar } from "antd";
 
-export const BulletinsBarChart = (bulletins: Record<number, number>) => {
-  const simpleMapsData = [];
+interface IProps {
+  bulletins: Record<number, number>;
+}
 
-  for (const [key, value] of Object.entries(bulletins)) {
-    simpleMapsData.push({
-      bulletinName: convertBulletinIDToName(key),
-      value: value,
-      bulletinId: key,
-    });
-  }
+export const BulletinsBarChart: React.FC<IProps> = ({ bulletins }) => {
+  const bulletinsData = useMemo(() => {
+    const simpleBulletinData = [];
 
-  const mapsData = sortArrayOfObjectsByTheirPropertyValue(
-    (simpleMapsData as unknown) as Array<Record<string, string>>,
-  );
+    for (const [key, value] of Object.entries(bulletins)) {
+      simpleBulletinData.push({
+        bulletinName: convertBulletinIDToName(key),
+        value: value,
+        bulletinId: key,
+      });
+    }
+
+    return sortArrayOfObjectsByTheirPropertyValue(
+      (simpleBulletinData as unknown) as Array<Record<string, string>>,
+    );
+  }, [bulletins]);
 
   const toolTipFunction = (toolTipData: Record<string, any>) => {
     const bulletinData = getBulletinData(toolTipData.data.bulletinId);
@@ -55,7 +61,7 @@ export const BulletinsBarChart = (bulletins: Record<number, number>) => {
       width={750}
       margin={{ top: 0, right: 20, bottom: 40, left: 220 }}
       // @ts-ignore
-      data={mapsData as data[] | undefined}
+      data={bulletinsData as data[] | undefined}
       layout={"horizontal"}
       keys={["value"]}
       indexBy="bulletinName"

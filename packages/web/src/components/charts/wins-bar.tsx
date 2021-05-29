@@ -1,18 +1,20 @@
 import { Bar } from "@nivo/bar";
-import React from "react";
+import React, { useMemo } from "react";
 
 interface IProps {
   data: Record<string, any>;
 }
 
 export const WinsChart: React.FC<IProps> = ({ data }) => {
-  const chartData = [
-    { ...{ faction: "British", ...data["british"] } },
-    { ...{ faction: "Soviet", ...data["soviet"] } },
-    { ...{ faction: "USF", ...data["usf"] } },
-    { ...{ faction: "Wermacht", ...data["wermacht"] } },
-    { ...{ faction: "WGerman", ...data["wgerman"] } },
-  ];
+  const chartData = useMemo(() => {
+    return [
+      { ...{ faction: "British", ...data["british"] } },
+      { ...{ faction: "Soviet", ...data["soviet"] } },
+      { ...{ faction: "USF", ...data["usf"] } },
+      { ...{ faction: "Wermacht", ...data["wermacht"] } },
+      { ...{ faction: "WGerman", ...data["wgerman"] } },
+    ];
+  }, [data]);
 
   return (
     <Bar

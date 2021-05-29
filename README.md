@@ -47,7 +47,7 @@ Tagged versions are automatically deployed to https://coh2stats.com/
 
 `master` branch is automatically deployed to https://coh2-ladders-dev.web.app/
 
-### Env variables
+### Env variables for Cloud Functions
 
 Env variables for the functions are deployed manually - not integrated in the CI/CD.
 See `config.ts`

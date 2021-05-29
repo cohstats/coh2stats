@@ -1,8 +1,9 @@
 import React, { useMemo } from "react";
-import { Card, Empty, Radio } from "antd";
+import { Card, Empty, Radio, Space, Tooltip } from "antd";
 import { HeatMapChart } from "../../components/charts/factions-heatmap";
 import { Helper } from "../../components/helper";
-import { useQuery } from "../../helpers";
+import { Typography } from "antd";
+const { Text } = Typography;
 
 interface IProps {
   data: Record<string, any>;
@@ -18,6 +19,57 @@ const extractFactionString = (factionString: string): Record<string, string> => 
     allies: (match && match[2]) || "",
   };
 };
+
+const legend = (
+  <div style={{ display: "inline-block", width: 125, verticalAlign: "top", paddingTop: 40 }}>
+    <Tooltip title={"W - (Wehrmacht, Ostheer, German)"}>
+      <div>
+        <img
+          width={18}
+          height={18}
+          src={"/resources/generalIcons/wermacht_small.png"}
+          alt="wermacht"
+        />{" "}
+        <Text strong>W</Text> - Wehrmacht
+      </div>
+    </Tooltip>
+    <Tooltip title={"O - (OKW, West German, Oberkommando West)"}>
+      <div>
+        <img width={18} height={18} src={"/resources/generalIcons/wgerman_small.png"} alt="OKW" />{" "}
+        <Text strong>O</Text> - OKW
+      </div>
+    </Tooltip>
+    <br />
+    <Tooltip title={"B - (British, UKF)"}>
+      <div>
+        <img
+          width={18}
+          height={18}
+          src={"/resources/generalIcons/british_small.png"}
+          alt="British"
+        />{" "}
+        <Text strong>B</Text> - British
+      </div>
+    </Tooltip>
+    <Tooltip title={"S - (Soviet)"}>
+      <div>
+        <img
+          width={18}
+          height={18}
+          src={"/resources/generalIcons/soviet_small.png"}
+          alt="Soviet"
+        />{" "}
+        <Text strong>S</Text> - Soviet
+      </div>
+    </Tooltip>
+    <Tooltip title={"U - (USF, US Forces, USA)"}>
+      <div>
+        <img width={18} height={18} src={"/resources/generalIcons/usf_small.png"} alt="USF" />{" "}
+        <Text strong>U</Text> - USF
+      </div>
+    </Tooltip>
+  </div>
+);
 
 export const FactionVsFactionCard: React.FC<IProps> = ({ title, data, style }) => {
   const factionData: Record<string, Record<string, number>> = data["factionMatrix"];
@@ -165,13 +217,18 @@ export const FactionVsFactionCard: React.FC<IProps> = ({ title, data, style }) =
           />
         </>
       }
-      style={{ ...style, ...{ width: 900, height: 440 } }}
+      style={{ ...style, ...{ width: 995, height: 440 } }}
       extra={menu}
     >
       {!factionData ? (
         <Empty />
       ) : (
-        <HeatMapChart data={dataForHeatmap} keys={keysForHeatMap} width={820} height={400} />
+        <div>
+          {legend}
+          <div style={{ display: "inline-block" }}>
+            <HeatMapChart data={dataForHeatmap} keys={keysForHeatMap} width={820} height={400} />
+          </div>
+        </div>
       )}
     </Card>
   );

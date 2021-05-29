@@ -133,7 +133,7 @@ const StatsDetails: React.FC = () => {
             <WinsChart data={specificData} />
           </Card>
           <Card title={`Winrate ${type}`} style={{ width: 485, height: 500 }}>
-            {WinRateChart(specificData)}
+            <WinRateChart data={specificData} />
           </Card>
         </Space>
       </Row>
@@ -146,7 +146,7 @@ const StatsDetails: React.FC = () => {
       </Row>
       <Row justify={"center"}>
         <Card title={`Maps ${type}`} style={{ width: 1200, height: 700, marginTop: 20 }}>
-          {MapBarChart(maps)}
+          <MapBarChart maps={maps} />
         </Card>
       </Row>
       <Row justify={"center"}>
@@ -186,7 +186,7 @@ const StatsDetails: React.FC = () => {
           </Card>
 
           <Card title={`Intel Bulletins  ${type} - ${race}`} style={{ width: 800, height: 900 }}>
-            {BulletinsBarChart(specificData["intelBulletins"][race])}
+            <BulletinsBarChart bulletins={specificData["intelBulletins"][race]} />
           </Card>
         </Space>
       </Row>
