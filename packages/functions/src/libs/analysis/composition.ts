@@ -18,7 +18,7 @@ const determineMatchWinner = (match: ProcessedMatch): "axis" | "allies" | "none"
   return "none";
 };
 
-const generateFactionString = (playerReports: Array<PlayerReport>) => {
+const generateFactionString = (playerReports: Array<PlayerReport>): string => {
   let factionShorts = [];
 
   for (const playerReport of playerReports) {

@@ -1,18 +1,25 @@
 import { Bar } from "@nivo/bar";
-import React from "react";
+import React, { useMemo } from "react";
 import { sortArrayOfObjectsByTheirPropertyValue } from "../../coh/helpers";
 
-export const MapBarChart = (maps: Record<string, number>) => {
-  // TODO: REWORK THIS SHIT
-  // @ts-ignore
-  let mapsData: Array<Record<string, string>> = Object.keys(maps).map((mapName) => {
-    return {
-      mapName: mapName,
-      value: maps[mapName],
-    };
-  });
+interface IProps {
+  maps: Record<string, number>;
+}
 
-  mapsData = sortArrayOfObjectsByTheirPropertyValue(mapsData);
+export const MapBarChart: React.FC<IProps> = ({ maps }) => {
+  const mapsData = useMemo(() => {
+    const mapsDataUnsorted: { mapName: string; value: number }[] = Object.keys(maps).map(
+      (mapName) => {
+        return {
+          mapName: mapName,
+          value: maps[mapName],
+        };
+      },
+    );
+    return sortArrayOfObjectsByTheirPropertyValue(
+      (mapsDataUnsorted as unknown) as Array<Record<string, string>>,
+    );
+  }, [maps]);
 
   return (
     <Bar
