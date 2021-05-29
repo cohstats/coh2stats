@@ -142,7 +142,7 @@ const StatsDetails: React.FC = () => {
         <FactionVsFactionCard
           title={`Team composition matrix ${type}`}
           data={specificData}
-          style={{ marginTop: 20 }}
+          style={{ marginTop: 40 }}
         />
       </Row>
       <Row justify={"center"}>
