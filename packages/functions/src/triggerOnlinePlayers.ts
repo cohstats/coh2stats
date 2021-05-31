@@ -15,10 +15,13 @@ const triggerNumberOfOnlinePlayers = functions
   .https.onCall(async () => {
     let amountOfPlayersOnline = await getSteamNumberOfOnlinePlayers();
     let onlinePlayersRef = getOnlinePlayersDocRef();
-    await onlinePlayersRef.set({
-      onlinePlayers: amountOfPlayersOnline,
-      timeStamp: Math.floor(Date.now() / 1000),
-    });
+
+    if (amountOfPlayersOnline != null && amountOfPlayersOnline > 0) {
+      await onlinePlayersRef.set({
+        onlinePlayers: amountOfPlayersOnline,
+        timeStamp: Math.floor(Date.now() / 1000),
+      });
+    }
 
     // 5 minutes wait
     await new Promise((resolve) => setTimeout(resolve, 300000));
@@ -26,10 +29,12 @@ const triggerNumberOfOnlinePlayers = functions
     amountOfPlayersOnline = await getSteamNumberOfOnlinePlayers();
     onlinePlayersRef = getOnlinePlayersDocRef();
 
-    await onlinePlayersRef.set({
-      onlinePlayers: amountOfPlayersOnline,
-      timeStamp: Math.floor(Date.now() / 1000),
-    });
+    if (amountOfPlayersOnline != null && amountOfPlayersOnline > 0) {
+      await onlinePlayersRef.set({
+        onlinePlayers: amountOfPlayersOnline,
+        timeStamp: Math.floor(Date.now() / 1000),
+      });
+    }
 
     return {};
   });
