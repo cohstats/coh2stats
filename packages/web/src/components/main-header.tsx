@@ -7,6 +7,7 @@ import { PlayerSearchInput } from "./header-search";
 import { aboutBase, bulletinsBase, commanderBase } from "../titles";
 import SubMenu from "antd/es/menu/SubMenu";
 import { firebase, useData, useLoading } from "../firebase";
+import { Link } from "react-router-dom";
 
 const pageTitleSwitch = (path: string) => {
   switch (path) {
@@ -63,10 +64,6 @@ export const MainHeader: React.FC = () => {
   let pathMatch = commandersMatch || statsMatch || aboutMatch || bulletinsMatch;
   const currentPath = pathMatch?.path || "";
   pageTitleSwitch(currentPath);
-
-  const onMenuClick = (item: Record<string, any>) => {
-    push(item.key);
-  };
 
   const onTitleClick = () => {
     push("");
@@ -125,33 +122,33 @@ export const MainHeader: React.FC = () => {
           selectedKeys={[currentPath]}
           defaultSelectedKeys={[currentPath]}
         >
-          <Menu.Item key={routes.statsBase()} onClick={onMenuClick}>
-            Stats
+          <Menu.Item key={routes.statsBase()}>
+            <Link to={routes.statsBase()}>Stats</Link>
           </Menu.Item>
-          <Menu.Item disabled={true} key="8" onClick={onMenuClick}>
+          <Menu.Item disabled={true} key="8">
             Players
           </Menu.Item>
-          <Menu.Item disabled={true} key="9" onClick={onMenuClick}>
+          <Menu.Item disabled={true} key="9">
             Matches
           </Menu.Item>
-          <Menu.Item disabled={true} key="11" onClick={onMenuClick}>
+          <Menu.Item disabled={true} key="11">
             Leaderboards
           </Menu.Item>
-          <Menu.Item key={routes.commanderBase()} onClick={onMenuClick}>
-            Commanders
+          <Menu.Item key={routes.commanderBase()}>
+            <Link to={routes.commanderBase()}>Commanders</Link>
           </Menu.Item>
-          <Menu.Item key={routes.bulletinsBase()} onClick={onMenuClick}>
-            Intel Bulletins
+          <Menu.Item key={routes.bulletinsBase()}>
+            <Link to={routes.bulletinsBase()}>Intel Bulletins</Link>
           </Menu.Item>
           <SubMenu key={routes.aboutBase()} title={"About"}>
-            <Menu.Item key={routes.aboutBase()} onClick={onMenuClick}>
-              About
+            <Menu.Item key={routes.aboutBase()}>
+              <Link to={routes.aboutBase()}>About</Link>
             </Menu.Item>
-            <Menu.Item key={`${routes.aboutBase()}#bugs`} onClick={onMenuClick}>
-              Contribution
+            <Menu.Item key={`${routes.aboutBase()}#bugs`}>
+              <Link to={`${routes.aboutBase()}#bugs`}>Contribution</Link>
             </Menu.Item>
-            <Menu.Item key={`${routes.aboutBase()}#donations`} onClick={onMenuClick}>
-              Donation
+            <Menu.Item key={`${routes.aboutBase()}#donations`}>
+              <Link to={`${routes.aboutBase()}#donations`}>Donation</Link>
             </Menu.Item>
           </SubMenu>
         </Menu>
