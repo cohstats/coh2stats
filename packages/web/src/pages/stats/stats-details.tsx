@@ -30,13 +30,12 @@ const StatsDetails: React.FC = () => {
   const statsSource: string | null = query.get("statsSource") ? query.get("statsSource") : "";
   const sourceIsAll = statsSource !== "top200";
 
-  const { frequency, timestamp, type, race } =
-    useParams<{
-      frequency: string;
-      timestamp: string;
-      type: string;
-      race: string;
-    }>();
+  const { frequency, timestamp, type, race } = useParams<{
+    frequency: string;
+    timestamp: string;
+    type: string;
+    race: string;
+  }>();
 
   // Page title
   React.useEffect(() => {

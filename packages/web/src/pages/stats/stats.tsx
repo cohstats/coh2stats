@@ -26,13 +26,12 @@ function useQuery() {
 }
 
 const Stats: React.FC = () => {
-  const { frequency, timestamp, type, race } =
-    useParams<{
-      frequency: string;
-      timestamp: string;
-      type: string;
-      race: string;
-    }>();
+  const { frequency, timestamp, type, race } = useParams<{
+    frequency: string;
+    timestamp: string;
+    type: string;
+    race: string;
+  }>();
   const { push } = useHistory();
   const { Option } = Select;
 

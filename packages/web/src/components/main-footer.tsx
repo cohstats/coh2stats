@@ -1,6 +1,7 @@
 import React from "react";
 import { Footer } from "antd/lib/layout/layout";
 import { Divider } from "antd";
+import { Link } from "react-router-dom";
 
 export const MainFooter: React.FC = () => {
   return (
@@ -10,7 +11,7 @@ export const MainFooter: React.FC = () => {
       <br />
       The data display here are not accurate and do not represent the actual state of the game.
       <br />
-      See <a href={"/about"}>about page</a> for more info.
+      See <Link to={"/about"}>about page</Link> for more info.
       <br />
       © 2021 COH2stats.com
       <br />
