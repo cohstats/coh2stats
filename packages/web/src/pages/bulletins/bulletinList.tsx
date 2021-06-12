@@ -8,7 +8,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import { ExportDate } from "../../components/export-date";
 import firebase from "../../analytics";
 
-export const BulletinList = () => {
+const BulletinList = () => {
   // Prepare bulletin data
   const bulletinData = getAllBulletins();
 
@@ -181,3 +181,5 @@ export const BulletinList = () => {
     </>
   );
 };
+
+export default BulletinList;

@@ -92,7 +92,7 @@ export const CommanderDetails = () => {
                         <div>
                           <Avatar src={getExportedIconPath(item.icon)} shape="square" size={64} />
                           <Badge count={0} overflowCount={999} showZero offset={[0, -32]}>
-                            <a href="#" className="head-example" />
+                            <></>
                           </Badge>
                         </div>
                       }

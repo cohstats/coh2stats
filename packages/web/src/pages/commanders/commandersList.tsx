@@ -1,16 +1,15 @@
 import React, { useEffect } from "react";
 import { Col, Row, List, Avatar } from "antd";
 import { getCommanderByRaces, getCommanderIconPath } from "../../coh/commanders";
-import { useHistory, useParams } from "react-router";
+import { useParams } from "react-router";
 import { RaceName } from "../../coh/types";
 import routes from "../../routes";
 import { ExportDate } from "../../components/export-date";
 import { commanderBase } from "../../titles";
 import { capitalize } from "../../helpers";
+import { Link } from "react-router-dom";
 
 export const CommandersList = () => {
-  const { push } = useHistory();
-
   const { race } =
     useParams<{
       race: string;
@@ -45,14 +44,6 @@ export const CommandersList = () => {
     );
   }
 
-  function onCommanderClick(CommanderServerID: string) {
-    push(routes.commanderByID(race, CommanderServerID));
-  }
-
-  let styleCursorPointer = {
-    cursor: "pointer",
-  };
-
   return (
     <div style={divStyle}>
       <Row justify="center">
@@ -66,25 +57,18 @@ export const CommandersList = () => {
                 <List.Item>
                   <List.Item.Meta
                     avatar={
-                      <div
-                        style={styleCursorPointer}
-                        onClick={() => onCommanderClick(item.serverID)}
-                      >
+                      <Link to={routes.commanderByID(race, item.serverID)}>
                         <Avatar
                           src={getCommanderIconPath(item.iconSmall)}
                           shape="square"
                           size={64}
                         />
-                        {console.log(item)}
-                      </div>
+                      </Link>
                     }
                     title={
-                      <div
-                        style={styleCursorPointer}
-                        onClick={() => onCommanderClick(item.serverID)}
-                      >
+                      <Link to={routes.commanderByID(race, item.serverID)}>
                         {item.commanderName}
-                      </div>
+                      </Link>
                     }
                     description={item.description}
                   />

@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography } from "antd";
+import { Space, Typography } from "antd";
 import { useData, useLoading } from "../firebase";
 import { Loading } from "./loading";
 const { Title } = Typography;
@@ -21,8 +21,11 @@ const MainHome: React.FC = () => {
       </Title>
       This is community site focused on providing insight into the current state of the game
       Company of Heroes 2.
-      <br />
-      <br />
+      <Space wrap>
+        <div>Statistics</div>
+        <div>Commanders</div>
+        <div>Intel Bulletins</div>
+      </Space>
       <Title level={4}>So far analyzed {analyzedMatches} matches.</Title>
     </div>
   );
