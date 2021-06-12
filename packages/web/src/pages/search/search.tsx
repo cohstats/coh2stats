@@ -140,7 +140,7 @@ const CustomSearch: React.FC = () => {
   }
 
   return (
-    <div style={{ textAlign: "center", maxWidth: 900, margin: "0 auto" }}>
+    <div style={{ textAlign: "center", maxWidth: 900, margin: "auto", paddingBottom: 20 }}>
       <Search
         placeholder="Exact Steam account name"
         defaultValue={searchParam}
