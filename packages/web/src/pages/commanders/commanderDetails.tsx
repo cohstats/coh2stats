@@ -8,10 +8,9 @@ import { getExportedIconPath, getGeneralIconPath } from "../../coh/helpers";
 import { commanderBase } from "../../titles";
 
 export const CommanderDetails = () => {
-  const { commanderID } =
-    useParams<{
-      commanderID: string;
-    }>();
+  const { commanderID } = useParams<{
+    commanderID: string;
+  }>();
 
   // We want to scroll top when we go to this page from the stats page
   useEffect(() => {
@@ -20,10 +19,9 @@ export const CommanderDetails = () => {
 
   const commanderData = getCommanderData(commanderID);
 
-  const { race } =
-    useParams<{
-      race: string;
-    }>();
+  const { race } = useParams<{
+    race: string;
+  }>();
 
   const divStyle = {
     backgroundImage: `url(${getGeneralIconPath(race)})`,

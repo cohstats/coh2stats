@@ -65,10 +65,6 @@ export const MainHeader: React.FC = () => {
   const currentPath = pathMatch?.path || "";
   pageTitleSwitch(currentPath);
 
-  const onTitleClick = () => {
-    push("");
-  };
-
   return (
     <Header style={{ height: "auto" }}>
       <div
@@ -105,17 +101,18 @@ export const MainHeader: React.FC = () => {
         </Space>
       </div>
       <Space direction={"horizontal"} size={"large"}>
-        <div
-          onClick={onTitleClick}
-          style={{
-            color: "whitesmoke",
-            fontSize: "x-large",
-            fontFamily: "sans-serif",
-            cursor: "pointer",
-          }}
-        >
-          CoH 2 Logs & Stats
-        </div>
+        <Link to={"/"}>
+          <div
+            style={{
+              color: "whitesmoke",
+              fontSize: "x-large",
+              fontFamily: "sans-serif",
+              cursor: "pointer",
+            }}
+          >
+            CoH 2 Logs & Stats
+          </div>
+        </Link>
         <Menu
           theme="dark"
           mode="horizontal"
@@ -141,7 +138,7 @@ export const MainHeader: React.FC = () => {
             <Link to={routes.bulletinsBase()}>Intel Bulletins</Link>
           </Menu.Item>
           <SubMenu key={routes.aboutBase()} title={"About"}>
-            <Menu.Item key={routes.aboutBase()}>
+            <Menu.Item key={`${routes.aboutBase()}#base`}>
               <Link to={routes.aboutBase()}>About</Link>
             </Menu.Item>
             <Menu.Item key={`${routes.aboutBase()}#bugs`}>

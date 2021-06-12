@@ -10,10 +10,9 @@ import { capitalize } from "../../helpers";
 import { Link } from "react-router-dom";
 
 export const CommandersList = () => {
-  const { race } =
-    useParams<{
-      race: string;
-    }>();
+  const { race } = useParams<{
+    race: string;
+  }>();
 
   useEffect(() => {
     document.title = `${commanderBase} - ${capitalize(race)}`;
