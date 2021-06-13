@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Header } from "antd/lib/layout/layout";
 import { Badge, Menu, Space, Tooltip } from "antd";
 import routes from "../routes";
-import { useHistory, useRouteMatch } from "react-router";
+import { useRouteMatch } from "react-router";
 import { PlayerSearchInput } from "./header-search";
 import { aboutBase, bulletinsBase, commanderBase } from "../titles";
 import SubMenu from "antd/es/menu/SubMenu";
@@ -27,7 +27,6 @@ const pageTitleSwitch = (path: string) => {
 };
 
 export const MainHeader: React.FC = () => {
-  const { push } = useHistory();
   const isOnlinePlayersLoading = useLoading("onlinePlayers");
   const onlinePlayersData: Record<string, any> = useData("onlinePlayers");
 

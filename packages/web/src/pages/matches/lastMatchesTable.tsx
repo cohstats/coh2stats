@@ -61,7 +61,8 @@ export const LastMatchesTable = () => {
           value: "4",
         },
       ],
-      onFilter: (value: any, record: any) => record.matchtype_id == value,
+
+      onFilter: (value: any, record: any) => record.matchtype_id == value, // eslint-disable-line eqeqeq
       render: (_text: any, record: any) => {
         return (
           <>

@@ -5,6 +5,13 @@ import { prepareMatchDBObject, isLastDayMatch } from "./single-match";
 import { performance } from "perf_hooks";
 import { ProcessedMatch } from "../types";
 import * as functions from "firebase-functions";
+import { getHoursOldTimestamp, printUTCTime } from "../helpers";
+import { getMatchCollectionRef } from "../../fb-paths";
+import { firestore } from "firebase-admin";
+
+import chunk = require("lodash.chunk");
+
+const db = firestore();
 
 const fetchPlayerMatchStats = async (profileName: string): Promise<Record<string, any>> => {
   const url = getRecentMatchHistoryUrl(profileName);
@@ -60,4 +67,42 @@ const getAndPrepareMatchesForPlayer = async (
   return matches;
 };
 
-export { getAndPrepareMatchesForPlayer };
+/**
+ * Finds all the matches old than daysOld param from today and deletes them.
+ * @param daysOld
+ */
+const removeOldMatches = async (daysOld = 93): Promise<void> => {
+  const timestampThreshold = getHoursOldTimestamp(24 * daysOld);
+
+  const snapshot = await getMatchCollectionRef()
+    .where("startgametime", "<", timestampThreshold)
+    .get();
+
+  const amountOfData = snapshot.size;
+  functions.logger.info(
+    `For deletion found ${amountOfData} matches older than ${printUTCTime(timestampThreshold)}`,
+  );
+
+  const chunkedData = chunk(snapshot.docs, 499);
+
+  functions.logger.info(`Split into ${chunkedData.length} chunks by 499 items`);
+
+  const allPromises = [];
+
+  for (const myChunk of chunkedData) {
+    functions.logger.info(`Amount of matches ${myChunk.length} is scheduled for deletion`);
+    const batch = db.batch();
+
+    myChunk.forEach((record) => {
+      batch.delete(record.ref);
+    });
+
+    allPromises.push(batch.commit());
+  }
+
+  await Promise.all(allPromises);
+
+  functions.logger.info(`Successfully deleted ${amountOfData} old matches from the database`);
+};
+
+export { getAndPrepareMatchesForPlayer, removeOldMatches };

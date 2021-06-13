@@ -1,5 +1,5 @@
-import React, { useMemo } from "react";
-import { Card, Empty, Radio, Space, Tooltip } from "antd";
+import React from "react";
+import { Card, Empty, Radio, Tooltip } from "antd";
 import { HeatMapChart } from "../../components/charts/factions-heatmap";
 import { Helper } from "../../components/helper";
 import { Typography } from "antd";

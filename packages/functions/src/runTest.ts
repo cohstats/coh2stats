@@ -10,13 +10,17 @@ import { DEFAULT_FUNCTIONS_LOCATION } from "./constants";
 // import { getMatchCollectionRef } from "./fb-paths";
 // import { ProcessedMatch } from "./libs/types";
 // import { analyzeAndSaveMatchStats, analyzeAndSaveTopMatchStats } from "./libs/analysis/analysis";
-import { runAndSaveMultiDayAnalysis } from "./libs/analysis/multi-day-analysis";
+// import { runAndSaveMultiDayAnalysis } from "./libs/analysis/multi-day-analysis";
+// import {getMatchCollectionRef} from "./fb-paths";
+// import {start} from "repl";
+// import {getHoursOldTimestamp} from "./libs/helpers";
+// import { removeOldMatches } from "./libs/matches/matches";
 
 // const db = firestore();
 
 const runtimeOpts: Record<string, "1GB" | any> = {
   timeoutSeconds: 540,
-  memory: "1GB",
+  memory: "2GB",
 };
 
 const runTest = functions
@@ -25,8 +29,8 @@ const runTest = functions
   .https.onRequest(async (request, response) => {
     // await runAndSaveMultiDayAnalysis(new Date(2021, 2, 12), "month", "top");
 
-    await runAndSaveMultiDayAnalysis(1620345600000, "week", "normal");
-    await runAndSaveMultiDayAnalysis(1620345600000, "week", "top");
+    // await runAndSaveMultiDayAnalysis(1620345600000, "week", "normal");
+    // await runAndSaveMultiDayAnalysis(1620345600000, "week", "top");
 
     // for (let i = 1; i < 9; i++) {
     //   functions.logger.info("Start analysis for one day");
@@ -35,10 +39,14 @@ const runTest = functions
     //
     //   const matches: Array<ProcessedMatch> = [];
     //
-    //   const snapshot = await getMatchCollectionRef()
-    //     .where("startgametime", ">=", start)
-    //     .where("startgametime", "<=", end)
-    //     .get();
+
+    // console.log("Recieved ", request.body.days);
+    //
+    // try {
+    //   await removeOldMatches(request.body.days);
+    // } catch (e) {
+    //   console.error("There was an error deleting the old data", e);
+    // }
     //
     //   snapshot.forEach((doc) => {
     //     matches.push(doc.data() as ProcessedMatch);

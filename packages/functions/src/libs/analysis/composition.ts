@@ -38,7 +38,10 @@ const generateFactionString = (playerReports: Array<PlayerReport>): string => {
  * @param match
  * @param stats
  */
-const addFactionMatrixAnalysisToStats = (match: ProcessedMatch, stats: Record<string, any>) => {
+const addFactionMatrixAnalysisToStats = (
+  match: ProcessedMatch,
+  stats: Record<string, any>,
+): Record<string, any> => {
   const axisPlayerReports = match.matchhistoryreportresults.filter((playerReport) => {
     return axisRaceIds.includes(playerReport.race_id);
   });

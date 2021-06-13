@@ -5,6 +5,7 @@ import { ProcessedMatch } from "./libs/types";
 import { getYesterdayDateTimeStampInterval, printUTCTime } from "./libs/helpers";
 import { analyzeAndSaveMatchStats, analyzeAndSaveTopMatchStats } from "./libs/analysis/analysis";
 import { analysisChecker } from "./libs/analysis/analysis-checker";
+import { removeOldMatches } from "./libs/matches/matches";
 
 const runtimeOpts: Record<string, "1GB" | any> = {
   timeoutSeconds: 540,
@@ -47,6 +48,13 @@ const runAnalysis = functions
     await analysisChecker();
 
     functions.logger.info(`Analysis for the date ${printUTCTime(start)} finished.`);
+
+    // Do DB clean up, we keep only matches which are less than 93 days old
+    try {
+      await removeOldMatches(93);
+    } catch (e) {
+      functions.logger.error(`There was an error deleting the old matches`, e);
+    }
   });
 
 export { runAnalysis };
