@@ -32,6 +32,7 @@ const config = {
 };
 
 // The date when we exported the data for the bulletins and commanders
-export const commanderAndBulletinDate = "28 March 2021";
+export const commanderAndBulletinDate = "19 June 2021";
+export const lastPatchName = "Commander Update 2021";
 
 export default config;

@@ -213,7 +213,7 @@
       },
       {
         "name": "Reserve Armor",
-        "description": "M4A3 Sherman Medium Tanks can be equipped with bulldozers. The powerful M4A3(76) Sherman tank can be requisitioned from the Battalion Command Post.",
+        "description": "The powerful M4A3(76) Sherman tank can be requisitioned from the Battalion Command Post.",
         "icon": "Icons_commander_cmdr_aef_reserve_armour"
       }
     ]
@@ -233,7 +233,7 @@
       },
       {
         "name": "Airdropped Combat Group",
-        "description": "A Paratrooper Support Squad and an M1 75mm Pack Howitzer gun can be paradropped into the battlefield. These specialized Paratroopers can specialize in long range firepower or anti-tank tactics through their weapon upgrades.",
+        "description": "A Paratrooper Squad and an M1 75mm Pack Howitzer gun can be paradropped into the battlefield.",
         "icon": "Icons_commander_aidropped_group"
       },
       {
@@ -376,14 +376,14 @@
   "450553": {
     "serverID": "450553",
     "commanderName": "Advanced Emplacement Regiment",
-    "description": "This Regiment provides strong benefits to Emplacements and promotes defensive play. Utilize Infantry Sections to build defensive structures of your choice. Activate “Counter Battery” on any of your artillery based buildings to combat against any forms of siege attack you may encounter.  Upgrade your defensive structures for increase durability and improved utility.  Precision Barrage is available to call in to disrupt enemy formations.",
+    "description": "This Regiment promotes defensive play. Utilize Infantry Sections to build defensive structures of your choice.  Upgrade your defensive structures for increased durability and improved utility. Precision Barrage is available to call in to disrupt enemy formations while infantry can be strengthened in friendly territory before support planes arrive.",
     "races": ["british"],
     "iconSmall": "Icons_commander_portrait_british_commander_07",
     "iconlarge": "Icons_commander_portrait_british_commander_07_large",
     "abilities": [
       {
         "name": "Defensive Operations",
-        "description": "Infantry Sections now have the ability to construct emplacements and repair buildings.",
+        "description": "Infantry squads and Royal Engineers are equipped with additional entrenching tools and equipment, allowing them to build additional emplacements and defenses.",
         "icon": "Icons_commander_cmdr_british_defensive_operations"
       },
       {
@@ -418,7 +418,7 @@
     "abilities": [
       {
         "name": "Early Warning",
-        "description": "Nearby artillery batteries fire flares periodically over enemy frontline territories revealing the area.",
+        "description": "Nearby artillery batteries fire flares periodically over a frontline sector, revealing the area.",
         "icon": "Icons_commander_cmdr_british_early_warning"
       },
       {
@@ -468,7 +468,7 @@
       },
       {
         "name": "Assault",
-        "description": "Infantry squads move more quickly and have better attack. Recon planes will flyover frontline enemy territories.",
+        "description": "Infantry squads move more quickly and have better combat capabilities Recon planes will flyover frontline enemy territories.",
         "icon": "Icons_commander_cmdr_british_assault_operation"
       },
       {
@@ -586,14 +586,14 @@
   "450268": {
     "serverID": "450268",
     "commanderName": "Tactical Support Regiment",
-    "description": "Tactical Support Regiments help out behind the lines, improving existing units and providing fire support to allies. Designate a Command Vehicle to improve nearby forces or use air support to provide equipment to frontline troops. Artillery can cover advancing troops while recovery teams gather resources from vehicle wrecks. A Forward Observation Post can be used to provide rapid responses to nearby threats.",
+    "description": "Tactical Support Regiments help out behind the lines, improving existing units and providing fire support to allies. Designate a Command Vehicle to improve nearby forces or use air support to provide equipment to frontline troops. Artillery can cover advancing troops while Raid Sections cut-off key points. A Forward Observation Post can be used to provide rapid responses to nearby threats.",
     "races": ["british"],
     "iconSmall": "Icons_commander_portrait_british_commander_02",
     "iconlarge": "Icons_commander_portrait_british_commander_02_large",
     "abilities": [
       {
         "name": "Field Recovery Operation",
-        "description": "Dispatch a Royal Engineer Recovery squad who can salvage vehicle wrecks for resources. When dispatched, flares will be fired over vehicle wrecks that are in the target area.",
+        "description": "Dispatch a Royal Engineer Recovery squad who can salvage vehicle wrecks for resources.",
         "icon": "Icons_commander_cmdr_british_recovery_engineers"
       },
       {
@@ -633,7 +633,7 @@
       },
       {
         "name": "Forward Logistics Glider",
-        "description": "Deploy a Forward Glider Headquarters. The headquarters can deploy frontline team weapons, medics, and act as a retreat point.",
+        "description": "Deploy a Forward Glider Headquarters. The headquarters can deploy frontline team weapons, commandos, and act as a retreat point.",
         "icon": "Icons_commander_cmdr_british_forward_logistics_glider"
       },
       {
@@ -683,7 +683,7 @@
       },
       {
         "name": "Concentrated Fire Operation",
-        "description": "Heavy supporting artillery will fire at the target location.",
+        "description": "Coordinate a massive bombardment on the target zone. One heavy artillery shell will be fired first before being followed up by a series of 25 pounder shells.",
         "icon": "Icons_commander_cmdr_british_concentrated_fire_operation"
       }
     ]
@@ -866,7 +866,7 @@
   "5570": {
     "serverID": "5570",
     "commanderName": "Festung Armor Doctrine",
-    "description": "A hard hitting defensive strategy; deploy hard hitting artillery options, use smoke to protect your vehicles  and mask movement, provide more capability by deploying a Command Tank, and destroy enemies from long range with the powerful Pak43 anti-tank gun.",
+    "description": "A hard hitting defensive strategy; deploy hard hitting artillery options, use smoke to protect your vehicles  and mask movement, use Panzer IV Js to reinforce the line, and destroy enemies from long range with the powerful Pak43 anti-tank gun.",
     "races": ["wermacht"],
     "iconSmall": "Icons_commander_portrait_german_commander_03",
     "iconlarge": "Icons_commander_portrait_german_commander_03_large",
@@ -883,7 +883,7 @@
       },
       {
         "name": "Hull Down",
-        "description": "Pioneers, Grenadiers and Panzer Grenadiers are able to set German armor in an immobile Hull Down position, increasing defenses and damage.",
+        "description": "Tanks crews can hulldown their vehicles into a defensive position, improving their effectiveness.",
         "icon": "Icons_commander_cmdr_german_hull_down"
       },
       {
@@ -901,7 +901,7 @@
   "5571": {
     "serverID": "5571",
     "commanderName": "Festung Support Doctrine",
-    "description": "Support a defensive strategy; control space with artillery to establish a strong front line. Le FH 18 10.5cm howtizers, 250/7 mortar half-tracks, and pre-sited Sector Artillery deny map control to the enemy, while relief infantry can replace any losses.",
+    "description": "Support a defensive strategy with the power of the Command Tank and control space with artillery to establish a strong front line. 250/7 mortar half-tracks, and pre-sited Sector Artillery deny map control to the enemy, while relief infantry can replace any losses.",
     "races": ["wermacht"],
     "iconSmall": "Icons_commander_portrait_german_commander_04",
     "iconlarge": "Icons_commander_portrait_german_commander_04_large",
@@ -948,7 +948,7 @@
       },
       {
         "name": "Hull Down",
-        "description": "Pioneers, Grenadiers and Panzer Grenadiers are able to set German armor in an immobile Hull Down position, increasing defenses and damage.",
+        "description": "Tanks crews can hulldown their vehicles into a defensive position, improving their effectiveness.",
         "icon": "Icons_commander_cmdr_german_hull_down"
       },
       {
@@ -971,7 +971,7 @@
   "7538": {
     "serverID": "7538",
     "commanderName": "Luftwaffe Supply Doctrine",
-    "description": "The Luftwaffe Supply doctrine utilizes the German Air Force in a support role for the ground troops. Ju52 cargo planes can deliver valuable resources and medical supplies to troops on the ground, while Stuka bombers will provide reconnaissance and destructive power against static positions.",
+    "description": "The Luftwaffe Supply doctrine utilizes the German Air Force in a support role for the ground troops. Ju52 cargo planes can deliver valuable weapons and medical supplies to troops on the ground. Officers can direct planes to provide tactical air support while bombers can rain death from overhead.",
     "races": ["wermacht"],
     "iconSmall": "Icons_commander_portrait_german_commander_18",
     "iconlarge": "Icons_commander_portrait_german_commander_18_large",
@@ -1321,7 +1321,7 @@
   "5930": {
     "serverID": "5930",
     "commanderName": "Joint Operations Doctrine",
-    "description": "Stressing the mutual support of air reconnaissance and artillery, the Joint Operations Doctrine allows you to identify targets and rapidly bring a variety of light and heavy artillery options to bear.",
+    "description": "Stressing the mutual support of air reconnaissance and artillery, the Joint Operations Doctrine allows you to identify targets to be demolished by howitzers. Officers can pin-point targets for destruction while the Forward Resupply Station allows forces a staging point to launch attacks.",
     "races": ["wermacht"],
     "iconSmall": "Icons_commander_portrait_german_commander_07",
     "iconlarge": "Icons_commander_portrait_german_commander_07_large",
@@ -1426,7 +1426,7 @@
   "5929": {
     "serverID": "5929",
     "commanderName": "Storm Doctrine",
-    "description": "Overwhelm your opponent with artillery and concentrated bombing. Tactical Movement allows your infantry to rapidly engage the enemy, while camouflage training allows troops to ambush counter-attacking enemies.",
+    "description": "Overwhelm your opponent with artillery and concentrated bombing. Infantry can sprint rapidly to engage the enemy, while camouflage training allows troops to ambush counter-attacking enemies.",
     "races": ["wermacht"],
     "iconSmall": "Icons_commander_portrait_german_commander_10",
     "iconlarge": "Icons_commander_portrait_german_commander_10_large",
@@ -1478,7 +1478,7 @@
       },
       {
         "name": "Mobile Observation Posts",
-        "description": "SdKfz. 251 Half-tracks are capable of camouflaging themselves and acting as an observation post to scout for hostile units.",
+        "description": "SdKfz. 251 Half-tracks are capable of camouflaging themselves and acting as an observation post to scout for hostile units. Riegal AT mines allow the 251 to set traps for enemy armor.",
         "icon": "Icons_commander_recon_mode_icon"
       },
       {
@@ -1531,7 +1531,7 @@
   "6121": {
     "serverID": "6121",
     "commanderName": "Soviet Reserve Army",
-    "description": "Constituted to replace massive losses suffered during the first months of the war and with the need to feed forces into the endless churn of battle, these armies are focused more on infantry.",
+    "description": "Constituted to replace massive losses suffered during the first months of the war, the Reserve Army can quickly replace combat losses. Being supported by both artillery, sub-machine guns and officers infantry, push the enemy back with an infantry orientated strategy.",
     "races": ["soviet"],
     "iconSmall": "Icons_commander_portrait_soviet_commander_12",
     "iconlarge": "Icons_commander_portrait_soviet_commander_12_large",
@@ -1543,7 +1543,7 @@
       },
       {
         "name": "Conscript Assault Package Upgrade",
-        "description": "Unlocks an upgrade package on Conscripts that replace three of their rifles with PPSh-41 Submachine Guns for better short-range firepower and the Hit the Dirt ability for improved combat tactics.",
+        "description": "Unlocks an upgrade package on Conscripts that replace four of their rifles with PPSh-41 Submachine Guns for better short-range firepower and the Hit the Dirt ability for improved combat tactics.",
         "icon": "Icons_commander_cmdr_soviet_conscript_assault_package"
       },
       {
@@ -1558,7 +1558,7 @@
       },
       {
         "name": "Conscript Repair Kit",
-        "description": "Demonstrating pure ingenuity, Conscripts can repair any damaged structure, vehicle, or bridge.",
+        "description": "Demonstrating pure ingenuity, Conscripts and Penal Battalions can repair any damaged structure, vehicle, or bridge.",
         "icon": "Icons_commander_cons_repair_kit"
       }
     ]
@@ -1588,7 +1588,7 @@
       },
       {
         "name": "Conscript Assault Package Upgrade",
-        "description": "Unlocks an upgrade package on Conscripts that replace three of their rifles with PPSh-41 Submachine Guns for better short-range firepower and the Hit the Dirt ability for improved combat tactics.",
+        "description": "Unlocks an upgrade package on Conscripts that replace four of their rifles with PPSh-41 Submachine Guns for better short-range firepower and the Hit the Dirt ability for improved combat tactics.",
         "icon": "Icons_commander_cmdr_soviet_conscript_assault_package"
       },
       {
@@ -1623,12 +1623,12 @@
       },
       {
         "name": "Conscript Assault Package Upgrade",
-        "description": "Unlocks an upgrade package on Conscripts that replace three of their rifles with PPSh-41 Submachine Guns for better short-range firepower and the Hit the Dirt ability for improved combat tactics.",
+        "description": "Unlocks an upgrade package on Conscripts that replace four of their rifles with PPSh-41 Submachine Guns for better short-range firepower and the Hit the Dirt ability for improved combat tactics.",
         "icon": "Icons_commander_cmdr_soviet_conscript_assault_package"
       },
       {
         "name": "Conscript Repair Kit",
-        "description": "Demonstrating pure ingenuity, Conscripts can repair any damaged structure, vehicle, or bridge.",
+        "description": "Demonstrating pure ingenuity, Conscripts and Penal Battalions can repair any damaged structure, vehicle, or bridge.",
         "icon": "Icons_commander_cons_repair_kit"
       }
     ]
@@ -1671,7 +1671,7 @@
   "5926": {
     "serverID": "5926",
     "commanderName": "Anti-Infantry Tactics",
-    "description": "Kill or drive off your enemy’s vital infantry forces; shock troops provide short-range attack power while artillery and the fearsome flamethrower equipped KV-8 are terribly effective against infantry.",
+    "description": "Kill or drive off your enemy’s vital infantry forces; Assault Guards can provide support against an array of foes while artillery and the fearsome flamethrower equipped KV-8 are terribly effective against infantry.",
     "races": ["soviet"],
     "iconSmall": "Icons_commander_portrait_soviet_commander_01",
     "iconlarge": "Icons_commander_portrait_soviet_commander_01_large",
@@ -1718,12 +1718,12 @@
       },
       {
         "name": "Conscript Repair Kit",
-        "description": "Demonstrating pure ingenuity, Conscripts can repair any damaged structure, vehicle, or bridge.",
+        "description": "Demonstrating pure ingenuity, Conscripts and Penal Battalions can repair any damaged structure, vehicle, or bridge.",
         "icon": "Icons_commander_cons_repair_kit"
       },
       {
         "name": "Conscript Assault Package Upgrade",
-        "description": "Unlocks an upgrade package on Conscripts that replace three of their rifles with PPSh-41 Submachine Guns for better short-range firepower and the Hit the Dirt ability for improved combat tactics.",
+        "description": "Unlocks an upgrade package on Conscripts that replace four of their rifles with PPSh-41 Submachine Guns for better short-range firepower and the Hit the Dirt ability for improved combat tactics.",
         "icon": "Icons_commander_cmdr_soviet_conscript_assault_package"
       },
       {
@@ -1811,7 +1811,7 @@
   "5576": {
     "serverID": "5576",
     "commanderName": "Guard Rifle Combined Arms Tactics",
-    "description": "Guard Armies were underpinned by versatile infantry. Providing short-range SMGs to conscripts boosts infantry combat capabilities while IL-2 aircraft, KV-1 heavy tanks, and 152mm howitzers pulverize a variety of enemy types.",
+    "description": "Deploy Guard Rifle Infantry to the battlefield who are supported by IL-2 aircraft, KV-1 heavy tanks, and 152mm howitzers that pulverize enemy positions. Should the attack falter, pull back to defenses constructed by Engineers that can slow the enemy's advance.",
     "races": ["soviet"],
     "iconSmall": "Icons_commander_portrait_soviet_commander_04",
     "iconlarge": "Icons_commander_portrait_soviet_commander_04_large",
@@ -1828,7 +1828,7 @@
       },
       {
         "name": "Conscript Assault Package Upgrade",
-        "description": "Unlocks an upgrade package on Conscripts that replace three of their rifles with PPSh-41 Submachine Guns for better short-range firepower and the Hit the Dirt ability for improved combat tactics.",
+        "description": "Unlocks an upgrade package on Conscripts that replace four of their rifles with PPSh-41 Submachine Guns for better short-range firepower and the Hit the Dirt ability for improved combat tactics.",
         "icon": "Icons_commander_cmdr_soviet_conscript_assault_package"
       },
       {
@@ -1933,12 +1933,12 @@
       },
       {
         "name": "Conscript Repair Kit",
-        "description": "Demonstrating pure ingenuity, Conscripts can repair any damaged structure, vehicle, or bridge.",
+        "description": "Demonstrating pure ingenuity, Conscripts and Penal Battalions can repair any damaged structure, vehicle, or bridge.",
         "icon": "Icons_commander_cons_repair_kit"
       },
       {
         "name": "Armored Vehicle Detection",
-        "description": "Conscripts and elite infantry are able to detect enemy vehicles at about double their sight range due to the vehicle's particular noise signatures.",
+        "description": "Infantry are trained to detect hostile vehicles through the FOW. Vehicle crews can track armored vehicles that they hit.",
         "icon": "Icons_commander_cmdr_soviet_tank_awareness"
       },
       {
@@ -1998,7 +1998,7 @@
       },
       {
         "name": "Advanced Fortifications",
-        "description": "Vehicle blocking Tank Traps and PMD-6 anti-personnel mines can be constructed by Combat Engineers.",
+        "description": "Vehicle blocking Tank Traps, Bunkers and PMD-6 anti-personnel mines can be constructed by Combat Engineers.",
         "icon": "Icons_commander_tank_trap_mines"
       },
       {
@@ -2043,7 +2043,7 @@
       },
       {
         "name": "B-4 203mm Howitzer",
-        "description": "The B-4 203mm Howitzer can be built by Combat Engineers. It fires a single devastating shot and can be used for direct fire against vehicles.",
+        "description": "The B-4 203mm Howitzer can be built by Combat Engineers. It fires massive shells with a large area of effect and can be used for direct fire against vehicles.",
         "icon": "Icons_vehicles_vehicle_soviet_b4_artillery_gun"
       },
       {
@@ -2091,7 +2091,7 @@
   "258974": {
     "serverID": "258974",
     "commanderName": "Lend Lease Tactics",
-    "description": "Taking the weapons from the Western Powers and combine them with Soviet tenacity to form a formidable force. Utilize resources delivered from the west to fuel vehicle production, and then overwhelm the enemy with imported Sherman tanks.",
+    "description": "Taking the weapons from the Western Powers and combine them with Soviet tenacity to form a formidable force. Boost resource production with supply trucks, and then overwhelm the enemy with imported Sherman tanks.",
     "races": ["soviet"],
     "iconSmall": "Icons_commander_portrait_soviet_commander_20",
     "iconlarge": "Icons_commander_portrait_soviet_commander_20_large",
@@ -2103,7 +2103,7 @@
       },
       {
         "name": "Conscript Repair Kit",
-        "description": "Demonstrating pure ingenuity, Conscripts can repair any damaged structure, vehicle, or bridge.",
+        "description": "Demonstrating pure ingenuity, Conscripts and Penal Battalions can repair any damaged structure, vehicle, or bridge.",
         "icon": "Icons_commander_cons_repair_kit"
       },
       {
@@ -2196,7 +2196,7 @@
   "7545": {
     "serverID": "7545",
     "commanderName": "Tank Hunter Tactics",
-    "description": "Disable enemy tanks and armored vehicles more easily with a variety of upgrades and abilities to support existing AT options. ML-20s can shell the enemy from afar and when that fails IL-2 planes can deliver a devastating anti-tank bombing run.",
+    "description": "Disable enemy tanks and armored vehicles more easily with a variety of upgrades and abilities to support existing AT options. B-4 203mm Howitzers can shell the enemy from afar and when that fails IL-2 planes can deliver a devastating anti-tank bombing run.",
     "races": ["soviet"],
     "iconSmall": "Icons_commander_portrait_soviet_commander_22",
     "iconlarge": "Icons_commander_portrait_soviet_commander_22_large",
@@ -2343,7 +2343,7 @@
     "abilities": [
       {
         "name": "For The Fatherland!",
-        "description": "Infantry in friendly territory will recieve a defensive bonus and movement speed increase for the duration of the ability.",
+        "description": "Infantry in friendly territory will recieve a defensive bonus for the duration of the ability.",
         "icon": "Icons_commander_cmdr_west_german_for_the_fatherland"
       },
       {
@@ -2427,7 +2427,7 @@
       },
       {
         "name": "Emergency Repairs",
-        "description": "Vehicle crews gain the ability to repair critical damage on their vehicles. The crew is very vulnerable during this repair procedure.",
+        "description": "Vehicle crews gain the ability to repair critical damage on their vehicles.",
         "icon": "Icons_commander_cmdr_west_german_vehicle_crew_critical_repair_training"
       },
       {
@@ -2512,7 +2512,7 @@
       },
       {
         "name": "Heavy Fortifications",
-        "description": "Sturmpioneers can construct Tank Traps, Flak Emplacements, and Trenches.",
+        "description": "Sturmpioneers can construct Tank Traps, S-Mine Fields, Flak Emplacements, and Trenches. Volksgrenadiers can construct bunkers.",
         "icon": "Icons_commander_cmdr_west_german_heavy_fortifications"
       }
     ]
@@ -2577,7 +2577,7 @@
       },
       {
         "name": "Heavy Fortifications",
-        "description": "Sturmpioneers can construct Tank Traps, Flak Emplacements, and Trenches.",
+        "description": "Sturmpioneers can construct Tank Traps, S-Mine Fields, Flak Emplacements, and Trenches. Volksgrenadiers can construct bunkers.",
         "icon": "Icons_commander_cmdr_west_german_heavy_fortifications"
       },
       {
@@ -2602,7 +2602,7 @@
       },
       {
         "name": "Thorough Salvage",
-        "description": "Salvaging will take more time, but also yields munitions resource.",
+        "description": "Salvaging will take more time, but also yields munitions resource. Volksgrenadiers can also be upgraded with repair kits.",
         "icon": "Icons_commander_cmdr_west_german_thorough_salvage"
       },
       {
@@ -2637,7 +2637,7 @@
       },
       {
         "name": "Thorough Salvage",
-        "description": "Salvaging will take more time, but also yields munitions resource.",
+        "description": "Salvaging will take more time, but also yields munitions resource. Volksgrenadiers can also be upgraded with repair kits.",
         "icon": "Icons_commander_cmdr_west_german_thorough_salvage"
       },
       {

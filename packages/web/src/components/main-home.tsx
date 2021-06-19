@@ -5,7 +5,8 @@ import { Loading } from "./loading";
 import Meta from "antd/es/card/Meta";
 import { Link } from "react-router-dom";
 import routes from "../routes";
-const { Title } = Typography;
+import { commanderAndBulletinDate, lastPatchName } from "../config";
+const { Title, Paragraph, Text } = Typography;
 
 const MainHome: React.FC = () => {
   const isLoading = useLoading("globalStats");
@@ -36,7 +37,7 @@ const MainHome: React.FC = () => {
         </Link>
       </Space>
       <Title level={4}>So far analyzed {analyzedMatches} matches.</Title>
-      <Space size={"large"} wrap>
+      <Space size={"large"} style={{ marginBottom: 10 }} wrap>
         <Link to={routes.commanderBase()}>
           <Card
             hoverable
@@ -62,6 +63,10 @@ const MainHome: React.FC = () => {
           </Card>
         </Link>
       </Space>
+      <Paragraph style={{ marginBottom: -4 }}>
+        Last patch data from <Text strong>{lastPatchName}</Text> extracted on{" "}
+        <Text strong>{commanderAndBulletinDate}</Text>
+      </Paragraph>
     </div>
   );
 };

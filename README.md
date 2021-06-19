@@ -77,6 +77,19 @@ To run the tests on functions:
 To run beautifier and linting:
 `yarn fix`
 
+### Patch update steps for text bulletin / commander data
+
+1. Run script `bulletinsAndCommanders.py` with correct path to your COH2 folder
+2. Copy the generated files `*ServerData.json` into `packages/functions/src/libs/data/`
+   - bulletinServerData.json
+   - commanderServerData.json
+3. Copy the generates files `*Data.json` into `packages/web/src/coh/data/`
+   - bulletinData.json
+   - commanderData.json
+4. Run formatter by using commander `yarn fix`
+5. Observe the changes
+6. Update the `packages/web/src/config.tsx` with the right date / patch name
+
 ### Crawler process
 
 Diagram:
