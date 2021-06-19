@@ -1626,7 +1626,7 @@
   "18436": {
     "serverID": "18436",
     "bulletinName": "Someone Needs to Man those Guns!",
-    "descriptionShort": "Dispatch time reduced by 10% for Osttruppen squads",
+    "descriptionShort": "Osttruppen squads now build 10% faster.",
     "descriptionLong": "The Axis powers on the Eastern Front are primarily portrayed as German, but in reality many lesser Axis powers contributed to the fight. Hungarian and Romanian forces made up a large part of the rear guard during Case Blue, and while often undersupplied, many fought valiantly in the face of overwhelming odds.",
     "icon": "Icons_intel_bulletins_infantry_ger_osttruppen_build",
     "races": ["wermacht"]
@@ -2362,7 +2362,7 @@
   "260768": {
     "serverID": "260768",
     "bulletinName": "Hurry Up and Move!",
-    "descriptionShort": "The Panzerfusiliers dispatch ability recharges 10% faster.",
+    "descriptionShort": "Panzerfusiliers build 10% faster.",
     "descriptionLong": "In Pre- War times the German usage of ‘Fusilier’ denoted a type of light infantry, though it became a traditional title reduced to an honorific. The regiment ‘Panzerfüsilier’’ was titled so to maintain that tradition, though they more resembled Panzergrenadiers in both organization and function.",
     "icon": "Icons_intel_bulletins_infantry_wgr_panzerfusiliers_dispatch",
     "races": ["wgerman"]
@@ -2498,7 +2498,7 @@
   "348140": {
     "serverID": "348140",
     "bulletinName": "… & Roll Out!",
-    "descriptionShort": "The M3 Half-track dispatch ability recharges 50% faster.",
+    "descriptionShort": "The M3 Half-tracks now build 50% faster.",
     "descriptionLong": "The M3 Half-track was an armored troop transport used by the US and the other Allies during World War II. Around 43,000 were produced and supplied across all Fronts to the US, British Commonwealth, and Soviet Red Army. American troops gave them the nickname of ‘Purple Heart Boxes’ due to their insufficient protection.",
     "icon": "Icons_intel_bulletins_lightvehicle_m3_dispatch",
     "races": ["usf"]
