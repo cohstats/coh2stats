@@ -10,3 +10,4 @@ export { getPlayerMatchesFromRelic } from "./getPlayerMatchesRelic";
 export { searchPlayersOnRelic } from "./searchPlayersRelic";
 export { searchPlayers } from "./searchPlayers";
 export { triggerNumberOfOnlinePlayers } from "./triggerOnlinePlayers";
+export { getCustomAnalysis } from "./getCustomAnalysis";
