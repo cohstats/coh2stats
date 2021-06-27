@@ -3,6 +3,7 @@ import * as functions from "firebase-functions";
 
 import {
   getCurrentDateTimestamp,
+  getDateTimeStampsInRange,
   getMonthTimeStamps,
   getStartOfTheMonth,
   getStartOfTheWeek,
@@ -40,13 +41,12 @@ const getSaveTimeStamp = (date: Date | number, frequency: frequencyType) => {
 };
 
 const generateMultiDayAnalysis = async (
-  date: Date | number,
-  frequency: frequencyType = "week",
+  eachDateTimeStamp: Array<number>,
   type: "normal" | "top" = "normal",
+  keepEachDay = true,
 ): Promise<Record<string, any>> => {
-  const eachDate = getTimeStamps(date, frequency);
   functions.logger.log(
-    `Stats - ${frequency} ${type} analysis for date ${date} started - have ${eachDate.length} dates.`,
+    `Generation of multi day analysis started - have ${eachDateTimeStamp.length} dates.`,
   );
 
   const allDocs: Record<
@@ -54,7 +54,7 @@ const generateMultiDayAnalysis = async (
     FirebaseFirestore.DocumentSnapshot<FirebaseFirestore.DocumentData>
   > = {};
 
-  for (const timeStamp of eachDate) {
+  for (const timeStamp of eachDateTimeStamp) {
     // We need to keep the timestamp
     if (type === "top") {
       allDocs[timeStamp] = await getTopStatsDocRef(timeStamp, "daily").get();
@@ -64,13 +64,13 @@ const generateMultiDayAnalysis = async (
   }
 
   if (!allDocs) {
-    functions.logger.error(`Did not found any daily stats for ${eachDate}`);
-    throw Object.assign(new Error("Not found any daily stats for"), { eachDate });
+    functions.logger.error(`Did not found any daily stats for ${eachDateTimeStamp}`);
+    throw Object.assign(new Error("Not found any daily stats for"), { eachDateTimeStamp });
   }
 
-  if (eachDate.length !== Object.keys(allDocs).length) {
+  if (eachDateTimeStamp.length !== Object.keys(allDocs).length) {
     functions.logger.warn(`We received different amount of docs than generate timestamps
-    we have ${eachDate.length} timestamp but ${Object.keys(allDocs).length} docs.`);
+    we have ${eachDateTimeStamp.length} timestamp but ${Object.keys(allDocs).length} docs.`);
   }
 
   const finalMultiDayStats: Record<string, any> = { days: {} };
@@ -83,7 +83,8 @@ const generateMultiDayAnalysis = async (
 
       const docCopy = JSON.parse(JSON.stringify(docData));
 
-      if (docCopy) {
+      // Keep each day only when it's required
+      if (docCopy && keepEachDay) {
         for (const key of Object.keys(docCopy)) {
           // We don't need to keep ib and commanders for each day
           delete docCopy[key].intelBulletins;
@@ -91,9 +92,9 @@ const generateMultiDayAnalysis = async (
           delete docCopy[key].maps;
           delete docCopy[key].factionMatrix;
         }
-      }
 
-      finalMultiDayStats.days[timeStamp] = docCopy;
+        finalMultiDayStats.days[timeStamp] = docCopy;
+      }
     } else {
       functions.logger.warn(`Doc missing ${doc} for timestamp ${timeStamp}`);
     }
@@ -107,7 +108,12 @@ const runAndSaveMultiDayAnalysis = async (
   frequency: frequencyType = "week",
   type: "normal" | "top" = "normal",
 ): Promise<void> => {
-  const finalMultiDayStats = await generateMultiDayAnalysis(date, frequency, type);
+  const eachDate = getTimeStamps(date, frequency);
+  functions.logger.log(
+    `Stats - ${frequency} ${type} analysis for date ${date} started - have ${eachDate.length} dates.`,
+  );
+
+  const finalMultiDayStats = await generateMultiDayAnalysis(eachDate, type);
 
   const saveTimeStamp = getSaveTimeStamp(date, frequency);
 
@@ -122,4 +128,23 @@ const runAndSaveMultiDayAnalysis = async (
   );
 };
 
-export { runAndSaveMultiDayAnalysis, generateMultiDayAnalysis };
+const generateCustomMultiDayAnalysis = async (
+  startDate: Date | number,
+  endDate: Date | number,
+  type: "normal" | "top" = "normal",
+): Promise<Record<string, any>> => {
+  const eachDate = getDateTimeStampsInRange(startDate, endDate);
+
+  functions.logger.log(
+    `Custom multi day analysis for startDate ${startDate} endDate ${endDate} started - have ${eachDate.length} timestamps`,
+  );
+
+  const finalMultiDayStats = await generateMultiDayAnalysis(eachDate, type);
+
+  functions.logger.log(
+    `Custom multi day analysis for startDate ${startDate} and endDate ${endDate} finished`,
+  );
+
+  return finalMultiDayStats;
+};
+export { runAndSaveMultiDayAnalysis, generateMultiDayAnalysis, generateCustomMultiDayAnalysis };
