@@ -1,5 +1,6 @@
 # COH2 CHARTS, STATS, LEADERBOARDS
-
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/petrvecera/coh2ladders)
+![Uptime Robot ratio (30 days)](https://img.shields.io/uptimerobot/ratio/m788579058-010f84f8b7e284e354b0946c?label=uptime%2030%20days)
 ## https://coh2stats.com/
 
 This project is set to create new usage charts for the game COH2.
