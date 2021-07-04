@@ -7,7 +7,7 @@ import {
   getMonthTimeStamps,
   getStartOfTheMonth,
   getStartOfTheWeek,
-  getWeekTimeStamps,
+  getWeekTimeStamps, printUTCTime,
   sumValuesOfObjects,
 } from "../helpers";
 import { saveAnalysis, saveTopAnalysis } from "./analysis";
@@ -136,7 +136,7 @@ const generateCustomMultiDayAnalysis = async (
   const eachDate = getDateTimeStampsInRange(startDate, endDate);
 
   functions.logger.log(
-    `Custom multi day analysis for startDate ${startDate} endDate ${endDate} started - have ${eachDate.length} timestamps`,
+    `Custom multi day analysis for startDate ${startDate}-${printUTCTime(startDate)} endDate ${endDate}-${printUTCTime(endDate)} started - have ${eachDate.length} timestamps`,
   );
 
   const finalMultiDayStats = await generateMultiDayAnalysis(eachDate, type);
