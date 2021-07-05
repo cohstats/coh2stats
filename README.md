@@ -9,7 +9,7 @@ This project is set to create new usage charts for the game COH2.
 The author of the game doesn't provide any global statistics.  
 http://www.companyofheroes.com/leaderboards
 
-This project is inspired by http://coh2chart.com/ which has data
+This project is inspired by coh2chart.com which has data
 only for years 2016-2017 after which it was shut down.
 
 ## Technical description
