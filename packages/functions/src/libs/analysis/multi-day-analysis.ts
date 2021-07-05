@@ -54,23 +54,32 @@ const generateMultiDayAnalysis = async (
     FirebaseFirestore.DocumentSnapshot<FirebaseFirestore.DocumentData>
   > = {};
 
+  const promisedDocs = [];
+
   for (const timeStamp of eachDateTimeStamp) {
     // We need to keep the timestamp
     if (type === "top") {
-      allDocs[timeStamp] = await getTopStatsDocRef(timeStamp, "daily").get();
+      promisedDocs.push(getTopStatsDocRef(timeStamp, "daily").get());
     } else {
-      allDocs[timeStamp] = await getStatsDocRef(timeStamp, "daily").get();
+      promisedDocs.push(getStatsDocRef(timeStamp, "daily").get());
     }
+  }
+
+  const allGeneratedDocs = await Promise.all(promisedDocs);
+
+  if (eachDateTimeStamp.length !== allGeneratedDocs.length) {
+    functions.logger.warn(`We received different amount of docs than generate timestamps
+    we have ${eachDateTimeStamp.length} timestamp but ${Object.keys(allDocs).length} docs.`);
+    throw Object.assign(new Error("Mismatch between timestamps and received data"));
+  }
+
+  for (let i = 0; i < promisedDocs.length; i++) {
+    allDocs[eachDateTimeStamp[i]] = allGeneratedDocs[i];
   }
 
   if (!allDocs) {
     functions.logger.error(`Did not found any daily stats for ${eachDateTimeStamp}`);
     throw Object.assign(new Error("Not found any daily stats for"), { eachDateTimeStamp });
-  }
-
-  if (eachDateTimeStamp.length !== Object.keys(allDocs).length) {
-    functions.logger.warn(`We received different amount of docs than generate timestamps
-    we have ${eachDateTimeStamp.length} timestamp but ${Object.keys(allDocs).length} docs.`);
   }
 
   const finalMultiDayStats: Record<string, any> = { days: {} };
@@ -136,7 +145,9 @@ const generateCustomMultiDayAnalysis = async (
   const eachDate = getDateTimeStampsInRange(startDate, endDate);
 
   functions.logger.log(
-    `Custom multi day analysis for startDate ${startDate} endDate ${endDate} started - have ${eachDate.length} timestamps`,
+    `Custom multi day analysis for startDate ${startDate}-${new Date(
+      startDate,
+    )} endDate ${endDate}-${new Date(endDate)} started - have ${eachDate.length} timestamps`,
   );
 
   const finalMultiDayStats = await generateMultiDayAnalysis(eachDate, type);

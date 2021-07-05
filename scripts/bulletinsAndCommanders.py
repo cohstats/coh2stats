@@ -10,11 +10,11 @@ import pandas as pd
 # Constants and parameters
 # ////////////////////////////////////////////////////////////////////////////
 # ////////////////////////////////////////////////////////////////////////////
-COH_TEXT_LIB_PATH = "D:/SteamLibrary/steamapps/common/Company of Heroes 2/CoH2/Locale/English/RelicCoH2.English.ucs" # file is utf16 encoded
+COH_TEXT_LIB_PATH = "S:/SteamLibrary/steamapps/common/Company of Heroes 2/CoH2/Locale/English/RelicCoH2.English.ucs" # file is utf16 encoded
 
-COH_PATH_INSTANCES = 'D:/SteamLibrary/steamapps/common/Company of Heroes 2 Tools/assets/data/attributes/instances/'
-COH_BULLETIN_PATH ="D:/SteamLibrary/steamapps/common/Company of Heroes 2 Tools/assets/data/attributes/instances/intel_bulletin"
-COH_COMMANDER_PATH = "D:/SteamLibrary/steamapps/common/Company of Heroes 2 Tools/assets/data/attributes/instances/commander"
+COH_PATH_INSTANCES = 'S:/SteamLibrary/steamapps/common/Company of Heroes 2 Tools/assets/data/attributes/instances/'
+COH_BULLETIN_PATH ="S:/SteamLibrary/steamapps/common/Company of Heroes 2 Tools/assets/data/attributes/instances/intel_bulletin"
+COH_COMMANDER_PATH = "S:/SteamLibrary/steamapps/common/Company of Heroes 2 Tools/assets/data/attributes/instances/commander"
 
 # hardcoded dictionary of race - to - race conversion
 RACE_DICT = [{'raceIn':'racebps\german','raceOut':'wermacht'},
@@ -61,7 +61,7 @@ def parseAbilityDetails(referenceXml):
     except:
         abilityDetails['description'] = 'undefined'
         print('Cannot find a localized TMX entry for file ' + xmlPath  + ' -> ' + str(textIndex))
-        
+
    # look for ability icon
     abilityIcon = xmlroot.findall(".//*icon")
     try:
@@ -112,10 +112,10 @@ def parseCommanderRecord(xmlPath):
     # look for icons
     iconSmall = xmlroot.findall(".//*icon/[@name='icon']")
     myCommanderRecord['iconSmall'] = iconSmall[0].attrib['value']
-    
+
     iconlarge = xmlroot.findall(".//*icon/[@name='icon_secondary']")
     myCommanderRecord['iconlarge'] = iconlarge[0].attrib['value']
-    
+
     # look for commander_ability
     xmlResult = xmlroot.findall(".//*[@name='commander_ability']")
     myAbilitiesList = []
@@ -128,7 +128,7 @@ def parseCommanderRecord(xmlPath):
         try:
             ability['icon'] = details['icon']
         except:
-            print('Ability icon not found')            
+            print('Ability icon not found')
         myAbilitiesList.append(ability)
 
     myCommanderRecord['abilities'] = myAbilitiesList

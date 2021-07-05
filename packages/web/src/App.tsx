@@ -3,13 +3,14 @@ import { Layout } from "antd";
 import "./App.css";
 import { useFirestoreConnect } from "react-redux-firebase";
 import { Route, Switch } from "react-router-dom";
+
+import routes from "./routes";
 import { CommanderDetails } from "./pages/commanders/commanderDetails";
 import { CommandersList } from "./pages/commanders/commandersList";
 import { RacePicker } from "./pages/commanders/racePicker";
 import BulletinList from "./pages/bulletins";
-import Stats from "./pages/stats";
+import OldStats from "./pages/stats/old-stats";
 import { MainFooter } from "./components/main-footer";
-import routes from "./routes";
 import { MainHeader } from "./components/main-header";
 import About from "./pages/about";
 import { LastMatchesTable } from "./pages/matches/lastMatchesTable";
@@ -17,6 +18,7 @@ import LastMatchesTableRelic from "./pages/matches/lastMatchesTableRelic";
 import CustomSearch from "./pages/search";
 import { BetaVersion } from "./components/beta-version";
 import MainHome from "./components/main-home";
+import CustomStats from "./pages/stats/custom-stats";
 
 const { Content } = Layout;
 
@@ -43,11 +45,11 @@ const App: React.FC = () => {
             <Route path={"/"} exact={true}>
               <MainHome />
             </Route>
-            <Route path={routes.fullStatsDetails()}>
-              <Stats />
+            <Route path={routes.fullStatsOldDetails()}>
+              <OldStats />
             </Route>
             <Route path={"/stats"}>
-              <Stats />
+              <CustomStats />
             </Route>
             <Route path={routes.commanderByID()}>
               <CommanderDetails />

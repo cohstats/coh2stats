@@ -2,14 +2,18 @@ import * as functions from "firebase-functions";
 import { DEFAULT_FUNCTIONS_LOCATION } from "./constants";
 import { generateCustomMultiDayAnalysis } from "./libs/analysis/multi-day-analysis";
 
-const runtimeOpts: Record<string, "128MB" | any> = {
+/**
+ * We use 512MB to have faster CF in terms of MHz - it executes the requests faster
+ */
+const runtimeOpts: Record<string, "512MB" | any> = {
   timeoutSeconds: 120,
-  memory: "128MB",
+  memory: "512MB",
 };
 
 /**
  * This function is callable with:
  * {startDate: "timestampInMs", endDate: "timestampInMs", type: ""}
+ * The TimeStamp is UNIX timestamp
  *
  * Returns the analysis object;
  */
@@ -29,8 +33,12 @@ const getCustomAnalysis = functions
     }
 
     try {
-      const analysis = await generateCustomMultiDayAnalysis(startDate, endDate, type);
-      return { analysis };
+      const analysis = await generateCustomMultiDayAnalysis(
+        parseInt(startDate) * 1000,
+        parseInt(endDate) * 1000,
+        type,
+      );
+      return { analysis, fromTimeStamp: startDate, toTimeStamp: endDate };
     } catch (e) {
       functions.logger.error(e);
       throw new functions.https.HttpsError("internal", `Error calling calling the API ${e}`);

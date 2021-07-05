@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import StatsDetails from "./stats-details";
-import { Redirect, Route, Switch, useLocation } from "react-router-dom";
-import { useHistory, useParams } from "react-router";
-import { useFirestoreConnect } from "react-redux-firebase";
+import { useLocation } from "react-router-dom";
+import { useHistory } from "react-router";
 import routes from "../../routes";
 import { ConfigProvider, Select, Space, Radio, Typography } from "antd";
 import DatePicker from "../../components/date-picker";
@@ -17,49 +15,34 @@ import enGB from "antd/lib/locale/en_GB";
 
 import { isBefore, isAfter } from "date-fns";
 import { Helper } from "../../components/helper";
-const { Link } = Typography;
+import CustomStatsRangeDataProvider from "./custom-stats-range-data-provider";
+import CustomStatsGeneralDataProvider from "./custom-stats-general-data-provider";
 
-type DatePickerType = "time" | "date" | "week" | "month" | "quarter" | "year" | undefined;
+const { Link } = Typography;
+const { RangePicker } = DatePicker;
+
+type DatePickerType = "time" | "date" | "week" | "month" | "range" | undefined;
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
-const Stats: React.FC = () => {
-  const { frequency, timestamp, type, race } = useParams<{
-    frequency: string;
-    timestamp: string;
-    type: string;
-    race: string;
-  }>();
+const CustomStats: React.FC = () => {
   const { push } = useHistory();
   const { Option } = Select;
 
   const query = useQuery();
 
   const statsSourceQuery = query.get("statsSource");
+  const frequency = query.get("range") || "week";
+  const timestamp = query.get("timeStamp") || `${getPreviousWeekTimeStamp()}`;
+  const type = query.get("type") || "4v4";
+  const race = query.get("race") || "wermacht";
 
-  let statDocToBeLoaded = "stats";
-  if (statsSourceQuery === "top200") {
-    statDocToBeLoaded = "topStats";
-  }
+  const fromTimeStamp = query.get("fromTimeStamp") || "";
+  const toTimeStamp = query.get("toTimeStamp") || "";
 
-  useFirestoreConnect([
-    {
-      collection: "stats",
-      doc: frequency,
-      subcollections: [
-        {
-          collection: timestamp,
-          doc: statDocToBeLoaded,
-        },
-      ],
-      storeAs: "stats",
-    },
-  ]);
-
-  const settableFrequently = frequency ? frequency : "week";
-  const [datePickerType, setDatePickerType] = useState(settableFrequently as DatePickerType);
+  const [datePickerType, setDatePickerType] = useState(frequency as DatePickerType);
   const [statsSource, setStatsSource] = useState(statsSourceQuery ? statsSourceQuery : "all");
   const [dateValue, setDateValue] = useState(
     timestamp
@@ -67,17 +50,33 @@ const Stats: React.FC = () => {
       : new Date(getPreviousWeekTimeStamp() * 1000),
   );
 
-  function disabledDate(current: Date) {
+  const [rangeDate, setRangeDate] = useState(
+    fromTimeStamp && toTimeStamp
+      ? {
+          fromDate: new Date(parseInt(fromTimeStamp) * 1000),
+          toDate: new Date(parseInt(toTimeStamp) * 1000),
+        }
+      : {
+          fromDate: new Date(),
+          toDate: new Date(),
+        },
+  );
+
+  const disabledDate = (current: Date) => {
     // we started logging Monday 8.3.2021
     const canBeOld = isBefore(current, new Date(2021, 2, 8));
     const canBeNew = isAfter(current, new Date());
 
     return canBeOld || canBeNew;
-  }
+  };
 
-  function PickerWithType({ type, onChange }: { type: DatePickerType; onChange: any }) {
+  const PickerWithType = ({ type, onChange }: { type: DatePickerType; onChange: any }) => {
     // @ts-ignore
     let pickerType = type === "daily" ? "date" : type;
+
+    if (pickerType === "range") {
+      return <>ERROR</>;
+    }
 
     return (
       // locale enGB for Monday as start of the week
@@ -92,7 +91,81 @@ const Stats: React.FC = () => {
         />
       </ConfigProvider>
     );
-  }
+  };
+
+  const onRangePickerChange = (value: any) => {
+    const from = (value && value[0]) || new Date();
+    const to = (value && value[1]) || new Date();
+
+    const fromDate = new Date(from);
+    const toDate = new Date(to);
+
+    setRangeDate({
+      fromDate: fromDate,
+      toDate: toDate,
+    });
+
+    changeStatsRoute({
+      datePickerTypeToLoad: datePickerType,
+      statsSourceToLoad: statsSource,
+      fromTimeStampToLoad: convertDateToDayTimestamp(fromDate).toString(),
+      toTimeStampToLoad: convertDateToDayTimestamp(toDate).toString(),
+    });
+  };
+
+  const CustomRangePicker = ({ from, to }: { from: Date; to: Date }) => {
+    return (
+      <ConfigProvider locale={enGB}>
+        <RangePicker
+          allowClear={false}
+          defaultValue={[from, to]}
+          disabledDate={disabledDate}
+          onChange={onRangePickerChange}
+          size={"large"}
+        />
+      </ConfigProvider>
+    );
+  };
+
+  const changeStatsRoute = (params: Record<string, any>) => {
+    const {
+      datePickerTypeToLoad,
+      statsSourceToLoad,
+      typeToLoad,
+      raceToLoad,
+      timeStampToLoad,
+      fromTimeStampToLoad,
+      toTimeStampToLoad,
+    } = params;
+
+    let searchValue;
+
+    const typeOfStats = datePickerTypeToLoad || datePickerType;
+
+    if (typeOfStats !== "range") {
+      searchValue = `?${new URLSearchParams({
+        range: datePickerTypeToLoad || (datePickerType as string),
+        statsSource: statsSourceToLoad || statsSource,
+        type: typeToLoad || type,
+        race: raceToLoad || race,
+        timeStamp: timeStampToLoad || timestamp,
+      })}`;
+    } else {
+      searchValue = `?${new URLSearchParams({
+        range: datePickerTypeToLoad || (datePickerType as string),
+        statsSource: statsSourceToLoad || statsSource,
+        type: typeToLoad || type,
+        race: raceToLoad || race,
+        fromTimeStamp: fromTimeStampToLoad || fromTimeStamp,
+        toTimeStamp: toTimeStampToLoad || toTimeStamp,
+      })}`;
+    }
+
+    push({
+      pathname: routes.statsBase(),
+      search: searchValue,
+    });
+  };
 
   // I am not really sure about this workflow with useEffect and state for handling this
   // form. I feel like it's not optimal, something is wrong and there is definitely
@@ -100,12 +173,6 @@ const Stats: React.FC = () => {
   React.useEffect(() => {
     let typeToLoad = "4v4";
     let raceToLoad = "wermacht";
-    let searchValue = "";
-
-    if (statsSource) {
-      // We should not use it like this
-      searchValue = `?${new URLSearchParams({ statsSource: statsSource }).toString()}`;
-    }
 
     if (validStatsTypes.includes(type)) {
       typeToLoad = type;
@@ -115,16 +182,23 @@ const Stats: React.FC = () => {
       raceToLoad = race;
     }
 
-    push({
-      pathname: routes.fullStatsDetails(
-        datePickerType,
-        convertDateToDayTimestamp(dateValue).toString(),
+    if (datePickerType !== "range") {
+      changeStatsRoute({
+        datePickerTypeToLoad: datePickerType,
+        statsSourceToLoad: statsSource,
         typeToLoad,
         raceToLoad,
-      ),
-      search: searchValue,
-    });
-  }, [datePickerType, dateValue, push, statsSource]);
+        timeStampToLoad: convertDateToDayTimestamp(dateValue).toString(),
+      });
+    } else {
+      changeStatsRoute({
+        datePickerTypeToLoad: datePickerType,
+        statsSourceToLoad: statsSource,
+        fromTimeStampToLoad: convertDateToDayTimestamp(rangeDate.fromDate).toString(),
+        toTimeStampToLoad: convertDateToDayTimestamp(rangeDate.toDate).toString(),
+      });
+    }
+  }, [datePickerType, dateValue, statsSource]);
 
   const onDatePickerTypeSelect = (value: DatePickerType) => {
     if (value === "week") {
@@ -160,28 +234,27 @@ const Stats: React.FC = () => {
   };
 
   return (
-    <Switch>
-      <Route path={routes.fullStatsDetails()}>
+    <div>
+      <div>
         <Space
           style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}
         >
           <Select
             value={datePickerType}
             onChange={onDatePickerTypeSelect}
-            style={{ width: 100 }}
+            style={{ width: 150 }}
             size={"large"}
           >
             <Option value="daily">Daily</Option>
             <Option value="week">Week</Option>
             <Option value="month">Month</Option>
-            <Option disabled={true} value="quarter">
-              Quarter
-            </Option>
-            <Option disabled={true} value="year">
-              Year
-            </Option>
+            <Option value="range">Custom Range</Option>
           </Select>
-          <PickerWithType type={datePickerType} onChange={onDateSelect} />
+          {datePickerType !== "range" ? (
+            <PickerWithType type={datePickerType} onChange={onDateSelect} />
+          ) : (
+            <CustomRangePicker from={rangeDate.fromDate} to={rangeDate.toDate} />
+          )}
           Ranking:
           <Radio.Group onChange={onStatsSourceChange} value={statsSource}>
             <Radio value={"all"}>
@@ -215,15 +288,14 @@ const Stats: React.FC = () => {
             </Radio>
           </Radio.Group>
         </Space>
-        <StatsDetails />
-      </Route>
-      <Route path={"/stats/"}>
-        <Redirect
-          to={routes.fullStatsDetails("week", getPreviousWeekTimeStamp(), "4v4", "wermacht")}
-        />
-      </Route>
-    </Switch>
+      </div>
+      {datePickerType === "range" ? (
+        <CustomStatsRangeDataProvider urlChanger={changeStatsRoute} />
+      ) : (
+        <CustomStatsGeneralDataProvider urlChanger={changeStatsRoute} />
+      )}
+    </div>
   );
 };
 
-export default Stats;
+export default CustomStats;

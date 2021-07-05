@@ -43,10 +43,14 @@ const getHoursOldTimestamp = (hours = 25): number => {
 
 /**
  * Maybe I should have imported some lib for datetime :Facepalm:
- * @param timestamp
+ * @param timestampOrDate
  */
-const printUTCTime = (timestamp: number): string => {
-  return `${new Date(timestamp * 1000)}`;
+const printUTCTime = (timestampOrDate: number | Date): string => {
+  if (typeof timestampOrDate === "number") {
+    return `${new Date(timestampOrDate * 1000)}`;
+  } else {
+    return `${timestampOrDate}`;
+  }
 };
 
 /**

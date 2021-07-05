@@ -1,1 +1,1 @@
-export { default } from "./stats";
+export { default } from "./custom-stats";
