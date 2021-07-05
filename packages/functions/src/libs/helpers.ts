@@ -46,10 +46,10 @@ const getHoursOldTimestamp = (hours = 25): number => {
  * @param timestampOrDate
  */
 const printUTCTime = (timestampOrDate: number | Date): string => {
-  if(typeof timestampOrDate === "number"){
+  if (typeof timestampOrDate === "number") {
     return `${new Date(timestampOrDate * 1000)}`;
   } else {
-    return `${timestampOrDate}`
+    return `${timestampOrDate}`;
   }
 };
 
