@@ -6,6 +6,7 @@ import { validStatsTypes } from "../../coh/types";
 import { useLocation } from "react-router-dom";
 import CustomStatsDetails from "./custom-stats-details";
 import { useFirestoreConnect } from "react-redux-firebase";
+import firebaseAnalytics from "../../analytics";
 
 const { Title } = Typography;
 
@@ -32,6 +33,8 @@ const CustomStatsGeneralDataProvider: React.FC<IProps> = ({ urlChanger }) => {
   if (statsSource === "top200") {
     statDocToBeLoaded = "topStats";
   }
+
+  firebaseAnalytics.statsDisplayed(frequency, statsSource || "");
 
   useFirestoreConnect([
     {

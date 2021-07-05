@@ -6,13 +6,13 @@ import { getAllBulletins, getBulletinIconPath } from "../../coh/bulletins";
 import { ColumnsType, ColumnType } from "antd/lib/table";
 import { SearchOutlined } from "@ant-design/icons";
 import { ExportDate } from "../../components/export-date";
-import firebase from "../../analytics";
+import firebaseAnalytics from "../../analytics";
 
 const BulletinList = () => {
   // Prepare bulletin data
   const bulletinData = getAllBulletins();
 
-  firebase.bulletinsDisplayed();
+  firebaseAnalytics.bulletinsDisplayed();
 
   // search through provided bulletin data
   bulletinData.map((sortedBulletinItem) => {
