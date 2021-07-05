@@ -2,7 +2,7 @@ const statsBase = () => {
   return "/stats";
 };
 
-const fullStatsDetails = (
+const fullStatsOldDetails = (
   frequency = ":frequency",
   timestamp: string | number = ":timestamp",
   type = ":type",
@@ -50,7 +50,7 @@ const playerMatches = (steamId = ":steamid") => {
 
 const routes = {
   statsBase,
-  fullStatsDetails,
+  fullStatsOldDetails,
   commanderBase,
   commanderList,
   commanderByID,

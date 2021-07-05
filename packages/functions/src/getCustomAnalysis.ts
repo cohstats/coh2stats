@@ -2,7 +2,6 @@ import * as functions from "firebase-functions";
 import { DEFAULT_FUNCTIONS_LOCATION } from "./constants";
 import { generateCustomMultiDayAnalysis } from "./libs/analysis/multi-day-analysis";
 
-
 /**
  * We use 512MB to have faster CF in terms of MHz - it executes the requests faster
  */

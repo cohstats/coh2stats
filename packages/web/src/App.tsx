@@ -17,6 +17,7 @@ import LastMatchesTableRelic from "./pages/matches/lastMatchesTableRelic";
 import CustomSearch from "./pages/search";
 import { BetaVersion } from "./components/beta-version";
 import MainHome from "./components/main-home";
+import CustomStats from "./pages/stats/custom-stats";
 
 const { Content } = Layout;
 
@@ -43,11 +44,11 @@ const App: React.FC = () => {
             <Route path={"/"} exact={true}>
               <MainHome />
             </Route>
-            <Route path={routes.fullStatsDetails()}>
+            <Route path={routes.fullStatsOldDetails()}>
               <Stats />
             </Route>
             <Route path={"/stats"}>
-              <Stats />
+              <CustomStats />
             </Route>
             <Route path={routes.commanderByID()}>
               <CommanderDetails />

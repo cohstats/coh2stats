@@ -71,7 +71,7 @@ const StatsDetails: React.FC = () => {
 
   const onTypeRadioChange = (e: RadioChangeEvent) => {
     push({
-      pathname: routes.fullStatsDetails(frequency, timestamp, e.target?.value, race),
+      pathname: routes.fullStatsOldDetails(frequency, timestamp, e.target?.value, race),
       // @ts-ignore
       search: `?${new URLSearchParams({ statsSource: statsSource }).toString()}`,
     });
@@ -79,7 +79,7 @@ const StatsDetails: React.FC = () => {
 
   const onRaceRadioChange = (e: RadioChangeEvent) => {
     push({
-      pathname: routes.fullStatsDetails(frequency, timestamp, type, e.target?.value),
+      pathname: routes.fullStatsOldDetails(frequency, timestamp, type, e.target?.value),
       // @ts-ignore
       search: `?${new URLSearchParams({ statsSource: statsSource }).toString()}`,
     });
