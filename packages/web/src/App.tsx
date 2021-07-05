@@ -3,13 +3,14 @@ import { Layout } from "antd";
 import "./App.css";
 import { useFirestoreConnect } from "react-redux-firebase";
 import { Route, Switch } from "react-router-dom";
+
+import routes from "./routes";
 import { CommanderDetails } from "./pages/commanders/commanderDetails";
 import { CommandersList } from "./pages/commanders/commandersList";
 import { RacePicker } from "./pages/commanders/racePicker";
 import BulletinList from "./pages/bulletins";
-import Stats from "./pages/stats";
+import OldStats from "./pages/stats/old-stats";
 import { MainFooter } from "./components/main-footer";
-import routes from "./routes";
 import { MainHeader } from "./components/main-header";
 import About from "./pages/about";
 import { LastMatchesTable } from "./pages/matches/lastMatchesTable";
@@ -45,7 +46,7 @@ const App: React.FC = () => {
               <MainHome />
             </Route>
             <Route path={routes.fullStatsOldDetails()}>
-              <Stats />
+              <OldStats />
             </Route>
             <Route path={"/stats"}>
               <CustomStats />

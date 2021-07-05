@@ -94,11 +94,8 @@ const CustomStats: React.FC = () => {
   };
 
   const onRangePickerChange = (value: any) => {
-    const from = value[0];
-    const to = value[1];
-
-    console.log("FROM", from);
-    console.log("TO", to);
+    const from = (value && value[0]) || new Date();
+    const to = (value && value[1]) || new Date();
 
     const fromDate = new Date(from);
     const toDate = new Date(to);
@@ -120,6 +117,7 @@ const CustomStats: React.FC = () => {
     return (
       <ConfigProvider locale={enGB}>
         <RangePicker
+          allowClear={false}
           defaultValue={[from, to]}
           disabledDate={disabledDate}
           onChange={onRangePickerChange}

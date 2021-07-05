@@ -109,7 +109,11 @@ const CustomStatsRangeDataProvider: React.FC<IProps> = ({ urlChanger }) => {
   }
 
   if (error) {
-    return <>ERROR {error}</>;
+    return (
+      <div style={{ textAlign: "center" }}>
+        <Title level={5}>ERROR {error}</Title>
+      </div>
+    );
   }
 
   if (!validStatsTypes.includes(type)) {
