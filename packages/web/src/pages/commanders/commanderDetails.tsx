@@ -3,7 +3,7 @@ import { Col, Row, List, Divider, Avatar, Badge } from "antd";
 import { getCommanderData, getCommanderIconPath } from "../../coh/commanders";
 import { useParams } from "react-router";
 import { ExportDate } from "../../components/export-date";
-import firebase from "../../analytics";
+import firebaseAnalytics from "../../analytics";
 import { getExportedIconPath, getGeneralIconPath } from "../../coh/helpers";
 import { commanderBase } from "../../titles";
 
@@ -43,7 +43,7 @@ export const CommanderDetails = () => {
   // Set page title
   document.title = `${commanderBase} - ${commanderData.commanderName}`;
 
-  firebase.commanderDisplayed(commanderData.commanderName, commanderData.races[0]);
+  firebaseAnalytics.commanderDisplayed(commanderData.commanderName, commanderData.races[0]);
 
   return (
     <>

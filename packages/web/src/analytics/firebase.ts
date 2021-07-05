@@ -50,13 +50,28 @@ const bulletinsDisplayed = (): void => {
   firebase.logEvent("bulletins");
 };
 
-const firebaseObject = {
+const statsDisplayed = (frequency: string, statsSource: string): void => {
+  firebase.logEvent("stats", { frequency, statsSource });
+};
+
+const rangeStatsDisplayed = (statsSource: string): void => {
+  firebase.logEvent("rangeStats", { statsSource });
+};
+
+const teamCompositionUsed = (faction: string, type: string): void => {
+  firebase.logEvent("tcmWidgetUsed", { faction, type });
+};
+
+const firebaseAnalytics = {
   login,
   logout,
   pageView,
   searchUsed,
   commanderDisplayed,
   bulletinsDisplayed,
+  statsDisplayed,
+  rangeStatsDisplayed,
+  teamCompositionUsed,
 };
 
-export default firebaseObject;
+export default firebaseAnalytics;

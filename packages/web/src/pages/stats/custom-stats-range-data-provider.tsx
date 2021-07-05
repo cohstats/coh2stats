@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Typography } from "antd";
 import { firebase } from "../../firebase";
 import { Loading } from "../../components/loading";
+import firebaseAnalytics from "../../analytics";
 
 import { validStatsTypes } from "../../coh/types";
 import { useLocation } from "react-router-dom";
@@ -39,7 +40,9 @@ const CustomStatsRangeDataProvider: React.FC<IProps> = ({ urlChanger }) => {
       if (!fromTimeStamp || !toTimeStamp) {
         return;
       }
+
       setIsLoading(true);
+      firebaseAnalytics.rangeStatsDisplayed(statsSource || "");
 
       try {
         const customAnalysis = firebase.functions().httpsCallable("getCustomAnalysis");

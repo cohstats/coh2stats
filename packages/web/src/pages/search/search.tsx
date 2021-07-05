@@ -4,12 +4,12 @@ import Search from "antd/es/input/Search";
 import { useHistory, useParams } from "react-router";
 import routes from "../../routes";
 import { Avatar, Empty, Space } from "antd";
-import analytics from "../../analytics";
 // @ts-ignore
 import ReactCountryFlag from "react-country-flag";
 
 import "./search.css";
 import { History } from "history";
+import firebaseAnalytics from "../../analytics";
 
 type userAPIObject = Record<"steamProfile" | "relicProfile", Record<string, any>>;
 
@@ -110,7 +110,7 @@ const CustomSearch: React.FC = () => {
       if (searchParam) {
         setIsLoading(true);
 
-        analytics.searchUsed(searchParam);
+        firebaseAnalytics.searchUsed(searchParam);
 
         const payLoad = { name: searchParam };
         const searchPlayers = firebase.functions().httpsCallable("searchPlayers");

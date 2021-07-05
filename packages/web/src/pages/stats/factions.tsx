@@ -3,6 +3,7 @@ import { Card, Empty, Radio, Tooltip } from "antd";
 import { HeatMapChart } from "../../components/charts/factions-heatmap";
 import { Helper } from "../../components/helper";
 import { Typography } from "antd";
+import firebaseAnalytics from "../../analytics";
 const { Text } = Typography;
 
 interface IProps {
@@ -91,6 +92,16 @@ export const FactionVsFactionCard: React.FC<IProps> = ({ title, data, style }) =
       </Card>
     );
   }
+
+  const changeHeatMapStyle = (value: string) => {
+    firebaseAnalytics.teamCompositionUsed(factionWinRate, value);
+    setHeatmapValues(value);
+  };
+
+  const changeFactionDisplay = (value: string) => {
+    firebaseAnalytics.teamCompositionUsed(value, heatmapValues);
+    setFactionWinRate(value);
+  };
 
   // Prepare transformation
   for (const [key, value] of Object.entries(factionData)) {
@@ -185,7 +196,7 @@ export const FactionVsFactionCard: React.FC<IProps> = ({ title, data, style }) =
 
   const menu = (
     <>
-      <Radio.Group onChange={(e) => setHeatmapValues(e.target.value)} value={heatmapValues}>
+      <Radio.Group onChange={(e) => changeHeatMapStyle(e.target.value)} value={heatmapValues}>
         <Radio value={"winRate"}>
           Winrate{" "}
           <Helper
@@ -197,7 +208,7 @@ export const FactionVsFactionCard: React.FC<IProps> = ({ title, data, style }) =
 
         <Radio value={"amountOfGames"}>Amount of games</Radio>
       </Radio.Group>
-      <Radio.Group onChange={(e) => setFactionWinRate(e.target.value)} value={factionWinRate}>
+      <Radio.Group onChange={(e) => changeFactionDisplay(e.target.value)} value={factionWinRate}>
         <Radio value={"axis"}>Axis</Radio>
         <Radio value={"allies"}>Allies</Radio>
       </Radio.Group>

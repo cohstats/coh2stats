@@ -1,4 +1,9 @@
 import { useLocation } from "react-router-dom";
+import { format } from "date-fns";
+
+const formatDate = (dateInput: Date) => {
+  return format(dateInput, "dd MMM yyyy");
+};
 
 const getYesterdayDateTimestamp = (): number => {
   const date = new Date();
@@ -50,4 +55,5 @@ export {
   getPreviousWeekTimeStamp,
   capitalize,
   useQuery,
+  formatDate,
 };
