@@ -9,6 +9,7 @@ import {
   convertDateToStartOfMonth,
   getPreviousWeekTimeStamp,
   getStartOfTheWeek,
+  useQuery,
 } from "../../helpers";
 import { validRaceNames, validStatsTypes } from "../../coh/types";
 import enGB from "antd/lib/locale/en_GB";
@@ -22,10 +23,6 @@ const { Link } = Typography;
 const { RangePicker } = DatePicker;
 
 type DatePickerType = "time" | "date" | "week" | "month" | "range" | undefined;
-
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
 
 const CustomStats: React.FC = () => {
   const { push } = useHistory();

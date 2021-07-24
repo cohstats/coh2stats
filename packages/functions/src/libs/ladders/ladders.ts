@@ -97,6 +97,11 @@ const getAndSaveAllLadders = async (): Promise<void> => {
     }
   }
 
+  // Save the timestamp also into the document / not just the name of the document - we can't filter on that
+  await firestore().collection("ladders").doc(`${currentDateTimeStamp}`).update({
+    timeStamp: currentDateTimeStamp,
+  });
+
   await callGetPlayerMatches(profileIDs);
 
   functions.logger.info(

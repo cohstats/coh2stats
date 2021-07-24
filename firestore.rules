@@ -7,7 +7,12 @@ service cloud.firestore {
     }
 
     match /stats/{document=**} {
-      // Read is allowed only to the owner.
+      // Read is allowed
+      allow read: if true;
+    }
+
+    match /ladders/{document=**} {
+      // Read is allowed
       allow read: if true;
     }
 

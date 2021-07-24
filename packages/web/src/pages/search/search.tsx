@@ -4,12 +4,11 @@ import Search from "antd/es/input/Search";
 import { useHistory, useParams } from "react-router";
 import routes from "../../routes";
 import { Avatar, Empty, Space } from "antd";
-// @ts-ignore
-import ReactCountryFlag from "react-country-flag";
 
 import "./search.css";
 import { History } from "history";
 import firebaseAnalytics from "../../analytics";
+import { CountryFlag } from "../../components/country-flag";
 
 type userAPIObject = Record<"steamProfile" | "relicProfile", Record<string, any>>;
 
@@ -48,16 +47,7 @@ const userCard = (
         style={{ display: "inline-block", verticalAlign: "top" }}
       />
       <div style={{ display: "inline-block", paddingLeft: 5, width: 180, textAlign: "left" }}>
-        <ReactCountryFlag
-          countryCode={countryCode}
-          svg
-          style={{
-            width: "1.5em",
-            height: "1.5em",
-            paddingRight: 5,
-          }}
-          title={countryCode}
-        />
+        <CountryFlag countryCode={countryCode} />
         <b>
           {playerName}
           <br />

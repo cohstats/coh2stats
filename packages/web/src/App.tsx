@@ -19,6 +19,7 @@ import CustomSearch from "./pages/search";
 import { BetaVersion } from "./components/beta-version";
 import MainHome from "./components/main-home";
 import CustomStats from "./pages/stats/custom-stats";
+import Leaderboards from "./pages/ladders";
 
 const { Content } = Layout;
 
@@ -50,6 +51,9 @@ const App: React.FC = () => {
             </Route>
             <Route path={"/stats"}>
               <CustomStats />
+            </Route>
+            <Route path={routes.leaderboardsBase()}>
+              <Leaderboards />
             </Route>
             <Route path={routes.commanderByID()}>
               <CommanderDetails />

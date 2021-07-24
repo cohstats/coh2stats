@@ -62,6 +62,10 @@ const teamCompositionUsed = (faction: string, type: string): void => {
   firebase.logEvent("tcmWidgetUsed", { faction, type });
 };
 
+const leaderboardsDisplayed = (): void => {
+  firebase.logEvent("leaderboards");
+};
+
 const firebaseAnalytics = {
   login,
   logout,
@@ -72,6 +76,7 @@ const firebaseAnalytics = {
   statsDisplayed,
   rangeStatsDisplayed,
   teamCompositionUsed,
+  leaderboardsDisplayed,
 };
 
 export default firebaseAnalytics;

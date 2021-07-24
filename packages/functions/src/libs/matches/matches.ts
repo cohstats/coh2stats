@@ -69,6 +69,7 @@ const getAndPrepareMatchesForPlayer = async (
 
 /**
  * Finds all the matches old than daysOld param from today and deletes them.
+ * FIREBASE
  * @param daysOld
  */
 const removeOldMatches = async (daysOld = 93): Promise<void> => {
