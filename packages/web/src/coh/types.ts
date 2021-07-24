@@ -61,6 +61,7 @@ interface LaddersDataArrayObject {
   lastmatchdate: number;
   ranktotal: number;
   losses: number;
+  change: number | string;
   members: Array<Record<string, any>>;
 }
 

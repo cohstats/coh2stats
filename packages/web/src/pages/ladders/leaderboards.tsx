@@ -24,6 +24,7 @@ import { isAfter, isBefore } from "date-fns";
 import { useHistory } from "react-router";
 import routes from "../../routes";
 import { getGeneralIconPath } from "../../coh/helpers";
+import { Helper } from "../../components/helper";
 
 const { Text } = Typography;
 
@@ -41,10 +42,13 @@ const Leaderboards = () => {
   const { push } = useHistory();
   const query = useQuery();
   const timestamp = query.get("timeStamp") || `${getYesterdayDateTimestamp()}`;
+  const historicTimestamp =
+    query.get("historicTimeStamp") || `${getYesterdayDateTimestamp() - 86400}`;
   const type = query.get("type") || "1v1";
   const race = query.get("race") || "soviet";
 
   const [selectedTimeStamp, setSelectedTimeStamp] = useState(timestamp);
+  const [selectedHistoricTimeStamp, setHistoricTimeStamp] = useState(historicTimestamp);
   const [selectedType, setSelectedType] = useState(type);
   const [selectedRace, setSelectedRace] = useState(race);
 
@@ -53,8 +57,10 @@ const Leaderboards = () => {
     selectedRace,
   )}`;
 
-  const isLoading = useLoading("leaderboards");
+  const isLoadingData = useLoading("leaderboards");
+  const isLoadingDataHistoric = useLoading("leaderboardsHistory");
   const data: LaddersDataObject = useData("leaderboards");
+  const dataHistoric: LaddersDataObject = useData("leaderboardsHistory");
 
   useFirestoreConnect([
     {
@@ -68,24 +74,36 @@ const Leaderboards = () => {
       ],
       storeAs: "leaderboards",
     },
+    {
+      collection: "ladders",
+      doc: selectedHistoricTimeStamp,
+      subcollections: [
+        {
+          collection: selectedType,
+          doc: selectedRace,
+        },
+      ],
+      storeAs: "leaderboardsHistory",
+    },
   ]);
 
   const divStyle = {
     backgroundImage: `url(${getGeneralIconPath(race)})`,
     backgroundRepeat: "no-repeat",
     backgroundSize: "350px",
-    backgroundPosition: "left top 250px",
+    backgroundPosition: "left top 200px",
     backgroundBlendMode: "overlay",
     backgroundColor: "rgba(255,255,255,0.8)",
   };
 
-  const changeLeaderBoardsRote = (params: Record<string, any>) => {
-    let { timeStampToLoad, typeToLoad, raceToLoad } = params;
+  const changeLeaderBoardsRoute = (params: Record<string, any>) => {
+    let { timeStampToLoad, typeToLoad, raceToLoad, historicTimeStampToLoad } = params;
 
     const searchValue = `?${new URLSearchParams({
       timeStamp: timeStampToLoad || selectedTimeStamp,
       type: typeToLoad || selectedType,
       race: raceToLoad || selectedRace,
+      historicTimeStamp: historicTimeStampToLoad || selectedHistoricTimeStamp,
     })}`;
 
     push({
@@ -104,6 +122,29 @@ const Leaderboards = () => {
       sorter: (a: LaddersDataArrayObject, b: LaddersDataArrayObject) => a.rank - b.rank,
     },
     { title: "Level", dataIndex: "ranklevel", key: "ranklevel", align: "center" as "center" },
+    {
+      title: "Change",
+      dataIndex: "change",
+      key: "change",
+      align: "center" as "center",
+      width: 110,
+      render: (data: any) => {
+        if (data > 0) {
+          return <div style={{ color: "green" }}>+{data}</div>;
+        } else if (data < 0) {
+          return <div style={{ color: "red" }}>{data}</div>;
+        } else if (data === "new") {
+          return "new";
+        }
+      },
+      sorter: (a: LaddersDataArrayObject, b: LaddersDataArrayObject) => {
+        if (Number.isInteger(a.change) && Number.isInteger(b.change)) {
+          return (a.change as number) - (b.change as number);
+        } else {
+          return +1;
+        }
+      },
+    },
     {
       title: "Alias",
       dataIndex: "members",
@@ -222,32 +263,45 @@ const Leaderboards = () => {
     return canBeOld || canBeNew;
   };
 
-  const CustomDatePicker = (
-    <ConfigProvider locale={enGB}>
-      <DatePicker
-        onChange={(value) => {
-          setSelectedTimeStamp(convertDateToDayTimestamp(`${value}`).toString());
-          changeLeaderBoardsRote({ timeStampToLoad: convertDateToDayTimestamp(`${value}`) });
-        }}
-        allowClear={false}
-        defaultValue={new Date(parseInt(selectedTimeStamp) * 1000)}
-        disabledDate={disabledDate}
-        size={"large"}
-      />
-    </ConfigProvider>
-  );
+  const CustomDatePicker = ({
+    onChange,
+    defaultValue,
+  }: {
+    onChange: any;
+    defaultValue: Date;
+  }) => {
+    return (
+      <ConfigProvider locale={enGB}>
+        <DatePicker
+          onChange={onChange}
+          allowClear={false}
+          defaultValue={defaultValue}
+          disabledDate={disabledDate}
+          size={"large"}
+        />
+      </ConfigProvider>
+    );
+  };
 
   return (
     <>
       <div style={divStyle}>
-        <Row justify="center" style={{ padding: "10px" }}>
+        <Row justify="center" style={{ paddingTop: "20px" }}>
           <Col>
             <Space direction={"horizontal"}>
-              {CustomDatePicker}
+              <CustomDatePicker
+                onChange={(value: any) => {
+                  setSelectedTimeStamp(convertDateToDayTimestamp(`${value}`).toString());
+                  changeLeaderBoardsRoute({
+                    timeStampToLoad: convertDateToDayTimestamp(`${value}`),
+                  });
+                }}
+                defaultValue={new Date(parseInt(selectedTimeStamp) * 1000)}
+              />
               <Select
                 value={selectedType}
                 onChange={(value) => {
-                  changeLeaderBoardsRote({ typeToLoad: value });
+                  changeLeaderBoardsRoute({ typeToLoad: value });
                   setSelectedType(value);
                 }}
                 style={{ width: 120 }}
@@ -264,7 +318,7 @@ const Leaderboards = () => {
               <Select
                 value={selectedRace}
                 onChange={(value) => {
-                  changeLeaderBoardsRote({ raceToLoad: value });
+                  changeLeaderBoardsRoute({ raceToLoad: value });
                   setSelectedRace(value);
                 }}
                 style={{ width: 130 }}
@@ -285,11 +339,33 @@ const Leaderboards = () => {
                   </>
                 )}
               </Select>
+              <div>
+                in compare with{" "}
+                <Helper
+                  text={
+                    <>
+                      Change in rank in compare to rank standings on selected date.
+                      <br />
+                      <Text mark>new</Text> means the player just got into top 200
+                    </>
+                  }
+                />
+              </div>
+              <CustomDatePicker
+                onChange={(value: any) => {
+                  setHistoricTimeStamp(convertDateToDayTimestamp(`${value}`).toString());
+                  changeLeaderBoardsRoute({
+                    historicTimeStampToLoad: convertDateToDayTimestamp(`${value}`),
+                  });
+                  setSelectedTimeStamp(selectedTimeStamp);
+                }}
+                defaultValue={new Date(parseInt(selectedHistoricTimeStamp) * 1000)}
+              />
             </Space>
           </Col>
         </Row>
         <Row justify="center" style={{ padding: "10px" }}>
-          <Col xs={24} xxl={16}>
+          <Col xs={24} xxl={17}>
             <Table
               style={{ minHeight: 600 }}
               title={(value) => {
@@ -305,7 +381,8 @@ const Leaderboards = () => {
                       UTC
                     </span>
                     <span style={{ float: "right" }}>
-                      <Text strong>{data?.rankTotal}</Text> ranked players
+                      <Text strong>{data?.rankTotal}</Text> ranked{" "}
+                      {isTeamGame(selectedType) ? "teams" : "players"}
                     </span>
                   </div>
                 );
@@ -316,8 +393,8 @@ const Leaderboards = () => {
                 pageSizeOptions: ["20", "40", "60", "100", "200"],
               }}
               rowKey={(record) => record?.rank}
-              dataSource={findAndMergeStatGroups(data)}
-              loading={isLoading}
+              dataSource={findAndMergeStatGroups(data, dataHistoric)}
+              loading={isLoadingData || isLoadingDataHistoric}
             />
           </Col>
         </Row>
