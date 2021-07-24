@@ -27,7 +27,7 @@ export const CommanderDetails = () => {
     backgroundImage: `url(${getGeneralIconPath(race)})`,
     backgroundRepeat: "no-repeat",
     backgroundSize: "350px",
-    backgroundPosition: "left top",
+    backgroundPosition: "left top 200px",
     backgroundBlendMode: "overlay",
     backgroundColor: "rgba(255,255,255,0.8)",
   };
