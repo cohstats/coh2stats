@@ -344,9 +344,10 @@ const Leaderboards = () => {
                 <Helper
                   text={
                     <>
-                      Change in rank in compare to rank standings on selected date.
+                      Change in rank in compare to rank standings on selected historic date.
                       <br />
-                      <Text mark>new</Text> means the player just got into top 200
+                      <Text mark>new</Text> means the player was not in top 200 on the selected
+                      historic date
                     </>
                   }
                 />
