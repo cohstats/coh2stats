@@ -6,6 +6,8 @@ const commanderBase = `${baseTitle} Commanders`;
 
 const bulletinsBase = `${baseTitle} Bulletins`;
 
+const leaderBoardsBase = `${baseTitle} Leaderboards`;
+
 const aboutBase = `${baseTitle} About`;
 
-export { baseTitle, statsBase, commanderBase, bulletinsBase, aboutBase };
+export { baseTitle, statsBase, commanderBase, bulletinsBase, aboutBase, leaderBoardsBase };

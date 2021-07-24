@@ -127,7 +127,7 @@ export const MainHeader: React.FC = () => {
           <Menu.Item disabled={true} key="9">
             Matches
           </Menu.Item>
-          <Menu.Item  key={routes.leaderboardsBase()}>
+          <Menu.Item key={routes.leaderboardsBase()}>
             <Link to={routes.leaderboardsBase()}>Leaderboards</Link>
           </Menu.Item>
           <Menu.Item key={routes.commanderBase()}>

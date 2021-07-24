@@ -17,6 +17,11 @@ const getExportedIconPath = (name: string): string => {
 };
 
 const getGeneralIconPath = (name: string): string => {
+  // We have typo in the system and DB, sometimes it's wermacht and sometimes wehrmacht
+  if (name === "wehrmacht") {
+    name = "wermacht";
+  }
+
   return `/resources/generalIcons/${name}.png`;
 };
 

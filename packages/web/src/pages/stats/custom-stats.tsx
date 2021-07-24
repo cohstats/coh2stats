@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
 import { useHistory } from "react-router";
 import routes from "../../routes";
 import { ConfigProvider, Select, Space, Radio, Typography } from "antd";

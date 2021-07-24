@@ -1,58 +1,98 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import TimeAgo from "javascript-time-ago";
 
-import { Table, Tag, Space, Col, Row, Input, Button, Tooltip } from "antd";
-
-import { IntelBulletinData, LaddersDataArrayObject, LaddersDataObject } from "../../coh/types";
-import { getAllBulletins, getBulletinIconPath } from "../../coh/bulletins";
-import { ColumnsType, ColumnType } from "antd/lib/table";
-import { SearchOutlined } from "@ant-design/icons";
-import { ExportDate } from "../../components/export-date";
+import { Table, Space, Col, Row, Tooltip, ConfigProvider, Select, Typography } from "antd";
+import { LaddersDataArrayObject, LaddersDataObject } from "../../coh/types";
+import { ColumnsType } from "antd/lib/table";
 import firebaseAnalytics from "../../analytics";
-import { getPreviousWeekTimeStamp, getYesterdayDateTimestamp, useQuery } from "../../helpers";
+import {
+  capitalize,
+  convertDateToDayTimestamp,
+  getYesterdayDateTimestamp,
+  useQuery,
+} from "../../helpers";
 import { useFirestoreConnect } from "react-redux-firebase";
 import { useData, useLoading } from "../../firebase";
-import { Loading } from "../../components/loading";
 import { findAndMergeStatGroups } from "./helpers";
 
 import en from "javascript-time-ago/locale/en";
 import { CountryFlag } from "../../components/country-flag";
+import { leaderBoardsBase } from "../../titles";
+import enGB from "antd/lib/locale/en_GB";
+import DatePicker from "../../components/date-picker";
+import { isAfter, isBefore } from "date-fns";
+import { useHistory } from "react-router";
+import routes from "../../routes";
+import { getGeneralIconPath } from "../../coh/helpers";
+
+const { Text } = Typography;
+
 TimeAgo.addDefaultLocale(en);
 const timeAgo = new TimeAgo("en-US");
 
+const isTeamGame = (type: string) => {
+  return !["1v1", "2v2", "3v3", "4v4"].includes(type);
+};
+
 const Leaderboards = () => {
   firebaseAnalytics.leaderboardsDisplayed();
+  const { Option } = Select;
 
+  const { push } = useHistory();
   const query = useQuery();
   const timestamp = query.get("timeStamp") || `${getYesterdayDateTimestamp()}`;
-  const type = query.get("type") || "team2";
-  const race = query.get("race") || "axis";
+  const type = query.get("type") || "1v1";
+  const race = query.get("race") || "soviet";
+
+  const [selectedTimeStamp, setSelectedTimeStamp] = useState(timestamp);
+  const [selectedType, setSelectedType] = useState(type);
+  const [selectedRace, setSelectedRace] = useState(race);
+
+  // Set page title
+  document.title = `${leaderBoardsBase} - ${capitalize(selectedType)} - ${capitalize(
+    selectedRace,
+  )}`;
 
   const isLoading = useLoading("leaderboards");
   const data: LaddersDataObject = useData("leaderboards");
-  const [tableData, setTableData] = useState<[] | Array<LaddersDataArrayObject>>([]);
 
   useFirestoreConnect([
     {
       collection: "ladders",
-      doc: timestamp,
+      doc: selectedTimeStamp,
       subcollections: [
         {
-          collection: type,
-          doc: race,
+          collection: selectedType,
+          doc: selectedRace,
         },
       ],
       storeAs: "leaderboards",
     },
   ]);
 
-  useEffect(() => {
-    if (data) {
-      setTableData(findAndMergeStatGroups(data));
-    }
-  }, [data]);
+  const divStyle = {
+    backgroundImage: `url(${getGeneralIconPath(race)})`,
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "350px",
+    backgroundPosition: "left top 250px",
+    backgroundBlendMode: "overlay",
+    backgroundColor: "rgba(255,255,255,0.8)",
+  };
 
-  if (isLoading) return <Loading />;
+  const changeLeaderBoardsRote = (params: Record<string, any>) => {
+    let { timeStampToLoad, typeToLoad, raceToLoad } = params;
+
+    const searchValue = `?${new URLSearchParams({
+      timeStamp: timeStampToLoad || selectedTimeStamp,
+      type: typeToLoad || selectedType,
+      race: raceToLoad || selectedRace,
+    })}`;
+
+    push({
+      pathname: routes.leaderboardsBase(),
+      search: searchValue,
+    });
+  };
 
   const TableColumns: ColumnsType<LaddersDataArrayObject> = [
     {
@@ -73,7 +113,7 @@ const Leaderboards = () => {
           <div>
             {data.map((playerInfo: Record<string, any>) => {
               return (
-                <div>
+                <div key={playerInfo.profile_id}>
                   <CountryFlag
                     countryCode={playerInfo["country"]}
                     style={{ width: "1.2em", height: "1.2em", paddingRight: 0 }}
@@ -89,13 +129,14 @@ const Leaderboards = () => {
     {
       title: "Streak",
       dataIndex: "streak",
+      key: "streak",
       align: "center" as "center",
       sorter: (a: LaddersDataArrayObject, b: LaddersDataArrayObject) => a.streak - b.streak,
       render: (data: any) => {
         if (data > 0) {
-          return <>+{data}</>;
+          return <div style={{ color: "green" }}>+{data}</div>;
         } else {
-          return <>{data}</>;
+          return <div style={{ color: "red" }}>{data}</div>;
         }
       },
     },
@@ -173,21 +214,111 @@ const Leaderboards = () => {
     },
   ];
 
+  const disabledDate = (current: Date) => {
+    // we started logging Monday 8.3.2021
+    const canBeOld = isBefore(current, new Date(2021, 2, 8));
+    const canBeNew = isAfter(current, new Date());
+
+    return canBeOld || canBeNew;
+  };
+
+  const CustomDatePicker = (
+    <ConfigProvider locale={enGB}>
+      <DatePicker
+        onChange={(value) => {
+          setSelectedTimeStamp(convertDateToDayTimestamp(`${value}`).toString());
+          changeLeaderBoardsRote({ timeStampToLoad: convertDateToDayTimestamp(`${value}`) });
+        }}
+        allowClear={false}
+        defaultValue={new Date(parseInt(selectedTimeStamp) * 1000)}
+        disabledDate={disabledDate}
+        size={"large"}
+      />
+    </ConfigProvider>
+  );
+
   return (
     <>
-      <div>
+      <div style={divStyle}>
+        <Row justify="center" style={{ padding: "10px" }}>
+          <Col>
+            <Space direction={"horizontal"}>
+              {CustomDatePicker}
+              <Select
+                value={selectedType}
+                onChange={(value) => {
+                  changeLeaderBoardsRote({ typeToLoad: value });
+                  setSelectedType(value);
+                }}
+                style={{ width: 120 }}
+                size={"large"}
+              >
+                <Option value="1v1">1v1</Option>
+                <Option value="2v2">2v2</Option>
+                <Option value="3v3">3v3</Option>
+                <Option value="4v4">4v4</Option>
+                <Option value="team2">Team of 2</Option>
+                <Option value="team3">Team of 3</Option>
+                <Option value="team4">Team of 4</Option>
+              </Select>
+              <Select
+                value={selectedRace}
+                onChange={(value) => {
+                  changeLeaderBoardsRote({ raceToLoad: value });
+                  setSelectedRace(value);
+                }}
+                style={{ width: 130 }}
+                size={"large"}
+              >
+                {!isTeamGame(selectedType) ? (
+                  <>
+                    <Option value="wehrmacht">Wehrmacht</Option>
+                    <Option value="wgerman">OKW</Option>
+                    <Option value="soviet">Soviet</Option>
+                    <Option value="usf">USF</Option>
+                    <Option value="british">British</Option>
+                  </>
+                ) : (
+                  <>
+                    <Option value="axis">Axis</Option>
+                    <Option value="allies">Allies</Option>
+                  </>
+                )}
+              </Select>
+            </Space>
+          </Col>
+        </Row>
         <Row justify="center" style={{ padding: "10px" }}>
           <Col xs={24} xxl={16}>
             <Table
+              style={{ minHeight: 600 }}
+              title={(value) => {
+                return (
+                  <div style={{ fontSize: "large", paddingBottom: 15 }}>
+                    <span style={{ float: "left" }}>
+                      {" "}
+                      <Text strong>
+                        {" "}
+                        Leaderboards for {capitalize(selectedRace)} {selectedType}
+                      </Text>{" "}
+                      as of {`${new Date(parseInt(selectedTimeStamp) * 1000).toLocaleString()}`}{" "}
+                      UTC
+                    </span>
+                    <span style={{ float: "right" }}>
+                      <Text strong>{data?.rankTotal}</Text> ranked players
+                    </span>
+                  </div>
+                );
+              }}
               columns={TableColumns}
               pagination={{
-                defaultPageSize: 60,
+                defaultPageSize: 40,
                 pageSizeOptions: ["20", "40", "60", "100", "200"],
               }}
               rowKey={(record) => record?.rank}
-              dataSource={tableData}
+              dataSource={findAndMergeStatGroups(data)}
+              loading={isLoading}
             />
-            <ExportDate typeOfData={"Intel bulletins"} />
           </Col>
         </Row>
       </div>
