@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import TimeAgo from "javascript-time-ago";
 
 import { Table, Space, Col, Row, Tooltip, ConfigProvider, Select, Typography } from "antd";
-import { LaddersDataArrayObject, LaddersDataObject } from "../../coh/types";
+import { LaddersDataArrayObject, LaddersDataObject, RaceName } from "../../coh/types";
 import { ColumnsType } from "antd/lib/table";
 import firebaseAnalytics from "../../analytics";
 import {
@@ -13,7 +13,7 @@ import {
 } from "../../helpers";
 import { useFirestoreConnect } from "react-redux-firebase";
 import { useData, useLoading } from "../../firebase";
-import { findAndMergeStatGroups } from "./helpers";
+import { findAndMergeStatGroups, isTeamGame } from "./helpers";
 
 import en from "javascript-time-ago/locale/en";
 import { CountryFlag } from "../../components/country-flag";
@@ -25,15 +25,10 @@ import { useHistory } from "react-router";
 import routes from "../../routes";
 import { getGeneralIconPath } from "../../coh/helpers";
 import { Helper } from "../../components/helper";
-
 const { Text } = Typography;
 
 TimeAgo.addDefaultLocale(en);
 const timeAgo = new TimeAgo("en-US");
-
-const isTeamGame = (type: string) => {
-  return !["1v1", "2v2", "3v3", "4v4"].includes(type);
-};
 
 const Leaderboards = () => {
   firebaseAnalytics.leaderboardsDisplayed();
@@ -255,6 +250,29 @@ const Leaderboards = () => {
     },
   ];
 
+  const generateIconsForTitle = (race: string, type: string) => {
+    if (isTeamGame(type)) {
+      if (race === "axis") {
+        return (
+          <>
+            <img src={getGeneralIconPath("wehrmacht")} height="24px" alt={race} />
+            <img src={getGeneralIconPath("wgerman")} height="24px" alt={race} />
+          </>
+        );
+      } else {
+        return (
+          <>
+            <img src={getGeneralIconPath("soviet")} height="24px" alt={race} />
+            <img src={getGeneralIconPath("british")} height="24px" alt={race} />
+            <img src={getGeneralIconPath("usf")} height="24px" alt={race} />
+          </>
+        );
+      }
+    } else if (race !== "axis" && race !== "allies") {
+      return <img src={getGeneralIconPath(race as RaceName)} height="24px" alt={race} />;
+    }
+  };
+
   const disabledDate = (current: Date) => {
     // we started logging Monday 8.3.2021
     const canBeOld = isBefore(current, new Date(2021, 2, 8));
@@ -295,6 +313,7 @@ const Leaderboards = () => {
                   changeLeaderBoardsRoute({
                     timeStampToLoad: convertDateToDayTimestamp(`${value}`),
                   });
+                  firebaseAnalytics.leaderboardsDateInteraction("regular");
                 }}
                 defaultValue={new Date(parseInt(selectedTimeStamp) * 1000)}
               />
@@ -303,6 +322,7 @@ const Leaderboards = () => {
                 onChange={(value) => {
                   changeLeaderBoardsRoute({ typeToLoad: value });
                   setSelectedType(value);
+                  firebaseAnalytics.leaderboardsTypeInteraction(value, selectedRace);
                 }}
                 style={{ width: 120 }}
                 size={"large"}
@@ -320,6 +340,7 @@ const Leaderboards = () => {
                 onChange={(value) => {
                   changeLeaderBoardsRoute({ raceToLoad: value });
                   setSelectedRace(value);
+                  firebaseAnalytics.leaderboardsTypeInteraction(selectedType, value);
                 }}
                 style={{ width: 130 }}
                 size={"large"}
@@ -359,6 +380,7 @@ const Leaderboards = () => {
                     historicTimeStampToLoad: convertDateToDayTimestamp(`${value}`),
                   });
                   setSelectedTimeStamp(selectedTimeStamp);
+                  firebaseAnalytics.leaderboardsDateInteraction("historic");
                 }}
                 defaultValue={new Date(parseInt(selectedHistoricTimeStamp) * 1000)}
               />
@@ -372,19 +394,18 @@ const Leaderboards = () => {
               title={(value) => {
                 return (
                   <div style={{ fontSize: "large", paddingBottom: 15 }}>
-                    <span style={{ float: "left" }}>
-                      {" "}
+                    <div style={{ float: "left" }}>
+                      {generateIconsForTitle(selectedRace, selectedType)}{" "}
                       <Text strong>
-                        {" "}
                         Leaderboards for {capitalize(selectedRace)} {selectedType}
                       </Text>{" "}
                       as of {`${new Date(parseInt(selectedTimeStamp) * 1000).toLocaleString()}`}{" "}
                       UTC
-                    </span>
-                    <span style={{ float: "right" }}>
+                    </div>
+                    <div style={{ float: "right" }}>
                       <Text strong>{data?.rankTotal}</Text> ranked{" "}
                       {isTeamGame(selectedType) ? "teams" : "players"}
-                    </span>
+                    </div>
                   </div>
                 );
               }}

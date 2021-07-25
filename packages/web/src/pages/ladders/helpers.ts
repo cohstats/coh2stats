@@ -42,4 +42,8 @@ const findAndMergeStatGroups = (
   return statGroupsArray;
 };
 
-export { findAndMergeStatGroups };
+const isTeamGame = (type: string) => {
+  return !["1v1", "2v2", "3v3", "4v4"].includes(type);
+};
+
+export { findAndMergeStatGroups, isTeamGame };
