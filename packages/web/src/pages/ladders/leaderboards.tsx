@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TimeAgo from "javascript-time-ago";
 
 import { Table, Space, Col, Row, Tooltip, ConfigProvider, Select, Typography } from "antd";
@@ -31,7 +31,6 @@ TimeAgo.addDefaultLocale(en);
 const timeAgo = new TimeAgo("en-US");
 
 const Leaderboards = () => {
-  firebaseAnalytics.leaderboardsDisplayed();
   const { Option } = Select;
 
   const { push } = useHistory();
@@ -81,6 +80,10 @@ const Leaderboards = () => {
       storeAs: "leaderboardsHistory",
     },
   ]);
+
+  useEffect(() => {
+    firebaseAnalytics.leaderboardsDisplayed();
+  }, []);
 
   const divStyle = {
     backgroundImage: `url(${getGeneralIconPath(race)})`,
@@ -400,7 +403,6 @@ const Leaderboards = () => {
                         Leaderboards for {capitalize(selectedRace)} {selectedType}
                       </Text>{" "}
                       as of {`${new Date(parseInt(selectedTimeStamp) * 1000).toLocaleString()}`}{" "}
-                      UTC
                     </div>
                     <div style={{ float: "right" }}>
                       <Text strong>{data?.rankTotal}</Text> ranked{" "}
