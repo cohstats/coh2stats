@@ -66,6 +66,14 @@ const leaderboardsDisplayed = (): void => {
   firebase.logEvent("leaderboards");
 };
 
+const leaderboardsDateInteraction = (type: string): void => {
+  firebase.logEvent("leaderboardsDateInteraction", { type });
+};
+
+const leaderboardsTypeInteraction = (type: string, race: string): void => {
+  firebase.logEvent("leaderboardsTypeInteraction", { type, race });
+};
+
 const firebaseAnalytics = {
   login,
   logout,
@@ -77,6 +85,8 @@ const firebaseAnalytics = {
   rangeStatsDisplayed,
   teamCompositionUsed,
   leaderboardsDisplayed,
+  leaderboardsDateInteraction,
+  leaderboardsTypeInteraction,
 };
 
 export default firebaseAnalytics;
