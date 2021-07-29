@@ -29,7 +29,7 @@ const userCard = (
   const xp = relicProfileMember["xp"];
 
   const onProfileClick = (steamId: string) => {
-    push(routes.playerMatches(steamId));
+    push(routes.playerCardWithId(steamId));
   };
 
   return (
@@ -132,7 +132,7 @@ const CustomSearch: React.FC = () => {
   return (
     <div style={{ textAlign: "center", maxWidth: 900, margin: "auto", paddingBottom: 20 }}>
       <Search
-        placeholder="Exact Steam account name"
+        placeholder="Steam name"
         defaultValue={searchParam}
         onSearch={onSearch}
         style={{ width: 320, padding: 20 }}

@@ -1,6 +1,12 @@
 import { useLocation } from "react-router-dom";
 import { format } from "date-fns";
 
+import TimeAgo from "javascript-time-ago";
+import en from "javascript-time-ago/locale/en";
+
+TimeAgo.addDefaultLocale(en);
+const timeAgo = new TimeAgo("en-US");
+
 const formatDate = (dateInput: Date) => {
   return format(dateInput, "dd MMM yyyy");
 };
@@ -56,4 +62,5 @@ export {
   capitalize,
   useQuery,
   formatDate,
+  timeAgo,
 };

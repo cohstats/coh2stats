@@ -20,6 +20,7 @@ import { BetaVersion } from "./components/beta-version";
 import MainHome from "./components/main-home";
 import CustomStats from "./pages/stats/custom-stats";
 import Leaderboards from "./pages/ladders";
+import PlayerCard from "./pages/players";
 
 const { Content } = Layout;
 
@@ -51,6 +52,12 @@ const App: React.FC = () => {
             </Route>
             <Route path={"/stats"}>
               <CustomStats />
+            </Route>
+            <Route path={routes.playerCardWithId()}>
+              <PlayerCard />
+            </Route>
+            <Route path={routes.playerCardBase()}>
+              <CustomSearch />
             </Route>
             <Route path={routes.leaderboardsBase()}>
               <Leaderboards />

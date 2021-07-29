@@ -121,8 +121,8 @@ export const MainHeader: React.FC = () => {
           <Menu.Item key={routes.statsBase()}>
             <Link to={routes.statsBase()}>Stats</Link>
           </Menu.Item>
-          <Menu.Item disabled={true} key="8">
-            Players
+          <Menu.Item key={routes.playerCardBase()}>
+            <Link to={routes.playerCardBase()}>Players</Link>
           </Menu.Item>
           <Menu.Item disabled={true} key="9">
             Matches

@@ -66,6 +66,10 @@ const leaderboardsDisplayed = (): void => {
   firebase.logEvent("leaderboards");
 };
 
+const playerCardDisplayed = (): void => {
+  firebase.logEvent("playerCard");
+};
+
 const leaderboardsDateInteraction = (type: string): void => {
   firebase.logEvent("leaderboardsDateInteraction", { type });
 };
@@ -85,6 +89,7 @@ const firebaseAnalytics = {
   rangeStatsDisplayed,
   teamCompositionUsed,
   leaderboardsDisplayed,
+  playerCardDisplayed,
   leaderboardsDateInteraction,
   leaderboardsTypeInteraction,
 };

@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
-import TimeAgo from "javascript-time-ago";
 
 import { Table, Space, Col, Row, Tooltip, ConfigProvider, Select, Typography } from "antd";
+import { Link } from "react-router-dom";
+import { isAfter, isBefore } from "date-fns";
+import { useHistory } from "react-router";
+
 import { LaddersDataArrayObject, LaddersDataObject, RaceName } from "../../coh/types";
 import { ColumnsType } from "antd/lib/table";
 import firebaseAnalytics from "../../analytics";
@@ -9,26 +12,26 @@ import {
   capitalize,
   convertDateToDayTimestamp,
   getYesterdayDateTimestamp,
+  timeAgo,
   useQuery,
 } from "../../helpers";
 import { useFirestoreConnect } from "react-redux-firebase";
 import { useData, useLoading } from "../../firebase";
-import { findAndMergeStatGroups, isTeamGame } from "./helpers";
 
-import en from "javascript-time-ago/locale/en";
 import { CountryFlag } from "../../components/country-flag";
 import { leaderBoardsBase } from "../../titles";
 import enGB from "antd/lib/locale/en_GB";
 import DatePicker from "../../components/date-picker";
-import { isAfter, isBefore } from "date-fns";
-import { useHistory } from "react-router";
+
 import routes from "../../routes";
-import { getGeneralIconPath } from "../../coh/helpers";
+import {
+  convertSteamNameToID,
+  findAndMergeStatGroups,
+  getGeneralIconPath,
+  isTeamGame,
+} from "../../coh/helpers";
 import { Helper } from "../../components/helper";
 const { Text } = Typography;
-
-TimeAgo.addDefaultLocale(en);
-const timeAgo = new TimeAgo("en-US");
 
 const Leaderboards = () => {
   const { Option } = Select;
@@ -157,7 +160,9 @@ const Leaderboards = () => {
                     countryCode={playerInfo["country"]}
                     style={{ width: "1.2em", height: "1.2em", paddingRight: 0 }}
                   />{" "}
-                  {playerInfo["alias"]}
+                  <Link to={routes.playerCardWithId(convertSteamNameToID(playerInfo["name"]))}>
+                    {playerInfo["alias"]}
+                  </Link>
                 </div>
               );
             })}
