@@ -150,11 +150,13 @@ const PlayerTeamMatchesTable: React.FC<IProps> = ({ title, data }) => {
       sorter: (a: LaddersDataArrayObject, b: LaddersDataArrayObject) =>
         a.lastmatchdate - b.lastmatchdate,
       render: (data: any) => {
-        return (
-          <Tooltip title={new Date(data * 1000).toLocaleString()}>
-            {timeAgo.format(Date.now() - (Date.now() - data * 1000), "round-minute")}
-          </Tooltip>
-        );
+        if (data) {
+          return (
+            <Tooltip title={new Date(data * 1000).toLocaleString()}>
+              {timeAgo.format(Date.now() - (Date.now() - data * 1000), "round-minute")}
+            </Tooltip>
+          );
+        }
       },
     },
   ];
