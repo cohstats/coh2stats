@@ -50,6 +50,13 @@ const getRecentMatchHistoryUrl = (profileName: string): string => {
   );
 };
 
+const getPlayerPersonalStatsUrl = (steamID: string): string => {
+  return encodeURI(
+    baseUrl +
+      `/community/leaderboard/GetPersonalStat?title=coh2&profile_names=["/steam/${steamID}"]`,
+  );
+};
+
 const getPlayerSearchUrl = (name: string): string => {
   return encodeURI(baseUrl + `/community/leaderboard/GetPersonalStat?title=coh2&search=${name}`);
 };
@@ -135,6 +142,7 @@ export {
   raceIdsShortCuts,
   baseUrl,
   getLadderUrl,
+  getPlayerPersonalStatsUrl,
   leaderboardsID,
   getRecentMatchHistoryUrl,
   raceIds,

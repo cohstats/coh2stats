@@ -48,6 +48,14 @@ const leaderboardsBase = () => {
   return "/leaderboards";
 };
 
+const playerCardBase = () => {
+  return "/players";
+};
+
+const playerCardWithId = (steamId = ":steamid") => {
+  return `${playerCardBase()}/${steamId}`;
+};
+
 const playerMatches = (steamId = ":steamid") => {
   return `${matchesBase()}/player/${steamId}`;
 };
@@ -64,6 +72,8 @@ const routes = {
   searchWithParam,
   playerMatches,
   leaderboardsBase,
+  playerCardBase,
+  playerCardWithId,
 };
 
 export default routes;
