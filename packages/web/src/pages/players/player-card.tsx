@@ -77,15 +77,13 @@ const PlayerCard = () => {
   }
 
   const steamProfile = data?.steamProfile[steamid];
-  console.log("data", data);
 
   const relicData = data?.relicPersonalStats;
   const statGroups = relicData?.statGroups;
   const playerRelicProfile = findPlayerProfile(statGroups);
-  console.log(playerRelicProfile);
 
   const playerName = playerRelicProfile.alias;
-  console.log(steamProfile);
+  document.title = `${playerCardBase} - ${playerName}`;
 
   const mergedGamesData = findAndMergeStatGroups(relicData as LaddersDataObject, null);
   const { finalStatsSingleGame, finalStatsTeamGames } =
@@ -105,8 +103,6 @@ const PlayerCard = () => {
   }
 
   for (const key of Object.keys(finalStatsTeamGames)) {
-    console.log(finalStatsTeamGames[key]);
-
     if (finalStatsTeamGames[key].length !== 0) {
       teamTables.push(
         <PlayerTeamMatchesTable key={key} title={key} data={finalStatsTeamGames[key]} />,
@@ -137,32 +133,7 @@ const PlayerCard = () => {
               {playerRelicProfile.xp === 18785964 ? " (MAX)" : ""}
             </div>
           </div>
-
-          <div style={{ float: "right", textAlign: "right" }}>
-            <div>
-              <Text strong>{totalGames} total games</Text>
-            </div>
-            <div>
-              Most played{" "}
-              <Text strong>
-                {convertTeamNames(mostPlayed.mode)} as {capitalize(mostPlayed.race)}
-              </Text>
-            </div>
-            <div>
-              Current best rank <Text strong>{bestRank.rank}</Text> in{" "}
-              <Text strong>
-                {convertTeamNames(bestRank.mode)} as {capitalize(bestRank.race)}
-              </Text>
-            </div>
-            <br />
-            <div>
-              <Tooltip title={new Date(lastGameDate * 1000).toLocaleString()}>
-                Last match{" "}
-                {timeAgo.format(Date.now() - (Date.now() - lastGameDate * 1000), "round-minute")}
-              </Tooltip>
-            </div>
-          </div>
-          <div style={{ float: "right", paddingLeft: 20, paddingRight: 20 }}>
+          <div style={{ float: "right", paddingLeft: 15 }}>
             {mostPlayed.race !== "allies" && mostPlayed.race !== "axis" && (
               <Tooltip
                 title={`Most played as ${mostPlayed.race} in ${convertTeamNames(
@@ -171,11 +142,35 @@ const PlayerCard = () => {
               >
                 <img
                   src={getGeneralIconPath(mostPlayed.race)}
-                  height="100px"
+                  height="120px"
                   alt={mostPlayed.race}
                 />
               </Tooltip>
             )}
+          </div>
+          <div style={{ float: "right", textAlign: "right" }}>
+            <div>
+              Current best rank <Text strong>{bestRank.rank}</Text> in{" "}
+              <Text strong>
+                {convertTeamNames(bestRank.mode)} as {capitalize(bestRank.race)}
+              </Text>
+            </div>
+            <div>
+              Most played{" "}
+              <Text strong>
+                {convertTeamNames(mostPlayed.mode)} as {capitalize(mostPlayed.race)}
+              </Text>
+            </div>
+            <div>
+              <Text strong>{totalGames} total games</Text>
+            </div>
+            <br />
+            <div>
+              <Tooltip title={new Date(lastGameDate * 1000).toLocaleString()}>
+                Last match{" "}
+                {timeAgo.format(Date.now() - (Date.now() - lastGameDate * 1000), "round-minute")}
+              </Tooltip>
+            </div>
           </div>
         </Col>
       </Row>
