@@ -6,8 +6,8 @@
 ## https://coh2stats.com/
 
 This project is set to create new usage charts for the game COH2.
-The author of the game doesn't provide any global statistics.  
-http://www.companyofheroes.com/leaderboards
+And also create web access to leaderboards, player cards and recent matches for players.
+The author of the game doesn't provide any global statistics. And online leaderboards has been shutdown recently.
 
 This project is inspired by coh2chart.com which has data
 only for years 2016-2017 after which it was shut down.
