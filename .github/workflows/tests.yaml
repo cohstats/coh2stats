@@ -3,8 +3,8 @@ on:
   pull_request:
 
 jobs:
-  lint:
-    name: Prettier
+  unit_tests:
+    name: Prettier and Unit Tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
