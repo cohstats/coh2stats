@@ -18,13 +18,22 @@ const getExportedIconPath = (name: string): string => {
   return `/resources/exportedIcons/${name}.png`;
 };
 
-const getGeneralIconPath = (name: string): string => {
+/**
+ * Small is 32px
+ * @param name
+ * @param size
+ */
+const getGeneralIconPath = (name: string, size: "normal" | "small" = "normal"): string => {
   // We have typo in the system and DB, sometimes it's wermacht and sometimes wehrmacht
   if (name === "wehrmacht") {
     name = "wermacht";
   }
 
-  return `/resources/generalIcons/${name}.png`;
+  if (size == "small") {
+    return `/resources/generalIcons/${name}_small.png`;
+  } else {
+    return `/resources/generalIcons/${name}.png`;
+  }
 };
 
 /**
