@@ -70,6 +70,10 @@ const playerCardDisplayed = (): void => {
   firebase.logEvent("playerCard");
 };
 
+const playerCardMatchesDisplayed = (): void => {
+  firebase.logEvent("playerCardMatches");
+};
+
 const leaderboardsDateInteraction = (type: string): void => {
   firebase.logEvent("leaderboardsDateInteraction", { type });
 };
@@ -92,6 +96,7 @@ const firebaseAnalytics = {
   playerCardDisplayed,
   leaderboardsDateInteraction,
   leaderboardsTypeInteraction,
+  playerCardMatchesDisplayed,
 };
 
 export default firebaseAnalytics;

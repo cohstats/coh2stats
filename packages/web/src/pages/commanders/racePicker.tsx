@@ -4,6 +4,7 @@ import { Col, Row } from "antd";
 import { RaceName } from "../../coh/types";
 import routes from "../../routes";
 import { Link } from "react-router-dom";
+import { Tip } from "../../components/tip";
 
 export const RacePicker = () => {
   const myImageSize = "220px";
@@ -22,6 +23,16 @@ export const RacePicker = () => {
   return (
     <>
       <div>
+        <div style={{ textAlign: "center", paddingTop: 10, fontSize: "larger" }}>
+          <Tip
+            text={
+              <>
+                You can see the most picked Commanders over at{" "}
+                <Link to={routes.statsBase()}>stats page</Link>.
+              </>
+            }
+          />
+        </div>
         <Row justify="center" style={{ padding: "20px" }}>
           <Col flex="none">
             <Link to={routes.commanderList("wermacht")}>

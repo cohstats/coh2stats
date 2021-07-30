@@ -8,6 +8,7 @@ import { ExportDate } from "../../components/export-date";
 import { commanderBase } from "../../titles";
 import { capitalize } from "../../helpers";
 import { Link } from "react-router-dom";
+import { Tip } from "../../components/tip";
 
 export const CommandersList = () => {
   const { race } = useParams<{
@@ -47,10 +48,20 @@ export const CommandersList = () => {
     <div style={divStyle}>
       <Row justify="center">
         <Col xs={20} xxl={12}>
+          <div style={{ textAlign: "center", paddingTop: 10, fontSize: "larger" }}>
+            <Tip
+              text={
+                <>
+                  You can see the most picked Commanders over at{" "}
+                  <Link to={routes.statsBase()}>stats page</Link>.
+                </>
+              }
+            />
+          </div>
           <List
             itemLayout="horizontal"
             dataSource={myData}
-            style={{ paddingTop: 50 }}
+            style={{ paddingTop: 10 }}
             renderItem={(item) => (
               <div>
                 <List.Item>

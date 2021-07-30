@@ -20,6 +20,7 @@ import routes from "../../routes";
 import { convertSteamNameToID, getGeneralIconPath } from "../../coh/helpers";
 import { BulbOutlined, DatabaseOutlined } from "@ant-design/icons";
 import { RelicIcon } from "../../components/relic-icon";
+import firebaseAnalytics from "../../analytics";
 
 const { Text } = Typography;
 
@@ -65,6 +66,8 @@ const LastMatchesTableRelic: React.FC = () => {
   }
 
   useEffect(() => {
+    firebaseAnalytics.playerCardDisplayed();
+
     // FYI this is special trick, anonymous function which is directly called - we need cos of compiler
     (async () => {
       // prepare the payload - you can modify the ID but it has to be in this format
@@ -76,8 +79,6 @@ const LastMatchesTableRelic: React.FC = () => {
       try {
         // call the CF
         const matches = await getMatchesFromRelic(payLoad);
-        // we have the data let's save it into the state
-        console.log(matches.data["playerMatches"]);
 
         // filter out invalid data provided by relic, and sort it descending with game start
         let localLoadedMatches = matches.data["playerMatches"]
@@ -103,7 +104,7 @@ const LastMatchesTableRelic: React.FC = () => {
         setError(JSON.stringify(e));
       }
     })();
-  }, []);
+  }, [steamid]);
 
   let matchRecords = loadedMatches;
 
