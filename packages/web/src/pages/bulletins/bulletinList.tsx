@@ -7,6 +7,9 @@ import { ColumnsType, ColumnType } from "antd/lib/table";
 import { SearchOutlined } from "@ant-design/icons";
 import { ExportDate } from "../../components/export-date";
 import firebaseAnalytics from "../../analytics";
+import { Tip } from "../../components/tip";
+import { Link } from "react-router-dom";
+import routes from "../../routes";
 
 const BulletinList = () => {
   // Prepare bulletin data
@@ -150,10 +153,17 @@ const BulletinList = () => {
     <>
       <div>
         <Row justify="center" style={{ padding: "10px" }}>
-          <Col xs={20} xxl={12} />
-        </Row>
-        <Row justify="center" style={{ padding: "10px" }}>
           <Col xs={20} xxl={12}>
+            <div style={{ textAlign: "center", paddingBottom: 10, fontSize: "larger" }}>
+              <Tip
+                text={
+                  <>
+                    You can see the most picked Intel Bulletins over at{" "}
+                    <Link to={routes.statsBase()}>stats page</Link>.
+                  </>
+                }
+              />
+            </div>
             <Table
               columns={TableColumns}
               pagination={{

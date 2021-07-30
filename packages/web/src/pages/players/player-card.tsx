@@ -152,10 +152,18 @@ const PlayerCard = () => {
           </div>
           <div style={{ float: "right", textAlign: "right" }}>
             <div>
-              Current best rank <Text strong>{bestRank.rank}</Text> in{" "}
-              <Text strong>
-                {convertTeamNames(bestRank.mode)} as {capitalize(bestRank.race)}
-              </Text>
+              {bestRank.rank !== Infinity ? (
+                <>
+                  Current best rank <Text strong>{bestRank.rank}</Text> in{" "}
+                  <Text strong>
+                    {convertTeamNames(bestRank.mode)} as {capitalize(bestRank.race)}
+                  </Text>
+                </>
+              ) : (
+                <>
+                  Currently <Text strong>unranked</Text>
+                </>
+              )}
             </div>
             <div>
               Most played{" "}
