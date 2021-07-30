@@ -161,8 +161,9 @@ export const raceIds: Record<number, RaceName> = {
  * @param steamId is steamID in relic api call format, example "/steam/76561198034318060"
  */
 export function getAliasFromSteamID(matchRecord: any, steamId: string) {
+  if (!matchRecord) return "unknown";
   let resultItem = matchRecord.matchhistoryreportresults.filter(
     (result: any) => result.profile.name === "/steam/" + steamId,
   );
-  return resultItem[0].profile.alias + ", " + resultItem[0].profile.country.toUpperCase();
+  return resultItem[0].profile.alias;
 }

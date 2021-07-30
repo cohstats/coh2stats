@@ -1,4 +1,4 @@
-import { Col, Row, Space, Table, Tooltip, Typography } from "antd";
+import { Col, Row, Space, Table, Tag, Tooltip, Typography } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import {
   formatMapName,
@@ -15,22 +15,21 @@ import "./tableStyle.css";
 import React, { useEffect, useState } from "react";
 import { firebase } from "../../firebase";
 import { useParams } from "react-router";
-import { Loading } from "../../components/loading";
+import { Link } from "react-router-dom";
+import routes from "../../routes";
+import { convertSteamNameToID, getGeneralIconPath } from "../../coh/helpers";
+import { BulbOutlined, DatabaseOutlined } from "@ant-design/icons";
+import { RelicIcon } from "../../components/relic-icon";
+
+const { Text } = Typography;
 
 const LastMatchesTableRelic: React.FC = () => {
-  const { Text } = Typography;
-
-  // the componet can be in 3 states
-  // error - something went wrong
-  // loading -- we are still loading the data
-  // loaded -- we have the date in the matches
-
   const { steamid } = useParams<{
     steamid: string;
   }>();
 
-  const [error, setError] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [loadedMatches, setLoadedMatches] = useState([]);
   const [profileID, setProfileID] = useState("/steam/" + steamid);
   const [playerAlias, setPlayerAlias] = useState("unknown player alias");
@@ -98,9 +97,10 @@ const LastMatchesTableRelic: React.FC = () => {
         let localAlias = getAliasFromSteamID(localLoadedMatches[0], steamid);
         setPlayerAlias(localAlias);
 
-        setIsLoaded(true);
+        setIsLoading(false);
       } catch (e) {
-        setError(e);
+        debugger;
+        setError(JSON.stringify(e));
       }
     })();
   }, []);
@@ -108,14 +108,12 @@ const LastMatchesTableRelic: React.FC = () => {
   let matchRecords = loadedMatches;
 
   function isPlayerVictorious(matchRecord: any): boolean {
+    if (!matchRecord) return false;
+
     let resultItem = matchRecord.matchhistoryreportresults.filter(
       (result: any) => result.profile.name == profileID,
     );
-    if (resultItem[0].resulttype == 1) {
-      return true;
-    } else {
-      return false;
-    }
+    return resultItem[0].resulttype == 1;
   }
 
   function getPlayerMatchHistoryResult(matchRecord: any) {
@@ -126,6 +124,9 @@ const LastMatchesTableRelic: React.FC = () => {
   }
 
   function renderExpandedMatch(record: any) {
+    if (!record) {
+      return <></>;
+    }
     let axisPlayers = getMatchPlayersByFaction(record.matchhistoryreportresults, "axis");
     let Axis = axisPlayers.map((player) => {
       return (
@@ -137,10 +138,12 @@ const LastMatchesTableRelic: React.FC = () => {
               height="32px"
               alt={player.race_id}
             />
-            <a key={player.profile_id + "link"} href={player.profile.name.match(/\d+/g)}>
+            <Link
+              key={player.profile_id + "link"}
+              to={routes.playerCardWithId(convertSteamNameToID(player.profile["name"]))}
+            >
               {player.profile.alias}{" "}
-            </a>
-            <br></br>
+            </Link>
           </Space>
         </div>
       );
@@ -157,10 +160,12 @@ const LastMatchesTableRelic: React.FC = () => {
               height="32px"
               alt={player.race_id}
             />
-            <a key={player.profile_id + "link"} href={player.profile.name.match(/\d+/g)}>
+            <Link
+              key={player.profile_id + "link"}
+              to={routes.playerCardWithId(convertSteamNameToID(player.profile["name"]))}
+            >
               {player.profile.alias}{" "}
-            </a>
-            <br></br>
+            </Link>
           </Space>
         </div>
       );
@@ -177,11 +182,11 @@ const LastMatchesTableRelic: React.FC = () => {
           <Col />
         </Row>
         <Row justify="center">
-          <a>
-            <Text disabled>
-              <b>View match details</b>
-            </Text>
-          </a>
+          <Text disabled>
+            TBD Additional match info
+            <br />
+            <b>View match details</b>
+          </Text>
         </Row>
       </div>
     );
@@ -189,9 +194,10 @@ const LastMatchesTableRelic: React.FC = () => {
 
   const columns: ColumnsType<any> = [
     {
-      title: "Match ID",
+      title: "Played",
       dataIndex: "id",
       key: "id",
+      align: "center" as "center",
       sorter: (a, b) => a.completiontime - b.completiontime,
       render: (_text: any, record: any) => {
         let player = getPlayerMatchHistoryResult(record);
@@ -214,11 +220,99 @@ const LastMatchesTableRelic: React.FC = () => {
         );
       },
     },
-
+    {
+      title: "Result",
+      dataIndex: "matchhistoryreportresults",
+      key: "result",
+      align: "center" as "center",
+      render: (data: any, record: any) => {
+        if (isPlayerVictorious(record)) {
+          return <Tag color={"#108ee9"}>VICTORY</Tag>;
+        } else {
+          return <Tag color={"#f50"}>DEFEAT</Tag>;
+        }
+      },
+    },
+    {
+      title: "Axis Players",
+      dataIndex: "matchhistoryreportresults",
+      responsive: ["xl"],
+      render: (data: any, record: any) => {
+        let axisPlayers = getMatchPlayersByFaction(data, "axis");
+        return (
+          <div>
+            {axisPlayers.map((playerInfo: Record<string, any>) => {
+              return (
+                <div key={playerInfo.profile_id}>
+                  <img
+                    key={playerInfo.profile_id}
+                    src={getGeneralIconPath(raceIds[playerInfo.race_id], "small")}
+                    height="20px"
+                    alt={playerInfo.race_id}
+                  />{" "}
+                  <Link
+                    to={routes.playerCardWithId(convertSteamNameToID(playerInfo.profile["name"]))}
+                  >
+                    {playerInfo.profile["alias"] === playerAlias ? (
+                      <b>{playerInfo.profile["alias"]}</b>
+                    ) : (
+                      playerInfo.profile["alias"]
+                    )}
+                  </Link>
+                </div>
+              );
+            })}
+          </div>
+        );
+      },
+    },
+    {
+      title: "Allies Players",
+      dataIndex: "matchhistoryreportresults",
+      responsive: ["xl"],
+      render: (data: any, record: any) => {
+        let alliesPlayers = getMatchPlayersByFaction(data, "allies");
+        return (
+          <div>
+            {alliesPlayers.map((playerInfo: Record<string, any>) => {
+              return (
+                <div key={playerInfo.profile_id}>
+                  <img
+                    key={playerInfo.profile_id}
+                    src={getGeneralIconPath(raceIds[playerInfo.race_id], "small")}
+                    height="20px"
+                    alt={playerInfo.race_id}
+                  />{" "}
+                  <Link
+                    to={routes.playerCardWithId(convertSteamNameToID(playerInfo.profile["name"]))}
+                  >
+                    {playerInfo.profile["alias"] === playerAlias ? (
+                      <b>{playerInfo.profile["alias"]}</b>
+                    ) : (
+                      playerInfo.profile["alias"]
+                    )}
+                  </Link>
+                </div>
+              );
+            })}
+          </div>
+        );
+      },
+    },
+    {
+      title: "Map",
+      dataIndex: "mapname",
+      key: "mapname",
+      filters: playerMaps,
+      align: "left" as "left",
+      onFilter: (value: any, record: any) => record.mapname == value,
+      responsive: ["lg"],
+    },
     {
       title: "Mode",
       dataIndex: "matchtype_id",
       key: "matchtype_id",
+      align: "center" as "center",
       filters: [
         {
           text: "1 vs 1",
@@ -249,131 +343,64 @@ const LastMatchesTableRelic: React.FC = () => {
         );
       },
     },
-
-    {
-      title: "Map",
-      dataIndex: "mapname",
-      key: "mapname",
-      filters: playerMaps,
-      onFilter: (value: any, record: any) => record.mapname == value,
-      responsive: ["lg"],
-      render: (_text: any, record: any) => {
-        return <p> {record.mapname} </p>;
-      },
-    },
-
-    {
-      title: "Result",
-      dataIndex: "result",
-      key: "result",
-      render: (_text: any, record: any) => {
-        return (
-          <div style={{ textAlign: "center" }}>
-            {getMatchResult(record.matchhistoryreportresults)}
-          </div>
-        );
-      },
-    },
-
     {
       title: "Match duration",
       dataIndex: "matchduration",
       key: "matchduration",
+      align: "center" as "center",
+      sorter: (a: any, b: any) =>
+        a.completiontime - a.startgametime - (b.completiontime - b.startgametime),
       render: (_text: any, record: any) => {
         return <p>{getMatchDuration(record.startgametime, record.completiontime)}</p>;
-      },
-    },
-
-    {
-      title: "Axis Players",
-
-      responsive: ["xl"],
-      render: (_text: any, record: any) => {
-        let axisPlayers = getMatchPlayersByFaction(record.matchhistoryreportresults, "axis");
-
-        let Images = axisPlayers.map((player) => {
-          return (
-            <Tooltip title={player.profile.alias} key={player.profile.alias}>
-              <img
-                key={player.profile_id}
-                src={getRaceImage(raceIds[player.race_id])}
-                height="48px"
-                alt={player.race_id}
-              />
-            </Tooltip>
-          );
-        });
-        return <Space>{Images}</Space>;
-      },
-    },
-
-    {
-      title: "Allies Players",
-
-      responsive: ["xl"],
-      render: (_text: any, record: any) => {
-        let alliesPlayers = getMatchPlayersByFaction(record.matchhistoryreportresults, "allies");
-
-        let Images = alliesPlayers.map((player) => {
-          return (
-            <Tooltip title={player.profile.alias} key={player.profile.alias}>
-              <img
-                key={player.profile_id}
-                src={getRaceImage(raceIds[player.race_id])}
-                height="48px"
-                alt={player.race_id}
-              />
-            </Tooltip>
-          );
-        });
-        return <Space>{Images}</Space>;
       },
     },
   ];
 
   if (error) {
     return <div>Error: {error}</div>;
-  } else if (!isLoaded) {
-    return (
-      <div>
-        <Loading />
-      </div>
-    );
   } else {
     return (
       <>
-        <Row justify="center">
-          <Col xs={24} xl={18}>
-            <h1>
-              {" "}
-              Recent matches for player: <br></br>
-              <b>{playerAlias}</b>{" "}
-            </h1>
-          </Col>
-        </Row>
-        <Row justify="center">
-          <Col xs={24} xl={18}>
-            <Table
-              pagination={{
-                defaultPageSize: 60,
-                pageSizeOptions: ["10", "20", "40", "60", "100", "200"],
-              }}
-              columns={columns}
-              dataSource={matchRecords}
-              rowKey={(record) => record.id}
-              size="middle"
-              rowClassName={(record) => (isPlayerVictorious(record) ? "green" : "red")}
-              expandable={{
-                expandedRowRender: (record) => renderExpandedMatch(record),
-                rowExpandable: (record) => true,
-                expandRowByClick: true,
-                expandIconColumnIndex: -1,
-                expandedRowClassName: (record) =>
-                  isPlayerVictorious(record) ? "lightgreen" : "lightred",
-              }}
-            />
-          </Col>
-        </Row>
+        <div>
+          <div style={{ float: "left" }}>
+            <Tooltip
+              title={
+                "The results are also time bounded. If the match is too old Relic deletes it even " +
+                "when you have less then 10 matches in that mode."
+              }
+            >
+              <BulbOutlined /> Relic keeps only last 10 matches for each mode.
+            </Tooltip>
+          </div>
+          <div style={{ float: "right" }}>
+            <Tooltip
+              title={"In future we might might allow access to matches stored at coh2stats.com"}
+            >
+              <DatabaseOutlined /> Data source <RelicIcon />
+            </Tooltip>
+          </div>
+        </div>
+        <Table
+          style={{ paddingTop: 5 }}
+          pagination={{
+            defaultPageSize: 60,
+            pageSizeOptions: ["10", "20", "40", "60", "100", "200"],
+          }}
+          columns={columns}
+          dataSource={matchRecords}
+          rowKey={(record) => record.id}
+          size="middle"
+          rowClassName={(record) => (isPlayerVictorious(record) ? "green" : "red")}
+          expandable={{
+            expandedRowRender: (record) => renderExpandedMatch(record),
+            rowExpandable: (record) => true,
+            expandRowByClick: true,
+            expandIconColumnIndex: -1,
+            expandedRowClassName: (record) =>
+              isPlayerVictorious(record) ? "lightgreen" : "lightred",
+          }}
+          loading={isLoading}
+        />
       </>
     );
   }

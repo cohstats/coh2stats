@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { Col, Row, Tooltip, Typography, Avatar } from "antd";
+import { Col, Row, Tooltip, Typography, Avatar, Tabs } from "antd";
 import { LaddersDataObject } from "../../coh/types";
 import firebaseAnalytics from "../../analytics";
 import { capitalize, timeAgo } from "../../helpers";
@@ -19,7 +19,9 @@ import {
 } from "./data-processing";
 import PlayerTeamMatchesTable from "./player-team-matches-table";
 import { convertTeamNames } from "./helpers";
+import LastMatchesTableRelic from "../matches/lastMatchesTableRelic";
 const { Text } = Typography;
+const { TabPane } = Tabs;
 
 type playerCardAPIObject = Record<"relicPersonalStats" | "steamProfile", Record<string, any>>;
 
@@ -112,7 +114,7 @@ const PlayerCard = () => {
 
   return (
     <div key={steamid}>
-      <Row justify="center" style={{ padding: "10px" }}>
+      <Row justify="center" style={{ paddingTop: "10px" }}>
         <Col xs={24} md={22} xxl={14}>
           <div style={{ float: "left" }}>
             <a href={steamProfile["profileurl"]} target={"_blank"} rel="noreferrer">
@@ -174,14 +176,17 @@ const PlayerCard = () => {
           </div>
         </Col>
       </Row>
-      <Row justify="center" style={{ padding: "10px" }}>
+      <Row justify="center">
         <Col xs={24} md={22} xxl={14}>
-          {singleTables}
-        </Col>
-      </Row>
-      <Row justify="center" style={{ padding: "10px" }}>
-        <Col xs={24} md={22} xxl={14}>
-          {teamTables}
+          <Tabs defaultActiveKey="playerStats" size={"large"} centered>
+            <TabPane tab={"Standings"} key="playerStats">
+              {singleTables}
+              {teamTables}
+            </TabPane>
+            <TabPane tab="Recent matches" key="matchHistory">
+              <LastMatchesTableRelic />
+            </TabPane>
+          </Tabs>
         </Col>
       </Row>
     </div>
