@@ -68,7 +68,7 @@ const PlayerCard = () => {
     return <>{JSON.stringify(error)}</>;
   }
 
-  if (isLoading || !data) {
+  if (isLoading || !data || data?.steamProfile[steamid] === undefined) {
     return (
       <div style={{ paddingTop: 50 }}>
         <Loading />
@@ -113,7 +113,7 @@ const PlayerCard = () => {
   return (
     <div key={steamid}>
       <Row justify="center" style={{ padding: "10px" }}>
-        <Col xs={22} xxl={14}>
+        <Col xs={24} md={22} xxl={14}>
           <div style={{ float: "left" }}>
             <a href={steamProfile["profileurl"]} target={"_blank"} rel="noreferrer">
               <Avatar
@@ -175,12 +175,12 @@ const PlayerCard = () => {
         </Col>
       </Row>
       <Row justify="center" style={{ padding: "10px" }}>
-        <Col xs={22} xxl={14}>
+        <Col xs={24} md={22} xxl={14}>
           {singleTables}
         </Col>
       </Row>
       <Row justify="center" style={{ padding: "10px" }}>
-        <Col xs={22} xxl={14}>
+        <Col xs={24} md={22} xxl={14}>
           {teamTables}
         </Col>
       </Row>
