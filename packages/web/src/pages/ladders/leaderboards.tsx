@@ -14,7 +14,7 @@ import {
   getYesterdayDateTimestamp,
   timeAgo,
   useQuery,
-} from "../../helpers";
+} from "../../utils/helpers";
 import { useFirestoreConnect } from "react-redux-firebase";
 import { useData, useLoading } from "../../firebase";
 
@@ -122,13 +122,20 @@ const Leaderboards = () => {
       width: 20,
       sorter: (a: LaddersDataArrayObject, b: LaddersDataArrayObject) => a.rank - b.rank,
     },
-    { title: "Level", dataIndex: "ranklevel", key: "ranklevel", align: "center" as "center" },
+    {
+      title: "Level",
+      dataIndex: "ranklevel",
+      key: "ranklevel",
+      align: "center" as "center",
+      responsive: ["xl"],
+    },
     {
       title: "Change",
       dataIndex: "change",
       key: "change",
       align: "center" as "center",
       width: 110,
+      responsive: ["xl"],
       render: (data: any) => {
         if (data > 0) {
           return <div style={{ color: "green" }}>+{data}</div>;
@@ -230,6 +237,7 @@ const Leaderboards = () => {
       key: "drops",
       align: "center" as "center",
       width: 20,
+      responsive: ["xl"],
       sorter: (a: LaddersDataArrayObject, b: LaddersDataArrayObject) => a.drops - b.drops,
     },
     {
@@ -237,6 +245,7 @@ const Leaderboards = () => {
       dataIndex: "disputes",
       key: "disputes",
       align: "center" as "center",
+      responsive: ["xl"],
       sorter: (a: LaddersDataArrayObject, b: LaddersDataArrayObject) => a.disputes - b.disputes,
       width: 20,
     },
@@ -314,7 +323,11 @@ const Leaderboards = () => {
       <div style={divStyle}>
         <Row justify="center" style={{ paddingTop: "20px" }}>
           <Col>
-            <Space direction={"horizontal"}>
+            <Space
+              direction={"horizontal"}
+              wrap
+              style={{ display: "flex", justifyContent: "center" }}
+            >
               <CustomDatePicker
                 onChange={(value: any) => {
                   setSelectedTimeStamp(convertDateToDayTimestamp(`${value}`).toString());
@@ -397,25 +410,21 @@ const Leaderboards = () => {
         </Row>
         <Row justify="center" style={{ padding: "10px" }}>
           <Col xs={24} xxl={17}>
+            <div style={{ fontSize: "large", paddingBottom: 15, paddingTop: 15 }}>
+              <div style={{ float: "left" }}>
+                {generateIconsForTitle(selectedRace, selectedType)}{" "}
+                <Text strong>
+                  Leaderboards for {capitalize(selectedRace)} {selectedType}
+                </Text>{" "}
+                as of {`${new Date(parseInt(selectedTimeStamp) * 1000).toLocaleString()}`}{" "}
+              </div>
+              <div style={{ float: "right" }}>
+                <Text strong>{data?.rankTotal}</Text> ranked{" "}
+                {isTeamGame(selectedType) ? "teams" : "players"}
+              </div>
+            </div>
             <Table
-              style={{ minHeight: 600 }}
-              title={(value) => {
-                return (
-                  <div style={{ fontSize: "large", paddingBottom: 15 }}>
-                    <div style={{ float: "left" }}>
-                      {generateIconsForTitle(selectedRace, selectedType)}{" "}
-                      <Text strong>
-                        Leaderboards for {capitalize(selectedRace)} {selectedType}
-                      </Text>{" "}
-                      as of {`${new Date(parseInt(selectedTimeStamp) * 1000).toLocaleString()}`}{" "}
-                    </div>
-                    <div style={{ float: "right" }}>
-                      <Text strong>{data?.rankTotal}</Text> ranked{" "}
-                      {isTeamGame(selectedType) ? "teams" : "players"}
-                    </div>
-                  </div>
-                );
-              }}
+              style={{ minHeight: 600, overflow: "auto" }}
               columns={TableColumns}
               pagination={{
                 defaultPageSize: 40,

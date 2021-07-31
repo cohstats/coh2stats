@@ -8,6 +8,7 @@ import { aboutBase, bulletinsBase, commanderBase } from "../titles";
 import SubMenu from "antd/es/menu/SubMenu";
 import { firebase, useData, useLoading } from "../firebase";
 import { Link } from "react-router-dom";
+import { UnorderedListOutlined } from "@ant-design/icons";
 
 const pageTitleSwitch = (path: string) => {
   switch (path) {
@@ -72,29 +73,37 @@ export const MainHeader: React.FC = () => {
           float: "right",
         }}
       >
-        <Space direction={"horizontal"} size={"small"}>
-          {!isOnlinePlayersLoading && (
-            <Tooltip
-              title={`Amount of online Steam players in game Company of Heroes 2 as of  ${new Date(
-                onlinePlayersData["timeStamp"] * 1000,
-              ).toLocaleString()}`}
-            >
-              <span
-                style={{
-                  color: "#f0f2f5",
-                }}
+        <Space
+          direction={"horizontal"}
+          size={"small"}
+          wrap
+          style={{ display: "flex", justifyContent: "center" }}
+        >
+          {/*Add div because of the layout shift*/}
+          <div style={{ minHeight: 64, minWidth: 120 }}>
+            {!isOnlinePlayersLoading && (
+              <Tooltip
+                title={`Amount of online Steam players in game Company of Heroes 2 as of  ${new Date(
+                  onlinePlayersData["timeStamp"] * 1000,
+                ).toLocaleString()}`}
               >
-                Ingame players
-              </span>
+                <span
+                  style={{
+                    color: "#f0f2f5",
+                  }}
+                >
+                  Ingame players
+                </span>
 
-              <Badge
-                className="site-badge-count-109"
-                count={onlinePlayersData["onlinePlayers"]}
-                style={{ backgroundColor: "#52c41a", boxShadow: "0 0 0 0", marginLeft: 10 }}
-                overflowCount={99999}
-              />
-            </Tooltip>
-          )}
+                <Badge
+                  className="site-badge-count-109"
+                  count={onlinePlayersData["onlinePlayers"]}
+                  style={{ backgroundColor: "#52c41a", boxShadow: "0 0 0 0", marginLeft: 10 }}
+                  overflowCount={99999}
+                />
+              </Tooltip>
+            )}
+          </div>
 
           <PlayerSearchInput />
         </Space>
@@ -107,12 +116,14 @@ export const MainHeader: React.FC = () => {
               fontSize: "x-large",
               fontFamily: "sans-serif",
               cursor: "pointer",
+              whiteSpace: "nowrap",
             }}
           >
             CoH 2 Logs & Stats
           </div>
         </Link>
         <Menu
+          overflowedIndicator={<div style={{ fontSize: "x-large" }}>☰</div>}
           theme="dark"
           mode="horizontal"
           selectedKeys={[currentPath]}

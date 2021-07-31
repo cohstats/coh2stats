@@ -1,4 +1,4 @@
-import { Bar } from "@nivo/bar";
+import { ResponsiveBar } from "@nivo/bar";
 import React, { useMemo } from "react";
 
 interface IProps {
@@ -8,18 +8,16 @@ interface IProps {
 export const WinsChart: React.FC<IProps> = ({ data }) => {
   const chartData = useMemo(() => {
     return [
-      { ...{ faction: "British", ...data["british"] } },
-      { ...{ faction: "Soviet", ...data["soviet"] } },
-      { ...{ faction: "USF", ...data["usf"] } },
-      { ...{ faction: "Wermacht", ...data["wermacht"] } },
-      { ...{ faction: "WGerman", ...data["wgerman"] } },
+      { faction: "British", ...data["british"] },
+      { faction: "Soviet", ...data["soviet"] },
+      { faction: "USF", ...data["usf"] },
+      { faction: "Wermacht", ...data["wermacht"] },
+      { faction: "WGerman", ...data["wgerman"] },
     ];
   }, [data]);
 
   return (
-    <Bar
-      height={400}
-      width={450}
+    <ResponsiveBar
       margin={{ top: 10, right: 80, bottom: 40, left: 40 }}
       // @ts-ignore
       data={chartData as data[] | undefined}

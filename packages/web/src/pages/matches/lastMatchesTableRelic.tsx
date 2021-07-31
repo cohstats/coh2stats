@@ -226,6 +226,7 @@ const LastMatchesTableRelic: React.FC = () => {
       dataIndex: "matchhistoryreportresults",
       key: "result",
       align: "center" as "center",
+      responsive: ["xl"],
       render: (data: any, record: any) => {
         if (isPlayerVictorious(record)) {
           return <Tag color={"#108ee9"}>VICTORY</Tag>;
@@ -237,7 +238,6 @@ const LastMatchesTableRelic: React.FC = () => {
     {
       title: "Axis Players",
       dataIndex: "matchhistoryreportresults",
-      responsive: ["xl"],
       render: (data: any, record: any) => {
         let axisPlayers = getMatchPlayersByFaction(data, "axis");
         return (
@@ -270,7 +270,6 @@ const LastMatchesTableRelic: React.FC = () => {
     {
       title: "Allies Players",
       dataIndex: "matchhistoryreportresults",
-      responsive: ["xl"],
       render: (data: any, record: any) => {
         let alliesPlayers = getMatchPlayersByFaction(data, "allies");
         return (
@@ -314,6 +313,7 @@ const LastMatchesTableRelic: React.FC = () => {
       dataIndex: "matchtype_id",
       key: "matchtype_id",
       align: "center" as "center",
+      responsive: ["xl"],
       filters: [
         {
           text: "1 vs 1",
@@ -349,6 +349,7 @@ const LastMatchesTableRelic: React.FC = () => {
       dataIndex: "matchduration",
       key: "matchduration",
       align: "center" as "center",
+      responsive: ["xl"],
       sorter: (a: any, b: any) =>
         a.completiontime - a.startgametime - (b.completiontime - b.startgametime),
       render: (_text: any, record: any) => {
@@ -382,7 +383,7 @@ const LastMatchesTableRelic: React.FC = () => {
           </div>
         </div>
         <Table
-          style={{ paddingTop: 5 }}
+          style={{ paddingTop: 5, overflow: "auto" }}
           pagination={{
             defaultPageSize: 60,
             pageSizeOptions: ["10", "20", "40", "60", "100", "200"],

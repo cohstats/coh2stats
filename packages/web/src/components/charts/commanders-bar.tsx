@@ -1,4 +1,4 @@
-import { Bar } from "@nivo/bar";
+import { ResponsiveBar } from "@nivo/bar";
 import React from "react";
 import { sortArrayOfObjectsByTheirPropertyValue } from "../../coh/helpers";
 import {
@@ -10,13 +10,15 @@ import { Avatar } from "antd";
 import routes from "../../routes";
 import type { History } from "history";
 
-export const CommandersBarChart = (
-  commanders: Record<number, number>,
+interface CommandersBarChartProps {
+  commanders: Record<number, number>;
   push: {
     (path: string, state?: unknown): void;
     (location: History.LocationDescriptor<unknown>): void;
-  },
-) => {
+  };
+}
+
+export const CommandersBarChart: React.FC<CommandersBarChartProps> = ({ commanders, push }) => {
   const simpleMapsData = [];
 
   for (const [key, value] of Object.entries(commanders)) {
@@ -33,7 +35,7 @@ export const CommandersBarChart = (
 
   const toolTipFunction = (toolTipData: Record<string, any>) => {
     const commanderData = getCommanderData(toolTipData.data.commanderId);
-    if (!commanderData) return <div></div>;
+    if (!commanderData) return <div />;
 
     const iconPath = getCommanderIconPath(commanderData?.iconSmall);
 
@@ -57,9 +59,7 @@ export const CommandersBarChart = (
   };
 
   return (
-    <Bar
-      height={800}
-      width={750}
+    <ResponsiveBar
       margin={{ top: 0, right: 20, bottom: 40, left: 180 }}
       // @ts-ignore
       data={mapsData as data[] | undefined}

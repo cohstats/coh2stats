@@ -1,4 +1,4 @@
-import { Bar } from "@nivo/bar";
+import { ResponsiveBar } from "@nivo/bar";
 import React, { useMemo } from "react";
 import { sortArrayOfObjectsByTheirPropertyValue } from "../../coh/helpers";
 
@@ -22,9 +22,7 @@ export const MapBarChart: React.FC<IProps> = ({ maps }) => {
   }, [maps]);
 
   return (
-    <Bar
-      height={600}
-      width={1100}
+    <ResponsiveBar
       margin={{ top: 0, right: 0, bottom: 40, left: 200 }}
       // @ts-ignore
       data={mapsData as data[] | undefined}

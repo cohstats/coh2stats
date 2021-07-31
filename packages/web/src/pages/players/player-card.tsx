@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Col, Row, Tooltip, Typography, Avatar, Tabs } from "antd";
 import { LaddersDataObject } from "../../coh/types";
 import firebaseAnalytics from "../../analytics";
-import { capitalize, timeAgo } from "../../helpers";
+import { capitalize, timeAgo } from "../../utils/helpers";
 import { firebase } from "../../firebase";
 
 import { CountryFlag } from "../../components/country-flag";
@@ -115,7 +115,7 @@ const PlayerCard = () => {
   return (
     <div key={steamid}>
       <Row justify="center" style={{ paddingTop: "10px" }}>
-        <Col xs={24} md={22} xxl={14}>
+        <Col xs={23} md={22} xxl={14}>
           <div style={{ float: "left" }}>
             <a href={steamProfile["profileurl"]} target={"_blank"} rel="noreferrer">
               <Avatar

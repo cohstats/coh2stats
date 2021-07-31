@@ -3,7 +3,7 @@ import { ColumnsType } from "antd/lib/table";
 import { LaddersDataArrayObject, PlayerCardDataArrayObject } from "../../coh/types";
 import { CountryFlag } from "../../components/country-flag";
 import { Table, Tooltip, Typography } from "antd";
-import { timeAgo } from "../../helpers";
+import { timeAgo } from "../../utils/helpers";
 import { convertSteamNameToID } from "../../coh/helpers";
 import { Link } from "react-router-dom";
 import routes from "../../routes";
@@ -163,15 +163,11 @@ const PlayerTeamMatchesTable: React.FC<IProps> = ({ title, data }) => {
 
   return (
     <>
+      <div style={{ fontSize: "large", paddingBottom: 4, paddingLeft: 4 }}>
+        <Text strong>{title.toUpperCase()}</Text>{" "}
+      </div>
       <Table
-        style={{ paddingBottom: 20 }}
-        title={(value) => {
-          return (
-            <div style={{ fontSize: "large" }}>
-              <Text strong>{title.toUpperCase()}</Text>{" "}
-            </div>
-          );
-        }}
+        style={{ paddingBottom: 20, overflow: "auto" }}
         columns={TableColumns}
         rowKey={(record) => record?.lastmatchdate}
         dataSource={sortedData}

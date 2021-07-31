@@ -9,7 +9,7 @@ import {
   getPreviousWeekTimeStamp,
   getStartOfTheWeek,
   useQuery,
-} from "../../helpers";
+} from "../../utils/helpers";
 import { validRaceNames, validStatsTypes } from "../../coh/types";
 import enGB from "antd/lib/locale/en_GB";
 
@@ -234,6 +234,7 @@ const CustomStats: React.FC = () => {
       <div>
         <Space
           style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}
+          wrap
         >
           <Select
             value={datePickerType}
