@@ -1,4 +1,4 @@
-import { Bar } from "@nivo/bar";
+import { ResponsiveBar } from "@nivo/bar";
 import React, { useMemo } from "react";
 import { sortArrayOfObjectsByTheirPropertyValue } from "../../coh/helpers";
 import {
@@ -54,11 +54,9 @@ export const BulletinsBarChart: React.FC<IProps> = ({ bulletins }) => {
     );
   };
 
-  // We have to use Bar chart instead of ResponsiveBar or it's not gonna render properly
   return (
-    <Bar
-      height={800}
-      width={750}
+    // We have to use Bar chart instead of ResponsiveBar or it's not gonna render properly
+    <ResponsiveBar
       margin={{ top: 0, right: 20, bottom: 40, left: 220 }}
       // @ts-ignore
       data={bulletinsData as data[] | undefined}

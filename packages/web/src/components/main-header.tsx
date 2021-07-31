@@ -116,6 +116,7 @@ export const MainHeader: React.FC = () => {
               fontSize: "x-large",
               fontFamily: "sans-serif",
               cursor: "pointer",
+              whiteSpace: "nowrap",
             }}
           >
             CoH 2 Logs & Stats

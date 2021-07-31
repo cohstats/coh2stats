@@ -12,6 +12,7 @@ import { capitalize, formatDate } from "../../utils/helpers";
 import { useLocation } from "react-router-dom";
 import { FactionVsFactionCard } from "./factions";
 import { isTimeStampInPatches } from "../../coh/patches";
+import { useMediaQuery } from "react-responsive";
 
 const { Text, Link } = Typography;
 
@@ -27,6 +28,7 @@ interface IProps {
 const CustomStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
   const { push } = useHistory();
   const query = useQuery();
+  const isMobile = useMediaQuery({ query: "(max-width: 1023px)" });
 
   const type = query.get("type") || "4v4";
   const race = query.get("race") || "wermacht";
@@ -87,7 +89,7 @@ const CustomStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
         buttonStyle="solid"
         onChange={onRaceRadioChange}
         size={"large"}
-        style={{ ...{ padding: 20 }, ...style }}
+        style={{ padding: 20, ...style }}
       >
         <Radio.Button value="wermacht">Wehrmacht</Radio.Button>
         <Radio.Button value="wgerman">WGerman</Radio.Button>
@@ -180,24 +182,40 @@ const CustomStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
         unixTimeStampTo: toTimeStamp,
       })}
       <Row justify={"center"} style={{ paddingTop: 10 }}>
-        <Space size={"large"} wrap>
-          <Card title={`Games Played ${type}`} style={{ width: 485, height: 500 }}>
+        <Space size={"large"} wrap style={{ display: "flex", justifyContent: "center" }}>
+          <Card
+            title={`Games Played ${type}`}
+            bodyStyle={
+              isMobile
+                ? { width: "90vw", height: 300 }
+                : { width: "48vw", maxWidth: 485, height: 460 }
+            }
+          >
             <WinsChart data={data} />
           </Card>
-          <Card title={`Winrate ${type}`} style={{ width: 485, height: 500 }}>
+          <Card
+            title={`Games Played ${type}`}
+            bodyStyle={isMobile ? { width: "90vw", height: 300 } : { width: 485, height: 460 }}
+          >
             <WinRateChart data={data} />
           </Card>
         </Space>
       </Row>
+      {!isMobile && (
+        <Row justify={"center"}>
+          <FactionVsFactionCard
+            title={`Team composition matrix ${type}`}
+            data={data}
+            style={{ marginTop: 40 }}
+          />
+        </Row>
+      )}
       <Row justify={"center"}>
-        <FactionVsFactionCard
-          title={`Team composition matrix ${type}`}
-          data={data}
+        <Card
+          title={`Maps ${type}`}
           style={{ marginTop: 40 }}
-        />
-      </Row>
-      <Row justify={"center"}>
-        <Card title={`Maps ${type}`} style={{ width: 1200, height: 700, marginTop: 20 }}>
+          bodyStyle={isMobile ? { width: "90vw", height: 300 } : { width: 1100, height: 650 }}
+        >
           <MapBarChart maps={mapsData} />
         </Card>
       </Row>
@@ -206,7 +224,7 @@ const CustomStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
         <TypeSelector style={{ paddingLeft: 0 }} />
       </Row>
       <Row justify={"center"}>
-        <Space size={"large"} wrap>
+        <Space size={"large"} style={{ display: "flex", justifyContent: "center" }} wrap>
           <Card
             title={
               <span>
@@ -221,12 +239,14 @@ const CustomStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
                 {` ${type} - ${race}`}
               </span>
             }
-            style={{ width: 800, height: 900 }}
+            bodyStyle={isMobile ? { width: "90vw", height: 600 } : { width: 800, height: 900 }}
           >
-            {CommandersBarChart(data["commanders"][race], push)}
+            <CommandersBarChart commanders={data.commanders[race]} push={push} />
           </Card>
-
-          <Card title={`Intel Bulletins  ${type} - ${race}`} style={{ width: 800, height: 900 }}>
+          <Card
+            title={`Intel Bulletins  ${type} - ${race}`}
+            bodyStyle={isMobile ? { width: "90vw", height: 1200 } : { width: 800, height: 900 }}
+          >
             <BulletinsBarChart bulletins={data["intelBulletins"][race]} />
           </Card>
         </Space>

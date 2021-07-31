@@ -234,6 +234,7 @@ const CustomStats: React.FC = () => {
       <div>
         <Space
           style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}
+          wrap
         >
           <Select
             value={datePickerType}
