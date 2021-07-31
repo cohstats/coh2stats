@@ -132,7 +132,7 @@ const CustomSearch: React.FC = () => {
   return (
     <div style={{ textAlign: "center", maxWidth: 900, margin: "auto", paddingBottom: 20 }}>
       <Search
-        placeholder="Steam name"
+        placeholder="Steam name or steam id"
         defaultValue={searchParam}
         onSearch={onSearch}
         style={{ width: 320, padding: 20 }}

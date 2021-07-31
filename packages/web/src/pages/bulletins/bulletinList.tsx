@@ -131,7 +131,7 @@ const BulletinList = () => {
       sorter: (a: IntelBulletinData, b: IntelBulletinData) => a.races.length - b.races.length,
       render: (tags: any[]) => (
         <>
-          <Space>
+          <Space wrap>
             {tags.sort().map((tag) => {
               let color = "geekblue";
               if (tag === "wermacht" || tag === "wgerman") {
@@ -153,7 +153,7 @@ const BulletinList = () => {
     <>
       <div>
         <Row justify="center" style={{ padding: "10px" }}>
-          <Col xs={20} xxl={12}>
+          <Col xs={22} xxl={14}>
             <div style={{ textAlign: "center", paddingBottom: 10, fontSize: "larger" }}>
               <Tip
                 text={

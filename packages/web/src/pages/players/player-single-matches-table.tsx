@@ -34,7 +34,7 @@ const PlayerSingleMatchesTable: React.FC<IProps> = ({ title, data }) => {
       key: "rank",
       align: "center" as "center",
       width: 70,
-      render: (data: any) => {
+      render: (data: number) => {
         if (data < 0) {
           return "-";
         } else {
@@ -48,7 +48,7 @@ const PlayerSingleMatchesTable: React.FC<IProps> = ({ title, data }) => {
       key: "ranklevel",
       align: "center" as "center",
       width: 90,
-      render: (data: any) => {
+      render: (data: number) => {
         if (data <= 0) {
           return "-";
         } else {
@@ -62,7 +62,7 @@ const PlayerSingleMatchesTable: React.FC<IProps> = ({ title, data }) => {
       key: "streak",
       align: "center" as "center",
       width: 90,
-      render: (data: any) => {
+      render: (data: number) => {
         if (data > 0) {
           return <div style={{ color: "green" }}>+{data}</div>;
         } else {
@@ -89,7 +89,7 @@ const PlayerSingleMatchesTable: React.FC<IProps> = ({ title, data }) => {
       key: "ratio",
       align: "center" as "center",
       width: 90,
-      render: (data: any) => {
+      render: (data: PlayerCardDataArrayObject) => {
         return <div>{Math.round(100 * Number(data.wins / (data.losses + data.wins)))}%</div>;
       },
     },
@@ -136,16 +136,12 @@ const PlayerSingleMatchesTable: React.FC<IProps> = ({ title, data }) => {
 
   return (
     <>
+      <div style={{ fontSize: "large", paddingBottom: 4, paddingLeft: 4 }}>
+        <img src={getGeneralIconPath(title)} height="24px" alt={title} />{" "}
+        <Text strong>{title.toUpperCase()}</Text>{" "}
+      </div>
       <Table
-        style={{ paddingBottom: 20 }}
-        title={(value) => {
-          return (
-            <div style={{ fontSize: "large" }}>
-              <img src={getGeneralIconPath(title)} height="24px" alt={title} />{" "}
-              <Text strong>{title.toUpperCase()}</Text>{" "}
-            </div>
-          );
-        }}
+        style={{ paddingBottom: 20, overflow: "auto" }}
         columns={TableColumns}
         rowKey={(record) => record?.lastmatchdate}
         dataSource={sortedData}

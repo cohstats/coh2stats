@@ -115,7 +115,7 @@ const PlayerCard = () => {
   return (
     <div key={steamid}>
       <Row justify="center" style={{ paddingTop: "10px" }}>
-        <Col xs={24} md={22} xxl={14}>
+        <Col xs={23} md={22} xxl={14}>
           <div style={{ float: "left" }}>
             <a href={steamProfile["profileurl"]} target={"_blank"} rel="noreferrer">
               <Avatar

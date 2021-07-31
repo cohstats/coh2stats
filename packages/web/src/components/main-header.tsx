@@ -8,6 +8,7 @@ import { aboutBase, bulletinsBase, commanderBase } from "../titles";
 import SubMenu from "antd/es/menu/SubMenu";
 import { firebase, useData, useLoading } from "../firebase";
 import { Link } from "react-router-dom";
+import { UnorderedListOutlined } from "@ant-design/icons";
 
 const pageTitleSwitch = (path: string) => {
   switch (path) {
@@ -72,7 +73,12 @@ export const MainHeader: React.FC = () => {
           float: "right",
         }}
       >
-        <Space direction={"horizontal"} size={"small"}>
+        <Space
+          direction={"horizontal"}
+          size={"small"}
+          wrap
+          style={{ display: "flex", justifyContent: "center" }}
+        >
           {!isOnlinePlayersLoading && (
             <Tooltip
               title={`Amount of online Steam players in game Company of Heroes 2 as of  ${new Date(
@@ -113,6 +119,7 @@ export const MainHeader: React.FC = () => {
           </div>
         </Link>
         <Menu
+          overflowedIndicator={<div style={{ fontSize: "x-large" }}>☰</div>}
           theme="dark"
           mode="horizontal"
           selectedKeys={[currentPath]}

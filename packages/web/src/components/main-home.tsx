@@ -37,7 +37,11 @@ const MainHome: React.FC = () => {
         </Link>
       </Space>
       <Title level={4}>So far analyzed {analyzedMatches} matches.</Title>
-      <Space size={"large"} style={{ marginBottom: 10 }} wrap>
+      <Space
+        size={"large"}
+        style={{ marginBottom: 10, display: "flex", justifyContent: "center" }}
+        wrap
+      >
         <Link to={routes.commanderBase()}>
           <Card
             hoverable
