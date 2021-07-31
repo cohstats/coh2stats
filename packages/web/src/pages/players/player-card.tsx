@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Col, Row, Tooltip, Typography, Avatar, Tabs } from "antd";
 import { LaddersDataObject } from "../../coh/types";
 import firebaseAnalytics from "../../analytics";
-import { capitalize, timeAgo } from "../../helpers";
+import { capitalize, timeAgo } from "../../utils/helpers";
 import { firebase } from "../../firebase";
 
 import { CountryFlag } from "../../components/country-flag";

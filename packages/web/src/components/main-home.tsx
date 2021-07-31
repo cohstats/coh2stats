@@ -1,7 +1,6 @@
 import React from "react";
 import { Card, Space, Typography } from "antd";
 import { useData, useLoading } from "../firebase";
-import { Loading } from "./loading";
 import Meta from "antd/es/card/Meta";
 import { Link } from "react-router-dom";
 import routes from "../routes";
@@ -12,11 +11,7 @@ const MainHome: React.FC = () => {
   const isLoading = useLoading("globalStats");
   const data: Record<string, any> = useData("globalStats");
 
-  let analyzedMatches = <Loading />;
-
-  if (!isLoading) {
-    analyzedMatches = data["analyzedMatches"].toLocaleString();
-  }
+  const analyzedMatches = isLoading ? ". . ." : data["analyzedMatches"].toLocaleString();
 
   return (
     <div style={{ textAlign: "center" }}>

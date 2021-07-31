@@ -3,7 +3,7 @@ import { ColumnsType } from "antd/lib/table";
 import { LaddersDataArrayObject, PlayerCardDataArrayObject } from "../../coh/types";
 import { CountryFlag } from "../../components/country-flag";
 import { Table, Tooltip, Typography } from "antd";
-import { timeAgo } from "../../helpers";
+import { timeAgo } from "../../utils/helpers";
 import { convertSteamNameToID } from "../../coh/helpers";
 import { Link } from "react-router-dom";
 import routes from "../../routes";

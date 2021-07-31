@@ -14,7 +14,7 @@ import {
   getYesterdayDateTimestamp,
   timeAgo,
   useQuery,
-} from "../../helpers";
+} from "../../utils/helpers";
 import { useFirestoreConnect } from "react-redux-firebase";
 import { useData, useLoading } from "../../firebase";
 

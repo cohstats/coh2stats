@@ -79,28 +79,31 @@ export const MainHeader: React.FC = () => {
           wrap
           style={{ display: "flex", justifyContent: "center" }}
         >
-          {!isOnlinePlayersLoading && (
-            <Tooltip
-              title={`Amount of online Steam players in game Company of Heroes 2 as of  ${new Date(
-                onlinePlayersData["timeStamp"] * 1000,
-              ).toLocaleString()}`}
-            >
-              <span
-                style={{
-                  color: "#f0f2f5",
-                }}
+          {/*Add div because of the layout shift*/}
+          <div style={{ minHeight: 64, minWidth: 120 }}>
+            {!isOnlinePlayersLoading && (
+              <Tooltip
+                title={`Amount of online Steam players in game Company of Heroes 2 as of  ${new Date(
+                  onlinePlayersData["timeStamp"] * 1000,
+                ).toLocaleString()}`}
               >
-                Ingame players
-              </span>
+                <span
+                  style={{
+                    color: "#f0f2f5",
+                  }}
+                >
+                  Ingame players
+                </span>
 
-              <Badge
-                className="site-badge-count-109"
-                count={onlinePlayersData["onlinePlayers"]}
-                style={{ backgroundColor: "#52c41a", boxShadow: "0 0 0 0", marginLeft: 10 }}
-                overflowCount={99999}
-              />
-            </Tooltip>
-          )}
+                <Badge
+                  className="site-badge-count-109"
+                  count={onlinePlayersData["onlinePlayers"]}
+                  style={{ backgroundColor: "#52c41a", boxShadow: "0 0 0 0", marginLeft: 10 }}
+                  overflowCount={99999}
+                />
+              </Tooltip>
+            )}
+          </div>
 
           <PlayerSearchInput />
         </Space>

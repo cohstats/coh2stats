@@ -8,7 +8,7 @@ import { CommandersBarChart } from "../../components/charts/commanders-bar";
 import { BulletinsBarChart } from "../../components/charts/bulletins-bar";
 import { Helper } from "../../components/helper";
 import { statsBase } from "../../titles";
-import { capitalize, formatDate } from "../../helpers";
+import { capitalize, formatDate } from "../../utils/helpers";
 import { useLocation } from "react-router-dom";
 import { FactionVsFactionCard } from "./factions";
 import { isTimeStampInPatches } from "../../coh/patches";

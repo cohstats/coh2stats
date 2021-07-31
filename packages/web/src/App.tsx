@@ -83,9 +83,6 @@ const App: React.FC = () => {
             <Route path={routes.searchBase()}>
               <CustomSearch />
             </Route>
-            <Route path={"/test"}>
-              <LastMatchesTable />
-            </Route>
             <Route path={"/matches/player/:steamid"}>
               <LastMatchesTableRelic />
             </Route>

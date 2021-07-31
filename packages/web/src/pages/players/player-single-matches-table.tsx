@@ -2,7 +2,7 @@ import React from "react";
 import { ColumnsType } from "antd/lib/table";
 import { PlayerCardDataArrayObject } from "../../coh/types";
 import { Table, Tooltip, Typography } from "antd";
-import { timeAgo } from "../../helpers";
+import { timeAgo } from "../../utils/helpers";
 import { getGeneralIconPath } from "../../coh/helpers";
 const { Text } = Typography;
 

@@ -6,7 +6,7 @@ import { RaceName } from "../../coh/types";
 import routes from "../../routes";
 import { ExportDate } from "../../components/export-date";
 import { commanderBase } from "../../titles";
-import { capitalize } from "../../helpers";
+import { capitalize } from "../../utils/helpers";
 import { Link } from "react-router-dom";
 import { Tip } from "../../components/tip";
 

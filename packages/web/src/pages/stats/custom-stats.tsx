@@ -9,7 +9,7 @@ import {
   getPreviousWeekTimeStamp,
   getStartOfTheWeek,
   useQuery,
-} from "../../helpers";
+} from "../../utils/helpers";
 import { validRaceNames, validStatsTypes } from "../../coh/types";
 import enGB from "antd/lib/locale/en_GB";
 

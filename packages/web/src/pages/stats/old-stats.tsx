@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Redirect, Route, Switch, useLocation } from "react-router-dom";
 import { useHistory, useParams } from "react-router";
 import routes from "../../routes";
-import { getPreviousWeekTimeStamp } from "../../helpers";
+import { getPreviousWeekTimeStamp } from "../../utils/helpers";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);

@@ -21,6 +21,7 @@
     "antd": "^4.15.6",
     "connected-react-router": "^6.8.0",
     "date-fns": "^2.19.0",
+    "dayjs": "^1.10.6",
     "firebase": "^8.2.5",
     "history": "^4.10.1",
     "javascript-time-ago": "^2.3.8",
