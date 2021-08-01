@@ -20,7 +20,7 @@ const MainHome: React.FC = () => {
           <Card
             hoverable
             style={{ width: 350 }}
-            cover={<img alt="Game statistics" height={150} src="/resources/chart.png" />}
+            cover={<img alt="Game statistics" width={350} height={150} src="/resources/chart.png" />}
           >
             <Meta
               title="Game Statistics"
@@ -41,7 +41,7 @@ const MainHome: React.FC = () => {
           <Card
             hoverable
             style={{ width: 280 }}
-            cover={<img alt="All commanders" src="/resources/commanders.png" />}
+            cover={<img width={280} height={240} alt="All commanders" src="/resources/commanders.png" />}
           >
             <Meta
               title="Commanders"
@@ -53,7 +53,7 @@ const MainHome: React.FC = () => {
           <Card
             hoverable
             style={{ width: 280 }}
-            cover={<img alt="All bulletins" src="/resources/bulletins.png" />}
+            cover={<img width={280} height={240} alt="All bulletins" src="/resources/bulletins.png" />}
           >
             <Meta
               title="Intel Bulletins"
