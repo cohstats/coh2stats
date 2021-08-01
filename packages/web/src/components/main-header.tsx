@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Header } from "antd/lib/layout/layout";
-import { Badge, Menu, Space, Tooltip } from "antd";
+import {Badge, Menu, Space, Switch, Tooltip} from "antd";
 import routes from "../routes";
 import { useRouteMatch } from "react-router";
 import { PlayerSearchInput } from "./header-search";
@@ -8,7 +8,7 @@ import { aboutBase, bulletinsBase, commanderBase } from "../titles";
 import SubMenu from "antd/es/menu/SubMenu";
 import { firebase, useData, useLoading } from "../firebase";
 import { Link } from "react-router-dom";
-import { UnorderedListOutlined } from "@ant-design/icons";
+import {useThemeSwitcher} from "react-css-theme-switcher";
 
 const pageTitleSwitch = (path: string) => {
   switch (path) {
@@ -30,6 +30,14 @@ const pageTitleSwitch = (path: string) => {
 export const MainHeader: React.FC = () => {
   const isOnlinePlayersLoading = useLoading("onlinePlayers");
   const onlinePlayersData: Record<string, any> = useData("onlinePlayers");
+  const [isDarkMode, setIsDarkMode] = React.useState(false);
+
+  const { switcher, currentTheme, status, themes } = useThemeSwitcher();
+
+  const toggleTheme = (isChecked: boolean) => {
+    setIsDarkMode(isChecked);
+    switcher({ theme: isChecked ? themes.dark : themes.light });
+  };
 
   useEffect(() => {
     (async () => {
@@ -106,6 +114,8 @@ export const MainHeader: React.FC = () => {
           </div>
 
           <PlayerSearchInput />
+          <Switch  checkedChildren={"dark"}  unCheckedChildren="light" checked={isDarkMode} onChange={toggleTheme} />
+
         </Space>
       </div>
       <Space direction={"horizontal"} size={"large"}>
