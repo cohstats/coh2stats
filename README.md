@@ -93,6 +93,11 @@ To run beautifier and linting:
 5. Observe the changes
 6. Update the `packages/web/src/config.tsx` with the right date / patch name
 
+### AndD update
+- We have manually copied antd css files in /public/css/* in case of atnd update,
+you have to manually copy the files there.
+
+
 ### Crawler process
 
 Diagram:
