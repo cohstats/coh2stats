@@ -4,7 +4,7 @@ import { getSteamNumberOfOnlinePlayers } from "./libs/steam-api";
 import { getOnlinePlayersDocRef } from "./fb-paths";
 
 const runtimeOpts: Record<string, "128MB" | any> = {
-  timeoutSeconds: 540,
+  timeoutSeconds: 30,
   memory: "128MB",
   maxInstances: 1,
 };
@@ -12,9 +12,11 @@ const runtimeOpts: Record<string, "128MB" | any> = {
 const triggerNumberOfOnlinePlayers = functions
   .region(DEFAULT_FUNCTIONS_LOCATION)
   .runWith(runtimeOpts)
-  .https.onCall(async () => {
-    let amountOfPlayersOnline = await getSteamNumberOfOnlinePlayers();
-    let onlinePlayersRef = getOnlinePlayersDocRef();
+  .pubsub.schedule("every 10 mins")
+  .timeZone("Etc/UTC")
+  .onRun(async () => {
+    const amountOfPlayersOnline = await getSteamNumberOfOnlinePlayers();
+    const onlinePlayersRef = getOnlinePlayersDocRef();
 
     if (amountOfPlayersOnline != null && amountOfPlayersOnline > 0) {
       await onlinePlayersRef.set({
@@ -22,21 +24,6 @@ const triggerNumberOfOnlinePlayers = functions
         timeStamp: Math.floor(Date.now() / 1000),
       });
     }
-
-    // 5 minutes wait
-    await new Promise((resolve) => setTimeout(resolve, 300000));
-
-    amountOfPlayersOnline = await getSteamNumberOfOnlinePlayers();
-    onlinePlayersRef = getOnlinePlayersDocRef();
-
-    if (amountOfPlayersOnline != null && amountOfPlayersOnline > 0) {
-      await onlinePlayersRef.set({
-        onlinePlayers: amountOfPlayersOnline,
-        timeStamp: Math.floor(Date.now() / 1000),
-      });
-    }
-
-    return {};
   });
 
 export { triggerNumberOfOnlinePlayers };

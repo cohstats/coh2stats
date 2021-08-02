@@ -210,6 +210,8 @@ const About: React.FC = () => {
         <br />
         <b>Past donations:</b>
         <br />
+        KoRneY
+        <br />
         ayy_howzit_braddah
         <br />
         gunther09
