@@ -5,14 +5,16 @@
 const patches = [
   {
     name: "Commander Update 2021",
-    link: "https://community.companyofheroes.com/discussion/comment/288981#Comment_288981",
+    link: "https://www.coh2.org/topic/4307/company-of-heroes-2-changelog/post/872416",
+    linkRelic: "https://community.companyofheroes.com/discussion/comment/288981#Comment_288981",
     humanReadableDate: "16th June 2021",
     startDateUnixTimeStamp: 1623801600, // 16th June
     endDateUnixTimeStamp: Infinity, // Infinity
   },
   {
     name: "Winter Balance Patch 2021",
-    link: "https://community.companyofheroes.com/discussion/comment/288640#Comment_288640",
+    link: "https://www.coh2.org/topic/4307/company-of-heroes-2-changelog/post/852771",
+    linkRelic: "https://community.companyofheroes.com/discussion/comment/288640#Comment_288640",
     humanReadableDate: "26th Feb 2021",
     startDateUnixTimeStamp: 1614297600, // 26th Feb
     endDateUnixTimeStamp: 1623801600, // 16th June

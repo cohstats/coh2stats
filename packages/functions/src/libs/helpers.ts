@@ -55,11 +55,16 @@ const printUTCTime = (timestampOrDate: number | Date): string => {
 
 /**
  * Extracts just the string ID from the steam name used in the results of API.
+ * Some could be https://coh2-api.reliclink.com/community/leaderboard/GetPersonalStat?title=coh2&search=rak
+ * Some could be "/feral/97200"
+ *
  * @param name In format "/steam/76561198131099369"
  */
 const convertSteamNameToID = (name: string): string => {
   const res = name.match(/\/steam\/(\d+)/);
   if (res) return res[1];
+  const feral = name.match(/\/feral\/(\d+)/);
+  if (feral) return feral[1];
   return "";
 };
 
