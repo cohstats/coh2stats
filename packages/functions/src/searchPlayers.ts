@@ -15,7 +15,7 @@ const playerSearchOnRelic = async (name: string): Promise<Array<Record<string, a
   // return only single players group
   if (response.data["statGroups"] != undefined) {
     return response.data["statGroups"].filter((statGroup: Record<string, any>) => {
-      return statGroup.type == 1;
+      return statGroup.type == 1 && statGroup.members[0]?.name?.startsWith("/steam/");
     });
   } else {
     return [];
