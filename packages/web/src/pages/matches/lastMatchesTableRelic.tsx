@@ -30,7 +30,6 @@ const LastMatchesTableRelic: React.FC<IProps> = ({ data, profileID }) => {
     .filter(
       (match) =>
         match.description != "SESSION_MATCH_KEY" &&
-        match.matchtype_id != 7 &&
         match.matchhistoryreportresults.length != 0,
     )
     .sort((a: any, b: any) => b.completiontime - a.completiontime);
@@ -344,7 +343,7 @@ const LastMatchesTableRelic: React.FC<IProps> = ({ data, profileID }) => {
         style={{ paddingTop: 5, overflow: "auto" }}
         pagination={{
           defaultPageSize: 60,
-          pageSizeOptions: ["10", "20", "40", "60", "100", "200"],
+          pageSizeOptions: ["20", "40", "60", "100", "200"],
         }}
         columns={columns}
         dataSource={matchRecords}
