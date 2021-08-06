@@ -50,7 +50,7 @@ const PlayerSingleMatchesTable: React.FC<IProps> = ({ title, data }) => {
           <Helper
             text={
               "Level 1 - 15 shows that you are better than bottom x% of players in the given leaderboard. Hover over the level to see the number." +
-              " Level 16 - 20 is top 200 players."
+              " Level 16 - 20 are top 200 players."
             }
           />
         </>
