@@ -3,7 +3,8 @@ import { ColumnsType } from "antd/lib/table";
 import { PlayerCardDataArrayObject } from "../../coh/types";
 import { Table, Tooltip, Typography } from "antd";
 import { timeAgo } from "../../utils/helpers";
-import { getGeneralIconPath } from "../../coh/helpers";
+import { getGeneralIconPath, levelToText } from "../../coh/helpers";
+import { Helper } from "../../components/helper";
 const { Text } = Typography;
 
 interface IProps {
@@ -43,7 +44,17 @@ const PlayerSingleMatchesTable: React.FC<IProps> = ({ title, data }) => {
       },
     },
     {
-      title: "Level",
+      title: (
+        <>
+          Level{" "}
+          <Helper
+            text={
+              "Level 1 - 15 shows that you are better than bottom x% of players in the given leaderboard. Hover over the level to see the number." +
+              " Level 16 - 20 is top 200 players."
+            }
+          />
+        </>
+      ),
       dataIndex: "ranklevel",
       key: "ranklevel",
       align: "center" as "center",
@@ -52,7 +63,7 @@ const PlayerSingleMatchesTable: React.FC<IProps> = ({ title, data }) => {
         if (data <= 0) {
           return "-";
         } else {
-          return data;
+          return <Tooltip title={levelToText(data)}>{data}</Tooltip>;
         }
       },
     },

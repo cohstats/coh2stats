@@ -23,7 +23,11 @@ import LastMatchesTableRelic from "../matches/lastMatchesTableRelic";
 const { Text } = Typography;
 const { TabPane } = Tabs;
 
-type playerCardAPIObject = Record<"relicPersonalStats" | "steamProfile", Record<string, any>>;
+type playerCardAPIObject = {
+  relicPersonalStats: Record<string, any>;
+  steamProfile: Record<string, any>;
+  playerMatches: Array<Record<string, any>>;
+};
 
 type statGroupsType = Array<Record<string, any>>;
 
@@ -53,7 +57,9 @@ const PlayerCard = () => {
 
     (async () => {
       const payLoad = { steamID: steamid };
-      const getPlayerPersonalStats = firebase.functions().httpsCallable("getPlayerPersonalStats");
+      const getPlayerPersonalStats = firebase
+        .functions()
+        .httpsCallable("getPlayerCardEverything");
       try {
         const { data } = await getPlayerPersonalStats(payLoad);
         setData(data);
@@ -192,7 +198,10 @@ const PlayerCard = () => {
               {teamTables}
             </TabPane>
             <TabPane tab="Recent matches" key="matchHistory">
-              <LastMatchesTableRelic />
+              <LastMatchesTableRelic
+                data={data["playerMatches"]}
+                profileID={`/steam/${steamid}`}
+              />
             </TabPane>
           </Tabs>
         </Col>

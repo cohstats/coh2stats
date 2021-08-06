@@ -1,4 +1,5 @@
 import { LaddersDataArrayObject, LaddersDataObject } from "./types";
+import { levels } from "./coh2-api";
 
 const sortArrayOfObjectsByTheirPropertyValue = (
   mapsData: Array<Record<string, string>>,
@@ -92,6 +93,12 @@ const findAndMergeStatGroups = (
   return statGroupsArray;
 };
 
+const levelToText = (level: string | number): string => {
+  level = `${level}`;
+
+  return levels[level] || "unknown level";
+};
+
 export {
   sortArrayOfObjectsByTheirPropertyValue,
   getExportedIconPath,
@@ -99,4 +106,5 @@ export {
   convertSteamNameToID,
   isTeamGame,
   findAndMergeStatGroups,
+  levelToText,
 };

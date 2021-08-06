@@ -13,7 +13,6 @@ import OldStats from "./pages/stats/old-stats";
 import { MainFooter } from "./components/main-footer";
 import { MainHeader } from "./components/main-header";
 import About from "./pages/about";
-import LastMatchesTableRelic from "./pages/matches/lastMatchesTableRelic";
 import CustomSearch from "./pages/search";
 import { BetaVersion } from "./components/beta-version";
 import MainHome from "./components/main-home";
@@ -81,9 +80,6 @@ const App: React.FC = () => {
             </Route>
             <Route path={routes.searchBase()}>
               <CustomSearch />
-            </Route>
-            <Route path={"/matches/player/:steamid"}>
-              <LastMatchesTableRelic />
             </Route>
           </Switch>
         </Content>

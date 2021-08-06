@@ -137,6 +137,48 @@ export const formatMatchtypeID = (matchType: number): string => {
     case 4:
       formattedMatchType = "4 vs 4 ";
       break;
+    case 5:
+      formattedMatchType = "2v2 AI Easy";
+      break;
+    case 6:
+      formattedMatchType = "2v2 AI Medium";
+      break;
+    case 7:
+      formattedMatchType = "2v2 AI Hard";
+      break;
+    case 8:
+      formattedMatchType = "2v2 AI Expert";
+      break;
+    case 9:
+      formattedMatchType = "3v3 AI Easy";
+      break;
+    case 10:
+      formattedMatchType = "3v3 AI Medium";
+      break;
+    case 11:
+      formattedMatchType = "3v3 AI Hard";
+      break;
+    case 12:
+      formattedMatchType = "3v3 AI Expert";
+      break;
+    case 13:
+      formattedMatchType = "4v4 AI Easy";
+      break;
+    case 14:
+      formattedMatchType = "4v4 AI Medium";
+      break;
+    case 15:
+      formattedMatchType = "4v4 AI Hard";
+      break;
+    case 16:
+      formattedMatchType = "4v4 AI Expert";
+      break;
+    case 17:
+      formattedMatchType = "4v4 AI Easy";
+      break;
+    case 22:
+      formattedMatchType = "Custom Game";
+      break;
     default:
       formattedMatchType = "unknown";
       break;
@@ -158,12 +200,12 @@ export const raceIds: Record<number, RaceName> = {
 /**
  * Returns string in format playerAllias, COUNTRY
  * @param matchRecord is a single record from array returned by relic api
- * @param steamId is steamID in relic api call format, example "/steam/76561198034318060"
+ * @param name is steamID in relic api call format, example "/steam/76561198034318060"
  */
-export function getAliasFromSteamID(matchRecord: any, steamId: string) {
+export function getAliasFromName(matchRecord: any, name: string) {
   if (!matchRecord) return "unknown";
   let resultItem = matchRecord.matchhistoryreportresults.filter(
-    (result: any) => result.profile.name === "/steam/" + steamId,
+    (result: any) => result.profile.name === name,
   );
   return resultItem[0].profile.alias;
 }

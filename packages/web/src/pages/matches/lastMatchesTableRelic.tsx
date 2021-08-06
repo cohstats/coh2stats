@@ -1,3 +1,4 @@
+import React from "react";
 import { Col, Row, Space, Table, Tag, Tooltip, Typography } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import {
@@ -6,41 +7,41 @@ import {
   formatMatchtypeID,
   getMatchDuration,
   getMatchPlayersByFaction,
-  getMatchResult,
   getRaceImage,
   raceIds,
-  getAliasFromSteamID,
+  getAliasFromName,
 } from "./tableFunctions";
 import "./tableStyle.css";
-import React, { useEffect, useState } from "react";
-import { firebase } from "../../firebase";
-import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import routes from "../../routes";
 import { convertSteamNameToID, getGeneralIconPath } from "../../coh/helpers";
 import { BulbOutlined, DatabaseOutlined } from "@ant-design/icons";
 import { RelicIcon } from "../../components/relic-icon";
-import firebaseAnalytics from "../../analytics";
 
 const { Text } = Typography;
 
-const LastMatchesTableRelic: React.FC = () => {
-  const { steamid } = useParams<{
-    steamid: string;
-  }>();
+interface IProps {
+  data: Array<Record<string, any>>;
+  profileID: string; // has to be in format "/steam/{steamID}"
+}
 
-  const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [loadedMatches, setLoadedMatches] = useState([]);
-  const [profileID, setProfileID] = useState("/steam/" + steamid);
-  const [playerAlias, setPlayerAlias] = useState("unknown player alias");
+const LastMatchesTableRelic: React.FC<IProps> = ({ data, profileID }) => {
+  let localLoadedMatches = data
+    .filter(
+      (match) =>
+        match.description != "SESSION_MATCH_KEY" &&
+        match.matchtype_id != 7 &&
+        match.matchhistoryreportresults.length != 0,
+    )
+    .sort((a: any, b: any) => b.completiontime - a.completiontime);
 
-  const [playerMaps, setPlayerMaps] = useState([
-    {
-      text: "8p_redball_express",
-      value: "8p_redball_express",
-    },
-  ]);
+  // set state variable for map filter options
+  const playerMaps = getPlayerMapListFilter(localLoadedMatches) || {
+    text: "8p_redball_express",
+    value: "8p_redball_express",
+  };
+  // set play alias
+  let playerAlias = getAliasFromName(localLoadedMatches[0], profileID) || "unknown player alias";
 
   // returns a filter setting for player maps
   function getPlayerMapListFilter(matches: any) {
@@ -65,61 +66,20 @@ const LastMatchesTableRelic: React.FC = () => {
     return filterSettings;
   }
 
-  useEffect(() => {
-    firebaseAnalytics.playerCardDisplayed();
-
-    // FYI this is special trick, anonymous function which is directly called - we need cos of compiler
-    (async () => {
-      // prepare the payload - you can modify the ID but it has to be in this format
-      const payLoad = { profileName: "/steam/" + steamid };
-      setProfileID(payLoad["profileName"]);
-      // prepare the CF
-      const getMatchesFromRelic = firebase.functions().httpsCallable("getPlayerMatchesFromRelic");
-
-      try {
-        // call the CF
-        const matches = await getMatchesFromRelic(payLoad);
-
-        // filter out invalid data provided by relic, and sort it descending with game start
-        let localLoadedMatches = matches.data["playerMatches"]
-          .filter(
-            (match: any) =>
-              match.description != "SESSION_MATCH_KEY" &&
-              match.matchtype_id != 7 &&
-              match.matchhistoryreportresults.length != 0,
-          )
-          .sort((a: any, b: any) => b.completiontime - a.completiontime);
-
-        // set state variable loaded matches
-        setLoadedMatches(localLoadedMatches);
-        // set state variable for map filter options
-        setPlayerMaps(getPlayerMapListFilter(localLoadedMatches));
-        // set play alias
-        let localAlias = getAliasFromSteamID(localLoadedMatches[0], steamid);
-        setPlayerAlias(localAlias);
-
-        setIsLoading(false);
-      } catch (e) {
-        debugger;
-        setError(JSON.stringify(e));
-      }
-    })();
-  }, [steamid]);
-
-  let matchRecords = loadedMatches;
+  let matchRecords = localLoadedMatches;
 
   function isPlayerVictorious(matchRecord: any): boolean {
     if (!matchRecord) return false;
 
     let resultItem = matchRecord.matchhistoryreportresults.filter(
-      (result: any) => result.profile.name == profileID,
+      (result: any) => result.profile.name === profileID,
     );
     return resultItem[0].resulttype == 1;
   }
 
   function getPlayerMatchHistoryResult(matchRecord: any) {
     let player = matchRecord.matchhistoryreportresults.filter(
-      (result: any) => result.profile.name == profileID,
+      (result: any) => result.profile.name === profileID,
     );
     return player[0];
   }
@@ -210,6 +170,7 @@ const LastMatchesTableRelic: React.FC = () => {
                   key={player.profile_id}
                   src={getRaceImage(raceIds[player.race_id])}
                   height="48px"
+                  width="48px"
                   alt={player.race_id}
                 />
               </Tooltip>
@@ -358,54 +319,49 @@ const LastMatchesTableRelic: React.FC = () => {
     },
   ];
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  } else {
-    return (
-      <>
-        <div>
-          <div style={{ float: "left" }}>
-            <Tooltip
-              title={
-                "The results are also time bounded. If the match is too old Relic deletes it even " +
-                "when you have less then 10 matches in that mode."
-              }
-            >
-              <BulbOutlined /> Relic keeps only last 10 matches for each mode.
-            </Tooltip>
-          </div>
-          <div style={{ float: "right" }}>
-            <Tooltip
-              title={"In future we might might allow access to matches stored at coh2stats.com"}
-            >
-              <DatabaseOutlined /> Data source <RelicIcon />
-            </Tooltip>
-          </div>
+  return (
+    <>
+      <div>
+        <div style={{ float: "left" }}>
+          <Tooltip
+            title={
+              "The results are also time bounded. If the match is too old Relic deletes it even " +
+              "when you have less then 10 matches in that mode."
+            }
+          >
+            <BulbOutlined /> Relic keeps only last 10 matches for each mode.
+          </Tooltip>
         </div>
-        <Table
-          style={{ paddingTop: 5, overflow: "auto" }}
-          pagination={{
-            defaultPageSize: 60,
-            pageSizeOptions: ["10", "20", "40", "60", "100", "200"],
-          }}
-          columns={columns}
-          dataSource={matchRecords}
-          rowKey={(record) => record.id}
-          size="middle"
-          rowClassName={(record) => (isPlayerVictorious(record) ? "green" : "red")}
-          expandable={{
-            expandedRowRender: (record) => renderExpandedMatch(record),
-            rowExpandable: (record) => true,
-            expandRowByClick: true,
-            expandIconColumnIndex: -1,
-            expandedRowClassName: (record) =>
-              isPlayerVictorious(record) ? "lightgreen" : "lightred",
-          }}
-          loading={isLoading}
-        />
-      </>
-    );
-  }
+        <div style={{ float: "right" }}>
+          <Tooltip
+            title={"In future we might might allow access to matches stored at coh2stats.com"}
+          >
+            <DatabaseOutlined /> Data source <RelicIcon />
+          </Tooltip>
+        </div>
+      </div>
+      <Table
+        style={{ paddingTop: 5, overflow: "auto" }}
+        pagination={{
+          defaultPageSize: 60,
+          pageSizeOptions: ["10", "20", "40", "60", "100", "200"],
+        }}
+        columns={columns}
+        dataSource={matchRecords}
+        rowKey={(record) => record.id}
+        size="middle"
+        rowClassName={(record) => (isPlayerVictorious(record) ? "green" : "red")}
+        expandable={{
+          expandedRowRender: (record) => renderExpandedMatch(record),
+          rowExpandable: (record) => true,
+          expandRowByClick: true,
+          expandIconColumnIndex: -1,
+          expandedRowClassName: (record) =>
+            isPlayerVictorious(record) ? "lightgreen" : "lightred",
+        }}
+      />
+    </>
+  );
 };
 
 export default LastMatchesTableRelic;

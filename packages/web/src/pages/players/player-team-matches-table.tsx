@@ -4,10 +4,11 @@ import { LaddersDataArrayObject, PlayerCardDataArrayObject } from "../../coh/typ
 import { CountryFlag } from "../../components/country-flag";
 import { Table, Tooltip, Typography } from "antd";
 import { timeAgo } from "../../utils/helpers";
-import { convertSteamNameToID } from "../../coh/helpers";
+import { convertSteamNameToID, levelToText } from "../../coh/helpers";
 import { Link } from "react-router-dom";
 import routes from "../../routes";
 import { convertTeamNames } from "./helpers";
+import { Helper } from "../../components/helper";
 const { Text } = Typography;
 
 interface IProps {
@@ -68,7 +69,17 @@ const PlayerTeamMatchesTable: React.FC<IProps> = ({ title, data }) => {
       },
     },
     {
-      title: "Level",
+      title: (
+        <>
+          Level{" "}
+          <Helper
+            text={
+              "Level 1 - 15 shows that you are better than bottom x% of players in the given leaderboard. Hover over the level to see the number." +
+              " Level 16 - 20 is top 200 players."
+            }
+          />
+        </>
+      ),
       dataIndex: "ranklevel",
       key: "ranklevel",
       align: "center" as "center",
@@ -77,7 +88,7 @@ const PlayerTeamMatchesTable: React.FC<IProps> = ({ title, data }) => {
         if (data <= 0) {
           return "-";
         } else {
-          return data;
+          return <Tooltip title={levelToText(data)}>{data}</Tooltip>;
         }
       },
     },

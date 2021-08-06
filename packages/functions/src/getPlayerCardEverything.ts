@@ -2,6 +2,7 @@ import * as functions from "firebase-functions";
 import { DEFAULT_FUNCTIONS_LOCATION } from "./constants";
 import { getSteamPlayerSummaries } from "./libs/steam-api";
 import { getPlayerStatsFromRelic } from "./libs/players/players";
+import { getAndPrepareMatchesForPlayer } from "./libs/matches/matches";
 
 const runtimeOpts: Record<string, "128MB" | any> = {
   timeoutSeconds: 120,
@@ -12,9 +13,10 @@ const runtimeOpts: Record<string, "128MB" | any> = {
  * Returns{
  *   relicPersonalStats: {},
  *   steamProfile: {}
+ *   playerMatches: {}
  * }
  */
-const getPlayerPersonalStats = functions
+const getPlayerCardEverything = functions
   .region(DEFAULT_FUNCTIONS_LOCATION)
   .runWith(runtimeOpts)
   .https.onCall(async (data, context) => {
@@ -32,14 +34,17 @@ const getPlayerPersonalStats = functions
     try {
       const PromiseRelicData = getPlayerStatsFromRelic(steamID);
       const PromiseSteamProfile = getSteamPlayerSummaries([steamID]);
-      const [relicData, steamProfile] = await Promise.all([
+      const PromisePlayerMatches = getAndPrepareMatchesForPlayer(`/steam/${steamID}`, false);
+      const [relicData, steamProfile, playerMatches] = await Promise.all([
         PromiseRelicData,
         PromiseSteamProfile,
+        PromisePlayerMatches,
       ]);
 
       return {
         relicPersonalStats: relicData,
         steamProfile: steamProfile,
+        playerMatches: playerMatches,
       };
     } catch (e) {
       functions.logger.error(e);
@@ -47,4 +52,4 @@ const getPlayerPersonalStats = functions
     }
   });
 
-export { getPlayerPersonalStats };
+export { getPlayerCardEverything };
