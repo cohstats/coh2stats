@@ -102,7 +102,7 @@ const BulletinList = () => {
       responsive: ["md"],
     },
     {
-      title: "Races",
+      title: "Factions",
       key: "races",
       dataIndex: "races",
       filters: [
