@@ -10,7 +10,7 @@ import {
   getRaceImage,
   raceIds,
   getAliasFromName,
-} from "./tableFunctions";
+} from "./table-functions";
 import "./tableStyle.css";
 import { Link } from "react-router-dom";
 import routes from "../../routes";
