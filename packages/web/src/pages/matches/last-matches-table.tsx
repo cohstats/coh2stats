@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Button, Card, Col, Modal, Row, Space, Table, Tag, Tooltip } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import {
@@ -21,9 +21,14 @@ import MatchDetails from "./match-details";
 import { MatchPlayerDetailsTable } from "./match-details-table";
 import { useMediaQuery } from "react-responsive";
 import { SimplePieChart } from "../../components/charts-match/simple-pie";
+import firebaseAnalytics from "../../analytics";
 
 const ExpandedMatch: React.FC<{ record: any }> = ({ record }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+  useEffect(() => {
+    firebaseAnalytics.playerCardMatchDetailsDisplayed();
+  }, []);
 
   if (!record) {
     return <></>;
@@ -163,10 +168,14 @@ interface IProps {
 const LastMatchesTable: React.FC<IProps> = ({ data, profileID }) => {
   const isMobile = useMediaQuery({ query: "(max-width: 1023px)" });
 
+  useEffect(() => {
+    firebaseAnalytics.playerCardMatchesDisplayed();
+  }, []);
+
   let localLoadedMatches = data
     .filter(
       (match) =>
-        match.description != "SESSION_MATCH_KEY" && match.matchhistoryreportresults.length != 0,
+        match.description !== "SESSION_MATCH_KEY" && match.matchhistoryreportresults.length != 0,
     )
     .sort((a: any, b: any) => b.completiontime - a.completiontime);
 

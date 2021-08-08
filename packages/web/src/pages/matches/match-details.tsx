@@ -1,9 +1,10 @@
-import React, { ReactFragment } from "react";
+import React, { ReactFragment, useEffect } from "react";
 import { getMatchPlayersByFaction } from "./table-functions";
 import { Card, Space } from "antd";
 import { getGeneralIconPath } from "../../coh/helpers";
 import { SimplePieChart } from "../../components/charts-match/simple-pie";
 import { MatchPlayerDetailsTable } from "./match-details-table";
+import firebaseAnalytics from "../../analytics";
 
 const generateSummaryChartData = (
   axisPlayers: Array<Record<string, any>>,
@@ -61,6 +62,10 @@ interface MatchDetailsProps {
 const MatchDetails: React.FC<MatchDetailsProps> = ({ data }) => {
   const axisPlayers = getMatchPlayersByFaction(data.matchhistoryreportresults, "axis");
   const alliesPlayers = getMatchPlayersByFaction(data.matchhistoryreportresults, "allies");
+
+  useEffect(() => {
+    firebaseAnalytics.playerCardFullMatchDetailsDisplayed();
+  }, []);
 
   return (
     <>
