@@ -1,14 +1,5 @@
 import { ResponsivePie } from "@nivo/pie";
 import React from "react";
-import { sortArrayOfObjectsByTheirPropertyValue } from "../../coh/helpers";
-import {
-  convertCommanderIDToName,
-  getCommanderData,
-  getCommanderIconPath,
-} from "../../coh/commanders";
-import { Avatar } from "antd";
-import routes from "../../routes";
-import type { History } from "history";
 
 interface DamageDonePieChartProps {
   data: Array<{

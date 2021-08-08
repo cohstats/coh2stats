@@ -1,17 +1,7 @@
 import React, { ReactFragment } from "react";
-import {
-  formatMatchTime,
-  formatMatchtypeID,
-  getMatchDuration,
-  getMatchPlayersByFaction,
-  getRaceImage,
-  raceIds,
-} from "./table-functions";
-import { Card, Space, Table, Tag, Tooltip } from "antd";
-import { ColumnsType } from "antd/lib/table";
-import { convertSteamNameToID, getGeneralIconPath } from "../../coh/helpers";
-import { Link } from "react-router-dom";
-import routes from "../../routes";
+import { getMatchPlayersByFaction } from "./table-functions";
+import { Card, Space } from "antd";
+import { getGeneralIconPath } from "../../coh/helpers";
 import { SimplePieChart } from "../../components/charts-match/simple-pie";
 import { MatchPlayerDetailsTable } from "./match-details-table";
 

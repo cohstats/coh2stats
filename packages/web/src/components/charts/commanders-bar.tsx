@@ -1,5 +1,5 @@
 import { ResponsiveBar } from "@nivo/bar";
-import React, { memo } from "react";
+import React from "react";
 import { sortArrayOfObjectsByTheirPropertyValue } from "../../coh/helpers";
 import {
   convertCommanderIDToName,
