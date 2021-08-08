@@ -12,11 +12,11 @@ const generateSummaryChartData = (
   value: string,
 ) => {
   const summaryAxis = axisPlayers.reduce((accumulator, currentValue) => {
-    return JSON.parse(currentValue.counters)[value];
+    return accumulator + JSON.parse(currentValue.counters)[value];
   }, 0);
 
   const summaryAllies = alliesPlayers.reduce((accumulator, currentValue) => {
-    return JSON.parse(currentValue.counters)[value];
+    return accumulator + JSON.parse(currentValue.counters)[value];
   }, 0);
 
   return [
