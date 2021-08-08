@@ -1,12 +1,12 @@
 import { ResponsiveBar } from "@nivo/bar";
-import React from "react";
+import React, { memo } from "react";
 import { sortArrayOfObjectsByTheirPropertyValue } from "../../coh/helpers";
 import {
   convertCommanderIDToName,
   getCommanderData,
   getCommanderIconPath,
 } from "../../coh/commanders";
-import { Avatar } from "antd";
+import { Avatar, Card } from "antd";
 import routes from "../../routes";
 import type { History } from "history";
 
@@ -40,7 +40,7 @@ export const CommandersBarChart: React.FC<CommandersBarChartProps> = ({ commande
     const iconPath = getCommanderIconPath(commanderData?.iconSmall);
 
     return (
-      <div>
+      <Card bodyStyle={{ padding: 5 }}>
         <Avatar
           size={54}
           shape="square"
@@ -54,7 +54,7 @@ export const CommandersBarChart: React.FC<CommandersBarChartProps> = ({ commande
           <br />
           <i>Click for more info ...</i>
         </div>
-      </div>
+      </Card>
     );
   };
 
@@ -67,7 +67,7 @@ export const CommandersBarChart: React.FC<CommandersBarChartProps> = ({ commande
       keys={["value"]}
       indexBy="commanderName"
       colors={{ scheme: "nivo" }}
-      colorBy={"index"}
+      colorBy={"indexValue"}
       animate={false}
       tooltip={toolTipFunction}
       axisBottom={{

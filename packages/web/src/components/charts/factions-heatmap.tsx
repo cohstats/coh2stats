@@ -1,5 +1,5 @@
 import { HeatMap } from "@nivo/heatmap";
-import React from "react";
+import React, { memo } from "react";
 
 interface IProps {
   data: Array<Record<string, any>>;
@@ -8,7 +8,7 @@ interface IProps {
   height: number;
 }
 
-export const HeatMapChart: React.FC<IProps> = ({ data, keys, width, height }) => {
+export const _HeatMapChart: React.FC<IProps> = ({ data, keys, width, height }) => {
   return (
     // probably Nivo bug
     // @ts-ignore
@@ -65,3 +65,5 @@ export const HeatMapChart: React.FC<IProps> = ({ data, keys, width, height }) =>
     />
   );
 };
+
+export const HeatMapChart = memo(_HeatMapChart);

@@ -1,12 +1,12 @@
 import { ResponsiveBar } from "@nivo/bar";
-import React, { useMemo } from "react";
+import React, { memo, useMemo } from "react";
 import { sortArrayOfObjectsByTheirPropertyValue } from "../../coh/helpers";
 
 interface IProps {
   maps: Record<string, number>;
 }
 
-export const MapBarChart: React.FC<IProps> = ({ maps }) => {
+export const _MapBarChart: React.FC<IProps> = ({ maps }) => {
   const mapsData = useMemo(() => {
     const mapsDataUnsorted: { mapName: string; value: number }[] = Object.keys(maps).map(
       (mapName) => {
@@ -30,7 +30,7 @@ export const MapBarChart: React.FC<IProps> = ({ maps }) => {
       keys={["value"]}
       indexBy="mapName"
       colors={{ scheme: "nivo" }}
-      colorBy={"index"}
+      colorBy={"indexValue"}
       axisBottom={{
         tickSize: 5,
         tickPadding: 5,
@@ -49,3 +49,5 @@ export const MapBarChart: React.FC<IProps> = ({ maps }) => {
     />
   );
 };
+
+export const MapBarChart = memo(_MapBarChart);

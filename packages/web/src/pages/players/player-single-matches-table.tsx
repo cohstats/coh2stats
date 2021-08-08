@@ -146,20 +146,21 @@ const PlayerSingleMatchesTable: React.FC<IProps> = ({ title, data }) => {
   ];
 
   return (
-    <>
+    <div key={title}>
       <div style={{ fontSize: "large", paddingBottom: 4, paddingLeft: 4 }}>
         <img src={getGeneralIconPath(title)} height="24px" alt={title} />{" "}
         <Text strong>{title.toUpperCase()}</Text>{" "}
       </div>
       <Table
+        key={title}
         style={{ paddingBottom: 20, overflow: "auto" }}
         columns={TableColumns}
-        rowKey={(record) => record?.lastmatchdate}
+        rowKey={(record) => `${record?.leaderboard_id}-${record.statgroup_id}`}
         dataSource={sortedData}
         pagination={false}
         size={"small"}
       />
-    </>
+    </div>
   );
 };
 

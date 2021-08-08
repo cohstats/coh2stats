@@ -19,7 +19,7 @@ import {
 } from "./data-processing";
 import PlayerTeamMatchesTable from "./player-team-matches-table";
 import { convertTeamNames } from "./helpers";
-import LastMatchesTableRelic from "../matches/lastMatchesTableRelic";
+import LastMatchesTable from "../matches/last-matches-table";
 const { Text } = Typography;
 const { TabPane } = Tabs;
 
@@ -198,10 +198,7 @@ const PlayerCard = () => {
               {teamTables}
             </TabPane>
             <TabPane tab="Recent matches" key="matchHistory">
-              <LastMatchesTableRelic
-                data={data["playerMatches"]}
-                profileID={`/steam/${steamid}`}
-              />
+              <LastMatchesTable data={data["playerMatches"]} profileID={`/steam/${steamid}`} />
             </TabPane>
           </Tabs>
         </Col>
