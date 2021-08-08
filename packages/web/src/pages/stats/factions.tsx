@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Card, Empty, Radio, Tooltip } from "antd";
 import { HeatMapChart } from "../../components/charts/factions-heatmap";
 import { Helper } from "../../components/helper";
@@ -72,7 +72,7 @@ const legend = (
   </div>
 );
 
-export const FactionVsFactionCard: React.FC<IProps> = ({ title, data, style }) => {
+const _FactionVsFactionCard: React.FC<IProps> = ({ title, data, style }) => {
   const factionData: Record<string, Record<string, number>> = data["factionMatrix"];
 
   // We should use useMemo for these values, there is lot of iterations which are recalculated "unnecessary"
@@ -244,3 +244,5 @@ export const FactionVsFactionCard: React.FC<IProps> = ({ title, data, style }) =
     </Card>
   );
 };
+
+export const FactionVsFactionCard = memo(_FactionVsFactionCard);

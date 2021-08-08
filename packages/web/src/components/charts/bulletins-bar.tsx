@@ -6,7 +6,7 @@ import {
   getBulletinData,
   getBulletinIconPath,
 } from "../../coh/bulletins";
-import { Avatar } from "antd";
+import { Avatar, Card } from "antd";
 
 interface IProps {
   bulletins: Record<number, number>;
@@ -36,7 +36,7 @@ export const BulletinsBarChart: React.FC<IProps> = ({ bulletins }) => {
     const iconPath = getBulletinIconPath(bulletinData?.icon);
 
     return (
-      <div>
+      <Card bodyStyle={{ padding: 5 }}>
         <Avatar
           size={54}
           shape="square"
@@ -50,7 +50,7 @@ export const BulletinsBarChart: React.FC<IProps> = ({ bulletins }) => {
           <br />
           {bulletinData.descriptionShort}
         </div>
-      </div>
+      </Card>
     );
   };
 
@@ -64,7 +64,7 @@ export const BulletinsBarChart: React.FC<IProps> = ({ bulletins }) => {
       keys={["value"]}
       indexBy="bulletinName"
       colors={{ scheme: "nivo" }}
-      colorBy={"index"}
+      colorBy={"indexValue"}
       animate={false}
       tooltip={toolTipFunction}
       axisBottom={{

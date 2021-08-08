@@ -1,5 +1,5 @@
-import React from "react";
-import { Col, Row, Space, Table, Tag, Tooltip, Typography } from "antd";
+import React, { useCallback, useState } from "react";
+import { Button, Card, Col, Modal, Row, Space, Table, Tag, Tooltip } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import {
   formatMapName,
@@ -10,27 +10,163 @@ import {
   getRaceImage,
   raceIds,
   getAliasFromName,
-} from "./tableFunctions";
+} from "./table-functions";
 import "./tableStyle.css";
 import { Link } from "react-router-dom";
 import routes from "../../routes";
 import { convertSteamNameToID, getGeneralIconPath } from "../../coh/helpers";
 import { BulbOutlined, DatabaseOutlined } from "@ant-design/icons";
 import { RelicIcon } from "../../components/relic-icon";
+import MatchDetails from "./match-details";
+import { MatchPlayerDetailsTable } from "./match-details-table";
+import { useMediaQuery } from "react-responsive";
+import { SimplePieChart } from "../../components/charts-match/simple-pie";
 
-const { Text } = Typography;
+const ExpandedMatch: React.FC<{ record: any }> = ({ record }) => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  if (!record) {
+    return <></>;
+  }
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  let axisPlayers = getMatchPlayersByFaction(record.matchhistoryreportresults, "axis");
+  let alliesPlayers = getMatchPlayersByFaction(record.matchhistoryreportresults, "allies");
+
+  const simplifiedDmgDataChartAxis = axisPlayers.map((stats) => {
+    return {
+      id: stats?.profile?.alias,
+      label: stats?.profile?.alias,
+      value: JSON.parse(stats.counters).dmgdone,
+    };
+  });
+
+  const simplifiedDmgDataChartAllies = alliesPlayers.map((stats) => {
+    return {
+      id: stats?.profile?.alias,
+      label: stats?.profile?.alias,
+      value: JSON.parse(stats.counters).dmgdone,
+    };
+  });
+
+  const simplifiedKillsDataChartAxis = axisPlayers.map((stats) => {
+    return {
+      id: stats?.profile?.alias,
+      label: stats?.profile?.alias,
+      value: JSON.parse(stats.counters).ekills,
+    };
+  });
+
+  const simplifiedKillsDataChartAllies = alliesPlayers.map((stats) => {
+    return {
+      id: stats?.profile?.alias,
+      label: stats?.profile?.alias,
+      value: JSON.parse(stats.counters).ekills,
+    };
+  });
+
+  return (
+    <div>
+      <Row key={"details"} style={{ paddingTop: 5 }}>
+        <Col span={12}>
+          <MatchPlayerDetailsTable data={axisPlayers} smallView={true} />
+        </Col>
+        <Col span={12}>
+          <MatchPlayerDetailsTable data={alliesPlayers} smallView={true} />
+        </Col>
+      </Row>
+      <Row justify={"center"} key={"charts"} style={{ paddingTop: 5, height: 200 }}>
+        <Col span={12} style={{ height: 200 }}>
+          <Space style={{ justifyContent: "center", display: "flex", paddingTop: 15 }}>
+            <Card
+              title={<div style={{ textAlign: "center" }}>Damage dealt</div>}
+              size={"small"}
+              bordered={false}
+              bodyStyle={{ height: 140, width: 140, padding: 0 }}
+            >
+              <SimplePieChart data={simplifiedDmgDataChartAxis} />
+            </Card>
+            <Card
+              title={<div style={{ textAlign: "center" }}>Kills</div>}
+              size={"small"}
+              bordered={false}
+              bodyStyle={{ height: 140, width: 140, padding: 0 }}
+            >
+              <SimplePieChart data={simplifiedKillsDataChartAxis} />
+            </Card>
+          </Space>
+        </Col>
+        <Col span={12}>
+          <Space style={{ justifyContent: "center", display: "flex", paddingTop: 15 }}>
+            <Card
+              title={<div style={{ textAlign: "center" }}>Damage Dealt</div>}
+              size={"small"}
+              bordered={false}
+              bodyStyle={{ height: 140, width: 140, padding: 0 }}
+            >
+              <SimplePieChart data={simplifiedDmgDataChartAllies} />
+            </Card>
+            <Card
+              title={<div style={{ textAlign: "center" }}>Unit Kills</div>}
+              size={"small"}
+              bordered={false}
+              bodyStyle={{ height: 140, width: 140, padding: 0 }}
+            >
+              <SimplePieChart data={simplifiedKillsDataChartAllies} />
+            </Card>
+          </Space>
+        </Col>
+      </Row>
+      <Row key={"expand_button"} justify="center">
+        <Button
+          size={"middle"}
+          type="primary"
+          onClick={showModal}
+          style={{ display: "flex", marginTop: -110 }}
+        >
+          Open Full Details
+        </Button>
+        <Modal
+          style={{ top: 20 }}
+          width={1810}
+          title="Match Details"
+          visible={isModalVisible}
+          onOk={handleOk}
+          onCancel={handleCancel}
+          destroyOnClose={true}
+          cancelButtonProps={{ hidden: true }}
+          okText={"Close"}
+        >
+          <MatchDetails data={record} />
+        </Modal>
+      </Row>
+    </div>
+  );
+};
 
 interface IProps {
   data: Array<Record<string, any>>;
   profileID: string; // has to be in format "/steam/{steamID}"
 }
 
-const LastMatchesTableRelic: React.FC<IProps> = ({ data, profileID }) => {
+const LastMatchesTable: React.FC<IProps> = ({ data, profileID }) => {
+  const isMobile = useMediaQuery({ query: "(max-width: 1023px)" });
+
   let localLoadedMatches = data
     .filter(
       (match) =>
-        match.description != "SESSION_MATCH_KEY" &&
-        match.matchhistoryreportresults.length != 0,
+        match.description != "SESSION_MATCH_KEY" && match.matchhistoryreportresults.length != 0,
     )
     .sort((a: any, b: any) => b.completiontime - a.completiontime);
 
@@ -83,74 +219,9 @@ const LastMatchesTableRelic: React.FC<IProps> = ({ data, profileID }) => {
     return player[0];
   }
 
-  function renderExpandedMatch(record: any) {
-    if (!record) {
-      return <></>;
-    }
-    let axisPlayers = getMatchPlayersByFaction(record.matchhistoryreportresults, "axis");
-    let Axis = axisPlayers.map((player) => {
-      return (
-        <div key={player.profile_id} style={{ fontSize: 16, margin: "5px" }}>
-          <Space>
-            <img
-              key={player.profile_id}
-              src={getRaceImage(raceIds[player.race_id])}
-              height="32px"
-              alt={player.race_id}
-            />
-            <Link
-              key={player.profile_id + "link"}
-              to={routes.playerCardWithId(convertSteamNameToID(player.profile["name"]))}
-            >
-              {player.profile.alias}{" "}
-            </Link>
-          </Space>
-        </div>
-      );
-    });
-
-    let alliesPlayers = getMatchPlayersByFaction(record.matchhistoryreportresults, "allies");
-    let allies = alliesPlayers.map((player) => {
-      return (
-        <div key={player.profile_id} style={{ fontSize: 16, margin: "5px" }}>
-          <Space>
-            <img
-              key={player.profile_id}
-              src={getRaceImage(raceIds[player.race_id])}
-              height="32px"
-              alt={player.race_id}
-            />
-            <Link
-              key={player.profile_id + "link"}
-              to={routes.playerCardWithId(convertSteamNameToID(player.profile["name"]))}
-            >
-              {player.profile.alias}{" "}
-            </Link>
-          </Space>
-        </div>
-      );
-    });
-
-    return (
-      <div>
-        <Row justify="end" key={1}>
-          <Col span={7} />
-          <Col span={4}>{Axis}</Col>
-          <Col span={2} />
-          <Col span={4}>{allies}</Col>
-          <Col span={7} />
-          <Col />
-        </Row>
-        <Row justify="center">
-          <Text disabled>
-            TBD Additional match info
-            <br />
-            <b>View match details</b>
-          </Text>
-        </Row>
-      </div>
-    );
-  }
+  const renderExpandedMatch = useCallback((record: any) => {
+    return <ExpandedMatch record={record} />;
+  }, []);
 
   const columns: ColumnsType<any> = [
     {
@@ -351,16 +422,14 @@ const LastMatchesTableRelic: React.FC<IProps> = ({ data, profileID }) => {
         size="middle"
         rowClassName={(record) => (isPlayerVictorious(record) ? "green" : "red")}
         expandable={{
-          expandedRowRender: (record) => renderExpandedMatch(record),
-          rowExpandable: (record) => true,
+          expandedRowRender: renderExpandedMatch,
+          rowExpandable: (_) => !isMobile,
           expandRowByClick: true,
-          expandIconColumnIndex: -1,
-          expandedRowClassName: (record) =>
-            isPlayerVictorious(record) ? "lightgreen" : "lightred",
+          expandIconColumnIndex: 20,
         }}
       />
     </>
   );
 };
 
-export default LastMatchesTableRelic;
+export default LastMatchesTable;
