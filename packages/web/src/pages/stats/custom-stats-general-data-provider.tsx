@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Typography } from "antd";
 import { useData, useLoading } from "../../firebase";
 import { Loading } from "../../components/loading";
@@ -34,7 +34,9 @@ const CustomStatsGeneralDataProvider: React.FC<IProps> = ({ urlChanger }) => {
     statDocToBeLoaded = "topStats";
   }
 
-  firebaseAnalytics.statsDisplayed(frequency, statsSource || "");
+  useEffect(() => {
+    firebaseAnalytics.statsDisplayed(frequency, statsSource || "");
+  }, [frequency, statsSource, timestamp, type]);
 
   useFirestoreConnect([
     {
