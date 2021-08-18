@@ -1,6 +1,6 @@
 import React from "react";
 import { ColumnsType } from "antd/lib/table";
-import { getGeneralIconPath } from "../../coh/helpers";
+import { convertSteamNameToID, getGeneralIconPath } from "../../coh/helpers";
 import { raceIds } from "./table-functions";
 import { Table, Tooltip } from "antd";
 import { Helper } from "../../components/helper";
@@ -8,6 +8,36 @@ import { Helper } from "../../components/helper";
 interface MatchPlayerDetailsTableProps {
   data: Array<Record<string, any>>;
   smallView?: boolean;
+}
+
+// handle sorting with 2 directions only -> this is default sorting for a table
+const simpleSorting: any = ["up", "down"];
+function SimpleSortNumeric(a: any, b: any, order: any) {
+  switch (order) {
+    case "up":
+      return a - b;
+    case "down":
+      return b - a;
+    default:
+      return 0;
+  }
+}
+
+// handle advanced sorting with lost/produced type of information
+const advancedSorting: any = ["up1", "down1", "up2", "down2"];
+function AdvancedSortNumeric(a1: any, b1: any, a2: any, b2: any, order: any) {
+  switch (order) {
+    case "up1":
+      return a1 - b1;
+    case "down1":
+      return b1 - a1;
+    case "up2":
+      return a2 - b2;
+    case "down2":
+      return b2 - a2;
+    default:
+      return 0;
+  }
 }
 
 export const MatchPlayerDetailsTable: React.FC<MatchPlayerDetailsTableProps> = ({
@@ -56,6 +86,7 @@ export const MatchPlayerDetailsTable: React.FC<MatchPlayerDetailsTableProps> = (
       dataIndex: "dmgdone",
       key: "dmgdone",
       align: "center" as "center",
+      sorter: (a, b, sortOrder) => SimpleSortNumeric(a.dmgdone, b.dmgdone, sortOrder),
       render: (dmgdone: number) => {
         return dmgdone.toLocaleString();
       },
@@ -65,17 +96,21 @@ export const MatchPlayerDetailsTable: React.FC<MatchPlayerDetailsTableProps> = (
       dataIndex: "ekills",
       key: "ekills",
       align: "center" as "center",
+      sorter: (a, b, sortOrder) => SimpleSortNumeric(a.ekills, b.ekills, sortOrder),
     },
     {
       title: "Units Lost",
       dataIndex: "edeaths",
       key: "edeaths",
       align: "center" as "center",
+      sorter: (a, b, sortOrder) => SimpleSortNumeric(a.edeaths, b.edeaths, sortOrder),
     },
     {
       title: "K/D",
       key: "kd",
       align: "center" as "center",
+      sorter: (a, b, sortOrder) =>
+        SimpleSortNumeric(a.ekills / a.edeaths, b.ekills / b.edeaths, sortOrder),
       render: (record) => {
         return (record.ekills / record.edeaths).toFixed(2);
       },
@@ -85,10 +120,14 @@ export const MatchPlayerDetailsTable: React.FC<MatchPlayerDetailsTableProps> = (
       dataIndex: "sqkilled",
       key: "sqkilled",
       align: "center" as "center",
+      sorter: (a, b, sortOrder) => SimpleSortNumeric(a.sqkilled, b.sqkilled, sortOrder),
     },
     {
       title: "Squads Made / Lost",
       dataIndex: "sqprod",
+      sortDirections: advancedSorting,
+      sorter: (a, b, sortOrder) =>
+        AdvancedSortNumeric(a.sqprod, b.sqprod, a.sqlost, b.sqlost, sortOrder),
       key: "sqprod",
       align: "center" as "center",
       render: (sqprod: number, record: Record<string, any>) => {
@@ -104,12 +143,16 @@ export const MatchPlayerDetailsTable: React.FC<MatchPlayerDetailsTableProps> = (
       dataIndex: "vkill",
       key: "vkill",
       align: "center" as "center",
+      sorter: (a, b, sortOrder) => SimpleSortNumeric(a.vkill, b.vkill, sortOrder),
     },
     {
       title: "Vehicles Prod / Lost",
       dataIndex: "vprod",
       key: "vprod",
       align: "center" as "center",
+      sortDirections: advancedSorting,
+      sorter: (a, b, sortOrder) =>
+        AdvancedSortNumeric(a.vprod, b.vprod, a.vlost, b.vlost, sortOrder),
       render: (vprod: number, record: Record<string, any>) => {
         return (
           <>
@@ -130,6 +173,9 @@ export const MatchPlayerDetailsTable: React.FC<MatchPlayerDetailsTableProps> = (
       dataIndex: "vcap",
       key: "vcap",
       align: "center" as "center",
+      sortDirections: advancedSorting,
+      sorter: (a, b, sortOrder) =>
+        AdvancedSortNumeric(a.vcap, b.vcap, a.vabnd, b.vabnd, sortOrder),
       render: (vcap: number, record: Record<string, any>) => {
         return (
           <>
@@ -143,6 +189,9 @@ export const MatchPlayerDetailsTable: React.FC<MatchPlayerDetailsTableProps> = (
       dataIndex: "pcap",
       key: "pcap",
       align: "center" as "center",
+      sortDirections: advancedSorting,
+      sorter: (a, b, sortOrder) =>
+        AdvancedSortNumeric(a.pcap, b.pcap, a.plost, b.plost, sortOrder),
       render: (pcap: number, record: Record<string, any>) => {
         return (
           <>
@@ -161,12 +210,14 @@ export const MatchPlayerDetailsTable: React.FC<MatchPlayerDetailsTableProps> = (
       dataIndex: "precap",
       key: "precap",
       align: "center" as "center",
+      sorter: (a, b, sortOrder) => SimpleSortNumeric(a.precap, b.precap, sortOrder),
     },
     {
       title: "Commander Abilities used",
       dataIndex: "cabil",
       key: "cabil",
       align: "center" as "center",
+      sorter: (a, b, sortOrder) => SimpleSortNumeric(a.cabil, b.cabil, sortOrder),
     },
     // {
     //   title: "Squads Lost",
@@ -192,6 +243,15 @@ export const MatchPlayerDetailsTable: React.FC<MatchPlayerDetailsTableProps> = (
       dataIndex: "manmax",
       key: "manmax",
       align: "center" as "center",
+      sortDirections: advancedSorting,
+      sorter: (a, b, sortOrder) =>
+        AdvancedSortNumeric(
+          Math.round((a.manspnt / (a.manearn + 400)) * 100),
+          Math.round((b.manspnt / (b.manearn + 400)) * 100),
+          a.manmax,
+          b.manmax,
+          sortOrder,
+        ),
       render: (manmax, record: Record<string, any>) => {
         return (
           <>
@@ -209,6 +269,9 @@ export const MatchPlayerDetailsTable: React.FC<MatchPlayerDetailsTableProps> = (
       dataIndex: "fuelmax",
       key: "fuelmax",
       align: "center" as "center",
+      sortDirections: advancedSorting,
+      sorter: (a, b, sortOrder) =>
+        AdvancedSortNumeric(a.fuelspnt, b.fuelspnt, a.fuelmax, b.fuelmax, sortOrder),
       render: (fuelmax, record: Record<string, any>) => {
         return (
           <>
@@ -226,6 +289,9 @@ export const MatchPlayerDetailsTable: React.FC<MatchPlayerDetailsTableProps> = (
       dataIndex: "munmax",
       key: "munmax",
       align: "center" as "center",
+      sortDirections: advancedSorting,
+      sorter: (a, b, sortOrder) =>
+        AdvancedSortNumeric(a.munspnt, b.munspnt, a.munmax, b.munmax, sortOrder),
       render: (munmax, record: Record<string, any>) => {
         return (
           <>
@@ -248,6 +314,7 @@ export const MatchPlayerDetailsTable: React.FC<MatchPlayerDetailsTableProps> = (
       dataIndex: "gt",
       key: "gt",
       align: "center" as "center",
+      sorter: (a, b, sortOrder) => SimpleSortNumeric(a.gt, b.gt, sortOrder),
       render: (gt: number) => {
         return new Date(gt * 1000).toISOString().substr(11, 8);
       },
@@ -261,15 +328,26 @@ export const MatchPlayerDetailsTable: React.FC<MatchPlayerDetailsTableProps> = (
       })
     : columns;
 
+  function showFactionResultColor(matchRecord: any, _smallView: boolean): string {
+    if (!_smallView)
+      if (matchRecord.resulttype === 1) return "green";
+      else if (matchRecord.resulttype === 0) return "red";
+
+    return "";
+  }
+
   return (
     <>
       <Table
         style={{ margin: "0 !important" }}
         bordered={false}
         pagination={false}
+        sortDirections={simpleSorting}
         columns={finalColumns}
         dataSource={convertedData}
+        showSorterTooltip={{ title: "Click to cycle sorting modes" }}
         rowKey={(record) => record.id}
+        rowClassName={(record) => showFactionResultColor(record, smallView)}
         size="small"
       />
     </>
