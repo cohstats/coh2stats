@@ -173,6 +173,7 @@ export const MatchPlayerDetailsTable: React.FC<MatchPlayerDetailsTableProps> = (
       dataIndex: "vcap",
       key: "vcap",
       align: "center" as "center",
+      showSorterTooltip: false,
       sortDirections: advancedSorting,
       sorter: (a, b, sortOrder) =>
         AdvancedSortNumeric(a.vcap, b.vcap, a.vabnd, b.vabnd, sortOrder),
@@ -210,6 +211,7 @@ export const MatchPlayerDetailsTable: React.FC<MatchPlayerDetailsTableProps> = (
       dataIndex: "precap",
       key: "precap",
       align: "center" as "center",
+      showSorterTooltip: false,
       sorter: (a, b, sortOrder) => SimpleSortNumeric(a.precap, b.precap, sortOrder),
     },
     {
@@ -314,6 +316,7 @@ export const MatchPlayerDetailsTable: React.FC<MatchPlayerDetailsTableProps> = (
       dataIndex: "gt",
       key: "gt",
       align: "center" as "center",
+      showSorterTooltip: false,
       sorter: (a, b, sortOrder) => SimpleSortNumeric(a.gt, b.gt, sortOrder),
       render: (gt: number) => {
         return new Date(gt * 1000).toISOString().substr(11, 8);
