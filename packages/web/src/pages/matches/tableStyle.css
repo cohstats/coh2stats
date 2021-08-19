@@ -23,3 +23,7 @@
 td.ant-table-cell.ant-table-column-sort {
   background: rgba(0, 0, 0, 0.13);
 }
+
+div.ant-table-column-sorters {
+  z-index: -1;
+}
