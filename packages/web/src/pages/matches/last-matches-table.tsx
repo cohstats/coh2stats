@@ -175,7 +175,7 @@ const LastMatchesTable: React.FC<IProps> = ({ data, profileID }) => {
   let localLoadedMatches = data
     .filter(
       (match) =>
-        match.description !== "SESSION_MATCH_KEY" && match.matchhistoryreportresults.length != 0,
+        match.description !== "SESSION_MATCH_KEY" && match.matchhistoryreportresults.length !== 0,
     )
     .sort((a: any, b: any) => b.completiontime - a.completiontime);
 
@@ -218,7 +218,7 @@ const LastMatchesTable: React.FC<IProps> = ({ data, profileID }) => {
     let resultItem = matchRecord.matchhistoryreportresults.filter(
       (result: any) => result.profile.name === profileID,
     );
-    return resultItem[0].resulttype == 1;
+    return resultItem[0].resulttype === 1;
   }
 
   function getPlayerMatchHistoryResult(matchRecord: any) {
@@ -345,7 +345,7 @@ const LastMatchesTable: React.FC<IProps> = ({ data, profileID }) => {
       key: "mapname",
       filters: playerMaps,
       align: "left" as "left",
-      onFilter: (value: any, record: any) => record.mapname == value,
+      onFilter: (value: any, record: any) => record.mapname === value,
       responsive: ["lg"],
     },
     {
@@ -372,7 +372,7 @@ const LastMatchesTable: React.FC<IProps> = ({ data, profileID }) => {
           value: "4",
         },
       ],
-      onFilter: (value: any, record: any) => record.matchtype_id == value,
+      onFilter: (value: any, record: any) => record.matchtype_id === value,
       render: (_text: any, record: any) => {
         return (
           <>

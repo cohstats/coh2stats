@@ -30,7 +30,7 @@ const getGeneralIconPath = (name: string, size: "normal" | "small" = "normal"): 
     name = "wermacht";
   }
 
-  if (size == "small") {
+  if (size === "small") {
     return `/resources/generalIcons/${name}_small.png`;
   } else {
     return `/resources/generalIcons/${name}.png`;

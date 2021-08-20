@@ -1,6 +1,6 @@
 import React from "react";
 import { ColumnsType } from "antd/lib/table";
-import { convertSteamNameToID, getGeneralIconPath } from "../../coh/helpers";
+import { getGeneralIconPath } from "../../coh/helpers";
 import { raceIds } from "./table-functions";
 import { Table, Tooltip } from "antd";
 import { Helper } from "../../components/helper";
@@ -10,9 +10,9 @@ interface MatchPlayerDetailsTableProps {
   smallView?: boolean;
 }
 
-// handle sorting with 2 directions only -> this is default sorting for a table
+// Handle sorting with 2 directions only -> this is default sorting for a table
 const simpleSorting: any = ["up", "down"];
-function SimpleSortNumeric(a: any, b: any, order: any) {
+const SimpleSortNumeric = (a: any, b: any, order?: string | null) => {
   switch (order) {
     case "up":
       return a - b;
@@ -21,11 +21,11 @@ function SimpleSortNumeric(a: any, b: any, order: any) {
     default:
       return 0;
   }
-}
+};
 
 // handle advanced sorting with lost/produced type of information
 const advancedSorting: any = ["up1", "down1", "up2", "down2"];
-function AdvancedSortNumeric(a1: any, b1: any, a2: any, b2: any, order: any) {
+const AdvancedSortNumeric = (a1: any, b1: any, a2: any, b2: any, order?: string | null) => {
   switch (order) {
     case "up1":
       return a1 - b1;
@@ -38,7 +38,7 @@ function AdvancedSortNumeric(a1: any, b1: any, a2: any, b2: any, order: any) {
     default:
       return 0;
   }
-}
+};
 
 export const MatchPlayerDetailsTable: React.FC<MatchPlayerDetailsTableProps> = ({
   data,

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Table, Tag, Space, Col, Row, Input, Button } from "antd";
 
 import { IntelBulletinData } from "../../coh/types";
@@ -15,7 +15,9 @@ const BulletinList = () => {
   // Prepare bulletin data
   const bulletinData = getAllBulletins();
 
-  firebaseAnalytics.bulletinsDisplayed();
+  useEffect(() => {
+    firebaseAnalytics.bulletinsDisplayed();
+  }, []);
 
   // search through provided bulletin data
   bulletinData.map((sortedBulletinItem) => {
