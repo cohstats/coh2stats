@@ -74,7 +74,16 @@ const searchPlayers = functions
       }
 
       for (const playerGroup of playerGroups) {
-        foundProfiles[extractSteamId(playerGroup)]["relicProfile"] = playerGroup;
+        const steamId = extractSteamId(playerGroup);
+
+        if (Object.prototype.hasOwnProperty.call(foundProfiles, steamId)) {
+          foundProfiles[steamId]["relicProfile"] = playerGroup;
+        } else {
+          functions.logger.warn(
+            `Did not found steam profile. SteamID: ${steamId}, playerGroup: ${playerGroup}`,
+          );
+          foundProfiles["unknown"] = { relicProfile: playerGroup, steamProfile: "unknown" };
+        }
       }
 
       return { foundProfiles };
