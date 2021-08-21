@@ -1,7 +1,9 @@
 import { leaderboardsID } from "../../coh/coh2-api";
 import { LeaderBoardStats, validStatsTypes } from "../../coh/types";
 
-const findByLeaderBoardID = (id: number) => {
+const findByLeaderBoardID = (
+  id: number,
+): { mode: undefined | string; race: undefined | string } => {
   for (const type in leaderboardsID) {
     for (const race in leaderboardsID[type]) {
       if (id === leaderboardsID[type][race]) {

@@ -3408,7 +3408,7 @@
     eslint-scope "^5.0.0"
     eslint-utils "^2.0.0"
 
-"@typescript-eslint/experimental-utils@4.29.2", "@typescript-eslint/experimental-utils@^4.24.0":
+"@typescript-eslint/experimental-utils@4.29.2":
   version "4.29.2"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/experimental-utils/-/experimental-utils-4.29.2.tgz#5f67fb5c5757ef2cb3be64817468ba35c9d4e3b7"
   integrity sha512-P6mn4pqObhftBBPAv4GQtEK7Yos1fz/MlpT7+YjH9fTxZcALbiiPKuSIfYP/j13CeOjfq8/fr9Thr2glM9ub7A==
@@ -6282,18 +6282,18 @@ eslint-plugin-sonarjs@^0.10.0:
   resolved "https://registry.yarnpkg.com/eslint-plugin-sonarjs/-/eslint-plugin-sonarjs-0.10.0.tgz#2b520c6d0dbdecbea98cd82f5cb84fc5c3d2b954"
   integrity sha512-FBRIBmWQh2UAfuLSnuYEfmle33jIup9hfkR0X8pkfjeCKNpHUG8qyZI63ahs3aw8CJrv47QJ9ccdK3ZxKH016A==
 
+eslint-plugin-testing-library@3.10.2:
+  version "3.10.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-testing-library/-/eslint-plugin-testing-library-3.10.2.tgz#609ec2b0369da7cf2e6d9edff5da153cc31d87bd"
+  integrity sha512-WAmOCt7EbF1XM8XfbCKAEzAPnShkNSwcIsAD2jHdsMUT9mZJPjLCG7pMzbcC8kK366NOuGip8HKLDC+Xk4yIdA==
+  dependencies:
+    "@typescript-eslint/experimental-utils" "^3.10.1"
+
 eslint-plugin-testing-library@^3.9.2:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/eslint-plugin-testing-library/-/eslint-plugin-testing-library-3.10.1.tgz#4dd02306d601c3238fdabf1d1dbc5f2a8e85d531"
   dependencies:
     "@typescript-eslint/experimental-utils" "^3.10.1"
-
-eslint-plugin-testing-library@^4.11.0:
-  version "4.11.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-testing-library/-/eslint-plugin-testing-library-4.11.0.tgz#59843429ae9c82eb7e6113e86896457984fc5aa2"
-  integrity sha512-2C5ODUaaxpOij1ah99vEFFbqDY/o5AXbAdjZcbT/RUcEIGcZupgxlFxID51wBsb6FWXtAL6mJliK0bAqgns4Ew==
-  dependencies:
-    "@typescript-eslint/experimental-utils" "^4.24.0"
 
 eslint-scope@^4.0.3:
   version "4.0.3"
