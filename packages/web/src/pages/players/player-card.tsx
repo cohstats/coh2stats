@@ -9,18 +9,14 @@ import { firebase } from "../../firebase";
 import { CountryFlag } from "../../components/country-flag";
 import { playerCardBase } from "../../titles";
 import { useHistory, useParams } from "react-router";
-import { findAndMergeStatGroups, getGeneralIconPath } from "../../coh/helpers";
+import { getGeneralIconPath } from "../../coh/helpers";
 import { Loading } from "../../components/loading";
 import Title from "antd/es/typography/Title";
-import PlayerSingleMatchesTable from "./player-single-matches-table";
-import {
-  calculateOverallStatsForPlayerCard,
-  prepareLeaderBoardDataForSinglePlayer,
-} from "./data-processing";
-import PlayerTeamMatchesTable from "./player-team-matches-table";
+import { calculateOverallStatsForPlayerCard } from "./data-processing";
 import { convertTeamNames } from "./helpers";
 import LastMatchesTable from "../matches/last-matches-table";
 import routes from "../../routes";
+import PlayerStandingsTables from "./player-standings";
 const { Text } = Typography;
 const { TabPane } = Tabs;
 
@@ -108,30 +104,9 @@ const PlayerCard = () => {
   const playerName = playerRelicProfile.alias;
   document.title = `${playerCardBase} - ${playerName}`;
 
-  const mergedGamesData = findAndMergeStatGroups(relicData as LaddersDataObject, null);
-  const { finalStatsSingleGame, finalStatsTeamGames } =
-    prepareLeaderBoardDataForSinglePlayer(mergedGamesData);
-
   const { totalGames, lastGameDate, bestRank, mostPlayed } = calculateOverallStatsForPlayerCard(
     relicData.leaderboardStats,
   );
-
-  const singleTables: Array<any> = [];
-  const teamTables: Array<any> = [];
-
-  for (const key of Object.keys(finalStatsSingleGame)) {
-    singleTables.push(
-      <PlayerSingleMatchesTable key={key} title={key} data={finalStatsSingleGame[key]} />,
-    );
-  }
-
-  for (const key of Object.keys(finalStatsTeamGames)) {
-    if (finalStatsTeamGames[key].length !== 0) {
-      teamTables.push(
-        <PlayerTeamMatchesTable key={key} title={key} data={finalStatsTeamGames[key]} />,
-      );
-    }
-  }
 
   return (
     <div key={steamid}>
@@ -209,8 +184,7 @@ const PlayerCard = () => {
         <Col xs={24} md={22} xxl={14}>
           <Tabs defaultActiveKey={tabView} size={"large"} centered onChange={changeTheUrl}>
             <TabPane tab={"Standings"} key="stats">
-              {singleTables}
-              {teamTables}
+              <PlayerStandingsTables data={relicData as LaddersDataObject} />
             </TabPane>
             <TabPane tab="Recent matches" key="matches">
               <LastMatchesTable data={data["playerMatches"]} profileID={`/steam/${steamid}`} />

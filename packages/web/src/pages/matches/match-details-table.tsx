@@ -168,21 +168,6 @@ export const MatchPlayerDetailsTable: React.FC<MatchPlayerDetailsTableProps> = (
       key: "cabil",
       align: "center" as "center",
     },
-    // {
-    //   title: "Squads Lost",
-    //   dataIndex: "sqlost",
-    //   key: "sqlost",
-    //   align: "center" as "center",
-    // },
-    // {
-    //   title: "K/D Ration",
-    //   dataIndex: "sqlost",
-    //   key: "kdration",
-    //   align: "center" as "center",
-    //   render: (_, record: Record<string, any>) => {
-    //     return (record.sqkilled / record.sqprod).toFixed(2)
-    //   }
-    // },
     {
       title: (
         <>
