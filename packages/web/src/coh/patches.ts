@@ -1,14 +1,9 @@
 /**
- * - To get the link to the comment - click on the twitter share button on the forum // old forum not works anymore
+ * - To get the link to the comment - click on the twitter share button on the forum
  * - Latest patch has to have endDate as Infinity
- *
- * When adding new patch / make sure too change the current key.
- *
  */
-const currentPatch = "cu2021";
-
-const patches = {
-  cu2021: {
+const patches = [
+  {
     name: "Commander Update 2021",
     link: "https://www.coh2.org/topic/4307/company-of-heroes-2-changelog/post/872416",
     linkRelic: "https://community.companyofheroes.com/discussion/comment/288981#Comment_288981",
@@ -16,7 +11,7 @@ const patches = {
     startDateUnixTimeStamp: 1623801600, // 16th June
     endDateUnixTimeStamp: Infinity, // Infinity
   },
-  wbp2021: {
+  {
     name: "Winter Balance Patch 2021",
     link: "https://www.coh2.org/topic/4307/company-of-heroes-2-changelog/post/852771",
     linkRelic: "https://community.companyofheroes.com/discussion/comment/288640#Comment_288640",
@@ -24,12 +19,12 @@ const patches = {
     startDateUnixTimeStamp: 1614297600, // 26th Feb
     endDateUnixTimeStamp: 1623801600, // 16th June
   },
-};
+];
 
 const isTimeStampInPatches = (unixTimeStamp: number) => {
   const isInPatches = [];
 
-  for (const patch of Object.values(patches)) {
+  for (const patch of patches) {
     if (
       unixTimeStamp >= patch.startDateUnixTimeStamp &&
       unixTimeStamp < patch.endDateUnixTimeStamp
@@ -41,8 +36,4 @@ const isTimeStampInPatches = (unixTimeStamp: number) => {
   return isInPatches;
 };
 
-const getCurrentPatch = () => {
-  return patches[currentPatch];
-};
-
-export { isTimeStampInPatches, getCurrentPatch };
+export { isTimeStampInPatches };
