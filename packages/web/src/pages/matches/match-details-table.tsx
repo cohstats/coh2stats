@@ -221,21 +221,6 @@ export const MatchPlayerDetailsTable: React.FC<MatchPlayerDetailsTableProps> = (
       align: "center" as "center",
       sorter: (a, b, sortOrder) => SimpleSortNumeric(a.cabil, b.cabil, sortOrder),
     },
-    // {
-    //   title: "Squads Lost",
-    //   dataIndex: "sqlost",
-    //   key: "sqlost",
-    //   align: "center" as "center",
-    // },
-    // {
-    //   title: "K/D Ration",
-    //   dataIndex: "sqlost",
-    //   key: "kdration",
-    //   align: "center" as "center",
-    //   render: (_, record: Record<string, any>) => {
-    //     return (record.sqkilled / record.sqprod).toFixed(2)
-    //   }
-    // },
     {
       title: (
         <>
