@@ -1,3 +1,51 @@
+// Leaderboards types
+
+type RelicAPIResult = {
+  code: number;
+  message: string;
+};
+
+type RawPlayerProfile = {
+  profile_id: number;
+  name: string;
+  alias: string;
+  personal_statgroup_id?: number;
+  xp?: number;
+  level: number;
+  leaderboardregion_id?: number;
+  country: string;
+};
+
+type RawStatGroup = {
+  id: number;
+  name?: string;
+  type?: number;
+  members: Array<RawPlayerProfile>;
+};
+
+type RawLeaderboardStat = {
+  statGroup_id: number;
+  leaderboard_id: number;
+  wins: number;
+  losses: number;
+  streak: number;
+  disputes: number;
+  drops: number;
+  rank: number;
+  rankTotal?: number;
+  regionRank?: number;
+  regionRankTotal?: number;
+  rankLevel: number;
+  lastMatchDate: number;
+};
+
+export interface RawLaddersObject {
+  result?: RelicAPIResult;
+  statGroups: Array<RawStatGroup>;
+  leaderboardStats: Array<RawLeaderboardStat>;
+  rankTotal: number;
+}
+
 /**
  * This is the data type of the match which has been already processed
  * and modified. Aka it's not the RAW match data from the API.
