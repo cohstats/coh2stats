@@ -6,6 +6,8 @@ import { firestore } from "firebase-admin";
 import axios from "axios";
 import { PUBSUB_TOPIC_DOWNLOAD_MATCHES } from "../../constants";
 import { PubSub } from "@google-cloud/pubsub";
+import { RawLaddersObject } from "../types";
+import { cleanLaddersData } from "./ladders-clean";
 
 const pubSubClient = new PubSub();
 const AMOUNT_OF_QUERIED_PLAYERS = 200; // 200 is max/
@@ -16,15 +18,11 @@ const CHUNK_PROFILES_TO_PROCESS = 1000; // This specifies how many profiles we w
  * The memory needed for this is ~400MB / CF, the limit is 512 MB.
  */
 
-const fetchLadderStats = async (leaderboardID: number): Promise<Record<string, any>> => {
+const fetchLadderStats = async (leaderboardID: number): Promise<RawLaddersObject> => {
   const response = await axios.get(getLadderUrl(leaderboardID, AMOUNT_OF_QUERIED_PLAYERS));
 
   if (response.status == 200) {
-    const data = response.data;
-    // Do we want to transform the data before we save them?
-    delete data["result"]; // We don't need the result
-
-    return data;
+    return response.data;
   } else {
     throw Error(`Failed to received the ladder stats, response: ${response}`);
   }
@@ -90,7 +88,7 @@ const getAndSaveAllLadders = async (): Promise<void> => {
         functions.logger.log(
           `Going to save ${data["statGroups"].length} items to DB collection ${collectionPath} for faction ${faction}`,
         );
-        await firestore().collection(collectionPath).doc(faction).set(data);
+        await firestore().collection(collectionPath).doc(faction).set(cleanLaddersData(data));
       } catch (e) {
         functions.logger.error(`Failed to process ${typeOfGame} - ${faction}`, e);
       }
