@@ -18,8 +18,8 @@ const CHUNK_PROFILES_TO_PROCESS = 1000; // This specifies how many profiles we w
  * The memory needed for this is ~400MB / CF, the limit is 512 MB.
  */
 
-const fetchLadderStats = async (leaderboardID: number): Promise<RawLaddersObject> => {
-  const response = await axios.get(getLadderUrl(leaderboardID, AMOUNT_OF_QUERIED_PLAYERS));
+const fetchLadderStats = async (leaderboardID: number, start = 1): Promise<RawLaddersObject> => {
+  const response = await axios.get(getLadderUrl(leaderboardID, AMOUNT_OF_QUERIED_PLAYERS, start));
 
   if (response.status == 200) {
     return response.data;
@@ -75,14 +75,20 @@ const getAndSaveAllLadders = async (): Promise<void> => {
       functions.logger.log(`Processing ${typeOfGame} - ${faction}, using leaderBoardID: ${id}`);
 
       // Total positions we queried on the ladder
-      totalQueriedPositions += AMOUNT_OF_QUERIED_PLAYERS;
+      totalQueriedPositions += AMOUNT_OF_QUERIED_PLAYERS * 2;
 
       try {
         const data = await fetchLadderStats(id);
         const extractedIds = extractTheProfileIDs(data);
 
-        functions.logger.log(`Extracted ${extractedIds.size} unique profile IDs`);
-        profileIDs = new Set([...profileIDs, ...extractedIds]);
+        // second data so we have more ids and matches, but this is not saved to the DB
+        const secondData = await fetchLadderStats(id, 200);
+        const secondExtractedIds = extractTheProfileIDs(secondData);
+
+        functions.logger.log(
+          `Extracted ${extractedIds.size} unique profile IDs in top 200, and ${secondExtractedIds.size} in top 200-400`,
+        );
+        profileIDs = new Set([...profileIDs, ...extractedIds, ...secondExtractedIds]);
 
         const collectionPath = `ladders/${currentDateTimeStamp}/${typeOfGame}`;
         functions.logger.log(
