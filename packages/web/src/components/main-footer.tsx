@@ -7,7 +7,8 @@ export const MainFooter: React.FC = () => {
   return (
     <Footer style={{ textAlign: "center" }}>
       <Divider />
-      This is unofficial fan-made site for COH2. Not associated with Relic Entertainment.
+      This is unofficial fan-made site for Company Of Heroes 2. Not associated with Relic
+      Entertainment.
       <br />
       The data display here are not accurate and do not represent the actual state of the game.
       <br />

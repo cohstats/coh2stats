@@ -15,11 +15,11 @@ const MainHome: React.FC = () => {
 
   return (
     <div style={{ textAlign: "center" }}>
-      <Space style={{ padding: 10 }} wrap>
+      <Space style={{ padding: 10, display: "flex", justifyContent: "center" }} wrap>
         <Link to={"/stats"}>
           <Card
             hoverable
-            style={{ width: 350 }}
+            style={{ width: 350, height: 375 }}
             cover={
               <img alt="Game statistics" width={350} height={150} src="/resources/chart.png" />
             }
@@ -29,6 +29,24 @@ const MainHome: React.FC = () => {
               description="Daily analysis of played matches which provides answers for questions such as. What is the
                current winrate of each faction? What is the most played map? What are the most picked commanders and
                intel bulletins for each faction and more. With top 200 rank analysis you can spot how the pros do it in 1v1."
+            />
+          </Card>
+        </Link>
+        <Link to={"/players"}>
+          <Card
+            hoverable
+            style={{ width: 350, height: 375 }}
+            cover={<img alt="Player Cards" height={150} src="/resources/player.png" />}
+          >
+            <Meta
+              title="Player Cards"
+              description={
+                <>
+                  See any player card with <b>player standings</b> and all recent matches. You can
+                  display <b>advanced match details</b> with never before seen stats and chart
+                  visualization.
+                </>
+              }
             />
           </Card>
         </Link>
