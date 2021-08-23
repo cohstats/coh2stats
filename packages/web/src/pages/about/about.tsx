@@ -49,6 +49,8 @@ const About: React.FC = () => {
         <br />
         And we are tracking only auto-match games which are against players (filter out vs AI
         games).
+        <br />
+        Update 22/Aug/21: Query top 400 positions.
       </Paragraph>
       More technical description of this process can be found{" "}
       <Link href="https://github.com/petrvecera/coh2ladders#crawler-process" target="_blank">
