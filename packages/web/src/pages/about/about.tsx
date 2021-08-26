@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { Typography } from "antd";
 import { useData, useLoading } from "../../firebase";
-import { Loading } from "../../components/loading";
 import { Donation } from "../../components/donations";
 const { Title, Link, Text, Paragraph } = Typography;
 
@@ -13,13 +12,8 @@ const About: React.FC = () => {
   const donationsRef = useRef(null);
   const contributionRef = useRef(null);
 
-  let analyzedMatches = <Loading />;
-  let analyzedTopMatches = <Loading />;
-
-  if (!isLoading) {
-    analyzedMatches = data["analyzedMatches"];
-    analyzedTopMatches = data["analyzedTopMatches"];
-  }
+  const analyzedMatches = isLoading ? ". . ." : data["analyzedMatches"].toLocaleString();
+  const analyzedTopMatches = isLoading ? ". . ." : data["analyzedTopMatches"].toLocaleString();
 
   useMountEffect(() => {
     const hash = window.location.hash;
