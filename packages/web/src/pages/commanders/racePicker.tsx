@@ -1,24 +1,19 @@
 import React from "react";
 import { Col, Row } from "antd";
 
-import { RaceName } from "../../coh/types";
 import routes from "../../routes";
 import { Link } from "react-router-dom";
 import { Tip } from "../../components/tip";
+import { getGeneralIconPath } from "../../coh/helpers";
+
+const imageWidth = 220;
+const imageHeight = 220;
 
 export const RacePicker = () => {
-  const myImageSize = "220px";
-
   let myCenterStyle = {
     justifyContent: "center",
     padding: "10px",
-    height: myImageSize,
-    cursor: "pointer",
   };
-
-  function getRaceImage(race: RaceName) {
-    return `/resources/generalIcons/${race}.png`;
-  }
 
   return (
     <>
@@ -37,14 +32,26 @@ export const RacePicker = () => {
           <Col flex="none">
             <Link to={routes.commanderList("wermacht")}>
               <div style={myCenterStyle}>
-                <img style={myCenterStyle} src={getRaceImage("wermacht")} alt="wermacht" />
+                <img
+                  width={imageWidth}
+                  height={imageHeight}
+                  style={myCenterStyle}
+                  src={getGeneralIconPath("wermacht")}
+                  alt="wermacht"
+                />
               </div>
             </Link>
           </Col>
           <Col flex="none">
             <Link to={routes.commanderList("wgerman")}>
               <div style={myCenterStyle}>
-                <img style={myCenterStyle} src={getRaceImage("wgerman")} alt="wgerman" />
+                <img
+                  width={imageWidth}
+                  height={imageHeight}
+                  style={myCenterStyle}
+                  src={getGeneralIconPath("wgerman")}
+                  alt="wgerman"
+                />
               </div>
             </Link>
           </Col>
@@ -53,21 +60,39 @@ export const RacePicker = () => {
           <Col flex="none">
             <Link to={routes.commanderList("soviet")}>
               <div style={myCenterStyle}>
-                <img style={myCenterStyle} src={getRaceImage("soviet")} alt="soviet" />
+                <img
+                  width={imageWidth}
+                  height={imageHeight}
+                  style={myCenterStyle}
+                  src={getGeneralIconPath("soviet")}
+                  alt="soviet"
+                />
               </div>
             </Link>
           </Col>
           <Col flex="none">
             <Link to={routes.commanderList("british")}>
               <div style={myCenterStyle}>
-                <img style={myCenterStyle} src={getRaceImage("british")} alt="british" />
+                <img
+                  width={imageWidth}
+                  height={imageHeight}
+                  style={myCenterStyle}
+                  src={getGeneralIconPath("british")}
+                  alt="british"
+                />
               </div>
             </Link>
           </Col>
           <Col flex="none">
             <Link to={routes.commanderList("usf")}>
               <div style={myCenterStyle}>
-                <img style={myCenterStyle} src={getRaceImage("usf")} alt="usf" />
+                <img
+                  width={imageWidth}
+                  height={imageHeight}
+                  style={myCenterStyle}
+                  src={getGeneralIconPath("usf")}
+                  alt="usf"
+                />
               </div>
             </Link>
           </Col>

@@ -82,7 +82,12 @@ const BulletinList = () => {
       render: (_text: any, record: any) => {
         return (
           <div>
-            <img src={getBulletinIconPath(record.icon)} height="64px" alt={record.name} />
+            <img
+              src={getBulletinIconPath(record.icon)}
+              height="64px"
+              width="64px"
+              alt={record.bulletinName}
+            />
           </div>
         );
       },
@@ -132,65 +137,61 @@ const BulletinList = () => {
       onFilter: (value: any, record: IntelBulletinData) => record.races.indexOf(value) !== -1,
       sorter: (a: IntelBulletinData, b: IntelBulletinData) => a.races.length - b.races.length,
       render: (tags: any[]) => (
-        <>
-          <Space wrap>
-            {tags.sort().map((tag) => {
-              let color = "geekblue";
-              if (tag === "wermacht" || tag === "wgerman") {
-                color = "volcano";
-              }
-              return (
-                <Tag color={color} key={tag}>
-                  {tag.toUpperCase()}
-                </Tag>
-              );
-            })}
-          </Space>
-        </>
+        <Space wrap>
+          {tags.sort().map((tag) => {
+            let color = "geekblue";
+            if (tag === "wermacht" || tag === "wgerman") {
+              color = "volcano";
+            }
+            return (
+              <Tag color={color} key={tag}>
+                {tag.toUpperCase()}
+              </Tag>
+            );
+          })}
+        </Space>
       ),
     },
   ];
 
   return (
-    <>
-      <div>
-        <Row justify="center" style={{ padding: "10px" }}>
-          <Col xs={22} xxl={14}>
-            <div style={{ textAlign: "center", paddingBottom: 10, fontSize: "larger" }}>
-              <Tip
-                text={
-                  <>
-                    You can see the most picked Intel Bulletins over at{" "}
-                    <Link to={routes.statsBase()}>stats page</Link>.
-                  </>
-                }
-              />
-            </div>
-            <Table
-              columns={TableColumns}
-              pagination={{
-                defaultPageSize: 60,
-                pageSizeOptions: ["10", "20", "40", "60", "100", "200"],
-              }}
-              rowKey={(record) => record.serverID}
-              expandable={{
-                expandedRowRender: (record) => (
-                  <div>
-                    <b>{record.descriptionShort}</b>
-                    <p>{record.descriptionLong}</p>
-                  </div>
-                ),
-                rowExpandable: (record) => record.descriptionLong.length !== 0,
-                expandRowByClick: true,
-                expandIconColumnIndex: -1,
-              }}
-              dataSource={bulletinData}
+    <div>
+      <Row justify="center" style={{ padding: "10px" }}>
+        <Col xs={22} xxl={14}>
+          <div style={{ textAlign: "center", paddingBottom: 10, fontSize: "larger" }}>
+            <Tip
+              text={
+                <>
+                  You can see the most picked Intel Bulletins over at{" "}
+                  <Link to={routes.statsBase()}>stats page</Link>.
+                </>
+              }
             />
-            <ExportDate typeOfData={"Intel bulletins"} />
-          </Col>
-        </Row>
-      </div>
-    </>
+          </div>
+          <Table
+            columns={TableColumns}
+            pagination={{
+              defaultPageSize: 60,
+              pageSizeOptions: ["10", "20", "40", "60", "100", "200"],
+            }}
+            rowKey={(record) => record.serverID}
+            expandable={{
+              expandedRowRender: (record) => (
+                <div>
+                  <b>{record.descriptionShort}</b>
+                  <p>{record.descriptionLong}</p>
+                </div>
+              ),
+              rowExpandable: (record) => record.descriptionLong.length !== 0,
+              expandRowByClick: true,
+              expandIconColumnIndex: -1,
+            }}
+            dataSource={bulletinData}
+          />
+          <ExportDate typeOfData={"Intel bulletins"} />
+        </Col>
+      </Row>
+    </div>
   );
 };
 

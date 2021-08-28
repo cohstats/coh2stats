@@ -12,12 +12,16 @@ export const CommanderDetails = () => {
     commanderID: string;
   }>();
 
+  const commanderData = getCommanderData(commanderID);
+
   // We want to scroll top when we go to this page from the stats page
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
-
-  const commanderData = getCommanderData(commanderID);
+    firebaseAnalytics.commanderDisplayed(
+      commanderData?.commanderName || "",
+      commanderData?.races[0] || "",
+    );
+  }, [commanderData]);
 
   const { race } = useParams<{
     race: string;
@@ -43,8 +47,6 @@ export const CommanderDetails = () => {
   // Set page title
   document.title = `${commanderBase} - ${commanderData.commanderName}`;
 
-  firebaseAnalytics.commanderDisplayed(commanderData.commanderName, commanderData.races[0]);
-
   return (
     <>
       <div style={divStyle}>
@@ -59,8 +61,8 @@ export const CommanderDetails = () => {
               <Col flex="100px">
                 <img
                   src={getCommanderIconPath(commanderData.iconlarge)}
-                  width="auto"
-                  height="auto"
+                  width="144"
+                  height="192"
                   alt={commanderData.commanderName}
                 />
                 <h2 style={{ textAlign: "center", margin: "-5px 0px 0px 0px" }}>
@@ -83,22 +85,25 @@ export const CommanderDetails = () => {
               itemLayout="horizontal"
               dataSource={commanderData.abilities}
               renderItem={(item: Record<string, any>) => (
-                <div>
-                  <List.Item>
-                    <List.Item.Meta
-                      avatar={
-                        <div>
-                          <Avatar src={getExportedIconPath(item.icon)} shape="square" size={64} />
-                          <Badge count={0} overflowCount={999} showZero offset={[0, -32]}>
-                            <></>
-                          </Badge>
-                        </div>
-                      }
-                      title={item.name}
-                      description={item.description}
-                    />
-                  </List.Item>
-                </div>
+                <List.Item>
+                  <List.Item.Meta
+                    avatar={
+                      <div>
+                        <Avatar
+                          alt={item.name}
+                          src={getExportedIconPath(item.icon)}
+                          shape="square"
+                          size={64}
+                        />
+                        <Badge count={0} overflowCount={999} showZero offset={[0, -32]}>
+                          <></>
+                        </Badge>
+                      </div>
+                    }
+                    title={item.name}
+                    description={item.description}
+                  />
+                </List.Item>
               )}
             />
             <ExportDate typeOfData={"Commander"} />
