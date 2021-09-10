@@ -26,11 +26,7 @@ const runTest = functions
   .region(DEFAULT_FUNCTIONS_LOCATION)
   .runWith(runtimeOpts)
   .https.onRequest(async (request, response) => {
-
-
-
     // await removeOldMatches(78);
-
     // const statsSnapshot = await getStatsDocRef("1615161600", "daily").get()
     // const ladderSnapshot = await getLadderDocRef("1615161600", "team4", "axis").get()
     // const matchSnapshot = await getMatchDocRef("257094533").get();
