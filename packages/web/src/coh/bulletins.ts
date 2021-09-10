@@ -1,4 +1,4 @@
-import * as bulletinIDsToRacesJSON from "./data/bulletinData.json";
+import * as bulletinIDsToRacesJSON from "./data/cu2021/bulletinData.json";
 import { IntelBulletinData, RaceName } from "./types";
 
 const bulletinsData: Record<string, any> = (bulletinIDsToRacesJSON as Record<string, any>)[

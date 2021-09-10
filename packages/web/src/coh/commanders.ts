@@ -1,4 +1,4 @@
-import * as allCommandersJSON from "./data/commanderData.json";
+import * as allCommandersJSON from "./data/wbp2021/commanderData.json";
 import { CommanderData, RaceName } from "./types";
 const allCommanders: Record<string, any> = (allCommandersJSON as Record<string, any>)["default"];
 

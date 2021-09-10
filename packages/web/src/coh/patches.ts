@@ -5,16 +5,27 @@
  * When adding new patch / make sure too change the current key.
  *
  */
-const currentPatch = "cu2021";
+const currentPatch = "sbp2021";
 
 const patches = {
+  sbp2021: {
+    name: "Summer Balance Patch 2021",
+    link: "https://www.coh2.org/topic/4307/coh2-changelog/post/876828",
+    linkRelic:
+      "https://community.companyofheroes.com/coh-franchise/company-of-heroes-legacy/forums/5-company-of-heroes-2-general/threads/1652-company-of-heroes-2-september-2021-patch-notes",
+    humanReadableDate: "9th September 2021",
+    startDateUnixTimeStamp: 1631145600, //  9th Sep
+    endDateUnixTimeStamp: Infinity, // Infinity
+    patchFolder: "cu2021", // There was no update
+  },
   cu2021: {
     name: "Commander Update 2021",
     link: "https://www.coh2.org/topic/4307/company-of-heroes-2-changelog/post/872416",
     linkRelic: "https://community.companyofheroes.com/discussion/comment/288981#Comment_288981",
     humanReadableDate: "16th June 2021",
     startDateUnixTimeStamp: 1623801600, // 16th June
-    endDateUnixTimeStamp: Infinity, // Infinity
+    endDateUnixTimeStamp: 1631145600, // 9th Sep
+    patchFolder: "cu2021",
   },
   wbp2021: {
     name: "Winter Balance Patch 2021",
@@ -23,6 +34,7 @@ const patches = {
     humanReadableDate: "26th Feb 2021",
     startDateUnixTimeStamp: 1614297600, // 26th Feb
     endDateUnixTimeStamp: 1623801600, // 16th June
+    patchFolder: "wbp2021",
   },
 };
 
