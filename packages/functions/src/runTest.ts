@@ -4,6 +4,7 @@
  */
 import * as functions from "firebase-functions";
 import { DEFAULT_FUNCTIONS_LOCATION } from "./constants";
+// import {removeOldMatches} from "./libs/matches/matches";
 
 // //import {runAndSaveMultiDayAnalysis} from "./libs/analysis/multi-day-analysis";
 // import { getDateTimeStampInterval, printUTCTime } from "./libs/helpers";
@@ -25,6 +26,11 @@ const runTest = functions
   .region(DEFAULT_FUNCTIONS_LOCATION)
   .runWith(runtimeOpts)
   .https.onRequest(async (request, response) => {
+
+
+
+    // await removeOldMatches(78);
+
     // const statsSnapshot = await getStatsDocRef("1615161600", "daily").get()
     // const ladderSnapshot = await getLadderDocRef("1615161600", "team4", "axis").get()
     // const matchSnapshot = await getMatchDocRef("257094533").get();

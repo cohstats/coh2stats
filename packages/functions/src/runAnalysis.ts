@@ -49,6 +49,16 @@ const runAnalysis = functions
 
     functions.logger.info(`Analysis for the date ${printUTCTime(start)} finished.`);
 
+    // Clean memory before another memory heavy task
+    try {
+      if (global.gc) {
+        global.gc();
+        functions.logger.info(`The memory should be cleared now.`);
+      }
+    } catch (e) {
+      functions.logger.error(`Garage collector is not available`, e);
+    }
+
     // Do DB clean up, we keep only matches which are less than 63 days old
     try {
       await removeOldMatches(63);
