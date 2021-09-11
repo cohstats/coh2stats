@@ -61,7 +61,7 @@ const runAnalysis = functions
 
     // Do DB clean up, we keep only matches which are less than 63 days old
     try {
-      await removeOldMatches(63);
+      await removeOldMatches(58);
     } catch (e) {
       functions.logger.error(`There was an error deleting the old matches`, e);
     }
