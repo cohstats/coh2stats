@@ -204,7 +204,9 @@ const About: React.FC = () => {
         <br />
         <Donation />
         <br />
-        <b>Past donations:</b>
+        <b>Past donations 2021:</b>
+        <br />
+        MECH
         <br />
         KoRneY
         <br />
