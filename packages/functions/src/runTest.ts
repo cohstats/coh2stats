@@ -4,6 +4,11 @@
  */
 import * as functions from "firebase-functions";
 import { DEFAULT_FUNCTIONS_LOCATION } from "./constants";
+import { getDateTimeStampInterval, printUTCTime } from "./libs/helpers";
+import { ProcessedMatch } from "./libs/types";
+import { getMatchCollectionRef } from "./fb-paths";
+import { analyzeMatchesByMaps } from "./libs/analysis/match-map-analysis";
+import { saveMapAnalysis } from "./libs/analysis/analysis";
 // import {removeOldMatches} from "./libs/matches/matches";
 
 // //import {runAndSaveMultiDayAnalysis} from "./libs/analysis/multi-day-analysis";
@@ -26,6 +31,33 @@ const runTest = functions
   .region(DEFAULT_FUNCTIONS_LOCATION)
   .runWith(runtimeOpts)
   .https.onRequest(async (request, response) => {
+    const matchDates = [17, 16, 15, 14, 13, 12, 11];
+
+    for (const date of matchDates) {
+      const { start, end } = getDateTimeStampInterval(date);
+
+      const matches: Array<ProcessedMatch> = [];
+
+      const snapshot = await getMatchCollectionRef()
+        .where("startgametime", ">=", start)
+        .where("startgametime", "<=", end)
+        .get();
+
+      snapshot.forEach((doc) => {
+        matches.push(doc.data() as ProcessedMatch);
+      });
+
+      functions.logger.info(
+        `Retrieved ${matches.length} matches which started between ${printUTCTime(
+          start,
+        )}, ${start} and ${printUTCTime(end)}, ${end} for analysis.`,
+      );
+
+      const analysis = analyzeMatchesByMaps(matches);
+
+      await saveMapAnalysis(analysis, start);
+    }
+
     // await removeOldMatches(78);
     // const statsSnapshot = await getStatsDocRef("1615161600", "daily").get()
     // const ladderSnapshot = await getLadderDocRef("1615161600", "team4", "axis").get()
@@ -80,6 +112,8 @@ const runTest = functions
     //
     //   functions.logger.info("Finished analysis for one day");
     // }
+
+    response.send("finished");
   });
 
 export { runTest };

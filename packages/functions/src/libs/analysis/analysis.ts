@@ -1,9 +1,10 @@
-import { getStatsDocRef, getTopStatsDocRef } from "../../fb-paths";
+import { getMapStatsDocRef, getStatsDocRef, getTopStatsDocRef } from "../../fb-paths";
 import { frequencyType, ProcessedMatch } from "../types";
 import { analyzeMatches, analyzeTopMatches } from "./match-analysis";
 import * as functions from "firebase-functions";
 import { globallyAnalyzedMatches, globallyAnalyzedTopMatches } from "../global-stats";
 import { getLadderNameIDsForTimestamp } from "../ladders/ladder-data";
+import { analyzeMatchesByMaps } from "./match-map-analysis";
 
 // const db = firestore();
 
@@ -41,6 +42,24 @@ const saveAnalysis = async (
   }
 };
 
+const saveMapAnalysis = async (
+  stats: Record<string, any>,
+  timestamp: number,
+  statType: frequencyType = "daily",
+): Promise<void> => {
+  const statRef = getMapStatsDocRef(timestamp, statType);
+  try {
+    await statRef.set(stats);
+  } catch (e) {
+    functions.logger.error(
+      `Failed to save new map analysis stats into ${statRef.path}`,
+      timestamp,
+      stats,
+      e,
+    );
+  }
+};
+
 const saveTopAnalysis = async (
   stats: Record<string, any>,
   timestamp: number | string,
@@ -57,6 +76,16 @@ const saveTopAnalysis = async (
       e,
     );
   }
+};
+
+const analyzeAndSaveMapStats = async (
+  matches: Array<ProcessedMatch>,
+  dateTimeStamp: number,
+): Promise<void> => {
+  functions.logger.log(`Map stats - analyzing ${matches.length} matches.`);
+  const analysis = analyzeMatchesByMaps(matches);
+  await saveMapAnalysis(analysis, dateTimeStamp);
+  functions.logger.log(`Map stats - analysis finished.`);
 };
 
 const analyzeAndSaveMatchStats = async (
@@ -92,4 +121,11 @@ const analyzeAndSaveTopMatchStats = async (
   functions.logger.log(`Stats analyzed, going to save them.`);
 };
 
-export { analyzeAndSaveMatchStats, saveAnalysis, saveTopAnalysis, analyzeAndSaveTopMatchStats };
+export {
+  analyzeAndSaveMatchStats,
+  saveAnalysis,
+  saveTopAnalysis,
+  analyzeAndSaveTopMatchStats,
+  saveMapAnalysis,
+  analyzeAndSaveMapStats,
+};
