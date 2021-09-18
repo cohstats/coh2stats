@@ -22,6 +22,14 @@ const getStatsDocRef = (
   return db.collection(`stats`).doc(`${type}`).collection(`${timestamp}`).doc("stats");
 };
 
+const getMapStatsDocRef = (
+  timestamp: string | number,
+  type: frequencyType,
+): DocumentReference<DocumentData> => {
+  // We need to follow pattern collection/doc/collection/doc
+  return db.collection(`stats`).doc(`${type}`).collection(`${timestamp}`).doc("mapStats");
+};
+
 const getTopStatsDocRef = (
   timestamp: string | number,
   type: frequencyType,
@@ -60,6 +68,7 @@ const getLadderDocRef = (
 
 export {
   getMatchDocRef,
+  getMapStatsDocRef,
   getStatsDocRef,
   getGlobalStatsDocRef,
   getMatchCollectionRef,

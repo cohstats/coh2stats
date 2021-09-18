@@ -3,7 +3,11 @@ import { getMatchCollectionRef } from "./fb-paths";
 import { DEFAULT_FUNCTIONS_LOCATION } from "./constants";
 import { ProcessedMatch } from "./libs/types";
 import { getYesterdayDateTimeStampInterval, printUTCTime } from "./libs/helpers";
-import { analyzeAndSaveMatchStats, analyzeAndSaveTopMatchStats } from "./libs/analysis/analysis";
+import {
+  analyzeAndSaveMapStats,
+  analyzeAndSaveMatchStats,
+  analyzeAndSaveTopMatchStats,
+} from "./libs/analysis/analysis";
 import { analysisChecker } from "./libs/analysis/analysis-checker";
 import { removeOldMatches } from "./libs/matches/matches";
 
@@ -44,6 +48,8 @@ const runAnalysis = functions
     await analyzeAndSaveMatchStats(matches, start);
 
     await analyzeAndSaveTopMatchStats(matches, start);
+
+    await analyzeAndSaveMapStats(matches, start);
 
     await analysisChecker();
 

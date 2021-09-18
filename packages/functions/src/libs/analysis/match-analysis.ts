@@ -99,6 +99,7 @@ const sortMatchesByType = (
   };
 
   const decider = (match: ProcessedMatch, type: "1v1" | "2v2" | "3v3" | "4v4") => {
+    // Ladders IDs are used for top 200 players analysis
     if (ladderIDs) {
       if (areMatchPlayersInLadder(match, ladderIDs[type])) {
         matchesByMode[type].push(match);
@@ -207,4 +208,4 @@ const analyzeTopMatches = (
   return fullStats;
 };
 
-export { analyzeMatches, analyzeTopMatches };
+export { analyzeMatches, analyzeTopMatches, filterOnlyAutomatchVsPlayers, sortMatchesByType };
