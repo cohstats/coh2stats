@@ -227,7 +227,7 @@ const MapStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
         <>
           <Row justify={"center"}>
             <Card
-              title={`Winrate per factions on maps ${type}`}
+              title={`Winrate diff per factions on maps ${type}`}
               style={{ marginTop: 40 }}
               bodyStyle={isMobile ? { width: "90vw", height: 300 } : { width: 1105, height: 650 }}
             >
