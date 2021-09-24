@@ -9,5 +9,7 @@ https://coh2stats.com/bulletins
 https://coh2stats.com/about
 https://coh2stats.com/stats
 https://coh2stats.com/leaderboards
+https://coh2stats.com/map-stats
+https://coh2stats.com/players
 
 
