@@ -1,4 +1,4 @@
-import { getStatsDocRef, getTopStatsDocRef } from "../../fb-paths";
+import { getMapStatsDocRef, getStatsDocRef, getTopStatsDocRef } from "../../fb-paths";
 import * as functions from "firebase-functions";
 
 import {
@@ -42,8 +42,8 @@ const getSaveTimeStamp = (date: Date | number, frequency: frequencyType) => {
 
 const generateMultiDayAnalysis = async (
   eachDateTimeStamp: Array<number>,
-  type: "normal" | "top" = "normal",
-  keepEachDay = true,
+  type: "normal" | "top" | "map" = "normal",
+  keepEachDay = false,
 ): Promise<Record<string, any>> => {
   functions.logger.log(
     `Generation of multi day analysis started - have ${eachDateTimeStamp.length} dates.`,
@@ -60,6 +60,8 @@ const generateMultiDayAnalysis = async (
     // We need to keep the timestamp
     if (type === "top") {
       promisedDocs.push(getTopStatsDocRef(timeStamp, "daily").get());
+    } else if (type === "map") {
+      promisedDocs.push(getMapStatsDocRef(timeStamp, "daily").get());
     } else {
       promisedDocs.push(getStatsDocRef(timeStamp, "daily").get());
     }
@@ -140,7 +142,7 @@ const runAndSaveMultiDayAnalysis = async (
 const generateCustomMultiDayAnalysis = async (
   startDate: Date | number,
   endDate: Date | number,
-  type: "normal" | "top" = "normal",
+  type: "normal" | "top" | "map" = "normal",
 ): Promise<Record<string, any>> => {
   const eachDate = getDateTimeStampsInRange(startDate, endDate);
 

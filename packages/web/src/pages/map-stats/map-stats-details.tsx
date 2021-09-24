@@ -1,20 +1,60 @@
 import React, { useEffect } from "react";
-import { Row, Card, Radio, RadioChangeEvent, Space, Typography, Col, Tooltip } from "antd";
+import {
+  Row,
+  Card,
+  Radio,
+  RadioChangeEvent,
+  Space,
+  Typography,
+  Col,
+  Tooltip,
+  Select,
+} from "antd";
 import { MapBarChart } from "../../components/charts/maps-bar";
-import { WinsChart } from "../../components/charts/wins-bar";
-import { WinRateChart } from "../../components/charts/winRate-bar";
-import { useHistory } from "react-router";
-import { CommandersBarChart } from "../../components/charts/commanders-bar";
-import { BulletinsBarChart } from "../../components/charts/bulletins-bar";
-import { Helper } from "../../components/helper";
-import { statsBase } from "../../titles";
+import { mapStatsBase } from "../../titles";
 import { capitalize, formatDate } from "../../utils/helpers";
 import { useLocation } from "react-router-dom";
 import { FactionVsFactionCard } from "../../components/factions";
 import { isTimeStampInPatches } from "../../coh/patches";
 import { useMediaQuery } from "react-responsive";
+import { MapsWinRateChart } from "../../components/charts/map-stats/maps-winrate-bar";
+import { MapsFactionWinRateChart } from "../../components/charts/map-stats/maps-winrate-faction-bar";
 
 const { Text, Link } = Typography;
+const { Option } = Select;
+
+const MapSelectorComponent: React.FC<{
+  map: string;
+  data: Record<string, any>;
+  changer: Function;
+}> = ({ map, data, changer }) => {
+  const mapNames = Object.keys(data).sort().reverse();
+
+  return (
+    <Select
+      showSearch
+      filterOption={(input, option) => {
+        return option?.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+      }}
+      defaultValue={map}
+      onChange={(value) => {
+        changer({
+          mapToLoad: value,
+        });
+      }}
+      style={{ width: 250 }}
+      size={"large"}
+    >
+      {mapNames.map((mapName) => {
+        return (
+          <Option key={mapName} value={mapName}>
+            {mapName}
+          </Option>
+        );
+      })}
+    </Select>
+  );
+};
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -25,40 +65,39 @@ interface IProps {
   specificData: Record<string, any>;
 }
 
-const CustomStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
-  const { push } = useHistory();
+const MapStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
   const query = useQuery();
   const isMobile = useMediaQuery({ query: "(max-width: 1023px)" });
 
   const type = query.get("type") || "4v4";
-  const race = query.get("race") || "wermacht";
-  const sourceIsAll = query.get("statsSource") !== "top200";
 
   const timestamp = query.get("timeStamp") || "";
   const fromTimeStamp = query.get("fromTimeStamp") || "";
   const toTimeStamp = query.get("toTimeStamp") || "";
   const frequency = query.get("range") || "";
+  let map = query.get("map") || "8p_redball_express";
 
-  const data = specificData["generalData"];
-  const mapsData = specificData["mapsData"];
+  const data = specificData;
+  let amountOfGames = 0;
+
+  const mapData: Record<string, number> = {};
+
+  for (const [mapName, mapValue] of Object.entries(data)) {
+    mapData[mapName] = mapValue.matchCount;
+    amountOfGames += mapValue.matchCount;
+  }
 
   // Page title
   useEffect(() => {
     // Set page title
-    if (!document.title.includes(type) || !document.title.includes(race)) {
-      document.title = `${statsBase} - ${capitalize(race)} - ${type}`;
+    if (!document.title.includes(type)) {
+      document.title = `${mapStatsBase} - ${type}`;
     }
-  }, [type, race]);
+  }, [type]);
 
   const onTypeRadioChange = (e: RadioChangeEvent) => {
     urlChanger({
       typeToLoad: e.target?.value,
-    });
-  };
-
-  const onRaceRadioChange = (e: RadioChangeEvent) => {
-    urlChanger({
-      raceToLoad: e.target?.value,
     });
   };
 
@@ -71,31 +110,10 @@ const CustomStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
         size={"large"}
         style={{ ...{ paddingBottom: 10 }, ...style }}
       >
-        <Radio.Button disabled={true} value="general">
-          General{" "}
-        </Radio.Button>
         <Radio.Button value="1v1">1 vs 1</Radio.Button>
         <Radio.Button value="2v2">2 vs 2</Radio.Button>
         <Radio.Button value="3v3">3 vs 3</Radio.Button>
         <Radio.Button value="4v4">4 vs 4</Radio.Button>
-      </Radio.Group>
-    );
-  };
-
-  const raceSelector = (style = {}) => {
-    return (
-      <Radio.Group
-        defaultValue={race}
-        buttonStyle="solid"
-        onChange={onRaceRadioChange}
-        size={"large"}
-        style={{ padding: 20, ...style }}
-      >
-        <Radio.Button value="wermacht">Wehrmacht</Radio.Button>
-        <Radio.Button value="wgerman">WGerman</Radio.Button>
-        <Radio.Button value="usf">USF</Radio.Button>
-        <Radio.Button value="british">British</Radio.Button>
-        <Radio.Button value="soviet">Soviet</Radio.Button>
       </Radio.Group>
     );
   };
@@ -145,18 +163,18 @@ const CustomStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
       <Row justify={"center"}>
         <div style={{ textAlign: "center" }}>
           <span style={{ fontSize: 20, fontWeight: 600 }}>
-            Amount of games for this analysis {`${data["matchCount"]}`}
+            Amount of games for this analysis {amountOfGames}
           </span>
           <br />
           <span>
-            {sourceIsAll && (
+            {
               <>
                 This does not include all games which were played. See about page to understand
                 the scope
                 <br />
               </>
-            )}
-            {data["matchCount"] < 2000 && (
+            }
+            {amountOfGames < 2000 && (
               <>
                 This analysis has <Text strong>low amount of matches</Text>. The results might not
                 be precise.
@@ -184,75 +202,52 @@ const CustomStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
       <Row justify={"center"} style={{ paddingTop: 10 }}>
         <Space size={"large"} wrap style={{ display: "flex", justifyContent: "center" }}>
           <Card
+            title={`Win rate Axis vs Allies - diff ${type}`}
+            bodyStyle={
+              isMobile
+                ? { width: "90vw", height: 300 }
+                : { width: "48vw", maxWidth: 540, height: 460 }
+            }
+          >
+            <MapsWinRateChart data={data} />
+          </Card>
+          <Card
             title={`Games Played ${type}`}
             bodyStyle={
               isMobile
                 ? { width: "90vw", height: 300 }
-                : { width: "48vw", maxWidth: 485, height: 460 }
+                : { width: "48vw", maxWidth: 540, height: 460 }
             }
           >
-            <WinsChart data={data} />
-          </Card>
-          <Card
-            title={`Games Played ${type}`}
-            bodyStyle={isMobile ? { width: "90vw", height: 300 } : { width: 485, height: 460 }}
-          >
-            <WinRateChart data={data} />
+            <MapBarChart maps={mapData} />
           </Card>
         </Space>
       </Row>
       {!isMobile && (
-        <Row justify={"center"}>
-          <FactionVsFactionCard
-            title={`Team composition matrix ${type}`}
-            data={data}
-            style={{ marginTop: 40 }}
-          />
-        </Row>
+        <>
+          <Row justify={"center"}>
+            <Card
+              title={`Winrate per factions on maps ${type}`}
+              style={{ marginTop: 40 }}
+              bodyStyle={isMobile ? { width: "90vw", height: 300 } : { width: 1105, height: 650 }}
+            >
+              <MapsFactionWinRateChart data={data} />
+            </Card>
+          </Row>
+          <Row justify={"center"} style={{ paddingTop: 40 }}>
+            <Space direction={"vertical"}>
+              <MapSelectorComponent data={data} map={map} changer={urlChanger} />
+              <FactionVsFactionCard
+                title={`${map} - ${type} team composition matrix`}
+                data={data[map]}
+                style={{ marginTop: 10, width: 1105 }}
+              />
+            </Space>
+          </Row>
+        </>
       )}
-      <Row justify={"center"}>
-        <Card
-          title={`Maps ${type}`}
-          style={{ marginTop: 40 }}
-          bodyStyle={isMobile ? { width: "90vw", height: 300 } : { width: 1100, height: 650 }}
-        >
-          <MapBarChart maps={mapsData} />
-        </Card>
-      </Row>
-      <Row justify={"center"}>{raceSelector({ paddingLeft: 0, paddingRight: 0 })}</Row>
-      <Row justify={"center"}>
-        <TypeSelector style={{ paddingLeft: 0 }} />
-      </Row>
-      <Row justify={"center"}>
-        <Space size={"large"} style={{ display: "flex", justifyContent: "center" }} wrap>
-          <Card
-            title={
-              <span>
-                {`Commanders `}
-                <Helper
-                  text={
-                    "We are not able to " +
-                    "get picked commander in the match. This represents only commanders which player " +
-                    "had available when he loaded into the match."
-                  }
-                />
-                {` ${type} - ${race}`}
-              </span>
-            }
-            bodyStyle={isMobile ? { width: "90vw", height: 600 } : { width: 800, height: 900 }}
-          >
-            <CommandersBarChart commanders={data.commanders[race]} push={push} />
-          </Card>
-          <Card
-            title={`Intel Bulletins  ${type} - ${race}`}
-            bodyStyle={isMobile ? { width: "90vw", height: 1200 } : { width: 800, height: 900 }}
-          >
-            <BulletinsBarChart bulletins={data["intelBulletins"][race]} />
-          </Card>
-        </Space>
-      </Row>
     </>
   );
 };
 
-export default CustomStatsDetails;
+export default MapStatsDetails;

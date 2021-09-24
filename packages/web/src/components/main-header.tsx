@@ -38,6 +38,14 @@ export const MainHeader: React.FC = () => {
     path: routes.statsBase(),
   });
 
+  const mapStatsMatch = useRouteMatch({
+    path: routes.mapStats(),
+  });
+
+  const leaderboardsMatch = useRouteMatch({
+    path: routes.leaderboardsBase(),
+  });
+
   const aboutMatch = useRouteMatch({
     path: routes.aboutBase(),
   });
@@ -46,7 +54,13 @@ export const MainHeader: React.FC = () => {
     path: routes.bulletinsBase(),
   });
 
-  let pathMatch = commandersMatch || statsMatch || aboutMatch || bulletinsMatch;
+  let pathMatch =
+    commandersMatch ||
+    statsMatch ||
+    aboutMatch ||
+    bulletinsMatch ||
+    mapStatsMatch ||
+    leaderboardsMatch;
   const currentPath = pathMatch?.path || "";
   pageTitleSwitch(currentPath);
 
@@ -114,11 +128,14 @@ export const MainHeader: React.FC = () => {
           selectedKeys={[currentPath]}
           defaultSelectedKeys={[currentPath]}
         >
+          <Menu.Item key={routes.playerCardBase()}>
+            <Link to={routes.playerCardBase()}>Players</Link>
+          </Menu.Item>
           <Menu.Item key={routes.statsBase()}>
             <Link to={routes.statsBase()}>Stats</Link>
           </Menu.Item>
-          <Menu.Item key={routes.playerCardBase()}>
-            <Link to={routes.playerCardBase()}>Players</Link>
+          <Menu.Item key={routes.mapStats()}>
+            <Link to={routes.mapStats()}>Map Stats</Link>
           </Menu.Item>
           <Menu.Item key={routes.leaderboardsBase()}>
             <Link to={routes.leaderboardsBase()}>Leaderboards</Link>

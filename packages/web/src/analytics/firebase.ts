@@ -54,6 +54,10 @@ const statsDisplayed = (frequency: string, statsSource: string): void => {
   firebase.logEvent("stats", { frequency, statsSource });
 };
 
+const mapStatsDisplayed = (frequency: string): void => {
+  firebase.logEvent("mapStats", { frequency });
+};
+
 const rangeStatsDisplayed = (statsSource: string): void => {
   firebase.logEvent("rangeStats", { statsSource });
 };
@@ -97,6 +101,7 @@ const firebaseAnalytics = {
   searchUsed,
   commanderDisplayed,
   bulletinsDisplayed,
+  mapStatsDisplayed,
   statsDisplayed,
   rangeStatsDisplayed,
   teamCompositionUsed,

@@ -31,7 +31,7 @@ const runTest = functions
   .region(DEFAULT_FUNCTIONS_LOCATION)
   .runWith(runtimeOpts)
   .https.onRequest(async (request, response) => {
-    const matchDates = [17, 16, 15, 14, 13, 12, 11];
+    const matchDates = [18, 17, 16, 15, 14, 13, 12, 11];
 
     for (const date of matchDates) {
       const { start, end } = getDateTimeStampInterval(date);

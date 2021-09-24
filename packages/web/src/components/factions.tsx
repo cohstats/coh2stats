@@ -1,9 +1,9 @@
 import React, { memo } from "react";
 import { Card, Empty, Radio, Tooltip } from "antd";
-import { HeatMapChart } from "../../components/charts/factions-heatmap";
-import { Helper } from "../../components/helper";
+import { HeatMapChart } from "./charts/factions-heatmap";
+import { Helper } from "./helper";
 import { Typography } from "antd";
-import firebaseAnalytics from "../../analytics";
+import firebaseAnalytics from "../analytics";
 const { Text } = Typography;
 
 interface IProps {
@@ -73,7 +73,9 @@ const legend = (
 );
 
 const _FactionVsFactionCard: React.FC<IProps> = ({ title, data, style }) => {
-  const factionData: Record<string, Record<string, number>> = data["factionMatrix"];
+  const factionData: Record<string, Record<string, number>> = data
+    ? data["factionMatrix"]
+    : undefined;
 
   // We should use useMemo for these values, there is lot of iterations which are recalculated "unnecessary"
   const keysForHeatMapSet: Set<string> = new Set();
@@ -87,7 +89,7 @@ const _FactionVsFactionCard: React.FC<IProps> = ({ title, data, style }) => {
 
   if (!factionData) {
     return (
-      <Card title={title} style={{ ...style, ...{ width: 900, height: 250 } }}>
+      <Card title={title} style={{ ...{ width: 900, height: 250 }, ...style }}>
         <Empty />
       </Card>
     );
@@ -228,7 +230,7 @@ const _FactionVsFactionCard: React.FC<IProps> = ({ title, data, style }) => {
           />
         </>
       }
-      style={{ ...style, ...{ width: 995, height: 440 } }}
+      style={{ ...{ width: 995, height: 440 }, ...style }}
       extra={menu}
     >
       {!factionData ? (

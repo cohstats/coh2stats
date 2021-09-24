@@ -68,7 +68,7 @@ const analyzeMatchesByMaps = (matches: Array<ProcessedMatch>): Record<string, an
     fullStats[matchType] = {};
 
     for (const mapName in splitByMaps) {
-      fullStats[matchType][mapName] = createMapStats(matchesInType);
+      fullStats[matchType][mapName] = createMapStats(splitByMaps[mapName]);
     }
   }
 
