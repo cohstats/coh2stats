@@ -19,6 +19,7 @@ import MainHome from "./components/main-home";
 import CustomStats from "./pages/stats/custom-stats";
 import Leaderboards from "./pages/ladders";
 import PlayerCard from "./pages/players";
+import MapStats from "./pages/map-stats";
 
 const { Content } = Layout;
 
@@ -48,7 +49,10 @@ const App: React.FC = () => {
             <Route path={routes.fullStatsOldDetails()}>
               <OldStats />
             </Route>
-            <Route path={"/stats"}>
+            <Route path={routes.mapStats()}>
+              <MapStats />
+            </Route>
+            <Route path={routes.statsBase()}>
               <CustomStats />
             </Route>
             <Route path={routes.playerCardWithId()}>

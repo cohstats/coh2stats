@@ -12,6 +12,10 @@ const fullStatsOldDetails = (
   return `${statsBase()}/${frequency}/${timestamp}/${type}/${race}`;
 };
 
+const mapStats = () => {
+  return "/map-stats";
+};
+
 const commanderBase = () => {
   return "/commanders";
 };
@@ -67,6 +71,7 @@ const routes = {
   commanderList,
   commanderByID,
   aboutBase,
+  mapStats,
   bulletinsBase,
   searchBase,
   searchWithParam,
