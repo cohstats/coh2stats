@@ -89,7 +89,6 @@ const App: React.FC = () => {
         </Content>
         <MainFooter />
       </Layout>
-      <BetaVersion />
     </div>
   );
 };
