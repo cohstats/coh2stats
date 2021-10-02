@@ -35,4 +35,4 @@ jobs:
           yarn web test
       - name: Run web build
         run: |
-          yarn web build
+          CI=false yarn web build
