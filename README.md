@@ -50,6 +50,27 @@ Tagged versions are automatically deployed to https://coh2stats.com/
 
 `master` branch is automatically deployed to https://coh2-ladders-dev.web.app/
 
+### Development
+The repository is yarn workspace. Use `yarn` to manage this.
+Do `yarn install` from the project root to install dependencies.
+
+To run beautifier and linting:
+`yarn fix`
+
+Use Node version 12.x or as described in `/packages/functions/package.json`
+
+#### Web
+- To start local web dev: `yarn web start`
+- Test: `yarn web test` 
+- Build: `yarn web build`
+
+#### Functions
+- To build the functions:
+`yarn functions build`
+- To run the tests on functions:
+`yarn functions test`
+
+
 ### Env variables for Cloud Functions
 
 Env variables for the functions are deployed manually - not integrated in the CI/CD.
@@ -61,24 +82,6 @@ const config = firebaseConfig().env;
 
 See https://firebase.google.com/docs/functions/config-env for more info.
 
-### Development
-
-The repository is yarn workspace. Use `yarn` to manage this.
-Do `yarn install` to install dependencies.
-
-To start local web dev:
-`yarn web start`
-build:
-`yarn web build`
-
-To build the functions:
-`yarn functions build`
-
-To run the tests on functions:
-`yarn functions test`
-
-To run beautifier and linting:
-`yarn fix`
 
 ### Patch update steps for text bulletin / commander data
 

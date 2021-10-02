@@ -33,3 +33,6 @@ jobs:
       - name: Run web tests
         run: |
           yarn web test
+      - name: Run web build
+        run: |
+          yarn web build
