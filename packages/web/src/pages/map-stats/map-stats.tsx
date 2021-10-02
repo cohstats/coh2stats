@@ -5,6 +5,8 @@ import { ConfigProvider, Select, Space, Radio, Typography } from "antd";
 import DatePicker from "../../components/date-picker";
 import {
   convertDateToDayTimestamp,
+  convertDateToMonthTimestamp,
+  convertDateToStartOfMonth,
   getYesterdayDateTimestamp,
   useQuery,
 } from "../../utils/helpers";
@@ -15,10 +17,9 @@ import { isBefore, isAfter } from "date-fns";
 import MapStatsGeneralDataProvider from "./map-stats-general-data-provider";
 import CustomMapStatsRangeDataProvider from "./map-stats-range-data-provider";
 
-const { Link } = Typography;
 const { RangePicker } = DatePicker;
 
-type DatePickerType = "date" | "range" | undefined;
+type DatePickerType = "date" | "month" | "range" | undefined;
 
 const MapStats: React.FC = () => {
   const { push } = useHistory();
@@ -26,8 +27,8 @@ const MapStats: React.FC = () => {
 
   const query = useQuery();
 
-  const frequency = query.get("range") || "daily";
-  const timestamp = query.get("timeStamp") || `${getYesterdayDateTimestamp()}`;
+  const frequency = query.get("range") || "month";
+  const timestamp = query.get("timeStamp") || `${convertDateToMonthTimestamp(new Date())}`;
   const type = query.get("type") || "4v4";
   const map = query.get("map") || "8p_redball_express";
 
@@ -181,11 +182,20 @@ const MapStats: React.FC = () => {
   }, [datePickerType, dateValue]);
 
   const onDatePickerTypeSelect = (value: DatePickerType) => {
+    if (value === "month") {
+      setDateValue(convertDateToStartOfMonth(dateValue));
+    }
+
     setDatePickerType(value);
   };
 
   const onDateSelect = (value: string) => {
     let actualDate: string | Date = value;
+
+    if (datePickerType === "month") {
+      actualDate = convertDateToStartOfMonth(value);
+    }
+
     setDateValue(new Date(actualDate));
   };
 
@@ -203,6 +213,7 @@ const MapStats: React.FC = () => {
             size={"large"}
           >
             <Option value="daily">Daily</Option>
+            <Option value="month">Month</Option>
             <Option value="range">Custom Range</Option>
           </Select>
           {datePickerType !== "range" ? (
