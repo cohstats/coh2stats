@@ -66,8 +66,12 @@ const PlayerCard = () => {
         const { data } = await getPlayerPersonalStats(payLoad);
         setData(data);
       } catch (e) {
+        let errorMessage = "Failed to do something exceptional";
+        if (e instanceof Error) {
+          errorMessage = e.message;
+        }
         console.error(e);
-        setError(e.message);
+        setError(errorMessage);
       } finally {
         setIsLoading(false);
       }

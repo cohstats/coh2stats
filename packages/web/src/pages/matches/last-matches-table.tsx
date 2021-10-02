@@ -357,19 +357,19 @@ const LastMatchesTable: React.FC<IProps> = ({ data, profileID }) => {
       filters: [
         {
           text: "1 vs 1",
-          value: "1",
+          value: 1,
         },
         {
           text: "2 vs 2",
-          value: "2",
+          value: 2,
         },
         {
           text: "3 vs 3",
-          value: "3",
+          value: 3,
         },
         {
           text: "4 vs 4",
-          value: "4",
+          value: 4,
         },
       ],
       onFilter: (value: any, record: any) => record.matchtype_id === value,
