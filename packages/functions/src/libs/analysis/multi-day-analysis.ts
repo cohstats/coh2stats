@@ -10,7 +10,7 @@ import {
   getWeekTimeStamps,
   sumValuesOfObjects,
 } from "../helpers";
-import { saveAnalysis, saveTopAnalysis } from "./analysis";
+import { saveAnalysis, saveMapAnalysis, saveTopAnalysis } from "./analysis";
 import { frequencyType, StatDict } from "../types";
 
 /**
@@ -117,7 +117,7 @@ const generateMultiDayAnalysis = async (
 const runAndSaveMultiDayAnalysis = async (
   date: Date | number,
   frequency: frequencyType = "week",
-  type: "normal" | "top" = "normal",
+  type: "normal" | "top" | "map" = "normal",
 ): Promise<void> => {
   const eachDate = getTimeStamps(date, frequency);
   functions.logger.log(
@@ -130,6 +130,8 @@ const runAndSaveMultiDayAnalysis = async (
 
   if (type === "top") {
     await saveTopAnalysis(finalMultiDayStats, saveTimeStamp, frequency);
+  } else if (type === "map") {
+    await saveMapAnalysis(finalMultiDayStats, saveTimeStamp, frequency);
   } else {
     await saveAnalysis(finalMultiDayStats, saveTimeStamp, frequency);
   }
