@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
 import routes from "../../routes";
-import { ConfigProvider, Select, Space, Radio, Typography } from "antd";
+import { ConfigProvider, Select, Space } from "antd";
 import DatePicker from "../../components/date-picker";
 import {
   convertDateToDayTimestamp,
@@ -160,7 +160,6 @@ const MapStats: React.FC = () => {
   // better solution.
   React.useEffect(() => {
     let typeToLoad = "4v4";
-    let raceToLoad = "wermacht";
 
     if (validStatsTypes.includes(type)) {
       typeToLoad = type;
