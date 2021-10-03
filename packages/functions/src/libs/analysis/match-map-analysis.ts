@@ -2,6 +2,7 @@ import { ProcessedMatch } from "../types";
 import { filterOnlyAutomatchVsPlayers, sortMatchesByType } from "./match-analysis";
 import { raceIds, resultType } from "../coh2-api";
 import { addFactionMatrixAnalysisToStats } from "./composition";
+import { addGameTimeAnalysisToStats } from "./utils";
 
 const analyzeMapMatch = (match: ProcessedMatch, stats: Record<string, any>) => {
   stats["matchCount"] = stats["matchCount"] + 1 || 1;
@@ -16,6 +17,8 @@ const analyzeMapMatch = (match: ProcessedMatch, stats: Record<string, any>) => {
       stats[faction]["losses"] = stats[faction]["losses"] + 1 || 1;
     }
   }
+
+  addGameTimeAnalysisToStats(match, stats);
 
   return stats;
 };
