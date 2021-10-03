@@ -7,6 +7,7 @@ import {
 } from "../coh2-api";
 import { ProcessedMatch, steamIDsInLadderInterface } from "../types";
 import { addFactionMatrixAnalysisToStats } from "./composition";
+import { addGameTimeAnalysisToStats } from "./utils";
 
 /**
  * FYI: This function doesn't do copy of the stats object - uses reference.
@@ -46,6 +47,8 @@ const analyzeMatch = (match: ProcessedMatch, stats: Record<string, any>) => {
       });
     }
   }
+
+  addGameTimeAnalysisToStats(match, stats);
 
   return stats;
 };
