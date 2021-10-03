@@ -23,7 +23,7 @@ const MapStatsGeneralDataProvider: React.FC<IProps> = ({ urlChanger }) => {
   const data: Record<string, any> = useData("mapStats");
   const query = useQuery();
 
-  const frequency = "daily"; // We will provide only daily stats
+  const frequency = query.get("range") || "month";
   const timestamp = query.get("timeStamp") || "0000";
   const type = query.get("type") || "4v4";
 
