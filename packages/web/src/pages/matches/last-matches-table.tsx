@@ -47,15 +47,15 @@ const ExpandedMatch: React.FC<{ record: any }> = ({ record }) => {
   };
 
   const handleDownloadGameData = () => {
-    const blob = new Blob([JSON.stringify(record)], { type:'application/json' });
+    const blob = new Blob([JSON.stringify(record)], { type: "application/json" });
     const href = URL.createObjectURL(blob);
-    const link = document.createElement('a');
+    const link = document.createElement("a");
     link.href = href;
     link.download = `coh2stats_match_${record.id}.json`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-  }
+  };
 
   let axisPlayers = getMatchPlayersByFaction(record.matchhistoryreportresults, "axis");
   let alliesPlayers = getMatchPlayersByFaction(record.matchhistoryreportresults, "allies");
@@ -165,7 +165,9 @@ const ExpandedMatch: React.FC<{ record: any }> = ({ record }) => {
           okText={"Close"}
           footer={[
             <Button onClick={handleDownloadGameData}>Download game data</Button>,
-            <Button onClick={handleCancel} type="primary">Close</Button>,
+            <Button onClick={handleCancel} type="primary">
+              Close
+            </Button>,
           ]}
         >
           <MatchDetails data={record} />
