@@ -10,7 +10,7 @@ export const MapsPlayTimeHistogram: React.FC<IProps> = ({ data }) => {
   const chartData: any[] | undefined = [];
 
   if (!data || !Object.prototype.hasOwnProperty.call(data, "gameTimeSpread")) {
-    return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={`No data`} />;
+    return <Empty />;
   }
 
   for (const [key, value] of Object.entries(data["gameTimeSpread"])) {

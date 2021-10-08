@@ -39,7 +39,7 @@ export const MapsPlayTime: React.FC<IProps> = ({ data, average = true }) => {
   });
 
   if (nodata) {
-    return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={`No data`} />;
+    return <Empty />;
   }
 
   return (
