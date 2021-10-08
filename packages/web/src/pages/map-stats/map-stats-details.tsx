@@ -235,7 +235,7 @@ const MapStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
           <Card
             title={
               <>
-                <span>{`Win rate deviation per map ${type}`}</span>{" "}
+                <span>{`Win rate deviation ${type}`}</span>{" "}
                 <Helper
                   text={
                     <>
@@ -265,7 +265,7 @@ const MapStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
           <Card
             title={
               <>
-                <span>{`Average playtime per map ${type}`}</span>{" "}
+                <span>{`Average playtime ${type}`}</span>{" "}
                 <Helper
                   text={
                     "We started measuring playtime from 21st of September 2021. Including days in custom range " +
