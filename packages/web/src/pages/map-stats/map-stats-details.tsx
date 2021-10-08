@@ -12,7 +12,7 @@ import {
 } from "antd";
 import { MapBarChart } from "../../components/charts/maps-bar";
 import { mapStatsBase } from "../../titles";
-import { capitalize, formatDate } from "../../utils/helpers";
+import { formatDate } from "../../utils/helpers";
 import { useLocation } from "react-router-dom";
 import { FactionVsFactionCard } from "../../components/factions";
 import { isTimeStampInPatches } from "../../coh/patches";
