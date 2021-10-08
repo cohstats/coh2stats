@@ -52,6 +52,17 @@ function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
+// https://en.wikipedia.org/wiki/Root_mean_square
+const calculateRMS = (...args: number[]) => {
+  return Math.sqrt(
+    (1 / args.length) *
+      args.reduce((sum, value) => {
+        // x^2
+        return sum + value * value;
+      }, 0),
+  );
+};
+
 export {
   getYesterdayDateTimestamp,
   convertDateToDayTimestamp,
@@ -62,5 +73,6 @@ export {
   capitalize,
   useQuery,
   formatDate,
+  calculateRMS,
   timeAgo,
 };

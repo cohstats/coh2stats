@@ -19,6 +19,10 @@ import { isTimeStampInPatches } from "../../coh/patches";
 import { useMediaQuery } from "react-responsive";
 import { MapsWinRateChart } from "../../components/charts/map-stats/maps-winrate-bar";
 import { MapsFactionWinRateChart } from "../../components/charts/map-stats/maps-winrate-faction-bar";
+import { MapsPlayTime } from "../../components/charts/map-stats/maps-playtime-bar";
+import { MapsWinRateSqrtChart } from "../../components/charts/map-stats/maps-winrate-sqrt-root-bar";
+import { Helper } from "../../components/helper";
+import { MapsPlayTimeHistogram } from "../../components/charts/map-stats/maps-playtime-histogram";
 
 const { Text, Link } = Typography;
 const { Option } = Select;
@@ -67,7 +71,7 @@ interface IProps {
 
 const MapStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
   const query = useQuery();
-  const isMobile = useMediaQuery({ query: "(max-width: 1023px)" });
+  const isMobile = useMediaQuery({ query: "(max-width: 920px)" });
 
   const type = query.get("type") || "4v4";
 
@@ -155,6 +159,9 @@ const MapStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
     return <div style={{ textAlign: "center" }}>{patchesJSX}</div>;
   };
 
+  const cardWidth = 510;
+  const cardHeight = 420;
+
   return (
     <>
       <Row justify={"center"}>
@@ -206,7 +213,7 @@ const MapStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
             bodyStyle={
               isMobile
                 ? { width: "90vw", height: 300 }
-                : { width: "48vw", maxWidth: 540, height: 460 }
+                : { width: "48vw", maxWidth: cardWidth, height: cardHeight }
             }
           >
             <MapsWinRateChart data={data} />
@@ -216,10 +223,64 @@ const MapStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
             bodyStyle={
               isMobile
                 ? { width: "90vw", height: 300 }
-                : { width: "48vw", maxWidth: 540, height: 460 }
+                : { width: "48vw", maxWidth: cardWidth, height: cardHeight }
             }
           >
             <MapBarChart maps={mapData} />
+          </Card>
+        </Space>
+      </Row>
+      <Row justify={"center"} style={{ paddingTop: 40 }}>
+        <Space size={"large"} wrap style={{ display: "flex", justifyContent: "center" }}>
+          <Card
+            title={
+              <>
+                <span>{`Win rate deviation per map ${type}`}</span>{" "}
+                <Helper
+                  text={
+                    <>
+                      <b>The lesser the more balanced map for all factions.</b> It shows the
+                      difference from 50% Win Rate for all factions on the map. It's calculated
+                      using{" "}
+                      <Link
+                        href={"https://en.wikipedia.org/wiki/Root_mean_square"}
+                        target="_blank"
+                      >
+                        RMS formula.
+                      </Link>{" "}
+                      RMS = Sqrt[ (1/5) * Sum of (winrate% - 50%)^2 ]
+                    </>
+                  }
+                />
+              </>
+            }
+            bodyStyle={
+              isMobile
+                ? { width: "90vw", height: 300 }
+                : { width: "48vw", maxWidth: cardWidth, height: cardHeight }
+            }
+          >
+            <MapsWinRateSqrtChart data={data} />
+          </Card>
+          <Card
+            title={
+              <>
+                <span>{`Average playtime per map ${type}`}</span>{" "}
+                <Helper
+                  text={
+                    "We started measuring playtime from 21st of September 2021. Including days in custom range " +
+                    "before this date can give you inaccurate results."
+                  }
+                />
+              </>
+            }
+            bodyStyle={
+              isMobile
+                ? { width: "90vw", height: 300 }
+                : { width: "48vw", maxWidth: cardWidth, height: cardHeight }
+            }
+          >
+            <MapsPlayTime data={data} average={true} />
           </Card>
         </Space>
       </Row>
@@ -229,7 +290,7 @@ const MapStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
             <Card
               title={`Winrate diff per factions on maps ${type}`}
               style={{ marginTop: 40 }}
-              bodyStyle={isMobile ? { width: "90vw", height: 300 } : { width: 1105, height: 650 }}
+              bodyStyle={isMobile ? { width: "90vw", height: 300 } : { width: 1155, height: 650 }}
             >
               <MapsFactionWinRateChart data={data} />
             </Card>
@@ -240,12 +301,21 @@ const MapStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
               <FactionVsFactionCard
                 title={`${map} - ${type} team composition matrix`}
                 data={data[map]}
-                style={{ marginTop: 10, width: 1105 }}
+                style={{ marginTop: 10, width: 1155 }}
               />
             </Space>
           </Row>
         </>
       )}
+      <Row justify={"center"} style={{ paddingTop: 0 }}>
+        <Card
+          title={`${map} - ${type} game time`}
+          style={{ marginTop: 40 }}
+          bodyStyle={isMobile ? { width: "90vw", height: 300 } : { width: 800, height: 450 }}
+        >
+          <MapsPlayTimeHistogram data={data[map]} />
+        </Card>
+      </Row>
     </>
   );
 };
