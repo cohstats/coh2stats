@@ -1,24 +1,26 @@
 import React from "react";
 import { Alert } from "antd";
 
-import hasIn = require("lodash.hasIn");
+const defaultCloseable = true;
 
-const alertTypes = [ "success", "info", "warning", "error" ]
-const defaultType = "info"
-
-function validateType(type:string) {
-    if (hasIn(type, alertTypes)) {
-        return type
-    }
-    return defaultType
+export interface AlertEvent {
+    /** Type of Alert styles, options:`success`, `info`, `warning`, `error` */
+    type: 'success' | 'info' | 'warning' | 'error';
+    /** Content of Alert */
+    message: React.ReactNode;
+    /** Additional content of Alert */
+    description?: React.ReactNode;
+    /** Whether Alert can be closed */
+    closable?: boolean;
 }
 
-export const AlertBox: React.FC = (type:string, message:string, description:string) => {
+export const AlertBox: React.FC<AlertEvent> = (event:AlertEvent) => {
     return (
         <Alert 
-            message={message} 
-            type={validateType(type)} 
-            description={description} 
+            message={event.message} 
+            type={event.type} 
+            description={event.description} 
+            closable={event.closable ?? defaultCloseable}
         />
     );
 }
