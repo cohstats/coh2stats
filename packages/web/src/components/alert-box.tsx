@@ -7,16 +7,16 @@ export interface AlertEvent {
     /** Type of Alert styles, options:`success`, `info`, `warning`, `error` */
     type: 'success' | 'info' | 'warning' | 'error';
     /** Content of Alert */
-    message: React.ReactNode;
+    message: React.ReactNode | string;
     /** Additional content of Alert */
-    description?: React.ReactNode;
+    description?: React.ReactNode | string;
     /** Whether Alert can be closed */
     closable?: boolean;
 }
 
 export const AlertBox: React.FC<AlertEvent> = (event:AlertEvent) => {
     return (
-        <Alert 
+        <Alert data-testid="alert-box"
             message={event.message} 
             type={event.type} 
             description={event.description} 
