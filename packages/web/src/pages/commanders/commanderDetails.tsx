@@ -95,7 +95,12 @@ export const CommanderDetails = () => {
                           shape="square"
                           size={64}
                         />
-                        <Badge count={0} overflowCount={999} showZero offset={[0, -32]}>
+                        <Badge
+                          count={item.commandPoints}
+                          overflowCount={999}
+                          showZero
+                          offset={[0, -32]}
+                        >
                           <></>
                         </Badge>
                       </div>
