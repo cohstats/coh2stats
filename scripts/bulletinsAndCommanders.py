@@ -30,6 +30,20 @@ def translateRaceID(RaceIn):
             if raceElement['raceIn'] == RaceIn:
                 return (raceElement['raceOut'])
 
+
+# function gets the command point requirements of an ability for a commander
+def parseCommandPointRequirements(abilityRoot):
+    referenceXml = abilityRoot.findall(".//*instance_reference/[@name='upgrade']")[0].attrib['value']
+    if not referenceXml:
+        referenceXml = abilityRoot.findall(".//*instance_reference/[@name='ability']")[0].attrib['value']
+    xmlPath = COH_PATH_INSTANCES+referenceXml+'.xml'
+    xmlPath = xmlPath.replace('\\','/')
+    
+    tree = ET.parse(xmlPath)
+    xmlroot = tree.getroot()
+
+    return xmlroot.findall(".//*float/[@name='command']")[-1].attrib['value']
+
 #function returns commander ability detail, use xml reference from source files as input
 def parseAbilityDetails(referenceXml):
 
@@ -70,6 +84,12 @@ def parseAbilityDetails(referenceXml):
         print('Cannot find Icon for ' + xmlPath)
         abilityDetails['icon'] = 'undefined'
 
+    # look for command points requirements
+    try:
+        abilityDetails['commandPoints'] = parseCommandPointRequirements(xmlroot)
+    except:
+        print('Cannot find command point requirements for ' + referenceXml)
+        abilityDetails['commandPoints'] = 'undefined'
 
     return abilityDetails
 
@@ -125,6 +145,7 @@ def parseCommanderRecord(xmlPath):
         details = parseAbilityDetails(xmlAbility.attrib['value'])
         ability['name'] = details['name']
         ability['description'] = details['description']
+        ability['commandPoints'] = details['commandPoints']
         try:
             ability['icon'] = details['icon']
         except:
