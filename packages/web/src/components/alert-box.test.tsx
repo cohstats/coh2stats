@@ -1,6 +1,6 @@
 import React from "react";
 
-import { render, fireEvent, waitForElement } from "@testing-library/react";
+import { render } from "@testing-library/react";
 
 import { AlertBox, AlertEvent } from "./alert-box";
 
@@ -17,7 +17,7 @@ describe("<AlertBox />", () => {
       closeable: false,
     };
     const { getByTestId } = renderAlertBox({ ...params });
-    const errorAlertBox = await getByTestId("alert-box");
+    const errorAlertBox = getByTestId("alert-box");
     const errorMessage = errorAlertBox.getElementsByClassName("ant-alert-message");
     expect(errorMessage[0]).toHaveTextContent("error");
     const errorDescription = errorAlertBox.getElementsByClassName("ant-alert-description");
