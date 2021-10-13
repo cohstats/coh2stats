@@ -1,6 +1,12 @@
 import * as allCommandersJSON from "./data/wbp2021/commanderData.json";
 import { CommanderData, RaceName } from "./types";
+const objectScan = require('object-scan');
 const allCommanders: Record<string, any> = (allCommandersJSON as Record<string, any>)["default"];
+
+const searchCommanders(search: string): any | null => {
+  const searchResults = objectScan(allCommanders, "name", search);
+  return searchResults ?? null;
+};
 
 const convertCommanderIDToName = (commanderID: string): string => {
   if (Object.prototype.hasOwnProperty.call(allCommanders, commanderID)) {
@@ -29,4 +35,4 @@ const getCommanderIconPath = (name: string): string => {
   return `/resources/exportedIcons/${name}.png`;
 };
 
-export { convertCommanderIDToName, getCommanderData, getCommanderByRaces, getCommanderIconPath };
+export { convertCommanderIDToName, getCommanderData, getCommanderByRaces, getCommanderIconPath, searchCommanders };

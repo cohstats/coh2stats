@@ -42,6 +42,7 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
-    "date-fns": "^2.23.0"
+    "date-fns": "^2.23.0",
+    "object-scan": "^17.1.0"
   }
 }
