@@ -3,7 +3,7 @@ import { CommanderData, RaceName } from "./types";
 const objectScan = require('object-scan');
 const allCommanders: Record<string, any> = (allCommandersJSON as Record<string, any>)["default"];
 
-const searchCommanders(search: string): any | null => {
+const searchCommanders = (search: string): any => {
   const searchResults = objectScan(allCommanders, "name", search);
   return searchResults ?? null;
 };
