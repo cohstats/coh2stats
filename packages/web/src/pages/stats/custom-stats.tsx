@@ -141,6 +141,27 @@ const CustomStats: React.FC = () => {
           disabledDate={disabledDate}
           onChange={onRangePickerChange}
           size={"large"}
+          dateRender={(current) => {
+            const style = {
+              border: "",
+              borderRadius: "",
+            };
+            for (const date of patchDates) {
+              if (
+                date.getDate() === current.getDate() &&
+                date.getMonth() === current.getMonth() &&
+                date.getFullYear() === current.getFullYear()
+              ) {
+                style.border = "1px solid #1890ff";
+                style.borderRadius = "50%";
+              }
+            }
+            return (
+              <div className="ant-picker-cell-inner" style={style}>
+                {current.getDate()}
+              </div>
+            );
+          }}
         />
       </ConfigProvider>
     );
