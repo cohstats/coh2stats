@@ -19,9 +19,8 @@ describe("<AlertBox />", () => {
     const { getByTestId } = renderAlertBox({ ...params });
     const errorAlertBox = await getByTestId("alert-box");
     const errorMessage = errorAlertBox.getElementsByClassName("ant-alert-message");
-    expect(errorMessage).toHaveValue("error");
+    expect(errorMessage[0]).toHaveTextContent("error");
     const errorDescription = errorAlertBox.getElementsByClassName("ant-alert-description");
-    expect(errorDescription).toHaveValue("this is an error");
-    expect(errorAlertBox).toContainElement(<button />);
+    expect(errorDescription[0]).toHaveTextContent("this is an error");
   });
 });
