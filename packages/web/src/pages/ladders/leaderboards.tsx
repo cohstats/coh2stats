@@ -6,6 +6,7 @@ import { isAfter, isBefore } from "date-fns";
 import { useHistory } from "react-router";
 
 import { LaddersDataArrayObject, LaddersDataObject, RaceName } from "../../coh/types";
+import { getAllPatchDates } from "../../coh/patches";
 import { ColumnsType } from "antd/lib/table";
 import firebaseAnalytics from "../../analytics";
 import {
@@ -43,6 +44,8 @@ const Leaderboards = () => {
     query.get("historicTimeStamp") || `${getYesterdayDateTimestamp() - 86400}`;
   const type = query.get("type") || "1v1";
   const race = query.get("race") || "soviet";
+
+  const patchDates = getAllPatchDates();
 
   const [selectedTimeStamp, setSelectedTimeStamp] = useState(timestamp);
   const [selectedHistoricTimeStamp, setHistoricTimeStamp] = useState(historicTimestamp);
@@ -313,6 +316,27 @@ const Leaderboards = () => {
           defaultValue={defaultValue}
           disabledDate={disabledDate}
           size={"large"}
+          dateRender={(current) => {
+            const style = {
+              border: "",
+              borderRadius: "",
+            };
+            for (const date of patchDates) {
+              if (
+                date.getDate() === current.getDate() &&
+                date.getMonth() === current.getMonth() &&
+                date.getFullYear() === current.getFullYear()
+              ) {
+                style.border = "1px solid #1890ff";
+                style.borderRadius = "50%";
+              }
+            }
+            return (
+              <div className="ant-picker-cell-inner" style={style}>
+                {current.getDate()}
+              </div>
+            );
+          }}
         />
       </ConfigProvider>
     );

@@ -57,4 +57,13 @@ const getCurrentPatch = () => {
   return patches[currentPatch];
 };
 
-export { isTimeStampInPatches, getCurrentPatch };
+const getAllPatchDates = () => {
+  const patchDates = [];
+  for (const patch of Object.values(patches)) {
+    let date = new Date(patch.startDateUnixTimeStamp * 1000);
+    patchDates.push(date);
+  }
+  return patchDates;
+};
+
+export { isTimeStampInPatches, getCurrentPatch, getAllPatchDates };
