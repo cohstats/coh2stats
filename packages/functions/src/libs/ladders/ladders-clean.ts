@@ -8,9 +8,9 @@ import { RawLaddersObject } from "../types";
 const cleanLaddersData = (data: RawLaddersObject): RawLaddersObject => {
   delete data.result;
   data.leaderboardStats = data.leaderboardStats.map((statObject) => {
-    delete statObject.rankTotal;
-    delete statObject.regionRank;
-    delete statObject.regionRankTotal;
+    delete statObject.ranktotal;
+    delete statObject.regionrank;
+    delete statObject.regionranktotal;
     return statObject;
   });
 

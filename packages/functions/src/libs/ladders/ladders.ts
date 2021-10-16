@@ -96,11 +96,6 @@ const getAndSaveAllLadders = async (): Promise<Set<string>> => {
         );
         const cleanedData = cleanLaddersData(data);
 
-        functions.logger.debug(
-          "Region rank should be cleaned:",
-          cleanedData.leaderboardStats[0].regionRank,
-        );
-
         await firestore().collection(collectionPath).doc(faction).set(cleanedData);
       } catch (e) {
         functions.logger.error(`Failed to process ${typeOfGame} - ${faction}`, e);
