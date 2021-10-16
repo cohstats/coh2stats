@@ -238,6 +238,8 @@ const CustomStats: React.FC = () => {
         toTimeStampToLoad: convertDateToDayTimestamp(rangeDate.toDate).toString(),
       });
     }
+    // We don't really want to track other things used here. Only the listed deps should invoke change.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [datePickerType, dateValue, statsSource]);
 
   const onDatePickerTypeSelect = (value: DatePickerType) => {

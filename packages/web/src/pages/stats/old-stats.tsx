@@ -34,6 +34,7 @@ const OldStats: React.FC = () => {
       pathname: routes.statsBase(),
       search: searchValue,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

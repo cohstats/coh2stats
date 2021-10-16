@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Typography } from "antd";
 import { firebase } from "../../firebase";
 import { Loading } from "../../components/loading";
-import firebaseAnalytics from "../../analytics";
 
 import { validStatsTypes } from "../../coh/types";
 import { useLocation } from "react-router-dom";
@@ -81,6 +80,9 @@ const CustomMapStatsRangeDataProvider: React.FC<IProps> = ({ urlChanger }) => {
         setIsLoading(false);
       }
     })();
+    // We don't really want to track TYPE here. We used it to save time and setup specific data ASAP.
+    // Although in this case this might not the be the best solution - however no time to test right now.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fromTimeStamp, toTimeStamp]);
 
   useEffect(() => {

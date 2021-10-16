@@ -14,7 +14,6 @@ import { MainFooter } from "./components/main-footer";
 import { MainHeader } from "./components/main-header";
 import About from "./pages/about";
 import CustomSearch from "./pages/search";
-import { BetaVersion } from "./components/beta-version";
 import MainHome from "./components/main-home";
 import CustomStats from "./pages/stats/custom-stats";
 import Leaderboards from "./pages/ladders";

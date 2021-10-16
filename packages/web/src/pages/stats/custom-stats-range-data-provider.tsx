@@ -87,6 +87,8 @@ const CustomStatsRangeDataProvider: React.FC<IProps> = ({ urlChanger }) => {
         setIsLoading(false);
       }
     })();
+    // We don't want to track TYPE as dep
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fromTimeStamp, toTimeStamp, statsSource]);
 
   useEffect(() => {
