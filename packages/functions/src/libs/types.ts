@@ -24,7 +24,7 @@ type RawStatGroup = {
 };
 
 type RawLeaderboardStat = {
-  statGroup_id: number;
+  statgroup_id: number;
   leaderboard_id: number;
   wins: number;
   losses: number;
@@ -32,11 +32,11 @@ type RawLeaderboardStat = {
   disputes: number;
   drops: number;
   rank: number;
-  rankTotal?: number;
-  regionRank?: number;
-  regionRankTotal?: number;
-  rankLevel: number;
-  lastMatchDate: number;
+  ranktotal?: number;
+  regionrank?: number;
+  regionranktotal?: number;
+  ranklevel: number;
+  lastmatchdate: number;
 };
 
 export interface RawLaddersObject {
