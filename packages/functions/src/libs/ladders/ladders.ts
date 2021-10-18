@@ -42,7 +42,7 @@ const invokeGetPlayerMatches = async (profileIds: Array<string>) => {
   }
 };
 
-const callGetPlayerMatches = async (profileIds: Set<string>) => {
+const callGetPlayerMatches = async (profileIds: Set<string>): Promise<void> => {
   const chunkSize = CHUNK_PROFILES_TO_PROCESS;
   const profileIdsArray = [...profileIds];
 
@@ -62,9 +62,9 @@ const callGetPlayerMatches = async (profileIds: Set<string>) => {
  * But we don't really need to stress the COH API that much. Speed is not factor here
  * so doing it one by one is OK in this case.
  *
- * This also triggers match downloads
+ * Returns set of profile IDS
  */
-const getAndSaveAllLadders = async (): Promise<void> => {
+const getAndSaveAllLadders = async (): Promise<Set<string>> => {
   const currentDateTimeStamp = getCurrentDateTimestamp();
   let profileIDs: Set<string> = new Set();
   let totalQueriedPositions = 0;
@@ -96,11 +96,6 @@ const getAndSaveAllLadders = async (): Promise<void> => {
         );
         const cleanedData = cleanLaddersData(data);
 
-        functions.logger.debug(
-          "Region rank should be cleaned:",
-          cleanedData.leaderboardStats[0].regionRank,
-        );
-
         await firestore().collection(collectionPath).doc(faction).set(cleanedData);
       } catch (e) {
         functions.logger.error(`Failed to process ${typeOfGame} - ${faction}`, e);
@@ -113,11 +108,11 @@ const getAndSaveAllLadders = async (): Promise<void> => {
     timeStamp: currentDateTimeStamp,
   });
 
-  await callGetPlayerMatches(profileIDs);
-
   functions.logger.info(
     `Finished processing all ladders, extracted ${profileIDs.size} unique player profiles out of ${totalQueriedPositions} positions.`,
   );
+
+  return profileIDs;
 };
 
-export { getAndSaveAllLadders };
+export { getAndSaveAllLadders, callGetPlayerMatches };

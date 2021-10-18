@@ -108,9 +108,8 @@ const PlayerCard = () => {
   const playerName = playerRelicProfile.alias;
   document.title = `${playerCardBase} - ${playerName}`;
 
-  const { totalGames, lastGameDate, bestRank, mostPlayed } = calculateOverallStatsForPlayerCard(
-    relicData.leaderboardStats,
-  );
+  const { totalGames, lastGameDate, bestRank, mostPlayed, totalWinRate } =
+    calculateOverallStatsForPlayerCard(relicData.leaderboardStats);
 
   return (
     <div key={steamid}>
@@ -173,6 +172,9 @@ const PlayerCard = () => {
             </div>
             <div>
               <Text strong>{totalGames} total games</Text>
+            </div>
+            <div>
+              <Text strong>{(totalWinRate * 100).toFixed(0)}% total winrate</Text>
             </div>
             <br />
             <div>

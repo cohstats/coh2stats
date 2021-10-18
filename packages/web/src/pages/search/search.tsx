@@ -119,7 +119,7 @@ const CustomSearch: React.FC = () => {
         }
       }
     })();
-  }, [searchParam]);
+  }, [searchParam, push]);
 
   const onSearch = async (value: string) => {
     push(routes.searchWithParam(value));

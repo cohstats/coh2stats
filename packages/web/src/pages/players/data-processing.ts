@@ -52,6 +52,8 @@ const calculateOverallStatsForPlayerCard = (
 ): Record<string, any> => {
   let totalGames = 0;
   let lastGameDate = 0;
+  let totalWins = 0;
+  let totalWinRate = null;
 
   let bestRank = {
     rank: Infinity,
@@ -66,6 +68,7 @@ const calculateOverallStatsForPlayerCard = (
   };
 
   for (const stat of data) {
+    totalWins += stat.wins;
     totalGames += stat.wins + stat.losses;
     if (stat.lastmatchdate > lastGameDate) {
       lastGameDate = stat.lastmatchdate;
@@ -90,11 +93,14 @@ const calculateOverallStatsForPlayerCard = (
     }
   }
 
+  totalWinRate = totalWins / totalGames;
+
   return {
     totalGames,
     lastGameDate,
     bestRank,
     mostPlayed,
+    totalWinRate,
   };
 };
 

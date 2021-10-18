@@ -11,6 +11,7 @@ import {
   useQuery,
 } from "../../utils/helpers";
 import { validRaceNames, validStatsTypes } from "../../coh/types";
+import { getAllPatchDates } from "../../coh/patches";
 import enGB from "antd/lib/locale/en_GB";
 
 import { isBefore, isAfter } from "date-fns";
@@ -37,6 +38,8 @@ const CustomStats: React.FC = () => {
 
   const fromTimeStamp = query.get("fromTimeStamp") || "";
   const toTimeStamp = query.get("toTimeStamp") || "";
+
+  const patchDates = getAllPatchDates();
 
   const [datePickerType, setDatePickerType] = useState(frequency as DatePickerType);
   const [statsSource, setStatsSource] = useState(statsSourceQuery ? statsSourceQuery : "all");
@@ -73,7 +76,6 @@ const CustomStats: React.FC = () => {
     if (pickerType === "range") {
       return <>ERROR</>;
     }
-
     return (
       // locale enGB for Monday as start of the week
       <ConfigProvider locale={enGB}>
@@ -84,6 +86,27 @@ const CustomStats: React.FC = () => {
           defaultValue={dateValue}
           disabledDate={disabledDate}
           size={"large"}
+          dateRender={(current) => {
+            const style = {
+              border: "",
+              borderRadius: "",
+            };
+            for (const date of patchDates) {
+              if (
+                date.getDate() === current.getDate() &&
+                date.getMonth() === current.getMonth() &&
+                date.getFullYear() === current.getFullYear()
+              ) {
+                style.border = "1px solid #1890ff";
+                style.borderRadius = "50%";
+              }
+            }
+            return (
+              <div className="ant-picker-cell-inner" style={style}>
+                {current.getDate()}
+              </div>
+            );
+          }}
         />
       </ConfigProvider>
     );
@@ -118,6 +141,27 @@ const CustomStats: React.FC = () => {
           disabledDate={disabledDate}
           onChange={onRangePickerChange}
           size={"large"}
+          dateRender={(current) => {
+            const style = {
+              border: "",
+              borderRadius: "",
+            };
+            for (const date of patchDates) {
+              if (
+                date.getDate() === current.getDate() &&
+                date.getMonth() === current.getMonth() &&
+                date.getFullYear() === current.getFullYear()
+              ) {
+                style.border = "1px solid #1890ff";
+                style.borderRadius = "50%";
+              }
+            }
+            return (
+              <div className="ant-picker-cell-inner" style={style}>
+                {current.getDate()}
+              </div>
+            );
+          }}
         />
       </ConfigProvider>
     );
@@ -194,6 +238,8 @@ const CustomStats: React.FC = () => {
         toTimeStampToLoad: convertDateToDayTimestamp(rangeDate.toDate).toString(),
       });
     }
+    // We don't really want to track other things used here. Only the listed deps should invoke change.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [datePickerType, dateValue, statsSource]);
 
   const onDatePickerTypeSelect = (value: DatePickerType) => {

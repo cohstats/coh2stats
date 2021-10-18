@@ -58,7 +58,7 @@ const analyzeMatch = (match: ProcessedMatch, stats: Record<string, any>) => {
  * and games which ended with win or lose, other result types are ignored
  * @param matches
  */
-const filterOnlyAutomatchVsPlayers = (matches: Array<ProcessedMatch>) => {
+const filterOnlyAutomatchVsPlayers = (matches: Array<ProcessedMatch>): Array<ProcessedMatch> => {
   // We could also filter based on the match_type ID but I am not sure
   // about that param
 
