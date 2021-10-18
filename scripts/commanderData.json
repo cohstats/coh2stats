@@ -6,8 +6,8 @@
         "races": [
             "usf"
         ],
-        "iconSmall": "Icons_commander_portrait_us_forces_commander_01",
-        "iconlarge": "Icons_commander_portrait_us_forces_commander_01_large",
+        "iconSmall": "Icons_commander_portrait_aef_commander_01_small",
+        "iconlarge": "Icons_commander_portrait_aef_commander_01",
         "abilities": [
             {
                 "name": "Paratroopers",
@@ -48,8 +48,8 @@
         "races": [
             "usf"
         ],
-        "iconSmall": "Icons_commander_portrait_us_forces_commander_03",
-        "iconlarge": "Icons_commander_portrait_us_forces_commander_03_large",
+        "iconSmall": "Icons_commander_portrait_aef_commander_03_small",
+        "iconlarge": "Icons_commander_portrait_aef_commander_03",
         "abilities": [
             {
                 "name": "M10 'Wolverine' Tank Destroyer",
@@ -141,8 +141,8 @@
         "races": [
             "usf"
         ],
-        "iconSmall": "Icons_commander_portrait_us_forces_commander_07",
-        "iconlarge": "Icons_commander_portrait_us_forces_commander_07_large",
+        "iconSmall": "Icons_commander_portrait_aef_commander_07_small",
+        "iconlarge": "Icons_commander_portrait_aef_commander_07",
         "abilities": [
             {
                 "name": "Riflemen Field Defenses",
@@ -183,8 +183,8 @@
         "races": [
             "usf"
         ],
-        "iconSmall": "Icons_commander_portrait_us_forces_commander_02",
-        "iconlarge": "Icons_commander_portrait_us_forces_commander_02_large",
+        "iconSmall": "Icons_commander_portrait_aef_commander_09_small",
+        "iconlarge": "Icons_commander_portrait_aef_commander_09",
         "abilities": [
             {
                 "name": "M7B1 'Priest' Howitzer Motor Carriage",
@@ -225,8 +225,8 @@
         "races": [
             "usf"
         ],
-        "iconSmall": "Icons_commander_portrait_us_forces_commander_05",
-        "iconlarge": "Icons_commander_portrait_us_forces_commander_05_large",
+        "iconSmall": "Icons_commander_portrait_aef_commander_05_small",
+        "iconlarge": "Icons_commander_portrait_aef_commander_05",
         "abilities": [
             {
                 "name": "M21 Mortar Half-track",
@@ -267,8 +267,8 @@
         "races": [
             "usf"
         ],
-        "iconSmall": "Icons_commander_portrait_us_forces_commander_04",
-        "iconlarge": "Icons_commander_portrait_us_forces_commander_04_large",
+        "iconSmall": "Icons_commander_portrait_aef_commander_04_small",
+        "iconlarge": "Icons_commander_portrait_aef_commander_04",
         "abilities": [
             {
                 "name": "M8 Greyhound",
@@ -309,8 +309,8 @@
         "races": [
             "usf"
         ],
-        "iconSmall": "Icons_commander_portrait_us_forces_commander_06",
-        "iconlarge": "Icons_commander_portrait_us_forces_commander_06_large",
+        "iconSmall": "Icons_commander_portrait_aef_commander_06_small",
+        "iconlarge": "Icons_commander_portrait_aef_commander_06",
         "abilities": [
             {
                 "name": "Advanced Infantry Equipment",
@@ -351,8 +351,8 @@
         "races": [
             "usf"
         ],
-        "iconSmall": "Icons_commander_portrait_us_forces_commander_08",
-        "iconlarge": "Icons_commander_portrait_us_forces_commander_08_large",
+        "iconSmall": "Icons_commander_portrait_aef_commander_08_small",
+        "iconlarge": "Icons_commander_portrait_aef_commander_08",
         "abilities": [
             {
                 "name": "M1919A6 Light Machine Gun",
@@ -393,8 +393,8 @@
         "races": [
             "usf"
         ],
-        "iconSmall": "Icons_commander_portrait_usf_commander_urbanassault",
-        "iconlarge": "Icons_commander_portrait_usf_commander_urbanassault_large",
+        "iconSmall": "Icons_commander_portrait_aef_commander_urban",
+        "iconlarge": "Icons_commander_portrait_aef_commander_urban_large",
         "abilities": [
             {
                 "name": "Urban Assault Kits",
@@ -453,8 +453,8 @@
         "races": [
             "british"
         ],
-        "iconSmall": "Icons_commander_portrait_british_commander_07",
-        "iconlarge": "Icons_commander_portrait_british_commander_07_large",
+        "iconSmall": "Icons_commander_portrait_ukf_commander_07_small",
+        "iconlarge": "Icons_commander_portrait_ukf_commander_07",
         "abilities": [
             {
                 "name": "Defensive Operations",
@@ -621,8 +621,8 @@
         "races": [
             "british"
         ],
-        "iconSmall": "Icons_commander_portrait_british_commander_lendleaseassault",
-        "iconlarge": "Icons_commander_portrait_british_commander_lendleaseassault_large",
+        "iconSmall": "Icons_commander_portrait_ukf_commander_lendlease_small",
+        "iconlarge": "Icons_commander_portrait_ukf_commander_lendlease",
         "abilities": [
             {
                 "name": "Assault Infantry Sections",
@@ -663,8 +663,8 @@
         "races": [
             "british"
         ],
-        "iconSmall": "Icons_commander_portrait_british_commander_08",
-        "iconlarge": "Icons_commander_portrait_british_commander_08_large",
+        "iconSmall": "Icons_commander_portrait_ukf_commander_08_small",
+        "iconlarge": "Icons_commander_portrait_ukf_commander_08",
         "abilities": [
             {
                 "name": "M2 Flamethrower",
@@ -789,7 +789,7 @@
         "races": [
             "british"
         ],
-        "iconSmall": "Icons_commander_portrait_british_commander_06",
+        "iconSmall": "Icons_commander_portrait_ukf_commander_06_small",
         "iconlarge": "Icons_commander_portrait_british_commander_06_large",
         "abilities": [
             {
@@ -831,8 +831,8 @@
         "races": [
             "wermacht"
         ],
-        "iconSmall": "Icons_commander_portrait_german_commander_11",
-        "iconlarge": "Icons_commander_portrait_german_commander_11_large",
+        "iconSmall": "Icons_commander_portrait_ostheer_commander_11_small",
+        "iconlarge": "Icons_commander_portrait_ostheer_commander_11",
         "abilities": [
             {
                 "name": "Command Tank",
@@ -873,8 +873,8 @@
         "races": [
             "wermacht"
         ],
-        "iconSmall": "Icons_commander_portrait_german_commander_12",
-        "iconlarge": "Icons_commander_portrait_german_commander_12_large",
+        "iconSmall": "Icons_commander_portrait_ostheer_commander_12_small",
+        "iconlarge": "Icons_commander_portrait_ostheer_commander_12",
         "abilities": [
             {
                 "name": "Fragmentation Bomb",
@@ -915,8 +915,8 @@
         "races": [
             "wermacht"
         ],
-        "iconSmall": "Icons_commander_portrait_german_commander_13",
-        "iconlarge": "Icons_commander_portrait_german_commander_13_large",
+        "iconSmall": "Icons_commander_portrait_ostheer_commander_13_small",
+        "iconlarge": "Icons_commander_portrait_ostheer_commander_13",
         "abilities": [
             {
                 "name": "Command Tank",
@@ -957,8 +957,8 @@
         "races": [
             "wermacht"
         ],
-        "iconSmall": "Icons_commander_portrait_german_commander_21",
-        "iconlarge": "Icons_commander_portrait_german_commander_21_large",
+        "iconSmall": "Icons_commander_portrait_ostheer_commander_21_small",
+        "iconlarge": "Icons_commander_portrait_ostheer_commander_21",
         "abilities": [
             {
                 "name": "Stuka Reconnaissance Pass",
@@ -999,8 +999,8 @@
         "races": [
             "wermacht"
         ],
-        "iconSmall": "Icons_commander_portrait_german_commander_02",
-        "iconlarge": "Icons_commander_portrait_german_commander_02_large",
+        "iconSmall": "Icons_commander_portrait_ostheer_commander_02_small",
+        "iconlarge": "Icons_commander_portrait_ostheer_commander_02",
         "abilities": [
             {
                 "name": "Cargo Truck",
@@ -1041,8 +1041,8 @@
         "races": [
             "wermacht"
         ],
-        "iconSmall": "Icons_commander_portrait_german_commander_03",
-        "iconlarge": "Icons_commander_portrait_german_commander_03_large",
+        "iconSmall": "Icons_commander_portrait_ostheer_commander_03_small",
+        "iconlarge": "Icons_commander_portrait_ostheer_commander_03",
         "abilities": [
             {
                 "name": "Panzer Tactician",
@@ -1083,8 +1083,8 @@
         "races": [
             "wermacht"
         ],
-        "iconSmall": "Icons_commander_portrait_german_commander_04",
-        "iconlarge": "Icons_commander_portrait_german_commander_04_large",
+        "iconSmall": "Icons_commander_portrait_ostheer_commander_04_small",
+        "iconlarge": "Icons_commander_portrait_ostheer_commander_04",
         "abilities": [
             {
                 "name": "Smoke Bombs",
@@ -1125,8 +1125,8 @@
         "races": [
             "wermacht"
         ],
-        "iconSmall": "Icons_commander_portrait_german_commander_01",
-        "iconlarge": "Icons_commander_portrait_german_commander_01_large",
+        "iconSmall": "Icons_commander_portrait_ostheer_commander_01_small",
+        "iconlarge": "Icons_commander_portrait_ostheer_commander_01",
         "abilities": [
             {
                 "name": "Panzer Tactician",
@@ -1167,8 +1167,8 @@
         "races": [
             "wermacht"
         ],
-        "iconSmall": "Icons_commander_portrait_german_commander_18",
-        "iconlarge": "Icons_commander_portrait_german_commander_18_large",
+        "iconSmall": "Icons_commander_portrait_ostheer_commander_18_small",
+        "iconlarge": "Icons_commander_portrait_ostheer_commander_18",
         "abilities": [
             {
                 "name": "Air-Dropped Medical Supplies",
@@ -1209,8 +1209,8 @@
         "races": [
             "wermacht"
         ],
-        "iconSmall": "Icons_commander_portrait_german_commander_16",
-        "iconlarge": "Icons_commander_portrait_german_commander_16_large",
+        "iconSmall": "Icons_commander_portrait_ostheer_commander_16_small",
+        "iconlarge": "Icons_commander_portrait_ostheer_commander_16",
         "abilities": [
             {
                 "name": "Sector Artillery",
@@ -1251,8 +1251,8 @@
         "races": [
             "wermacht"
         ],
-        "iconSmall": "Icons_commander_portrait_german_commander_17",
-        "iconlarge": "Icons_commander_portrait_german_commander_17_large",
+        "iconSmall": "Icons_commander_portrait_ostheer_commander_17_small",
+        "iconlarge": "Icons_commander_portrait_ostheer_commander_17",
         "abilities": [
             {
                 "name": "Stormtroopers",
@@ -1293,8 +1293,8 @@
         "races": [
             "wermacht"
         ],
-        "iconSmall": "Icons_commander_portrait_german_commander_22",
-        "iconlarge": "Icons_commander_portrait_german_commander_22_large",
+        "iconSmall": "Icons_commander_portrait_ostheer_commander_22_small",
+        "iconlarge": "Icons_commander_portrait_ostheer_commander_22",
         "abilities": [
             {
                 "name": "Breakthrough",
@@ -1335,8 +1335,8 @@
         "races": [
             "wermacht"
         ],
-        "iconSmall": "Icons_commander_portrait_german_commander_14",
-        "iconlarge": "Icons_commander_portrait_german_commander_14_large",
+        "iconSmall": "Icons_commander_portrait_ostheer_commander_14_small",
+        "iconlarge": "Icons_commander_portrait_ostheer_commander_14",
         "abilities": [
             {
                 "name": "Tiger Tank",
@@ -1377,8 +1377,8 @@
         "races": [
             "wermacht"
         ],
-        "iconSmall": "Icons_commander_portrait_german_commander_19",
-        "iconlarge": "Icons_commander_portrait_german_commander_19_large",
+        "iconSmall": "Icons_commander_portrait_ostheer_commander_19_small",
+        "iconlarge": "Icons_commander_portrait_ostheer_commander_19",
         "abilities": [
             {
                 "name": "Panzer Tactician",
@@ -1419,8 +1419,8 @@
         "races": [
             "wermacht"
         ],
-        "iconSmall": "Icons_commander_portrait_german_commander_15",
-        "iconlarge": "Icons_commander_portrait_german_commander_15_large",
+        "iconSmall": "Icons_commander_portrait_ostheer_commander_15_small",
+        "iconlarge": "Icons_commander_portrait_ostheer_commander_15",
         "abilities": [
             {
                 "name": "Railway Artillery Support",
@@ -1503,8 +1503,8 @@
         "races": [
             "wermacht"
         ],
-        "iconSmall": "Icons_commander_portrait_german_commander_05",
-        "iconlarge": "Icons_commander_portrait_german_commander_05_large",
+        "iconSmall": "Icons_commander_portrait_ostheer_commander_05_small",
+        "iconlarge": "Icons_commander_portrait_ostheer_commander_05",
         "abilities": [
             {
                 "name": "Half-track Riegel 43 Anti-Tank Mine",
@@ -1545,8 +1545,8 @@
         "races": [
             "wermacht"
         ],
-        "iconSmall": "Icons_commander_portrait_german_commander_06",
-        "iconlarge": "Icons_commander_portrait_german_commander_06_large",
+        "iconSmall": "Icons_commander_portrait_ostheer_commander_06_small",
+        "iconlarge": "Icons_commander_portrait_ostheer_commander_06",
         "abilities": [
             {
                 "name": "Ambush Training",
@@ -1587,8 +1587,8 @@
         "races": [
             "wermacht"
         ],
-        "iconSmall": "Icons_commander_portrait_german_commander_07",
-        "iconlarge": "Icons_commander_portrait_german_commander_07_large",
+        "iconSmall": "Icons_commander_portrait_ostheer_commander_07_small",
+        "iconlarge": "Icons_commander_portrait_ostheer_commander_07",
         "abilities": [
             {
                 "name": "Reconnaissance Overflight",
@@ -1629,8 +1629,8 @@
         "races": [
             "wermacht"
         ],
-        "iconSmall": "Icons_commander_portrait_german_commander_08",
-        "iconlarge": "Icons_commander_portrait_german_commander_08_large",
+        "iconSmall": "Icons_commander_portrait_ostheer_commander_08_small",
+        "iconlarge": "Icons_commander_portrait_ostheer_commander_08",
         "abilities": [
             {
                 "name": "Stuka Close Air Support",
@@ -1671,8 +1671,8 @@
         "races": [
             "wermacht"
         ],
-        "iconSmall": "Icons_commander_portrait_german_commander_09",
-        "iconlarge": "Icons_commander_portrait_german_commander_09_large",
+        "iconSmall": "Icons_commander_portrait_ostheer_commander_09_small",
+        "iconlarge": "Icons_commander_portrait_ostheer_commander_09",
         "abilities": [
             {
                 "name": "Panzer Tactician",
@@ -1713,8 +1713,8 @@
         "races": [
             "wermacht"
         ],
-        "iconSmall": "Icons_commander_portrait_german_commander_10",
-        "iconlarge": "Icons_commander_portrait_german_commander_10_large",
+        "iconSmall": "Icons_commander_portrait_ostheer_commander_10_small",
+        "iconlarge": "Icons_commander_portrait_ostheer_commander_10",
         "abilities": [
             {
                 "name": "Ambush Training",
@@ -1755,8 +1755,8 @@
         "races": [
             "wermacht"
         ],
-        "iconSmall": "Icons_commander_portrait_icons_commander_portrait_german_strategic_reserves",
-        "iconlarge": "Icons_commander_portrait_icons_commander_portrait_strategic_reserves_large",
+        "iconSmall": "Icons_commander_portrait_ostheer_commander_23_small",
+        "iconlarge": "Icons_commander_portrait_ostheer_commander_23",
         "abilities": [
             {
                 "name": "Assault Grenadiers",
@@ -1797,8 +1797,8 @@
         "races": [
             "soviet"
         ],
-        "iconSmall": "Icons_commander_portrait_soviet_commander_11",
-        "iconlarge": "Icons_commander_portrait_soviet_commander_11_large",
+        "iconSmall": "Icons_commander_portrait_soviets_commander_11_small",
+        "iconlarge": "Icons_commander_portrait_soviets_commander_11",
         "abilities": [
             {
                 "name": "ML-20 152mm Gun-Howitzer",
@@ -1839,8 +1839,8 @@
         "races": [
             "soviet"
         ],
-        "iconSmall": "Icons_commander_portrait_soviet_commander_12",
-        "iconlarge": "Icons_commander_portrait_soviet_commander_12_large",
+        "iconSmall": "Icons_commander_portrait_soviets_commander_12_small",
+        "iconlarge": "Icons_commander_portrait_soviets_commander_12",
         "abilities": [
             {
                 "name": "ML-20 152mm Gun-Howitzer",
@@ -1881,8 +1881,8 @@
         "races": [
             "soviet"
         ],
-        "iconSmall": "Icons_commander_portrait_soviet_commander_13",
-        "iconlarge": "Icons_commander_portrait_soviet_commander_13_large",
+        "iconSmall": "Icons_commander_portrait_soviets_commander_13_small",
+        "iconlarge": "Icons_commander_portrait_soviets_commander_13",
         "abilities": [
             {
                 "name": "Shock Troops",
@@ -1923,8 +1923,8 @@
         "races": [
             "soviet"
         ],
-        "iconSmall": "Icons_commander_portrait_soviet_commander_21",
-        "iconlarge": "Icons_commander_portrait_soviet_commander_21_large",
+        "iconSmall": "Icons_commander_portrait_soviets_commander_21_small",
+        "iconlarge": "Icons_commander_portrait_soviets_commander_21",
         "abilities": [
             {
                 "name": "T-34/85 Medium Tank",
@@ -1965,8 +1965,8 @@
         "races": [
             "soviet"
         ],
-        "iconSmall": "Icons_commander_portrait_soviet_commander_airborne",
-        "iconlarge": "Icons_commander_portrait_soviet_commander_airborne_large",
+        "iconSmall": "Icons_commander_portrait_soviets_commander_airbourne_small",
+        "iconlarge": "Icons_commander_portrait_soviets_commander_airbourn",
         "abilities": [
             {
                 "name": "Weapons Crate Drop",
@@ -2007,8 +2007,8 @@
         "races": [
             "soviet"
         ],
-        "iconSmall": "Icons_commander_portrait_soviet_commander_01",
-        "iconlarge": "Icons_commander_portrait_soviet_commander_01_large",
+        "iconSmall": "Icons_commander_portrait_soviets_commander_01_small",
+        "iconlarge": "Icons_commander_portrait_soviets_commander_01",
         "abilities": [
             {
                 "name": "Shock Troops",
@@ -2049,8 +2049,8 @@
         "races": [
             "soviet"
         ],
-        "iconSmall": "Icons_commander_portrait_soviet_commander_02",
-        "iconlarge": "Icons_commander_portrait_soviet_commander_02_large",
+        "iconSmall": "Icons_commander_portrait_soviets_commander_02_small",
+        "iconlarge": "Icons_commander_portrait_soviets_commander_02",
         "abilities": [
             {
                 "name": "KV-1 Heavy Tank",
@@ -2091,8 +2091,8 @@
         "races": [
             "soviet"
         ],
-        "iconSmall": "Icons_commander_portrait_soviet_commander_03",
-        "iconlarge": "Icons_commander_portrait_soviet_commander_03_large",
+        "iconSmall": "Icons_commander_portrait_soviets_commander_03_small",
+        "iconlarge": "Icons_commander_portrait_soviets_commander_03",
         "abilities": [
             {
                 "name": "Guards Rifle Infantry",
@@ -2175,8 +2175,8 @@
         "races": [
             "soviet"
         ],
-        "iconSmall": "Icons_commander_portrait_soviet_commander_04",
-        "iconlarge": "Icons_commander_portrait_soviet_commander_04_large",
+        "iconSmall": "Icons_commander_portrait_soviets_commander_04_small",
+        "iconlarge": "Icons_commander_portrait_soviets_commander_04",
         "abilities": [
             {
                 "name": "Guards Rifle Infantry",
@@ -2217,8 +2217,8 @@
         "races": [
             "soviet"
         ],
-        "iconSmall": "Icons_commander_portrait_soviet_commander_05",
-        "iconlarge": "Icons_commander_portrait_soviet_commander_05_large",
+        "iconSmall": "Icons_commander_portrait_soviets_commander_05_small",
+        "iconlarge": "Icons_commander_portrait_soviets_commander_05",
         "abilities": [
             {
                 "name": "Guards Rifle Infantry",
@@ -2259,8 +2259,8 @@
         "races": [
             "soviet"
         ],
-        "iconSmall": "Icons_commander_portrait_soviet_commander_06",
-        "iconlarge": "Icons_commander_portrait_soviet_commander_06_large",
+        "iconSmall": "Icons_commander_portrait_soviets_commander_06_small",
+        "iconlarge": "Icons_commander_portrait_soviets_commander_06",
         "abilities": [
             {
                 "name": "Radio Intercept",
@@ -2301,8 +2301,8 @@
         "races": [
             "soviet"
         ],
-        "iconSmall": "Icons_commander_portrait_soviet_commander_07",
-        "iconlarge": "Icons_commander_portrait_soviet_commander_07_large",
+        "iconSmall": "Icons_commander_portrait_soviets_commander_07_small",
+        "iconlarge": "Icons_commander_portrait_soviets_commander_07",
         "abilities": [
             {
                 "name": "ISU-152 Heavy Assault Gun",
@@ -2343,8 +2343,8 @@
         "races": [
             "soviet"
         ],
-        "iconSmall": "Icons_commander_portrait_soviet_commander_08",
-        "iconlarge": "Icons_commander_portrait_soviet_commander_08_large",
+        "iconSmall": "Icons_commander_portrait_soviets_commander_08_small",
+        "iconlarge": "Icons_commander_portrait_soviets_commander_08",
         "abilities": [
             {
                 "name": "Shock Troops",
@@ -2385,8 +2385,8 @@
         "races": [
             "soviet"
         ],
-        "iconSmall": "Icons_commander_portrait_soviet_commander_16",
-        "iconlarge": "Icons_commander_portrait_soviet_commander_16_large",
+        "iconSmall": "Icons_commander_portrait_soviets_commander_16_small",
+        "iconlarge": "Icons_commander_portrait_soviets_commander_16",
         "abilities": [
             {
                 "name": "DShK 38 Heavy Machine Gun",
@@ -2427,8 +2427,8 @@
         "races": [
             "soviet"
         ],
-        "iconSmall": "Icons_commander_portrait_soviet_commander_14",
-        "iconlarge": "Icons_commander_portrait_soviet_commander_14_large",
+        "iconSmall": "Icons_commander_portrait_soviets_commander_14_small",
+        "iconlarge": "Icons_commander_portrait_soviets_commander_14",
         "abilities": [
             {
                 "name": "KV-1 Heavy Tank",
@@ -2469,8 +2469,8 @@
         "races": [
             "soviet"
         ],
-        "iconSmall": "Icons_commander_portrait_soviet_commander_18",
-        "iconlarge": "Icons_commander_portrait_soviet_commander_18_large",
+        "iconSmall": "Icons_commander_portrait_soviets_commander_18_small",
+        "iconlarge": "Icons_commander_portrait_soviets_commander_18",
         "abilities": [
             {
                 "name": "Allied Supply Drop",
@@ -2511,8 +2511,8 @@
         "races": [
             "soviet"
         ],
-        "iconSmall": "Icons_commander_portrait_soviet_commander_20",
-        "iconlarge": "Icons_commander_portrait_soviet_commander_20_large",
+        "iconSmall": "Icons_commander_portrait_soviets_commander_20_small",
+        "iconlarge": "Icons_commander_portrait_soviets_commander_20",
         "abilities": [
             {
                 "name": "DShK 38 Heavy Machine Gun",
@@ -2595,7 +2595,7 @@
         "races": [
             "soviet"
         ],
-        "iconSmall": "Icons_commander_portrait_soviet_commander_17",
+        "iconSmall": "Icons_commander_portrait_soviets_commander_17_small",
         "iconlarge": "Icons_commander_portrait_soviet_commander_17_large",
         "abilities": [
             {
@@ -2637,7 +2637,7 @@
         "races": [
             "soviet"
         ],
-        "iconSmall": "Icons_commander_portrait_soviet_commander_22",
+        "iconSmall": "Icons_commander_portrait_soviets_commander_22_small",
         "iconlarge": "Icons_commander_portrait_soviet_commander_22_large",
         "abilities": [
             {
@@ -2679,8 +2679,8 @@
         "races": [
             "soviet"
         ],
-        "iconSmall": "Icons_commander_portrait_soviet_commander_15",
-        "iconlarge": "Icons_commander_portrait_soviet_commander_15_large",
+        "iconSmall": "Icons_commander_portrait_soviets_commander_15_small",
+        "iconlarge": "Icons_commander_portrait_soviets_commander_15",
         "abilities": [
             {
                 "name": "Shock Troops",
@@ -2721,8 +2721,8 @@
         "races": [
             "soviet"
         ],
-        "iconSmall": "Icons_commander_portrait_soviet_commander_09",
-        "iconlarge": "Icons_commander_portrait_soviet_commander_09_large",
+        "iconSmall": "Icons_commander_portrait_soviets_commander_09_small",
+        "iconlarge": "Icons_commander_portrait_soviets_commander_09",
         "abilities": [
             {
                 "name": "Radio Intercept",
@@ -2763,8 +2763,8 @@
         "races": [
             "soviet"
         ],
-        "iconSmall": "Icons_commander_portrait_soviet_commander_10",
-        "iconlarge": "Icons_commander_portrait_soviet_commander_10_large",
+        "iconSmall": "Icons_commander_portrait_soviets_commander_10_small",
+        "iconlarge": "Icons_commander_portrait_soviets_commander_10",
         "abilities": [
             {
                 "name": "Shock Troops",
@@ -2805,8 +2805,8 @@
         "races": [
             "wgerman"
         ],
-        "iconSmall": "Icons_commander_portrait_german_commander_23",
-        "iconlarge": "Icons_commander_portrait_german_commander_23_large",
+        "iconSmall": "Icons_commander_portrait_west_german_commander_23_small",
+        "iconlarge": "Icons_commander_portrait_west_german_commander_23",
         "abilities": [
             {
                 "name": "For The Fatherland!",
@@ -2847,8 +2847,8 @@
         "races": [
             "wgerman"
         ],
-        "iconSmall": "Icons_commander_portrait_oberkommand_west_commander_03",
-        "iconlarge": "Icons_commander_portrait_oberkommand_west_commander_03_large",
+        "iconSmall": "Icons_commander_portrait_west_german_commander_03_small",
+        "iconlarge": "Icons_commander_portrait_west_german_commander_03",
         "abilities": [
             {
                 "name": "Assault Artillery",
@@ -2898,8 +2898,8 @@
         "races": [
             "wgerman"
         ],
-        "iconSmall": "Icons_commander_portrait_oberkommand_west_commander_06",
-        "iconlarge": "Icons_commander_portrait_oberkommand_west_commander_06_large",
+        "iconSmall": "Icons_commander_portrait_west_german_commander_06_small",
+        "iconlarge": "Icons_commander_portrait_west_german_commander_06",
         "abilities": [
             {
                 "name": "Sd.KFz. 221",
@@ -2940,8 +2940,8 @@
         "races": [
             "wgerman"
         ],
-        "iconSmall": "Icons_commander_portrait_oberkommand_west_commander_07",
-        "iconlarge": "Icons_commander_portrait_oberkommand_west_commander_07_large",
+        "iconSmall": "Icons_commander_portrait_west_german_commander_07_small",
+        "iconlarge": "Icons_commander_portrait_west_german_commander_07",
         "abilities": [
             {
                 "name": "Assault Package",
@@ -2982,8 +2982,8 @@
         "races": [
             "wgerman"
         ],
-        "iconSmall": "Icons_commander_portrait_oberkommand_west_commander_05",
-        "iconlarge": "Icons_commander_portrait_oberkommand_west_commander_05_large",
+        "iconSmall": "Icons_commander_portrait_west_german_commander_05_small",
+        "iconlarge": "Icons_commander_portrait_west_german_commander_05",
         "abilities": [
             {
                 "name": "Field Defenses",
@@ -3024,8 +3024,8 @@
         "races": [
             "wgerman"
         ],
-        "iconSmall": "Icons_commander_portrait_okw_commander_grandoffensive",
-        "iconlarge": "Icons_commander_portrait_okw_commander_grandoffensive_large",
+        "iconSmall": "Icons_commander_portrait_west_german_commander_grand",
+        "iconlarge": "Icons_commander_portrait_west_german_commander_grand_large",
         "abilities": [
             {
                 "name": "Panzerfüsiliers",
@@ -3066,8 +3066,8 @@
         "races": [
             "wgerman"
         ],
-        "iconSmall": "Icons_commander_portrait_oberkommand_west_commander_02",
-        "iconlarge": "Icons_commander_portrait_oberkommand_west_commander_02_large",
+        "iconSmall": "Icons_commander_portrait_west_german_commander_02_small",
+        "iconlarge": "Icons_commander_portrait_west_german_commander_02",
         "abilities": [
             {
                 "name": "Fallschirmjäger",
@@ -3108,8 +3108,8 @@
         "races": [
             "wgerman"
         ],
-        "iconSmall": "Icons_commander_portrait_oberkommand_west_commander_04",
-        "iconlarge": "Icons_commander_portrait_oberkommand_west_commander_04_large",
+        "iconSmall": "Icons_commander_portrait_west_german_commander_04_small",
+        "iconlarge": "Icons_commander_portrait_west_german_commander_04",
         "abilities": [
             {
                 "name": "Infiltration Tactics",
@@ -3192,8 +3192,8 @@
         "races": [
             "wgerman"
         ],
-        "iconSmall": "Icons_commander_portrait_oberkommand_west_commander_01",
-        "iconlarge": "Icons_commander_portrait_oberkommand_west_commander_01_large",
+        "iconSmall": "Icons_commander_portrait_west_german_commander_01_small",
+        "iconlarge": "Icons_commander_portrait_west_german_commander_01",
         "abilities": [
             {
                 "name": "Artillery Flares",
