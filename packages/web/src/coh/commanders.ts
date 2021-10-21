@@ -4,8 +4,19 @@ const objectScan = require('object-scan');
 const allCommanders: Record<string, any> = (allCommandersJSON as Record<string, any>)["default"];
 
 const searchCommanders = (search: string): any => {
-  const searchResults = objectScan(allCommanders, "name", search);
-  return searchResults ?? null;
+
+  Object.values(allCommanders).filter((commanderData) => {
+        
+    const evalPerName:boolean = commanderData["commanderName"].toLowerCase().matches(/${search}/);
+
+    const evalPerAbility = commanderData["abilities"].find((ability:any) => {
+      const lowerCaseAbilityName = ability["name"].toLowerCase()
+      return lowerCaseAbilityName.matches(/${search}/);
+    });
+
+    
+  });
+  
 };
 
 const convertCommanderIDToName = (commanderID: string): string => {
