@@ -180,7 +180,7 @@ const PlayerTeamMatchesTable: React.FC<IProps> = ({ title, data }) => {
       <Table
         style={{ paddingBottom: 20, overflow: "auto" }}
         columns={TableColumns}
-        rowKey={(record) => `${record?.leaderboard_id}-${record.statgroup_id}`}
+        rowKey={(record) => `${record?.leaderboard_id}-${record?.statgroup_id}`}
         dataSource={sortedData}
         pagination={false}
         size={"small"}

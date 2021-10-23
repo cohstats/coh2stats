@@ -10,11 +10,11 @@ function renderAlertBox(params: Partial<AlertEvent>) {
 
 describe("<AlertBox />", () => {
   test("should display an error with message 'error', details 'this is an error'", async () => {
-    const params = {
+    const params: AlertEvent = {
       type: "error",
       message: "error",
       description: "this is an error",
-      closeable: false,
+      closable: false,
     };
     const { getByTestId } = renderAlertBox({ ...params });
     const errorAlertBox = getByTestId("alert-box");
