@@ -14,6 +14,13 @@ describe("convertSteamNameToID", () => {
 
     expect(id).toBe("76561198131099369");
   });
+
+  test("On wrong input", () => {
+    const steamName = "";
+    const id = convertSteamNameToID(steamName);
+
+    expect(id).toBe("");
+  });
 });
 
 describe("sumValuesOfObjects", () => {
