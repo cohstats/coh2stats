@@ -2,7 +2,7 @@ import { useLocation } from "react-router-dom";
 import { format } from "date-fns";
 
 import TimeAgo from "javascript-time-ago";
-import en from "javascript-time-ago/locale/en";
+import en from "javascript-time-ago/locale/en.json";
 
 TimeAgo.addDefaultLocale(en);
 const timeAgo = new TimeAgo("en-US");

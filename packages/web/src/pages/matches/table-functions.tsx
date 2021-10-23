@@ -100,7 +100,7 @@ export function getMatchResult(reportedPlayerResults: Array<any>) {
   let color = "#108ee9";
 
   // loop thru all players
-  for (let index in reportedPlayerResults) {
+  for (let index of reportedPlayerResults) {
     // find a winner
     if (reportedPlayerResults[index].resulttype === 1) {
       // if its a axis player by race

@@ -6,7 +6,7 @@ import {
   getCommanderIconPath,
 } from "../../coh/commanders";
 import { RaceName } from "../../coh/types";
-import * as data from "../../coh/data/wbp2021/commanderData.json";
+import * as data from "../../coh/data/cu2021/commanderData.json";
 
 describe("convertCommanderIDToName", () => {
   test("Returns commanderID when commanderID not in commanderData", () => {
