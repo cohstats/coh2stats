@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { Table, Space, Col, Row, Tooltip, ConfigProvider, Select, Typography } from "antd";
 import { Link } from "react-router-dom";
-import { isAfter, isBefore } from "date-fns";
+import { isAfter, isBefore, isMonday } from "date-fns";
 import { useHistory } from "react-router";
 
 import { LaddersDataArrayObject, LaddersDataObject, RaceName } from "../../coh/types";
@@ -32,6 +32,7 @@ import {
   isTeamGame,
 } from "../../coh/helpers";
 import { Helper } from "../../components/helper";
+import subDays from "date-fns/subDays";
 const { Text } = Typography;
 
 const Leaderboards = () => {
@@ -298,7 +299,10 @@ const Leaderboards = () => {
     const canBeOld = isBefore(current, new Date(2021, 2, 8));
     const canBeNew = isAfter(current, new Date());
 
-    return canBeOld || canBeNew;
+    const isOldExceptMonday =
+      current.getTime() < subDays(new Date(), 60).getTime() && !isMonday(current);
+
+    return canBeOld || canBeNew || isOldExceptMonday;
   };
 
   const CustomDatePicker = ({

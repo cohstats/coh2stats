@@ -10,6 +10,7 @@ import {
 } from "./libs/analysis/analysis";
 import { analysisChecker } from "./libs/analysis/analysis-checker";
 import { removeOldMatches } from "./libs/matches/matches";
+import { removeOldLadder } from "./libs/ladders/ladders-old";
 
 const runtimeOpts: Record<string, "1GB" | any> = {
   timeoutSeconds: 540,
@@ -65,11 +66,18 @@ const runAnalysis = functions
       functions.logger.error(`Garage collector is not available`, e);
     }
 
-    // Do DB clean up, we keep only matches which are less than 63 days old
+    // Do DB clean up, we keep only matches which are less than 14 days old
     try {
       await removeOldMatches(14);
     } catch (e) {
       functions.logger.error(`There was an error deleting the old matches`, e);
+    }
+
+    // Do DB clean up, we remove ladders older than 60 days, keep only mondays
+    try {
+      await removeOldLadder(60);
+    } catch (e) {
+      functions.logger.error(`There was an error deleting the old ladder`, e);
     }
   });
 
