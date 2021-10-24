@@ -6,14 +6,12 @@ const bulletinsData: Record<string, any> = (bulletinIDsToRacesJSON as Record<str
 ];
 
 const searchBulletins = (search: string): Array<IntelBulletinData> => {
-  const searchRegExp = new RegExp(search.toLowerCase(), 'g');
+  const searchRegExp = new RegExp(search.toLowerCase(), "g");
   const foundBulletins = Object.values(bulletinsData).filter((bulletinData) => {
-    const evalPerName: boolean = bulletinData["bulletinName"]
-      .toLowerCase()
-      .match(searchRegExp) != null;
-    const evalPerDescription: boolean = bulletinData["descriptionShort"]
-    .toLowerCase()
-    .match(searchRegExp) != null;    
+    const evalPerName: boolean =
+      bulletinData["bulletinName"].toLowerCase().match(searchRegExp) != null;
+    const evalPerDescription: boolean =
+      bulletinData["descriptionShort"].toLowerCase().match(searchRegExp) != null;
     return evalPerDescription || evalPerName;
   });
   return foundBulletins;

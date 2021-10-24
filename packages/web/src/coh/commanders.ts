@@ -4,14 +4,14 @@ import { CommanderData, RaceName } from "./types";
 const allCommanders: Record<string, any> = (allCommandersJSON as Record<string, any>)["default"];
 
 const searchCommanders = (search: string): Array<CommanderData> => {
-  const searchRegExp = new RegExp(search.toLowerCase(), 'g');
+  const searchRegExp = new RegExp(search.toLowerCase(), "g");
   const foundCommanders = Object.values(allCommanders).filter((commanderData) => {
-    const evalPerName: boolean = commanderData["commanderName"]
-      .toLowerCase()
-      .match(searchRegExp) != null;
-    const evalPerAbility = commanderData["abilities"].find((ability: any) => {
-      return ability["name"].toLowerCase().match(searchRegExp) != null;
-    }) != null;
+    const evalPerName: boolean =
+      commanderData["commanderName"].toLowerCase().match(searchRegExp) != null;
+    const evalPerAbility =
+      commanderData["abilities"].find((ability: any) => {
+        return ability["name"].toLowerCase().match(searchRegExp) != null;
+      }) != null;
     return evalPerAbility || evalPerName;
   });
   return foundCommanders;
