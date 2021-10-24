@@ -5,6 +5,20 @@ const bulletinsData: Record<string, any> = (bulletinIDsToRacesJSON as Record<str
   "default"
 ];
 
+const searchBulletins = (search: string): Array<IntelBulletinData> => {
+  const searchRegExp = new RegExp(search.toLowerCase(), 'g');
+  const foundBulletins = Object.values(bulletinsData).filter((bulletinData) => {
+    const evalPerName: boolean = bulletinData["bulletinName"]
+      .toLowerCase()
+      .match(searchRegExp) != null;
+    const evalPerDescription: boolean = bulletinData["descriptionShort"]
+    .toLowerCase()
+    .match(searchRegExp) != null;    
+    return evalPerDescription || evalPerName;
+  });
+  return foundBulletins;
+};
+
 const convertBulletinIDToName = (bulletinID: string): string => {
   if (Object.prototype.hasOwnProperty.call(bulletinsData, bulletinID)) {
     return bulletinsData[bulletinID]["bulletinName"];
@@ -42,4 +56,5 @@ export {
   getBulletinsByRaces,
   getAllBulletins,
   getBulletinIconPath,
+  searchBulletins,
 };
