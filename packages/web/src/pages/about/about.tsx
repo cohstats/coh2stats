@@ -45,6 +45,8 @@ const About: React.FC = () => {
         games).
         <br />
         Update 22/Aug/21: Query top 400 positions.
+        <br />
+        Update 25/Oct/21: Query top 600 positions.
       </Paragraph>
       More technical description of this process can be found{" "}
       <Link href="https://github.com/petrvecera/coh2ladders#crawler-process" target="_blank">
@@ -109,36 +111,6 @@ const About: React.FC = () => {
         player from the match could be top 200 and other players might be much lower skill.
       </Paragraph>
       <b>So far analyzed {analyzedTopMatches} matches.</b>
-      <a href={"#future"}>
-        <Title level={2} style={{ paddingTop: 15 }} id={"future"}>
-          Future functionality
-        </Title>
-      </a>
-      As you can see lot of features and functionality is not finished right now. Feel free to
-      vote/discuss on the forums about the priority of each feature.
-      <br />
-      <Text strong>Match overview</Text>
-      <br />
-      We would like to add much better match overview. Relic stores much more data for each match
-      that it's shown. We are able to get this data and we would like to display much better match
-      overview which would include the map, player average rankings and more info.
-      <br />
-      Also the players would have possibility to request their matches to be stored (so not only
-      the top 4%).
-      <br />
-      <br />
-      <Text strong>Players overview</Text>
-      <br />
-      We would like to give better player overview. For example track their record how good they
-      are playing on each map. Maybe add percentile to their rank because each mode has different
-      amount of players and ranked positions.
-      <br />
-      <br />
-      <Text strong>Other</Text>
-      <br />
-      There is huge amount of things we could improve everywhere. The stats charts possibilities
-      are limitless. We definitely want to add analysis based on each map. To see if some maps are
-      better for different factions. If you have any ideas feel free to suggest them.
       <a href={"#bugs"} ref={contributionRef}>
         <Title level={2} style={{ paddingTop: 15 }} id={"bugs"}>
           Bugs, ideas and contribution
@@ -148,8 +120,7 @@ const About: React.FC = () => {
       <Link href="https://github.com/petrvecera/coh2ladders" target="_blank">
         GitHub Repo
       </Link>{" "}
-      for more info. Any contributions are welcomed. However please read more info in the repo
-      description if you have required skill set.
+      for more info. Any contributions are welcomed.
       <br />
       <br />
       You can report any bugs or feature requests on{" "}
@@ -189,8 +160,14 @@ const About: React.FC = () => {
           10 games for each mode for each player). However when we started working on this
           project, we greatly underestimated the amount of data which is produced every day.
           <br />
-          We are tracking around 300k matches and the DB holding this has up to 10GB already (as
-          of 16/May/2021). We are guessing COH2 to have ~50k matches/day.
+          <s>
+            We are tracking around 300k matches and the DB holding this has up to 10GB already (as
+            of 16/May/2021). We are guessing COH2 to have ~50k matches/day.
+          </s>
+          <br />
+          Update Oct/2021: The server DB costs were growing by 20% every month. To have the
+          expenses under control, we had to do these changes with storing the data: Leaderboards
+          (only last 3 months, older 1x a week is kept forever). Matches (only last 14 days).
         </Paragraph>
         We are still planning to deliver advanced match overview which would bring more
         functionality and better insight into your past games. But we will most likely not be able

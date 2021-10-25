@@ -75,7 +75,7 @@ const getAndSaveAllLadders = async (): Promise<Set<string>> => {
       functions.logger.log(`Processing ${typeOfGame} - ${faction}, using leaderBoardID: ${id}`);
 
       // Total positions we queried on the ladder
-      totalQueriedPositions += AMOUNT_OF_QUERIED_PLAYERS * 2;
+      totalQueriedPositions += AMOUNT_OF_QUERIED_PLAYERS * 3;
 
       try {
         const data = await fetchLadderStats(id);
@@ -85,10 +85,20 @@ const getAndSaveAllLadders = async (): Promise<Set<string>> => {
         const secondData = await fetchLadderStats(id, 200);
         const secondExtractedIds = extractTheProfileIDs(secondData);
 
+        // second data so we have more ids and matches, but this is not saved to the DB
+        const thirdData = await fetchLadderStats(id, 400);
+        const thirdExtractedIds = extractTheProfileIDs(thirdData);
+
         functions.logger.log(
-          `Extracted ${extractedIds.size} unique profile IDs in top 200, and ${secondExtractedIds.size} in top 200-400`,
+          `Extracted ${extractedIds.size} unique profile IDs in top 200, and ${secondExtractedIds.size} in top 200-400 and ${thirdExtractedIds.size} in 400-600 `,
         );
-        profileIDs = new Set([...profileIDs, ...extractedIds, ...secondExtractedIds]);
+
+        profileIDs = new Set([
+          ...profileIDs,
+          ...extractedIds,
+          ...secondExtractedIds,
+          ...thirdExtractedIds,
+        ]);
 
         const collectionPath = `ladders/${currentDateTimeStamp}/${typeOfGame}`;
         functions.logger.log(
