@@ -66,6 +66,10 @@ const getLadderDocRef = (
   return db.collection("ladders").doc(`${timestamp}`).collection(type).doc(race);
 };
 
+const getLadderForDayDocRef = (timestamp: string | number): DocumentReference<DocumentData> => {
+  return db.collection("ladders").doc(`${timestamp}`);
+};
+
 export {
   getMatchDocRef,
   getMapStatsDocRef,
@@ -73,6 +77,7 @@ export {
   getGlobalStatsDocRef,
   getMatchCollectionRef,
   getLadderDocRef,
+  getLadderForDayDocRef,
   getTopStatsDocRef,
   getTopLadderUniquePlayersDocRef,
   getOnlinePlayersDocRef,

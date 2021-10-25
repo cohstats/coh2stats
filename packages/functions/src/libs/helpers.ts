@@ -108,6 +108,11 @@ const getStartOfTheWeek = (date: Date | number): Date => {
   return startOfWeek(date, { weekStartsOn: 1 });
 };
 
+const convertDateToDayTimestamp = (dateInput: string | Date): number => {
+  const date = new Date(dateInput);
+  return Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()) / 1000;
+};
+
 /**
  *
  * @param startDate
@@ -182,5 +187,6 @@ export {
   getStartOfTheWeek,
   getMonthTimeStamps,
   getStartOfTheMonth,
+  convertDateToDayTimestamp,
   isMonday,
 };

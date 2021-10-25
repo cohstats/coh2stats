@@ -9,7 +9,9 @@ import { DEFAULT_FUNCTIONS_LOCATION } from "./constants";
 // import { getMatchCollectionRef } from "./fb-paths";
 // import { analyzeMatchesByMaps } from "./libs/analysis/match-map-analysis";
 // import { saveMapAnalysis } from "./libs/analysis/analysis";
-import { getAndSaveAllLadders } from "./libs/ladders/ladders";
+// import { getAndSaveAllLadders } from "./libs/ladders/ladders";
+import { removeLadderExceptMonday } from "./libs/ladders/ladders-old";
+import { getDateTimeStampInterval } from "./libs/helpers";
 // import {removeOldMatches} from "./libs/matches/matches";
 
 // //import {runAndSaveMultiDayAnalysis} from "./libs/analysis/multi-day-analysis";
@@ -32,9 +34,14 @@ const runTest = functions
   .region(DEFAULT_FUNCTIONS_LOCATION)
   .runWith(runtimeOpts)
   .https.onRequest(async (request, response) => {
-    const test = await getAndSaveAllLadders();
+    for (let i = 1; i <= 31; i++) {
+      const { start } = getDateTimeStampInterval(i, new Date(1628553600 * 1000));
+      await removeLadderExceptMonday(new Date(start * 1000));
+    }
 
-    response.send(test);
+    // const test = await getAndSaveAllLadders();
+    //
+    // response.send("finished");
 
     // const matchDates = [18, 17, 16, 15, 14, 13, 12, 11];
     //

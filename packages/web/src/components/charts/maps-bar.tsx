@@ -1,5 +1,5 @@
 import { ResponsiveBar } from "@nivo/bar";
-import React, { memo, useMemo } from "react";
+import React, { useMemo } from "react";
 import { sortArrayOfObjectsByTheirPropertyValue } from "../../coh/helpers";
 
 interface IProps {
@@ -50,4 +50,4 @@ export const _MapBarChart: React.FC<IProps> = ({ maps }) => {
   );
 };
 
-export const MapBarChart = memo(_MapBarChart);
+export const MapBarChart = _MapBarChart;
