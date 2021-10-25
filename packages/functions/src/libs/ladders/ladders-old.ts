@@ -6,12 +6,17 @@ import {
 } from "../types";
 import { getLadderDocRef, getLadderForDayDocRef } from "../../fb-paths";
 import { convertDateToDayTimestamp, isMonday } from "../helpers";
-import subDays from "date-fns/subDays";
+import { subDays } from "date-fns";
 import { firestore } from "firebase-admin";
 
 const db = firestore();
 const batch = db.batch();
 
+/**
+ * We need to delete all sub collections and documents on the item manually because firebase doesn't
+ * have simple function to delete everything ...
+ * @param timestamp
+ */
 const deleteLadderDayRecord = async (timestamp: string | number): Promise<void> => {
   // Delete normal games
   /// "1v1", "2v2", "3v3", "4v4"
