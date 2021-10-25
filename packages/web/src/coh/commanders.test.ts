@@ -4,7 +4,7 @@ describe("Search Commanders Function test", () => {
   test("Finds at least 1 commander with full name", () => {
     const searchQuery = "Airborne Company";
     const foundCommanders = searchCommanders(searchQuery);
-    expect(foundCommanders.length).toBeGreaterThan(1);
+    expect(foundCommanders.length).toBeGreaterThan(0);
   });
   test("Finds more than 1 commanders with a generic commander", () => {
     const searchQuery = "Company";
