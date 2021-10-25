@@ -64,7 +64,7 @@ const ExpandedMatch: React.FC<{ record: any }> = ({ record }) => {
     return {
       id: stats?.profile?.alias,
       label: stats?.profile?.alias,
-      value: JSON.parse(stats.counters).dmgdone,
+      value: JSON.parse(stats?.counters).dmgdone,
     };
   });
 
@@ -72,7 +72,7 @@ const ExpandedMatch: React.FC<{ record: any }> = ({ record }) => {
     return {
       id: stats?.profile?.alias,
       label: stats?.profile?.alias,
-      value: JSON.parse(stats.counters).dmgdone,
+      value: JSON.parse(stats?.counters).dmgdone,
     };
   });
 
@@ -80,7 +80,7 @@ const ExpandedMatch: React.FC<{ record: any }> = ({ record }) => {
     return {
       id: stats?.profile?.alias,
       label: stats?.profile?.alias,
-      value: JSON.parse(stats.counters).ekills,
+      value: JSON.parse(stats?.counters).ekills,
     };
   });
 
@@ -88,7 +88,7 @@ const ExpandedMatch: React.FC<{ record: any }> = ({ record }) => {
     return {
       id: stats?.profile?.alias,
       label: stats?.profile?.alias,
-      value: JSON.parse(stats.counters).ekills,
+      value: JSON.parse(stats?.counters).ekills,
     };
   });
 

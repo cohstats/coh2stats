@@ -82,7 +82,8 @@ const PlayerCard = () => {
     return <>{JSON.stringify(error)}</>;
   }
 
-  if (isLoading || !data || data?.steamProfile[steamid] === undefined) {
+  // This protects all the requests accessing data
+  if (isLoading || !data || data.steamProfile[steamid] === undefined) {
     return (
       <div style={{ paddingTop: 50 }}>
         <Loading />
@@ -99,10 +100,10 @@ const PlayerCard = () => {
     });
   };
 
-  const steamProfile = data?.steamProfile[steamid];
+  const steamProfile = data.steamProfile[steamid];
 
-  const relicData = data?.relicPersonalStats;
-  const statGroups = relicData?.statGroups;
+  const relicData = data.relicPersonalStats;
+  const statGroups = relicData.statGroups;
   const playerRelicProfile = findPlayerProfile(statGroups);
 
   const playerName = playerRelicProfile.alias;

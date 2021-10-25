@@ -6,7 +6,7 @@
     "outDir": "lib",
     "sourceMap": false,
     "strict": true,
-    "target": "es2017",
+    "target": "es2018",
     "resolveJsonModule": true
   },
   "compileOnSave": true,

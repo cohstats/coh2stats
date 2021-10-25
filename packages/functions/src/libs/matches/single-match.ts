@@ -109,7 +109,7 @@ const transformProfilesInMatch = (
   for (const playerResult of singleMatchObject["matchhistoryreportresults"]) {
     const profile = findProfile(playerResult["profile_id"], profiles);
     playerResult["profile"] = profile;
-    steamIDs.push(convertSteamNameToID(profile?.name));
+    steamIDs.push(convertSteamNameToID(profile?.name || ""));
   }
 
   return steamIDs;

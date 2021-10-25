@@ -2,6 +2,7 @@
 
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/petrvecera/coh2ladders)
 ![Uptime Robot ratio (30 days)](https://img.shields.io/uptimerobot/ratio/m788579058-010f84f8b7e284e354b0946c?label=uptime%2030%20days)
+[![DeepScan grade](https://deepscan.io/api/teams/15780/projects/19027/branches/481420/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=15780&pid=19027&bid=481420)
 
 ## https://coh2stats.com/
 
@@ -87,15 +88,16 @@ See https://firebase.google.com/docs/functions/config-env for more info.
 ### Patch update steps for text bulletin / commander data
 
 1. Run script `bulletinsAndCommanders.py` with correct path to your COH2 folder
-2. Copy the generated files `*ServerData.json` into `packages/functions/src/libs/data/`
+2. Run script `fixCommanderImages.py` to fix the generated commanderData.json file
+3. Copy the generated files `*ServerData.json` into `packages/functions/src/libs/data/`
    - bulletinServerData.json
    - commanderServerData.json
-3. Copy the generates files `*Data.json` into `packages/web/src/coh/data/`
+4. Copy the generates files `*Data.json` into `packages/web/src/coh/data/`
    - bulletinData.json
    - commanderData.json
-4. Run formatter by using commander `yarn fix`
-5. Observe the changes
-6. Update the `packages/web/src/config.tsx` with the right date / patch name
+5. Run formatter by using commander `yarn fix`
+6. Observe the changes
+7. Update the `packages/web/src/config.tsx` with the right date / patch name
 
 ### Crawler process
 
