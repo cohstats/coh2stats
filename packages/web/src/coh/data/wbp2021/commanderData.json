@@ -210,7 +210,7 @@
   },
   "260696": {
     "serverID": "260696",
-    "commanderName": "Mechanized cc",
+    "commanderName": "Mechanized Company",
     "description": "Light vehicles provide valuable support to advancing American infantry units. Take advantage of a wide range of light US vehicles while upgraded Shermans engage the opposition. Heavy artillery can be used to destroy infantry or provide a support role against enemy vehicles.",
     "races": ["usf"],
     "iconSmall": "Icons_commander_portrait_us_forces_commander_05",
