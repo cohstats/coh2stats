@@ -29,9 +29,9 @@ const PlayerSingleMatchesTable: React.FC<IProps> = ({ title, data }) => {
     let latest = sortedData[0].lastmatchdate;
     sortedData.forEach((data) => {
       if (data.lastmatchdate > latest) {
-        latest = data.lastmatchdate      
+        latest = data.lastmatchdate;
       }
-    })
+    });
     return latest;
   };
 
@@ -177,30 +177,32 @@ const PlayerSingleMatchesTable: React.FC<IProps> = ({ title, data }) => {
         dataSource={sortedData}
         pagination={false}
         size={"small"}
-        summary={pageData => {
+        summary={(pageData) => {
           let totalWins = 0;
           let totalLosses = 0;
           let totalDrops = 0;
           let totalDisputes = 0;
-  
+
           pageData.forEach(({ wins, losses, drops, disputes }) => {
             totalWins += wins;
             totalLosses += losses;
             totalDrops += drops;
             totalDisputes += disputes;
           });
-  
+
           return (
             <>
               <Table.Summary.Row>
-                 <Table.Summary.Cell index={0} colSpan={4}></Table.Summary.Cell>
-                 <Table.Summary.Cell index={1}>{totalWins}</Table.Summary.Cell>
-                 <Table.Summary.Cell index={2}>{totalLosses}</Table.Summary.Cell>
-                 <Table.Summary.Cell index={3}>{percentageFormat(totalWins, totalLosses)}%</Table.Summary.Cell>
-                 <Table.Summary.Cell index={4}>{totalWins + totalLosses}</Table.Summary.Cell>
-                 <Table.Summary.Cell index={5}>{totalDrops}</Table.Summary.Cell>
-                 <Table.Summary.Cell index={6}>{totalDisputes}</Table.Summary.Cell>
-                 <Table.Summary.Cell index={7}>{formatTimeAgo(latestDate())}</Table.Summary.Cell>
+                <Table.Summary.Cell index={0} colSpan={4}></Table.Summary.Cell>
+                <Table.Summary.Cell index={1}>{totalWins}</Table.Summary.Cell>
+                <Table.Summary.Cell index={2}>{totalLosses}</Table.Summary.Cell>
+                <Table.Summary.Cell index={3}>
+                  {percentageFormat(totalWins, totalLosses)}%
+                </Table.Summary.Cell>
+                <Table.Summary.Cell index={4}>{totalWins + totalLosses}</Table.Summary.Cell>
+                <Table.Summary.Cell index={5}>{totalDrops}</Table.Summary.Cell>
+                <Table.Summary.Cell index={6}>{totalDisputes}</Table.Summary.Cell>
+                <Table.Summary.Cell index={7}>{formatTimeAgo(latestDate())}</Table.Summary.Cell>
               </Table.Summary.Row>
             </>
           );
