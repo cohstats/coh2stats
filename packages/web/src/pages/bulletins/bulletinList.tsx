@@ -10,8 +10,33 @@ import firebaseAnalytics from "../../analytics";
 import { Tip } from "../../components/tip";
 import { Link } from "react-router-dom";
 import routes from "../../routes";
+import { ChangeEvent } from "react";
+
+interface FilteredInfoState {
+  icon?: string;
+  bulletinName?: string;
+  descriptionShort?: string;
+  races?: string[];
+}
 
 const BulletinList = () => {
+  const [filteredInfo, setFilteredInfo] = React.useState<FilteredInfoState>({});
+  let timeout: any;
+
+  const handleRaceFilter = (filters: any) => {
+    setFilteredInfo({ ...filteredInfo, races: filters.races });
+  };
+
+  const handleNameSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      handleSearch(e.target.value, "bulletinName");
+    }, 800);
+  };
+
+  const handleSearch = (value: string, column: string) =>
+    setFilteredInfo({ ...filteredInfo, [column]: value });
+
   // Prepare bulletin data
   const bulletinData = getAllBulletins();
 
@@ -96,7 +121,7 @@ const BulletinList = () => {
       title: "Name",
       dataIndex: "bulletinName",
       key: "bulletinName",
-      ...tableColumnTextFilterConfig<IntelBulletinData>(),
+      filteredValue: filteredInfo?.bulletinName ? [filteredInfo.bulletinName] : null,
       onFilter: (value: any, record: IntelBulletinData) =>
         record.bulletinName.toLowerCase().includes(value.toLowerCase()),
       sorter: (a: IntelBulletinData, b: IntelBulletinData) =>
@@ -134,7 +159,10 @@ const BulletinList = () => {
           value: "wgerman",
         },
       ],
-      onFilter: (value: any, record: IntelBulletinData) => record.races.indexOf(value) !== -1,
+      filteredValue: filteredInfo?.races ? filteredInfo.races : null,
+      onFilter: (value: any, record: IntelBulletinData) => {
+        return record.races.indexOf(value) !== -1;
+      },
       sorter: (a: IntelBulletinData, b: IntelBulletinData) => a.races.length - b.races.length,
       render: (tags: any[]) => (
         <Space wrap>
@@ -168,6 +196,16 @@ const BulletinList = () => {
               }
             />
           </div>
+          <div style={{ textAlign: "center", paddingBottom: 10 }}>
+            <Input
+              placeholder="Search name"
+              size="large"
+              style={{ maxWidth: 400 }}
+              onChange={handleNameSearch}
+              allowClear
+              autoFocus
+            />
+          </div>
           <Table
             columns={TableColumns}
             pagination={{
@@ -187,6 +225,7 @@ const BulletinList = () => {
               expandIconColumnIndex: -1,
             }}
             dataSource={bulletinData}
+            onChange={(pagination, filters, sorter) => handleRaceFilter(filters)}
           />
           <ExportDate typeOfData={"Intel bulletins"} />
         </Col>
