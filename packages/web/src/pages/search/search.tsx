@@ -126,7 +126,21 @@ const CustomSearch: React.FC = () => {
   };
 
   if (error) {
-    return <>{error}</>;
+    return (
+      <div>
+        <div>{error}</div>
+        <div>
+          If the error persists, please report it{" "}
+          <a
+            href={"https://github.com/petrvecera/coh2ladders/issues"}
+            target={"_blank"}
+            rel="noreferrer"
+          >
+            here.
+          </a>
+        </div>
+      </div>
+    );
   }
 
   return (

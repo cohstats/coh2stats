@@ -30,6 +30,7 @@ div.ant-table-column-sorters::after {
 
 .ant-table-summary {
   text-align: center;
+  background: #fafafa;
 }
 
 .ant-table-summary > tr > td:last-child {

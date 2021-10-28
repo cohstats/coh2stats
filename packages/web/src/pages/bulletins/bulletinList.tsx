@@ -31,7 +31,7 @@ const BulletinList = () => {
     clearTimeout(timeout);
     timeout = setTimeout(() => {
       handleSearch(e.target.value, "bulletinName");
-    }, 800);
+    }, 300);
   };
 
   const handleSearch = (value: string, column: string) =>

@@ -133,6 +133,11 @@ const PlayerCard = () => {
               </Title>
               <b>XP:</b> {playerRelicProfile.xp.toLocaleString()}
               {playerRelicProfile.xp === 18785964 ? " (MAX)" : ""}
+              <div>
+                <a href={steamProfile["profileurl"]} target={"_blank"} rel="noreferrer">
+                  <Avatar size={24} src={"/resources/steam_icon.png"} alt={"steam icon"} />
+                </a>
+              </div>
             </div>
           </div>
           <div style={{ float: "right", paddingLeft: 15 }}>
