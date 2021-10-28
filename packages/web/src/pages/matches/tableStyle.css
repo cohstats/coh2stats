@@ -27,3 +27,15 @@ td.ant-table-cell.ant-table-column-sort {
 div.ant-table-column-sorters::after {
   z-index: -1;
 }
+
+.ant-table-summary {
+  text-align: center;
+}
+
+.ant-table-summary > tr > td:last-child {
+  text-align: end;
+}
+
+.ant-table-summary > tr:hover > td {
+  background: rgba(170, 170, 170, 0.3);
+}

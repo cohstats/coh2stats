@@ -21,6 +21,24 @@ const PlayerSingleMatchesTable: React.FC<IProps> = ({ title, data }) => {
     }
   });
 
+  const percentageFormat = (wins: number, losses: number) => {
+    return Math.round(100 * Number(wins / (losses + wins)));
+  };
+
+  const latestDate = () => {
+    let latest = sortedData[0].lastmatchdate;
+    sortedData.forEach((data) => {
+      if (data.lastmatchdate > latest) {
+        latest = data.lastmatchdate;
+      }
+    });
+    return latest;
+  };
+
+  const formatTimeAgo = (date: any) => {
+    return timeAgo.format(Date.now() - (Date.now() - date * 1000), "round-minute");
+  };
+
   const TableColumns: ColumnsType<PlayerCardDataArrayObject> = [
     {
       title: "Mode",
@@ -101,7 +119,7 @@ const PlayerSingleMatchesTable: React.FC<IProps> = ({ title, data }) => {
       align: "center" as "center",
       width: 90,
       render: (data: PlayerCardDataArrayObject) => {
-        return <div>{Math.round(100 * Number(data.wins / (data.losses + data.wins)))}%</div>;
+        return <div>{percentageFormat(data.wins, data.losses)}%</div>;
       },
     },
     {
@@ -137,7 +155,7 @@ const PlayerSingleMatchesTable: React.FC<IProps> = ({ title, data }) => {
         if (data) {
           return (
             <Tooltip title={new Date(data * 1000).toLocaleString()}>
-              {timeAgo.format(Date.now() - (Date.now() - data * 1000), "round-minute")}
+              {formatTimeAgo(data)}
             </Tooltip>
           );
         }
@@ -159,6 +177,36 @@ const PlayerSingleMatchesTable: React.FC<IProps> = ({ title, data }) => {
         dataSource={sortedData}
         pagination={false}
         size={"small"}
+        summary={(pageData) => {
+          let totalWins = 0;
+          let totalLosses = 0;
+          let totalDrops = 0;
+          let totalDisputes = 0;
+
+          pageData.forEach(({ wins, losses, drops, disputes }) => {
+            totalWins += wins;
+            totalLosses += losses;
+            totalDrops += drops;
+            totalDisputes += disputes;
+          });
+
+          return (
+            <>
+              <Table.Summary.Row>
+                <Table.Summary.Cell index={0} colSpan={4}></Table.Summary.Cell>
+                <Table.Summary.Cell index={1}>{totalWins}</Table.Summary.Cell>
+                <Table.Summary.Cell index={2}>{totalLosses}</Table.Summary.Cell>
+                <Table.Summary.Cell index={3}>
+                  {percentageFormat(totalWins, totalLosses)}%
+                </Table.Summary.Cell>
+                <Table.Summary.Cell index={4}>{totalWins + totalLosses}</Table.Summary.Cell>
+                <Table.Summary.Cell index={5}>{totalDrops}</Table.Summary.Cell>
+                <Table.Summary.Cell index={6}>{totalDisputes}</Table.Summary.Cell>
+                <Table.Summary.Cell index={7}>{formatTimeAgo(latestDate())}</Table.Summary.Cell>
+              </Table.Summary.Row>
+            </>
+          );
+        }}
       />
     </div>
   );
