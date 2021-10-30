@@ -4,6 +4,7 @@ import { useData, useLoading } from "../../firebase";
 import { Donation } from "../../components/donations";
 const { Title, Link, Text, Paragraph } = Typography;
 
+// eslint-disable-next-line react-hooks/exhaustive-deps
 const useMountEffect = (fun: { (): void }) => useEffect(fun, []);
 
 const About: React.FC = () => {

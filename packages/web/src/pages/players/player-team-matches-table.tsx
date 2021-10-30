@@ -3,11 +3,10 @@ import { ColumnsType } from "antd/lib/table";
 import { LaddersDataArrayObject, PlayerCardDataArrayObject } from "../../coh/types";
 import { CountryFlag } from "../../components/country-flag";
 import { Table, Tooltip, Typography } from "antd";
-import { timeAgo } from "../../utils/helpers";
 import { convertSteamNameToID, levelToText } from "../../coh/helpers";
 import { Link } from "react-router-dom";
 import routes from "../../routes";
-import { convertTeamNames } from "./helpers";
+import { convertTeamNames, formatTimeAgo, latestDate, percentageFormat } from "./helpers";
 import { Helper } from "../../components/helper";
 const { Text } = Typography;
 
@@ -25,24 +24,6 @@ const PlayerTeamMatchesTable: React.FC<IProps> = ({ title, data }) => {
       return 1;
     }
   });
-
-  const percentageFormat = (wins: number, losses: number) => {
-    return Math.round(100 * Number(wins / (losses + wins)));
-  };
-
-  const latestDate = () => {
-    let latest = sortedData[0].lastmatchdate;
-    sortedData.forEach((data) => {
-      if (data.lastmatchdate > latest) {
-        latest = data.lastmatchdate;
-      }
-    });
-    return latest;
-  };
-
-  const formatTimeAgo = (date: any) => {
-    return timeAgo.format(Date.now() - (Date.now() - date * 1000), "round-minute");
-  };
 
   const TableColumns: ColumnsType<PlayerCardDataArrayObject> = [
     {
@@ -230,7 +211,7 @@ const PlayerTeamMatchesTable: React.FC<IProps> = ({ title, data }) => {
                 <Table.Summary.Cell index={7}>{totalDisputes}</Table.Summary.Cell>
                 <Table.Summary.Cell index={8}>
                   <Tooltip title={`Last game as ${title.toUpperCase()}`}>
-                    {formatTimeAgo(latestDate())}
+                    {formatTimeAgo(latestDate(sortedData))}
                   </Tooltip>
                 </Table.Summary.Cell>
               </Table.Summary.Row>

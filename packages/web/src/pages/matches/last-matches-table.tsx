@@ -208,8 +208,8 @@ const LastMatchesTable: React.FC<IProps> = ({ data, profileID }) => {
   function getPlayerMapListFilter(matches: any) {
     let mapSet = new Set();
     let filterSettings: any[] = [];
-    for (let index in matches) {
-      mapSet.add(matches[index].mapname);
+    for (const map of matches) {
+      mapSet.add(map.mapname);
     }
 
     // sort maps alphabetically
@@ -217,13 +217,13 @@ const LastMatchesTable: React.FC<IProps> = ({ data, profileID }) => {
       return a.localeCompare(b);
     });
 
-    // create filter style
-    for (let index in sortedMapsArray) {
-      filterSettings[index] = {
-        text: formatMapName(sortedMapsArray[index]),
-        value: sortedMapsArray[index],
-      };
+    for (const map of sortedMapsArray) {
+      filterSettings.push({
+        text: formatMapName(map),
+        value: map,
+      });
     }
+
     return filterSettings;
   }
 

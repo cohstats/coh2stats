@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
-import { Table, Tag, Space, Col, Row, Input, Button } from "antd";
+import { Table, Tag, Space, Col, Row, Input } from "antd";
 
 import { IntelBulletinData } from "../../coh/types";
 import { getAllBulletins, getBulletinIconPath } from "../../coh/bulletins";
-import { ColumnsType, ColumnType } from "antd/lib/table";
-import { SearchOutlined } from "@ant-design/icons";
+import { ColumnsType } from "antd/lib/table";
 import { ExportDate } from "../../components/export-date";
 import firebaseAnalytics from "../../analytics";
 import { Tip } from "../../components/tip";
@@ -44,59 +43,50 @@ const BulletinList = () => {
     firebaseAnalytics.bulletinsDisplayed();
   }, []);
 
-  // search through provided bulletin data
-  bulletinData.map((sortedBulletinItem) => {
-    // if a bulletin belongs to more then 1 race, sort the races alphabetically
-    if (sortedBulletinItem.races.length > 1) {
-      sortedBulletinItem.races.sort((a, b) => {
-        return a.localeCompare(b);
-      });
-    }
-  });
   // sort alphabetically by the first race
   bulletinData.sort((a, b) => {
     return a.races[0].localeCompare(b.races[0]);
   });
 
-  function tableColumnTextFilterConfig<T>(): ColumnType<T> {
-    const searchInputHolder: { current: Input | null } = { current: null };
-    return {
-      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => {
-        return (
-          <div style={{ padding: 8 }}>
-            <Input
-              ref={(node) => (searchInputHolder.current = node)}
-              placeholder={"Search bulletin name"}
-              value={selectedKeys[0]}
-              onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-              onPressEnter={() => confirm({ closeDropdown: false })}
-              style={{ width: 188, marginBottom: 8, display: "block" }}
-            />
-            <Button
-              type="primary"
-              onClick={() => confirm({ closeDropdown: true })}
-              icon={<SearchOutlined />}
-              size="small"
-              style={{ width: 90, marginRight: 8 }}
-            >
-              Search
-            </Button>
-            <Button size="small" style={{ width: 90 }} onClick={clearFilters}>
-              Reset
-            </Button>
-          </div>
-        );
-      },
-      filterIcon: (filtered) => (
-        <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
-      ),
-      onFilterDropdownVisibleChange: (visible) => {
-        if (visible) {
-          setTimeout(() => searchInputHolder.current?.select());
-        }
-      },
-    };
-  }
+  // function tableColumnTextFilterConfig<T>(): ColumnType<T> {
+  //   const searchInputHolder: { current: Input | null } = { current: null };
+  //   return {
+  //     filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => {
+  //       return (
+  //         <div style={{ padding: 8 }}>
+  //           <Input
+  //             ref={(node) => (searchInputHolder.current = node)}
+  //             placeholder={"Search bulletin name"}
+  //             value={selectedKeys[0]}
+  //             onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+  //             onPressEnter={() => confirm({ closeDropdown: false })}
+  //             style={{ width: 188, marginBottom: 8, display: "block" }}
+  //           />
+  //           <Button
+  //             type="primary"
+  //             onClick={() => confirm({ closeDropdown: true })}
+  //             icon={<SearchOutlined />}
+  //             size="small"
+  //             style={{ width: 90, marginRight: 8 }}
+  //           >
+  //             Search
+  //           </Button>
+  //           <Button size="small" style={{ width: 90 }} onClick={clearFilters}>
+  //             Reset
+  //           </Button>
+  //         </div>
+  //       );
+  //     },
+  //     filterIcon: (filtered) => (
+  //       <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
+  //     ),
+  //     onFilterDropdownVisibleChange: (visible) => {
+  //       if (visible) {
+  //         setTimeout(() => searchInputHolder.current?.select());
+  //       }
+  //     },
+  //   };
+  // }
 
   // Prepare table header
   const TableColumns: ColumnsType<IntelBulletinData> = [
