@@ -223,6 +223,8 @@ const MapStats: React.FC = () => {
         toTimeStampToLoad: convertDateToDayTimestamp(rangeDate.toDate).toString(),
       });
     }
+    // We don't really want to track other values ...
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [datePickerType, dateValue]);
 
   const onDatePickerTypeSelect = (value: DatePickerType) => {

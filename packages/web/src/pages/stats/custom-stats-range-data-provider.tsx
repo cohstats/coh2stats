@@ -101,6 +101,7 @@ const CustomStatsRangeDataProvider: React.FC<IProps> = ({ urlChanger }) => {
       // @ts-ignore
       mapsData: fullData[type]["maps"],
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [type]);
 
   if (isLoading) return <Loading />;
