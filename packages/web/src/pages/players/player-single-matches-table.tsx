@@ -2,9 +2,9 @@ import React from "react";
 import { ColumnsType } from "antd/lib/table";
 import { PlayerCardDataArrayObject } from "../../coh/types";
 import { Table, Tooltip, Typography } from "antd";
-import { timeAgo } from "../../utils/helpers";
 import { getGeneralIconPath, levelToText } from "../../coh/helpers";
 import { Helper } from "../../components/helper";
+import { formatTimeAgo, latestDate, percentageFormat } from "./helpers";
 const { Text } = Typography;
 
 interface IProps {
@@ -20,24 +20,6 @@ const PlayerSingleMatchesTable: React.FC<IProps> = ({ title, data }) => {
       return -1;
     }
   });
-
-  const percentageFormat = (wins: number, losses: number) => {
-    return Math.round(100 * Number(wins / (losses + wins)));
-  };
-
-  const latestDate = () => {
-    let latest = sortedData[0].lastmatchdate;
-    sortedData.forEach((data) => {
-      if (data.lastmatchdate > latest) {
-        latest = data.lastmatchdate;
-      }
-    });
-    return latest;
-  };
-
-  const formatTimeAgo = (date: any) => {
-    return timeAgo.format(Date.now() - (Date.now() - date * 1000), "round-minute");
-  };
 
   const TableColumns: ColumnsType<PlayerCardDataArrayObject> = [
     {
@@ -205,7 +187,7 @@ const PlayerSingleMatchesTable: React.FC<IProps> = ({ title, data }) => {
                 <Table.Summary.Cell index={7}>{totalDisputes}</Table.Summary.Cell>
                 <Table.Summary.Cell index={8}>
                   <Tooltip title={`Last game as ${title.toUpperCase()}`}>
-                    {formatTimeAgo(latestDate())}
+                    {formatTimeAgo(latestDate(sortedData))}
                   </Tooltip>
                 </Table.Summary.Cell>
               </Table.Summary.Row>
