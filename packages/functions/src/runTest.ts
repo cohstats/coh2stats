@@ -4,42 +4,102 @@
  */
 import * as functions from "firebase-functions";
 import { DEFAULT_FUNCTIONS_LOCATION } from "./constants";
-// import { getDateTimeStampInterval, printUTCTime } from "./libs/helpers";
-// import { ProcessedMatch } from "./libs/types";
-// import { getMatchCollectionRef } from "./fb-paths";
-// import { analyzeMatchesByMaps } from "./libs/analysis/match-map-analysis";
-// import { saveMapAnalysis } from "./libs/analysis/analysis";
-// import { getAndSaveAllLadders } from "./libs/ladders/ladders";
-import { removeOldLadder } from "./libs/ladders/ladders-old";
-//import { getDateTimeStampInterval } from "./libs/helpers";
-// import {removeOldMatches} from "./libs/matches/matches";
 
-// //import {runAndSaveMultiDayAnalysis} from "./libs/analysis/multi-day-analysis";
-// import { getDateTimeStampInterval, printUTCTime } from "./libs/helpers";
-// import { getMatchCollectionRef } from "./fb-paths";
-// import { ProcessedMatch } from "./libs/types";
-// import { analyzeAndSaveMatchStats, analyzeAndSaveTopMatchStats } from "./libs/analysis/analysis";
-// import { runAndSaveMultiDayAnalysis } from "./libs/analysis/multi-day-analysis";
-// import {getMatchCollectionRef} from "./fb-paths";
-// import {start} from "repl";
-// import {getHoursOldTimestamp} from "./libs/helpers";
-// import { removeOldMatches } from "./libs/matches/matches";
 
-const runtimeOpts: Record<string, "1GB" | any> = {
+import * as zlib from "zlib";
+import {getPlayerStatsFromRelic} from "./libs/players/players";
+import {getSteamPlayerSummaries} from "./libs/steam-api";
+import {getAndPrepareMatchesForPlayer} from "./libs/matches/matches";
+
+import * as stream from "stream";
+
+
+const runtimeOpts: Record<string, "128MB" | any> = {
   timeoutSeconds: 540,
-  memory: "1GB",
+  memory: "128MB",
 };
 
 const runTest = functions
   .region(DEFAULT_FUNCTIONS_LOCATION)
   .runWith(runtimeOpts)
   .https.onRequest(async (request, response) => {
+    response.set('Access-Control-Allow-Origin', "*")
+    response.set('Access-Control-Allow-Methods', 'GET');
+    response.set("content-encoding", "br")
+
+    const steamID: string = <string>request.query.steamid || "";
+
+    const PromiseRelicData = getPlayerStatsFromRelic(steamID);
+    const PromiseSteamProfile = getSteamPlayerSummaries([steamID]);
+    const PromisePlayerMatches = getAndPrepareMatchesForPlayer(`/steam/${steamID}`, false);
+    const [relicData, steamProfile, playerMatches] = await Promise.all([
+      PromiseRelicData,
+      PromiseSteamProfile,
+      PromisePlayerMatches,
+    ]);
+
+    const inputData = {
+      relicPersonalStats: relicData,
+      steamProfile: steamProfile,
+      playerMatches: playerMatches,
+    }
+
+    const stringifiedData = JSON.stringify(inputData);
+
+    const inputStream = new stream.Readable(); // Create the stream
+    inputStream.push(stringifiedData); // Push the data
+    inputStream.push(null); // End the stream data
+
+    const passTrough = new stream.PassThrough()
+
+    const brotli = zlib.createBrotliCompress(  {
+      chunkSize: 32 * 1024,
+      params: {
+        [zlib.constants.BROTLI_PARAM_MODE]: zlib.constants.BROTLI_MODE_TEXT,
+        [zlib.constants.BROTLI_PARAM_QUALITY]: 4,
+        [zlib.constants.BROTLI_PARAM_SIZE_HINT]: stringifiedData.length
+      }});
+
+    inputStream.pipe(brotli).pipe(passTrough)
+
+    passTrough.on('data', (data) => {
+      response.write(data);
+    })
+
+    passTrough.on('end', () => {
+      response.end();
+    })
+    //
+    //
+    // zlib.brotliCompress(
+    //   stringifiedData,
+    //   {
+    //   chunkSize: 32 * 1024,
+    //     params: {
+    //       [zlib.constants.BROTLI_PARAM_MODE]: zlib.constants.BROTLI_MODE_TEXT,
+    //       [zlib.constants.BROTLI_PARAM_QUALITY]: 4,
+    //       [zlib.constants.BROTLI_PARAM_SIZE_HINT]: stringifiedData.length
+    //     }
+    // }, ((error, result) => {
+    //   if(error){
+    //     console.error("Error", error)
+    //     response.status(500).end()
+    //   }
+    //   response.set("content-encoding", "br")
+    //   response.send(result);
+    // }))
+
+
+
+
+    // response.send("finished");
+
     // for (let i = 1; i <= 31; i++) {
     //   const { start } = getDateTimeStampInterval(i, new Date(1628553600 * 1000));
     //   await removeLadderExceptMonday(new Date(start * 1000));
     // }
-
-    await removeOldLadder(60);
+    //
+    // await removeOldLadder(60);
 
     // const test = await getAndSaveAllLadders();
     //
@@ -127,7 +187,7 @@ const runTest = functions
     //   functions.logger.info("Finished analysis for one day");
     // }
 
-    response.send("finished");
+    // response.send("finished");
   });
 
 export { runTest };
