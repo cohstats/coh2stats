@@ -3,6 +3,7 @@
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/petrvecera/coh2ladders)
 ![Uptime Robot ratio (30 days)](https://img.shields.io/uptimerobot/ratio/m788579058-010f84f8b7e284e354b0946c?label=uptime%2030%20days)
 [![DeepScan grade](https://deepscan.io/api/teams/15780/projects/19027/branches/481420/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=15780&pid=19027&bid=481420)
+![GitHub CodeQL Workflow Status (branch)](https://img.shields.io/github/workflow/status/petrvecera/coh2ladders/CodeQL/master?label=CodeQL)
 
 ## https://coh2stats.com/
 
