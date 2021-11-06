@@ -184,6 +184,8 @@ const About: React.FC = () => {
         <br />
         <b>Past donations 2021:</b>
         <br />
+        Gammi
+        <br />
         MECH
         <br />
         KoRneY
