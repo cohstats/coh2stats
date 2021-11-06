@@ -4,7 +4,6 @@ import { Col, Row, Tooltip, Typography, Avatar, Tabs } from "antd";
 import { LaddersDataObject } from "../../coh/types";
 import firebaseAnalytics from "../../analytics";
 import { capitalize, timeAgo, useQuery } from "../../utils/helpers";
-import { firebase } from "../../firebase";
 
 import { CountryFlag } from "../../components/country-flag";
 import { playerCardBase } from "../../titles";
@@ -17,6 +16,7 @@ import { convertTeamNames } from "./helpers";
 import LastMatchesTable from "../matches/last-matches-table";
 import routes from "../../routes";
 import PlayerStandingsTables from "./player-standings";
+import config from "../../config";
 const { Text } = Typography;
 const { TabPane } = Tabs;
 
@@ -58,20 +58,18 @@ const PlayerCard = () => {
     setIsLoading(true);
 
     (async () => {
-      const payLoad = { steamID: steamid };
-      const getPlayerPersonalStats = firebase
-        .functions()
-        .httpsCallable("getPlayerCardEverything");
       try {
-        const { data } = await getPlayerPersonalStats(payLoad);
-        setData(data);
+        const response = await fetch(
+          `https://${config.firebaseFunctions.location}-coh2-ladders-prod.cloudfunctions.net/getPlayerCardEverythingHttp?steamid=${steamid}`,
+        );
+        setData(await response.json());
       } catch (e) {
         let errorMessage = "Failed to do something exceptional";
         if (e instanceof Error) {
           errorMessage = e.message;
         }
         console.error(e);
-        setError(errorMessage);
+        setError(JSON.stringify(errorMessage));
       } finally {
         setIsLoading(false);
       }
