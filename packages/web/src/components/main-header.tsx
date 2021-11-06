@@ -66,99 +66,102 @@ export const MainHeader: React.FC = () => {
 
   return (
     <Header style={{ height: "auto" }}>
-      <div
-        style={{
-          position: "relative",
-          float: "right",
-        }}
-      >
-        <Space
-          direction={"horizontal"}
-          size={"small"}
-          wrap
-          style={{ display: "flex", justifyContent: "center" }}
+      <div>
+        <div style={{ float: "left" }}>
+          <Link to={"/"}>
+            <div
+              style={{
+                color: "whitesmoke",
+                fontSize: "x-large",
+                fontFamily: "sans-serif",
+                cursor: "pointer",
+                whiteSpace: "nowrap",
+              }}
+            >
+              CoH 2 Logs & Stats
+            </div>
+          </Link>
+        </div>
+        <div
+          style={{
+            float: "right",
+          }}
         >
-          {/*Add div because of the layout shift*/}
-          <div style={{ minHeight: 64, minWidth: 120 }}>
-            {!isOnlinePlayersLoading && (
-              <Tooltip
-                title={`Amount of online Steam players in game Company of Heroes 2 as of  ${new Date(
-                  onlinePlayersData["timeStamp"] * 1000,
-                ).toLocaleString()}`}
-              >
-                <span
-                  style={{
-                    color: "#f0f2f5",
-                  }}
-                >
-                  Ingame players
-                </span>
-
-                <Badge
-                  className="site-badge-count-109"
-                  count={onlinePlayersData["onlinePlayers"]}
-                  style={{ backgroundColor: "#52c41a", boxShadow: "0 0 0 0", marginLeft: 10 }}
-                  overflowCount={99999}
-                />
-              </Tooltip>
-            )}
-          </div>
-
-          <PlayerSearchInput />
-        </Space>
-      </div>
-      <Space direction={"horizontal"} size={"large"}>
-        <Link to={"/"}>
-          <div
-            style={{
-              color: "whitesmoke",
-              fontSize: "x-large",
-              fontFamily: "sans-serif",
-              cursor: "pointer",
-              whiteSpace: "nowrap",
-            }}
+          <Space
+            direction={"horizontal"}
+            size={"small"}
+            wrap
+            style={{ display: "flex", justifyContent: "center" }}
           >
-            CoH 2 Logs & Stats
-          </div>
-        </Link>
-        <Menu
-          overflowedIndicator={<div style={{ fontSize: "x-large" }}>☰</div>}
-          theme="dark"
-          mode="horizontal"
-          selectedKeys={[currentPath]}
-          defaultSelectedKeys={[currentPath]}
-        >
-          <Menu.Item key={routes.playerCardBase()}>
-            <Link to={routes.playerCardBase()}>Players</Link>
-          </Menu.Item>
-          <Menu.Item key={routes.statsBase()}>
-            <Link to={routes.statsBase()}>Stats</Link>
-          </Menu.Item>
-          <Menu.Item key={routes.mapStats()}>
-            <Link to={routes.mapStats()}>Map Stats</Link>
-          </Menu.Item>
-          <Menu.Item key={routes.leaderboardsBase()}>
-            <Link to={routes.leaderboardsBase()}>Leaderboards</Link>
-          </Menu.Item>
-          <Menu.Item key={routes.commanderBase()}>
-            <Link to={routes.commanderBase()}>Commanders</Link>
-          </Menu.Item>
-          <Menu.Item key={routes.bulletinsBase()}>
-            <Link to={routes.bulletinsBase()}>Intel Bulletins</Link>
-          </Menu.Item>
-          <SubMenu key={routes.aboutBase()} title={"About"}>
-            <Menu.Item key={`${routes.aboutBase()}#base`}>
-              <Link to={routes.aboutBase()}>About</Link>
+            {/*Add div because of the layout shift*/}
+            <div style={{ minHeight: 64, minWidth: 125 }}>
+              {!isOnlinePlayersLoading && (
+                <Tooltip
+                  title={`Amount of online Steam players in game Company of Heroes 2 as of  ${new Date(
+                    onlinePlayersData["timeStamp"] * 1000,
+                  ).toLocaleString()}`}
+                >
+                  <span
+                    style={{
+                      color: "#f0f2f5",
+                    }}
+                  >
+                    Ingame players
+                  </span>
+
+                  <Badge
+                    className="site-badge-count-109"
+                    count={onlinePlayersData["onlinePlayers"]}
+                    style={{ backgroundColor: "#52c41a", boxShadow: "0 0 0 0", marginLeft: 10 }}
+                    overflowCount={99999}
+                  />
+                </Tooltip>
+              )}
+            </div>
+
+            <PlayerSearchInput />
+          </Space>
+        </div>
+        <div>
+          <Menu
+            overflowedIndicator={<div style={{ fontSize: "x-large" }}>☰</div>}
+            theme="dark"
+            mode="horizontal"
+            selectedKeys={[currentPath]}
+            defaultSelectedKeys={[currentPath]}
+          >
+            <Menu.Item key={routes.playerCardBase()}>
+              <Link to={routes.playerCardBase()}>Players</Link>
             </Menu.Item>
-            <Menu.Item key={`${routes.aboutBase()}#bugs`}>
-              <Link to={`${routes.aboutBase()}#bugs`}>Contribution</Link>
+            <Menu.Item key={routes.statsBase()}>
+              <Link to={routes.statsBase()}>Stats</Link>
             </Menu.Item>
-            <Menu.Item key={`${routes.aboutBase()}#donations`}>
-              <Link to={`${routes.aboutBase()}#donations`}>Donation</Link>
+            <Menu.Item key={routes.mapStats()}>
+              <Link to={routes.mapStats()}>Map Stats</Link>
             </Menu.Item>
-          </SubMenu>
-        </Menu>
-      </Space>
+            <Menu.Item key={routes.leaderboardsBase()}>
+              <Link to={routes.leaderboardsBase()}>Leaderboards</Link>
+            </Menu.Item>
+            <Menu.Item key={routes.commanderBase()}>
+              <Link to={routes.commanderBase()}>Commanders</Link>
+            </Menu.Item>
+            <Menu.Item key={routes.bulletinsBase()}>
+              <Link to={routes.bulletinsBase()}>Intel Bulletins</Link>
+            </Menu.Item>
+            <SubMenu key={routes.aboutBase()} title={"About"}>
+              <Menu.Item key={`${routes.aboutBase()}#base`}>
+                <Link to={routes.aboutBase()}>About</Link>
+              </Menu.Item>
+              <Menu.Item key={`${routes.aboutBase()}#bugs`}>
+                <Link to={`${routes.aboutBase()}#bugs`}>Contribution</Link>
+              </Menu.Item>
+              <Menu.Item key={`${routes.aboutBase()}#donations`}>
+                <Link to={`${routes.aboutBase()}#donations`}>Donation</Link>
+              </Menu.Item>
+            </SubMenu>
+          </Menu>
+        </div>
+      </div>
     </Header>
   );
 };
