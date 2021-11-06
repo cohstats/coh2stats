@@ -5,14 +5,12 @@
 import * as functions from "firebase-functions";
 import { DEFAULT_FUNCTIONS_LOCATION } from "./constants";
 
-
-import * as zlib from "zlib";
-import {getPlayerStatsFromRelic} from "./libs/players/players";
-import {getSteamPlayerSummaries} from "./libs/steam-api";
-import {getAndPrepareMatchesForPlayer} from "./libs/matches/matches";
-
-import * as stream from "stream";
-
+// import * as zlib from "zlib";
+// import { getPlayerStatsFromRelic } from "./libs/players/players";
+// import { getSteamPlayerSummaries } from "./libs/steam-api";
+// import { getAndPrepareMatchesForPlayer } from "./libs/matches/matches";
+//
+// import * as stream from "stream";
 
 const runtimeOpts: Record<string, "128MB" | any> = {
   timeoutSeconds: 540,
@@ -23,52 +21,53 @@ const runTest = functions
   .region(DEFAULT_FUNCTIONS_LOCATION)
   .runWith(runtimeOpts)
   .https.onRequest(async (request, response) => {
-    response.set('Access-Control-Allow-Origin', "*")
-    response.set('Access-Control-Allow-Methods', 'GET');
-    response.set("content-encoding", "br")
-
-    const steamID: string = <string>request.query.steamid || "";
-
-    const PromiseRelicData = getPlayerStatsFromRelic(steamID);
-    const PromiseSteamProfile = getSteamPlayerSummaries([steamID]);
-    const PromisePlayerMatches = getAndPrepareMatchesForPlayer(`/steam/${steamID}`, false);
-    const [relicData, steamProfile, playerMatches] = await Promise.all([
-      PromiseRelicData,
-      PromiseSteamProfile,
-      PromisePlayerMatches,
-    ]);
-
-    const inputData = {
-      relicPersonalStats: relicData,
-      steamProfile: steamProfile,
-      playerMatches: playerMatches,
-    }
-
-    const stringifiedData = JSON.stringify(inputData);
-
-    const inputStream = new stream.Readable(); // Create the stream
-    inputStream.push(stringifiedData); // Push the data
-    inputStream.push(null); // End the stream data
-
-    const passTrough = new stream.PassThrough()
-
-    const brotli = zlib.createBrotliCompress(  {
-      chunkSize: 32 * 1024,
-      params: {
-        [zlib.constants.BROTLI_PARAM_MODE]: zlib.constants.BROTLI_MODE_TEXT,
-        [zlib.constants.BROTLI_PARAM_QUALITY]: 4,
-        [zlib.constants.BROTLI_PARAM_SIZE_HINT]: stringifiedData.length
-      }});
-
-    inputStream.pipe(brotli).pipe(passTrough)
-
-    passTrough.on('data', (data) => {
-      response.write(data);
-    })
-
-    passTrough.on('end', () => {
-      response.end();
-    })
+    // response.set("Access-Control-Allow-Origin", "*");
+    // response.set("Access-Control-Allow-Methods", "GET");
+    // response.set("content-encoding", "br");
+    //
+    // const steamID: string = <string>request.query.steamid || "";
+    //
+    // const PromiseRelicData = getPlayerStatsFromRelic(steamID);
+    // const PromiseSteamProfile = getSteamPlayerSummaries([steamID]);
+    // const PromisePlayerMatches = getAndPrepareMatchesForPlayer(`/steam/${steamID}`, false);
+    // const [relicData, steamProfile, playerMatches] = await Promise.all([
+    //   PromiseRelicData,
+    //   PromiseSteamProfile,
+    //   PromisePlayerMatches,
+    // ]);
+    //
+    // const inputData = {
+    //   relicPersonalStats: relicData,
+    //   steamProfile: steamProfile,
+    //   playerMatches: playerMatches,
+    // };
+    //
+    // const stringifiedData = JSON.stringify(inputData);
+    //
+    // const inputStream = new stream.Readable(); // Create the stream
+    // inputStream.push(stringifiedData); // Push the data
+    // inputStream.push(null); // End the stream data
+    //
+    // const passTrough = new stream.PassThrough();
+    //
+    // const brotli = zlib.createBrotliCompress({
+    //   chunkSize: 32 * 1024,
+    //   params: {
+    //     [zlib.constants.BROTLI_PARAM_MODE]: zlib.constants.BROTLI_MODE_TEXT,
+    //     [zlib.constants.BROTLI_PARAM_QUALITY]: 4,
+    //     [zlib.constants.BROTLI_PARAM_SIZE_HINT]: stringifiedData.length,
+    //   },
+    // });
+    //
+    // inputStream.pipe(brotli).pipe(passTrough);
+    //
+    // passTrough.on("data", (data) => {
+    //   response.write(data);
+    // });
+    //
+    // passTrough.on("end", () => {
+    //   response.end();
+    // });
     //
     //
     // zlib.brotliCompress(
@@ -88,23 +87,16 @@ const runTest = functions
     //   response.set("content-encoding", "br")
     //   response.send(result);
     // }))
-
-
-
-
     // response.send("finished");
-
     // for (let i = 1; i <= 31; i++) {
     //   const { start } = getDateTimeStampInterval(i, new Date(1628553600 * 1000));
     //   await removeLadderExceptMonday(new Date(start * 1000));
     // }
     //
     // await removeOldLadder(60);
-
     // const test = await getAndSaveAllLadders();
     //
     // response.send("finished");
-
     // const matchDates = [18, 17, 16, 15, 14, 13, 12, 11];
     //
     // for (const date of matchDates) {
@@ -131,7 +123,6 @@ const runTest = functions
     //
     //   await saveMapAnalysis(analysis, start);
     // }
-
     // await removeOldMatches(78);
     // const statsSnapshot = await getStatsDocRef("1615161600", "daily").get()
     // const ladderSnapshot = await getLadderDocRef("1615161600", "team4", "axis").get()
@@ -186,7 +177,6 @@ const runTest = functions
     //
     //   functions.logger.info("Finished analysis for one day");
     // }
-
     // response.send("finished");
   });
 

@@ -12,3 +12,4 @@ export { triggerNumberOfOnlinePlayers } from "./triggerOnlinePlayers";
 export { getCustomAnalysis } from "./getCustomAnalysis";
 // export { getPlayerPersonalStats } from "./getPlayerPersonalStats";
 export { getPlayerCardEverything } from "./getPlayerCardEverything";
+export { getPlayerCardEverythingHttp } from "./getPlayerCardEverythingHttp";
