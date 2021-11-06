@@ -15,7 +15,8 @@ const getPlayerStatsFromRelic = async (steamID: string): Promise<Record<string, 
   } else if (data["result"]["message"] === "UNREGISTERED_PROFILE_NAME") {
     throw new Error("UNREGISTERED_PROFILE_NAME");
   } else {
-    console.error(`Error getting player profile data for steamID ${steamID}`, data);
+    console.error(`Error getting player profile data for steamID ${steamID}`);
+    console.error(data);
     throw new Error("ERROR GETTING PLAYER PROFILE DATA");
   }
 };

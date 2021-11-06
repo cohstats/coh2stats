@@ -69,7 +69,7 @@ const PlayerCard = () => {
           errorMessage = e.message;
         }
         console.error(e);
-        setError(errorMessage);
+        setError(JSON.stringify(errorMessage));
       } finally {
         setIsLoading(false);
       }

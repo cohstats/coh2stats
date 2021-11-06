@@ -5,11 +5,14 @@ import { getPlayerStatsFromRelic } from "./libs/players/players";
 import { getAndPrepareMatchesForPlayer } from "./libs/matches/matches";
 import { allowedCrossOrigins } from "./config";
 
+import { query, validationResult } from "express-validator";
+
 import * as stream from "stream";
 import * as zlib from "zlib";
 
 import * as cors from "cors";
 import * as express from "express";
+import * as htmlescape from "htmlescape";
 
 const app = express();
 const corsOptions = {
@@ -19,64 +22,76 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-app.get("/", async (req, res) => {
-  res.set("Content-Encoding", "br");
+const queryName = "steamid";
 
-  functions.logger.info(`Getting personal stats for ${JSON.stringify(req.query)}`);
+// Steam ID should be max 17 chars
+app.get(
+  "/",
+  [query(queryName).matches(/\d+/).isLength({ min: 6, max: 20 })],
+  async (req: express.Request, res: express.Response) => {
+    const validationErrors = validationResult(req);
+    if (!validationErrors.isEmpty()) {
+      res.status(400).json({ errors: validationErrors.array() });
+    }
 
-  const steamID: string = (req.query.steamid as string) || "";
+    functions.logger.info(`Getting personal stats for ${JSON.stringify(req.query)}`);
 
-  if (!steamID) {
-    res.status(500).send("The function must be called with query ?steamID=4981651654");
-  }
+    const steamID = `${req.query[queryName]}`;
 
-  try {
-    const PromiseRelicData = getPlayerStatsFromRelic(steamID);
-    const PromiseSteamProfile = getSteamPlayerSummaries([steamID]);
-    const PromisePlayerMatches = getAndPrepareMatchesForPlayer(`/steam/${steamID}`, false);
-    const [relicData, steamProfile, playerMatches] = await Promise.all([
-      PromiseRelicData,
-      PromiseSteamProfile,
-      PromisePlayerMatches,
-    ]);
+    if (!steamID) {
+      res.status(400).send("The function must be called with query ?steamID=4981651654");
+    }
 
-    const inputData = {
-      relicPersonalStats: relicData,
-      steamProfile: steamProfile,
-      playerMatches: playerMatches,
-    };
+    try {
+      const PromiseRelicData = getPlayerStatsFromRelic(steamID);
+      const PromiseSteamProfile = getSteamPlayerSummaries([steamID]);
+      const PromisePlayerMatches = getAndPrepareMatchesForPlayer(`/steam/${steamID}`, false);
+      const [relicData, steamProfile, playerMatches] = await Promise.all([
+        PromiseRelicData,
+        PromiseSteamProfile,
+        PromisePlayerMatches,
+      ]);
 
-    const stringifiedData = JSON.stringify(inputData);
+      const inputData = {
+        relicPersonalStats: relicData,
+        steamProfile: steamProfile,
+        playerMatches: playerMatches,
+      };
 
-    const inputStream = new stream.Readable(); // Create the stream
-    inputStream.push(stringifiedData); // Push the data
-    inputStream.push(null); // End the stream data
+      const stringifiedData = JSON.stringify(inputData);
 
-    const passTrough = new stream.PassThrough();
+      const inputStream = new stream.Readable(); // Create the stream
+      inputStream.push(stringifiedData); // Push the data
+      inputStream.push(null); // End the stream data
 
-    const brotli = zlib.createBrotliCompress({
-      chunkSize: 32 * 1024,
-      params: {
-        [zlib.constants.BROTLI_PARAM_MODE]: zlib.constants.BROTLI_MODE_TEXT,
-        [zlib.constants.BROTLI_PARAM_QUALITY]: 4,
-        [zlib.constants.BROTLI_PARAM_SIZE_HINT]: stringifiedData.length,
-      },
-    });
+      const passTrough = new stream.PassThrough();
 
-    inputStream.pipe(brotli).pipe(passTrough);
+      const brotli = zlib.createBrotliCompress({
+        chunkSize: 32 * 1024,
+        params: {
+          [zlib.constants.BROTLI_PARAM_MODE]: zlib.constants.BROTLI_MODE_TEXT,
+          [zlib.constants.BROTLI_PARAM_QUALITY]: 4,
+          [zlib.constants.BROTLI_PARAM_SIZE_HINT]: stringifiedData.length,
+        },
+      });
 
-    passTrough.on("data", (data: any) => {
-      res.write(data);
-    });
+      inputStream.pipe(brotli).pipe(passTrough);
 
-    passTrough.on("end", () => {
-      res.end();
-    });
-  } catch (e) {
-    functions.logger.error(e);
-    res.status(500).send(`Error calling calling the API ${e}`);
-  }
-});
+      // Set brotli encoding only when we are ready to pipe data back
+      res.set("Content-Encoding", "br");
+      passTrough.on("data", (data: any) => {
+        res.write(data);
+      });
+
+      passTrough.on("end", () => {
+        res.end();
+      });
+    } catch (e) {
+      functions.logger.error(e);
+      res.status(500).send(`Error calling calling the API ${htmlescape(e)}`);
+    }
+  },
+);
 
 const runtimeOpts: Record<string, "128MB" | any> = {
   timeoutSeconds: 120,
