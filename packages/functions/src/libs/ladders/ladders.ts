@@ -37,7 +37,7 @@ const invokeGetPlayerMatches = async (profileIds: Array<string>) => {
   try {
     const messageId = await pubSubClient.topic(PUBSUB_TOPIC_DOWNLOAD_MATCHES).publish(dataBuffer);
     console.log(`Message ${messageId} published.`);
-  } catch (error) {
+  } catch (error: any) {
     console.error(`Received error while publishing: ${error.message}`);
   }
 };
