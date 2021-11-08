@@ -6,6 +6,7 @@ import { getAndPrepareMatchesForPlayer } from "./libs/matches/matches";
 import { allowedCrossOrigins } from "./config";
 
 import { query, validationResult } from "express-validator";
+import * as htmlescape from "htmlescape";
 
 import * as stream from "stream";
 import * as zlib from "zlib";
@@ -88,7 +89,7 @@ app.get(
       });
     } catch (e: any) {
       functions.logger.error(e);
-      return res.status(500).send(`Error calling calling the API ${e.message}`);
+      return res.status(500).send(`Error calling calling the API ${htmlescape(e.message)}`);
     }
   },
 );
