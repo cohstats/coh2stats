@@ -1,7 +1,7 @@
 import React from "react";
 import { Alert } from "antd";
 
-const defaultCloseable = true;
+const defaultCloseable = false;
 
 export interface AlertEvent {
   /** Type of Alert styles, options:`success`, `info`, `warning`, `error` */
@@ -22,6 +22,10 @@ export const AlertBox: React.FC<AlertEvent> = (event: AlertEvent) => {
       type={event.type}
       description={event.description}
       closable={event.closable ?? defaultCloseable}
+      style={{
+        margin: 10,
+        maxWidth: 450,
+      }}
     />
   );
 };

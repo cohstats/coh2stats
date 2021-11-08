@@ -17,6 +17,7 @@ import LastMatchesTable from "../matches/last-matches-table";
 import routes from "../../routes";
 import PlayerStandingsTables from "./player-standings";
 import config from "../../config";
+import { AlertBox } from "../../components/alert-box";
 const { Text } = Typography;
 const { TabPane } = Tabs;
 
@@ -62,6 +63,11 @@ const PlayerCard = () => {
         const response = await fetch(
           `https://${config.firebaseFunctions.location}-coh2-ladders-prod.cloudfunctions.net/getPlayerCardEverythingHttp?steamid=${steamid}`,
         );
+        if (!response.ok) {
+          throw new Error(
+            `API request failed with code: ${response.status}, res: ${await response.text()}`,
+          );
+        }
         setData(await response.json());
       } catch (e) {
         let errorMessage = "Failed to do something exceptional";
@@ -77,7 +83,15 @@ const PlayerCard = () => {
   }, [steamid]);
 
   if (!isLoading && error != null) {
-    return <>{JSON.stringify(error)}</>;
+    return (
+      <Row justify="center" style={{ paddingTop: "10px" }}>
+        <AlertBox
+          type={"error"}
+          message={"There was an error loading the player card"}
+          description={`${JSON.stringify(error)}`}
+        />
+      </Row>
+    );
   }
 
   // This protects all the requests accessing data
