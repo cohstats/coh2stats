@@ -158,6 +158,15 @@ export const MainHeader: React.FC = () => {
               <Menu.Item key={`${routes.aboutBase()}#donations`}>
                 <Link to={`${routes.aboutBase()}#donations`}>Donation</Link>
               </Menu.Item>
+              <Menu.Item key={"relic-api-status"}>
+                <a
+                  href="https://stats.uptimerobot.com/03lN1ckr5j"
+                  target="_blank"
+                  rel={"noreferrer"}
+                >
+                  Relic API Status
+                </a>
+              </Menu.Item>
             </SubMenu>
           </Menu>
         </div>

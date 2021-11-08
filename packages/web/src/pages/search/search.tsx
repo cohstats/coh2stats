@@ -140,7 +140,15 @@ const CustomSearch: React.FC = () => {
             message={"Relic API might not be responding"}
             description={
               <div>
-                If the error persists, please report it{" "}
+                You can check Relic API status{" "}
+                <a
+                  href="https://stats.uptimerobot.com/03lN1ckr5j"
+                  target="_blank"
+                  rel={"noreferrer"}
+                >
+                  here
+                </a>
+                . If the error persists, please report it{" "}
                 <a
                   href={"https://github.com/petrvecera/coh2ladders/issues"}
                   target={"_blank"}
