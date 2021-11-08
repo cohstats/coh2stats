@@ -3,12 +3,13 @@ import { firebase } from "../../firebase";
 import Search from "antd/es/input/Search";
 import { useHistory, useParams } from "react-router";
 import routes from "../../routes";
-import { Avatar, Empty, Space } from "antd";
+import { Avatar, Empty, Row, Space } from "antd";
 
 import "./search.css";
 import { History } from "history";
 import firebaseAnalytics from "../../analytics";
 import { CountryFlag } from "../../components/country-flag";
+import { AlertBox } from "../../components/alert-box";
 
 type userAPIObject = Record<"steamProfile" | "relicProfile", Record<string, any>>;
 
@@ -111,9 +112,9 @@ const CustomSearch: React.FC = () => {
           const resultHtml = buildSearchResults(foundProfiles);
 
           setSearchData(resultHtml);
-        } catch (e) {
+        } catch (e: any) {
           console.error(e);
-          setError("Error occurred during the search.");
+          setError(e.message);
         } finally {
           setIsLoading(false);
         }
@@ -127,19 +128,31 @@ const CustomSearch: React.FC = () => {
 
   if (error) {
     return (
-      <div>
-        <div>{error}</div>
-        <div>
-          If the error persists, please report it{" "}
-          <a
-            href={"https://github.com/petrvecera/coh2ladders/issues"}
-            target={"_blank"}
-            rel="noreferrer"
-          >
-            here.
-          </a>
+      <Row justify="center" style={{ paddingTop: "10px" }}>
+        <div style={{ display: "inline-block" }}>
+          <AlertBox
+            type={"error"}
+            message={"There was an error while searching for players"}
+            description={`${JSON.stringify(error)}`}
+          />
+          <AlertBox
+            type={"warning"}
+            message={"Relic API might not be responding"}
+            description={
+              <div>
+                If the error persists, please report it{" "}
+                <a
+                  href={"https://github.com/petrvecera/coh2ladders/issues"}
+                  target={"_blank"}
+                  rel="noreferrer"
+                >
+                  here.
+                </a>
+              </div>
+            }
+          />
         </div>
-      </div>
+      </Row>
     );
   }
 

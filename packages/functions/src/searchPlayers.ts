@@ -64,7 +64,10 @@ const searchPlayers = functions
 
       const steamProfiles = await getSteamPlayerSummaries(steamIDs);
       if (!steamProfiles) {
-        throw new functions.https.HttpsError("internal", `Did not found any steam accounts`);
+        throw new functions.https.HttpsError(
+          "internal",
+          `Did not found any steam accounts for ids ${steamIDs}`,
+        );
       }
 
       const foundProfiles: Record<string, Record<"steamProfile" | "relicProfile", any>> = {};

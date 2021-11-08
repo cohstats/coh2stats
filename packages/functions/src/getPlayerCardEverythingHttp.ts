@@ -12,7 +12,6 @@ import * as zlib from "zlib";
 
 import * as cors from "cors";
 import * as express from "express";
-import * as htmlescape from "htmlescape";
 
 const app = express();
 const corsOptions = {
@@ -27,11 +26,12 @@ const queryName = "steamid";
 // Steam ID should be max 17 chars
 app.get(
   "/",
-  [query(queryName).matches(/\d+/).isLength({ min: 6, max: 20 })],
+  [query(queryName).matches(/^\d+$/).isLength({ min: 6, max: 20 })],
   async (req: express.Request, res: express.Response) => {
     const validationErrors = validationResult(req);
     if (!validationErrors.isEmpty()) {
-      res.status(400).json({ errors: validationErrors.array() });
+      functions.logger.warn(`The query did not pass the validation`);
+      return res.status(400).json({ errors: validationErrors.array() });
     }
 
     functions.logger.info(`Getting personal stats for ${JSON.stringify(req.query)}`);
@@ -39,7 +39,7 @@ app.get(
     const steamID = `${req.query[queryName]}`;
 
     if (!steamID) {
-      res.status(400).send("The function must be called with query ?steamID=4981651654");
+      return res.status(400).send("The function must be called with query ?steamID=4981651654");
     }
 
     try {
@@ -84,11 +84,11 @@ app.get(
       });
 
       passTrough.on("end", () => {
-        res.end();
+        return res.end();
       });
-    } catch (e) {
+    } catch (e: any) {
       functions.logger.error(e);
-      res.status(500).send(`Error calling calling the API ${htmlescape(e)}`);
+      return res.status(500).send(`Error calling calling the API ${e.message}`);
     }
   },
 );
