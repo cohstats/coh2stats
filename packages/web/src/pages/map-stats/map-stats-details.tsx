@@ -23,6 +23,7 @@ import { MapsPlayTime } from "../../components/charts/map-stats/maps-playtime-ba
 import { MapsWinRateSqrtChart } from "../../components/charts/map-stats/maps-winrate-sqrt-root-bar";
 import { Helper } from "../../components/helper";
 import { MapsPlayTimeHistogram } from "../../components/charts/map-stats/maps-playtime-histogram";
+import { MapsPlayTimeHistogramStacked } from "../../components/charts/map-stats/maps-playtime-histogram-stacked";
 
 const { Text, Link } = Typography;
 const { Option } = Select;
@@ -308,13 +309,22 @@ const MapStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
         </>
       )}
       <Row justify={"center"} style={{ paddingTop: 0 }}>
-        <Card
-          title={`${map} - ${type} game time`}
-          style={{ marginTop: 40 }}
-          bodyStyle={isMobile ? { width: "90vw", height: 300 } : { width: 800, height: 450 }}
-        >
-          <MapsPlayTimeHistogram data={data[map]} />
-        </Card>
+        <Space size={"large"} wrap style={{ display: "flex", justifyContent: "center" }}>
+          <Card
+            title={`${map} - ${type} game time`}
+            style={{ marginTop: 40 }}
+            bodyStyle={isMobile ? { width: "90vw", height: 300 } : { width: 480, height: 450 }}
+          >
+            <MapsPlayTimeHistogram data={data[map]} />
+          </Card>
+          <Card
+            title={`Percentage of games with particular game time`}
+            style={{ marginTop: 40 }}
+            bodyStyle={isMobile ? { width: "90vw", height: 300 } : { width: 645, height: 450 }}
+          >
+            <MapsPlayTimeHistogramStacked data={data} />
+          </Card>
+        </Space>
       </Row>
     </>
   );
