@@ -39,7 +39,7 @@ export const MapsPlayTimeHistogram: React.FC<IProps> = ({ data }) => {
 
   return (
     <ResponsiveBar
-      margin={{ top: 0, right: 25, bottom: 40, left: 50 }}
+      margin={{ top: 0, right: 0, bottom: 40, left: 45 }}
       // @ts-ignore
       data={chartData as data[] | undefined}
       layout={"vertical"}
