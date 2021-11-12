@@ -13,6 +13,8 @@ interface IProps {
 }
 
 const PlayerSingleMatchesTable: React.FC<IProps> = ({ title, data }) => {
+  const isAIGame = title.startsWith("AI");
+
   const sortedData = data.sort((a, b) => {
     if (a.mode > b.mode) {
       return 1;
@@ -145,11 +147,28 @@ const PlayerSingleMatchesTable: React.FC<IProps> = ({ title, data }) => {
     },
   ];
 
+  const tableTitle = (() => {
+    if (isAIGame) {
+      return title;
+    } else {
+      return title.toUpperCase();
+    }
+  })();
+
+  const imageSource = (() => {
+    if (isAIGame) {
+      return getGeneralIconPath("Multiplayer_AICallout");
+    } else if (title === "Custom Games") {
+      return getGeneralIconPath("Multiplayer_Gears");
+    } else {
+      return getGeneralIconPath(title);
+    }
+  })();
+
   return (
     <div key={title}>
       <div style={{ fontSize: "large", paddingBottom: 4, paddingLeft: 4 }}>
-        <img src={getGeneralIconPath(title)} height="24px" alt={title} />{" "}
-        <Text strong>{title.toUpperCase()}</Text>{" "}
+        <img src={imageSource} height="24px" alt={title} /> <Text strong>{tableTitle}</Text>{" "}
       </div>
       <Table
         key={title}
@@ -172,6 +191,8 @@ const PlayerSingleMatchesTable: React.FC<IProps> = ({ title, data }) => {
             totalDisputes += disputes;
           });
 
+          const lastDate = latestDate(sortedData);
+
           return (
             <>
               <Table.Summary.Row>
@@ -187,7 +208,7 @@ const PlayerSingleMatchesTable: React.FC<IProps> = ({ title, data }) => {
                 <Table.Summary.Cell index={7}>{totalDisputes}</Table.Summary.Cell>
                 <Table.Summary.Cell index={8}>
                   <Tooltip title={`Last game as ${title.toUpperCase()}`}>
-                    {formatTimeAgo(latestDate(sortedData))}
+                    {lastDate !== 0 && formatTimeAgo(lastDate)}
                   </Tooltip>
                 </Table.Summary.Cell>
               </Table.Summary.Row>
