@@ -189,10 +189,10 @@ const PlayerCard = () => {
               </Text>
             </div>
             <div>
-              <Text strong>{totalGames} total games</Text>
+              <Text strong>{totalGames} ranked games</Text>
             </div>
             <div>
-              <Text strong>{(totalWinRate * 100).toFixed(0)}% total winrate</Text>
+              <Text strong>{(totalWinRate * 100).toFixed(0)}% ranked winrate</Text>
             </div>
             <br />
             <div>

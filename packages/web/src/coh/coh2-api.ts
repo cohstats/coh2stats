@@ -42,6 +42,53 @@ const leaderboardsID: Record<string, Record<string, number>> = {
     axis: 24,
     allies: 25,
   },
+  custom: {
+    wehrmacht: 0,
+    soviet: 1,
+    wgerman: 2,
+    usf: 3,
+    british: 50,
+  },
+  AIEasyAxis: {
+    "2v2": 26,
+    "3v3": 34,
+    "4v4": 42,
+  },
+  AIMediumAxis: {
+    "2v2": 28,
+    "3v3": 36,
+    "4v4": 44,
+  },
+  AIHardAxis: {
+    "2v2": 30,
+    "3v3": 38,
+    "4v4": 46,
+  },
+  AIExpertAxis: {
+    "2v2": 32,
+    "3v3": 40,
+    "4v4": 48,
+  },
+  AIEasyAllies: {
+    "2v2": 27,
+    "3v3": 35,
+    "4v4": 43,
+  },
+  AIMediumAllies: {
+    "2v2": 29,
+    "3v3": 37,
+    "4v4": 45,
+  },
+  AIHardAllies: {
+    "2v2": 31,
+    "3v3": 39,
+    "4v4": 47,
+  },
+  AIExpertAllies: {
+    "2v2": 33,
+    "3v3": 41,
+    "4v4": 49,
+  },
 };
 
 const levels: Record<string, string> = {
