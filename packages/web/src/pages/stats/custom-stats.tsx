@@ -279,7 +279,7 @@ const CustomStats: React.FC = () => {
     <div>
       <div>
         <Space
-          style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}
+          style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: 10 }}
           wrap
         >
           <Select

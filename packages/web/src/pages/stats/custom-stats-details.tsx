@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Row, Card, Radio, RadioChangeEvent, Space, Typography, Col, Tooltip } from "antd";
+import { Row, Card, Radio, RadioChangeEvent, Space, Typography, Tooltip } from "antd";
 import { MapBarChart } from "../../components/charts/maps-bar";
 import { WinsChart } from "../../components/charts/wins-bar";
 import { WinRateChart } from "../../components/charts/winRate-bar";
@@ -8,14 +8,14 @@ import { CommandersBarChart } from "../../components/charts/commanders-bar";
 import { BulletinsBarChart } from "../../components/charts/bulletins-bar";
 import { Helper } from "../../components/helper";
 import { statsBase } from "../../titles";
-import { capitalize, formatDate } from "../../utils/helpers";
+import { capitalize } from "../../utils/helpers";
 import { useLocation } from "react-router-dom";
 import { FactionVsFactionCard } from "../../components/factions";
-import { isTimeStampInPatches } from "../../coh/patches";
 import { useMediaQuery } from "react-responsive";
 import { PlayTimeHistogram } from "../../components/charts/map-stats/play-time-histogram";
+import PatchNotification from "../../components/patch-notifications";
 
-const { Text, Link } = Typography;
+const { Text } = Typography;
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -70,7 +70,7 @@ const CustomStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
         buttonStyle="solid"
         onChange={onTypeRadioChange}
         size={"large"}
-        style={{ ...{ paddingBottom: 10 }, ...style }}
+        style={{ ...{ paddingBottom: 0 }, ...style }}
       >
         <Radio.Button disabled={true} value="general">
           General{" "}
@@ -99,43 +99,6 @@ const CustomStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
         <Radio.Button value="soviet">Soviet</Radio.Button>
       </Radio.Group>
     );
-  };
-
-  const buildPatchNotification = (params: Record<string, any>) => {
-    const { unixTimeStamp, unixTimeStampFrom, unixTimeStampTo } = params;
-
-    const patches = unixTimeStamp ? isTimeStampInPatches(parseInt(`${unixTimeStamp}`)) : [];
-    const patchesFrom = unixTimeStampFrom
-      ? isTimeStampInPatches(parseInt(`${unixTimeStampFrom}`))
-      : [];
-    const patchesTo = unixTimeStampTo ? isTimeStampInPatches(parseInt(`${unixTimeStampTo}`)) : [];
-
-    // Clear duplicates by going Array -> Set -> Array
-    const allPatches = [...new Set(patches.concat(patchesFrom).concat(patchesTo))];
-
-    const patchesJSX = [];
-
-    let i = 0;
-    for (const patch of allPatches) {
-      const endTimeStamps = patch.endDateUnixTimeStamp * 1000;
-      const endDate = endTimeStamps === Infinity ? "Now" : formatDate(new Date(endTimeStamps));
-      const startDate = formatDate(new Date(patch.startDateUnixTimeStamp * 1000));
-
-      patchesJSX.push(
-        <Row key={i++}>
-          <Col span={12} style={{ textAlign: "right" }}>
-            <Link href={patch.link} target="_blank">
-              <Text strong>{patch.name}</Text>
-            </Link>
-          </Col>
-          <Col>
-            &nbsp;- From {startDate} to {endDate}
-          </Col>
-        </Row>,
-      );
-    }
-
-    return <div style={{ textAlign: "center" }}>{patchesJSX}</div>;
   };
 
   const RegularStatsCards = (props: {
@@ -207,11 +170,13 @@ const CustomStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
           <Text strong>This analysis includes games from these patches:</Text>
         </Tooltip>
       </Row>
-      {buildPatchNotification({
-        unixTimeStamp: timestamp,
-        unixTimeStampFrom: fromTimeStamp,
-        unixTimeStampTo: toTimeStamp,
-      })}
+      <PatchNotification
+        params={{
+          unixTimeStamp: timestamp,
+          unixTimeStampFrom: fromTimeStamp,
+          unixTimeStampTo: toTimeStamp,
+        }}
+      />
       <Row justify={"center"} style={{ paddingTop: 10 }}>
         <Space size={"large"} wrap style={{ display: "flex", justifyContent: "center" }}>
           <RegularStatsCards title={`Games Played ${type}`}>
@@ -245,7 +210,7 @@ const CustomStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
       <Row justify={"center"}>
         <TypeSelector style={{ paddingLeft: 0 }} />
       </Row>
-      <Row justify={"center"}>
+      <Row justify={"center"} style={{ paddingTop: 20 }}>
         <Space size={"large"} style={{ display: "flex", justifyContent: "center" }} wrap>
           <Card
             title={
