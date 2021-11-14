@@ -22,7 +22,7 @@ import { MapsFactionWinRateChart } from "../../components/charts/map-stats/maps-
 import { MapsPlayTime } from "../../components/charts/map-stats/maps-playtime-bar";
 import { MapsWinRateSqrtChart } from "../../components/charts/map-stats/maps-winrate-sqrt-root-bar";
 import { Helper } from "../../components/helper";
-import { MapsPlayTimeHistogram } from "../../components/charts/map-stats/maps-playtime-histogram";
+import { PlayTimeHistogram } from "../../components/charts/map-stats/play-time-histogram";
 import { MapsPlayTimeHistogramStacked } from "../../components/charts/map-stats/maps-playtime-histogram-stacked";
 
 const { Text, Link } = Typography;
@@ -315,7 +315,7 @@ const MapStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
             style={{ marginTop: 40 }}
             bodyStyle={isMobile ? { width: "90vw", height: 300 } : { width: 480, height: 450 }}
           >
-            <MapsPlayTimeHistogram data={data[map]} />
+            <PlayTimeHistogram data={data[map]} />
           </Card>
           <Card
             title={`Percentage of ${type} games with particular game time`}

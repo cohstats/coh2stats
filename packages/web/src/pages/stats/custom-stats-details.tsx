@@ -13,6 +13,7 @@ import { useLocation } from "react-router-dom";
 import { FactionVsFactionCard } from "../../components/factions";
 import { isTimeStampInPatches } from "../../coh/patches";
 import { useMediaQuery } from "react-responsive";
+import { PlayTimeHistogram } from "../../components/charts/map-stats/play-time-histogram";
 
 const { Text, Link } = Typography;
 
@@ -137,6 +138,36 @@ const CustomStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
     return <div style={{ textAlign: "center" }}>{patchesJSX}</div>;
   };
 
+  const RegularStatsCards = (props: {
+    title:
+      | boolean
+      | React.ReactChild
+      | React.ReactFragment
+      | React.ReactPortal
+      | null
+      | undefined;
+    children:
+      | boolean
+      | React.ReactChild
+      | React.ReactFragment
+      | React.ReactPortal
+      | null
+      | undefined;
+  }) => {
+    return (
+      <Card
+        title={props.title}
+        bodyStyle={
+          isMobile
+            ? { width: "90vw", maxWidth: 480, height: 300 }
+            : { width: "48vw", maxWidth: 480, height: 410 }
+        }
+      >
+        {props.children}
+      </Card>
+    );
+  };
+
   return (
     <>
       <Row justify={"center"}>
@@ -183,22 +214,12 @@ const CustomStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
       })}
       <Row justify={"center"} style={{ paddingTop: 10 }}>
         <Space size={"large"} wrap style={{ display: "flex", justifyContent: "center" }}>
-          <Card
-            title={`Games Played ${type}`}
-            bodyStyle={
-              isMobile
-                ? { width: "90vw", height: 300 }
-                : { width: "48vw", maxWidth: 485, height: 460 }
-            }
-          >
+          <RegularStatsCards title={`Games Played ${type}`}>
             <WinsChart data={data} />
-          </Card>
-          <Card
-            title={`Games Played ${type}`}
-            bodyStyle={isMobile ? { width: "90vw", height: 300 } : { width: 485, height: 460 }}
-          >
+          </RegularStatsCards>
+          <RegularStatsCards title={`Faction winrate ${type}`}>
             <WinRateChart data={data} />
-          </Card>
+          </RegularStatsCards>
         </Space>
       </Row>
       {!isMobile && (
@@ -206,18 +227,19 @@ const CustomStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
           <FactionVsFactionCard
             title={`Team composition matrix ${type}`}
             data={data}
-            style={{ marginTop: 40 }}
+            style={{ marginTop: 20 }}
           />
         </Row>
       )}
-      <Row justify={"center"}>
-        <Card
-          title={`Maps ${type}`}
-          style={{ marginTop: 40 }}
-          bodyStyle={isMobile ? { width: "90vw", height: 300 } : { width: 1100, height: 650 }}
-        >
-          <MapBarChart maps={mapsData} />
-        </Card>
+      <Row justify={"center"} style={{ paddingTop: 20 }}>
+        <Space size={"large"} wrap style={{ display: "flex", justifyContent: "center" }}>
+          <RegularStatsCards title={`Game time ${type}`}>
+            <PlayTimeHistogram data={data} />
+          </RegularStatsCards>
+          <RegularStatsCards title={`Maps ${type}`}>
+            <MapBarChart maps={mapsData} />
+          </RegularStatsCards>
+        </Space>
       </Row>
       <Row justify={"center"}>{raceSelector({ paddingLeft: 0, paddingRight: 0 })}</Row>
       <Row justify={"center"}>
