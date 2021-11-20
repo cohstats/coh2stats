@@ -116,7 +116,7 @@ const CommanderAbilitiesComponent = (props: CommanderAbilityProps) => {
       <Row>
         {props.commanderAbilities.map((item: CommanderAbility) => {
           return (
-            <Col>
+            <Col key={item.name}>
               <Tooltip placement={"bottom"} title={item.description}>
                 <Avatar
                   alt={item.name}
