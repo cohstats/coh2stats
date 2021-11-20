@@ -6,6 +6,7 @@ import { ExportDate } from "../../components/export-date";
 import firebaseAnalytics from "../../analytics";
 import { getExportedIconPath, getGeneralIconPath } from "../../coh/helpers";
 import { commanderBase } from "../../titles";
+import { CommanderAbility } from "../../coh/types";
 
 export const CommanderDetails = () => {
   const { commanderID } = useParams<{
@@ -84,7 +85,7 @@ export const CommanderDetails = () => {
             <List
               itemLayout="horizontal"
               dataSource={commanderData.abilities}
-              renderItem={(item: Record<string, any>) => (
+              renderItem={(item: CommanderAbility) => (
                 <List.Item>
                   <List.Item.Meta
                     avatar={
