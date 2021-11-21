@@ -1,29 +1,18 @@
 import React, { useEffect } from "react";
-import {
-  Row,
-  Card,
-  Radio,
-  RadioChangeEvent,
-  Space,
-  Typography,
-  Col,
-  Tooltip,
-  Select,
-} from "antd";
+import { Row, Card, Radio, RadioChangeEvent, Space, Typography, Tooltip, Select } from "antd";
 import { MapBarChart } from "../../components/charts/maps-bar";
 import { mapStatsBase } from "../../titles";
-import { formatDate } from "../../utils/helpers";
 import { useLocation } from "react-router-dom";
 import { FactionVsFactionCard } from "../../components/factions";
-import { isTimeStampInPatches } from "../../coh/patches";
 import { useMediaQuery } from "react-responsive";
 import { MapsWinRateChart } from "../../components/charts/map-stats/maps-winrate-bar";
 import { MapsFactionWinRateChart } from "../../components/charts/map-stats/maps-winrate-faction-bar";
 import { MapsPlayTime } from "../../components/charts/map-stats/maps-playtime-bar";
 import { MapsWinRateSqrtChart } from "../../components/charts/map-stats/maps-winrate-sqrt-root-bar";
 import { Helper } from "../../components/helper";
-import { MapsPlayTimeHistogram } from "../../components/charts/map-stats/maps-playtime-histogram";
+import { PlayTimeHistogram } from "../../components/charts/map-stats/play-time-histogram";
 import { MapsPlayTimeHistogramStacked } from "../../components/charts/map-stats/maps-playtime-histogram-stacked";
+import PatchNotification from "../../components/patch-notifications";
 
 const { Text, Link } = Typography;
 const { Option } = Select;
@@ -123,43 +112,6 @@ const MapStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
     );
   };
 
-  const buildPatchNotification = (params: Record<string, any>) => {
-    const { unixTimeStamp, unixTimeStampFrom, unixTimeStampTo } = params;
-
-    const patches = unixTimeStamp ? isTimeStampInPatches(parseInt(`${unixTimeStamp}`)) : [];
-    const patchesFrom = unixTimeStampFrom
-      ? isTimeStampInPatches(parseInt(`${unixTimeStampFrom}`))
-      : [];
-    const patchesTo = unixTimeStampTo ? isTimeStampInPatches(parseInt(`${unixTimeStampTo}`)) : [];
-
-    // Clear duplicates by going Array -> Set -> Array
-    const allPatches = [...new Set(patches.concat(patchesFrom).concat(patchesTo))];
-
-    const patchesJSX = [];
-
-    let i = 0;
-    for (const patch of allPatches) {
-      const endTimeStamps = patch.endDateUnixTimeStamp * 1000;
-      const endDate = endTimeStamps === Infinity ? "Now" : formatDate(new Date(endTimeStamps));
-      const startDate = formatDate(new Date(patch.startDateUnixTimeStamp * 1000));
-
-      patchesJSX.push(
-        <Row key={i++}>
-          <Col span={12} style={{ textAlign: "right" }}>
-            <Link href={patch.link} target="_blank">
-              <Text strong>{patch.name}</Text>
-            </Link>
-          </Col>
-          <Col>
-            &nbsp;- From {startDate} to {endDate}
-          </Col>
-        </Row>,
-      );
-    }
-
-    return <div style={{ textAlign: "center" }}>{patchesJSX}</div>;
-  };
-
   const cardWidth = 510;
   const cardHeight = 420;
 
@@ -202,11 +154,13 @@ const MapStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
           <Text strong>This analysis includes games from these patches:</Text>
         </Tooltip>
       </Row>
-      {buildPatchNotification({
-        unixTimeStamp: timestamp,
-        unixTimeStampFrom: fromTimeStamp,
-        unixTimeStampTo: toTimeStamp,
-      })}
+      <PatchNotification
+        params={{
+          unixTimeStamp: timestamp,
+          unixTimeStampFrom: fromTimeStamp,
+          unixTimeStampTo: toTimeStamp,
+        }}
+      />
       <Row justify={"center"} style={{ paddingTop: 10 }}>
         <Space size={"large"} wrap style={{ display: "flex", justifyContent: "center" }}>
           <Card
@@ -315,7 +269,7 @@ const MapStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
             style={{ marginTop: 40 }}
             bodyStyle={isMobile ? { width: "90vw", height: 300 } : { width: 480, height: 450 }}
           >
-            <MapsPlayTimeHistogram data={data[map]} />
+            <PlayTimeHistogram data={data[map]} />
           </Card>
           <Card
             title={`Percentage of ${type} games with particular game time`}

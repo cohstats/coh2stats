@@ -10,7 +10,7 @@ import {
   getStartOfTheWeek,
   useQuery,
 } from "../../utils/helpers";
-import { validRaceNames, validStatsTypes } from "../../coh/types";
+import { RaceName, validRaceNames, validStatsTypes } from "../../coh/types";
 import { getAllPatchDates } from "../../coh/patches";
 import enGB from "antd/lib/locale/en_GB";
 
@@ -34,7 +34,7 @@ const CustomStats: React.FC = () => {
   const frequency = query.get("range") || "week";
   const timestamp = query.get("timeStamp") || `${getPreviousWeekTimeStamp()}`;
   const type = query.get("type") || "4v4";
-  const race = query.get("race") || "wermacht";
+  const race: RaceName = (query.get("race") as RaceName) || "wermacht";
 
   const fromTimeStamp = query.get("fromTimeStamp") || "";
   const toTimeStamp = query.get("toTimeStamp") || "";
@@ -279,7 +279,7 @@ const CustomStats: React.FC = () => {
     <div>
       <div>
         <Space
-          style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}
+          style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: 10 }}
           wrap
         >
           <Select

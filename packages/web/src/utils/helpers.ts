@@ -52,6 +52,18 @@ function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
+const formatFactionName = (name: string) => {
+  name = name.toLowerCase();
+
+  if (name === "usf") {
+    return "USF";
+  } else if (name === "wgerman") {
+    return "WGerman";
+  } else {
+    return capitalize(name);
+  }
+};
+
 // https://en.wikipedia.org/wiki/Root_mean_square
 const calculateRMS = (...args: number[]) => {
   return Math.sqrt(
@@ -61,6 +73,43 @@ const calculateRMS = (...args: number[]) => {
         return sum + value * value;
       }, 0),
   );
+};
+
+/**
+ * Takes 2 objects.
+ * This function is not immutable! Modifies the first object.
+ * btw this was bullshit it should have been immutable!!
+ *
+ * Maybe better name?
+ * @param masterObject
+ * @param newObject
+ */
+const sumValuesOfObjects = (
+  masterObject: Record<string, any>,
+  newObject: Record<string, any>,
+): Record<string, any> => {
+  for (const key in newObject) {
+    // Also in master object => merge
+    if (key in masterObject) {
+      const masterValue = masterObject[key];
+      const newValue = newObject[key];
+      // Both are numbers
+      if (typeof masterValue === "number" && typeof newValue === "number") {
+        masterObject[key] = masterValue + newValue;
+        // Both are Objects
+      } else if (typeof masterValue !== "number" && typeof newValue !== "number") {
+        masterObject[key] = sumValuesOfObjects(masterValue, newValue);
+        // Something is wrong
+      } else {
+        console.error("Mismatched types in summing the stats!", newObject);
+      }
+      // Not in master object => put new
+    } else {
+      debugger;
+      masterObject[key] = newObject[key];
+    }
+  }
+  return masterObject;
 };
 
 export {
@@ -74,5 +123,7 @@ export {
   useQuery,
   formatDate,
   calculateRMS,
+  sumValuesOfObjects,
+  formatFactionName,
   timeAgo,
 };

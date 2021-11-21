@@ -25,9 +25,12 @@ interface IntelBulletinData {
 }
 
 type RaceName = "wermacht" | "usf" | "soviet" | "wgerman" | "british";
-const validRaceNames = ["wermacht", "usf", "soviet", "wgerman", "british"];
+const validRaceNames: Array<RaceName> = ["british", "soviet", "usf", "wermacht", "wgerman"];
 
 const validStatsTypes = ["1v1", "2v2", "3v3", "4v4", "general"];
+
+type statTypesInDbAsType = "1v1" | "2v2" | "3v3" | "4v4";
+const statsTypesInDB: Array<statTypesInDbAsType> = ["1v1", "2v2", "3v3", "4v4"];
 
 interface LeaderBoardStats {
   wins: number;
@@ -66,6 +69,39 @@ interface PlayerCardDataArrayObject extends LaddersDataArrayObject {
   percentile: number;
 }
 
+type TypeAnalysisObject = {
+  soviet: { wins: number; losses: number };
+  wermacht: { wins: number; losses: number };
+  wgerman: { wins: number; losses: number };
+  british: { wins: number; losses: number };
+  usf: { wins: number; losses: number };
+  matchCount: number;
+  gameTime: number;
+  maps: Record<string, number>;
+  commanders: {
+    soviet: Record<string, number>;
+    wermacht: Record<string, number>;
+    wgerman: Record<string, number>;
+    british: Record<string, number>;
+    usf: Record<string, number>;
+  };
+  intelBulletins: {
+    soviet: Record<string, number>;
+    wermacht: Record<string, number>;
+    wgerman: Record<string, number>;
+    british: Record<string, number>;
+    usf: Record<string, number>;
+  };
+  factionMatrix: Record<string, { wins: number; losses: number }>;
+};
+
+interface StatsDataObject {
+  "1v1": TypeAnalysisObject;
+  "2v2": TypeAnalysisObject;
+  "3v3": TypeAnalysisObject;
+  "4v4": TypeAnalysisObject;
+}
+
 export type {
   CommanderData,
   CommanderAbility,
@@ -75,5 +111,8 @@ export type {
   LaddersDataArrayObject,
   PlayerCardDataArrayObject,
   LeaderBoardStats,
+  StatsDataObject,
+  TypeAnalysisObject,
+  statTypesInDbAsType,
 };
-export { validRaceNames, validStatsTypes };
+export { validRaceNames, validStatsTypes, statsTypesInDB };

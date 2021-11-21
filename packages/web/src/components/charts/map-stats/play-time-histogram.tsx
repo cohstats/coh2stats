@@ -6,7 +6,7 @@ interface IProps {
   data: Record<string, any>;
 }
 
-export const MapsPlayTimeHistogram: React.FC<IProps> = ({ data }) => {
+export const PlayTimeHistogram: React.FC<IProps> = ({ data }) => {
   const chartData: any[] | undefined = [];
 
   if (!data || !Object.prototype.hasOwnProperty.call(data, "gameTimeSpread")) {

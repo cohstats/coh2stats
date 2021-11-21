@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { Typography } from "antd";
 import { useData, useLoading } from "../../firebase";
-import { Donation } from "../../components/donations";
+import { Donation } from "./donations";
 const { Title, Link, Text, Paragraph } = Typography;
 
 // eslint-disable-next-line react-hooks/exhaustive-deps

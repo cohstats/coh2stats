@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
-import { Redirect, Route, Switch, useLocation } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import { useHistory, useParams } from "react-router";
 import routes from "../../routes";
-import { getPreviousWeekTimeStamp } from "../../utils/helpers";
+import { getPreviousWeekTimeStamp, useQuery } from "../../utils/helpers";
 
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
-
+/**
+ * This is old stats format, it's used for redirect from the old links
+ *
+ */
 const OldStats: React.FC = () => {
   const { frequency, timestamp, type, race } = useParams<{
     frequency: string;
