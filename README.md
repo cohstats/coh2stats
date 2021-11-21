@@ -65,7 +65,7 @@ Use Node version 14.x or as described in `/packages/functions/package.json`
 #### Web
 
 - To start local web dev: `yarn web start`
-- Test: `yarn web test`
+- Test: `yarn web test` (located in `packages/web/src/tests`)
 - Build: `yarn web build`
 
 #### Functions
