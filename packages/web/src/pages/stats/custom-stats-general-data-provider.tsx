@@ -2,11 +2,13 @@ import React, { useEffect } from "react";
 import { Typography } from "antd";
 import { useData, useLoading } from "../../firebase";
 import { Loading } from "../../components/loading";
-import { validStatsTypes } from "../../coh/types";
+import { StatsDataObject, statTypesInDbAsType, validStatsTypes } from "../../coh/types";
 import { useLocation } from "react-router-dom";
 import CustomStatsDetails from "./custom-stats-details";
 import { useFirestoreConnect } from "react-redux-firebase";
 import firebaseAnalytics from "../../analytics";
+import GeneralStats from "./general-stats";
+import { StatsHeader } from "./stats-header";
 
 const { Title } = Typography;
 
@@ -20,7 +22,7 @@ interface IProps {
 
 const CustomStatsGeneralDataProvider: React.FC<IProps> = ({ urlChanger }) => {
   const isLoading = useLoading("stats");
-  const data: Record<string, any> = useData("stats");
+  const data: StatsDataObject = useData("stats");
   const query = useQuery();
   const statsSource: string | null = query.get("statsSource") ? query.get("statsSource") : "";
 
@@ -72,16 +74,23 @@ const CustomStatsGeneralDataProvider: React.FC<IProps> = ({ urlChanger }) => {
     );
   }
 
-  const specificData = {
-    generalData: data[type],
-    mapsData: data[type]["maps"],
-  };
+  const specificData = { generalData: data[type as "1v1" | "2v2" | "3v3" | "4v4"] };
 
-  return (
-    <>
-      <CustomStatsDetails urlChanger={urlChanger} specificData={specificData} />
-    </>
-  );
+  if (type === "general") {
+    return (
+      <>
+        <StatsHeader urlChanger={urlChanger} data={data} />
+        <GeneralStats data={data} />
+      </>
+    );
+  } else {
+    return (
+      <>
+        <StatsHeader urlChanger={urlChanger} data={data} type={type as statTypesInDbAsType} />
+        <CustomStatsDetails urlChanger={urlChanger} specificData={specificData} />
+      </>
+    );
+  }
 };
 
 export default CustomStatsGeneralDataProvider;

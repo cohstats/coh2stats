@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Row, Card, Radio, RadioChangeEvent, Space, Typography, Tooltip } from "antd";
+import React from "react";
+import { Row, Card, Radio, RadioChangeEvent, Space } from "antd";
 import { MapBarChart } from "../../components/charts/maps-bar";
 import { WinsChart } from "../../components/charts/wins-bar";
 import { WinRateChart } from "../../components/charts/winRate-bar";
@@ -7,23 +7,17 @@ import { useHistory } from "react-router";
 import { CommandersBarChart } from "../../components/charts/commanders-bar";
 import { BulletinsBarChart } from "../../components/charts/bulletins-bar";
 import { Helper } from "../../components/helper";
-import { statsBase } from "../../titles";
-import { capitalize } from "../../utils/helpers";
-import { useLocation } from "react-router-dom";
 import { FactionVsFactionCard } from "../../components/factions";
 import { useMediaQuery } from "react-responsive";
 import { PlayTimeHistogram } from "../../components/charts/map-stats/play-time-histogram";
-import PatchNotification from "../../components/patch-notifications";
-
-const { Text } = Typography;
-
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
+import { TypeAnalysisObject } from "../../coh/types";
+import { useQuery } from "../../utils/helpers";
 
 interface IProps {
   urlChanger: Function;
-  specificData: Record<string, any>;
+  specificData: {
+    generalData: TypeAnalysisObject;
+  };
 }
 
 const CustomStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
@@ -33,23 +27,14 @@ const CustomStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
 
   const type = query.get("type") || "4v4";
   const race = query.get("race") || "wermacht";
-  const sourceIsAll = query.get("statsSource") !== "top200";
 
-  const timestamp = query.get("timeStamp") || "";
-  const fromTimeStamp = query.get("fromTimeStamp") || "";
-  const toTimeStamp = query.get("toTimeStamp") || "";
-  const frequency = query.get("range") || "";
+  const data = specificData.generalData;
 
-  const data = specificData["generalData"];
-  const mapsData = specificData["mapsData"];
+  if (!data) {
+    return <></>;
+  }
 
-  // Page title
-  useEffect(() => {
-    // Set page title
-    if (!document.title.includes(type) || !document.title.includes(race)) {
-      document.title = `${statsBase} - ${capitalize(race)} - ${type}`;
-    }
-  }, [type, race]);
+  const mapsData = data["maps"];
 
   const onTypeRadioChange = (e: RadioChangeEvent) => {
     urlChanger({
@@ -72,9 +57,7 @@ const CustomStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
         size={"large"}
         style={{ ...{ paddingBottom: 0 }, ...style }}
       >
-        <Radio.Button disabled={true} value="general">
-          General{" "}
-        </Radio.Button>
+        <Radio.Button value="general">General</Radio.Button>
         <Radio.Button value="1v1">1 vs 1</Radio.Button>
         <Radio.Button value="2v2">2 vs 2</Radio.Button>
         <Radio.Button value="3v3">3 vs 3</Radio.Button>
@@ -133,50 +116,6 @@ const CustomStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
 
   return (
     <>
-      <Row justify={"center"}>
-        <TypeSelector style={{ paddingLeft: 0 }} />
-      </Row>
-      <Row justify={"center"}>
-        <div style={{ textAlign: "center" }}>
-          <span style={{ fontSize: 20, fontWeight: 600 }}>
-            Amount of games for this analysis {`${data["matchCount"]}`}
-          </span>
-          <br />
-          <span>
-            {sourceIsAll && (
-              <>
-                This does not include all games which were played. See about page to understand
-                the scope
-                <br />
-              </>
-            )}
-            {data["matchCount"] < 2000 && (
-              <>
-                This analysis has <Text strong>low amount of matches</Text>. The results might not
-                be precise.
-              </>
-            )}
-          </span>
-        </div>
-      </Row>
-      <Row justify={"center"}>
-        <Tooltip
-          title={
-            frequency !== "range"
-              ? "It's possible that there are multiple patches in this analysis. Use custom range to display all patches."
-              : ""
-          }
-        >
-          <Text strong>This analysis includes games from these patches:</Text>
-        </Tooltip>
-      </Row>
-      <PatchNotification
-        params={{
-          unixTimeStamp: timestamp,
-          unixTimeStampFrom: fromTimeStamp,
-          unixTimeStampTo: toTimeStamp,
-        }}
-      />
       <Row justify={"center"} style={{ paddingTop: 10 }}>
         <Space size={"large"} wrap style={{ display: "flex", justifyContent: "center" }}>
           <RegularStatsCards title={`Games Played ${type}`}>
@@ -228,13 +167,13 @@ const CustomStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
             }
             bodyStyle={isMobile ? { width: "90vw", height: 600 } : { width: 800, height: 900 }}
           >
-            <CommandersBarChart commanders={data.commanders[race]} push={push} />
+            <CommandersBarChart commanders={data.commanders[race as "soviet"]} push={push} />
           </Card>
           <Card
             title={`Intel Bulletins  ${type} - ${race}`}
             bodyStyle={isMobile ? { width: "90vw", height: 1200 } : { width: 800, height: 900 }}
           >
-            <BulletinsBarChart bulletins={data["intelBulletins"][race]} />
+            <BulletinsBarChart bulletins={data["intelBulletins"][race as "soviet"]} />
           </Card>
         </Space>
       </Row>

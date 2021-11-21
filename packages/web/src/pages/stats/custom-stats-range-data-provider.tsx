@@ -4,9 +4,16 @@ import { firebase } from "../../firebase";
 import { Loading } from "../../components/loading";
 import firebaseAnalytics from "../../analytics";
 
-import { validStatsTypes } from "../../coh/types";
+import {
+  StatsDataObject,
+  statTypesInDbAsType,
+  TypeAnalysisObject,
+  validStatsTypes,
+} from "../../coh/types";
 import { useLocation } from "react-router-dom";
 import CustomStatsDetails from "./custom-stats-details";
+import { StatsHeader } from "./stats-header";
+import GeneralStats from "./general-stats";
 
 const { Title } = Typography;
 
@@ -22,15 +29,11 @@ const CustomStatsRangeDataProvider: React.FC<IProps> = ({ urlChanger }) => {
   const query = useQuery();
   const statsSource: string | null = query.get("statsSource") ? query.get("statsSource") : "";
 
-  const [specificData, setSpecificData] = useState({});
-  const [fullData, setFullData] = useState({});
+  const [fullData, setFullData] = useState<StatsDataObject | {}>({});
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // const frequency = query.get("range") || "week";
-  // const timestamp = query.get("timeStamp") || "0000";
   const type = query.get("type") || "4v4";
-  // const race = query.get("race") || "wermacht";
 
   const fromTimeStamp = query.get("fromTimeStamp") || "";
   const toTimeStamp = query.get("toTimeStamp") || "";
@@ -71,14 +74,6 @@ const CustomStatsRangeDataProvider: React.FC<IProps> = ({ urlChanger }) => {
         // Save the original data
         setFullData(analysis);
 
-        const specificData: Record<string, any> = analysis[type];
-        const maps: Record<string, number> = specificData["maps"];
-
-        setSpecificData({
-          generalData: specificData,
-          mapsData: maps,
-        });
-
         setError("");
       } catch (e) {
         console.error(e);
@@ -91,22 +86,9 @@ const CustomStatsRangeDataProvider: React.FC<IProps> = ({ urlChanger }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fromTimeStamp, toTimeStamp, statsSource]);
 
-  useEffect(() => {
-    if (isLoading) return;
-    if (Object.entries(specificData).length < 1) return;
-
-    setSpecificData({
-      // @ts-ignore
-      generalData: fullData[type],
-      // @ts-ignore
-      mapsData: fullData[type]["maps"],
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [type]);
-
   if (isLoading) return <Loading />;
 
-  if (Object.entries(specificData).length < 1) {
+  if (Object.entries(fullData).length < 2) {
     return (
       <div style={{ textAlign: "center" }}>
         <Title level={5}>Please select date range to trigger the load.</Title>
@@ -130,11 +112,31 @@ const CustomStatsRangeDataProvider: React.FC<IProps> = ({ urlChanger }) => {
     );
   }
 
-  return (
-    <>
-      <CustomStatsDetails urlChanger={urlChanger} specificData={specificData} />
-    </>
-  );
+  // @ts-ignore
+  const specificData = { generalData: fullData[type as "1v1" | "2v2" | "3v3" | "4v4"] };
+
+  if (type === "general") {
+    return (
+      <>
+        <StatsHeader urlChanger={urlChanger} data={fullData as StatsDataObject} />
+        <GeneralStats data={fullData as StatsDataObject} />
+      </>
+    );
+  } else {
+    return (
+      <>
+        <StatsHeader
+          urlChanger={urlChanger}
+          data={fullData as StatsDataObject}
+          type={type as statTypesInDbAsType}
+        />
+        <CustomStatsDetails
+          urlChanger={urlChanger}
+          specificData={specificData as { generalData: TypeAnalysisObject }}
+        />
+      </>
+    );
+  }
 };
 
 export default CustomStatsRangeDataProvider;
