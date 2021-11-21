@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Col, Row, List, Avatar, Badge, Tooltip } from "antd";
+import { Col, Row, List, Avatar, Badge, Tooltip, Typography } from "antd";
 import { getCommanderByRaces, getCommanderIconPath } from "../../coh/commanders";
 import { useParams } from "react-router";
 import { CommanderAbility, RaceName } from "../../coh/types";
@@ -11,6 +11,8 @@ import { Link } from "react-router-dom";
 import { Tip } from "../../components/tip";
 import { getExportedIconPath } from "../../coh/helpers";
 import Text from "antd/lib/typography/Text";
+
+const { Title } = Typography;
 
 export const CommandersList = () => {
   const { race } = useParams<{
@@ -80,14 +82,16 @@ export const CommandersList = () => {
                     }
                     title={
                       <Link to={routes.commanderByID(race, item.serverID)}>
-                        {item.commanderName}
+                        <Title level={3}>{item.commanderName}</Title>
                       </Link>
                     }
                     description={
-                      <CommanderAbilitiesComponent
-                        commanderDescription={item.description}
-                        commanderAbilities={item.abilities}
-                      />
+                      <>
+                        <CommanderAbilitiesComponent
+                          commanderDescription={item.description}
+                          commanderAbilities={item.abilities}
+                        />
+                      </>
                     }
                   />
                 </List.Item>
@@ -109,10 +113,9 @@ type CommanderAbilityProps = {
 const CommanderAbilitiesComponent = (props: CommanderAbilityProps) => {
   return (
     <>
-      <Row style={{ paddingBottom: 16, paddingTop: 16 }}>
+      <Row style={{ paddingBottom: 25 }}>
         <Text>{props.commanderDescription}</Text>
       </Row>
-      <br />
       <Row>
         {props.commanderAbilities.map((item: CommanderAbility) => {
           return (
@@ -128,7 +131,7 @@ const CommanderAbilitiesComponent = (props: CommanderAbilityProps) => {
                   count={item.commandPoints}
                   overflowCount={999}
                   showZero
-                  offset={[0, -32]}
+                  offset={[-16, -32]}
                 />
               </Tooltip>
             </Col>
