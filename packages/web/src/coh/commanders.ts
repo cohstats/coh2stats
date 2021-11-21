@@ -28,20 +28,32 @@ const convertCommanderIDToName = (commanderID: string): string => {
 
 const getCommanderData = (commanderID: string): CommanderData | null => {
   if (Object.prototype.hasOwnProperty.call(allCommanders, commanderID)) {
-    return allCommanders[commanderID];
+    let commander = allCommanders[commanderID] as CommanderData;
+    return decorateCommanderData(commander);
   } else {
     return null;
   }
 };
 
 const getCommanderByRaces = (raceName: RaceName): Array<CommanderData> => {
-  return Object.values(allCommanders).filter((commanderData) => {
-    return commanderData["races"][0] === raceName;
-  });
+  return Object.values(allCommanders)
+    .map((commander) => decorateCommanderData(commander))
+    .filter((commanderData) => {
+      return commanderData["races"][0] === raceName;
+    });
 };
 
 const getCommanderIconPath = (name: string): string => {
   return `/resources/exportedIcons/${name}.png`;
+};
+
+const decorateCommanderData = (commander: CommanderData): CommanderData => {
+  return {
+    ...commander,
+    abilities: commander.abilities.sort((a, b) => {
+      return +a.commandPoints < +b.commandPoints ? -1 : 1;
+    }),
+  };
 };
 
 export {

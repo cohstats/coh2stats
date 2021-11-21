@@ -5,8 +5,15 @@ interface CommanderData {
   commanderName: string;
   description: string;
   races: Array<string>;
-  abilities: Array<Record<string, any>>;
+  abilities: Array<CommanderAbility>;
 }
+
+type CommanderAbility = {
+  name: string;
+  description: string;
+  commandPoints: string;
+  icon: string;
+};
 
 interface IntelBulletinData {
   serverID: string;
@@ -61,6 +68,7 @@ interface PlayerCardDataArrayObject extends LaddersDataArrayObject {
 
 export type {
   CommanderData,
+  CommanderAbility,
   IntelBulletinData,
   RaceName,
   LaddersDataObject,

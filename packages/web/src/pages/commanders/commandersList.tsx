@@ -1,14 +1,16 @@
 import React, { useEffect } from "react";
-import { Col, Row, List, Avatar } from "antd";
+import { Col, Row, List, Avatar, Badge, Tooltip } from "antd";
 import { getCommanderByRaces, getCommanderIconPath } from "../../coh/commanders";
 import { useParams } from "react-router";
-import { RaceName } from "../../coh/types";
+import { CommanderAbility, RaceName } from "../../coh/types";
 import routes from "../../routes";
 import { ExportDate } from "../../components/export-date";
 import { commanderBase } from "../../titles";
 import { capitalize } from "../../utils/helpers";
 import { Link } from "react-router-dom";
 import { Tip } from "../../components/tip";
+import { getExportedIconPath } from "../../coh/helpers";
+import Text from "antd/lib/typography/Text";
 
 export const CommandersList = () => {
   const { race } = useParams<{
@@ -69,9 +71,10 @@ export const CommandersList = () => {
                     avatar={
                       <Link to={routes.commanderByID(race, item.serverID)}>
                         <Avatar
-                          src={getCommanderIconPath(item.iconSmall)}
+                          src={getCommanderIconPath(item.iconlarge)}
                           shape="square"
-                          size={64}
+                          size={192}
+                          style={{ height: "192px", width: "144px" }}
                         />
                       </Link>
                     }
@@ -80,7 +83,12 @@ export const CommandersList = () => {
                         {item.commanderName}
                       </Link>
                     }
-                    description={item.description}
+                    description={
+                      <CommanderAbilitiesComponent
+                        commanderDescription={item.description}
+                        commanderAbilities={item.abilities}
+                      />
+                    }
                   />
                 </List.Item>
               </div>
@@ -90,5 +98,43 @@ export const CommandersList = () => {
         </Col>
       </Row>
     </div>
+  );
+};
+
+type CommanderAbilityProps = {
+  commanderAbilities: Array<CommanderAbility>;
+  commanderDescription: string;
+};
+
+const CommanderAbilitiesComponent = (props: CommanderAbilityProps) => {
+  return (
+    <>
+      <Row style={{ paddingBottom: 16, paddingTop: 16 }}>
+        <Text>{props.commanderDescription}</Text>
+      </Row>
+      <br />
+      <Row>
+        {props.commanderAbilities.map((item: CommanderAbility) => {
+          return (
+            <Col key={item.name}>
+              <Tooltip placement={"bottom"} title={item.description}>
+                <Avatar
+                  alt={item.name}
+                  src={getExportedIconPath(item.icon)}
+                  shape="square"
+                  size={64}
+                />
+                <Badge
+                  count={item.commandPoints}
+                  overflowCount={999}
+                  showZero
+                  offset={[0, -32]}
+                />
+              </Tooltip>
+            </Col>
+          );
+        })}
+      </Row>
+    </>
   );
 };
