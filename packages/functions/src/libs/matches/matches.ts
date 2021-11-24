@@ -8,15 +8,19 @@ import * as functions from "firebase-functions";
 import { getHoursOldTimestamp, printUTCTime } from "../helpers";
 import { getMatchCollectionRef } from "../../fb-paths";
 import { firestore } from "firebase-admin";
+import { Agent } from "https";
 
 import chunk = require("lodash.chunk");
 
 const db = firestore();
 
+// Keep Alive the TCP connection
+const httpsAgent = new Agent({ keepAlive: true });
+
 const fetchPlayerMatchStats = async (profileName: string): Promise<Record<string, any>> => {
   const url = getRecentMatchHistoryUrl(profileName);
 
-  const response = await axios.get(url);
+  const response = await axios.get(url, { httpsAgent });
 
   if (response.status == 200 && response.data["result"]["message"] == "SUCCESS") {
     const data = response.data;

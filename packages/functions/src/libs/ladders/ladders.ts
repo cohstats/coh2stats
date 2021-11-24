@@ -8,18 +8,25 @@ import { PUBSUB_TOPIC_DOWNLOAD_MATCHES } from "../../constants";
 import { PubSub } from "@google-cloud/pubsub";
 import { RawLaddersObject } from "../types";
 import { cleanLaddersData } from "./ladders-clean";
+import { Agent } from "https";
 
 const pubSubClient = new PubSub();
+
+// Keep Alive the TCP connection
+const httpsAgent = new Agent({ keepAlive: true });
+
 const AMOUNT_OF_QUERIED_PLAYERS = 200; // 200 is max/
-const CHUNK_PROFILES_TO_PROCESS = 1000; // This specifies how many profiles we will send to the que in one message
+const CHUNK_PROFILES_TO_PROCESS = 1100; // This specifies how many profiles we will send to the que in one message
 /** CHUNK_PROFILES_TO_PROCESS
  * The chunk of 1k seems to be ideal, the time it takes to process those profiles ~6 minutes.
  * The timeout of the CF is 9 minutes. This gives us ~30% service degradation buffer.
  * The memory needed for this is ~400MB / CF, the limit is 512 MB.
  */
-
 const fetchLadderStats = async (leaderboardID: number, start = 1): Promise<RawLaddersObject> => {
-  const response = await axios.get(getLadderUrl(leaderboardID, AMOUNT_OF_QUERIED_PLAYERS, start));
+  const response = await axios.get(
+    getLadderUrl(leaderboardID, AMOUNT_OF_QUERIED_PLAYERS, start),
+    { httpsAgent },
+  );
 
   if (response.status == 200) {
     return response.data;
