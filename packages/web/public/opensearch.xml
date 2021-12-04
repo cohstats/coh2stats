@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
-    <ShortName>COH2 Stats Search</ShortName>
+    <ShortName>COH2 Players</ShortName>
     <Description>Search for player cards and matches</Description>
     <InputEncoding>[UTF-8]</InputEncoding>
     <Url type="text/html" template="https://coh2stats.com/search/{searchTerms}"/>
