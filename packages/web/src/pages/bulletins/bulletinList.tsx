@@ -10,6 +10,9 @@ import { Tip } from "../../components/tip";
 import { Link } from "react-router-dom";
 import routes from "../../routes";
 import { ChangeEvent } from "react";
+import { useHistory } from "react-router";
+import { useQuery } from "../../utils/helpers";
+import { useRef } from "react";
 
 interface FilteredInfoState {
   icon?: string;
@@ -19,17 +22,32 @@ interface FilteredInfoState {
 }
 
 const BulletinList = () => {
+  const query = useQuery();
   const [filteredInfo, setFilteredInfo] = React.useState<FilteredInfoState>({});
   let timeout: any;
+
+  const { push } = useHistory();
+
+  const searchQuery = query.get("search") || "";
+  const searchInputFieldRef = useRef<Input>(null);
 
   const handleRaceFilter = (filters: any) => {
     setFilteredInfo({ ...filteredInfo, races: filters.races });
   };
 
+  const changeRoute = (searchValue: string) => {
+    push({
+      pathname: routes.bulletinsBase(),
+      search: `?search=${searchValue}`,
+    });
+  };
+
   const handleNameSearch = (e: ChangeEvent<HTMLInputElement>) => {
     clearTimeout(timeout);
     timeout = setTimeout(() => {
-      handleSearch(e.target.value, "bulletinName");
+      const targetValue = e.target.value;
+      changeRoute(targetValue);
+      handleSearch(targetValue, "bulletinName");
     }, 300);
   };
 
@@ -42,6 +60,14 @@ const BulletinList = () => {
   useEffect(() => {
     firebaseAnalytics.bulletinsDisplayed();
   }, []);
+
+  useEffect(() => {
+    searchInputFieldRef.current?.setValue(searchQuery);
+    handleSearch(searchQuery, "bulletinName");
+    // We don't want to put handleSearch as part of the dependencies since it will cause this effect to run
+    // multiple times as it's recreated on every render.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchQuery]);
 
   // sort alphabetically by the first race
   bulletinData.sort((a, b) => {
@@ -190,6 +216,8 @@ const BulletinList = () => {
             <Input
               placeholder="Search name"
               size="large"
+              ref={searchInputFieldRef}
+              defaultValue={searchQuery}
               style={{ maxWidth: 400 }}
               onChange={handleNameSearch}
               allowClear
