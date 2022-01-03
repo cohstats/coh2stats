@@ -66,4 +66,4 @@ const getAllPatchDates = () => {
   return patchDates;
 };
 
-export { isTimeStampInPatches, getCurrentPatch, getAllPatchDates };
+export { isTimeStampInPatches, getCurrentPatch, getAllPatchDates, patches };

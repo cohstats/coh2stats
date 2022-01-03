@@ -5,8 +5,8 @@ import { ConfigProvider, Select, Space, Radio, Typography } from "antd";
 import DatePicker from "../../components/date-picker";
 import {
   convertDateToDayTimestamp,
+  convertDateToMonthTimestamp,
   convertDateToStartOfMonth,
-  getPreviousWeekTimeStamp,
   getStartOfTheWeek,
   useQuery,
 } from "../../utils/helpers";
@@ -21,18 +21,18 @@ import CustomStatsGeneralDataProvider from "./custom-stats-general-data-provider
 
 const { Link } = Typography;
 const { RangePicker } = DatePicker;
+const { Option } = Select;
 
 type DatePickerType = "time" | "date" | "week" | "month" | "range" | undefined;
 
 const CustomStats: React.FC = () => {
   const { push } = useHistory();
-  const { Option } = Select;
 
   const query = useQuery();
 
   const statsSourceQuery = query.get("statsSource");
-  const frequency = query.get("range") || "week";
-  const timestamp = query.get("timeStamp") || `${getPreviousWeekTimeStamp()}`;
+  const frequency = query.get("range") || "month";
+  const timestamp = query.get("timeStamp") || `${convertDateToMonthTimestamp(new Date())}`;
   const type = query.get("type") || "4v4";
   const race: RaceName = (query.get("race") as RaceName) || "wermacht";
 
@@ -46,7 +46,7 @@ const CustomStats: React.FC = () => {
   const [dateValue, setDateValue] = useState(
     timestamp
       ? new Date(parseInt(timestamp) * 1000)
-      : new Date(getPreviousWeekTimeStamp() * 1000),
+      : new Date(convertDateToMonthTimestamp(new Date()) * 1000),
   );
 
   const [rangeDate, setRangeDate] = useState(
