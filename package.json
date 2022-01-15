@@ -8,6 +8,7 @@
   "scripts": {
     "functions": "yarn workspace @coh2ladders/functions",
     "web": "yarn workspace @coh2ladders/web",
+    "app": "yarn workspace @coh2ladders/app",
     "fix": "run-s fix:*",
     "fix:eslint": "eslint --fix packages/**/*.{ts,tsx,js}",
     "fix:prettier": "prettier --loglevel warn --write .",
