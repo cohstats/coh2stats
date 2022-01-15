@@ -1,5 +1,10 @@
-import { Notification } from "electron"
+import { Notification } from "electron";
+import activeWindows from "electron-active-window";
 
-export const showNotification = (title: string, body: string) => {
-  new Notification({ title: title , body: body}).show();
+export const notifyGameFound = () => {
+    activeWindows().getActiveWindow().then((result: {windowClass: string}) => {
+        if (result.windowClass !== "RelicCoH2.exe") {
+            new Notification({ title: "Found a Game", body: "You are joining a game in Coh2"}).show();
+        }
+    });
 }

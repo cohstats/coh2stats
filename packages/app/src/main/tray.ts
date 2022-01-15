@@ -1,5 +1,5 @@
 import { app, Menu, Tray } from 'electron';
-import { showNotification } from './notification';
+import { notifyGameFound } from './notification';
 import { getIconPath } from './paths';
 import { openMatchWindow, openSettingsWindow, openWebWindow } from './windows';
 
@@ -12,7 +12,7 @@ export const createTrayIcon = () => {
     {
       label: 'Notification Text',
       click: () => {
-        showNotification("Coh2 Stats", "Coh2 match starts");
+        notifyGameFound();
       }
     },
     {
