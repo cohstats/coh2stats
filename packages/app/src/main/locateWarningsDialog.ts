@@ -9,4 +9,6 @@ export const locateWarningsFile = () => {
     properties: [ 'openFile', 'dontAddToRecent'],
     message: "If Coh2 is installed and has been executed once the warnings.logs should appear in Documents/My Games/Company of Heroes2"
   });
+
+  //set location
 }

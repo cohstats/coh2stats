@@ -26,9 +26,26 @@
  * ```
  */
 
+import "antd/dist/antd.css";
 import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import App from "./app";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+declare global {
+  interface Window {
+    electron: { ipcRenderer: any, store: any};
+  }
+}
+
+window.electron.ipcRenderer.syncStores();
+
+ReactDOM.render(
+  <React.StrictMode>
+    <Provider store={window.electron.store}>
+      <App />
+    </Provider>
+  </React.StrictMode>,
+  document.getElementById('root')
+  );

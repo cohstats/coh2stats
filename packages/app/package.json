@@ -1,8 +1,8 @@
 {
   "name": "@coh2ladders/app",
-  "productName": "app",
+  "productName": "Coh2 Match Stats",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "Displays stats of players in the current Coh2 game",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
@@ -13,8 +13,7 @@
   },
   "keywords": [],
   "author": {
-    "name": "Johannes Merkt",
-    "email": "mailjohannesmerkt@gmail.com"
+    "name": "Johannes Merkt"
   },
   "license": "MIT",
   "config": {
@@ -29,6 +28,7 @@
     "@electron-forge/plugin-webpack": "6.0.0-beta.63",
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
+    "@types/react-redux": "^7.1.22",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "@vercel/webpack-asset-relocator-loader": "1.7.0",
@@ -46,11 +46,21 @@
     "url-loader": "^4.1.1"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.7.0",
+    "@reduxjs/toolkit": "^1.7.1",
     "antd": "^4.18.3",
+    "axios": "^0.24.0",
+    "date-fns": "^2.28.0",
     "electron-active-window": "^0.0.6",
     "electron-is-packaged": "^1.0.2",
+    "electron-redux": "^1.5.4",
     "electron-squirrel-startup": "^1.0.0",
+    "electron-store": "^8.0.1",
+    "javascript-time-ago": "^2.3.10",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-country-flag": "^3.0.2",
+    "react-dom": "^17.0.2",
+    "react-redux": "^7.2.6",
+    "reverse-line-reader": "^0.2.6"
   }
 }

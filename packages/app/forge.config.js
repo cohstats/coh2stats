@@ -56,7 +56,7 @@ module.exports = {
     {
       name: "@electron-forge/maker-squirrel",
       config: {
-        name: "app",
+        name: "Coh2 Match Stats",
         setupIcon: "assets/icon.ico"
       }
     }
@@ -94,12 +94,18 @@ module.exports = {
             {
               html: "./src/renderer/windows/match/index.html",
               js: "./src/renderer/windows/match/index.tsx",
-              name: "match_window"
+              name: "match_window",
+              preload: {
+                js: "./src/renderer/windows/preload.tsx"
+              }
             },
             {
               html: "./src/renderer/windows/settings/index.html",
               js: "./src/renderer/windows/settings/index.tsx",
-              name: "settings_window"
+              name: "settings_window",
+              preload: {
+                js: "./src/renderer/windows/preload.tsx"
+              }
             }
           ]
         }

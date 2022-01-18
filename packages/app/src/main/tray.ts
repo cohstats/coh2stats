@@ -1,7 +1,7 @@
 import { app, Menu, Tray } from 'electron';
 import { notifyGameFound } from './notification';
 import { getIconPath } from './paths';
-import { openMatchWindow, openSettingsWindow, openWebWindow } from './windows';
+/*import { openMatchWindow, openSettingsWindow, openWebWindow } from './windows';
 
 let tray: null | Tray = null;
 let quitApplication = false;
@@ -37,6 +37,7 @@ export const createTrayIcon = () => {
   });
   tray.setToolTip('Tray Test');
   tray.setContextMenu(contextMenu);
+
 }
 
 export const ExitApplication = () => {
@@ -47,3 +48,4 @@ export const ExitApplication = () => {
 export const isQuitting = () => {
   return quitApplication;
 }
+*/
