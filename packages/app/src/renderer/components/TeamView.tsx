@@ -193,7 +193,7 @@ const TeamView: React.FC<Props> = ({side}) => {
       title: "Last Game",
       key: "lastmatchdate",
       align: "right" as "right",
-      width: 110,
+      width: 120,
       responsive: ["sm"],
       /*sorter: (a, b) =>
         a.lastmatchdate - b.lastmatchdate,*/

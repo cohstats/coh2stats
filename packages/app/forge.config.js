@@ -56,7 +56,7 @@ module.exports = {
     {
       name: "@electron-forge/maker-squirrel",
       config: {
-        name: "Coh2 Match Stats",
+        name: "coh2-match-stats",
         setupIcon: "assets/icon.ico"
       }
     }

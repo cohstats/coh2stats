@@ -21,7 +21,7 @@ const MatchOverview: React.FC<Props> = ({match}) => {
           </>
         ): (
           <>
-            <h1><Spin size="large" />Scanning for a Match</h1>
+            <h1><Spin size="large" style={{paddingRight: "20px"}} />Scanning for a Match</h1>
           </>
         )}
 

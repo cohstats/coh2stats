@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, Slice, Store } from "@reduxjs/toolkit";
-import { ApplicationSettings, ApplicationState, MatchData } from "./state";
+import { ApplicationSettings, ApplicationState, MatchData, LadderStats, SideData } from "./state";
 
 export const defaultSettings: ApplicationSettings = {
   coh2LogFileFound: false,
@@ -28,6 +28,21 @@ export const initialState: ApplicationState = {
   updateCounter: 0
 }
 
+const cloneLadderStatArray = (array: LadderStats[]) => {
+  return array.map(ladderStat => {
+    const members = ladderStat.members.map(member => Object.assign({}, member));
+    const newLadderStat = Object.assign({}, ladderStat);
+    newLadderStat.members = members;
+    return newLadderStat;
+  });
+}
+const cloneSideData = (sideData: SideData): SideData => {
+  return {
+    solo: cloneLadderStatArray(sideData.solo),
+    teams: cloneLadderStatArray(sideData.teams)
+  }
+}
+
 export const slice = createSlice({
   name: 'application',
   initialState,
@@ -54,6 +69,13 @@ export const slice = createSlice({
       state.match = payload;
     },
     update: (state, { payload }: PayloadAction) => {
+      state.settings = Object.assign({}, state.settings);
+      const newMatchData: MatchData = {
+        display: state.match.display,
+        left: cloneSideData(state.match.left),
+        right: cloneSideData(state.match.right),
+      }
+      state.match = newMatchData;
       state.updateCounter = state.updateCounter + 1;
     },
   }

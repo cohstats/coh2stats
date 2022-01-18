@@ -1,22 +1,9 @@
 import ElectronStore from "electron-store";
 import { ApplicationSettings, ApplicationState } from "../redux/state";
-import { defaultSettings, initialState, ReduxStore, slice, startupMatchData } from "../redux/slice";
+import { defaultSettings, ReduxStore, slice, startupMatchData } from "../redux/slice";
 import { configureMainStore } from "../redux/configureStoreMain";
 import { AnyAction, Unsubscribe } from "@reduxjs/toolkit";
 import { ipcMain } from "electron";
-
-/*export const createElectronStore = () => {
-  const schema = {
-    settings: {
-      default: initialState
-    }
-  };
-  console.log(schema.settings.default);
-  const store = new ElectronStore({schema});
-  store.clear();
-  store.set("settings", schema.settings.default);
-  return store;
-} */
 
 export class ApplicationStore {
   runtimeStore: ReduxStore;
@@ -33,8 +20,8 @@ export class ApplicationStore {
       schema: electronStoreSchema
     });
     //temporary reset during development
-    this.fileStore.clear();
-    this.setSavedSettings(defaultSettings);
+    //this.fileStore.clear();
+    //this.setSavedSettings(defaultSettings);
 
 
   }

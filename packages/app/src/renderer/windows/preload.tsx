@@ -10,6 +10,12 @@ contextBridge.exposeInMainWorld('electron', {
     showProfile(steamID: string) {
       ipcRenderer.send('showProfile', steamID);
     },
+    locateLogFile() {
+      ipcRenderer.send('locateLogFile');
+    },
+    scanForLogFile() {
+      ipcRenderer.send('scanForLogFile');
+    }
 /*    on(channel: any, func: any) {
       const validChannels = ['test'];
       if (validChannels.includes(channel)) {

@@ -1,4 +1,4 @@
-import { app } from "electron";
+import { app, ipcMain } from "electron";
 import path from "path";
 import fs from "fs";
 import reverseLineReader from 'reverse-line-reader';
@@ -9,6 +9,7 @@ import { Factions, LadderStats, MatchData, Member, SideData } from "../redux/sta
 import axios from "axios";
 import { PersonalStatResponse } from "./relicAPITypes";
 import { notifyGameFound } from "./notification";
+import { locateWarningsFile } from "./locateWarningsDialog";
 
 export interface LogFilePlayerData {
   ai: boolean;
@@ -57,6 +58,21 @@ export class GameWatcher {
     this.lastGameId = "";
     this.currentIntervalTime = settings.updateInterval;
     this.setInterval(this.currentIntervalTime);
+
+    ipcMain.on('locateLogFile', async () => {
+      const filePath = await locateWarningsFile();
+      if (fs.existsSync(filePath)) {
+        this.applicationStore.dispatch(actions.setLogFileFound(true));
+        this.applicationStore.dispatch(actions.setLogFilePath(filePath));
+      }
+    });
+    ipcMain.on('scanForLogFile', () => {
+      const theoreticalLogPath = path.resolve(app.getPath("documents"), "My Games", "Company of Heroes 2", "warnings.log");
+      if (fs.existsSync(theoreticalLogPath)) {
+        this.applicationStore.dispatch(actions.setLogFileFound(true));
+        this.applicationStore.dispatch(actions.setLogFilePath(theoreticalLogPath));
+      }
+    });
 
     // listen to settings changes
     this.unsubscriber = this.applicationStore.runtimeStore.subscribe(this.runtimeStoreSubscriber);
@@ -144,7 +160,10 @@ export class GameWatcher {
       }).then(async () => {
         if (foundNewGame) {
           // send a notification
+          console.log(!this.isFirstScan);
+          console.log(this.applicationStore.getState().settings.gameNotification);
           if (!this.isFirstScan && this.applicationStore.getState().settings.gameNotification){
+            console.log("passed");
             notifyGameFound();
           }
           this.isFirstScan = false;
@@ -319,7 +338,7 @@ export class GameWatcher {
         }
         destination.solo[i] = soloLadderStats;
       }
-      destination.teams = Object.values(teamLeaderboardStats);
+      destination.teams = Object.values(teamLeaderboardStats).sort((a, b) => (b.members.length - a.members.length) * 100 + (b.ranklevel - a.ranklevel));
     }
     await checkSide(players.left, detailedMatchData.left);
     await checkSide(players.right, detailedMatchData.right);
