@@ -27,15 +27,15 @@
  */
 
 import "antd/dist/antd.css";
-import './index.css';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+import "./index.css";
+import React from "react";
+import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
 import App from "./app";
 
 declare global {
   interface Window {
-    electron: { ipcRenderer: any, store: any};
+    electron: { ipcRenderer: any; store: any };
   }
 }
 
@@ -47,5 +47,5 @@ ReactDOM.render(
       <App />
     </Provider>
   </React.StrictMode>,
-  document.getElementById('root')
-  );
+  document.getElementById("root"),
+);

@@ -7,28 +7,29 @@ interface Props {
   match: MatchData;
 }
 
-const MatchOverview: React.FC<Props> = ({match}) => {
-
+const MatchOverview: React.FC<Props> = ({ match }) => {
   return (
     <div>
       <Row justify="center" style={{ paddingTop: "20px", paddingBottom: "20px" }}>
-      <Col xs={24} md={22} xxl={14}>
-        {match.display ? (
-          <>
-            <TeamView side={match.left}/>
-            <h1>VS</h1>
-            <TeamView side={match.right}/>
-          </>
-        ): (
-          <>
-            <h1><Spin size="large" style={{paddingRight: "20px"}} />Scanning for a Match</h1>
-          </>
-        )}
-
-      </Col>
+        <Col xs={24} md={22} xxl={14}>
+          {match.display ? (
+            <>
+              <TeamView side={match.left} />
+              <h1>VS</h1>
+              <TeamView side={match.right} />
+            </>
+          ) : (
+            <>
+              <h1>
+                <Spin size="large" style={{ paddingRight: "20px" }} />
+                Scanning for a Match
+              </h1>
+            </>
+          )}
+        </Col>
       </Row>
     </div>
   );
-}
+};
 
 export default MatchOverview;

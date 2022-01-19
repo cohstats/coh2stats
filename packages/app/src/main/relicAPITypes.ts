@@ -32,7 +32,7 @@ export interface StatGroup {
 }
 
 export interface PersonalStatResponse {
-  result: { code: number, message: string};
+  result: { code: number; message: string };
   statGroups: StatGroup[];
   leaderboardStats: LeaderboardStat[];
 }

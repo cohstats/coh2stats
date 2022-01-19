@@ -2,3 +2,8 @@ build*/
 dist/
 lib/
 fbexport
+packages/app/forge.config.js
+packages/app/webpack.main.config.js
+packages/app/webpack.renderer.config.js
+packages/app/webpack.plugins.js
+packages/app/webpack.rules.js

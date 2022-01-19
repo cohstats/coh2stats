@@ -8,20 +8,20 @@ ipcRenderer.on("updateStore", (event, args) => {
   store.dispatch(actions.setStore(args));
 });
 
-contextBridge.exposeInMainWorld('electron', {
+contextBridge.exposeInMainWorld("electron", {
   store: store,
   ipcRenderer: {
     syncStores() {
-      ipcRenderer.send('syncStores');
+      ipcRenderer.send("syncStores");
     },
     showProfile(steamID: string) {
-      ipcRenderer.send('showProfile', steamID);
+      ipcRenderer.send("showProfile", steamID);
     },
     locateLogFile() {
-      ipcRenderer.send('locateLogFile');
+      ipcRenderer.send("locateLogFile");
     },
     scanForLogFile() {
-      ipcRenderer.send('scanForLogFile');
-    }
-  }
+      ipcRenderer.send("scanForLogFile");
+    },
+  },
 });

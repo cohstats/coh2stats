@@ -17,27 +17,27 @@ interface Props {
   ai: boolean;
   style?: React.CSSProperties;
 }
-export const FactionIcon: React.FC<Props> = ({faction, ai, style}) => {
+export const FactionIcon: React.FC<Props> = ({ faction, ai, style }) => {
   let lookupTable: any = {
-    "german": german,
-    "soviet": soviet,
-    "west_german": west_german,
-    "aef": aef,
-    "british": british,
-  }
+    german: german,
+    soviet: soviet,
+    west_german: west_german,
+    aef: aef,
+    british: british,
+  };
   if (ai) {
     lookupTable = {
-      "german": german_ai,
-      "soviet": soviet_ai,
-      "west_german": west_german_ai,
-      "aef": aef_ai,
-      "british": british_ai,
-    }
+      german: german_ai,
+      soviet: soviet_ai,
+      west_german: west_german_ai,
+      aef: aef_ai,
+      british: british_ai,
+    };
   }
 
   return (
-  <>
-    <img src={lookupTable[faction]} style={style} />
-  </>
+    <>
+      <img src={lookupTable[faction]} style={style} alt={faction} />
+    </>
   );
 };

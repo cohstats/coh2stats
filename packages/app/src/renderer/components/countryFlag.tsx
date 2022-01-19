@@ -285,6 +285,12 @@ export const CountryFlag: React.FC<IProps> = ({ countryCode, style }) => {
     ...style,
   };
   return (
-    <ReactCountryFlag cdnUrl={gg.substring(0,gg.length - 6)} countryCode={countryCode} svg style={finalStyle} title={countryCode} />
+    <ReactCountryFlag
+      cdnUrl={gg.substring(0, gg.length - 6)}
+      countryCode={countryCode}
+      svg
+      style={finalStyle}
+      title={countryCode}
+    />
   );
 };

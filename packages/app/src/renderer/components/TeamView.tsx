@@ -1,30 +1,30 @@
 import { ColumnsType } from "antd/lib/table";
-import { PlusSquareOutlined, MinusSquareOutlined } from '@ant-design/icons';
-import { Table, Tooltip } from "antd";
-import Text from "antd/lib/typography/Text";
-import React from "react";
+import { PlusSquareOutlined, MinusSquareOutlined } from "@ant-design/icons";
+import Tooltip from "antd/lib/tooltip/index";
+import Table from "antd/lib/table/Table";
+import { Typography } from "antd";
+import React, { useState } from "react";
 import { LadderStats, Member, SideData } from "../../redux/state";
 import { CountryFlag } from "./countryFlag";
 import { timeAgo } from "../utils/helpers";
-import { useState } from "react";
 import { FactionIcon } from "./factionIcon";
 
 interface Props {
-  side: SideData
+  side: SideData;
 }
 
-const TeamView: React.FC<Props> = ({side}) => {
+const TeamView: React.FC<Props> = ({ side }) => {
   const [showTeams, setShowTeams] = useState(false);
   const showPlayerProfile = (steamId: string) => {
     window.electron.ipcRenderer.showProfile(steamId);
-  }
+  };
 
   const TableColumns: ColumnsType<LadderStats> = [
     {
       title: "Rank",
       dataIndex: "rank",
       key: "rank",
-      align: "center" as "center",
+      align: "center" as const,
       width: 80,
       render: (rank: number) => {
         if (rank < 0) {
@@ -32,13 +32,13 @@ const TeamView: React.FC<Props> = ({side}) => {
         } else {
           return rank;
         }
-      }
+      },
     },
     {
       title: "Level",
       dataIndex: "ranklevel",
       key: "ranklevel",
-      align: "center" as "center",
+      align: "center" as const,
       responsive: ["lg"],
       width: 20,
       render: (level: number) => {
@@ -47,7 +47,7 @@ const TeamView: React.FC<Props> = ({side}) => {
         } else {
           return level;
         }
-      }
+      },
     },
     {
       title: "Alias",
@@ -56,31 +56,41 @@ const TeamView: React.FC<Props> = ({side}) => {
       render: (members: Member[]) => {
         return (
           <div>
-            {members.map(member => {
+            {members.map((member) => {
               return (
                 <div key={member.relicID}>
-                  <FactionIcon ai={member.ai} faction={member.faction} style={{ width: "1.2em", height: "1.2em" }} />
-                  <CountryFlag countryCode={member.country} style={{ width: "1.2em", height: "1.2em", paddingRight: 0 }} />
-                  {" "}
-                  <a onClick={() => {
-                    showPlayerProfile(member.steamID)
-                  }}>{member.name}</a>
+                  <FactionIcon
+                    ai={member.ai}
+                    faction={member.faction}
+                    style={{ width: "1.2em", height: "1.2em" }}
+                  />
+                  <CountryFlag
+                    countryCode={member.country}
+                    style={{ width: "1.2em", height: "1.2em", paddingRight: 0 }}
+                  />{" "}
+                  <Typography.Link
+                    onClick={() => {
+                      showPlayerProfile(member.steamID);
+                    }}
+                  >
+                    {member.name}
+                  </Typography.Link>
                 </div>
               );
             })}
           </div>
         );
-      }
+      },
     },
     {
       title: "Streak",
       key: "streak",
-      align: "center" as "center",
+      align: "center" as const,
       width: 80,
       responsive: ["sm"],
       //sorter: (a, b) => a.streak - b.streak,
       render: (data: LadderStats) => {
-        if ((data.wins + data.losses) > 0) {
+        if (data.wins + data.losses > 0) {
           if (data.streak > 0) {
             return <div style={{ color: "green" }}>+{data.streak}</div>;
           } else {
@@ -94,12 +104,12 @@ const TeamView: React.FC<Props> = ({side}) => {
     {
       title: "Wins",
       key: "wins",
-      align: "center" as "center",
+      align: "center" as const,
       width: 20,
       responsive: ["md"],
       //sorter: (a, b) => a.wins - b.wins,
       render: (data: LadderStats) => {
-        if ((data.wins + data.losses) > 0) {
+        if (data.wins + data.losses > 0) {
           return data.wins;
         } else {
           return "-";
@@ -109,12 +119,12 @@ const TeamView: React.FC<Props> = ({side}) => {
     {
       title: "Losses",
       key: "losses",
-      align: "center" as "center",
+      align: "center" as const,
       width: 20,
       responsive: ["md"],
       //sorter: (a, b) => a.losses - b.losses,
       render: (data: LadderStats) => {
-        if ((data.wins + data.losses) > 0) {
+        if (data.wins + data.losses > 0) {
           return data.losses;
         } else {
           return "-";
@@ -124,7 +134,7 @@ const TeamView: React.FC<Props> = ({side}) => {
     {
       title: "Ratio",
       key: "ratio",
-      align: "center" as "center",
+      align: "center" as const,
       width: 80,
       /*sorter: (a, b) => {
         return (
@@ -133,7 +143,7 @@ const TeamView: React.FC<Props> = ({side}) => {
         );
       },*/
       render: (data: LadderStats) => {
-        if ((data.wins + data.losses) > 0) {
+        if (data.wins + data.losses > 0) {
           return <div>{Math.round(100 * Number(data.wins / (data.losses + data.wins)))}%</div>;
         } else {
           return "-";
@@ -143,14 +153,14 @@ const TeamView: React.FC<Props> = ({side}) => {
     {
       title: "Total",
       key: "total",
-      align: "center" as "center",
+      align: "center" as const,
       width: 60,
       responsive: ["md"],
       /*sorter: (a, b) => {
         return a.wins + a.losses - (b.wins + b.losses);
       },*/
       render: (data: LadderStats) => {
-        if ((data.wins + data.losses) > 0) {
+        if (data.wins + data.losses > 0) {
           return <>{data.wins + data.losses}</>;
         } else {
           return "-";
@@ -161,7 +171,7 @@ const TeamView: React.FC<Props> = ({side}) => {
       title: "Drops",
       dataIndex: "drops",
       key: "drops",
-      align: "center" as "center",
+      align: "center" as const,
       width: 20,
       responsive: ["xl"],
       //sorter: (a, b) => a.drops - b.drops,
@@ -171,13 +181,13 @@ const TeamView: React.FC<Props> = ({side}) => {
         } else {
           return drops;
         }
-      }
+      },
     },
     {
       title: "Disputes",
       dataIndex: "disputes",
       key: "disputes",
-      align: "center" as "center",
+      align: "center" as const,
       responsive: ["xl"],
       //sorter: (a, b) => a.disputes - b.disputes,
       width: 20,
@@ -187,21 +197,24 @@ const TeamView: React.FC<Props> = ({side}) => {
         } else {
           return disputes;
         }
-      }
+      },
     },
     {
       title: "Last Game",
       key: "lastmatchdate",
-      align: "right" as "right",
+      align: "right" as const,
       width: 120,
       responsive: ["sm"],
       /*sorter: (a, b) =>
         a.lastmatchdate - b.lastmatchdate,*/
       render: (data: LadderStats) => {
-        if ((data.wins + data.losses)>0) {
+        if (data.wins + data.losses > 0) {
           return (
             <Tooltip title={new Date(data.lastmatchdate * 1000).toLocaleString()}>
-              {timeAgo.format(Date.now() - (Date.now() - data.lastmatchdate * 1000), "round-minute")}
+              {timeAgo.format(
+                Date.now() - (Date.now() - data.lastmatchdate * 1000),
+                "round-minute",
+              )}
             </Tooltip>
           );
         } else {
@@ -216,9 +229,13 @@ const TeamView: React.FC<Props> = ({side}) => {
       return (
         <>
           {!showTeams ? (
-            <a onClick={() => setShowTeams(true)}><PlusSquareOutlined /> Show {side.teams.length} Team Rankings</a>
-          ): (
-            <a onClick={() => setShowTeams(false)}><MinusSquareOutlined /> Hide Team Rankings</a>
+            <Typography.Link onClick={() => setShowTeams(true)}>
+              <PlusSquareOutlined /> Show {side.teams.length} Team Rankings
+            </Typography.Link>
+          ) : (
+            <Typography.Link onClick={() => setShowTeams(false)}>
+              <MinusSquareOutlined /> Hide Team Rankings
+            </Typography.Link>
           )}
         </>
       );
@@ -233,14 +250,18 @@ const TeamView: React.FC<Props> = ({side}) => {
         style={{ paddingBottom: 20, overflow: "auto" }}
         columns={TableColumns}
         dataSource={showTeams ? side.solo.concat(side.teams) : side.solo}
-        rowKey={(record) => record.members.map(member => member.relicID + "" + member.faction + "" + member.name).join("")}
+        rowKey={(record) =>
+          record.members
+            .map((member) => member.relicID + "" + member.faction + "" + member.name)
+            .join("")
+        }
         pagination={false}
         size={"small"}
         footer={footer}
       />
     </div>
   );
-}
+};
 
 export default TeamView;
 
