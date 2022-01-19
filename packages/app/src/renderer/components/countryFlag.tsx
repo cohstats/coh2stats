@@ -1,6 +1,6 @@
 import React from "react";
 
-import ReactCountryFlag from "react-country-flag";
+import ReactCountryFlag from "react-country-flag"; // eslint-disable-line import/no-named-as-default
 import gg from "../../../assets/flags/4x3/gg.svg";
 
 // tell webpack to import these svg's
@@ -272,8 +272,8 @@ require("../../../assets/flags/4x3/zm.svg");
 require("../../../assets/flags/4x3/zw.svg");
 
 interface IProps {
-  countryCode: string | any;
-  style?: Record<string, any>;
+  countryCode: string;
+  style?: React.CSSProperties;
 }
 export const CountryFlag: React.FC<IProps> = ({ countryCode, style }) => {
   const finalStyle = {

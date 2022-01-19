@@ -35,7 +35,7 @@ import App from "./app";
 
 declare global {
   interface Window {
-    electron: { ipcRenderer: any; store: any };
+    electron: { ipcRenderer: any; store: any }; // eslint-disable-line @typescript-eslint/no-explicit-any
   }
 }
 

@@ -124,8 +124,8 @@ export class GameWatcher {
       this.isFirstScan = false;
       // now fetch the player stats
       this.fetchDataFromRelicAPI(result.players).then(
-        (response: AxiosResponse<any, any>) => {
-          const apiData = response.data as PersonalStatResponse;
+        (response: AxiosResponse<PersonalStatResponse>) => {
+          const apiData = response.data;
           if (response.status === 200 && apiData.result.code === 0) {
             this.applicationStore.dispatch(
               actions.setMatchData({
@@ -416,7 +416,7 @@ export class GameWatcher {
 
   protected fetchDataFromRelicAPI = (
     players: LogFileMatchData,
-  ): Promise<AxiosResponse<any, any>> => {
+  ): Promise<AxiosResponse<PersonalStatResponse>> => {
     const profile_ids = players.left
       .concat(players.right)
       .filter((player) => !player.ai)

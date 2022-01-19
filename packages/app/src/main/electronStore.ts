@@ -7,7 +7,7 @@ import { ipcMain } from "electron";
 
 export class ApplicationStore {
   runtimeStore: ReduxStore;
-  protected fileStore: ElectronStore<any>;
+  protected fileStore: ElectronStore;
   protected unsubscriber: Unsubscribe;
 
   constructor() {
@@ -16,7 +16,7 @@ export class ApplicationStore {
         default: defaultSettings,
       },
     };
-    this.fileStore = new ElectronStore({
+    this.fileStore = new ElectronStore<Record<string, unknown>>({
       schema: electronStoreSchema,
     });
     //temporary reset during development

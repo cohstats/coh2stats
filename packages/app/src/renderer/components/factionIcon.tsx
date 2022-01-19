@@ -18,7 +18,7 @@ interface Props {
   style?: React.CSSProperties;
 }
 export const FactionIcon: React.FC<Props> = ({ faction, ai, style }) => {
-  let lookupTable: any = {
+  const lookupTable: Record<string, string> = {
     german: german,
     soviet: soviet,
     west_german: west_german,
@@ -26,13 +26,11 @@ export const FactionIcon: React.FC<Props> = ({ faction, ai, style }) => {
     british: british,
   };
   if (ai) {
-    lookupTable = {
-      german: german_ai,
-      soviet: soviet_ai,
-      west_german: west_german_ai,
-      aef: aef_ai,
-      british: british_ai,
-    };
+    lookupTable.german = german_ai;
+    lookupTable.soviet = soviet_ai;
+    lookupTable.west_german = west_german_ai;
+    lookupTable.aef = aef_ai;
+    lookupTable.british = british_ai;
   }
 
   return (

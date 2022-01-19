@@ -14,11 +14,3 @@ const App = (): JSX.Element => {
 };
 
 export default App;
-
-/*
-        <Row justify='center' style={{paddingTop: "20px"}}>
-          <Col>
-            <Table style={{overflow: "auto"}} />
-          </Col>
-        </Row>
-        */
