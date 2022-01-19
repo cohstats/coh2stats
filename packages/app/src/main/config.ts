@@ -5,7 +5,7 @@ const firebaseFunctions = {
 
 const config = {
   firebaseFunctions,
-  applicationName: "Coh2 Match Stats"
+  applicationName: "Coh2 Game Stats"
 }
 
 export default config;

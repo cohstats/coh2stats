@@ -33,7 +33,7 @@ const App = () => {
     <>
     {!settings.coh2LogFileFound ? <Alert type="error" message="Could not locate warnings.log file!" description="Either Company of Heroes 2 is not installed or your system configuration is different and you need to locate the warnings.log file manually" banner /> : null}
     <Form labelCol={{span: 8}} wrapperCol={{ span: 10}} layout='horizontal' style={{ paddingTop: "20px", paddingBottom: "20px" }}>
-      <Form.Item label="Path to warinings.log">
+      <Form.Item label="Path to warnings.log">
         <Input.Group compact>
           <Form.Item noStyle>
             <Input style={{ width: '70%' }} type={"text"} value={settings.coh2LogFileLocation} disabled/>
