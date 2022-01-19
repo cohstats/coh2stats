@@ -68,6 +68,11 @@ export const slice = createSlice({
     setMatchData: (state, { payload }: PayloadAction<MatchData>) => {
       state.match = payload;
     },
+    setStore: ( state, { payload }: PayloadAction<ApplicationState>) => {
+      state.match = payload.match;
+      state.settings = payload.settings;
+      state.updateCounter = payload.updateCounter;
+    },
     update: (state, { payload }: PayloadAction) => {
       state.settings = Object.assign({}, state.settings);
       const newMatchData: MatchData = {

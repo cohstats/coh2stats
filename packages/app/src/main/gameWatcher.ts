@@ -6,8 +6,8 @@ import { ApplicationStore } from './electronStore';
 import { actions } from "../redux/slice";
 import { Unsubscribe } from "@reduxjs/toolkit";
 import { Factions, LadderStats, MatchData, Member, SideData } from "../redux/state";
-import axios from "axios";
-import { PersonalStatResponse } from "./relicAPITypes";
+import axios, { AxiosResponse } from "axios";
+import { LeaderboardStat, PersonalStatResponse, StatGroup, StatGroupMember } from "./relicAPITypes";
 import { notifyGameFound } from "./notification";
 import { locateWarningsFile } from "./locateWarningsDialog";
 
@@ -104,13 +104,13 @@ export class GameWatcher {
         if (firstSpaceIndex !== -1) { // found a space
           const logType = lineWithoutTimeCode.substring(0, firstSpaceIndex);
           if (logType === "GAME") { // found game specific log
-            const parametersSeperatorIndex = lineWithoutTimeCode.indexOf(" -- ");
-            if (parametersSeperatorIndex !== -1) { // found params
-              const parametersString = lineWithoutTimeCode.substring(parametersSeperatorIndex + 4);
-              const subParametersSeperatorIndex = parametersString.indexOf(":");
-              if (subParametersSeperatorIndex !== -1) { // params with subparams
-                const param = parametersString.substring(0, subParametersSeperatorIndex);
-                const subParams = parametersString.substring(subParametersSeperatorIndex + 1);
+            const parametersSeparatorIndex = lineWithoutTimeCode.indexOf(" -- ");
+            if (parametersSeparatorIndex !== -1) { // found params
+              const parametersString = lineWithoutTimeCode.substring(parametersSeparatorIndex + 4);
+              const subParametersSeparatorIndex = parametersString.indexOf(":");
+              if (subParametersSeparatorIndex !== -1) { // params with subparams
+                const param = parametersString.substring(0, subParametersSeparatorIndex);
+                const subParams = parametersString.substring(subParametersSeparatorIndex + 1);
                 if (param === "Win Condition Name") { // reached the end lines describing a match
                   if (constructedGameId !== this.lastGameId) { // found a new match
                     foundNewGame = true;
@@ -168,13 +168,190 @@ export class GameWatcher {
           }
           this.isFirstScan = false;
           // now fetch the player stats
-          await this.fetchDetailedMatchData(players);
+          this.fetchDataFromRelicAPI(players).then((response: AxiosResponse<any, any>) => {
+            const apiData = response.data as PersonalStatResponse;
+            if (response.status === 200 && apiData.result.code === 0) {
+              this.applicationStore.dispatch(actions.setMatchData({
+                display: true,
+                left: this.parseSideData(players.left, apiData),
+                right: this.parseSideData(players.right, apiData),
+              }))
+            } else {
+              this.handleAPIRequestFailed();
+            }
+          }, (reason) => {
+            this.handleAPIRequestFailed();
+            console.log(reason);
+          });
+          //await this.fetchDetailedMatchData(players);
         }
       });
     }
   }
 
-  protected fetchDetailedMatchData = async (players: LogFileMatchData) => {
+  protected parseSideData = (logFilePlayers: LogFilePlayerData[], apiData: PersonalStatResponse): SideData => {
+    const copyLeaderboardStatsToLadderStats = (leaderboardStats: LeaderboardStat, ladderStats: LadderStats) => {
+      ladderStats.wins = leaderboardStats.wins;
+      ladderStats.losses = leaderboardStats.losses;
+      ladderStats.streak = leaderboardStats.streak;
+      ladderStats.disputes = leaderboardStats.disputes;
+      ladderStats.drops = leaderboardStats.drops;
+      ladderStats.rank = leaderboardStats.rank;
+      ladderStats.ranktotal = leaderboardStats.ranktotal;
+      ladderStats.ranklevel = leaderboardStats.ranklevel;
+      ladderStats.regionrank = leaderboardStats.regionrank;
+      ladderStats.regionranktotal = leaderboardStats.regionranktotal;
+      ladderStats.lastmatchdate = leaderboardStats.lastmatchdate;
+    }
+    const setMemberWithStatGroupMember = (statGroupMember: StatGroupMember, member: Member) => {
+      member.relicID = statGroupMember.profile_id;
+      const steamStringSplit = statGroupMember.name.split("/") as string[];
+      member.steamID = steamStringSplit[steamStringSplit.length - 1];
+      member.xp = statGroupMember.xp;
+      member.level = statGroupMember.level;
+      member.country = statGroupMember.country;
+    }
+    const { statGroups, leaderboardStats } = apiData;
+    const soloData: LadderStats[] = new Array(logFilePlayers.length);
+    const soloComplete: Map<number, boolean> = new Map(logFilePlayers.map((p, i) => [i, false]));
+    // create a starter to populate later
+    logFilePlayers.forEach((logFilePlayer, index) => {
+      const soloMember: Member = {
+        ai: logFilePlayer.ai,
+        relicID: logFilePlayer.ai ? -(index+1) : parseInt(logFilePlayer.relicID, 10),
+        name: logFilePlayer.name,
+        faction: logFilePlayer.faction,
+        steamID: "",
+        xp: -1,
+        level: -1,
+        country: ""
+      }
+      if (logFilePlayer.ai) {
+        soloComplete.delete(index);
+      }
+      soloData[index] = {
+        members: [soloMember],
+        wins: -1,
+        losses: -1,
+        streak: -1,
+        disputes: -1,
+        drops: -1,
+        rank: -1,
+        ranktotal: -1,
+        ranklevel: -1,
+        regionrank: -1,
+        regionranktotal: -1,
+        lastmatchdate: -1
+      }
+    });
+    const teamData: Record<string, LadderStats> = {};
+    const maxTeamLeaderboardId = 17 + logFilePlayers.length * 2;
+    leaderboardStats.forEach(leaderboardStat => {
+      const leaderboardId = leaderboardStat.leaderboard_id;
+      // add additional data to solo entries
+      if (soloComplete.size>0) {
+        if ((leaderboardId > 3 && leaderboardId < 20) || (leaderboardId > 50 && leaderboardId < 55)) { // solo ranking
+          const soloStatGroup = statGroups.find(statGroup => statGroup.id === leaderboardStat.statgroup_id);
+          if (soloStatGroup) {
+            let matchingPlayerId: number | undefined = undefined;
+            soloComplete.forEach((v,k) => {
+              const wantedLeaderboardId = leaderboardIDLookupTable[soloData[k].members[0].faction][logFilePlayers.length - 1];
+              if(soloData[k].members[0].relicID === soloStatGroup.members[0].profile_id && wantedLeaderboardId === leaderboardId) {
+                // found the right entry
+                copyLeaderboardStatsToLadderStats(leaderboardStat, soloData[k]);
+                setMemberWithStatGroupMember(soloStatGroup.members[0], soloData[k].members[0]);
+                matchingPlayerId = k;
+              }
+            });
+            soloComplete.delete(matchingPlayerId);
+          }
+        }
+      }
+      if (leaderboardId > 19 && leaderboardId <= maxTeamLeaderboardId) { // team ranking
+        const teamStatGroup = statGroups.find((statGroup) => statGroup.id === leaderboardStat.statgroup_id);
+        if (teamStatGroup) {
+          // check if all members of statgroup are playing in the match
+          let isPlaying = true;
+          let statGroupMemberId = 0;
+          const matchedLogFilePlayers: LogFilePlayerData[] = new Array(teamStatGroup.members.length);
+          while (statGroupMemberId < teamStatGroup.members.length) {
+            const teamStatMemberRelicId = teamStatGroup.members[statGroupMemberId].profile_id;
+            let foundMember = false;
+            let logFilePlayerId = 0;
+            while (logFilePlayerId < logFilePlayers.length) {
+              const logFilePlayerRelicId = parseInt(logFilePlayers[logFilePlayerId].relicID, 10);
+              if (teamStatMemberRelicId === logFilePlayerRelicId) {
+                foundMember = true;
+                matchedLogFilePlayers[statGroupMemberId] = logFilePlayers[logFilePlayerId];
+                logFilePlayerId = logFilePlayers.length;
+              }
+              logFilePlayerId++;
+            }
+            if (!foundMember) {
+              isPlaying = false;
+              statGroupMemberId = teamStatGroup.members.length;
+            }
+            statGroupMemberId++;
+          }
+          if (isPlaying) {
+            // generate unique index by concatenating sorted relicIds
+            const uniqueTeamId = teamStatGroup.members.map(member => member.profile_id).sort((a, b) => a - b).map(relicId => "" + relicId).join("");
+            const teamMembers: Member[] = new Array(teamStatGroup.members.length);
+            for (let k = 0; k < teamStatGroup.members.length; k++) {
+              const statGroupMember = teamStatGroup.members[k];
+              const matchedSideMember = matchedLogFilePlayers[k];
+              const teamMemberSteamStringSplit = statGroupMember.name.split("/") as string[];
+              teamMembers[k] = {
+                ai: false,
+                relicID: statGroupMember.profile_id,
+                name: matchedSideMember.name,
+                faction: matchedSideMember.faction,
+                steamID: teamMemberSteamStringSplit[teamMemberSteamStringSplit.length - 1],
+                xp: statGroupMember.xp,
+                level: statGroupMember.level,
+                country: statGroupMember.country
+              }
+            }
+            const teamLadderStats: LadderStats = {
+              members: teamMembers,
+              wins: -1,
+              losses: -1,
+              streak: -1,
+              disputes: -1,
+              drops: -1,
+              rank: -1,
+              ranktotal: -1,
+              ranklevel: -1,
+              regionrank: -1,
+              regionranktotal: -1,
+              lastmatchdate: -1
+            }
+            copyLeaderboardStatsToLadderStats(leaderboardStat, teamLadderStats);
+            teamData[uniqueTeamId] = teamLadderStats;
+          }
+        }
+      }
+    });
+    return {
+      solo: soloData,
+      teams: Object.values(teamData).sort((a, b) => (b.members.length - a.members.length) * 100 + (b.ranklevel - a.ranklevel))
+    }
+  }
+
+  protected handleAPIRequestFailed = () => {
+    console.log("Request Failed");
+    this.lastGameId = ""; // retry in next interval
+    this.isFirstScan = true; // do not notify more than once when request fail
+  }
+
+  protected fetchDataFromRelicAPI = (players: LogFileMatchData) => {
+    const profile_ids = players.left.concat(players.right).filter(player => !player.ai).map(player => player.relicID).join();
+    const requestURL = "https://coh2-api.reliclink.com/community/leaderboard/GetPersonalStat?title=coh2&profile_ids=[" + profile_ids + "]";
+    console.log("Relic API request");
+    return axios.get(requestURL);
+  }
+
+  /*protected fetchDetailedMatchData = async (players: LogFileMatchData) => {
     let requestFailed = false;
     const detailedMatchData: MatchData = {
       display: true,
@@ -346,7 +523,7 @@ export class GameWatcher {
       return;
     }
     this.applicationStore.dispatch(actions.setMatchData(detailedMatchData));
-  }
+  }*/
 
   protected fetchDetailedPlayerData = async (player: LogFilePlayerData) => {
     if (!player.ai) {

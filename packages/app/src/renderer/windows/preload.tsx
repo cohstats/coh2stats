@@ -1,8 +1,15 @@
 import { contextBridge, ipcRenderer } from "electron";
+import { actions } from "../../redux/slice";
 import { configureRendererStore } from "../../redux/configureStoreRenderer";
 
+const store = configureRendererStore();
+
+ipcRenderer.on("updateStore", (event, args) => {
+  store.dispatch(actions.setStore(args));
+});
+
 contextBridge.exposeInMainWorld('electron', {
-  store: configureRendererStore(),
+  store: store,
   ipcRenderer: {
     syncStores() {
       ipcRenderer.send('syncStores');
@@ -16,19 +23,5 @@ contextBridge.exposeInMainWorld('electron', {
     scanForLogFile() {
       ipcRenderer.send('scanForLogFile');
     }
-/*    on(channel: any, func: any) {
-      const validChannels = ['test'];
-      if (validChannels.includes(channel)) {
-        // Deliberately strip event as it includes `sender`
-        ipcRenderer.on(channel, (event, ...args) => func(...args));
-      }
-    },
-    once(channel: any, func: any) {
-      const validChannels = ['test'];
-      if (validChannels.includes(channel)) {
-        // Deliberately strip event as it includes `sender`
-        ipcRenderer.once(channel, (event, ...args) => func(...args));
-      }
-    }, */
   }
 });

@@ -3,7 +3,7 @@ import React from "react";
 import ReactCountryFlag from "react-country-flag";
 import gg from "../../../assets/flags/4x3/gg.svg";
 
-// tell webpack to import these svgs
+// tell webpack to import these svg's
 // TODO: find a cleaner solution
 require("../../../assets/flags/4x3/ac.svg");
 require("../../../assets/flags/4x3/ad.svg");

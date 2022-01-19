@@ -60,12 +60,12 @@ export class ApplicationStore {
     this.fileStore.set("settings", settings);
   }
 
-  protected storeSyncer = () => {
-    this.runtimeStore.dispatch(slice.actions.update());
+  protected storeSyncer = (event: Electron.IpcMainEvent) => {
+    event.sender.send("updateStore", this.runtimeStore.getState());
   }
 
   protected runtimeStoreSubscriber = () => {
-    // update filestore on changes
+    // update file store on changes
     this.setSavedSettings(this.runtimeStore.getState().settings);
   }
 
