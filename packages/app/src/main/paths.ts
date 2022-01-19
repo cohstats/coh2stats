@@ -9,5 +9,5 @@ export const getAssetsPath = (): string => {
 };
 
 export const getIconPath = (): string => {
-  return path.join(getAssetsPath(), "icon.ico");
+  return path.join(getAssetsPath(), "appIcon.ico");
 };
