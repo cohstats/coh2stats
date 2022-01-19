@@ -6,15 +6,15 @@ export const notifyGameFound = (): void => {
   if (activeWindows) {
     try {
       activeWindows()
-      .getActiveWindow()
-      .then((result: { windowClass: string }) => {
-        if (result.windowClass !== "RelicCoH2.exe") {
-          new Notification({
-            title: "Found a Game",
-            body: "You are joining a game in Coh2",
-          }).show();
-        }
-      });
+        .getActiveWindow()
+        .then((result: { windowClass: string }) => {
+          if (result.windowClass !== "RelicCoH2.exe") {
+            new Notification({
+              title: "Found a Game",
+              body: "You are joining a game in Coh2",
+            }).show();
+          }
+        });
     } catch {
       console.log("Active window did not work!");
     }
