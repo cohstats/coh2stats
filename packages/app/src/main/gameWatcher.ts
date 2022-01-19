@@ -115,10 +115,7 @@ export class GameWatcher {
     if (result) {
       this.lastGameId = result.newGameId;
       // send a notification
-      console.log(!this.isFirstScan);
-      console.log(this.applicationStore.getState().settings.gameNotification);
       if (!this.isFirstScan && this.applicationStore.getState().settings.gameNotification) {
-        console.log("passed");
         notifyGameFound();
       }
       this.isFirstScan = false;

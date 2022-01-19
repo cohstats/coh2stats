@@ -1,19 +1,24 @@
 import { Notification } from "electron";
-import activeWindows from "electron-active-window";
+import { optionalRequire } from "optional-require";
 
 export const notifyGameFound = (): void => {
-  activeWindows()
-    .getActiveWindow()
-    .then((result: { windowClass: string }) => {
-      console.log(result.windowClass);
-      if (result.windowClass !== "RelicCoH2.exe") {
-        console.log("passed2");
-        new Notification({
-          title: "Found a Game",
-          body: "You are joining a game in Coh2",
-          urgency: "critical",
-          silent: false,
-        }).show();
-      }
-    });
+  const activeWindows = optionalRequire("electron-active-window", true);
+  if (activeWindows) {
+    try {
+      activeWindows()
+      .getActiveWindow()
+      .then((result: { windowClass: string }) => {
+        if (result.windowClass !== "RelicCoH2.exe") {
+          new Notification({
+            title: "Found a Game",
+            body: "You are joining a game in Coh2",
+          }).show();
+        }
+      });
+    } catch {
+      console.log("Active window did not work!");
+    }
+  } else {
+    console.log("active window was false");
+  }
 };
