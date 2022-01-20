@@ -1,19 +1,55 @@
 import reverseLineReader from "reverse-line-reader";
 import { Factions } from "../redux/state";
-import { LogFileMatchData, LogFilePlayerData } from "./gameWatcher";
+
+const factionSideLookupTable: Record<string, TeamSide> = {
+  german: "axis",
+  soviet: "allies",
+  west_german: "axis",
+  aef: "allies",
+  british: "allies",
+};
+
+export type GameType = "classic" | "ai" | "custom";
+export type TeamSide = "axis" | "allies" | "mixed";
+
+export interface LogFilePlayerData {
+  ai: boolean;
+  faction: Factions;
+  relicID: string;
+  name: string;
+  position: number;
+}
+
+export interface LogFileTeamData {
+  players: LogFilePlayerData[];
+  side: TeamSide;
+}
+
+export interface LogFileGameData {
+  type: GameType;
+  left: LogFileTeamData;
+  right: LogFileTeamData;
+}
 
 export const parseLogFileReverse = async (
   logFileLocation: string,
   lastGameId: string,
-): Promise<false | { players: LogFileMatchData; newGameId: string }> => {
+): Promise<false | { game: LogFileGameData; newGameId: string }> => {
   // check warnings.log for new game
   let foundNewGame = false;
   let continueReading = true;
   // game id is constructed by joining the relicIDs of each player up to one string
   let constructedGameId = "";
-  const players: LogFileMatchData = {
-    left: [],
-    right: [],
+  const game: LogFileGameData = {
+    type: "custom",
+    left: {
+      side: "mixed",
+      players: [],
+    },
+    right: {
+      side: "mixed",
+      players: [],
+    },
   };
 
   // read the log file from bottom to top to find the last logged game first
@@ -37,9 +73,9 @@ export const parseLogFileReverse = async (
         name: playerDataChunks.slice(2, playerDataChunks.length - 3).join(" "),
       };
       if (side === "0") {
-        players.left.unshift(playerData);
+        game.left.players.unshift(playerData);
       } else {
-        players.right.unshift(playerData);
+        game.right.players.unshift(playerData);
       }
       constructedGameId += "" + playerData.relicID;
     });
@@ -54,18 +90,58 @@ export const parseLogFileReverse = async (
         name: playerDataChunks.slice(2, playerDataChunks.length - 3).join(" "),
       };
       if (side === "0") {
-        players.left.unshift(playerData);
+        game.left.players.unshift(playerData);
       } else {
-        players.right.unshift(playerData);
+        game.right.players.unshift(playerData);
       }
       constructedGameId += "-1 ";
     });
     return continueReading;
   });
   if (foundNewGame) {
-    return { players, newGameId: constructedGameId };
+    return { game: determineGameType(game), newGameId: constructedGameId };
   }
   return false;
+};
+
+const determineGameType = (game: LogFileGameData): LogFileGameData => {
+  let foundAi = false;
+  let foundMixedTeam = false;
+  const leftComp = determineTeamComposition(game.left);
+  const rightComp = determineTeamComposition(game.right);
+  if (leftComp.ai || rightComp.ai) {
+    foundAi = true;
+  }
+  if (leftComp.side === "mixed" || rightComp.side === "mixed") {
+    foundMixedTeam = true;
+  }
+  return {
+    type: foundMixedTeam ? "custom" : foundAi ? "ai" : "classic",
+    left: {
+      side: leftComp.side,
+      players: game.left.players,
+    },
+    right: {
+      side: rightComp.side,
+      players: game.right.players,
+    },
+  };
+};
+
+const determineTeamComposition = (team: LogFileTeamData): { ai: boolean; side: TeamSide } => {
+  let foundAi = false;
+  let mixed = false;
+  let lastSide: null | TeamSide;
+  team.players.forEach((player) => {
+    if (player.ai) {
+      foundAi = true;
+    }
+    if (lastSide && factionSideLookupTable[player.faction] !== lastSide) {
+      mixed = true;
+    }
+    lastSide = factionSideLookupTable[player.faction];
+  });
+  return { ai: foundAi, side: mixed ? "mixed" : lastSide };
 };
 
 const handleLogType = (line: string, logType: string, func: (remainingLine: string) => void) => {

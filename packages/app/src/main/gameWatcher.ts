@@ -4,7 +4,7 @@ import fs from "fs";
 import { ApplicationStore } from "./electronStore";
 import { actions } from "../redux/slice";
 import { Unsubscribe } from "@reduxjs/toolkit";
-import { Factions, LadderStats, Member, SideData } from "../redux/state";
+import { LadderStats, Member, SideData } from "../redux/state";
 import axios, { AxiosResponse } from "axios";
 import {
   LeaderboardStat,
@@ -14,19 +14,13 @@ import {
 } from "./relicAPITypes";
 import { notifyGameFound } from "./notification";
 import { locateWarningsFile } from "./locateWarningsDialog";
-import { parseLogFileReverse } from "./parseLogFile";
-
-export interface LogFilePlayerData {
-  ai: boolean;
-  faction: Factions;
-  relicID: string;
-  name: string;
-  position: number;
-}
-export interface LogFileMatchData {
-  left: LogFilePlayerData[];
-  right: LogFilePlayerData[];
-}
+import {
+  LogFileGameData,
+  LogFilePlayerData,
+  LogFileTeamData,
+  parseLogFileReverse,
+  TeamSide,
+} from "./parseLogFile";
 
 const leaderboardIDLookupTable = {
   german: [4, 8, 12, 16],
@@ -36,6 +30,12 @@ const leaderboardIDLookupTable = {
   axis: [20, 22, 24],
   allies: [21, 23, 25],
   british: [51, 52, 53, 54],
+};
+
+const teamLeaderboardIdsLookupTable: Record<TeamSide, number[]> = {
+  axis: [20, 22, 24],
+  allies: [21, 23, 25],
+  mixed: [],
 };
 
 export class GameWatcher {
@@ -110,7 +110,7 @@ export class GameWatcher {
   };
 
   protected processLogFileResult = (
-    result: false | { players: LogFileMatchData; newGameId: string },
+    result: false | { game: LogFileGameData; newGameId: string },
   ): void => {
     if (result) {
       this.lastGameId = result.newGameId;
@@ -120,15 +120,15 @@ export class GameWatcher {
       }
       this.isFirstScan = false;
       // now fetch the player stats
-      this.fetchDataFromRelicAPI(result.players).then(
+      this.fetchDataFromRelicAPI(result.game).then(
         (response: AxiosResponse<PersonalStatResponse>) => {
           const apiData = response.data;
           if (response.status === 200 && apiData.result.code === 0) {
             this.applicationStore.dispatch(
               actions.setMatchData({
                 display: true,
-                left: this.parseSideData(result.players.left, apiData),
-                right: this.parseSideData(result.players.right, apiData),
+                left: this.parseSideData(result.game.left, apiData),
+                right: this.parseSideData(result.game.right, apiData),
               }),
             );
           } else {
@@ -144,7 +144,7 @@ export class GameWatcher {
   };
 
   protected parseSideData = (
-    logFilePlayers: LogFilePlayerData[],
+    logFileTeam: LogFileTeamData,
     apiData: PersonalStatResponse,
   ): SideData => {
     const copyLeaderboardStatsToLadderStats = (
@@ -172,10 +172,12 @@ export class GameWatcher {
       member.country = statGroupMember.country;
     };
     const { statGroups, leaderboardStats } = apiData;
-    const soloData: LadderStats[] = new Array(logFilePlayers.length);
-    const soloComplete: Map<number, boolean> = new Map(logFilePlayers.map((p, i) => [i, false]));
+    const soloData: LadderStats[] = new Array(logFileTeam.players.length);
+    const soloComplete: Map<number, boolean> = new Map(
+      logFileTeam.players.map((p, i) => [i, false]),
+    );
     // create a starter to populate later
-    logFilePlayers.forEach((logFilePlayer, index) => {
+    logFileTeam.players.forEach((logFilePlayer, index) => {
       const soloMember: Member = {
         ai: logFilePlayer.ai,
         relicID: logFilePlayer.ai ? -(index + 1) : parseInt(logFilePlayer.relicID, 10),
@@ -205,7 +207,6 @@ export class GameWatcher {
       };
     });
     const teamData: Record<string, LadderStats> = {};
-    const maxTeamLeaderboardId = 17 + logFilePlayers.length * 2;
     const processSoloLeaderboardStats = (leaderboardStat: LeaderboardStat) => {
       const leaderboardId = leaderboardStat.leaderboard_id;
       if (
@@ -219,7 +220,9 @@ export class GameWatcher {
           let matchingPlayerId: number | undefined = undefined;
           soloComplete.forEach((v, k) => {
             const wantedLeaderboardId =
-              leaderboardIDLookupTable[soloData[k].members[0].faction][logFilePlayers.length - 1];
+              leaderboardIDLookupTable[soloData[k].members[0].faction][
+                logFileTeam.players.length - 1
+              ];
             if (
               soloData[k].members[0].relicID === soloStatGroup.members[0].profile_id &&
               wantedLeaderboardId === leaderboardId
@@ -242,12 +245,12 @@ export class GameWatcher {
         const teamStatMemberRelicId = teamStatGroup.members[statGroupMemberId].profile_id;
         let foundMember = false;
         let logFilePlayerId = 0;
-        while (logFilePlayerId < logFilePlayers.length) {
-          const logFilePlayerRelicId = parseInt(logFilePlayers[logFilePlayerId].relicID, 10);
+        while (logFilePlayerId < logFileTeam.players.length) {
+          const logFilePlayerRelicId = parseInt(logFileTeam.players[logFilePlayerId].relicID, 10);
           if (teamStatMemberRelicId === logFilePlayerRelicId) {
             foundMember = true;
-            matchedLogFilePlayers[statGroupMemberId] = logFilePlayers[logFilePlayerId];
-            logFilePlayerId = logFilePlayers.length;
+            matchedLogFilePlayers[statGroupMemberId] = logFileTeam.players[logFilePlayerId];
+            logFilePlayerId = logFileTeam.players.length;
           }
           logFilePlayerId++;
         }
@@ -264,7 +267,11 @@ export class GameWatcher {
     };
     const processTeamLeaderboardStats = (leaderboardStat: LeaderboardStat) => {
       const leaderboardId = leaderboardStat.leaderboard_id;
-      if (leaderboardId > 19 && leaderboardId <= maxTeamLeaderboardId) {
+      const validIds = teamLeaderboardIdsLookupTable[logFileTeam.side].slice(
+        0,
+        logFileTeam.players.length - 1,
+      );
+      if (validIds.includes(leaderboardId)) {
         // team ranking
         const teamStatGroup = statGroups.find(
           (statGroup) => statGroup.id === leaderboardStat.statgroup_id,
@@ -335,10 +342,10 @@ export class GameWatcher {
   };
 
   protected fetchDataFromRelicAPI = (
-    players: LogFileMatchData,
+    game: LogFileGameData,
   ): Promise<AxiosResponse<PersonalStatResponse>> => {
-    const profile_ids = players.left
-      .concat(players.right)
+    const profile_ids = game.left.players
+      .concat(game.right.players)
       .filter((player) => !player.ai)
       .map((player) => player.relicID)
       .join();
