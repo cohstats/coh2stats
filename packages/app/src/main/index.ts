@@ -2,12 +2,14 @@ import { app, BrowserWindow } from "electron";
 import { ApplicationStore } from "./electronStore";
 import { GameWatcher } from "./gameWatcher";
 import { ApplicationManager } from "./applicationManager";
+import { StreamerOverlay } from "./streamerOverlay";
 
 // manages file and runtime (redux) storage for main
 const applicationStore = new ApplicationStore();
 
 let logFileWatcher: GameWatcher;
 let applicationManager: ApplicationManager;
+let streamerOverlay: StreamerOverlay;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
@@ -21,6 +23,7 @@ app.on("ready", () => {
   applicationStore.initializeRuntimeStore();
   logFileWatcher = new GameWatcher(applicationStore);
   applicationManager = new ApplicationManager(applicationStore);
+  streamerOverlay = new StreamerOverlay(applicationStore);
 });
 
 app.on("activate", () => {
@@ -34,6 +37,7 @@ app.on("activate", () => {
 
 app.on("quit", () => {
   console.log("App is quiting");
+  streamerOverlay.destroy();
   applicationManager.destroy();
   logFileWatcher.destroy();
   applicationStore.destroy();

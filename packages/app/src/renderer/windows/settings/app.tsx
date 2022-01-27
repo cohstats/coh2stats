@@ -1,6 +1,7 @@
-import { Alert, Button, Form, Input, InputNumber, Switch } from "antd";
+import { Alert, Button, Form, Input, InputNumber, Select, Switch } from "antd";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { StreamOverlayPositions } from "../../../redux/state";
 import { actions, selectSettings } from "../../../redux/slice";
 
 const App = (): JSX.Element => {
@@ -19,6 +20,15 @@ const App = (): JSX.Element => {
   const handleGameNotificationChange = (checked: boolean) => {
     dispatch(actions.setGameNotification(checked));
   };
+  const handleStreamerModeChange = (checked: boolean) => {
+    dispatch(actions.setStreamOverlay(checked));
+  };
+  const handleStreamModePortChange = (value: number) => {
+    dispatch(actions.setStreamOverlayPort(value));
+  };
+  const handleStreamViewLayoutChange = (value: StreamOverlayPositions) => {
+    dispatch(actions.setStreamOverlayPosition(value));
+  };
   return (
     <>
       {!settings.coh2LogFileFound ? (
@@ -26,6 +36,14 @@ const App = (): JSX.Element => {
           type="error"
           message="Could not locate warnings.log file!"
           description="Either Company of Heroes 2 is not installed or your system configuration is different and you need to locate the warnings.log file manually"
+          banner
+        />
+      ) : null}
+      {settings.streamOverlay && !settings.streamOverlayPortFree ? (
+        <Alert
+          type="error"
+          message="The port for the stream overlay is already in use!"
+          description="Select a different port or make sure only one insantce of this application is running"
           banner
         />
       ) : null}
@@ -70,6 +88,34 @@ const App = (): JSX.Element => {
         <Form.Item label={"Notify when game found"}>
           <Switch checked={settings.gameNotification} onChange={handleGameNotificationChange} />
         </Form.Item>
+        <Form.Item label={"Use streamer mode"}>
+          <Switch checked={settings.streamOverlay} onChange={handleStreamerModeChange} />
+        </Form.Item>
+        {settings.streamOverlay ? (
+          <>
+            <Form.Item label={"Streamer view server port"}>
+              <InputNumber
+                min={0}
+                max={65535}
+                value={settings.streamOverlayPort}
+                formatter={(value) => Math.round(value) + ""}
+                parser={(value) => Number.parseInt(value, 10)}
+                onChange={handleStreamModePortChange}
+              />
+              <br />
+              {" => URL: http://localhost:" + settings.streamOverlayPort}
+            </Form.Item>
+            <Form.Item label={"Streamer view layout"}>
+              <Select
+                value={settings.streamOverlayPosition}
+                onChange={handleStreamViewLayoutChange}
+              >
+                <Select.Option value="top">Top</Select.Option>
+                <Select.Option value="left">Left</Select.Option>
+              </Select>
+            </Form.Item>
+          </>
+        ) : null}
       </Form>
     </>
   );

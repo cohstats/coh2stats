@@ -1,10 +1,10 @@
 import { app, ipcMain } from "electron";
 import path from "path";
 import fs from "fs";
-import { ApplicationStore } from "./electronStore";
-import { actions } from "../redux/slice";
+import { ApplicationStore } from "../electronStore";
+import { actions } from "../../redux/slice";
 import { Unsubscribe } from "@reduxjs/toolkit";
-import { LadderStats, Member, SideData } from "../redux/state";
+import { LadderStats, Member, SideData } from "../../redux/state";
 import axios, { AxiosResponse } from "axios";
 import {
   LeaderboardStat,
@@ -109,10 +109,12 @@ export class GameWatcher {
     }
   };
 
-  protected processLogFileResult = (
-    result: false | { game: LogFileGameData; newGameId: string },
-  ): void => {
-    if (result) {
+  protected processLogFileResult = (result: {
+    new: boolean;
+    game: LogFileGameData;
+    newGameId: string;
+  }): void => {
+    if (result.new) {
       this.lastGameId = result.newGameId;
       // send a notification
       if (!this.isFirstScan && this.applicationStore.getState().settings.gameNotification) {
@@ -127,6 +129,8 @@ export class GameWatcher {
             this.applicationStore.dispatch(
               actions.setMatchData({
                 display: true,
+                started: result.game.started,
+                ended: result.game.ended,
                 left: this.parseSideData(result.game.left, apiData),
                 right: this.parseSideData(result.game.right, apiData),
               }),
@@ -140,6 +144,14 @@ export class GameWatcher {
           console.log(reason);
         },
       );
+    } else {
+      const currentMatch = this.applicationStore.getState().match;
+      if (currentMatch.started !== result.game.started) {
+        this.applicationStore.dispatch(actions.setMatchStarted(result.game.started));
+      }
+      if (currentMatch.ended !== result.game.ended) {
+        this.applicationStore.dispatch(actions.setMatchEnded(result.game.ended));
+      }
     }
   };
 

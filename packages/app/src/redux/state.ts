@@ -1,3 +1,5 @@
+export type StreamOverlayPositions = "top" | "left";
+
 export interface ApplicationSettings {
   coh2LogFileFound: boolean;
   coh2LogFileLocation: string;
@@ -5,6 +7,10 @@ export interface ApplicationSettings {
   runInTray: boolean;
   openLinksInBrowser: boolean;
   gameNotification: boolean;
+  streamOverlay: boolean;
+  streamOverlayPort: number;
+  streamOverlayPortFree: boolean;
+  streamOverlayPosition: StreamOverlayPositions;
 }
 
 export type Factions = "german" | "west_german" | "aef" | "british" | "soviet";
@@ -42,6 +48,8 @@ export interface SideData {
 
 export interface MatchData {
   display: boolean;
+  started: boolean;
+  ended: boolean;
   left: SideData;
   right: SideData;
 }

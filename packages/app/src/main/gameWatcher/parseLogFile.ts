@@ -1,5 +1,5 @@
 import reverseLineReader from "reverse-line-reader";
-import { Factions } from "../redux/state";
+import { Factions } from "../../redux/state";
 
 const factionSideLookupTable: Record<string, TeamSide> = {
   german: "axis",
@@ -27,6 +27,8 @@ export interface LogFileTeamData {
 
 export interface LogFileGameData {
   type: GameType;
+  started: boolean;
+  ended: boolean;
   left: LogFileTeamData;
   right: LogFileTeamData;
 }
@@ -34,7 +36,7 @@ export interface LogFileGameData {
 export const parseLogFileReverse = async (
   logFileLocation: string,
   lastGameId: string,
-): Promise<false | { game: LogFileGameData; newGameId: string }> => {
+): Promise<{ new: boolean; game: LogFileGameData; newGameId: string }> => {
   // check warnings.log for new game
   let foundNewGame = false;
   let continueReading = true;
@@ -42,6 +44,8 @@ export const parseLogFileReverse = async (
   let constructedGameId = "";
   const game: LogFileGameData = {
     type: "custom",
+    started: false,
+    ended: false,
     left: {
       side: "mixed",
       players: [],
@@ -61,6 +65,12 @@ export const parseLogFileReverse = async (
         foundNewGame = true;
       }
       continueReading = false; // do not continue reading log file when one match was found
+    });
+    handleGameParam(line, "Starting mission", () => {
+      game.started = true;
+    });
+    handleGameOver(line, () => {
+      game.ended = true;
     });
     handleGameParam(line, "Human Player", (subParams) => {
       const playerDataChunks = subParams.split(" ");
@@ -99,9 +109,9 @@ export const parseLogFileReverse = async (
     return continueReading;
   });
   if (foundNewGame) {
-    return { game: determineGameType(game), newGameId: constructedGameId };
+    return { new: true, game: determineGameType(game), newGameId: constructedGameId };
   }
-  return false;
+  return { new: false, game: game, newGameId: constructedGameId };
 };
 
 const determineGameType = (game: LogFileGameData): LogFileGameData => {
@@ -117,6 +127,8 @@ const determineGameType = (game: LogFileGameData): LogFileGameData => {
   }
   return {
     type: foundMixedTeam ? "custom" : foundAi ? "ai" : "classic",
+    started: game.started,
+    ended: game.ended,
     left: {
       side: leftComp.side,
       players: game.left.players,
@@ -154,6 +166,22 @@ const handleLogType = (line: string, logType: string, func: (remainingLine: stri
       func(lineWithoutTimeCode.substring(firstSpaceIndex));
     }
   }
+};
+
+const handleModLogs = (line: string, func: (remainingLine: string) => void) => {
+  handleLogType(line, "MOD", func);
+};
+
+const handleGameOver = (line: string, func: () => void) => {
+  handleModLogs(line, (remainingLine) => {
+    const parametersSeparatorIndex = remainingLine.indexOf(" -- ");
+    if (parametersSeparatorIndex !== -1) {
+      const remainingString = remainingLine.substring(parametersSeparatorIndex + 4);
+      if (remainingString.includes("Game Over at frame")) {
+        func();
+      }
+    }
+  });
 };
 
 const handleGameLogs = (line: string, func: (remainingLine: string) => void) => {

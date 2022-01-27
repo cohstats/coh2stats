@@ -1,5 +1,12 @@
 import { createSlice, PayloadAction, Store } from "@reduxjs/toolkit";
-import { ApplicationSettings, ApplicationState, MatchData, LadderStats, SideData } from "./state";
+import {
+  ApplicationSettings,
+  ApplicationState,
+  MatchData,
+  LadderStats,
+  SideData,
+  StreamOverlayPositions,
+} from "./state";
 
 export const defaultSettings: ApplicationSettings = {
   coh2LogFileFound: false,
@@ -8,10 +15,16 @@ export const defaultSettings: ApplicationSettings = {
   runInTray: true,
   openLinksInBrowser: false,
   gameNotification: true,
+  streamOverlay: false,
+  streamOverlayPort: 47824,
+  streamOverlayPortFree: true,
+  streamOverlayPosition: "top",
 };
 
 export const startupMatchData: MatchData = {
   display: false,
+  started: false,
+  ended: false,
   left: {
     solo: [],
     teams: [],
@@ -65,8 +78,28 @@ export const slice = createSlice({
     setGameNotification: (state, { payload }: PayloadAction<boolean>) => {
       state.settings.gameNotification = payload;
     },
+    setStreamOverlay: (state, { payload }: PayloadAction<boolean>) => {
+      state.settings.streamOverlay = payload;
+    },
+    setStreamOverlayPort: (state, { payload }: PayloadAction<number>) => {
+      if (Number.isInteger(payload) && payload >= 0 && payload <= 65535) {
+        state.settings.streamOverlayPort = payload;
+      }
+    },
+    setStreamOverlayPortFree: (state, { payload }: PayloadAction<boolean>) => {
+      state.settings.streamOverlayPortFree = payload;
+    },
+    setStreamOverlayPosition: (state, { payload }: PayloadAction<StreamOverlayPositions>) => {
+      state.settings.streamOverlayPosition = payload;
+    },
     setMatchData: (state, { payload }: PayloadAction<MatchData>) => {
       state.match = payload;
+    },
+    setMatchStarted: (state, { payload }: PayloadAction<boolean>) => {
+      state.match.started = payload;
+    },
+    setMatchEnded: (state, { payload }: PayloadAction<boolean>) => {
+      state.match.ended = payload;
     },
     setStore: (state, { payload }: PayloadAction<ApplicationState>) => {
       state.match = payload.match;
@@ -77,6 +110,8 @@ export const slice = createSlice({
       state.settings = Object.assign({}, state.settings);
       const newMatchData: MatchData = {
         display: state.match.display,
+        started: state.match.started,
+        ended: state.match.ended,
         left: cloneSideData(state.match.left),
         right: cloneSideData(state.match.right),
       };

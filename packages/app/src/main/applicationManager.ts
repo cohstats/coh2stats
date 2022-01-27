@@ -46,7 +46,7 @@ export class ApplicationManager {
     // settings window
     this.settingsWindow = new BrowserWindow({
       icon: getIconPath(),
-      height: 500,
+      height: 700,
       width: 700,
       webPreferences: {
         preload: SETTINGS_WINDOW_PRELOAD_WEBPACK_ENTRY,
