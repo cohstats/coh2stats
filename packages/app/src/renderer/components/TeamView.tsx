@@ -42,7 +42,7 @@ const TeamView: React.FC<Props> = ({ side }) => {
       responsive: ["lg"],
       width: 20,
       render: (level: number) => {
-        if (level < 0) {
+        if (level <= 0) {
           return "-";
         } else {
           return level;
