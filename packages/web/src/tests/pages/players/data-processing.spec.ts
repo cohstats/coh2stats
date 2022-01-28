@@ -18,21 +18,21 @@ describe("prepareLeaderBoardData", () => {
 
 describe("findByLeaderBoardID", () => {
   test("Finds the british", () => {
-    const result = findByLeaderBoardID(52); // eslint-disable-line testing-library/await-async-query
+    const result = findByLeaderBoardID(52);
 
     expect(result.mode).toBe("2v2");
     expect(result.race).toBe("british");
   });
 
   test("Finds the usf", () => {
-    const result = findByLeaderBoardID(19); // eslint-disable-line testing-library/await-async-query
+    const result = findByLeaderBoardID(19);
 
     expect(result.mode).toBe("4v4");
     expect(result.race).toBe("usf");
   });
 
   test("Finds the team matches", () => {
-    const result = findByLeaderBoardID(20); // eslint-disable-line testing-library/await-async-query
+    const result = findByLeaderBoardID(20);
 
     expect(result.mode).toBe("team2");
     expect(result.race).toBe("axis");
