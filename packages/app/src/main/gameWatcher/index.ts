@@ -129,8 +129,9 @@ export class GameWatcher {
             this.applicationStore.dispatch(
               actions.setGameData({
                 found: true,
-                started: result.game.started,
-                ended: result.game.ended,
+                state: result.game.state,
+                map: result.game.map,
+                winCondition: result.game.winCondition,
                 left: this.parseSideData(result.game.left, apiData),
                 right: this.parseSideData(result.game.right, apiData),
               }),
@@ -146,11 +147,8 @@ export class GameWatcher {
       );
     } else {
       const currentGame = this.applicationStore.getState().game;
-      if (currentGame.started !== result.game.started) {
-        this.applicationStore.dispatch(actions.setGameStarted(result.game.started));
-      }
-      if (currentGame.ended !== result.game.ended) {
-        this.applicationStore.dispatch(actions.setGameEnded(result.game.ended));
+      if (currentGame.state !== result.game.state) {
+        this.applicationStore.dispatch(actions.setGameState(result.game.state));
       }
     }
   };

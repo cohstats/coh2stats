@@ -46,10 +46,13 @@ export interface SideData {
   teams: LadderStats[];
 }
 
+export type GameState = "closed" | "menu" | "loading" | "ingame";
+
 export interface GameData {
   found: boolean;
-  started: boolean;
-  ended: boolean;
+  state: GameState;
+  map: string;
+  winCondition: string;
   left: SideData;
   right: SideData;
 }
