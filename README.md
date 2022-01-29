@@ -5,7 +5,13 @@
 [![DeepScan grade](https://deepscan.io/api/teams/15780/projects/19027/branches/481420/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=15780&pid=19027&bid=481420)
 ![GitHub CodeQL Workflow Status (branch)](https://img.shields.io/github/workflow/status/petrvecera/coh2ladders/CodeQL/master?label=CodeQL)
 
-## https://coh2stats.com/
+### Website https://coh2stats.com/
+
+With all the data, player cards, leaderboards, maps, stats, commanders, inte-bulletins and much more!
+
+### Desktop App [here](packages/app/README.md)
+
+For current match details, player information and other features.
 
 This project is set to create new usage charts for the game COH2.
 And also create web access to leaderboards, player cards and recent matches for players.

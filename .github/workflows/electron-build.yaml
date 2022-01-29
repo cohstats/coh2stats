@@ -1,0 +1,37 @@
+name: Build Electron app
+on:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - packages/functions/**
+      - packages/web/**
+
+jobs:
+  build_on_win:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@master
+        with:
+          node-version: 14
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+      - uses: actions/cache@v2
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Install dependencies
+        run: yarn install
+      - name: Build
+        run: yarn app make
+      - name: Upload the build
+        uses: actions/upload-artifact@v2
+        with:
+          name: coh2-game-stats-installer.zip
+          path: |
+            packages/app/out/make/squirrel.windows/x64/*.exe
