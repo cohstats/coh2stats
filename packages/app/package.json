@@ -55,7 +55,6 @@
     "electron-store": "^8.0.1",
     "express": "^4.17.2",
     "javascript-time-ago": "^2.3.10",
-    "optional-require": "^1.1.8",
     "react": "^17.0.2",
     "react-country-flag": "^3.0.2",
     "react-dom": "^17.0.2",
@@ -63,8 +62,5 @@
     "reverse-line-reader": "^0.2.6",
     "socket.io": "^4.4.1",
     "tcp-port-used": "^1.0.2"
-  },
-  "optionalDependencies": {
-    "electron-active-window": "^0.0.6"
   }
 }
