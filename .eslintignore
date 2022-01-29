@@ -2,3 +2,11 @@ build*/
 dist/
 lib/
 fbexport
+forge.config.js
+webpack.main.config.js
+webpack.renderer.config.js
+webpack.plugins.js
+webpack.rules.js
+.webpack/
+.resources/
+out/
