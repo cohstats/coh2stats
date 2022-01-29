@@ -127,8 +127,8 @@ export class GameWatcher {
           const apiData = response.data;
           if (response.status === 200 && apiData.result.code === 0) {
             this.applicationStore.dispatch(
-              actions.setMatchData({
-                display: true,
+              actions.setGameData({
+                found: true,
                 started: result.game.started,
                 ended: result.game.ended,
                 left: this.parseSideData(result.game.left, apiData),
@@ -145,12 +145,12 @@ export class GameWatcher {
         },
       );
     } else {
-      const currentMatch = this.applicationStore.getState().match;
-      if (currentMatch.started !== result.game.started) {
-        this.applicationStore.dispatch(actions.setMatchStarted(result.game.started));
+      const currentGame = this.applicationStore.getState().game;
+      if (currentGame.started !== result.game.started) {
+        this.applicationStore.dispatch(actions.setGameStarted(result.game.started));
       }
-      if (currentMatch.ended !== result.game.ended) {
-        this.applicationStore.dispatch(actions.setMatchEnded(result.game.ended));
+      if (currentGame.ended !== result.game.ended) {
+        this.applicationStore.dispatch(actions.setGameEnded(result.game.ended));
       }
     }
   };

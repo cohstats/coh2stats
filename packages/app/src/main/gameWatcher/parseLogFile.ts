@@ -59,12 +59,12 @@ export const parseLogFileReverse = async (
   // read the log file from bottom to top to find the last logged game first
   await reverseLineReader.eachLine(logFileLocation, (line: string) => {
     handleGameParam(line, "Win Condition Name", () => {
-      // reached the end lines describing a match
+      // reached the end lines describing a game
       if (constructedGameId !== lastGameId) {
-        // found a new match
+        // found a new game
         foundNewGame = true;
       }
-      continueReading = false; // do not continue reading log file when one match was found
+      continueReading = false; // do not continue reading log file when one game was found
     });
     handleGameParam(line, "Starting mission", () => {
       game.started = true;
@@ -200,7 +200,7 @@ const handleGameParam = (line: string, param: string, func: (subParams: string) 
         const foundParam = parametersString.substring(0, subParametersSeparatorIndex);
         const subParams = parametersString.substring(subParametersSeparatorIndex + 1);
         if (foundParam === param) {
-          // reached the end lines describing a match
+          // reached the end lines describing a game
           func(subParams);
         }
       }

@@ -43,7 +43,7 @@ function copyFolderRecursiveSync(source, target) {
 module.exports = {
   packagerConfig: {
     asar: true,
-    icon: "assets/appIcon.ico",
+    icon: "assets/icon.ico",
     extraResource: [".resources/node_modules", "assets"],
   },
   makers: [
@@ -51,7 +51,7 @@ module.exports = {
       name: "@electron-forge/maker-squirrel",
       config: {
         name: "coh2-game-stats",
-        setupIcon: "assets/appIcon.ico",
+        setupIcon: "assets/icon.ico",
       },
     },
   ],
@@ -88,9 +88,9 @@ module.exports = {
           config: "./webpack.renderer.config.js",
           entryPoints: [
             {
-              html: "./src/renderer/windows/match/index.html",
-              js: "./src/renderer/windows/match/index.tsx",
-              name: "match_window",
+              html: "./src/renderer/windows/main/index.html",
+              js: "./src/renderer/windows/main/index.tsx",
+              name: "main_window",
               preload: {
                 js: "./src/renderer/windows/preload.tsx",
               },

@@ -18,5 +18,5 @@ export const getAntdDistPath = (): string => {
 };
 
 export const getIconPath = (): string => {
-  return path.join(getAssetsPath(), "appIcon.ico");
+  return path.join(getAssetsPath(), "icon.ico");
 };

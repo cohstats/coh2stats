@@ -13,6 +13,5 @@ module.exports = {
   },
   externals: {
     // here you can add libraries with binaries that otherwise wont run properly
-    "electron-active-window": "electron-active-window",
   },
 };

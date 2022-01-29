@@ -1,6 +1,6 @@
 import ElectronStore from "electron-store";
 import { ApplicationSettings, ApplicationState } from "../redux/state";
-import { defaultSettings, ReduxStore, startupMatchData } from "../redux/slice";
+import { defaultSettings, ReduxStore, startupGameData } from "../redux/slice";
 import { configureMainStore } from "../redux/configureStoreMain";
 import { AnyAction, Unsubscribe } from "@reduxjs/toolkit";
 import { ipcMain } from "electron";
@@ -29,7 +29,7 @@ export class ApplicationStore {
     // initialize runtime state
     const startupRuntimeState: ApplicationState = {
       settings: defaultSettings,
-      match: startupMatchData,
+      game: startupGameData,
       updateCounter: 0,
     };
     if (savedSettings) {

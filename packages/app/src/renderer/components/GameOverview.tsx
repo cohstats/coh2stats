@@ -1,28 +1,28 @@
 import { Col, Row, Spin } from "antd";
 import React from "react";
-import { MatchData } from "../../redux/state";
+import { GameData } from "../../redux/state";
 import TeamView from "./TeamView";
 
 interface Props {
-  match: MatchData;
+  game: GameData;
 }
 
-const MatchOverview: React.FC<Props> = ({ match }) => {
+const GameOverview: React.FC<Props> = ({ game }) => {
   return (
     <div>
       <Row justify="center" style={{ paddingTop: "20px", paddingBottom: "20px" }}>
         <Col xs={24} md={22} xxl={14}>
-          {match.display ? (
+          {game.found ? (
             <>
-              <TeamView side={match.left} />
+              <TeamView side={game.left} />
               <h1>VS</h1>
-              <TeamView side={match.right} />
+              <TeamView side={game.right} />
             </>
           ) : (
             <>
               <h1>
                 <Spin size="large" style={{ paddingRight: "20px" }} />
-                Scanning for a Match
+                Scanning for a Game
               </h1>
             </>
           )}
@@ -32,4 +32,4 @@ const MatchOverview: React.FC<Props> = ({ match }) => {
   );
 };
 
-export default MatchOverview;
+export default GameOverview;
