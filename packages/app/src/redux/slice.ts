@@ -3,6 +3,7 @@ import {
   ApplicationSettings,
   ApplicationState,
   GameData,
+  GameState,
   LadderStats,
   SideData,
   StreamOverlayPositions,
@@ -23,8 +24,9 @@ export const defaultSettings: ApplicationSettings = {
 
 export const startupGameData: GameData = {
   found: false,
-  started: false,
-  ended: false,
+  state: "closed",
+  map: "",
+  winCondition: "",
   left: {
     solo: [],
     teams: [],
@@ -95,11 +97,8 @@ export const slice = createSlice({
     setGameData: (state, { payload }: PayloadAction<GameData>) => {
       state.game = payload;
     },
-    setGameStarted: (state, { payload }: PayloadAction<boolean>) => {
-      state.game.started = payload;
-    },
-    setGameEnded: (state, { payload }: PayloadAction<boolean>) => {
-      state.game.ended = payload;
+    setGameState: (state, { payload }: PayloadAction<GameState>) => {
+      state.game.state = payload;
     },
     setStore: (state, { payload }: PayloadAction<ApplicationState>) => {
       state.game = payload.game;
@@ -110,8 +109,9 @@ export const slice = createSlice({
       state.settings = Object.assign({}, state.settings);
       const newGameData: GameData = {
         found: state.game.found,
-        started: state.game.started,
-        ended: state.game.ended,
+        state: state.game.state,
+        map: state.game.map,
+        winCondition: state.game.winCondition,
         left: cloneSideData(state.game.left),
         right: cloneSideData(state.game.right),
       };

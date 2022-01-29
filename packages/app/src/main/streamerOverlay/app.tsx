@@ -12,7 +12,7 @@ const App: React.FC<Props> = ({ state }) => {
   const game = state.game;
   return (
     <>
-      {game.started && !game.ended ? (
+      {game.state === "ingame" ? (
         <>
           {state.settings.streamOverlayPosition === "top" ? (
             <CenterView game={game} />
@@ -21,7 +21,7 @@ const App: React.FC<Props> = ({ state }) => {
           )}
         </>
       ) : null}
-      {!game.started && !game.ended ? (
+      {game.state === "loading" ? (
         <>
           <LoadingView game={game} />
         </>

@@ -1,5 +1,5 @@
 import reverseLineReader from "reverse-line-reader";
-import { Factions } from "../../redux/state";
+import { Factions, GameState } from "../../redux/state";
 
 const factionSideLookupTable: Record<string, TeamSide> = {
   german: "axis",
@@ -27,8 +27,9 @@ export interface LogFileTeamData {
 
 export interface LogFileGameData {
   type: GameType;
-  started: boolean;
-  ended: boolean;
+  state: GameState;
+  map: string;
+  winCondition: string;
   left: LogFileTeamData;
   right: LogFileTeamData;
 }
@@ -42,10 +43,15 @@ export const parseLogFileReverse = async (
   let continueReading = true;
   // game id is constructed by joining the relicIDs of each player up to one string
   let constructedGameId = "";
+  let gameLoading = false; // logs contains a start loading line
+  let gameStarted = false; // logs contains a started game line
+  let gameEnded = false; // logs contains a ended game line
+  let gameRunning = true; // logs says application closed
   const game: LogFileGameData = {
     type: "custom",
-    started: false,
-    ended: false,
+    state: "closed",
+    map: "",
+    winCondition: "",
     left: {
       side: "mixed",
       players: [],
@@ -58,19 +64,30 @@ export const parseLogFileReverse = async (
 
   // read the log file from bottom to top to find the last logged game first
   await reverseLineReader.eachLine(logFileLocation, (line: string) => {
-    handleGameParam(line, "Win Condition Name", () => {
+    if (line.includes("Application closed")) {
+      gameRunning = false;
+    }
+    handleGameParam(line, "Scenario", (params) => {
+      const split = params.split("\\");
+      const map = split[split.length - 1];
+      game.map = map;
+      continueReading = false; // do not continue reading log file when one game was found
+    });
+    handleGameParam(line, "Win Condition Name", (params) => {
+      const winCondition = params.replace(/\s/g, ""); // remove spaces
+      game.winCondition = winCondition;
       // reached the end lines describing a game
       if (constructedGameId !== lastGameId) {
         // found a new game
         foundNewGame = true;
       }
-      continueReading = false; // do not continue reading log file when one game was found
+      gameLoading = true;
     });
     handleGameParam(line, "Starting mission", () => {
-      game.started = true;
+      gameStarted = true;
     });
     handleGameOver(line, () => {
-      game.ended = true;
+      gameEnded = true;
     });
     handleGameParam(line, "Human Player", (subParams) => {
       const playerDataChunks = subParams.split(" ");
@@ -108,10 +125,32 @@ export const parseLogFileReverse = async (
     });
     return continueReading;
   });
+  game.state = determineGameState(gameLoading, gameStarted, gameEnded, gameRunning);
   if (foundNewGame) {
     return { new: true, game: determineGameType(game), newGameId: constructedGameId };
   }
   return { new: false, game: game, newGameId: constructedGameId };
+};
+
+const determineGameState = (
+  loading: boolean,
+  started: boolean,
+  ended: boolean,
+  running: boolean,
+): GameState => {
+  if (!running) {
+    return "closed";
+  }
+  if (ended || !loading) {
+    return "menu";
+  }
+  if (started) {
+    return "ingame";
+  }
+  if (loading) {
+    return "loading";
+  }
+  return "menu";
 };
 
 const determineGameType = (game: LogFileGameData): LogFileGameData => {
@@ -127,8 +166,9 @@ const determineGameType = (game: LogFileGameData): LogFileGameData => {
   }
   return {
     type: foundMixedTeam ? "custom" : foundAi ? "ai" : "classic",
-    started: game.started,
-    ended: game.ended,
+    state: game.state,
+    map: game.map,
+    winCondition: game.winCondition,
     left: {
       side: leftComp.side,
       players: game.left.players,
