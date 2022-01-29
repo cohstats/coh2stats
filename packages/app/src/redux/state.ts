@@ -46,8 +46,8 @@ export interface SideData {
   teams: LadderStats[];
 }
 
-export interface MatchData {
-  display: boolean;
+export interface GameData {
+  found: boolean;
   started: boolean;
   ended: boolean;
   left: SideData;
@@ -56,6 +56,6 @@ export interface MatchData {
 
 export interface ApplicationState {
   settings: ApplicationSettings;
-  match: MatchData;
+  game: GameData;
   updateCounter: number;
 }

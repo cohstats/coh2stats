@@ -2,7 +2,7 @@ import { createSlice, PayloadAction, Store } from "@reduxjs/toolkit";
 import {
   ApplicationSettings,
   ApplicationState,
-  MatchData,
+  GameData,
   LadderStats,
   SideData,
   StreamOverlayPositions,
@@ -21,8 +21,8 @@ export const defaultSettings: ApplicationSettings = {
   streamOverlayPosition: "top",
 };
 
-export const startupMatchData: MatchData = {
-  display: false,
+export const startupGameData: GameData = {
+  found: false,
   started: false,
   ended: false,
   left: {
@@ -37,7 +37,7 @@ export const startupMatchData: MatchData = {
 
 export const initialState: ApplicationState = {
   settings: defaultSettings,
-  match: startupMatchData,
+  game: startupGameData,
   updateCounter: 0,
 };
 
@@ -92,37 +92,37 @@ export const slice = createSlice({
     setStreamOverlayPosition: (state, { payload }: PayloadAction<StreamOverlayPositions>) => {
       state.settings.streamOverlayPosition = payload;
     },
-    setMatchData: (state, { payload }: PayloadAction<MatchData>) => {
-      state.match = payload;
+    setGameData: (state, { payload }: PayloadAction<GameData>) => {
+      state.game = payload;
     },
-    setMatchStarted: (state, { payload }: PayloadAction<boolean>) => {
-      state.match.started = payload;
+    setGameStarted: (state, { payload }: PayloadAction<boolean>) => {
+      state.game.started = payload;
     },
-    setMatchEnded: (state, { payload }: PayloadAction<boolean>) => {
-      state.match.ended = payload;
+    setGameEnded: (state, { payload }: PayloadAction<boolean>) => {
+      state.game.ended = payload;
     },
     setStore: (state, { payload }: PayloadAction<ApplicationState>) => {
-      state.match = payload.match;
+      state.game = payload.game;
       state.settings = payload.settings;
       state.updateCounter = payload.updateCounter;
     },
     update: (state, { payload }: PayloadAction) => {
       state.settings = Object.assign({}, state.settings);
-      const newMatchData: MatchData = {
-        display: state.match.display,
-        started: state.match.started,
-        ended: state.match.ended,
-        left: cloneSideData(state.match.left),
-        right: cloneSideData(state.match.right),
+      const newGameData: GameData = {
+        found: state.game.found,
+        started: state.game.started,
+        ended: state.game.ended,
+        left: cloneSideData(state.game.left),
+        right: cloneSideData(state.game.right),
       };
-      state.match = newMatchData;
+      state.game = newGameData;
       state.updateCounter = state.updateCounter + 1;
     },
   },
 });
 
 export const selectSettings = (state: ApplicationState): ApplicationSettings => state.settings;
-export const selectMatch = (state: ApplicationState): MatchData => state.match;
+export const selectGame = (state: ApplicationState): GameData => state.game;
 
 export type ReduxStore = Store<ApplicationState>;
 export const actions = slice.actions;

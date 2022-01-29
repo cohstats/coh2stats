@@ -1,14 +1,14 @@
 import { Col, Row } from "antd";
 import Title from "antd/lib/typography/Title";
 import React from "react";
-import { MatchData } from "../../redux/state";
+import { GameData } from "../../redux/state";
 import { FactionIcon } from "./factionIcon";
 
 interface Props {
-  match: MatchData;
+  game: GameData;
 }
 
-const CenterView: React.FC<Props> = ({ match }) => {
+const CenterView: React.FC<Props> = ({ game }) => {
   const shadowStyle = "1.5px 1.5px black";
   return (
     <>
@@ -16,7 +16,7 @@ const CenterView: React.FC<Props> = ({ match }) => {
         <Col span={10} offset={7}>
           <Row>
             <Col span={12} style={{ paddingRight: "35px" }}>
-              {match.left.solo.map((ladderStats, index) => (
+              {game.left.solo.map((ladderStats, index) => (
                 <Row key={ladderStats.members[0].relicID + "" + index}>
                   <Col flex="auto">
                     <Title
@@ -41,7 +41,7 @@ const CenterView: React.FC<Props> = ({ match }) => {
               ))}
             </Col>
             <Col span={12} style={{ paddingLeft: "35px" }}>
-              {match.right.solo.map((ladderStats, index) => (
+              {game.right.solo.map((ladderStats, index) => (
                 <Row key={ladderStats.members[0].relicID + "" + index}>
                   <Col flex="80px" style={{ textAlign: "center" }}>
                     <Title level={4} style={{ textShadow: shadowStyle, marginBottom: "5px" }}>

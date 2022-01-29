@@ -1,14 +1,14 @@
 import { Col, Row } from "antd";
 import Title from "antd/lib/typography/Title";
 import React from "react";
-import { LadderStats, MatchData } from "../../redux/state";
+import { LadderStats, GameData } from "../../redux/state";
 import { FactionIcon } from "./factionIcon";
 
 interface Props {
-  match: MatchData;
+  game: GameData;
 }
 
-const LeftView: React.FC<Props> = ({ match }) => {
+const LeftView: React.FC<Props> = ({ game }) => {
   const shadowStyle = "1.5px 1.5px black";
 
   const renderMember = (ladderStats: LadderStats, index: number) => (
@@ -38,7 +38,7 @@ const LeftView: React.FC<Props> = ({ match }) => {
     <>
       <Row style={{ paddingTop: "150px", paddingLeft: "15px" }}>
         <Col span={8}>
-          {match.left.solo.map(renderMember)}
+          {game.left.solo.map(renderMember)}
           <Row>
             <Col style={{ paddingLeft: "100px" }}>
               <Title level={2} style={{ textShadow: shadowStyle, marginBottom: "5px" }}>
@@ -46,7 +46,7 @@ const LeftView: React.FC<Props> = ({ match }) => {
               </Title>
             </Col>
           </Row>
-          {match.right.solo.map(renderMember)}
+          {game.right.solo.map(renderMember)}
         </Col>
       </Row>
     </>

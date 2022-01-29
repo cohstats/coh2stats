@@ -88,9 +88,9 @@ module.exports = {
           config: "./webpack.renderer.config.js",
           entryPoints: [
             {
-              html: "./src/renderer/windows/match/index.html",
-              js: "./src/renderer/windows/match/index.tsx",
-              name: "match_window",
+              html: "./src/renderer/windows/main/index.html",
+              js: "./src/renderer/windows/main/index.tsx",
+              name: "main_window",
               preload: {
                 js: "./src/renderer/windows/preload.tsx",
               },

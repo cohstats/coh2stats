@@ -9,21 +9,21 @@ interface Props {
 }
 
 const App: React.FC<Props> = ({ state }) => {
-  const match = state.match;
+  const game = state.game;
   return (
     <>
-      {match.started && !match.ended ? (
+      {game.started && !game.ended ? (
         <>
           {state.settings.streamOverlayPosition === "top" ? (
-            <CenterView match={match} />
+            <CenterView game={game} />
           ) : (
-            <LeftView match={match} />
+            <LeftView game={game} />
           )}
         </>
       ) : null}
-      {!match.started && !match.ended ? (
+      {!game.started && !game.ended ? (
         <>
-          <LoadingView match={match} />
+          <LoadingView game={game} />
         </>
       ) : null}
     </>

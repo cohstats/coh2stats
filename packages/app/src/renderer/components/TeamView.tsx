@@ -264,20 +264,3 @@ const TeamView: React.FC<Props> = ({ side }) => {
 };
 
 export default TeamView;
-
-/*
-export interface LadderStats {
-  members: Member[];
-  wins: number;
-  losses: number;
-  streak: number;
-  disputes: number;
-  drops: number;
-  rank: number;
-  ranktotal: number;
-  ranklevel: number;
-  regionrank: number;
-  regionranktotal: number;
-  lastmatchdate: number;
-}
-*/
