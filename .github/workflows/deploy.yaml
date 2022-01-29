@@ -5,6 +5,7 @@ on:
       - v*
     paths-ignore:
       - packages/functions/**
+      - packages/app/**
 
 env:
   FB_PROJECT: coh2-ladders-prod

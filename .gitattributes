@@ -2,5 +2,6 @@
 # Denote all files that are truly binary and should not be modified.
 *.png binary
 *.jpg binary
+*.ico binary
 *.7z binary
 scripts/data/all-img.7z filter=lfs diff=lfs merge=lfs -text
