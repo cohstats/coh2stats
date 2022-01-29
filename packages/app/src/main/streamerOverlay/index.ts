@@ -4,7 +4,7 @@ import { Server } from "http";
 import net from "net";
 import * as socketIo from "socket.io";
 import tcpPortUsed from "tcp-port-used";
-import { getAssetsPath } from "../paths";
+import { getAntdDistPath, getAssetsPath } from "../paths";
 import express, { Request, Response, NextFunction } from "express";
 import { renderHtml } from "./renderHtml";
 import { actions } from "../../redux/slice";
@@ -53,6 +53,7 @@ export class StreamerOverlay {
       } else {
         const app = express();
         app.use("/assets", express.static(getAssetsPath()));
+        app.use("/antd", express.static(getAntdDistPath()));
         app.use("/", this.renderPage);
         this.expressServer = app.listen(port, () => {
           console.log("Stream overlay server is running!");

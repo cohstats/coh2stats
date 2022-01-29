@@ -12,7 +12,7 @@ export const renderHtml = (state: ApplicationState): string => {
           <meta charSet="utf-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <title>CoH2 Game Stats Streamer Overlay</title>
-          <link rel="stylesheet" href={"/assets/streamerOverlay/antd.dark.min.css"} />
+          <link rel="stylesheet" href={"/antd/antd.dark.min.css"} />
         </head>
         <body>
           <div dangerouslySetInnerHTML={{ __html: content }} />

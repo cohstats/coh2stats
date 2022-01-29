@@ -6,4 +6,3 @@ scripts/
 .webpack/
 .resources/
 out/
-antd.dark.min.css
