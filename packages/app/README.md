@@ -1,6 +1,54 @@
-# Coh2 match stats app
+![grafik](https://user-images.githubusercontent.com/25324640/151676070-d293d944-3029-4ba9-a96f-13b391050c70.png)
+
+# Coh2 Game Stats app
 
 An application that can show you stats of players you are playing with/against.
+
+## Features
+
+- Easy to use, not configuration required
+- Displays detailed leaderboard stats of players in your game
+- Displays team stats
+- Full player cards from https://coh2stats.com/ easily accessible
+- Auto refreshes when a game is started
+- [Overlay feature for streamers](#stream-overlay)
+- Get notified when a game was found
+
+![grafik](https://user-images.githubusercontent.com/25324640/151676338-67481e96-e138-466b-8188-ccb014568407.png)
+
+## Installation
+
+Download the installer from the releases page (todo: upload a release and paste a link here)
+
+## Stream Overlay
+
+An easy way to overlay player stats over your Coh2 game with OBS. There are two layout variants available:
+
+- Top: Player stats will be shown under the vp ticker ![grafik](https://user-images.githubusercontent.com/25324640/151676111-21bf12c7-3d7b-4a97-b2e6-2d0df1c0a9a2.png)
+
+- Left: Player stats will be shown on the left side of the screen ![grafik](https://user-images.githubusercontent.com/25324640/151676094-24aa5ea8-627d-4a4f-a068-26859ff03cbe.png)
+
+Feel free to request a different layout in the repos issues.
+
+This overlay **_changes its view dynamically based on the game state_**. **_If you are on the home screen / not in game, it will show nothing_**. When loading into a game ranks will be displayed inside the corresponding player card of the loading screen. When in game player stats will be shown under the vp counter or on the left side based on what you chose.
+
+### Setup
+
+Inside the Coh2 Game Stats app, go to settings and enable the streamer mode. Here you can also choose your preferred layout. When enabled the settings window will show you a url under the streamer mode port. Copy this url...
+
+![grafik](https://user-images.githubusercontent.com/25324640/151676284-64c55322-a6b3-42d3-b375-69d438607021.png)
+
+Inside OBS add a new source and choose browser. Paste the url inside the url field. Set the width and height according to your coh2 game resolution. In most cases 1920x1080.
+
+![grafik](https://user-images.githubusercontent.com/25324640/151676229-e6934cfa-6bf1-445d-abe0-b4a8c2f0193c.png)
+
+![grafik](https://user-images.githubusercontent.com/25324640/151676262-f84f3d07-e436-4ad1-b84f-2190d59895a7.png)
+
+> The most important here is matching the aspect ratio to your game. E.g. If you are running your game in 4k you can still choose 1920x1080. Widescreen users will have to figure the resolution out themselfes.
+
+Select Ok and adjust the browser layer to be on top of your game while also making sure both layers are perfectly on top of each other.
+
+You are done! Happy streaming :)
 
 ## How it works
 
@@ -21,9 +69,9 @@ Your build will appear in the `out` folder.
 
 ### TODOs for the future
 
-- Streamer mode
 - Notification system improvement (currently notifications get suppressed when running a game)
 - Add replay analysis
 - Find leaderboard stats for ai games and custom games
 - Button to take a screenshot that gets added to clipboard for sharing
 - Close windows instead of hiding them to hopefully save memory
+- Change the Gif shown during installation to something better
