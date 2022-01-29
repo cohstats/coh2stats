@@ -2,7 +2,7 @@ name: Build Electron app
 on:
   push:
     branches:
-      - electron-build
+      - master
     paths-ignore:
       - packages/functions/**
       - packages/web/**
@@ -25,13 +25,13 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-      - name: install dependencies
+      - name: Install dependencies
         run: yarn install
-      - name: build
+      - name: Build
         run: yarn app make
       - name: Upload the build
         uses: actions/upload-artifact@v2
         with:
-          name: dist-without-markdown
+          name: coh2-game-stats-installer.zip
           path: |
             packages/app/out/make/squirrel.windows/x64/*.exe
