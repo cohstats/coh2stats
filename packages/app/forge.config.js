@@ -43,7 +43,7 @@ function copyFolderRecursiveSync(source, target) {
 module.exports = {
   packagerConfig: {
     asar: true,
-    icon: "assets/appIcon.ico",
+    icon: "assets/icon.ico",
     extraResource: [".resources/node_modules", "assets"],
   },
   makers: [
@@ -51,7 +51,7 @@ module.exports = {
       name: "@electron-forge/maker-squirrel",
       config: {
         name: "coh2-game-stats",
-        setupIcon: "assets/appIcon.ico",
+        setupIcon: "assets/icon.ico",
       },
     },
   ],
