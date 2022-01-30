@@ -84,6 +84,10 @@ module.exports = {
       "@electron-forge/plugin-webpack",
       {
         mainConfig: "./webpack.main.config.js",
+        // This allows us to connect to the firebase from the render process
+        // It's a security risk, but also only way to make it work?
+        // More info here https://github.com/electron-userland/electron-forge/issues/2331
+        devContentSecurityPolicy: `default-src * self blob: data: gap:; style-src * self 'unsafe-inline' blob: data: gap:; script-src * 'self' 'unsafe-eval' 'unsafe-inline' blob: data: gap:; object-src * 'self' blob: data: gap:; img-src * self 'unsafe-inline' blob: data: gap:; connect-src self * 'unsafe-inline' blob: data: gap:; frame-src * self blob: data: gap:;`,
         renderer: {
           config: "./webpack.renderer.config.js",
           entryPoints: [

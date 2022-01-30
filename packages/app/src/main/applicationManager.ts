@@ -34,6 +34,9 @@ export class ApplicationManager {
       width: 1280,
       webPreferences: {
         preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
+        // This disables ability to use NODE functions in the render process
+        // it's important for firebase to work
+        nodeIntegration: false,
       },
     });
     this.mainWindow.hide();
