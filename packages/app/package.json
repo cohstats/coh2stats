@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "description": "Displays stats of players in the current Coh2 game",
   "main": ".webpack/main",
+  "private": true,
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
