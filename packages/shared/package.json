@@ -1,0 +1,7 @@
+{
+  "name": "@coh2ladders/shared",
+  "version": "1.0.0",
+  "description": "Functions, configs and helpers to be shared across all packages.",
+  "author": "coh2stats",
+  "license": "MIT"
+}

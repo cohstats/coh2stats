@@ -7,9 +7,7 @@ import { firebaseInit } from "../../firebase/firebase";
 import { getFirestore, doc, getDoc, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
-// So I am not really sure about this -- calling the function from the web package
-// those helper files were not written in a way that could be easily shared - I think it inits additional things
-import { convertDateToMonthTimestamp } from "@coh2ladders/web/src/utils/helpers";
+import { convertDateToMonthTimestamp } from "@coh2ladders/shared/src/utils/date-helpers";
 
 // We need to initialize our Firebase
 // This has to happen once on the main file in the app
