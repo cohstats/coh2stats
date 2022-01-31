@@ -5,9 +5,9 @@ import Table from "antd/lib/table/Table";
 import { Typography } from "antd";
 import React, { useState } from "react";
 import { LadderStats, Member, SideData } from "../../redux/state";
-import { CountryFlag } from "./countryFlag";
+import { CountryFlag } from "./country-flag";
 import { timeAgo } from "../utils/helpers";
-import { FactionIcon } from "./factionIcon";
+import { FactionIcon } from "./faction-icon";
 
 interface Props {
   side: SideData;

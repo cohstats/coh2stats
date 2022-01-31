@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useSelector } from "react-redux";
 import { selectGame } from "../../../redux/slice";
-import GameOverview from "../../components/GameOverview";
+import CurrentGameOverview from "../../components/current-game-overview";
 import { firebaseInit } from "../../firebase/firebase";
 
 import { getFirestore, doc, getDoc, onSnapshot } from "firebase/firestore";
@@ -70,7 +70,7 @@ const App = (): JSX.Element => {
     <>
       {/*This is just example*/}
       <div>{onlinePlayersElement}</div>
-      <GameOverview game={gameData} />
+      <CurrentGameOverview game={gameData} />
     </>
   );
 };
