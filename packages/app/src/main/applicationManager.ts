@@ -27,61 +27,6 @@ export class ApplicationManager {
     this.isQuitting = false;
     this.applicationStore = applicationStore;
     const settings = this.applicationStore.getState().settings;
-    // start windows in background
-    this.mainWindow = new BrowserWindow({
-      icon: getIconPath(),
-      height: 750,
-      width: 1280,
-      webPreferences: {
-        preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
-        // This disables ability to use NODE functions in the render process
-        // it's important for firebase to work
-        nodeIntegration: false,
-      },
-    });
-    this.mainWindow.hide();
-    this.mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
-    if (!isPackaged) {
-      this.mainWindow.webContents.openDevTools();
-    }
-    this.mainWindow.setMenu(this.getMainWindowMenu());
-    this.mainWindow.on("close", this.mainWindowCloseHandler);
-    // settings window
-    this.settingsWindow = new BrowserWindow({
-      icon: getIconPath(),
-      height: 700,
-      width: 700,
-      webPreferences: {
-        preload: SETTINGS_WINDOW_PRELOAD_WEBPACK_ENTRY,
-      },
-    });
-    this.settingsWindow.hide();
-    this.settingsWindow.setMenu(Menu.buildFromTemplate([]));
-    this.settingsWindow.loadURL(SETTINGS_WINDOW_WEBPACK_ENTRY);
-    if (!isPackaged) {
-      this.settingsWindow.webContents.openDevTools();
-    }
-    this.settingsWindow.on("close", (event: Electron.Event) => {
-      if (!this.isQuitting) {
-        event.preventDefault();
-        this.settingsWindow.hide();
-      }
-    });
-    // web window
-    this.webWindow = new BrowserWindow({
-      icon: getIconPath(),
-      height: 800,
-      width: 1260,
-    });
-    this.webWindow.hide();
-    this.webWindow.setMenu(Menu.buildFromTemplate([]));
-    this.webWindow.loadURL("https://coh2stats.com/leaderboards");
-    this.webWindow.on("close", (event: Electron.Event) => {
-      if (!this.isQuitting) {
-        event.preventDefault();
-        this.webWindow.hide();
-      }
-    });
     // launch tray if in tray mode
     if (settings.runInTray) {
       this.inTrayMode = true;
@@ -150,7 +95,7 @@ export class ApplicationManager {
     if (this.applicationStore.getState().settings.runInTray) {
       if (!this.isQuitting) {
         event.preventDefault();
-        this.mainWindow.hide();
+        this.mainWindow.destroy();
       }
     } else {
       this.quit();
@@ -175,18 +120,63 @@ export class ApplicationManager {
   };
 
   showMainWindow = (): void => {
-    this.mainWindow.show();
+    this.mainWindow = new BrowserWindow({
+      icon: getIconPath(),
+      height: 750,
+      width: 1280,
+      webPreferences: {
+        preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
+        // This disables ability to use NODE functions in the render process
+        // it's important for firebase to work
+        nodeIntegration: false,
+      },
+    });
+    this.mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
+    if (!isPackaged) {
+      this.mainWindow.webContents.openDevTools();
+    }
+    this.mainWindow.setMenu(this.getMainWindowMenu());
+    this.mainWindow.on("close", this.mainWindowCloseHandler);
     this.mainWindow.focus();
   };
 
   showSettingsWindow = (): void => {
-    this.settingsWindow.show();
+    this.settingsWindow = new BrowserWindow({
+      icon: getIconPath(),
+      height: 700,
+      width: 700,
+      webPreferences: {
+        preload: SETTINGS_WINDOW_PRELOAD_WEBPACK_ENTRY,
+      },
+    });
+    this.settingsWindow.setMenu(Menu.buildFromTemplate([]));
+    this.settingsWindow.loadURL(SETTINGS_WINDOW_WEBPACK_ENTRY);
+    if (!isPackaged) {
+      this.settingsWindow.webContents.openDevTools();
+    }
+    this.settingsWindow.on("close", (event: Electron.Event) => {
+      if (!this.isQuitting) {
+        event.preventDefault();
+        this.settingsWindow.destroy();
+      }
+    });
     this.settingsWindow.focus();
   };
 
   showWebWindow = (url: string): void => {
+    this.webWindow = new BrowserWindow({
+      icon: getIconPath(),
+      height: 800,
+      width: 1260,
+    });
+    this.webWindow.setMenu(Menu.buildFromTemplate([]));
     this.webWindow.loadURL(url);
-    this.webWindow.show();
+    this.webWindow.on("close", (event: Electron.Event) => {
+      if (!this.isQuitting) {
+        event.preventDefault();
+        this.webWindow.destroy();
+      }
+    });
     this.webWindow.focus();
   };
 

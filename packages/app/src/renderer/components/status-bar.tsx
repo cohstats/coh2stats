@@ -1,4 +1,5 @@
-import { Col, Row } from "antd";
+import Col from "antd/lib/grid/col";
+import Row from "antd/lib/grid/row";
 import React from "react";
 
 interface Props {

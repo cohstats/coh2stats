@@ -5,8 +5,11 @@ import CurrentGameOverview from "../../features/current-game-overview";
 import { firebaseInit } from "../../firebase/firebase";
 
 import PlayerCount from "../../features/player-count";
-import { LoadingOutlined } from "@ant-design/icons";
-import { Col, Divider, Row, Spin } from "antd";
+import LoadingOutlined from "@ant-design/icons/LoadingOutlined";
+import Spin from "antd/lib/spin";
+import Col from "antd/lib/grid/col";
+import Row from "antd/lib/grid/row";
+import Divider from "antd/lib/divider";
 import Title from "antd/lib/typography/Title";
 import StatusBar from "../../components/status-bar";
 

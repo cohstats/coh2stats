@@ -1,4 +1,11 @@
-import { Alert, Button, Form, Input, InputNumber, message, Select, Switch } from "antd";
+import Alert from "antd/lib/alert";
+import Button from "antd/lib/button";
+import Form from "antd/lib/form";
+import Input from "antd/lib/input";
+import InputNumber from "antd/lib/input-number";
+import message from "antd/lib/message";
+import Select from "antd/lib/select";
+import Switch from "antd/lib/switch";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { StreamOverlayPositions } from "../../../redux/state";

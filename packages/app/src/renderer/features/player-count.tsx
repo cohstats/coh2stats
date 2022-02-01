@@ -1,7 +1,8 @@
-import { Badge, Spin } from "antd";
+import Badge from "antd/lib/badge";
+import Spin from "antd/lib/spin";
 import { doc, getFirestore, onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { LoadingOutlined } from "@ant-design/icons";
+import LoadingOutlined from "@ant-design/icons/LoadingOutlined";
 
 const PlayerCount: React.FC = () => {
   const [onlinePlayers, setOnlinePlayers] = useState<number | null>(null);
@@ -26,7 +27,10 @@ const PlayerCount: React.FC = () => {
         </>
       ) : (
         <>
-          <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+          <Spin
+            style={{ marginLeft: 10 }}
+            indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
+          />
         </>
       )}
     </>
