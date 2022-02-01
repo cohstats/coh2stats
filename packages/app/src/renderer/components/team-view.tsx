@@ -18,7 +18,6 @@ const TeamView: React.FC<Props> = ({ side }) => {
   const showPlayerProfile = (steamId: string) => {
     window.electron.ipcRenderer.showProfile(steamId);
   };
-
   const TableColumns: ColumnsType<LadderStats> = [
     {
       title: "Rank",
@@ -31,6 +30,23 @@ const TeamView: React.FC<Props> = ({ side }) => {
           return "-";
         } else {
           return rank;
+        }
+      },
+    },
+    {
+      title: "TRank",
+      dataIndex: "teamrank",
+      key: "teamrank",
+      align: "center" as const,
+      width: 80,
+      render: (teamrank: number) => {
+        if (!teamrank) {
+          return "";
+        } else {
+          if (teamrank < 0) {
+            return "-";
+          }
+          return teamrank;
         }
       },
     },
