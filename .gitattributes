@@ -3,6 +3,7 @@
 *.png binary
 *.jpg binary
 *.ico binary
+*.gif binary
 *.7z binary
 *.ico binary
 scripts/data/all-img.7z filter=lfs diff=lfs merge=lfs -text
