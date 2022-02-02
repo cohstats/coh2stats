@@ -7,9 +7,6 @@ on:
       - packages/functions/**
       - packages/web/**
 
-env:
-  VERSION: ${{$CI_COMMIT_SHORT_SHA}}
-
 jobs:
   build_on_win:
     runs-on: windows-latest
@@ -24,12 +21,12 @@ jobs:
         run: yarn install
       - name: Change the version in package.json
         run: |
-          sed -i'' -E 's/"version": "[0-9]*\.[0-9]*\.[0-9]*"/"version": "$VERSION"/g' package.json
+          sed -i'' -E 's/"version": "[0-9]*\.[0-9]*\.[0-9]*"/"version": "$CI_COMMIT_SHORT_SHA"/g' package.json
       - name: Build
         run: yarn app make
       - name: Upload the build
         uses: actions/upload-artifact@v2
         with:
-          name: coh2-game-stats-dev-$VERSION.zip
+          name: coh2-game-stats-dev-$CI_COMMIT_SHORT_SHA.zip
           path: |
             packages/app/out/make/squirrel.windows/x64/*.exe
