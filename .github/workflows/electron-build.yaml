@@ -2,7 +2,7 @@ name: Build Electron app
 on:
   push:
     branches:
-      - master
+      - improve-ci
     paths-ignore:
       - packages/functions/**
       - packages/web/**
