@@ -6,6 +6,8 @@ import React from "react";
 import { GameData, SideData, LadderStats } from "../../redux/state";
 import { FactionIcon } from "./faction-icon";
 import Table from "antd/lib/table/Table";
+import { Helper } from "@coh2ladders/shared/src/components/helper";
+import { Typography } from "antd";
 
 const findAllStatsForEachPlayerInSide = (side: SideData): LadderStats[][] => {
   const result: LadderStats[][] = new Array(side.solo.length);
@@ -89,11 +91,11 @@ const GameBalanceView: React.FC<Props> = ({ game, mapCompositionEntry }) => {
   // Calculate a total win ratio from the above data
   const axisStrength = axisAverageLevel * axisAverageWinRatio;
   const alliesStrength = alliesAverageLevel * alliesAverageWinRatio;
-  const axisStrenthRatio = (axisStrength / (axisStrength + alliesStrength)) * 100;
-  const alliesStrenthRatio = (alliesStrength / (axisStrength + alliesStrength)) * 100;
-  // give ranks a higher weight than map statistic
-  const axisTotalWinRatio = (axisStrenthRatio + axisMapWinRatio) / 2;
-  const alliesTotalWinRatio = (alliesStrenthRatio + alliesMapWinRatio) / 2;
+  const axisStrengthRatio = (axisStrength / (axisStrength + alliesStrength)) * 100;
+  const alliesStrengthRatio = (alliesStrength / (axisStrength + alliesStrength)) * 100;
+
+  const axisTotalWinRatio = (axisStrengthRatio + axisMapWinRatio) / 2;
+  const alliesTotalWinRatio = (alliesStrengthRatio + alliesMapWinRatio) / 2;
 
   type ComparisonDataType = {
     axis: React.ReactNode;
@@ -146,21 +148,55 @@ const GameBalanceView: React.FC<Props> = ({ game, mapCompositionEntry }) => {
       1,
       axisAverageWinRatio,
       alliesAverageWinRatio,
-      "Average Team Win Ratio",
+      <>Average Team Win Ratio</>,
       "%",
     ),
     createComparisonDataEntry(
       2,
       axisMapWinRatio,
       alliesMapWinRatio,
-      "Win Ratio for Team Composition on " + game.map + " this month",
+      <>
+        Win Ratio for this Faction Composition{" "}
+        <Helper
+          text={
+            <>
+              Based on{" "}
+              <Typography.Link
+                onClick={() =>
+                  window.electron.ipcRenderer.openInBrowser(
+                    "https://coh2stats.com/map-stats?range=month&type=" +
+                      game.left.solo.length +
+                      "v" +
+                      game.left.solo.length +
+                      "&map=" +
+                      game.map,
+                  )
+                }
+              >
+                coh2stats.com{" "}
+              </Typography.Link>
+              map analysis.
+            </>
+          }
+        />
+      </>,
       "%",
     ),
     createComparisonDataEntry(
       3,
       axisTotalWinRatio,
       alliesTotalWinRatio,
-      "Total Win Ratio",
+      <>
+        Victory Chance Probability{" "}
+        <Helper
+          text={
+            <>
+              This is probability of victory based on average team level, average players winrate
+              and factions composition matchup win ratio
+            </>
+          }
+        />
+      </>,
       "%",
       true,
     ),
@@ -171,7 +207,7 @@ const GameBalanceView: React.FC<Props> = ({ game, mapCompositionEntry }) => {
       key={stats.members[0].relicID}
       large
       faction={stats.members[0].faction}
-      style={{ width: "25%", maxWidth: 80 }}
+      style={{ width: "25%", maxWidth: 50 }}
     />
   );
 
@@ -185,7 +221,7 @@ const GameBalanceView: React.FC<Props> = ({ game, mapCompositionEntry }) => {
     {
       title: (
         <>
-          <Title>VS</Title>
+          <Title style={{ paddingTop: 8 }}>VS</Title>
         </>
       ),
       key: "desc",

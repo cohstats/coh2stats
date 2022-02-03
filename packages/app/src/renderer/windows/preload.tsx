@@ -1,4 +1,4 @@
-import { contextBridge, ipcRenderer } from "electron";
+import { contextBridge, ipcRenderer, shell } from "electron";
 import { actions } from "../../redux/slice";
 import { configureRendererStore } from "../../redux/configureStoreRenderer";
 
@@ -16,6 +16,9 @@ contextBridge.exposeInMainWorld("electron", {
     },
     showProfile(steamID: string) {
       ipcRenderer.send("showProfile", steamID);
+    },
+    openInBrowser(link: string) {
+      shell.openExternal(link);
     },
     locateLogFile() {
       ipcRenderer.send("locateLogFile");
