@@ -1,4 +1,5 @@
-import { Col, Row } from "antd";
+import Col from "antd/lib/grid/col";
+import Row from "antd/lib/grid/row";
 import Title from "antd/lib/typography/Title";
 import React from "react";
 import { GameData } from "../../redux/state";

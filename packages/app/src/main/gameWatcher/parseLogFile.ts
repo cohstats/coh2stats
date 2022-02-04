@@ -1,5 +1,5 @@
 import reverseLineReader from "reverse-line-reader";
-import { Factions, GameState } from "../../redux/state";
+import { Factions, GameState, GameType, TeamSide } from "../../redux/state";
 
 const factionSideLookupTable: Record<string, TeamSide> = {
   german: "axis",
@@ -8,9 +8,6 @@ const factionSideLookupTable: Record<string, TeamSide> = {
   aef: "allies",
   british: "allies",
 };
-
-export type GameType = "classic" | "ai" | "custom";
-export type TeamSide = "axis" | "allies" | "mixed";
 
 export interface LogFilePlayerData {
   ai: boolean;

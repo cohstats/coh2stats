@@ -34,6 +34,8 @@ export interface LadderStats {
   disputes: number;
   drops: number;
   rank: number;
+  teamrank?: number;
+  teamId?: number;
   ranktotal: number;
   ranklevel: number;
   regionrank: number;
@@ -42,15 +44,19 @@ export interface LadderStats {
 }
 
 export interface SideData {
+  side: TeamSide;
   solo: LadderStats[];
   teams: LadderStats[];
 }
 
+export type GameType = "classic" | "ai" | "custom";
+export type TeamSide = "axis" | "allies" | "mixed";
 export type GameState = "closed" | "menu" | "loading" | "ingame";
 
 export interface GameData {
   found: boolean;
   state: GameState;
+  type: GameType;
   map: string;
   winCondition: string;
   left: SideData;

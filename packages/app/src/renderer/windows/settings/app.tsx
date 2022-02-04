@@ -1,33 +1,55 @@
-import { Alert, Button, Form, Input, InputNumber, Select, Switch } from "antd";
+import Alert from "antd/lib/alert";
+import Button from "antd/lib/button";
+import Form from "antd/lib/form";
+import Input from "antd/lib/input";
+import InputNumber from "antd/lib/input-number";
+import message from "antd/lib/message";
+import Select from "antd/lib/select";
+import Switch from "antd/lib/switch";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { StreamOverlayPositions } from "../../../redux/state";
 import { actions, selectSettings } from "../../../redux/slice";
+import { useState } from "react";
 
 const App = (): JSX.Element => {
   const dispatch = useDispatch();
   const settings = useSelector(selectSettings);
+  const [messageVisible, setMessageVisible] = useState(false);
 
+  const savedMessage = () => {
+    if (!messageVisible) {
+      message.success("Saved automatically", 3, () => setMessageVisible(false));
+      setMessageVisible(true);
+    }
+  };
   const handleUpdateIntervalChange = (value: number) => {
     dispatch(actions.setUpdateInterval(value));
+    savedMessage();
   };
   const handleRunInTrayChange = (checked: boolean) => {
     dispatch(actions.setRunInTray(checked));
+    savedMessage();
   };
   const handleOpenInBrowserChange = (checked: boolean) => {
     dispatch(actions.setOpenLinksInBrowser(checked));
+    savedMessage();
   };
   const handleGameNotificationChange = (checked: boolean) => {
     dispatch(actions.setGameNotification(checked));
+    savedMessage();
   };
   const handleStreamerModeChange = (checked: boolean) => {
     dispatch(actions.setStreamOverlay(checked));
+    savedMessage();
   };
   const handleStreamModePortChange = (value: number) => {
     dispatch(actions.setStreamOverlayPort(value));
+    savedMessage();
   };
   const handleStreamViewLayoutChange = (value: StreamOverlayPositions) => {
     dispatch(actions.setStreamOverlayPosition(value));
+    savedMessage();
   };
   return (
     <>

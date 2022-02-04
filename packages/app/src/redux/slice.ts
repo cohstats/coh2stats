@@ -27,11 +27,14 @@ export const startupGameData: GameData = {
   state: "closed",
   map: "",
   winCondition: "",
+  type: "custom",
   left: {
+    side: "mixed",
     solo: [],
     teams: [],
   },
   right: {
+    side: "mixed",
     solo: [],
     teams: [],
   },
@@ -53,6 +56,7 @@ const cloneLadderStatArray = (array: LadderStats[]) => {
 };
 const cloneSideData = (sideData: SideData): SideData => {
   return {
+    side: sideData.side,
     solo: cloneLadderStatArray(sideData.solo),
     teams: cloneLadderStatArray(sideData.teams),
   };
@@ -110,6 +114,7 @@ export const slice = createSlice({
       const newGameData: GameData = {
         found: state.game.found,
         state: state.game.state,
+        type: state.game.type,
         map: state.game.map,
         winCondition: state.game.winCondition,
         left: cloneSideData(state.game.left),

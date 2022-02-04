@@ -52,6 +52,7 @@ module.exports = {
       config: {
         name: "coh2-game-stats",
         setupIcon: "assets/icon.ico",
+        loadingGif: "assets/installSplash.gif",
       },
     },
   ],

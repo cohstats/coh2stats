@@ -284,6 +284,9 @@ export const CountryFlag: React.FC<IProps> = ({ countryCode, style }) => {
     },
     ...style,
   };
+  if (countryCode.length === 0) {
+    return <></>;
+  }
   return (
     <ReactCountryFlag
       cdnUrl={gg.substring(0, gg.length - 6)}

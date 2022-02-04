@@ -3,5 +3,10 @@
   "version": "1.0.0",
   "description": "Functions, configs and helpers to be shared across all packages.",
   "author": "coh2stats",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@ant-design/icons": "^4.7.0",
+    "antd": "^4.18.5",
+    "react": "^17.0.2"
+  }
 }

@@ -2,12 +2,12 @@ import { ColumnsType } from "antd/lib/table";
 import { PlusSquareOutlined, MinusSquareOutlined } from "@ant-design/icons";
 import Tooltip from "antd/lib/tooltip/index";
 import Table from "antd/lib/table/Table";
-import { Typography } from "antd";
+import Typography from "antd/lib/typography";
 import React, { useState } from "react";
 import { LadderStats, Member, SideData } from "../../redux/state";
-import { CountryFlag } from "./countryFlag";
+import { CountryFlag } from "./country-flag";
 import { timeAgo } from "../utils/helpers";
-import { FactionIcon } from "./factionIcon";
+import { FactionIcon } from "./faction-icon";
 
 interface Props {
   side: SideData;
@@ -18,7 +18,6 @@ const TeamView: React.FC<Props> = ({ side }) => {
   const showPlayerProfile = (steamId: string) => {
     window.electron.ipcRenderer.showProfile(steamId);
   };
-
   const TableColumns: ColumnsType<LadderStats> = [
     {
       title: "Rank",
@@ -31,6 +30,23 @@ const TeamView: React.FC<Props> = ({ side }) => {
           return "-";
         } else {
           return rank;
+        }
+      },
+    },
+    {
+      title: "TRank",
+      dataIndex: "teamrank",
+      key: "teamrank",
+      align: "center" as const,
+      width: 80,
+      render: (teamrank: number) => {
+        if (!teamrank) {
+          return "";
+        } else {
+          if (teamrank < 0) {
+            return "-";
+          }
+          return teamrank;
         }
       },
     },

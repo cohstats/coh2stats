@@ -34,6 +34,8 @@ app.on("activate", () => {
   }
 });
 
+app.on("window-all-closed", (e: { preventDefault: () => void }) => e.preventDefault());
+
 app.on("quit", () => {
   console.log("App is quiting");
   streamerOverlay.destroy();

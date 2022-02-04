@@ -1,77 +1,63 @@
 import * as React from "react";
 import { useSelector } from "react-redux";
 import { selectGame } from "../../../redux/slice";
-import GameOverview from "../../components/GameOverview";
+import CurrentGameOverview from "../../features/current-game-overview";
 import { firebaseInit } from "../../firebase/firebase";
 
-import { getFirestore, doc, getDoc, onSnapshot } from "firebase/firestore";
-import { useEffect, useState } from "react";
-
-import { convertDateToMonthTimestamp } from "@coh2ladders/shared/src/utils/date-helpers";
+import PlayerCount from "../../features/player-count";
+import LoadingOutlined from "@ant-design/icons/LoadingOutlined";
+import Spin from "antd/lib/spin";
+import Col from "antd/lib/grid/col";
+import Row from "antd/lib/grid/row";
+import Divider from "antd/lib/divider";
+import Title from "antd/lib/typography/Title";
+import StatusBar from "../../components/status-bar";
 
 // We need to initialize our Firebase
 // This has to happen once on the main file in the app
 firebaseInit();
 
-const db = getFirestore();
-
 const App = (): JSX.Element => {
   const gameData = useSelector(selectGame);
 
-  /*
-  There are 2 ways how we can get data from firestore - our database.
-  1. One time request to access the data https://firebase.google.com/docs/firestore/query-data/get-data
-  2. Connection which will stream the data to us and automatically update anytime there is update
-  in the database - aka realtime updates https://firebase.google.com/docs/firestore/query-data/listen
-
-  I am gonna demonstrate both ways in this file but move it to components where it makes sense!
-   */
-
-  // =========== This is real time updates ===============
-  const [onlinePlayers, setOnlinePlayers] = useState(null);
-
-  // On component mount we will register the snapshot listener
-  useEffect(() => {
-    onSnapshot(doc(db, "stats", "onlinePlayers"), (doc) => {
-      console.log("Current data: ", doc.data());
-      setOnlinePlayers(doc.data());
-    });
-  }, []);
-
-  let onlinePlayersElement = "In-game players ...";
-
-  if (onlinePlayers !== null) {
-    // The date is * 1000 because we store them as unix timestamp, javascript uses different timestamp
-    // We could have some element like on https://coh2stats.com/ , check packages/web/src/components/main-header.tsx:99
-    // I think we could take exactly what is in that file
-    onlinePlayersElement = `In game players ${onlinePlayers.onlinePlayers} on ${new Date(
-      onlinePlayers.timeStamp * 1000,
-    )}`;
+  let content = (
+    <>
+      <CurrentGameOverview game={gameData} />
+    </>
+  );
+  // show loader when not in game
+  if (gameData.state === "closed" || gameData.state === "menu") {
+    content = (
+      <>
+        <div style={{ textAlign: "center", paddingTop: 30, paddingBottom: 30 }}>
+          <Title>
+            <Spin indicator={<LoadingOutlined style={{ fontSize: 30 }} spin />} /> Waiting for a
+            game
+          </Title>
+        </div>
+        {gameData.found ? (
+          <>
+            <Divider orientation="left">
+              <Title level={3}>Last Game</Title>
+            </Divider>
+            <div>
+              <CurrentGameOverview game={gameData} />
+            </div>
+          </>
+        ) : null}
+      </>
+    );
   }
 
-  // =========== This is one time get ===============
-
-  // I would go for month stats because that's the best
-  // For the month you need to have timestamp for the 1st of the month
-  // we could use function convertDateToMonthTimestamp
-  const monthTimestamp = convertDateToMonthTimestamp(new Date());
-  const mapStatsForMonthRef = doc(db, `stats/month/${monthTimestamp}/`, "mapStats");
-
-  getDoc(mapStatsForMonthRef).then((docSnap) => {
-    if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
-    } else {
-      // doc.data() will be undefined in this case
-      console.log("No such document!");
-    }
-  });
-
   return (
-    <>
-      {/*This is just example*/}
-      <div>{onlinePlayersElement}</div>
-      <GameOverview game={gameData} />
-    </>
+    <div>
+      <StatusBar left={null} right={<PlayerCount />} />
+      <Row justify="center" style={{ paddingTop: "20px", paddingBottom: "20px" }}>
+        <Col xs={24} md={22} xxl={14}>
+          {content}
+        </Col>
+      </Row>
+    </div>
   );
 };
 
