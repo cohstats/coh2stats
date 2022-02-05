@@ -1,4 +1,4 @@
-name: Build Electron app
+name: Build and Release Electron app
 on:
   push:
     tags:
