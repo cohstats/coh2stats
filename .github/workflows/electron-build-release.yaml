@@ -1,8 +1,8 @@
 name: Build Electron app
 on:
   push:
-    branches:
-      - master
+    tags:
+      - v*
     paths-ignore:
       - packages/functions/**
       - packages/web/**
@@ -21,9 +21,8 @@ jobs:
         run: yarn install
       - name: Build
         run: yarn app make
-      - name: Upload the build
-        uses: actions/upload-artifact@v2
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
         with:
-          name: coh2-game-stats-dev-${{github.sha}}.zip
-          path: |
-            packages/app/out/make/squirrel.windows/x64/*.exe
+          files: packages/app/out/make/squirrel.windows/x64/*.exe
