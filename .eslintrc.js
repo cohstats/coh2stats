@@ -25,12 +25,7 @@ module.exports = {
     // In fact we are OK with == instead of === as we aren't sure if
     // data type in API is number/string. It really doesn't matter;
     eqeqeq: "off",
-    "jest/expect-expect": [
-      "warn",
-      {
-        assertFunctionNames: ["expect", "assertFails", "assertSucceeds"],
-      },
-    ],
+    "jest/expect-expect": "off",
     "sonarjs/cognitive-complexity": ["error", 25],
   },
   overrides: [
