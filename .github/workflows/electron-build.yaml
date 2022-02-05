@@ -27,6 +27,11 @@ jobs:
       - name: Upload the build
         uses: actions/upload-artifact@v2
         with:
-          name: coh2-game-stats-dev-${{github.sha}}.zip
+          name: coh2-game-stats-dev-${{github.ref}}.zip
           path: |
             packages/app/out/make/squirrel.windows/x64/*.exe
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: packages/app/out/make/squirrel.windows/x64/*.exe
