@@ -38,7 +38,7 @@ const App = (): JSX.Element => {
         {gameData.found ? (
           <>
             <Divider orientation="left">
-              <Title level={3}>Last Game</Title>
+              <Title level={3}>Last Game - {gameData.map}</Title>
             </Divider>
             <div>
               <CurrentGameOverview game={gameData} />
