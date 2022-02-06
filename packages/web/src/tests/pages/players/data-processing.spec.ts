@@ -16,6 +16,7 @@ describe("prepareLeaderBoardData", () => {
   });
 });
 
+/* eslint-disable */
 describe("findByLeaderBoardID", () => {
   test("Finds the british", () => {
     const result = findByLeaderBoardID(52);
@@ -38,5 +39,6 @@ describe("findByLeaderBoardID", () => {
     expect(result.race).toBe("axis");
   });
 });
+/* eslint-enable */
 
 export {};

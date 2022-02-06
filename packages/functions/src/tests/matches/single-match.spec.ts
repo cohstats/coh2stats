@@ -33,7 +33,6 @@ describe("filterOutItems", () => {
 });
 
 describe("removeExtraDataFromItems", () => {
-  /* eslint-disable jest/expect-expect */
   // Verification is done in the function ^^
   test("Unnecessary properties from items are removed", () => {
     const clonedObject = JSON.parse(JSON.stringify(singleMatchObjectFromAPI));
