@@ -34,7 +34,7 @@ const TeamView: React.FC<Props> = ({ side }) => {
       },
     },
     {
-      title: "TRank",
+      title: "T Rank",
       dataIndex: "teamrank",
       key: "teamrank",
       align: "center" as const,
@@ -78,12 +78,12 @@ const TeamView: React.FC<Props> = ({ side }) => {
                   <FactionIcon
                     ai={member.ai}
                     faction={member.faction}
-                    style={{ width: "1.2em", height: "1.2em" }}
+                    style={{ width: "1.2em", height: "1.2em", marginRight: 4 }}
                   />
                   <CountryFlag
                     countryCode={member.country}
-                    style={{ width: "1.2em", height: "1.2em", paddingRight: 0 }}
-                  />{" "}
+                    style={{ width: "1.2em", height: "1.2em", paddingRight: 0, marginRight: 4 }}
+                  />
                   <Typography.Link
                     onClick={() => {
                       showPlayerProfile(member.steamID);
