@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction, Store } from "@reduxjs/toolkit";
+import { defaultSettings, defaultWindowStates, startupGameData } from "./defaultState";
 import {
   ApplicationSettings,
   ApplicationState,
@@ -7,42 +8,13 @@ import {
   LadderStats,
   SideData,
   StreamOverlayPositions,
+  WindowState,
+  WindowStates,
 } from "./state";
-
-export const defaultSettings: ApplicationSettings = {
-  appVersion: "0.0.0",
-  coh2LogFileFound: false,
-  coh2LogFileLocation: "",
-  updateInterval: 2,
-  runInTray: false,
-  openLinksInBrowser: false,
-  gameNotification: false,
-  streamOverlay: false,
-  streamOverlayPort: 47824,
-  streamOverlayPortFree: true,
-  streamOverlayPosition: "top",
-};
-
-export const startupGameData: GameData = {
-  found: false,
-  state: "closed",
-  map: "",
-  winCondition: "",
-  type: "custom",
-  left: {
-    side: "mixed",
-    solo: [],
-    teams: [],
-  },
-  right: {
-    side: "mixed",
-    solo: [],
-    teams: [],
-  },
-};
 
 export const initialState: ApplicationState = {
   settings: defaultSettings,
+  windowStates: defaultWindowStates,
   game: startupGameData,
   updateCounter: 0,
 };
@@ -102,6 +74,18 @@ export const slice = createSlice({
     setStreamOverlayPosition: (state, { payload }: PayloadAction<StreamOverlayPositions>) => {
       state.settings.streamOverlayPosition = payload;
     },
+    setMainWindowState: (state, { payload }: PayloadAction<WindowState>) => {
+      state.windowStates.main = payload;
+    },
+    setSettingsWindowState: (state, { payload }: PayloadAction<WindowState>) => {
+      state.windowStates.settings = payload;
+    },
+    setAboutWindowState: (state, { payload }: PayloadAction<WindowState>) => {
+      state.windowStates.about = payload;
+    },
+    setWebWindowState: (state, { payload }: PayloadAction<WindowState>) => {
+      state.windowStates.web = payload;
+    },
     setGameData: (state, { payload }: PayloadAction<GameData>) => {
       state.game = payload;
     },
@@ -116,6 +100,13 @@ export const slice = createSlice({
     update: (state, { payload }: PayloadAction) => {
       // make a deep copy of state
       state.settings = Object.assign({}, state.settings);
+      const newWindowStates: WindowStates = {
+        main: Object.assign({}, state.windowStates.main),
+        settings: Object.assign({}, state.windowStates.settings),
+        about: Object.assign({}, state.windowStates.settings),
+        web: Object.assign({}, state.windowStates.settings),
+      };
+      state.windowStates = newWindowStates;
       const newGameData: GameData = {
         found: state.game.found,
         state: state.game.state,
