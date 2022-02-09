@@ -174,7 +174,9 @@ export class ApplicationManager {
     this.mainWindow = new BrowserWindow({
       icon: getIconPath(),
       height: lastWindowState.height,
+      minHeight: 300,
       width: lastWindowState.width,
+      minWidth: 550,
       x: lastWindowState.x,
       y: lastWindowState.y,
       webPreferences: {
@@ -202,6 +204,8 @@ export class ApplicationManager {
       icon: getIconPath(),
       height: lastWindowState.height,
       width: lastWindowState.width,
+      minWidth: 700,
+      minHeight: 250,
       x: lastWindowState.x,
       y: lastWindowState.y,
       maximizable: false,
@@ -269,7 +273,9 @@ export class ApplicationManager {
     this.webWindow = new BrowserWindow({
       icon: getIconPath(),
       height: lastWindowState.height,
+      minHeight: 350,
       width: lastWindowState.width,
+      minWidth: 720,
       x: lastWindowState.x,
       y: lastWindowState.y,
     });
