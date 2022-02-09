@@ -1,9 +1,9 @@
 import ElectronStore from "electron-store";
 import { ApplicationSettings, ApplicationState } from "../redux/state";
-import { defaultSettings, ReduxStore, startupGameData } from "../redux/slice";
+import { actions, defaultSettings, ReduxStore, startupGameData } from "../redux/slice";
 import { configureMainStore } from "../redux/configureStoreMain";
 import { AnyAction, Unsubscribe } from "@reduxjs/toolkit";
-import { ipcMain } from "electron";
+import { app, ipcMain } from "electron";
 
 export class ApplicationStore {
   runtimeStore: ReduxStore;
@@ -36,6 +36,7 @@ export class ApplicationStore {
       startupRuntimeState.settings = savedSettings;
     }
     this.runtimeStore = configureMainStore(startupRuntimeState);
+    this.runtimeStore.dispatch(actions.setAppVersion(app.getVersion()));
     this.unsubscriber = this.runtimeStore.subscribe(this.runtimeStoreSubscriber);
 
     // Used to sync redux stores on renderers with the main store when they get created

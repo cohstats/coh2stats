@@ -1,6 +1,7 @@
 export type StreamOverlayPositions = "top" | "left";
 
 export interface ApplicationSettings {
+  appVersion: string;
   coh2LogFileFound: boolean;
   coh2LogFileLocation: string;
   updateInterval: number;

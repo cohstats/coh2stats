@@ -10,6 +10,7 @@ import {
 } from "./state";
 
 export const defaultSettings: ApplicationSettings = {
+  appVersion: "0.0.0",
   coh2LogFileFound: false,
   coh2LogFileLocation: "",
   updateInterval: 2,
@@ -66,6 +67,9 @@ export const slice = createSlice({
   name: "application",
   initialState,
   reducers: {
+    setAppVersion: (state, { payload }: PayloadAction<string>) => {
+      state.settings.appVersion = payload;
+    },
     setLogFileFound: (state, { payload }: PayloadAction<boolean>) => {
       state.settings.coh2LogFileFound = payload;
     },
@@ -110,6 +114,7 @@ export const slice = createSlice({
       state.updateCounter = payload.updateCounter;
     },
     update: (state, { payload }: PayloadAction) => {
+      // make a deep copy of state
       state.settings = Object.assign({}, state.settings);
       const newGameData: GameData = {
         found: state.game.found,
@@ -126,6 +131,7 @@ export const slice = createSlice({
   },
 });
 
+export const selectAppVersion = (state: ApplicationState): string => state.settings.appVersion;
 export const selectSettings = (state: ApplicationState): ApplicationSettings => state.settings;
 export const selectGame = (state: ApplicationState): GameData => state.game;
 
