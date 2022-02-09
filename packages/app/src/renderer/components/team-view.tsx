@@ -55,7 +55,7 @@ const TeamView: React.FC<Props> = ({ side }) => {
       dataIndex: "ranklevel",
       key: "ranklevel",
       align: "center" as const,
-      responsive: ["lg"],
+      responsive: ["sm"],
       width: 20,
       render: (level: number) => {
         if (level <= 0) {
@@ -103,7 +103,7 @@ const TeamView: React.FC<Props> = ({ side }) => {
       key: "streak",
       align: "center" as const,
       width: 80,
-      responsive: ["sm"],
+      responsive: ["md"],
       //sorter: (a, b) => a.streak - b.streak,
       render: (data: LadderStats) => {
         if (data.wins + data.losses > 0) {
@@ -122,7 +122,7 @@ const TeamView: React.FC<Props> = ({ side }) => {
       key: "wins",
       align: "center" as const,
       width: 20,
-      responsive: ["md"],
+      responsive: ["lg"],
       //sorter: (a, b) => a.wins - b.wins,
       render: (data: LadderStats) => {
         if (data.wins + data.losses > 0) {
@@ -137,7 +137,7 @@ const TeamView: React.FC<Props> = ({ side }) => {
       key: "losses",
       align: "center" as const,
       width: 20,
-      responsive: ["md"],
+      responsive: ["lg"],
       //sorter: (a, b) => a.losses - b.losses,
       render: (data: LadderStats) => {
         if (data.wins + data.losses > 0) {
@@ -171,7 +171,7 @@ const TeamView: React.FC<Props> = ({ side }) => {
       key: "total",
       align: "center" as const,
       width: 60,
-      responsive: ["md"],
+      responsive: ["lg"],
       /*sorter: (a, b) => {
         return a.wins + a.losses - (b.wins + b.losses);
       },*/
@@ -220,7 +220,7 @@ const TeamView: React.FC<Props> = ({ side }) => {
       key: "lastmatchdate",
       align: "right" as const,
       width: 120,
-      responsive: ["sm"],
+      responsive: ["md"],
       /*sorter: (a, b) =>
         a.lastmatchdate - b.lastmatchdate,*/
       render: (data: LadderStats) => {
