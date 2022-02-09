@@ -64,7 +64,8 @@ const getFactionMatrix = (gameData: GameData): string => {
 
 const CurrentGameOverview: React.FC<Props> = ({ game }) => {
   const [mapApiData, setMapApiData] = useState(null);
-  const [mapWinLosses, setMapWinLosses] = useState(null);
+  const [mapWinLosses, setMapWinLosses] = useState<{ wins: number; losses: number }>();
+  const [mapFound, setMapFound] = useState(false);
 
   // listen map stats from firestore
   useEffect(() => {
@@ -80,14 +81,11 @@ const CurrentGameOverview: React.FC<Props> = ({ game }) => {
   // update displayed map stats when gamedata changes
   useEffect(() => {
     // can only show valid data classic games
-    if (
-      mapApiData &&
-      game.type === "classic" &&
-      game.left.solo.length === game.right.solo.length
-    ) {
+    if (mapApiData) {
       const result = findMapInApiData(mapApiData, game);
       // has found the map?
       if (result) {
+        setMapFound(true);
         const factionMatrix = getFactionMatrix(game);
         const winLosses = result["factionMatrix"][factionMatrix];
         if (winLosses) {
@@ -95,6 +93,8 @@ const CurrentGameOverview: React.FC<Props> = ({ game }) => {
         } else {
           console.log("Not found composition on map");
         }
+      } else {
+        setMapFound(false);
       }
     }
   }, [game, mapApiData]);
@@ -104,7 +104,12 @@ const CurrentGameOverview: React.FC<Props> = ({ game }) => {
       <TeamView side={game.left} />
       <h1 style={{ paddingLeft: 20 }}>VS</h1>
       <TeamView side={game.right} />
-      {mapWinLosses ? <GameBalanceView game={game} mapCompositionEntry={mapWinLosses} /> : null}
+      <GameBalanceView
+        game={game}
+        apiDataAvailable={mapApiData ? true : false}
+        mapFound={mapFound}
+        mapCompositionEntry={mapWinLosses}
+      />
     </>
   );
 };
