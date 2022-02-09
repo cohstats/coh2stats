@@ -8,6 +8,8 @@ import { LadderStats, Member, SideData } from "../../redux/state";
 import { CountryFlag } from "./country-flag";
 import { timeAgo } from "../utils/helpers";
 import { FactionIcon } from "./faction-icon";
+import { Helper } from "@coh2ladders/shared/src/components/helper";
+import { levelToText } from "@coh2ladders/shared/src/coh/helpers";
 
 interface Props {
   side: SideData;
@@ -51,17 +53,27 @@ const TeamView: React.FC<Props> = ({ side }) => {
       },
     },
     {
-      title: "Level",
+      title: (
+        <>
+          Level{" "}
+          <Helper
+            text={
+              "Level 1 - 15 shows that you are better than bottom x% of players in the given leaderboard. Hover over the level to see the number." +
+              " Level 16 - 20 are top 200 players."
+            }
+          />
+        </>
+      ),
       dataIndex: "ranklevel",
       key: "ranklevel",
       align: "center" as const,
       responsive: ["sm"],
-      width: 20,
+      width: 80,
       render: (level: number) => {
         if (level <= 0) {
           return "-";
         } else {
-          return level;
+          return <Tooltip title={levelToText(level)}>{level}</Tooltip>;
         }
       },
     },
