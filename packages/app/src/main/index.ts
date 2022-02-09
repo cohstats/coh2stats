@@ -1,5 +1,5 @@
 import { app, BrowserWindow } from "electron";
-import { ApplicationStore } from "./electronStore";
+import { ApplicationStore } from "./applicationStore";
 import { GameWatcher } from "./gameWatcher";
 import { ApplicationManager } from "./applicationManager";
 import { StreamerOverlay } from "./streamerOverlay";

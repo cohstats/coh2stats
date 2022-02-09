@@ -2,7 +2,7 @@ import { Unsubscribe } from "@reduxjs/toolkit";
 import { app, BrowserWindow, ipcMain, Menu, shell, Tray } from "electron";
 import { isPackaged } from "electron-is-packaged";
 import config from "./config";
-import { ApplicationStore } from "./electronStore";
+import { ApplicationStore } from "./applicationStore";
 import { getIconPath, getAssetsPath } from "./paths";
 import path from "path";
 

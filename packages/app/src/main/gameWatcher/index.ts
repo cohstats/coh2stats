@@ -1,7 +1,7 @@
 import { app, ipcMain } from "electron";
 import path from "path";
 import fs from "fs";
-import { ApplicationStore } from "../electronStore";
+import { ApplicationStore } from "../applicationStore";
 import { actions } from "../../redux/slice";
 import { Unsubscribe } from "@reduxjs/toolkit";
 import { notifyGameFound } from "./notification";
