@@ -2,12 +2,14 @@ import { ColumnsType } from "antd/lib/table";
 import { BaseType } from "antd/lib/typography/Base";
 import Text from "antd/lib/typography/Text";
 import Title from "antd/lib/typography/Title";
+import Tooltip from "antd/lib/tooltip/index";
 import React from "react";
 import { GameData, SideData, LadderStats } from "../../redux/state";
 import { FactionIcon } from "./faction-icon";
 import Table from "antd/lib/table/Table";
 import { Helper } from "@coh2ladders/shared/src/components/helper";
 import { Typography } from "antd";
+import InfoCircleOutlined from "@ant-design/icons/InfoCircleOutlined";
 
 const findAllStatsForEachPlayerInSide = (side: SideData): LadderStats[][] => {
   const result: LadderStats[][] = new Array(side.solo.length);
@@ -51,153 +53,273 @@ const GetAverageTeamValue = (
   );
 };
 
-interface Props {
-  game: GameData;
-  mapCompositionEntry: { wins: number; losses: number };
+interface ComparisonSide {
+  available: boolean;
+  value: number;
+  reason: React.ReactNode;
 }
 
-const GameBalanceView: React.FC<Props> = ({ game, mapCompositionEntry }) => {
-  let axis = game.left;
-  let allies = game.right;
-  if (game.left.side === "allies") {
-    axis = game.right;
-    allies = game.left;
+interface ComparisonData {
+  label: React.ReactNode;
+  suffix?: string;
+  left: ComparisonSide;
+  right: ComparisonSide;
+}
+
+type ComparisonDataEntry = {
+  left: React.ReactNode;
+  label: React.ReactNode;
+  right: React.ReactNode;
+  key: number;
+};
+
+interface Props {
+  game: GameData;
+  apiDataAvailable: boolean;
+  mapFound: boolean;
+  mapCompositionEntry?: { wins: number; losses: number };
+}
+
+const GameBalanceView: React.FC<Props> = ({
+  game,
+  mapCompositionEntry,
+  mapFound,
+  apiDataAvailable,
+}) => {
+  let mapDataAvailable = true;
+  let noMapDataReason: React.ReactNode = "";
+  let leftMapWinRatio = -1;
+  let rightMapWinRatio = -1;
+  if (!apiDataAvailable) {
+    mapDataAvailable = false;
+    noMapDataReason = "No map data from API recieved yet.";
   }
-  const axisPlayerStats = findAllStatsForEachPlayerInSide(axis);
-  const alliesPlayerStats = findAllStatsForEachPlayerInSide(allies);
-  const totalMapCompositionDataPoints = mapCompositionEntry.wins + mapCompositionEntry.losses;
-
-  if (
-    game.type !== "classic" ||
-    totalMapCompositionDataPoints < 5 || // minimum 5 games necessary for map stats
-    !allPlayersInSideHaveRanking(axisPlayerStats) ||
-    !allPlayersInSideHaveRanking(alliesPlayerStats)
-  ) {
-    return <></>;
+  if (mapDataAvailable && !mapFound) {
+    mapDataAvailable = false;
+    noMapDataReason = "Stats for custom maps are not available";
   }
-  const axisAverageLevel = GetAverageTeamValue(axisPlayerStats, (stats) => stats.ranklevel);
-  const alliesAverageLevel = GetAverageTeamValue(alliesPlayerStats, (stats) => stats.ranklevel);
-  const axisAverageWinRatio = GetAverageTeamValue(
-    axisPlayerStats,
-    (stats) => (stats.wins / (stats.wins + stats.losses)) * 100,
-  );
-  const alliesAverageWinRatio = GetAverageTeamValue(
-    alliesPlayerStats,
-    (stats) => (stats.wins / (stats.wins + stats.losses)) * 100,
-  );
-  const axisMapWinRatio = (mapCompositionEntry.wins / totalMapCompositionDataPoints) * 100;
-  const alliesMapWinRatio = (mapCompositionEntry.losses / totalMapCompositionDataPoints) * 100;
+  if (mapDataAvailable && game.type !== "classic") {
+    mapDataAvailable = false;
+    noMapDataReason =
+      "Map data only available for Axis vs Allies Games without AI and equal Team size.";
+  }
+  if (mapDataAvailable && !mapCompositionEntry) {
+    mapDataAvailable = false;
+    noMapDataReason = "No data for this team composition on this map is available";
+  }
+  if (mapDataAvailable && mapCompositionEntry) {
+    const totalMapCompositionDataPoints = mapCompositionEntry.wins + mapCompositionEntry.losses;
+    if (totalMapCompositionDataPoints < 5) {
+      // minimum 5 games necessary for map stats
+      mapDataAvailable = false;
+      noMapDataReason =
+        "There are not enough games for this team composition on this map. Minimum 5 games needed.";
+    } else {
+      const axisMapWinRatio = (mapCompositionEntry.wins / totalMapCompositionDataPoints) * 100;
+      const alliesMapWinRatio =
+        (mapCompositionEntry.losses / totalMapCompositionDataPoints) * 100;
+      leftMapWinRatio = game.left.side === "axis" ? axisMapWinRatio : alliesMapWinRatio;
+      rightMapWinRatio = game.right.side === "axis" ? axisMapWinRatio : alliesMapWinRatio;
+    }
+  }
 
-  // Calculate a total win ratio from the above data
-  const axisStrength = axisAverageLevel * axisAverageWinRatio;
-  const alliesStrength = alliesAverageLevel * alliesAverageWinRatio;
-  const axisStrengthRatio = (axisStrength / (axisStrength + alliesStrength)) * 100;
-  const alliesStrengthRatio = (alliesStrength / (axisStrength + alliesStrength)) * 100;
+  const leftPlayerStats = findAllStatsForEachPlayerInSide(game.left);
+  const rightPlayerStats = findAllStatsForEachPlayerInSide(game.right);
+  const leftAllRanked = allPlayersInSideHaveRanking(leftPlayerStats);
+  const rightAllRanked = allPlayersInSideHaveRanking(rightPlayerStats);
+  const notAllRankedReason: React.ReactNode = "Not all players have a ranking";
 
-  const axisTotalWinRatio = (axisStrengthRatio + axisMapWinRatio) / 2;
-  const alliesTotalWinRatio = (alliesStrengthRatio + alliesMapWinRatio) / 2;
+  let leftAverageLevel = -1;
+  let leftAverageWinRatio = -1;
+  if (leftAllRanked) {
+    leftAverageLevel = GetAverageTeamValue(leftPlayerStats, (stats) => stats.ranklevel);
+    leftAverageWinRatio = GetAverageTeamValue(
+      leftPlayerStats,
+      (stats) => (stats.wins / (stats.wins + stats.losses)) * 100,
+    );
+  }
 
-  type ComparisonDataType = {
-    axis: React.ReactNode;
-    label: React.ReactNode;
-    allies: React.ReactNode;
-    key: number;
-  };
+  let rightAverageLevel = -1;
+  let rightAverageWinRatio = -1;
+  if (rightAllRanked) {
+    rightAverageLevel = GetAverageTeamValue(rightPlayerStats, (stats) => stats.ranklevel);
+    rightAverageWinRatio = GetAverageTeamValue(
+      rightPlayerStats,
+      (stats) => (stats.wins / (stats.wins + stats.losses)) * 100,
+    );
+  }
+
+  let totalVictoryChanceAvailable = true;
+  let noTotalVictoryChanceReason: React.ReactNode = "";
+  let leftTotalWinRatio = -1;
+  let rightTotalWinRatio = -1;
+  if (!leftAllRanked || !rightAllRanked) {
+    totalVictoryChanceAvailable = false;
+    noTotalVictoryChanceReason = "All players have to have a ranking";
+  }
+  if (totalVictoryChanceAvailable && !mapDataAvailable) {
+    totalVictoryChanceAvailable = false;
+    noTotalVictoryChanceReason = "Win Ratio for this Faction Composition not available";
+  }
+  if (totalVictoryChanceAvailable) {
+    const leftStrength = leftAverageLevel * leftAverageWinRatio;
+    const rightStrength = rightAverageLevel * rightAverageWinRatio;
+    const leftStrengthRatio = (leftStrength / (leftStrength + rightStrength)) * 100;
+    const rightStrengthRatio = (rightStrength / (rightStrength + leftStrength)) * 100;
+    leftTotalWinRatio = (leftStrengthRatio + leftMapWinRatio) / 2;
+    rightTotalWinRatio = (rightStrengthRatio + rightMapWinRatio) / 2;
+  }
+
   const createComparisonDataEntry = (
     key: number,
-    axisValue: number,
-    alliesValue: number,
-    label: React.ReactNode,
-    suffix?: string,
+    comparisonData: ComparisonData,
     title?: boolean,
-  ): ComparisonDataType => {
-    const renderValue = (bigger: boolean, value: number, suffix?: string, title?: boolean) => {
-      let color: BaseType = "danger";
-      if (bigger) {
-        color = "success";
-      }
+  ): ComparisonDataEntry => {
+    const renderValue = (
+      textColor: BaseType | undefined,
+      comparisonSide: ComparisonSide,
+      suffix?: string,
+      title?: boolean,
+    ) => {
+      const content = (
+        <>
+          {comparisonSide.available ? (
+            <>
+              {comparisonSide.value.toFixed(1)}
+              {suffix ? " " + suffix : null}
+            </>
+          ) : (
+            <>
+              <Tooltip title={comparisonSide.reason}>N/A</Tooltip>
+            </>
+          )}
+        </>
+      );
       if (title) {
         return (
-          <Title level={5} type={color}>
-            {value.toFixed(1)}
-            {suffix ? " " + suffix : null}
+          <Title level={5} type={textColor}>
+            {content}
           </Title>
         );
       }
-      return (
-        <Text type={color}>
-          {value.toFixed(1)}
-          {suffix ? " " + suffix : null}
-        </Text>
-      );
+      return <Text type={textColor}>{content}</Text>;
     };
-    let labelJSX = <>{label}</>;
+    let labelJSX = <>{comparisonData.label}</>;
     if (title) {
-      labelJSX = <Title level={5}>{label}</Title>;
+      labelJSX = <Title level={5}>{comparisonData.label}</Title>;
+    }
+    let leftTextColor: BaseType | undefined = undefined;
+    let rightTextColor: BaseType | undefined = undefined;
+    if (comparisonData.left.available && comparisonData.right.available) {
+      leftTextColor =
+        comparisonData.left.value >= comparisonData.right.value ? "success" : "danger";
+      rightTextColor =
+        comparisonData.right.value >= comparisonData.left.value ? "success" : "danger";
     }
     return {
-      axis: renderValue(axisValue > alliesValue, axisValue, suffix, title),
+      left: renderValue(leftTextColor, comparisonData.left, comparisonData.suffix, title),
       label: labelJSX,
-      allies: renderValue(alliesValue > axisValue, alliesValue, suffix, title),
+      right: renderValue(rightTextColor, comparisonData.right, comparisonData.suffix, title),
       key: key,
     };
   };
-  const tableDataSource: ComparisonDataType[] = [
-    createComparisonDataEntry(0, axisAverageLevel, alliesAverageLevel, "Average Team Level"),
-    createComparisonDataEntry(
-      1,
-      axisAverageWinRatio,
-      alliesAverageWinRatio,
-      <>Average Team Win Ratio</>,
-      "%",
-    ),
-    createComparisonDataEntry(
-      2,
-      axisMapWinRatio,
-      alliesMapWinRatio,
-      <>
-        Win Ratio for this Faction Composition{" "}
-        <Helper
-          text={
-            <>
-              Based on{" "}
-              <Typography.Link
-                onClick={() =>
-                  window.electron.ipcRenderer.openInBrowser(
-                    "https://coh2stats.com/map-stats?range=month&type=" +
-                      game.left.solo.length +
-                      "v" +
-                      game.left.solo.length +
-                      "&map=" +
-                      game.map,
-                  )
-                }
-              >
-                coh2stats.com{" "}
-              </Typography.Link>
-              map analysis.
-            </>
-          }
-        />
-      </>,
-      "%",
-    ),
+
+  const tableDataSource: ComparisonDataEntry[] = [
+    createComparisonDataEntry(0, {
+      label: "Average Team Level",
+      left: {
+        available: leftAllRanked,
+        value: leftAverageLevel,
+        reason: notAllRankedReason,
+      },
+      right: {
+        available: rightAllRanked,
+        value: rightAverageLevel,
+        reason: notAllRankedReason,
+      },
+    }),
+    createComparisonDataEntry(1, {
+      label: <>Average Team Win Ratio</>,
+      suffix: "%",
+      left: {
+        available: leftAllRanked,
+        value: leftAverageWinRatio,
+        reason: notAllRankedReason,
+      },
+      right: {
+        available: rightAllRanked,
+        value: rightAverageWinRatio,
+        reason: notAllRankedReason,
+      },
+    }),
+    createComparisonDataEntry(2, {
+      label: (
+        <>
+          Win Ratio for this Faction Composition{" "}
+          <Helper
+            text={
+              <>
+                Based on{" "}
+                <Typography.Link
+                  onClick={() =>
+                    window.electron.ipcRenderer.openInBrowser(
+                      "https://coh2stats.com/map-stats?range=month&type=" +
+                        game.left.solo.length +
+                        "v" +
+                        game.left.solo.length +
+                        "&map=" +
+                        game.map,
+                    )
+                  }
+                >
+                  coh2stats.com{" "}
+                </Typography.Link>
+                map analysis.
+              </>
+            }
+          />
+        </>
+      ),
+      suffix: "%",
+      left: {
+        available: mapDataAvailable,
+        value: leftMapWinRatio,
+        reason: noMapDataReason,
+      },
+      right: {
+        available: mapDataAvailable,
+        value: rightMapWinRatio,
+        reason: noMapDataReason,
+      },
+    }),
     createComparisonDataEntry(
       3,
-      axisTotalWinRatio,
-      alliesTotalWinRatio,
-      <>
-        Victory Chance Probability{" "}
-        <Helper
-          text={
-            <>
-              This is probability of victory based on average team level, average players winrate
-              and factions composition matchup win ratio
-            </>
-          }
-        />
-      </>,
-      "%",
+      {
+        label: (
+          <>
+            Victory Chance Probability{" "}
+            <Helper
+              text={
+                <>
+                  This is probability of victory based on average team level, average players
+                  winrate and factions composition matchup win ratio
+                </>
+              }
+            />
+          </>
+        ),
+        suffix: "%",
+        left: {
+          available: totalVictoryChanceAvailable,
+          value: leftTotalWinRatio,
+          reason: noTotalVictoryChanceReason,
+        },
+        right: {
+          available: totalVictoryChanceAvailable,
+          value: rightTotalWinRatio,
+          reason: noTotalVictoryChanceReason,
+        },
+      },
       true,
     ),
   ];
@@ -211,12 +333,12 @@ const GameBalanceView: React.FC<Props> = ({ game, mapCompositionEntry }) => {
     />
   );
 
-  const tableColumns: ColumnsType<ComparisonDataType> = [
+  const tableColumns: ColumnsType<ComparisonDataEntry> = [
     {
-      title: <>{axis.solo.map(renderFactionIcon)}</>,
-      key: "axis",
+      title: <>{game.left.solo.map(renderFactionIcon)}</>,
+      key: "left",
       align: "right",
-      render: (data: ComparisonDataType) => <>{data.axis}</>,
+      render: (data: ComparisonDataEntry) => <>{data.left}</>,
     },
     {
       title: (
@@ -227,26 +349,29 @@ const GameBalanceView: React.FC<Props> = ({ game, mapCompositionEntry }) => {
       key: "desc",
       align: "center",
       width: 250,
-      render: (data: ComparisonDataType) => <>{data.label}</>,
+      render: (data: ComparisonDataEntry) => <>{data.label}</>,
     },
     {
-      title: <>{allies.solo.map(renderFactionIcon)}</>,
-      key: "allies",
+      title: <>{game.right.solo.map(renderFactionIcon)}</>,
+      key: "right",
       align: "left",
-      render: (data: ComparisonDataType) => <>{data.allies}</>,
+      render: (data: ComparisonDataEntry) => <>{data.right}</>,
     },
   ];
 
   return (
     <>
       <Table
-        style={{ paddingTop: 50, paddingBottom: 50 }}
+        style={{ paddingTop: 50 }}
         columns={tableColumns}
         dataSource={tableDataSource}
         rowKey={(data) => data.key}
         pagination={false}
         size={"small"}
       />
+      <Text italic style={{ paddingBottom: 50 }}>
+        <InfoCircleOutlined /> Stats missing? Hover over them to find out the reason.
+      </Text>
     </>
   );
 };

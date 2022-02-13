@@ -1,6 +1,22 @@
+export interface WindowState {
+  x?: number;
+  y?: number;
+  width: number;
+  height: number;
+  maximized: boolean;
+}
+
+export interface WindowStates {
+  main: WindowState;
+  settings: WindowState;
+  about: WindowState;
+  web: WindowState;
+}
+
 export type StreamOverlayPositions = "top" | "left";
 
 export interface ApplicationSettings {
+  appVersion: string;
   coh2LogFileFound: boolean;
   coh2LogFileLocation: string;
   updateInterval: number;
@@ -65,6 +81,7 @@ export interface GameData {
 
 export interface ApplicationState {
   settings: ApplicationSettings;
+  windowStates: WindowStates;
   game: GameData;
   updateCounter: number;
 }

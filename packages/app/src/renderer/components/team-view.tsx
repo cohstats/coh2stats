@@ -8,6 +8,8 @@ import { LadderStats, Member, SideData } from "../../redux/state";
 import { CountryFlag } from "./country-flag";
 import { timeAgo } from "../utils/helpers";
 import { FactionIcon } from "./faction-icon";
+import { Helper } from "@coh2ladders/shared/src/components/helper";
+import { levelToText } from "@coh2ladders/shared/src/coh/helpers";
 
 interface Props {
   side: SideData;
@@ -51,17 +53,27 @@ const TeamView: React.FC<Props> = ({ side }) => {
       },
     },
     {
-      title: "Level",
+      title: (
+        <>
+          Level{" "}
+          <Helper
+            text={
+              "Level 1 - 15 shows that you are better than bottom x% of players in the given leaderboard. Hover over the level to see the number." +
+              " Level 16 - 20 are top 200 players."
+            }
+          />
+        </>
+      ),
       dataIndex: "ranklevel",
       key: "ranklevel",
       align: "center" as const,
-      responsive: ["lg"],
-      width: 20,
+      responsive: ["sm"],
+      width: 80,
       render: (level: number) => {
         if (level <= 0) {
           return "-";
         } else {
-          return level;
+          return <Tooltip title={levelToText(level)}>{level}</Tooltip>;
         }
       },
     },
@@ -103,7 +115,7 @@ const TeamView: React.FC<Props> = ({ side }) => {
       key: "streak",
       align: "center" as const,
       width: 80,
-      responsive: ["sm"],
+      responsive: ["md"],
       //sorter: (a, b) => a.streak - b.streak,
       render: (data: LadderStats) => {
         if (data.wins + data.losses > 0) {
@@ -122,7 +134,7 @@ const TeamView: React.FC<Props> = ({ side }) => {
       key: "wins",
       align: "center" as const,
       width: 20,
-      responsive: ["md"],
+      responsive: ["lg"],
       //sorter: (a, b) => a.wins - b.wins,
       render: (data: LadderStats) => {
         if (data.wins + data.losses > 0) {
@@ -137,7 +149,7 @@ const TeamView: React.FC<Props> = ({ side }) => {
       key: "losses",
       align: "center" as const,
       width: 20,
-      responsive: ["md"],
+      responsive: ["lg"],
       //sorter: (a, b) => a.losses - b.losses,
       render: (data: LadderStats) => {
         if (data.wins + data.losses > 0) {
@@ -171,7 +183,7 @@ const TeamView: React.FC<Props> = ({ side }) => {
       key: "total",
       align: "center" as const,
       width: 60,
-      responsive: ["md"],
+      responsive: ["lg"],
       /*sorter: (a, b) => {
         return a.wins + a.losses - (b.wins + b.losses);
       },*/
@@ -220,7 +232,7 @@ const TeamView: React.FC<Props> = ({ side }) => {
       key: "lastmatchdate",
       align: "right" as const,
       width: 120,
-      responsive: ["sm"],
+      responsive: ["md"],
       /*sorter: (a, b) =>
         a.lastmatchdate - b.lastmatchdate,*/
       render: (data: LadderStats) => {

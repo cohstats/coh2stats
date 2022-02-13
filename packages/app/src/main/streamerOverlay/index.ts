@@ -1,5 +1,5 @@
 import { Unsubscribe } from "@reduxjs/toolkit";
-import { ApplicationStore } from "../electronStore";
+import { ApplicationStore } from "../applicationStore";
 import { Server } from "http";
 import net from "net";
 import * as socketIo from "socket.io";
