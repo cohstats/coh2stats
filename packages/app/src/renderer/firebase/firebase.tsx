@@ -38,7 +38,7 @@ const events = {
   },
   settings_changed: (settings_name: string): void => {
     // Means that settings has been changed
-    logEvent(analytics, "ea_settings", {
+    logEvent(analytics, "ea_settings_changed", {
       settings_name: settings_name,
     });
   },
