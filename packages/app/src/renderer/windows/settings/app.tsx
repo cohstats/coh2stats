@@ -10,12 +10,20 @@ import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { StreamOverlayPositions } from "../../../redux/state";
 import { actions, selectSettings } from "../../../redux/slice";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { events, firebaseInit } from "../../firebase/firebase";
+
+// Because about window is completely new render process we need to init firebase again
+firebaseInit();
 
 const App = (): JSX.Element => {
   const dispatch = useDispatch();
   const settings = useSelector(selectSettings);
   const [messageVisible, setMessageVisible] = useState(false);
+
+  useEffect(() => {
+    events.settings();
+  }, []);
 
   const savedMessage = () => {
     if (!messageVisible) {
@@ -25,30 +33,37 @@ const App = (): JSX.Element => {
   };
   const handleUpdateIntervalChange = (value: number) => {
     dispatch(actions.setUpdateInterval(value));
+    events.settings_changed("updateInterval");
     savedMessage();
   };
   const handleRunInTrayChange = (checked: boolean) => {
     dispatch(actions.setRunInTray(checked));
+    events.settings_changed("runInTray");
     savedMessage();
   };
   const handleOpenInBrowserChange = (checked: boolean) => {
     dispatch(actions.setOpenLinksInBrowser(checked));
+    events.settings_changed("openInBrowser");
     savedMessage();
   };
   const handleGameNotificationChange = (checked: boolean) => {
     dispatch(actions.setGameNotification(checked));
+    events.settings_changed("setGameNotifications");
     savedMessage();
   };
   const handleStreamerModeChange = (checked: boolean) => {
     dispatch(actions.setStreamOverlay(checked));
+    events.settings_changed("streamerMode");
     savedMessage();
   };
   const handleStreamModePortChange = (value: number) => {
     dispatch(actions.setStreamOverlayPort(value));
+    events.settings_changed("streamerModePort");
     savedMessage();
   };
   const handleStreamViewLayoutChange = (value: StreamOverlayPositions) => {
     dispatch(actions.setStreamOverlayPosition(value));
+    events.settings_changed("streamViewLayoutChange");
     savedMessage();
   };
   return (
