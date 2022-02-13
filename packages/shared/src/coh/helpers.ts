@@ -15,28 +15,6 @@ const sortArrayOfObjectsByTheirPropertyValue = (
   });
 };
 
-const getExportedIconPath = (name: string): string => {
-  return `/resources/exportedIcons/${name}.png`;
-};
-
-/**
- * Small is 32px
- * @param name
- * @param size
- */
-const getGeneralIconPath = (name: string, size: "normal" | "small" = "normal"): string => {
-  // We have typo in the system and DB, sometimes it's wermacht and sometimes wehrmacht
-  if (name === "wehrmacht") {
-    name = "wermacht";
-  }
-
-  if (size === "small") {
-    return `/resources/generalIcons/${name}_small.png`;
-  } else {
-    return `/resources/generalIcons/${name}.png`;
-  }
-};
-
 /**
  * Extracts just the string ID from the steam name used in the results of API.
  * @param name In format "/steam/76561198131099369"
@@ -101,8 +79,6 @@ const levelToText = (level: string | number): string => {
 
 export {
   sortArrayOfObjectsByTheirPropertyValue,
-  getExportedIconPath,
-  getGeneralIconPath,
   convertSteamNameToID,
   isTeamGame,
   findAndMergeStatGroups,
