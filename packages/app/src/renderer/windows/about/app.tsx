@@ -7,9 +7,18 @@ import * as React from "react";
 import { useSelector } from "react-redux";
 import { selectAppVersion } from "../../../redux/slice";
 import iconBig from "../../../../assets/iconBig.png";
+import { useEffect } from "react";
+import { events, firebaseInit } from "../../firebase/firebase";
+
+// Because about window is completely new render process we need to init firebase again
+firebaseInit();
 
 const App = (): JSX.Element => {
   const appVersion = useSelector(selectAppVersion);
+
+  useEffect(() => {
+    events.about();
+  }, []);
 
   return (
     <>

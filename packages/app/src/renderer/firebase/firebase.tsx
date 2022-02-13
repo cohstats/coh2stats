@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { Analytics, getAnalytics, logEvent } from "firebase/analytics";
+import { Analytics, getAnalytics, logEvent, setUserProperties } from "firebase/analytics";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA3aaUBNJx9s1euglz1kVOC5OV7Z0Ls5m0",
@@ -18,13 +18,33 @@ let analytics: Analytics = null;
 const firebaseInit = (): void => {
   const app = initializeApp(firebaseConfig);
   analytics = getAnalytics(app);
-  events.init();
+  // Because Analytics treats Electron as another browser we need to set up custom property
+  setUserProperties(analytics, { custom_platform: "electron_app" });
 };
 
-// WIP - Probably not working
+// We should start all events with EA as indicator that it's electron app
+// Analytics events can be called only after firabaseInit!
 const events = {
   init: (): void => {
     logEvent(analytics, "ea_init");
+  },
+  game_displayed: (): void => {
+    // Means that new game has been found
+    logEvent(analytics, "ea_game_displayed");
+  },
+  settings: (): void => {
+    // Means that settings has been opened
+    logEvent(analytics, "ea_settings");
+  },
+  settings_changed: (settings_name: string): void => {
+    // Means that settings has been changed
+    logEvent(analytics, "ea_settings", {
+      settings_name: settings_name,
+    });
+  },
+  about: (): void => {
+    // Means that about window has been opened
+    logEvent(analytics, "ea_about");
   },
 };
 

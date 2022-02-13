@@ -4,6 +4,7 @@ import TeamView from "../components/team-view";
 // import { convertDateToMonthTimestamp } from "@coh2ladders/shared/src/utils/date-helpers";
 import { doc, DocumentData, getFirestore, onSnapshot } from "firebase/firestore";
 import GameBalanceView from "../components/game-balance-view";
+import { events } from "../firebase/firebase";
 
 interface Props {
   game: GameData;
@@ -77,6 +78,10 @@ const CurrentGameOverview: React.FC<Props> = ({ game }) => {
       setMapApiData(doc.data());
     });
   }, []);
+
+  useEffect(() => {
+    events.game_displayed();
+  }, [game]);
 
   // update displayed map stats when gamedata changes
   useEffect(() => {
