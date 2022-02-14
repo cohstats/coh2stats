@@ -67,6 +67,14 @@ Once you have installed all dependencies. You can use
 To build the executable and an installer run `yarn app make`.
 Your build will appear in the `out` folder.
 
+#### Update mechanism
+
+You need to update the version in `packages/app/package.json`.
+The document which is checked for new version is located in `packages/web/public/electron-app-version.json` and this is
+released to `coh2stats.com/electron-app-version.json`
+
+When a new tag is done in master, new .exe installer is build to that release.
+
 ### TODOs for the future
 
 - Notification system improvement (currently notifications get suppressed when running a game)
