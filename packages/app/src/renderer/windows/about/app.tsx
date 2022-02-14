@@ -3,18 +3,25 @@ import Text from "antd/lib/typography/Text";
 import Col from "antd/lib/grid/col";
 import Row from "antd/lib/grid/row";
 import Link from "antd/lib/typography/Link";
+import compareVersions from "compare-versions";
 import * as React from "react";
 import { useSelector } from "react-redux";
-import { selectAppVersion } from "../../../redux/slice";
+import { selectSettings } from "../../../redux/slice";
 import iconBig from "../../../../assets/iconBig.png";
 import { useEffect } from "react";
 import { events, firebaseInit } from "../../firebase/firebase";
+import { Tag, Tooltip } from "antd";
+import { DownloadOutlined, InfoCircleOutlined } from "@ant-design/icons";
 
 // Because about window is completely new render process we need to init firebase again
 firebaseInit();
 
 const App = (): JSX.Element => {
-  const appVersion = useSelector(selectAppVersion);
+  const settings = useSelector(selectSettings);
+  let upToDate = true;
+  if (settings.appNewestVersion) {
+    upToDate = compareVersions(settings.appVersion, settings.appNewestVersion) >= 0;
+  }
 
   useEffect(() => {
     events.about();
@@ -29,7 +36,37 @@ const App = (): JSX.Element => {
         <Col span={16} style={{ paddingRight: 10 }}>
           <Title style={{ marginBottom: 5 }}>Coh2 Game Stats </Title>
           <Title level={5} style={{ marginTop: 5 }}>
-            Version {appVersion}{" "}
+            Version <Tag color={upToDate ? "green" : "red"}>{settings.appVersion}</Tag>{" "}
+            {upToDate ? undefined : (
+              <>
+                <Tooltip
+                  title={
+                    "To update the app, download the new installer and run it. No uninstall required!"
+                  }
+                >
+                  <Tag icon={<DownloadOutlined />} color="#cd201f">
+                    <Link
+                      style={{ color: "white" }}
+                      onClick={() =>
+                        window.electron.ipcRenderer.openInBrowser(settings.appUpdateDownloadLink)
+                      }
+                    >
+                      Download {settings.appNewestVersion}
+                    </Link>
+                  </Tag>
+                </Tooltip>
+                <Tag icon={<InfoCircleOutlined />} color="#3b5999">
+                  <Link
+                    style={{ color: "white" }}
+                    onClick={() =>
+                      window.electron.ipcRenderer.openInBrowser(settings.appReleaseInfos)
+                    }
+                  >
+                    Release Notes
+                  </Link>
+                </Tag>
+              </>
+            )}
           </Title>
           <p>
             <Text>
@@ -85,3 +122,4 @@ const App = (): JSX.Element => {
 export default App;
 
 // <Text type="secondary"> (up to date)</Text> // for after version
+//<Link onClick={() => window.electron.ipcRenderer.openInBrowser(settings.appUpdateDownloadLink)}> </Link>

@@ -42,6 +42,14 @@ export const slice = createSlice({
     setAppVersion: (state, { payload }: PayloadAction<string>) => {
       state.settings.appVersion = payload;
     },
+    setCurrentAppInfos: (
+      state,
+      { payload }: PayloadAction<{ version: string; releaseInfo: string; downloadLink: string }>,
+    ) => {
+      state.settings.appNewestVersion = payload.version;
+      state.settings.appReleaseInfos = payload.releaseInfo;
+      state.settings.appUpdateDownloadLink = payload.downloadLink;
+    },
     setLogFileFound: (state, { payload }: PayloadAction<boolean>) => {
       state.settings.coh2LogFileFound = payload;
     },
@@ -122,7 +130,6 @@ export const slice = createSlice({
   },
 });
 
-export const selectAppVersion = (state: ApplicationState): string => state.settings.appVersion;
 export const selectSettings = (state: ApplicationState): ApplicationSettings => state.settings;
 export const selectGame = (state: ApplicationState): GameData => state.game;
 
