@@ -66,7 +66,7 @@ export class ApplicationStore {
         }
       },
       (reason) => {
-        console.log("Couldnt check if app is up to date: Web request failed");
+        console.error("Couldn't check if app is up to date: Web request failed");
       },
     );
     this.unsubscriber = this.runtimeStore.subscribe(this.runtimeStoreSubscriber);
