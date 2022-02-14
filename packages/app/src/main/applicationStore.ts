@@ -5,6 +5,8 @@ import { configureMainStore } from "../redux/configureStoreMain";
 import { AnyAction, Unsubscribe } from "@reduxjs/toolkit";
 import { app, ipcMain } from "electron";
 import { defaultSettings, defaultWindowStates, startupGameData } from "../redux/defaultState";
+import axios from "axios";
+import config from "./config";
 
 export class ApplicationStore {
   runtimeStore: ReduxStore;
@@ -47,6 +49,26 @@ export class ApplicationStore {
     }
     this.runtimeStore = configureMainStore(startupRuntimeState);
     this.runtimeStore.dispatch(actions.setAppVersion(app.getVersion()));
+    // check if app is up to date
+    // const requestCurrentVersionURL = config.checkCurrentVersionLocalDevURL; // for development
+    const requestCurrentVersionURL = config.checkCurrentVersionURL;
+    axios.get(requestCurrentVersionURL).then(
+      (response) => {
+        const data = response.data;
+        if (response.status === 200) {
+          this.runtimeStore.dispatch(
+            actions.setCurrentAppInfos({
+              version: data.version,
+              releaseInfo: data.link,
+              downloadLink: data.downloadLink,
+            }),
+          );
+        }
+      },
+      (reason) => {
+        console.error("Couldn't check if app is up to date: Web request failed");
+      },
+    );
     this.unsubscriber = this.runtimeStore.subscribe(this.runtimeStoreSubscriber);
 
     // Used to sync redux stores on renderers with the main store when they get created

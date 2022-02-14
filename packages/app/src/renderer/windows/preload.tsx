@@ -17,6 +17,9 @@ contextBridge.exposeInMainWorld("electron", {
     showProfile(steamID: string) {
       ipcRenderer.send("showProfile", steamID);
     },
+    showAbout() {
+      ipcRenderer.send("showAbout");
+    },
     openInBrowser(link: string) {
       shell.openExternal(link);
     },

@@ -50,6 +50,10 @@ export class ApplicationManager {
       }
     });
 
+    ipcMain.on("showAbout", () => {
+      this.showAboutWindow();
+    });
+
     this.showMainWindow();
     if (!settings.coh2LogFileFound) {
       this.showSettingsWindow();
