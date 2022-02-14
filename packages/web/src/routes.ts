@@ -28,6 +28,10 @@ const commanderByID = (race = ":race", commanderID = ":commanderID") => {
   return `${commanderList(race)}/${commanderID}`;
 };
 
+const desktopAppBase = () => {
+  return "/desktopApp";
+};
+
 const aboutBase = () => {
   return "/about";
 };
@@ -79,6 +83,7 @@ const routes = {
   leaderboardsBase,
   playerCardBase,
   playerCardWithId,
+  desktopAppBase,
 };
 
 export default routes;

@@ -8,6 +8,7 @@ import routes from "./routes";
 import { CommanderDetails } from "./pages/commanders/commanderDetails";
 import { CommandersList } from "./pages/commanders/commandersList";
 import { RacePicker } from "./pages/commanders/racePicker";
+import DesktopApp from "./pages/desktop-app/desktop-app";
 import BulletinList from "./pages/bulletins";
 import OldStats from "./pages/stats/old-stats";
 import { MainFooter } from "./components/main-footer";
@@ -71,6 +72,9 @@ const App: React.FC = () => {
             </Route>
             <Route path={routes.commanderBase()}>
               <RacePicker />
+            </Route>
+            <Route path={routes.desktopAppBase()}>
+              <DesktopApp />
             </Route>
             <Route path={routes.aboutBase()}>
               <About />
