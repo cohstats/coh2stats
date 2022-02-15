@@ -1,5 +1,10 @@
 import ElectronStore from "electron-store";
-import { ApplicationSettings, ApplicationState, WindowStates } from "../redux/state";
+import {
+  ApplicationCache,
+  ApplicationSettings,
+  ApplicationState,
+  WindowStates,
+} from "../redux/state";
 import { actions, ReduxStore } from "../redux/slice";
 import { configureMainStore } from "../redux/configureStoreMain";
 import { AnyAction, Unsubscribe } from "@reduxjs/toolkit";
@@ -18,6 +23,9 @@ export class ApplicationStore {
       settings: {
         default: defaultSettings,
       },
+      cache: {
+        default: {},
+      },
       windowStates: {
         default: defaultWindowStates,
       },
@@ -28,21 +36,27 @@ export class ApplicationStore {
     //temporary reset during development
     //this.fileStore.clear();
     //this.setSavedSettings(defaultSettings);
+    //this.setSavedCache({});
     //this.setSavedWindowStates(defaultWindowStates);
   }
 
   initializeRuntimeStore(): void {
     const savedSettings = this.fileStore.get("settings") as ApplicationSettings;
+    const savedCache = this.fileStore.get("cache") as ApplicationCache;
     const savedWindowStates = this.fileStore.get("windowStates") as WindowStates;
     // initialize runtime state
     const startupRuntimeState: ApplicationState = {
       settings: defaultSettings,
+      cache: {},
       windowStates: defaultWindowStates,
       game: startupGameData,
       updateCounter: 0,
     };
     if (savedSettings) {
       startupRuntimeState.settings = savedSettings;
+    }
+    if (savedCache) {
+      startupRuntimeState.cache = savedCache;
     }
     if (savedWindowStates) {
       startupRuntimeState.windowStates = savedWindowStates;
@@ -88,14 +102,20 @@ export class ApplicationStore {
     this.fileStore.set("settings", settings);
   }
 
+  protected setSavedCache(cache: ApplicationCache): void {
+    this.fileStore.set("cache", cache);
+  }
+
   protected setSavedWindowStates(windowStates: WindowStates): void {
     this.fileStore.set("windowStates", windowStates);
   }
 
   protected runtimeStoreSubscriber = (): void => {
     // update file store on changes
-    this.setSavedSettings(this.runtimeStore.getState().settings);
-    this.setSavedWindowStates(this.runtimeStore.getState().windowStates);
+    const state = this.runtimeStore.getState();
+    this.setSavedSettings(state.settings);
+    this.setSavedCache(state.cache);
+    this.setSavedWindowStates(state.windowStates);
   };
 
   destroy(): void {

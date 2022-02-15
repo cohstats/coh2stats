@@ -82,8 +82,18 @@ export interface GameData {
   right: SideData;
 }
 
+export interface MapStatCache {
+  requestDate: number;
+  data: Record<string, unknown>;
+}
+
+export interface ApplicationCache {
+  mapStats?: MapStatCache;
+}
+
 export interface ApplicationState {
   settings: ApplicationSettings;
+  cache: ApplicationCache;
   windowStates: WindowStates;
   game: GameData;
   updateCounter: number;
