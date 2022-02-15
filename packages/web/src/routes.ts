@@ -29,7 +29,7 @@ const commanderByID = (race = ":race", commanderID = ":commanderID") => {
 };
 
 const desktopAppBase = () => {
-  return "/desktopApp";
+  return "/desktop-app";
 };
 
 const aboutBase = () => {
