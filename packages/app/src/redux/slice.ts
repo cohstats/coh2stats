@@ -5,11 +5,8 @@ import {
   ApplicationState,
   GameData,
   GameState,
-  LadderStats,
-  SideData,
   StreamOverlayPositions,
   WindowState,
-  WindowStates,
 } from "./state";
 
 export const initialState: ApplicationState = {
@@ -17,22 +14,6 @@ export const initialState: ApplicationState = {
   windowStates: defaultWindowStates,
   game: startupGameData,
   updateCounter: 0,
-};
-
-const cloneLadderStatArray = (array: LadderStats[]) => {
-  return array.map((ladderStat) => {
-    const members = ladderStat.members.map((member) => Object.assign({}, member));
-    const newLadderStat = Object.assign({}, ladderStat);
-    newLadderStat.members = members;
-    return newLadderStat;
-  });
-};
-const cloneSideData = (sideData: SideData): SideData => {
-  return {
-    side: sideData.side,
-    solo: cloneLadderStatArray(sideData.solo),
-    teams: cloneLadderStatArray(sideData.teams),
-  };
 };
 
 export const slice = createSlice({
@@ -99,33 +80,6 @@ export const slice = createSlice({
     },
     setGameState: (state, { payload }: PayloadAction<GameState>) => {
       state.game.state = payload;
-    },
-    setStore: (state, { payload }: PayloadAction<ApplicationState>) => {
-      state.game = payload.game;
-      state.settings = payload.settings;
-      state.updateCounter = payload.updateCounter;
-    },
-    update: (state, { payload }: PayloadAction) => {
-      // make a deep copy of state
-      state.settings = Object.assign({}, state.settings);
-      const newWindowStates: WindowStates = {
-        main: Object.assign({}, state.windowStates.main),
-        settings: Object.assign({}, state.windowStates.settings),
-        about: Object.assign({}, state.windowStates.settings),
-        web: Object.assign({}, state.windowStates.settings),
-      };
-      state.windowStates = newWindowStates;
-      const newGameData: GameData = {
-        found: state.game.found,
-        state: state.game.state,
-        type: state.game.type,
-        map: state.game.map,
-        winCondition: state.game.winCondition,
-        left: cloneSideData(state.game.left),
-        right: cloneSideData(state.game.right),
-      };
-      state.game = newGameData;
-      state.updateCounter = state.updateCounter + 1;
     },
   },
 });

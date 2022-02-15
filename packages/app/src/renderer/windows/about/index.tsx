@@ -39,8 +39,6 @@ declare global {
   }
 }
 
-window.electron.ipcRenderer.syncStores();
-
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={window.electron.store}>
