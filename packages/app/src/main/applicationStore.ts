@@ -3,7 +3,7 @@ import { ApplicationSettings, ApplicationState, WindowStates } from "../redux/st
 import { actions, ReduxStore } from "../redux/slice";
 import { configureMainStore } from "../redux/configureStoreMain";
 import { AnyAction, Unsubscribe } from "@reduxjs/toolkit";
-import { app, ipcMain } from "electron";
+import { app } from "electron";
 import { defaultSettings, defaultWindowStates, startupGameData } from "../redux/defaultState";
 import axios from "axios";
 import config from "./config";
@@ -70,9 +70,6 @@ export class ApplicationStore {
       },
     );
     this.unsubscriber = this.runtimeStore.subscribe(this.runtimeStoreSubscriber);
-
-    // Used to sync redux stores on renderers with the main store when they get created
-    ipcMain.on("syncStores", this.storeSyncer);
   }
 
   getSavedSettings(): ApplicationSettings {
@@ -95,10 +92,6 @@ export class ApplicationStore {
     this.fileStore.set("windowStates", windowStates);
   }
 
-  protected storeSyncer = (event: Electron.IpcMainEvent): void => {
-    event.sender.send("updateStore", this.runtimeStore.getState());
-  };
-
   protected runtimeStoreSubscriber = (): void => {
     // update file store on changes
     this.setSavedSettings(this.runtimeStore.getState().settings);
@@ -106,7 +99,6 @@ export class ApplicationStore {
   };
 
   destroy(): void {
-    ipcMain.removeListener("syncStores", this.storeSyncer);
     this.unsubscriber();
   }
 }
