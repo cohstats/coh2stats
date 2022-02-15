@@ -27,6 +27,8 @@ const init = (): void => {
   const db = firestore();
   const fn = functions();
 
+  firebase.analytics().setUserProperties({ custom_platform: "web_app" });
+
   if (useEmulators) {
     db.settings({ host: "localhost:8080", ssl: false });
     fn.useFunctionsEmulator("http://localhost:5001");

@@ -50,6 +50,24 @@ const MainHome: React.FC = () => {
             />
           </Card>
         </Link>
+        <Link to={"/desktop-app"}>
+          <Card
+            hoverable
+            style={{ width: 350, height: 375 }}
+            cover={<img alt="Desktop App" height={150} src="/resources/desktop-app.png" />}
+          >
+            <Meta
+              title="Desktop App"
+              description={
+                <>
+                  Gain additional intel on your current games with <b>desktop App</b>. See if
+                  players are <b>playing in team</b>. What is their <b>rank</b> and prediction on
+                  your <b>win chance on the current map</b> and team composition.
+                </>
+              }
+            />
+          </Card>
+        </Link>
       </Space>
       <Title level={4}>So far analyzed {analyzedMatches} matches.</Title>
       <Space
