@@ -12,7 +12,7 @@ An application that can show you stats of players you are playing with/against.
 - Full player cards from https://coh2stats.com/ easily accessible
 - Auto refreshes when a game is started
 - [Overlay feature for streamers](#stream-overlay)
-- Get notified when a game was found
+- ~Get notified when a game was found~
 
 ![grafik](https://user-images.githubusercontent.com/25324640/151676338-67481e96-e138-466b-8188-ccb014568407.png)
 
@@ -34,11 +34,11 @@ This overlay **_changes its view dynamically based on the game state_**. **_If y
 
 ### Setup
 
-Inside the Coh2 Game Stats app, go to settings and enable the streamer mode. Here you can also choose your preferred layout. When enabled the settings window will show you a url under the streamer mode port. Copy this url...
+Inside the Coh2 Game Stats app, go to settings and enable the streamer mode (after enabling the streamer mode you need to **restart the app**). Here you can also choose your preferred layout. When enabled the settings window will show you a url under the streamer mode port. Copy this url...
 
 ![grafik](https://user-images.githubusercontent.com/25324640/151676284-64c55322-a6b3-42d3-b375-69d438607021.png)
 
-Inside OBS add a new source and choose browser. Paste the url inside the url field. Set the width and height according to your coh2 game resolution. In most cases 1920x1080.
+Inside OBS add a new source and choose browser (supported in lastest OBS - update if you don't see browser). Paste the url inside the url field. Set the width and height according to your coh2 game resolution. In most cases 1920x1080.
 
 ![grafik](https://user-images.githubusercontent.com/25324640/151676229-e6934cfa-6bf1-445d-abe0-b4a8c2f0193c.png)
 
