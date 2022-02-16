@@ -7467,14 +7467,6 @@ electron-rebuild@^3.2.6:
     tar "^6.0.5"
     yargs "^17.0.1"
 
-electron-redux@^1.5.4:
-  version "1.5.4"
-  resolved "https://registry.yarnpkg.com/electron-redux/-/electron-redux-1.5.4.tgz#27eb3df052880f73a2393ff1aad6dff529091b62"
-  integrity sha512-7fM7OLVR34prk/ZlIv3yRbB4XCZPPQJ9ZfYLPmWPvKIONe2qm1e0on+cMLGgwzREapQrzCmc1VAxs8WNbWgncg==
-  dependencies:
-    debug "^4.1.1"
-    redux "^4.0.1"
-
 electron-squirrel-startup@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/electron-squirrel-startup/-/electron-squirrel-startup-1.0.0.tgz#19b4e55933fa0ef8f556784b9c660f772546a0b8"
@@ -14259,7 +14251,7 @@ redux-toolbelt@^3.1.1:
   dependencies:
     lodash "^4"
 
-redux@^4.0.0, redux@^4.0.1, redux@^4.1.1, redux@^4.1.2:
+redux@^4.0.0, redux@^4.1.1, redux@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/redux/-/redux-4.1.2.tgz#140f35426d99bb4729af760afcf79eaaac407104"
   integrity sha512-SH8PglcebESbd/shgf6mii6EIoRM0zrQyjcuQ+ojmfxjTtE0z9Y8pa62iA/OJ58qjP6j27uyW4kUF4jl/jd6sw==

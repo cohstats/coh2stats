@@ -94,8 +94,6 @@ const CurrentGameOverview: React.FC<Props> = ({ game }) => {
                 }),
               );
               setRequestState("completed");
-            } else {
-              setRequestState("idle");
             }
           },
         );
