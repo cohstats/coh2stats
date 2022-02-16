@@ -1,16 +1,19 @@
 import { createSlice, PayloadAction, Store } from "@reduxjs/toolkit";
 import { defaultSettings, defaultWindowStates, startupGameData } from "./defaultState";
 import {
+  ApplicationCache,
   ApplicationSettings,
   ApplicationState,
   GameData,
   GameState,
+  MapStatCache,
   StreamOverlayPositions,
   WindowState,
 } from "./state";
 
 export const initialState: ApplicationState = {
   settings: defaultSettings,
+  cache: {},
   windowStates: defaultWindowStates,
   game: startupGameData,
   updateCounter: 0,
@@ -81,10 +84,14 @@ export const slice = createSlice({
     setGameState: (state, { payload }: PayloadAction<GameState>) => {
       state.game.state = payload;
     },
+    setMapStatCache: (state, { payload }: PayloadAction<MapStatCache>) => {
+      state.cache.mapStats = payload;
+    },
   },
 });
 
 export const selectSettings = (state: ApplicationState): ApplicationSettings => state.settings;
+export const selectCache = (state: ApplicationState): ApplicationCache => state.cache;
 export const selectGame = (state: ApplicationState): GameData => state.game;
 
 export type ReduxStore = Store<ApplicationState>;

@@ -28,6 +28,7 @@ export const configureRendererStore = (): EnhancedStore => {
   ipcRenderer.send("ReduxInitialize");
   // listen to updates from main
   ipcRenderer.on("ReduxUpdate", (event, args: ApplicationState) => {
+    console.log("--Redux Store Update------");
     store.dispatch({
       type: "ReduxUpdate",
       payload: args,

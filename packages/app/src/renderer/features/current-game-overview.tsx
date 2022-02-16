@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Factions, GameData } from "../../redux/state";
 import TeamView from "../components/team-view";
 // import { convertDateToMonthTimestamp } from "@coh2ladders/shared/src/utils/date-helpers";
-import { doc, DocumentData, getFirestore, onSnapshot } from "firebase/firestore";
+import { doc, DocumentData, getDoc, getFirestore } from "firebase/firestore";
 import GameBalanceView from "../components/game-balance-view";
 import { events } from "../firebase/firebase";
+import { useDispatch, useSelector } from "react-redux";
+import { actions, selectCache } from "../../redux/slice";
+import { datesAreOnSameDay } from "../utils/helpers";
 
 interface Props {
   game: GameData;
@@ -64,30 +67,39 @@ const getFactionMatrix = (gameData: GameData): string => {
 };
 
 const CurrentGameOverview: React.FC<Props> = ({ game }) => {
-  const [mapApiData, setMapApiData] = useState(null);
+  const dispatch = useDispatch();
+  const applicationCache = useSelector(selectCache);
+  const [requestState, setRequestState] = useState<"loading" | "idle" | "completed">("idle");
   const [mapWinLosses, setMapWinLosses] = useState<{ wins: number; losses: number }>();
   const [mapFound, setMapFound] = useState(false);
 
-  // listen map stats from firestore
   useEffect(() => {
-    //convertDateToMonthTimestamp(new Date())
-    const monthTimestamp =
-      Date.UTC(new Date().getUTCFullYear(), new Date().getUTCMonth() - 1, 1) / 1000;
-    //Date.UTC(new Date().getUTCFullYear(), new Date().getUTCMonth() - 1, 1) / 1000;
-    onSnapshot(doc(getFirestore(), `stats/month/${monthTimestamp}/`, "mapStats"), (doc) => {
-      setMapApiData(doc.data());
-    });
-  }, []);
-
-  useEffect(() => {
-    events.game_displayed();
-  }, [game]);
-
-  // update displayed map stats when gamedata changes
-  useEffect(() => {
-    // can only show valid data classic games
-    if (mapApiData) {
-      const result = findMapInApiData(mapApiData, game);
+    if (
+      !applicationCache.mapStats ||
+      !datesAreOnSameDay(new Date(applicationCache.mapStats.requestDate), new Date(Date.now()))
+    ) {
+      if (requestState === "idle") {
+        console.log("Request new mapstats data");
+        const monthTimestamp =
+          Date.UTC(new Date().getUTCFullYear(), new Date().getUTCMonth() - 1, 1) / 1000;
+        //Date.UTC(new Date().getUTCFullYear(), new Date().getUTCMonth() - 1, 1) / 1000;
+        setRequestState("loading");
+        getDoc(doc(getFirestore(), `stats/month/${monthTimestamp}/`, "mapStats")).then(
+          (docSnap) => {
+            if (docSnap.exists()) {
+              dispatch(
+                actions.setMapStatCache({
+                  requestDate: Date.now(),
+                  data: docSnap.data(),
+                }),
+              );
+              setRequestState("completed");
+            }
+          },
+        );
+      }
+    } else {
+      const result = findMapInApiData(applicationCache.mapStats.data, game);
       // has found the map?
       if (result) {
         setMapFound(true);
@@ -96,13 +108,18 @@ const CurrentGameOverview: React.FC<Props> = ({ game }) => {
         if (winLosses) {
           setMapWinLosses(winLosses);
         } else {
-          console.log("Not found composition on map");
+          console.warn("Not found composition on map");
         }
       } else {
         setMapFound(false);
       }
     }
-  }, [game, mapApiData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [game, requestState]);
+
+  useEffect(() => {
+    events.game_displayed();
+  }, [game]);
 
   return (
     <>
@@ -111,7 +128,7 @@ const CurrentGameOverview: React.FC<Props> = ({ game }) => {
       <TeamView side={game.right} />
       <GameBalanceView
         game={game}
-        apiDataAvailable={mapApiData ? true : false}
+        apiDataAvailable={applicationCache && applicationCache.mapStats ? true : false}
         mapFound={mapFound}
         mapCompositionEntry={mapWinLosses}
       />
