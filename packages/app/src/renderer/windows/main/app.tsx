@@ -28,7 +28,8 @@ const App = (): JSX.Element => {
 
   // On init of the app
   useEffect(() => {
-    events.init();
+    events.init(settings.appVersion);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

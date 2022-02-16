@@ -25,8 +25,10 @@ const firebaseInit = (): void => {
 // We should start all events with EA as indicator that it's electron app
 // Analytics events can be called only after firabaseInit!
 const events = {
-  init: (): void => {
-    logEvent(analytics, "ea_init");
+  init: (version: string): void => {
+    logEvent(analytics, "ea_init", {
+      version: version,
+    });
   },
   game_displayed: (): void => {
     // Means that new game has been found
