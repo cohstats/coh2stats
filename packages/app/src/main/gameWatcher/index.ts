@@ -8,6 +8,7 @@ import { notifyGameFound } from "./notification";
 import { locateWarningsFile } from "./locateWarningsDialog";
 import { parseLogFileReverse } from "./parseLogFile";
 import { refineLogFileData } from "./refineLogFileData";
+import { events } from "../mixpanel";
 
 export class GameWatcher {
   applicationStore: ApplicationStore;
@@ -84,6 +85,7 @@ export class GameWatcher {
           this.isFirstScan = false;
           refineLogFileData(result.game).then(
             (gameData) => {
+              events.new_match_found(gameData.map);
               this.applicationStore.dispatch(actions.setGameData(gameData));
             },
             () => {
