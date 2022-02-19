@@ -1,10 +1,17 @@
+/**
+ * This component can also change the title of the pages.
+ * Some pages which have dynamic title - such as stats / map stats / player cards handle the title
+ * in their components.
+ *
+ * Other which are static are handled here.
+ */
 import React from "react";
 import { Header } from "antd/lib/layout/layout";
 import { Badge, Menu, Space, Tooltip } from "antd";
 import routes from "../routes";
 import { useRouteMatch } from "react-router";
 import { PlayerSearchInput } from "./header-search";
-import { aboutBase, bulletinsBase, commanderBase } from "../titles";
+import { aboutBase, bulletinsBase, commanderBase, desktopAppBase } from "../titles";
 import SubMenu from "antd/es/menu/SubMenu";
 import { useData, useLoading } from "../firebase";
 import { Link } from "react-router-dom";
@@ -23,12 +30,19 @@ const pageTitleSwitch = (path: string) => {
     case routes.aboutBase():
       document.title = aboutBase;
       break;
+    case routes.desktopAppBase():
+      document.title = desktopAppBase;
+      break;
   }
 };
 
 export const MainHeader: React.FC = () => {
   const isOnlinePlayersLoading = useLoading("onlinePlayers");
   const onlinePlayersData: Record<string, any> = useData("onlinePlayers");
+
+  /**
+   * It would be great if we could re-write this code as it has a lot of hard-coded stuff
+   */
 
   const commandersMatch = useRouteMatch({
     path: routes.commanderBase(),
@@ -54,12 +68,17 @@ export const MainHeader: React.FC = () => {
     path: routes.bulletinsBase(),
   });
 
+  const desktopAppMatch = useRouteMatch({
+    path: routes.desktopAppBase(),
+  });
+
   let pathMatch =
     commandersMatch ||
     statsMatch ||
     aboutMatch ||
     bulletinsMatch ||
     mapStatsMatch ||
+    desktopAppMatch ||
     leaderboardsMatch;
   const currentPath = pathMatch?.path || "";
   pageTitleSwitch(currentPath);
