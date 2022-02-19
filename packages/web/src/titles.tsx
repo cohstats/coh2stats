@@ -14,6 +14,8 @@ const playerCardBase = `${baseTitle} Player Card`;
 
 const aboutBase = `${baseTitle} About`;
 
+const desktopAppBase = `${baseTitle} Stats Desktop App`;
+
 export {
   baseTitle,
   statsBase,
@@ -23,4 +25,5 @@ export {
   aboutBase,
   leaderBoardsBase,
   playerCardBase,
+  desktopAppBase,
 };
