@@ -4,11 +4,12 @@ import { QuestionCircleOutlined } from "@ant-design/icons";
 
 interface IProps {
   text: string | any;
+  style?: Record<string, any>;
 }
-export const Helper: React.FC<IProps> = ({ text }) => {
+export const Helper: React.FC<IProps> = ({ text, style }) => {
   return (
     <Tooltip title={text}>
-      <QuestionCircleOutlined />
+      <QuestionCircleOutlined style={style} />
     </Tooltip>
   );
 };
