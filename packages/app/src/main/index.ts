@@ -3,6 +3,7 @@ import { ApplicationStore } from "./applicationStore";
 import { GameWatcher } from "./gameWatcher";
 import { ApplicationManager } from "./applicationManager";
 import { StreamerOverlay } from "./streamerOverlay";
+import { events } from "./mixpanel";
 
 // manages file and runtime (redux) storage for main
 const applicationStore = new ApplicationStore();
@@ -11,9 +12,30 @@ let logFileWatcher: GameWatcher;
 let applicationManager: ApplicationManager;
 let streamerOverlay: StreamerOverlay;
 
-// Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (require("electron-squirrel-startup")) {
-  //events.setup();
+if (process.platform !== "win32") {
+  // do not start if not windows platform
+  app.quit();
+}
+
+const squirrelSetupCommand = process.argv[1];
+if (squirrelSetupCommand === "--squirrel-updated") {
+  // called on the updated version
+  app.quit();
+}
+if (squirrelSetupCommand === "--squirrel-install") {
+  // on first time install
+  events.install(() => {
+    app.quit();
+  });
+}
+if (squirrelSetupCommand === "--squirrel-uninstall") {
+  // called when uninstalling
+  events.uninstall(() => {
+    app.quit();
+  });
+}
+if (squirrelSetupCommand === "--squirrel-obsolete") {
+  // called on the version that gets overridden by the new version
   app.quit();
 }
 
