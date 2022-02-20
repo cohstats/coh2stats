@@ -1,5 +1,5 @@
 import { ActionCreatorWithOptionalPayload, Unsubscribe } from "@reduxjs/toolkit";
-import { app, BrowserWindow, ipcMain, Menu, shell, Tray } from "electron";
+import { app, BrowserWindow, ipcMain, Menu, screen, shell, Tray } from "electron";
 import { isPackaged } from "electron-is-packaged";
 import config from "./config";
 import { ApplicationStore } from "./applicationStore";
@@ -179,14 +179,15 @@ export class ApplicationManager {
 
   showMainWindow = (): void => {
     const lastWindowState = this.applicationStore.getState().windowStates.main;
+    const validWindowState = this.getValidWindowSpawn(lastWindowState);
     this.mainWindow = new BrowserWindow({
       icon: getIconPath(),
-      height: lastWindowState.height,
+      height: validWindowState.height,
       minHeight: 300,
-      width: lastWindowState.width,
+      width: validWindowState.width,
       minWidth: 550,
-      x: lastWindowState.x,
-      y: lastWindowState.y,
+      x: validWindowState.x,
+      y: validWindowState.y,
       webPreferences: {
         preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
         // This disables ability to use NODE functions in the render process
@@ -200,7 +201,7 @@ export class ApplicationManager {
     }
     this.mainWindow.setMenu(this.getMainWindowMenu());
     this.mainWindow.on("close", this.mainWindowCloseHandler);
-    if (lastWindowState.maximized) {
+    if (validWindowState.maximized) {
       this.settingsWindow.maximize();
     }
     this.mainWindow.focus();
@@ -208,14 +209,15 @@ export class ApplicationManager {
 
   showSettingsWindow = (): void => {
     const lastWindowState = this.applicationStore.getState().windowStates.settings;
+    const validWindowState = this.getValidWindowSpawn(lastWindowState);
     this.settingsWindow = new BrowserWindow({
       icon: getIconPath(),
-      height: lastWindowState.height,
-      width: lastWindowState.width,
+      height: validWindowState.height,
+      width: validWindowState.width,
       minWidth: 700,
       minHeight: 250,
-      x: lastWindowState.x,
-      y: lastWindowState.y,
+      x: validWindowState.x,
+      y: validWindowState.y,
       maximizable: false,
       fullscreenable: false,
       webPreferences: {
@@ -244,11 +246,12 @@ export class ApplicationManager {
 
   showAboutWindow = (): void => {
     const lastWindowState = this.applicationStore.getState().windowStates.about;
+    const validWindowState = this.getValidWindowSpawn(lastWindowState);
     this.aboutWindow = new BrowserWindow({
       height: 250,
       width: 650,
-      x: lastWindowState.x,
-      y: lastWindowState.y,
+      x: validWindowState.x,
+      y: validWindowState.y,
       resizable: false,
       maximizable: false,
       fullscreenable: false,
@@ -280,14 +283,15 @@ export class ApplicationManager {
 
   showWebWindow = (url: string): void => {
     const lastWindowState = this.applicationStore.getState().windowStates.web;
+    const validWindowState = this.getValidWindowSpawn(lastWindowState);
     this.webWindow = new BrowserWindow({
       icon: getIconPath(),
-      height: lastWindowState.height,
+      height: validWindowState.height,
       minHeight: 350,
-      width: lastWindowState.width,
+      width: validWindowState.width,
       minWidth: 720,
-      x: lastWindowState.x,
-      y: lastWindowState.y,
+      x: validWindowState.x,
+      y: validWindowState.y,
     });
     this.webWindow.setMenu(Menu.buildFromTemplate([]));
     this.webWindow.loadURL(url);
@@ -302,11 +306,68 @@ export class ApplicationManager {
         this.webWindow.destroy();
       }
     });
-    if (lastWindowState.maximized) {
+    if (validWindowState.maximized) {
       this.settingsWindow.maximize();
     }
     this.webWindow.focus();
   };
+
+  protected getValidWindowSpawn(windowState: WindowState): WindowState {
+    const displays = screen.getAllDisplays();
+    let lastStateIsValid = true;
+    if (windowState.x && windowState.y) {
+      displays.forEach((display) => {
+        if (!this.isWithinDisplayBounds(windowState, display.bounds)) {
+          lastStateIsValid = false;
+        }
+      });
+    } else {
+      lastStateIsValid = false;
+    }
+    if (lastStateIsValid) {
+      return windowState;
+    } else {
+      const spawnDisplayBounds = this.getSpawnDisplayBounds();
+      return {
+        x: spawnDisplayBounds.x + spawnDisplayBounds.width / 2 - windowState.width / 2,
+        y: spawnDisplayBounds.y + spawnDisplayBounds.height / 2 - windowState.height / 2,
+        width:
+          windowState.width > spawnDisplayBounds.width
+            ? spawnDisplayBounds.width
+            : windowState.width,
+        height:
+          windowState.height > spawnDisplayBounds.height
+            ? spawnDisplayBounds.height
+            : windowState.height,
+        maximized: windowState.maximized,
+      };
+    }
+  }
+
+  protected isWithinDisplayBounds(windowState: WindowState, bounds: Electron.Rectangle): boolean {
+    return (
+      windowState.x &&
+      windowState.y &&
+      windowState.x >= bounds.x &&
+      windowState.y >= bounds.y &&
+      windowState.x + windowState.width <= bounds.x + bounds.width &&
+      windowState.y + windowState.height <= bounds.y + bounds.height
+    );
+  }
+
+  protected getSpawnDisplayBounds(): Electron.Rectangle {
+    const displays = screen.getAllDisplays();
+    let displayBounds: undefined | Electron.Rectangle = undefined;
+    displays.forEach((display) => {
+      if (!displayBounds) {
+        displayBounds = display.bounds;
+      }
+      if (display.bounds.x !== 0 || display.bounds.y !== 0) {
+        displayBounds = display.bounds;
+      }
+    });
+    return displayBounds;
+  }
 
   quit = (): void => {
     this.isQuitting = true;

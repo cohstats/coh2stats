@@ -12,6 +12,9 @@ import { StreamOverlayPositions } from "../../../redux/state";
 import { actions, selectSettings } from "../../../redux/slice";
 import { useEffect, useState } from "react";
 import { events, firebaseInit } from "../../firebase/firebase";
+import { Helper } from "@coh2ladders/shared/src/components/helper";
+import { Tooltip, Typography } from "antd";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 
 // Because about window is completely new render process we need to init firebase again
 firebaseInit();
@@ -108,7 +111,16 @@ const App = (): JSX.Element => {
             </Form.Item>
           </Input.Group>
         </Form.Item>
-        <Form.Item label={"File check interval"}>
+        <Form.Item
+          label={
+            <>
+              File check interval{" "}
+              <Helper
+                text={"Interval in seconds to check the warnings.log file for a new game."}
+              />
+            </>
+          }
+        >
           <InputNumber
             min={1}
             addonAfter="Seconds"
@@ -116,16 +128,71 @@ const App = (): JSX.Element => {
             onChange={handleUpdateIntervalChange}
           />
         </Form.Item>
-        <Form.Item label={"Run in tray"}>
+        <Form.Item
+          label={
+            <>
+              Run in tray{" "}
+              <Helper
+                text={"Application keeps running in system tray when all windows are closed."}
+              />
+            </>
+          }
+        >
           <Switch checked={settings.runInTray} onChange={handleRunInTrayChange} />
         </Form.Item>
-        <Form.Item label={"Open detail info in browser"}>
+        <Form.Item
+          label={
+            <>
+              Open detail info in browser{" "}
+              <Helper
+                text={
+                  "Open player cards in your default system browser instead of a new application window."
+                }
+              />
+            </>
+          }
+        >
           <Switch checked={settings.openLinksInBrowser} onChange={handleOpenInBrowserChange} />
         </Form.Item>
-        <Form.Item label={"Notify when game found"}>
+        <Form.Item
+          label={
+            <>
+              Notify when game found{" "}
+              <Tooltip
+                title={
+                  'Windows will suppress notifications when focus assist do not disturb for games is enabled. To change that go to windows settings, search for focus assist and disable "When i\'m playing a game"'
+                }
+              >
+                <ExclamationCircleOutlined style={{ color: "#eb2f96" }} />
+              </Tooltip>
+            </>
+          }
+        >
           <Switch checked={settings.gameNotification} onChange={handleGameNotificationChange} />
         </Form.Item>
-        <Form.Item label={"Use streamer mode"}>
+        <Form.Item
+          label={
+            <>
+              Use streamer mode{" "}
+              <Helper
+                text={
+                  <>
+                    Learn more about the setup{" "}
+                    <Typography.Link
+                      onClick={() =>
+                        window.electron.ipcRenderer.openInBrowser(
+                          "https://github.com/petrvecera/coh2ladders/blob/master/packages/app/README.md#stream-overlay",
+                        )
+                      }
+                    >
+                      here
+                    </Typography.Link>
+                  </>
+                }
+              />
+            </>
+          }
+        >
           <Switch checked={settings.streamOverlay} onChange={handleStreamerModeChange} />
         </Form.Item>
         {settings.streamOverlay ? (

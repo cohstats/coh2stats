@@ -64,20 +64,22 @@ export const parseLogFileReverse = async (
     if (line.includes("Application closed")) {
       gameRunning = false;
     }
-    handleGameParam(line, "Scenario", (params) => {
+    handleGameParam(line, "Scenario", (timeCode, params) => {
       const split = params.split("\\");
       const map = split[split.length - 1];
       game.map = map;
-      continueReading = false; // do not continue reading log file when one game was found
-    });
-    handleGameParam(line, "Win Condition Name", (params) => {
-      const winCondition = params.replace(/\s/g, ""); // remove spaces
-      game.winCondition = winCondition;
+      constructedGameId += "" + map;
+      constructedGameId += timeCode;
       // reached the end lines describing a game
       if (constructedGameId !== lastGameId) {
         // found a new game
         foundNewGame = true;
       }
+      continueReading = false; // do not continue reading log file when one game was found
+    });
+    handleGameParam(line, "Win Condition Name", (timeCode, params) => {
+      const winCondition = params.replace(/\s/g, ""); // remove spaces
+      game.winCondition = winCondition;
       gameLoading = true;
     });
     handleGameParam(line, "Starting mission", () => {
@@ -86,7 +88,7 @@ export const parseLogFileReverse = async (
     handleGameOver(line, () => {
       gameEnded = true;
     });
-    handleGameParam(line, "Human Player", (subParams) => {
+    handleGameParam(line, "Human Player", (timeCode, subParams) => {
       const playerDataChunks = subParams.split(" ");
       const side = playerDataChunks[playerDataChunks.length - 2];
       const playerData: LogFilePlayerData = {
@@ -103,7 +105,7 @@ export const parseLogFileReverse = async (
       }
       constructedGameId += "" + playerData.relicID;
     });
-    handleGameParam(line, "AI Player", (subParams) => {
+    handleGameParam(line, "AI Player", (timeCode, subParams) => {
       const playerDataChunks = subParams.split(" ");
       const side = playerDataChunks[playerDataChunks.length - 2];
       const playerData: LogFilePlayerData = {
@@ -193,24 +195,29 @@ const determineTeamComposition = (team: LogFileTeamData): { ai: boolean; side: T
   return { ai: foundAi, side: mixed ? "mixed" : lastSide };
 };
 
-const handleLogType = (line: string, logType: string, func: (remainingLine: string) => void) => {
+const handleLogType = (
+  line: string,
+  logType: string,
+  func: (timeCode: string, remainingLine: string) => void,
+) => {
+  const timeCode = line.substring(0, 11);
   const lineWithoutTimeCode = line.substring(14);
   const firstSpaceIndex = lineWithoutTimeCode.indexOf(" ");
   if (firstSpaceIndex !== -1) {
     // found a space
     const foundLogType = lineWithoutTimeCode.substring(0, firstSpaceIndex);
     if (foundLogType === logType) {
-      func(lineWithoutTimeCode.substring(firstSpaceIndex));
+      func(timeCode, lineWithoutTimeCode.substring(firstSpaceIndex));
     }
   }
 };
 
-const handleModLogs = (line: string, func: (remainingLine: string) => void) => {
+const handleModLogs = (line: string, func: (timeCode: string, remainingLine: string) => void) => {
   handleLogType(line, "MOD", func);
 };
 
 const handleGameOver = (line: string, func: () => void) => {
-  handleModLogs(line, (remainingLine) => {
+  handleModLogs(line, (timeCode: string, remainingLine) => {
     const parametersSeparatorIndex = remainingLine.indexOf(" -- ");
     if (parametersSeparatorIndex !== -1) {
       const remainingString = remainingLine.substring(parametersSeparatorIndex + 4);
@@ -221,12 +228,19 @@ const handleGameOver = (line: string, func: () => void) => {
   });
 };
 
-const handleGameLogs = (line: string, func: (remainingLine: string) => void) => {
+const handleGameLogs = (
+  line: string,
+  func: (timeCode: string, remainingLine: string) => void,
+) => {
   handleLogType(line, "GAME", func);
 };
 
-const handleGameParam = (line: string, param: string, func: (subParams: string) => void) => {
-  handleGameLogs(line, (remainingLine) => {
+const handleGameParam = (
+  line: string,
+  param: string,
+  func: (timeCode: string, subParams: string) => void,
+) => {
+  handleGameLogs(line, (timeCode, remainingLine) => {
     const parametersSeparatorIndex = remainingLine.indexOf(" -- ");
     if (parametersSeparatorIndex !== -1) {
       // found params
@@ -238,7 +252,7 @@ const handleGameParam = (line: string, param: string, func: (subParams: string) 
         const subParams = parametersString.substring(subParametersSeparatorIndex + 1);
         if (foundParam === param) {
           // reached the end lines describing a game
-          func(subParams);
+          func(timeCode, subParams);
         }
       }
     }
