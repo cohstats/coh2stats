@@ -21,10 +21,10 @@ declare const ABOUT_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
 export class ApplicationManager {
   applicationStore: ApplicationStore;
-  mainWindow: BrowserWindow;
-  settingsWindow: BrowserWindow;
-  aboutWindow: BrowserWindow;
-  webWindow: BrowserWindow;
+  mainWindow: BrowserWindow | undefined;
+  settingsWindow: BrowserWindow | undefined;
+  aboutWindow: BrowserWindow | undefined;
+  webWindow: BrowserWindow | undefined;
   tray: Tray;
   inTrayMode: boolean;
   isQuitting: boolean;
@@ -178,136 +178,144 @@ export class ApplicationManager {
   }
 
   showMainWindow = (): void => {
-    const lastWindowState = this.applicationStore.getState().windowStates.main;
-    const validWindowState = this.getValidWindowSpawn(lastWindowState);
-    this.mainWindow = new BrowserWindow({
-      icon: getIconPath(),
-      height: validWindowState.height,
-      minHeight: 300,
-      width: validWindowState.width,
-      minWidth: 550,
-      x: validWindowState.x,
-      y: validWindowState.y,
-      webPreferences: {
-        preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
-        // This disables ability to use NODE functions in the render process
-        // it's important for firebase to work
-        nodeIntegration: false,
-      },
-    });
-    this.mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
-    if (!isPackaged) {
-      this.mainWindow.webContents.openDevTools();
-    }
-    this.mainWindow.setMenu(this.getMainWindowMenu());
-    this.mainWindow.on("close", this.mainWindowCloseHandler);
-    if (validWindowState.maximized) {
-      this.settingsWindow.maximize();
+    if (!this.mainWindow || this.mainWindow.isDestroyed()) {
+      const lastWindowState = this.applicationStore.getState().windowStates.main;
+      const validWindowState = this.getValidWindowSpawn(lastWindowState);
+      this.mainWindow = new BrowserWindow({
+        icon: getIconPath(),
+        height: validWindowState.height,
+        minHeight: 300,
+        width: validWindowState.width,
+        minWidth: 550,
+        x: validWindowState.x,
+        y: validWindowState.y,
+        webPreferences: {
+          preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
+          // This disables ability to use NODE functions in the render process
+          // it's important for firebase to work
+          nodeIntegration: false,
+        },
+      });
+      this.mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
+      if (!isPackaged) {
+        this.mainWindow.webContents.openDevTools();
+      }
+      this.mainWindow.setMenu(this.getMainWindowMenu());
+      this.mainWindow.on("close", this.mainWindowCloseHandler);
+      if (validWindowState.maximized) {
+        this.settingsWindow.maximize();
+      }
     }
     this.mainWindow.focus();
   };
 
   showSettingsWindow = (): void => {
-    const lastWindowState = this.applicationStore.getState().windowStates.settings;
-    const validWindowState = this.getValidWindowSpawn(lastWindowState);
-    this.settingsWindow = new BrowserWindow({
-      icon: getIconPath(),
-      height: validWindowState.height,
-      width: validWindowState.width,
-      minWidth: 700,
-      minHeight: 250,
-      x: validWindowState.x,
-      y: validWindowState.y,
-      maximizable: false,
-      fullscreenable: false,
-      webPreferences: {
-        preload: SETTINGS_WINDOW_PRELOAD_WEBPACK_ENTRY,
-      },
-    });
-    this.settingsWindow.setMenu(Menu.buildFromTemplate([]));
-    this.settingsWindow.loadURL(SETTINGS_WINDOW_WEBPACK_ENTRY);
-    if (!isPackaged) {
-      this.settingsWindow.webContents.openDevTools();
-    }
-    this.settingsWindow.on("close", (event: Electron.Event) => {
-      if (!this.isQuitting) {
-        event.preventDefault();
-        this.saveWindowState(
-          this.settingsWindow,
-          actions.setSettingsWindowState,
-          this.applicationStore.getState().windowStates.settings,
-        );
-        this.settingsWindow.destroy();
+    if (!this.settingsWindow || this.settingsWindow.isDestroyed()) {
+      const lastWindowState = this.applicationStore.getState().windowStates.settings;
+      const validWindowState = this.getValidWindowSpawn(lastWindowState);
+      this.settingsWindow = new BrowserWindow({
+        icon: getIconPath(),
+        height: validWindowState.height,
+        width: validWindowState.width,
+        minWidth: 700,
+        minHeight: 250,
+        x: validWindowState.x,
+        y: validWindowState.y,
+        maximizable: false,
+        fullscreenable: false,
+        webPreferences: {
+          preload: SETTINGS_WINDOW_PRELOAD_WEBPACK_ENTRY,
+        },
+      });
+      this.settingsWindow.setMenu(Menu.buildFromTemplate([]));
+      this.settingsWindow.loadURL(SETTINGS_WINDOW_WEBPACK_ENTRY);
+      if (!isPackaged) {
+        this.settingsWindow.webContents.openDevTools();
       }
-    });
+      this.settingsWindow.on("close", (event: Electron.Event) => {
+        if (!this.isQuitting) {
+          event.preventDefault();
+          this.saveWindowState(
+            this.settingsWindow,
+            actions.setSettingsWindowState,
+            this.applicationStore.getState().windowStates.settings,
+          );
+          this.settingsWindow.destroy();
+        }
+      });
+      events.settings_open();
+    }
     this.settingsWindow.focus();
-    events.settings_open();
   };
 
   showAboutWindow = (): void => {
-    const lastWindowState = this.applicationStore.getState().windowStates.about;
-    const validWindowState = this.getValidWindowSpawn(lastWindowState);
-    this.aboutWindow = new BrowserWindow({
-      height: 250,
-      width: 650,
-      x: validWindowState.x,
-      y: validWindowState.y,
-      resizable: false,
-      maximizable: false,
-      fullscreenable: false,
-      title: "",
-      icon: path.join(getAssetsPath(), "blank.ico"),
-      webPreferences: {
-        preload: ABOUT_WINDOW_PRELOAD_WEBPACK_ENTRY,
-      },
-    });
-    this.aboutWindow.setMenu(Menu.buildFromTemplate([]));
-    this.aboutWindow.loadURL(ABOUT_WINDOW_WEBPACK_ENTRY);
-    if (!isPackaged) {
-      this.aboutWindow.webContents.openDevTools();
-    }
-    this.aboutWindow.on("close", (event: Electron.Event) => {
-      if (!this.isQuitting) {
-        event.preventDefault();
-        this.saveWindowState(
-          this.aboutWindow,
-          actions.setAboutWindowState,
-          this.applicationStore.getState().windowStates.about,
-        );
-        this.aboutWindow.destroy();
+    if (!this.aboutWindow || this.aboutWindow.isDestroyed()) {
+      const lastWindowState = this.applicationStore.getState().windowStates.about;
+      const validWindowState = this.getValidWindowSpawn(lastWindowState);
+      this.aboutWindow = new BrowserWindow({
+        height: 250,
+        width: 650,
+        x: validWindowState.x,
+        y: validWindowState.y,
+        resizable: false,
+        maximizable: false,
+        fullscreenable: false,
+        title: "",
+        icon: path.join(getAssetsPath(), "blank.ico"),
+        webPreferences: {
+          preload: ABOUT_WINDOW_PRELOAD_WEBPACK_ENTRY,
+        },
+      });
+      this.aboutWindow.setMenu(Menu.buildFromTemplate([]));
+      this.aboutWindow.loadURL(ABOUT_WINDOW_WEBPACK_ENTRY);
+      if (!isPackaged) {
+        this.aboutWindow.webContents.openDevTools();
       }
-    });
+      this.aboutWindow.on("close", (event: Electron.Event) => {
+        if (!this.isQuitting) {
+          event.preventDefault();
+          this.saveWindowState(
+            this.aboutWindow,
+            actions.setAboutWindowState,
+            this.applicationStore.getState().windowStates.about,
+          );
+          this.aboutWindow.destroy();
+        }
+      });
+      events.about_open();
+    }
     this.aboutWindow.focus();
-    events.about_open();
   };
 
   showWebWindow = (url: string): void => {
-    const lastWindowState = this.applicationStore.getState().windowStates.web;
-    const validWindowState = this.getValidWindowSpawn(lastWindowState);
-    this.webWindow = new BrowserWindow({
-      icon: getIconPath(),
-      height: validWindowState.height,
-      minHeight: 350,
-      width: validWindowState.width,
-      minWidth: 720,
-      x: validWindowState.x,
-      y: validWindowState.y,
-    });
-    this.webWindow.setMenu(Menu.buildFromTemplate([]));
-    this.webWindow.loadURL(url);
-    this.webWindow.on("close", (event: Electron.Event) => {
-      if (!this.isQuitting) {
-        event.preventDefault();
-        this.saveWindowState(
-          this.webWindow,
-          actions.setWebWindowState,
-          this.applicationStore.getState().windowStates.web,
-        );
-        this.webWindow.destroy();
+    if (!this.webWindow || this.webWindow.isDestroyed()) {
+      const lastWindowState = this.applicationStore.getState().windowStates.web;
+      const validWindowState = this.getValidWindowSpawn(lastWindowState);
+      this.webWindow = new BrowserWindow({
+        icon: getIconPath(),
+        height: validWindowState.height,
+        minHeight: 350,
+        width: validWindowState.width,
+        minWidth: 720,
+        x: validWindowState.x,
+        y: validWindowState.y,
+      });
+      this.webWindow.setMenu(Menu.buildFromTemplate([]));
+      this.webWindow.loadURL(url);
+      this.webWindow.on("close", (event: Electron.Event) => {
+        if (!this.isQuitting) {
+          event.preventDefault();
+          this.saveWindowState(
+            this.webWindow,
+            actions.setWebWindowState,
+            this.applicationStore.getState().windowStates.web,
+          );
+          this.webWindow.destroy();
+        }
+      });
+      if (validWindowState.maximized) {
+        this.settingsWindow.maximize();
       }
-    });
-    if (validWindowState.maximized) {
-      this.settingsWindow.maximize();
     }
     this.webWindow.focus();
   };
