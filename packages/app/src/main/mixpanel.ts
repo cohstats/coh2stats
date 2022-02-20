@@ -9,11 +9,11 @@ const mixpanel = init(config.mixpanelProjectToken);
 const clientId = machineIdSync(true);
 
 const events = {
-  setup: (): void => {
+  /*setup: (): void => {
     mixpanel.track("app_setup", {
       distinct_id: clientId,
     });
-  },
+  },*/
   init: (): void => {
     mixpanel.track("app_init", {
       distinct_id: clientId,
