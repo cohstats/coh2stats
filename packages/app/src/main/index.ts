@@ -3,6 +3,7 @@ import { ApplicationStore } from "./applicationStore";
 import { GameWatcher } from "./gameWatcher";
 import { ApplicationManager } from "./applicationManager";
 import { StreamerOverlay } from "./streamerOverlay";
+import { events } from "./mixpanel";
 
 // manages file and runtime (redux) storage for main
 const applicationStore = new ApplicationStore();
@@ -13,6 +14,7 @@ let streamerOverlay: StreamerOverlay;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
+  events.setup();
   app.quit();
 }
 
