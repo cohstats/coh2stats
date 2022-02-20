@@ -47,7 +47,7 @@ const App = (): JSX.Element => {
   if (gameData.state === "closed" || gameData.state === "menu") {
     content = (
       <>
-        <div style={{ textAlign: "center", paddingTop: 20, paddingBottom: 20 }}>
+        <div style={{ textAlign: "center", paddingTop: 10, paddingBottom: 15 }}>
           <Title>
             <Spin indicator={<LoadingOutlined style={{ fontSize: 30 }} spin />} /> Waiting for a
             game
@@ -86,7 +86,7 @@ const App = (): JSX.Element => {
         }
         right={<PlayerCount />}
       />
-      <Row justify="center" style={{ paddingTop: "0px", paddingBottom: "20px" }}>
+      <Row justify="center" style={{ paddingTop: "10px", paddingBottom: "20px" }}>
         <Col xs={24} md={22} xxl={14}>
           {content}
         </Col>

@@ -117,6 +117,7 @@ const App = (): JSX.Element => {
               File check interval{" "}
               <Helper
                 text={"Interval in seconds to check the warnings.log file for a new game."}
+                style={{ paddingLeft: "5px" }}
               />
             </>
           }
@@ -134,6 +135,7 @@ const App = (): JSX.Element => {
               Run in tray{" "}
               <Helper
                 text={"Application keeps running in system tray when all windows are closed."}
+                style={{ paddingLeft: "5px" }}
               />
             </>
           }
@@ -148,6 +150,7 @@ const App = (): JSX.Element => {
                 text={
                   "Open player cards in your default system browser instead of a new application window."
                 }
+                style={{ paddingLeft: "5px" }}
               />
             </>
           }
@@ -163,7 +166,7 @@ const App = (): JSX.Element => {
                   'Windows will suppress notifications when focus assist do not disturb for games is enabled. To change that go to windows settings, search for focus assist and disable "When i\'m playing a game"'
                 }
               >
-                <ExclamationCircleOutlined style={{ color: "#eb2f96" }} />
+                <ExclamationCircleOutlined style={{ color: "#eb2f96", paddingLeft: "5px" }} />
               </Tooltip>
             </>
           }
@@ -189,6 +192,7 @@ const App = (): JSX.Element => {
                     </Typography.Link>
                   </>
                 }
+                style={{ paddingLeft: "5px" }}
               />
             </>
           }
