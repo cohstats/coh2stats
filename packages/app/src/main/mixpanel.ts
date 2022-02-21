@@ -9,6 +9,26 @@ const mixpanel = init(config.mixpanelProjectToken);
 const clientId = machineIdSync(true);
 
 const events = {
+  install: (onEventSent: () => void): void => {
+    mixpanel.track(
+      "app_install",
+      {
+        distinct_id: clientId,
+        version: app.getVersion(),
+      },
+      onEventSent,
+    );
+  },
+  uninstall: (onEventSent: () => void): void => {
+    mixpanel.track(
+      "app_uninstall",
+      {
+        distinct_id: clientId,
+        version: app.getVersion(),
+      },
+      onEventSent,
+    );
+  },
   init: (): void => {
     mixpanel.track("app_init", {
       distinct_id: clientId,
