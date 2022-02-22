@@ -30,8 +30,8 @@ import "./index.css";
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import ThemeProvider from "./theme-provider";
 import App from "./app";
+import ThemeProvider from "../../utils/theme-provider";
 
 declare global {
   interface Window {

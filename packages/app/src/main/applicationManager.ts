@@ -58,7 +58,7 @@ export class ApplicationManager {
     });
 
     ipcMain.on("reloadAllWindows", () => {
-      BrowserWindow.getAllWindows().forEach(window => {
+      BrowserWindow.getAllWindows().forEach((window) => {
         window.reload();
       });
     });

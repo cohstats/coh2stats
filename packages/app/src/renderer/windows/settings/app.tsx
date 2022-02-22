@@ -15,6 +15,9 @@ import { events, firebaseInit } from "../../firebase/firebase";
 import { Helper } from "@coh2ladders/shared/src/components/helper";
 import { Tooltip, Typography } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
+import LoadingOutlined from "@ant-design/icons/LoadingOutlined";
+import Spin from "antd/lib/spin";
+import Title from "antd/lib/typography/Title";
 
 // Because about window is completely new render process we need to init firebase again
 firebaseInit();
@@ -23,6 +26,8 @@ const App = (): JSX.Element => {
   const dispatch = useDispatch();
   const settings = useSelector(selectSettings);
   const [messageVisible, setMessageVisible] = useState(false);
+  // Because reload after change of theme takes some time and UI becomes buggy, we want to display spin animation
+  const [reloading, setReloading] = useState(false);
 
   useEffect(() => {
     events.settings();
@@ -78,11 +83,28 @@ const App = (): JSX.Element => {
   };
 
   const handleThemeChange = (value: boolean) => {
-    dispatch(actions.setSettingsTheme(value ? "light" : "dark"));
-    savedMessage();
+    setReloading(true);
+    dispatch(actions.setSettingsTheme(value ? "dark" : "light"));
     window.electron.ipcRenderer.reloadAllWindows();
   };
 
+  if (reloading) {
+    return (
+      <div
+        style={{
+          textAlign: "center",
+          top: "50%",
+          left: "50%",
+          position: "absolute",
+          transform: "translate(-50%, -50%)",
+        }}
+      >
+        <Spin indicator={<LoadingOutlined style={{ fontSize: 50 }} spin />} />
+        <br />
+        <Title>RELOADING</Title>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -188,14 +210,13 @@ const App = (): JSX.Element => {
         >
           <Switch checked={settings.gameNotification} onChange={handleGameNotificationChange} />
         </Form.Item>
-        <Form.Item
-          label={
-            <>
-              Theme
-            </>
-          }
-        >
-          <Switch checkedChildren={"Dark"} unCheckedChildren={"Light"} checked={settings.theme === "light"} onChange={handleThemeChange} />
+        <Form.Item label={<>Theme</>}>
+          <Switch
+            checkedChildren={"Dark"}
+            unCheckedChildren={"Light"}
+            checked={settings.theme === "dark"}
+            onChange={handleThemeChange}
+          />
         </Form.Item>
         <Form.Item
           label={

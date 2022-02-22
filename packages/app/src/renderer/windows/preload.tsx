@@ -1,7 +1,6 @@
 import { contextBridge, ipcRenderer, shell } from "electron";
 import { configureRendererStore } from "../../redux/configureStoreRenderer";
 
-
 const store = configureRendererStore();
 
 contextBridge.exposeInMainWorld("electron", {
