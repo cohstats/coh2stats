@@ -12,6 +12,7 @@ export const defaultSettings: ApplicationSettings = {
   streamOverlayPort: 47824,
   streamOverlayPortFree: true,
   streamOverlayPosition: "top",
+  theme: "light",
 };
 
 export const defaultWindowStates: WindowStates = {

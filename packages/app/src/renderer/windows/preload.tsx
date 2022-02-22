@@ -12,6 +12,9 @@ contextBridge.exposeInMainWorld("electron", {
     showAbout() {
       ipcRenderer.send("showAbout");
     },
+    reloadAllWindows() {
+      ipcRenderer.send("reloadAllWindows");
+    },
     openInBrowser(link: string) {
       shell.openExternal(link);
     },

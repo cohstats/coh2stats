@@ -15,6 +15,9 @@ import { events, firebaseInit } from "../../firebase/firebase";
 import { Helper } from "@coh2ladders/shared/src/components/helper";
 import { Tooltip, Typography } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
+import LoadingOutlined from "@ant-design/icons/LoadingOutlined";
+import Spin from "antd/lib/spin";
+import Title from "antd/lib/typography/Title";
 
 // Because about window is completely new render process we need to init firebase again
 firebaseInit();
@@ -23,6 +26,8 @@ const App = (): JSX.Element => {
   const dispatch = useDispatch();
   const settings = useSelector(selectSettings);
   const [messageVisible, setMessageVisible] = useState(false);
+  // Because reload after change of theme takes some time and UI becomes buggy, we want to display spin animation
+  const [reloading, setReloading] = useState(false);
 
   useEffect(() => {
     events.settings();
@@ -34,41 +39,73 @@ const App = (): JSX.Element => {
       setMessageVisible(true);
     }
   };
+
   const handleUpdateIntervalChange = (value: number) => {
     dispatch(actions.setUpdateInterval(value));
     events.settings_changed("updateInterval");
     savedMessage();
   };
+
   const handleRunInTrayChange = (checked: boolean) => {
     dispatch(actions.setRunInTray(checked));
     events.settings_changed("runInTray");
     savedMessage();
   };
+
   const handleOpenInBrowserChange = (checked: boolean) => {
     dispatch(actions.setOpenLinksInBrowser(checked));
     events.settings_changed("openInBrowser");
     savedMessage();
   };
+
   const handleGameNotificationChange = (checked: boolean) => {
     dispatch(actions.setGameNotification(checked));
     events.settings_changed("setGameNotifications");
     savedMessage();
   };
+
   const handleStreamerModeChange = (checked: boolean) => {
     dispatch(actions.setStreamOverlay(checked));
     events.settings_changed("streamerMode");
     savedMessage();
   };
+
   const handleStreamModePortChange = (value: number) => {
     dispatch(actions.setStreamOverlayPort(value));
     events.settings_changed("streamerModePort");
     savedMessage();
   };
+
   const handleStreamViewLayoutChange = (value: StreamOverlayPositions) => {
     dispatch(actions.setStreamOverlayPosition(value));
     events.settings_changed("streamViewLayoutChange");
     savedMessage();
   };
+
+  const handleThemeChange = (value: boolean) => {
+    setReloading(true);
+    dispatch(actions.setSettingsTheme(value ? "dark" : "light"));
+    window.electron.ipcRenderer.reloadAllWindows();
+  };
+
+  if (reloading) {
+    return (
+      <div
+        style={{
+          textAlign: "center",
+          top: "50%",
+          left: "50%",
+          position: "absolute",
+          transform: "translate(-50%, -50%)",
+        }}
+      >
+        <Spin indicator={<LoadingOutlined style={{ fontSize: 50 }} spin />} />
+        <br />
+        <Title>RELOADING</Title>
+      </div>
+    );
+  }
+
   return (
     <>
       {!settings.coh2LogFileFound ? (
@@ -172,6 +209,14 @@ const App = (): JSX.Element => {
           }
         >
           <Switch checked={settings.gameNotification} onChange={handleGameNotificationChange} />
+        </Form.Item>
+        <Form.Item label={<>Theme</>}>
+          <Switch
+            checkedChildren={"Dark"}
+            unCheckedChildren={"Light"}
+            checked={settings.theme === "dark"}
+            onChange={handleThemeChange}
+          />
         </Form.Item>
         <Form.Item
           label={
