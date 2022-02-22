@@ -1,6 +1,7 @@
 import { contextBridge, ipcRenderer, shell } from "electron";
 import { configureRendererStore } from "../../redux/configureStoreRenderer";
 
+
 const store = configureRendererStore();
 
 contextBridge.exposeInMainWorld("electron", {
@@ -11,6 +12,9 @@ contextBridge.exposeInMainWorld("electron", {
     },
     showAbout() {
       ipcRenderer.send("showAbout");
+    },
+    reloadAllWindows() {
+      ipcRenderer.send("reloadAllWindows");
     },
     openInBrowser(link: string) {
       shell.openExternal(link);

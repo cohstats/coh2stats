@@ -46,6 +46,9 @@ export const slice = createSlice({
     setRunInTray: (state, { payload }: PayloadAction<boolean>) => {
       state.settings.runInTray = payload;
     },
+    setSettingsTheme: (state, { payload }: PayloadAction<string>) => {
+      state.settings.theme = payload;
+    },
     setOpenLinksInBrowser: (state, { payload }: PayloadAction<boolean>) => {
       state.settings.openLinksInBrowser = payload;
     },

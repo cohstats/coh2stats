@@ -53,7 +53,7 @@ export class ApplicationStore {
       updateCounter: 0,
     };
     if (savedSettings) {
-      startupRuntimeState.settings = savedSettings;
+      startupRuntimeState.settings = {...defaultSettings, ...savedSettings};
     }
     if (savedCache) {
       startupRuntimeState.cache = savedCache;

@@ -2,8 +2,8 @@ import React, { ReactChild, ReactChildren, lazy, Suspense } from "react";
 import { useSelector } from "react-redux";
 import { selectSettings } from "../../../redux/slice";
 
-const AppDark = lazy(() => import("../../utils/theme-dark"));
-const AppLight = lazy(() => import("../../utils/theme-light"));
+const ThemeDark = lazy(() => import("../../utils/theme-dark"));
+const ThemeLight = lazy(() => import("../../utils/theme-light"));
 
 interface IProps {
   children: ReactChild | ReactChildren;
@@ -12,15 +12,11 @@ interface IProps {
 const ThemeProvider: React.FC<IProps> = ({ children }): JSX.Element => {
   const settings = useSelector(selectSettings);
 
-  //TODO: Finish the settings
-  console.log(settings);
-  console.log(settings.theme === "dark");
-
-  const isDark = true;
+  console.log("THEME", settings.theme)
 
   return (
     <>
-      <Suspense fallback={<span />}>{isDark ? <AppDark /> : <AppLight />}</Suspense>
+      <Suspense fallback={<span />}>{settings.theme === "dark" ? <ThemeDark /> : <ThemeLight />}</Suspense>
       {children}
     </>
   );

@@ -57,6 +57,12 @@ export class ApplicationManager {
       this.showAboutWindow();
     });
 
+    ipcMain.on("reloadAllWindows", () => {
+      BrowserWindow.getAllWindows().forEach(window => {
+        window.reload();
+      });
+    });
+
     this.showMainWindow();
     if (!settings.coh2LogFileFound) {
       this.showSettingsWindow();

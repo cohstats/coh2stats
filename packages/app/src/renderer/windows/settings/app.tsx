@@ -34,41 +34,56 @@ const App = (): JSX.Element => {
       setMessageVisible(true);
     }
   };
+
   const handleUpdateIntervalChange = (value: number) => {
     dispatch(actions.setUpdateInterval(value));
     events.settings_changed("updateInterval");
     savedMessage();
   };
+
   const handleRunInTrayChange = (checked: boolean) => {
     dispatch(actions.setRunInTray(checked));
     events.settings_changed("runInTray");
     savedMessage();
   };
+
   const handleOpenInBrowserChange = (checked: boolean) => {
     dispatch(actions.setOpenLinksInBrowser(checked));
     events.settings_changed("openInBrowser");
     savedMessage();
   };
+
   const handleGameNotificationChange = (checked: boolean) => {
     dispatch(actions.setGameNotification(checked));
     events.settings_changed("setGameNotifications");
     savedMessage();
   };
+
   const handleStreamerModeChange = (checked: boolean) => {
     dispatch(actions.setStreamOverlay(checked));
     events.settings_changed("streamerMode");
     savedMessage();
   };
+
   const handleStreamModePortChange = (value: number) => {
     dispatch(actions.setStreamOverlayPort(value));
     events.settings_changed("streamerModePort");
     savedMessage();
   };
+
   const handleStreamViewLayoutChange = (value: StreamOverlayPositions) => {
     dispatch(actions.setStreamOverlayPosition(value));
     events.settings_changed("streamViewLayoutChange");
     savedMessage();
   };
+
+  const handleThemeChange = (value: boolean) => {
+    dispatch(actions.setSettingsTheme(value ? "light" : "dark"));
+    savedMessage();
+    window.electron.ipcRenderer.reloadAllWindows();
+  };
+
+
   return (
     <>
       {!settings.coh2LogFileFound ? (
@@ -172,6 +187,15 @@ const App = (): JSX.Element => {
           }
         >
           <Switch checked={settings.gameNotification} onChange={handleGameNotificationChange} />
+        </Form.Item>
+        <Form.Item
+          label={
+            <>
+              Theme
+            </>
+          }
+        >
+          <Switch checkedChildren={"Dark"} unCheckedChildren={"Light"} checked={settings.theme === "light"} onChange={handleThemeChange} />
         </Form.Item>
         <Form.Item
           label={
