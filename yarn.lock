@@ -6792,6 +6792,11 @@ currently-unhandled@^0.4.1:
   dependencies:
     array-find-index "^1.0.1"
 
+custom-electron-titlebar@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/custom-electron-titlebar/-/custom-electron-titlebar-4.1.0.tgz#a34b4e557e661d604a5bb7807cd5127a68c46921"
+  integrity sha512-5iHiOAF+m97ZDBqhrn1KRtQr7j4ALEERNVqljryVx2tMcFv535wAZs4Tj7XSrbALJLHIixKvXQyypnvEf27NhA==
+
 d3-array@2, d3-array@^2.3.0:
   version "2.12.1"
   resolved "https://registry.yarnpkg.com/d3-array/-/d3-array-2.12.1.tgz#e20b41aafcdffdf5d50928004ececf815a465e81"
@@ -7466,13 +7471,6 @@ electron-rebuild@^3.2.6:
     semver "^7.3.5"
     tar "^6.0.5"
     yargs "^17.0.1"
-
-electron-squirrel-startup@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/electron-squirrel-startup/-/electron-squirrel-startup-1.0.0.tgz#19b4e55933fa0ef8f556784b9c660f772546a0b8"
-  integrity sha1-GbTlWTP6Dvj1VnhLnGYPdyVGoLg=
-  dependencies:
-    debug "^2.2.0"
 
 electron-store@^8.0.1:
   version "8.0.1"
