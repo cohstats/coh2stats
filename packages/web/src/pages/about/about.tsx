@@ -181,6 +181,9 @@ const About: React.FC = () => {
         In case you want to be mentioned on the site, write your nickname into the payment note.
         <br />
         <Donation />
+        The PaKman
+        <br />
+        KoRneY
         <br />
         <b>Past donations 2021:</b>
         <br />
