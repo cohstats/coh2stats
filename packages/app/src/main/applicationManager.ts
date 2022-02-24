@@ -3,8 +3,7 @@ import { app, BrowserWindow, ipcMain, Menu, screen, shell, Tray } from "electron
 import { isPackaged } from "electron-is-packaged";
 import config from "./config";
 import { ApplicationStore } from "./applicationStore";
-import { getIconPath, getAssetsPath } from "./paths";
-import path from "path";
+import { getIconPath } from "./paths";
 import { WindowState } from "../redux/state";
 import { actions } from "../redux/slice";
 import { events } from "./mixpanel";
@@ -267,7 +266,7 @@ export class ApplicationManager {
         maximizable: false,
         fullscreenable: false,
         title: "",
-        icon: path.join(getAssetsPath(), "blank.ico"),
+        icon: getIconPath(),
         webPreferences: {
           preload: ABOUT_WINDOW_PRELOAD_WEBPACK_ENTRY,
         },
