@@ -36,7 +36,7 @@ const PlayerTeamMatchesTable: React.FC<IProps> = ({ title, data }) => {
         return (
           <div>
             <Text strong>{convertTeamNames(mode)}</Text>
-            {data["members"].map((playerInfo: Record<string, any>) => {
+            {data["members"].map((playerInfo: Record<string, any>, index: number) => {
               if (playerInfo) {
                 return (
                   <div key={playerInfo.profile_id} style={{ paddingLeft: 10 }}>
@@ -50,7 +50,11 @@ const PlayerTeamMatchesTable: React.FC<IProps> = ({ title, data }) => {
                   </div>
                 );
               } else {
-                return <div style={{ paddingLeft: 30 }}>Unknown</div>;
+                return (
+                  <div key={index} style={{ paddingLeft: 30 }}>
+                    Unknown
+                  </div>
+                );
               }
             })}
           </div>
