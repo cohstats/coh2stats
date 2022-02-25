@@ -36,18 +36,26 @@ const PlayerTeamMatchesTable: React.FC<IProps> = ({ title, data }) => {
         return (
           <div>
             <Text strong>{convertTeamNames(mode)}</Text>
-            {data["members"].map((playerInfo: Record<string, any>) => {
-              return (
-                <div key={playerInfo.profile_id} style={{ paddingLeft: 10 }}>
-                  <CountryFlag
-                    countryCode={playerInfo["country"]}
-                    style={{ width: "1.2em", height: "1.2em", paddingRight: 0 }}
-                  />{" "}
-                  <Link to={routes.playerCardWithId(convertSteamNameToID(playerInfo["name"]))}>
-                    {playerInfo["alias"]}
-                  </Link>
-                </div>
-              );
+            {data["members"].map((playerInfo: Record<string, any>, index: number) => {
+              if (playerInfo) {
+                return (
+                  <div key={playerInfo.profile_id} style={{ paddingLeft: 10 }}>
+                    <CountryFlag
+                      countryCode={playerInfo["country"]}
+                      style={{ width: "1.2em", height: "1.2em", paddingRight: 0 }}
+                    />{" "}
+                    <Link to={routes.playerCardWithId(convertSteamNameToID(playerInfo["name"]))}>
+                      {playerInfo["alias"]}
+                    </Link>
+                  </div>
+                );
+              } else {
+                return (
+                  <div key={index} style={{ paddingLeft: 30 }}>
+                    Unknown
+                  </div>
+                );
+              }
             })}
           </div>
         );
