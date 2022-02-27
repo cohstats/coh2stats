@@ -19,6 +19,8 @@ import LoadingOutlined from "@ant-design/icons/LoadingOutlined";
 import Spin from "antd/lib/spin";
 import Title from "antd/lib/typography/Title";
 
+const { Text } = Typography;
+
 // Because about window is completely new render process we need to init firebase again
 firebaseInit();
 
@@ -88,6 +90,14 @@ const App = (): JSX.Element => {
     window.electron.ipcRenderer.reloadAllWindows();
   };
 
+  const handleChangeOfPath = () => {
+    window.electron.ipcRenderer.locateLogFile();
+  };
+
+  const handleScan = () => {
+    window.electron.ipcRenderer.scanForLogFile();
+  };
+
   if (reloading) {
     return (
       <div
@@ -130,7 +140,24 @@ const App = (): JSX.Element => {
         layout="horizontal"
         style={{ paddingTop: "20px", paddingBottom: "20px" }}
       >
-        <Form.Item label="Path to warnings.log">
+        <Form.Item
+          label={
+            <>
+              Path to warnings.log
+              <Helper
+                text={
+                  <>
+                    Path to COH warnings log. By default located in{" "}
+                    <Text code>
+                      "C:\\Users\\[user]\\Documents\\My Games\\Company of Heroes 2\\warnings.log"
+                    </Text>
+                  </>
+                }
+                style={{ paddingLeft: "5px" }}
+              />
+            </>
+          }
+        >
           <Input.Group compact>
             <Form.Item noStyle>
               <Input
@@ -141,10 +168,10 @@ const App = (): JSX.Element => {
               />
             </Form.Item>
             <Form.Item noStyle>
-              <Button onClick={window.electron.ipcRenderer.locateLogFile}>Select</Button>
+              <Button onClick={handleChangeOfPath}>Select</Button>
             </Form.Item>
             <Form.Item noStyle>
-              <Button onClick={window.electron.ipcRenderer.scanForLogFile}>Scan</Button>
+              <Button onClick={handleScan}>Auto locate</Button>
             </Form.Item>
           </Input.Group>
         </Form.Item>
