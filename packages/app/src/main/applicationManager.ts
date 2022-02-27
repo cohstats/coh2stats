@@ -152,9 +152,7 @@ export class ApplicationManager {
         this.createTray();
       } else {
         this.inTrayMode = false;
-        if (!this.mainWindow.isVisible()) {
-          this.mainWindow.show();
-        }
+        this.showMainWindow();
         this.tray.destroy();
       }
     }
