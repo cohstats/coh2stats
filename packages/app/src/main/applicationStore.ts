@@ -46,7 +46,7 @@ export class ApplicationStore {
     const savedWindowStates = this.fileStore.get("windowStates") as WindowStates;
     // initialize runtime state
     const startupRuntimeState: ApplicationState = {
-      settings: defaultSettings,
+      settings: { ...defaultSettings },
       cache: {},
       windowStates: defaultWindowStates,
       game: startupGameData,

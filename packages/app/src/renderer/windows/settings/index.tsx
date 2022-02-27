@@ -32,7 +32,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import App from "./app";
-import ThemeProvider from "../../utils/theme-provider";
 
 declare global {
   interface Window {
@@ -43,9 +42,7 @@ declare global {
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={window.electron.store}>
-      <ThemeProvider>
-        <App />
-      </ThemeProvider>
+      <App />
     </Provider>
   </React.StrictMode>,
   document.getElementById("root"),
