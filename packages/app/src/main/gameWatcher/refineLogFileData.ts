@@ -58,7 +58,10 @@ export const refineLogFileData = (logFileGameData: LogFileGameData): Promise<Gam
 const parseSideData = (logFileTeam: LogFileTeamData, apiData: PersonalStatResponse): SideData => {
   const { statGroups, leaderboardStats } = apiData;
   const soloData: LadderStats[] = new Array(logFileTeam.players.length);
-  const unfinishedSoloDatas: Map<number, undefined> = new Map(
+  const unfinishedSoloLadderDatas: Map<number, undefined> = new Map(
+    logFileTeam.players.map((p, i) => [i, undefined]),
+  );
+  const unfinishedSoloMemberDatas: Map<number, undefined> = new Map(
     logFileTeam.players.map((p, i) => [i, undefined]),
   );
   // create a starter to populate later
@@ -74,7 +77,8 @@ const parseSideData = (logFileTeam: LogFileTeamData, apiData: PersonalStatRespon
       country: "",
     };
     if (logFilePlayer.ai) {
-      unfinishedSoloDatas.delete(index);
+      unfinishedSoloLadderDatas.delete(index);
+      unfinishedSoloMemberDatas.delete(index);
     }
     soloData[index] = {
       members: [soloMember],
@@ -93,12 +97,14 @@ const parseSideData = (logFileTeam: LogFileTeamData, apiData: PersonalStatRespon
   });
   const teamData: Record<string, LadderStats> = {};
 
+  findMemberInfos(statGroups, unfinishedSoloMemberDatas, soloData);
+
   leaderboardStats.forEach((leaderboardStat) => {
     // add additional data to solo entries
     processSoloLeaderboardStats(
       leaderboardStat,
       statGroups,
-      unfinishedSoloDatas,
+      unfinishedSoloLadderDatas,
       soloData,
       logFileTeam.players.length,
     );
@@ -146,16 +152,42 @@ const findTeamRankingForSoloStats = (
   }
 };
 
+const findMemberInfos = (
+  statGroups: StatGroup[],
+  unfinishedSoloMemberDatas: Map<number, undefined>,
+  soloData: LadderStats[],
+) => {
+  for (let i = 0; i < statGroups.length; i++) {
+    if (unfinishedSoloMemberDatas.size > 0) {
+      const members = statGroups[i].members;
+      members.forEach((member) => {
+        const keysToDelete: number[] = [];
+        unfinishedSoloMemberDatas.forEach((v, k) => {
+          if (member.profile_id === soloData[k].members[0].relicID) {
+            setMemberWithStatGroupMember(member, soloData[k].members[0]);
+            keysToDelete.push(k);
+          }
+        });
+        keysToDelete.forEach((key) => {
+          unfinishedSoloMemberDatas.delete(key);
+        });
+      });
+    } else {
+      return;
+    }
+  }
+};
+
 const processSoloLeaderboardStats = (
   leaderboardStat: LeaderboardStat,
   statGroups: StatGroup[],
-  unfinishedSoloDatas: Map<number, undefined>,
+  unfinishedSoloLadderDatas: Map<number, undefined>,
   soloData: LadderStats[],
   playerCount: number,
 ) => {
   const leaderboardId = leaderboardStat.leaderboard_id;
   if (
-    unfinishedSoloDatas.size > 0 &&
+    unfinishedSoloLadderDatas.size > 0 &&
     ((leaderboardId > 3 && leaderboardId < 20) || (leaderboardId > 50 && leaderboardId < 55))
   ) {
     const soloStatGroup = statGroups.find(
@@ -163,7 +195,7 @@ const processSoloLeaderboardStats = (
     );
     if (soloStatGroup) {
       let matchingPlayerId: number | undefined = undefined;
-      unfinishedSoloDatas.forEach((v, k) => {
+      unfinishedSoloLadderDatas.forEach((v, k) => {
         const wantedLeaderboardId =
           leaderboardIDLookupTable[soloData[k].members[0].faction][playerCount - 1];
         if (
@@ -172,14 +204,10 @@ const processSoloLeaderboardStats = (
         ) {
           // found the right entry
           copyLeaderboardStatsToLadderStats(leaderboardStat, soloData[k]);
-          setMemberWithStatGroupMember(soloStatGroup.members[0], soloData[k].members[0]);
           matchingPlayerId = k;
-        } else if (soloData[k].members[0].relicID === soloStatGroup.members[0].profile_id) {
-          // stats for player not found, but we still want to populate some of his info
-          setMemberWithStatGroupMember(soloStatGroup.members[0], soloData[k].members[0]);
         }
       });
-      unfinishedSoloDatas.delete(matchingPlayerId);
+      unfinishedSoloLadderDatas.delete(matchingPlayerId);
     }
   }
 };
