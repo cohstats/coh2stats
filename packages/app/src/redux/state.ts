@@ -30,7 +30,7 @@ export interface ApplicationSettings {
   streamOverlayPort: number;
   streamOverlayPortFree: boolean;
   streamOverlayPosition: StreamOverlayPositions;
-  theme: string;
+  theme: "light" | "dark";
 }
 
 export type Factions = "german" | "west_german" | "aef" | "british" | "soviet";

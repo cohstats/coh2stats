@@ -8,7 +8,7 @@ import {
 import { actions, ReduxStore } from "../redux/slice";
 import { configureMainStore } from "../redux/configureStoreMain";
 import { AnyAction, Unsubscribe } from "@reduxjs/toolkit";
-import { app } from "electron";
+import { app, nativeTheme } from "electron";
 import { defaultSettings, defaultWindowStates, startupGameData } from "../redux/defaultState";
 import axios from "axios";
 import config from "./config";
@@ -52,6 +52,7 @@ export class ApplicationStore {
       game: startupGameData,
       updateCounter: 0,
     };
+    startupRuntimeState.settings.theme = nativeTheme.shouldUseDarkColors ? "dark" : "light";
     if (savedSettings) {
       startupRuntimeState.settings = { ...defaultSettings, ...savedSettings };
     }

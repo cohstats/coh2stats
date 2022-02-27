@@ -1,5 +1,5 @@
 import { ActionCreatorWithOptionalPayload, Unsubscribe } from "@reduxjs/toolkit";
-import { app, BrowserWindow, ipcMain, Menu, screen, shell, Tray } from "electron";
+import { app, BrowserWindow, ipcMain, Menu, nativeTheme, screen, shell, Tray } from "electron";
 import { isPackaged } from "electron-is-packaged";
 import config from "./config";
 import { ApplicationStore } from "./applicationStore";
@@ -146,6 +146,9 @@ export class ApplicationManager {
   protected runtimeStoreSubscriber = (): void => {
     // update setting changes
     const settings = this.applicationStore.getState().settings;
+    if (nativeTheme.themeSource !== settings.theme) {
+      nativeTheme.themeSource = settings.theme;
+    }
     if (settings.runInTray !== this.inTrayMode) {
       if (settings.runInTray) {
         this.inTrayMode = true;
