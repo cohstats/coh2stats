@@ -174,6 +174,9 @@ const processSoloLeaderboardStats = (
           copyLeaderboardStatsToLadderStats(leaderboardStat, soloData[k]);
           setMemberWithStatGroupMember(soloStatGroup.members[0], soloData[k].members[0]);
           matchingPlayerId = k;
+        } else if (soloData[k].members[0].relicID === soloStatGroup.members[0].profile_id) {
+          // stats for player not found, but we still want to populate some of his info
+          setMemberWithStatGroupMember(soloStatGroup.members[0], soloData[k].members[0]);
         }
       });
       unfinishedSoloDatas.delete(matchingPlayerId);
