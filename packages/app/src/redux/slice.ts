@@ -4,6 +4,7 @@ import {
   ApplicationCache,
   ApplicationSettings,
   ApplicationState,
+  ApplicationWindows,
   GameData,
   GameState,
   MapStatCache,
@@ -69,17 +70,11 @@ export const slice = createSlice({
     setStreamOverlayPosition: (state, { payload }: PayloadAction<StreamOverlayPositions>) => {
       state.settings.streamOverlayPosition = payload;
     },
-    setMainWindowState: (state, { payload }: PayloadAction<WindowState>) => {
-      state.windowStates.main = payload;
-    },
-    setSettingsWindowState: (state, { payload }: PayloadAction<WindowState>) => {
-      state.windowStates.settings = payload;
-    },
-    setAboutWindowState: (state, { payload }: PayloadAction<WindowState>) => {
-      state.windowStates.about = payload;
-    },
-    setWebWindowState: (state, { payload }: PayloadAction<WindowState>) => {
-      state.windowStates.web = payload;
+    setWindowState: (
+      state,
+      { payload }: PayloadAction<{ windowName: ApplicationWindows; state: WindowState }>,
+    ) => {
+      state.windowStates[payload.windowName] = payload.state;
     },
     setGameData: (state, { payload }: PayloadAction<GameData>) => {
       state.game = payload;

@@ -16,6 +16,8 @@ import StatusBar from "../../components/status-bar";
 import { useEffect, useState } from "react";
 import { Tag } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
+import WindowTitlebar from "../../titlebar/window-titlebar";
+import WindowTitlebarItem from "../../titlebar/window-titlebar-item";
 
 // We need to initialize our Firebase
 // This has to happen once on the main file of each render process
@@ -67,8 +69,19 @@ const App = (): JSX.Element => {
     );
   }
 
+  const menuItems = (
+    <>
+      <WindowTitlebarItem onClick={() => window.electron.ipcRenderer.showWindow("settings")}>
+        Settings
+      </WindowTitlebarItem>
+      <WindowTitlebarItem onClick={() => window.electron.ipcRenderer.showWindow("about")}>
+        About
+      </WindowTitlebarItem>
+    </>
+  );
+
   return (
-    <div>
+    <WindowTitlebar windowName="main" items={menuItems}>
       <StatusBar
         left={
           upToDate ? undefined : (
@@ -76,7 +89,7 @@ const App = (): JSX.Element => {
               <Tag icon={<DownloadOutlined />} color="#3b5999">
                 <Link
                   style={{ color: "white" }}
-                  onClick={() => window.electron.ipcRenderer.showAbout()}
+                  onClick={() => window.electron.ipcRenderer.showWindow("about")}
                 >
                   Update available!
                 </Link>
@@ -91,7 +104,7 @@ const App = (): JSX.Element => {
           {content}
         </Col>
       </Row>
-    </div>
+    </WindowTitlebar>
   );
 };
 

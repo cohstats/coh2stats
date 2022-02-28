@@ -1,0 +1,46 @@
+.dragableTitlebar {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+}
+
+.dragableTitlebar li {
+  line-height: 30px;
+  padding-left: 10px;
+  padding-right: 10px;
+  -webkit-app-region: unset;
+  user-select: unset;
+  -webkit-user-select: unset;
+}
+
+.windowControlsParent {
+  display: flex;
+  align-items: stretch;
+}
+
+.windowControl {
+  user-select: none;
+  -webkit-user-select: none;
+  padding: 0 1.15em;
+  font-size: 0.875em;
+  display: flex;
+  height: 30px;
+  align-items: center;
+  -webkit-app-region: no-drag;
+}
+
+.windowControl:hover {
+  background: #242d38;
+  color: #d8d9db;
+}
+
+.windowCloseControl:hover {
+  background: #e10000;
+}
+
+.windowIconArea {
+  height: 30px;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+}

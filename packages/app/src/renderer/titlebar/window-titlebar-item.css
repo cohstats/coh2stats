@@ -1,0 +1,15 @@
+.windowMenuItem {
+  user-select: none;
+  -webkit-user-select: none;
+  padding: 0 1.15em;
+  padding-top: 4px;
+  font-size: 0.875em;
+  height: 30px;
+  align-items: center;
+  -webkit-app-region: no-drag;
+}
+
+.windowMenuItem:hover {
+  background: #242d38;
+  color: #d8d9db;
+}

@@ -32,12 +32,6 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import App from "./app";
 
-declare global {
-  interface Window {
-    electron: { ipcRenderer: any; store: any }; // eslint-disable-line @typescript-eslint/no-explicit-any
-  }
-}
-
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={window.electron.store}>

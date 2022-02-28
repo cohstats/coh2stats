@@ -15,6 +15,7 @@ import { events, firebaseInit } from "../../firebase/firebase";
 import { Helper } from "@coh2ladders/shared/src/components/helper";
 import { Tooltip, Typography } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
+import WindowTitlebar from "../../titlebar/window-titlebar";
 
 const { Text } = Typography;
 
@@ -95,185 +96,188 @@ const App = (): JSX.Element => {
 
   return (
     <>
-      {!settings.coh2LogFileFound ? (
-        <Alert
-          type="error"
-          message="Could not locate warnings.log file!"
-          description="Either Company of Heroes 2 is not installed or your system configuration is different and you need to locate the warnings.log file manually"
-          banner
-        />
-      ) : null}
-      {settings.streamOverlay && !settings.streamOverlayPortFree ? (
-        <Alert
-          type="error"
-          message="The port for the stream overlay is already in use!"
-          description="Select a different port or make sure only one insantce of this application is running"
-          banner
-        />
-      ) : null}
-      <Form
-        labelCol={{ span: 8 }}
-        wrapperCol={{ span: 10 }}
-        layout="horizontal"
-        style={{ paddingTop: "20px", paddingBottom: "20px" }}
-      >
-        <Form.Item
-          label={
-            <>
-              Path to warnings.log
-              <Helper
-                text={
-                  <>
-                    Path to COH warnings log. By default located in{" "}
-                    <Text code>
-                      "C:\\Users\\[user]\\Documents\\My Games\\Company of Heroes 2\\warnings.log"
-                    </Text>
-                  </>
-                }
-                style={{ paddingLeft: "5px" }}
-              />
-            </>
-          }
-        >
-          <Input.Group compact>
-            <Form.Item noStyle>
-              <Input
-                style={{ width: "70%" }}
-                type={"text"}
-                value={settings.coh2LogFileLocation}
-                disabled
-              />
-            </Form.Item>
-            <Form.Item noStyle>
-              <Button onClick={handleChangeOfPath}>Select</Button>
-            </Form.Item>
-            <Form.Item noStyle>
-              <Button onClick={handleScan}>Auto locate</Button>
-            </Form.Item>
-          </Input.Group>
-        </Form.Item>
-        <Form.Item
-          label={
-            <>
-              File check interval{" "}
-              <Helper
-                text={"Interval in seconds to check the warnings.log file for a new game."}
-                style={{ paddingLeft: "5px" }}
-              />
-            </>
-          }
-        >
-          <InputNumber
-            min={1}
-            addonAfter="Seconds"
-            value={settings.updateInterval}
-            onChange={handleUpdateIntervalChange}
+      <WindowTitlebar windowName="settings" cantMaximize>
+        {!settings.coh2LogFileFound ? (
+          <Alert
+            type="error"
+            message="Could not locate warnings.log file!"
+            description="Either Company of Heroes 2 is not installed or your system configuration is different and you need to locate the warnings.log file manually"
+            banner
           />
-        </Form.Item>
-        <Form.Item
-          label={
-            <>
-              Run in tray{" "}
-              <Helper
-                text={"Application keeps running in system tray when all windows are closed."}
-                style={{ paddingLeft: "5px" }}
-              />
-            </>
-          }
-        >
-          <Switch checked={settings.runInTray} onChange={handleRunInTrayChange} />
-        </Form.Item>
-        <Form.Item
-          label={
-            <>
-              Open detail info in browser{" "}
-              <Helper
-                text={
-                  "Open player cards in your default system browser instead of a new application window."
-                }
-                style={{ paddingLeft: "5px" }}
-              />
-            </>
-          }
-        >
-          <Switch checked={settings.openLinksInBrowser} onChange={handleOpenInBrowserChange} />
-        </Form.Item>
-        <Form.Item
-          label={
-            <>
-              Notify when game found{" "}
-              <Tooltip
-                title={
-                  'Windows will suppress notifications when focus assist do not disturb for games is enabled. To change that go to windows settings, search for focus assist and disable "When i\'m playing a game"'
-                }
-              >
-                <ExclamationCircleOutlined style={{ color: "#eb2f96", paddingLeft: "5px" }} />
-              </Tooltip>
-            </>
-          }
-        >
-          <Switch checked={settings.gameNotification} onChange={handleGameNotificationChange} />
-        </Form.Item>
-        <Form.Item label={<>Theme</>}>
-          <Switch
-            checkedChildren={"Dark"}
-            unCheckedChildren={"Light"}
-            checked={settings.theme === "dark"}
-            onChange={handleThemeChange}
-          />
-        </Form.Item>
-        <Form.Item
-          label={
-            <>
-              Use streamer mode{" "}
-              <Helper
-                text={
-                  <>
-                    Learn more about the setup{" "}
-                    <Typography.Link
-                      onClick={() =>
-                        window.electron.ipcRenderer.openInBrowser(
-                          "https://github.com/petrvecera/coh2ladders/blob/master/packages/app/README.md#stream-overlay",
-                        )
-                      }
-                    >
-                      here
-                    </Typography.Link>
-                  </>
-                }
-                style={{ paddingLeft: "5px" }}
-              />
-            </>
-          }
-        >
-          <Switch checked={settings.streamOverlay} onChange={handleStreamerModeChange} />
-        </Form.Item>
-        {settings.streamOverlay ? (
-          <>
-            <Form.Item label={"Streamer view server port"}>
-              <InputNumber
-                min={0}
-                max={65535}
-                value={settings.streamOverlayPort}
-                formatter={(value) => Math.round(value) + ""}
-                parser={(value) => Number.parseInt(value, 10)}
-                onChange={handleStreamModePortChange}
-              />
-              <br />
-              {" => URL: http://localhost:" + settings.streamOverlayPort}
-            </Form.Item>
-            <Form.Item label={"Streamer view layout"}>
-              <Select
-                value={settings.streamOverlayPosition}
-                onChange={handleStreamViewLayoutChange}
-              >
-                <Select.Option value="top">Top</Select.Option>
-                <Select.Option value="left">Left</Select.Option>
-              </Select>
-            </Form.Item>
-          </>
         ) : null}
-      </Form>
+        {settings.streamOverlay && !settings.streamOverlayPortFree ? (
+          <Alert
+            type="error"
+            message="The port for the stream overlay is already in use!"
+            description="Select a different port or make sure only one insantce of this application is running"
+            banner
+          />
+        ) : null}
+        <Form
+          labelCol={{ span: 8 }}
+          wrapperCol={{ span: 10 }}
+          layout="horizontal"
+          style={{ paddingTop: "20px", paddingBottom: "20px" }}
+        >
+          <Form.Item
+            label={
+              <>
+                Path to warnings.log
+                <Helper
+                  text={
+                    <>
+                      Path to COH warnings log. By default located in{" "}
+                      <Text code>
+                        "C:\\Users\\[user]\\Documents\\My Games\\Company of Heroes
+                        2\\warnings.log"
+                      </Text>
+                    </>
+                  }
+                  style={{ paddingLeft: "5px" }}
+                />
+              </>
+            }
+          >
+            <Input.Group compact>
+              <Form.Item noStyle>
+                <Input
+                  style={{ width: "70%" }}
+                  type={"text"}
+                  value={settings.coh2LogFileLocation}
+                  disabled
+                />
+              </Form.Item>
+              <Form.Item noStyle>
+                <Button onClick={handleChangeOfPath}>Select</Button>
+              </Form.Item>
+              <Form.Item noStyle>
+                <Button onClick={handleScan}>Auto locate</Button>
+              </Form.Item>
+            </Input.Group>
+          </Form.Item>
+          <Form.Item
+            label={
+              <>
+                File check interval{" "}
+                <Helper
+                  text={"Interval in seconds to check the warnings.log file for a new game."}
+                  style={{ paddingLeft: "5px" }}
+                />
+              </>
+            }
+          >
+            <InputNumber
+              min={1}
+              addonAfter="Seconds"
+              value={settings.updateInterval}
+              onChange={handleUpdateIntervalChange}
+            />
+          </Form.Item>
+          <Form.Item
+            label={
+              <>
+                Run in tray{" "}
+                <Helper
+                  text={"Application keeps running in system tray when all windows are closed."}
+                  style={{ paddingLeft: "5px" }}
+                />
+              </>
+            }
+          >
+            <Switch checked={settings.runInTray} onChange={handleRunInTrayChange} />
+          </Form.Item>
+          <Form.Item
+            label={
+              <>
+                Open detail info in browser{" "}
+                <Helper
+                  text={
+                    "Open player cards in your default system browser instead of a new application window."
+                  }
+                  style={{ paddingLeft: "5px" }}
+                />
+              </>
+            }
+          >
+            <Switch checked={settings.openLinksInBrowser} onChange={handleOpenInBrowserChange} />
+          </Form.Item>
+          <Form.Item
+            label={
+              <>
+                Notify when game found{" "}
+                <Tooltip
+                  title={
+                    'Windows will suppress notifications when focus assist do not disturb for games is enabled. To change that go to windows settings, search for focus assist and disable "When i\'m playing a game"'
+                  }
+                >
+                  <ExclamationCircleOutlined style={{ color: "#eb2f96", paddingLeft: "5px" }} />
+                </Tooltip>
+              </>
+            }
+          >
+            <Switch checked={settings.gameNotification} onChange={handleGameNotificationChange} />
+          </Form.Item>
+          <Form.Item label={<>Theme</>}>
+            <Switch
+              checkedChildren={"Dark"}
+              unCheckedChildren={"Light"}
+              checked={settings.theme === "dark"}
+              onChange={handleThemeChange}
+            />
+          </Form.Item>
+          <Form.Item
+            label={
+              <>
+                Use streamer mode{" "}
+                <Helper
+                  text={
+                    <>
+                      Learn more about the setup{" "}
+                      <Typography.Link
+                        onClick={() =>
+                          window.electron.ipcRenderer.openInBrowser(
+                            "https://github.com/petrvecera/coh2ladders/blob/master/packages/app/README.md#stream-overlay",
+                          )
+                        }
+                      >
+                        here
+                      </Typography.Link>
+                    </>
+                  }
+                  style={{ paddingLeft: "5px" }}
+                />
+              </>
+            }
+          >
+            <Switch checked={settings.streamOverlay} onChange={handleStreamerModeChange} />
+          </Form.Item>
+          {settings.streamOverlay ? (
+            <>
+              <Form.Item label={"Streamer view server port"}>
+                <InputNumber
+                  min={0}
+                  max={65535}
+                  value={settings.streamOverlayPort}
+                  formatter={(value) => Math.round(value) + ""}
+                  parser={(value) => Number.parseInt(value, 10)}
+                  onChange={handleStreamModePortChange}
+                />
+                <br />
+                {" => URL: http://localhost:" + settings.streamOverlayPort}
+              </Form.Item>
+              <Form.Item label={"Streamer view layout"}>
+                <Select
+                  value={settings.streamOverlayPosition}
+                  onChange={handleStreamViewLayoutChange}
+                >
+                  <Select.Option value="top">Top</Select.Option>
+                  <Select.Option value="left">Left</Select.Option>
+                </Select>
+              </Form.Item>
+            </>
+          ) : null}
+        </Form>
+      </WindowTitlebar>
     </>
   );
 };
