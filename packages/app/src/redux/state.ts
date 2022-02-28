@@ -1,3 +1,5 @@
+export type ApplicationWindows = "main" | "settings" | "about" | "web";
+
 export interface WindowState {
   x?: number;
   y?: number;
@@ -6,12 +8,7 @@ export interface WindowState {
   maximized: boolean;
 }
 
-export interface WindowStates {
-  main: WindowState;
-  settings: WindowState;
-  about: WindowState;
-  web: WindowState;
-}
+export type WindowStates = Record<ApplicationWindows, WindowState>;
 
 export type StreamOverlayPositions = "top" | "left";
 
@@ -30,7 +27,7 @@ export interface ApplicationSettings {
   streamOverlayPort: number;
   streamOverlayPortFree: boolean;
   streamOverlayPosition: StreamOverlayPositions;
-  theme: string;
+  theme: "light" | "dark";
 }
 
 export type Factions = "german" | "west_german" | "aef" | "british" | "soviet";
