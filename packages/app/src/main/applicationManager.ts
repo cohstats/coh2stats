@@ -206,7 +206,7 @@ export class ApplicationManager {
       this.mainWindow.setMenu(this.getMainWindowMenu());
       this.mainWindow.on("close", this.mainWindowCloseHandler);
       if (validWindowState.maximized) {
-        this.settingsWindow.maximize();
+        this.mainWindow.maximize();
       }
     }
     this.mainWindow.focus();
@@ -317,7 +317,7 @@ export class ApplicationManager {
         }
       });
       if (validWindowState.maximized) {
-        this.settingsWindow.maximize();
+        this.webWindow.maximize();
       }
     }
     this.webWindow.focus();
