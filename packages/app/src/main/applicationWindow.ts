@@ -1,4 +1,4 @@
-import { BrowserWindow, screen } from "electron";
+import { BrowserWindow, Menu, screen } from "electron";
 import { ApplicationWindows, WindowState } from "../redux/state";
 import { isPackaged } from "electron-is-packaged";
 import { getIconPath } from "./paths";
@@ -58,6 +58,7 @@ export class ApplicationWindow {
           nodeIntegration: false,
         },
       });
+      this.window.setMenu(Menu.buildFromTemplate([]));
       this.window.loadURL(this.options.displayExternalContent ? url : this.options.url);
       if (!isPackaged) {
         this.window.webContents.openDevTools({

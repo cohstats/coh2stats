@@ -30,7 +30,7 @@ const App = (): JSX.Element => {
 
   return (
     <>
-      <WindowTitlebar windowName="about" invisibleBar cantMaximize>
+      <WindowTitlebar windowName="about" cantMaximize>
         <Row>
           <Col span={8} style={{ paddingRight: 20, paddingLeft: 20 }}>
             <img src={iconBig} style={{ width: "100%" }} alt="App Icon" />
