@@ -12,6 +12,8 @@ export type WindowStates = Record<ApplicationWindows, WindowState>;
 
 export type StreamOverlayPositions = "top" | "left";
 
+export type ApplicationThemes = "light" | "dark";
+
 export interface ApplicationSettings {
   appVersion: string;
   appNewestVersion?: string;
@@ -27,7 +29,7 @@ export interface ApplicationSettings {
   streamOverlayPort: number;
   streamOverlayPortFree: boolean;
   streamOverlayPosition: StreamOverlayPositions;
-  theme: "light" | "dark";
+  theme: ApplicationThemes;
 }
 
 export type Factions = "german" | "west_german" | "aef" | "british" | "soviet";

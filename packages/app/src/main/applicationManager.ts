@@ -236,6 +236,7 @@ export class ApplicationManager {
 
   quit = (): void => {
     this.isQuitting = true;
+    //events.app_quit(this.applicationStore.runtimeStore.getState().settings.theme, () => app.quit());
     app.quit();
   };
 

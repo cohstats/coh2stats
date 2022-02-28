@@ -33,11 +33,12 @@ export class ApplicationStore {
     this.fileStore = new ElectronStore<Record<string, unknown>>({
       schema: electronStoreSchema,
     });
+
     //temporary reset during development
-    //this.fileStore.clear();
-    //this.setSavedSettings(defaultSettings);
-    //this.setSavedCache({});
-    //this.setSavedWindowStates(defaultWindowStates);
+    this.fileStore.clear();
+    this.setSavedSettings(defaultSettings);
+    this.setSavedCache({});
+    this.setSavedWindowStates(defaultWindowStates);
   }
 
   initializeRuntimeStore(): void {
@@ -64,6 +65,9 @@ export class ApplicationStore {
     }
     this.runtimeStore = configureMainStore(startupRuntimeState);
     this.runtimeStore.dispatch(actions.setAppVersion(app.getVersion()));
+    //process.on("uncaughtException", (error, origin) => {
+    //  events.error(error, origin, this.runtimeStore.getState());
+    //});
     // check if app is up to date
     // const requestCurrentVersionURL = config.checkCurrentVersionLocalDevURL; // for development
     const requestCurrentVersionURL = config.checkCurrentVersionURL;
