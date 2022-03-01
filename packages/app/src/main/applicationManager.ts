@@ -236,10 +236,18 @@ export class ApplicationManager {
 
   quit = (): void => {
     this.isQuitting = true;
-    app.quit();
+    this.windows.main = null;
+    this.windows.web = null;
+    this.windows.settings = null;
+    this.windows.about = null;
   };
 
   destroy(): void {
     this.unsubscriber();
   }
 }
+
+// When all windows are closed the app will end all processes
+app.on("window-all-closed", () => {
+  app.quit();
+});
