@@ -207,6 +207,7 @@ export class ApplicationManager {
       } else {
         this.inTrayMode = false;
         this.windows.main.show();
+        this.windows.settings.show();
         this.tray.destroy();
       }
     }
@@ -236,18 +237,14 @@ export class ApplicationManager {
 
   quit = (): void => {
     this.isQuitting = true;
-    this.windows.main = null;
-    this.windows.web = null;
-    this.windows.settings = null;
-    this.windows.about = null;
+    this.windows.main.destroy();
+    this.windows.web.destroy();
+    this.windows.settings.destroy();
+    this.windows.about.destroy();
+    app.quit();
   };
 
   destroy(): void {
     this.unsubscriber();
   }
 }
-
-// When all windows are closed the app will end all processes
-app.on("window-all-closed", () => {
-  app.quit();
-});
