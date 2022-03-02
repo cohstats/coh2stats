@@ -36,10 +36,10 @@ export class ApplicationStore {
     });
 
     //temporary reset during development
-    this.fileStore.clear();
-    this.setSavedSettings(defaultSettings);
-    this.setSavedCache({});
-    this.setSavedWindowStates(defaultWindowStates);
+    //this.fileStore.clear();
+    //this.setSavedSettings(defaultSettings);
+    //this.setSavedCache({});
+    //this.setSavedWindowStates(defaultWindowStates);
   }
 
   initializeRuntimeStore(): void {
