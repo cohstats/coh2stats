@@ -59,12 +59,13 @@ const events = {
       type: type,
     });
   },
-  app_quit: (settings: ApplicationSettings, onEventSent: () => void): void => {
+  app_quit: (settings: ApplicationSettings, runtime: number, onEventSent: () => void): void => {
     mixpanel.track(
       "app_quit",
       {
         distinct_id: clientId,
         settings: settings,
+        runtime: runtime,
       },
       onEventSent,
     );
