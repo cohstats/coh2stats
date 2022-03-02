@@ -207,6 +207,7 @@ export class ApplicationManager {
       } else {
         this.inTrayMode = false;
         this.windows.main.show();
+        this.windows.settings.show();
         this.tray.destroy();
       }
     }
@@ -237,6 +238,10 @@ export class ApplicationManager {
   quit = (): void => {
     this.isQuitting = true;
     //events.app_quit(this.applicationStore.runtimeStore.getState().settings.theme, () => app.quit());
+    this.windows.main.destroy();
+    this.windows.web.destroy();
+    this.windows.settings.destroy();
+    this.windows.about.destroy();
     app.quit();
   };
 
