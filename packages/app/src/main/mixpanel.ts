@@ -2,6 +2,7 @@ import { init } from "mixpanel";
 import config from "./config";
 import { machineIdSync } from "node-machine-id";
 import { app } from "electron";
+import { ApplicationSettings, ApplicationState, ApplicationWindows } from "../redux/state";
 
 const mixpanel = init(config.mixpanelProjectToken);
 
@@ -41,20 +42,44 @@ const events = {
       map: map,
     });
   },
-  about_open: (): void => {
-    mixpanel.track("about_open", {
+  open_window: (windowName: ApplicationWindows): void => {
+    mixpanel.track(windowName + "_open", {
       distinct_id: clientId,
     });
   },
-  settings_open: (): void => {
-    mixpanel.track("settings_open", {
+  close_window: (windowName: ApplicationWindows, openTime: number): void => {
+    mixpanel.track(windowName + "_close", {
       distinct_id: clientId,
+      open_time: openTime,
     });
   },
   click_on_player: (type: string): void => {
     mixpanel.track("open_player_profile", {
       distinct_id: clientId,
       type: type,
+    });
+  },
+  app_quit: (settings: ApplicationSettings, runtime: number, onEventSent: () => void): void => {
+    mixpanel.track(
+      "app_quit",
+      {
+        distinct_id: clientId,
+        settings: settings,
+        runtime: runtime,
+      },
+      onEventSent,
+    );
+  },
+  error: (
+    error: Error,
+    origin: NodeJS.UncaughtExceptionOrigin,
+    applicationState: ApplicationState,
+  ): void => {
+    mixpanel.track("app_error", {
+      distinct_id: clientId,
+      error: error,
+      origin: origin,
+      applicationState: applicationState,
     });
   },
 };

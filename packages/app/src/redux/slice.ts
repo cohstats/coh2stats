@@ -4,6 +4,7 @@ import {
   ApplicationCache,
   ApplicationSettings,
   ApplicationState,
+  ApplicationThemes,
   ApplicationWindows,
   GameData,
   GameState,
@@ -47,7 +48,7 @@ export const slice = createSlice({
     setRunInTray: (state, { payload }: PayloadAction<boolean>) => {
       state.settings.runInTray = payload;
     },
-    setSettingsTheme: (state, { payload }: PayloadAction<"light" | "dark">) => {
+    setSettingsTheme: (state, { payload }: PayloadAction<ApplicationThemes>) => {
       state.settings.theme = payload;
     },
     setOpenLinksInBrowser: (state, { payload }: PayloadAction<boolean>) => {

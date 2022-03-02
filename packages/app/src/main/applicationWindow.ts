@@ -2,6 +2,7 @@ import { BrowserWindow, Menu, screen } from "electron";
 import { ApplicationWindows, WindowState } from "../redux/state";
 import { isPackaged } from "electron-is-packaged";
 import { getIconPath } from "./paths";
+import { events } from "./mixpanel";
 
 export interface ApplicationWindowOptions {
   minWidth: number;
@@ -25,6 +26,7 @@ export class ApplicationWindow {
   options: ApplicationWindowOptions;
   name: ApplicationWindows;
   window: BrowserWindow | undefined;
+  startTime: number;
 
   constructor(windowName: ApplicationWindows, options: ApplicationWindowOptions) {
     this.options = options;
@@ -37,6 +39,8 @@ export class ApplicationWindow {
 
   show = (url?: string): void => {
     if (!this.exists() && (!this.options.displayExternalContent || url)) {
+      this.startTime = new Date().getTime();
+      events.open_window(this.name);
       const windowState = this.options.getLastWindowSateFunc(this.name);
       const validWindowState = this.getValidWindowSpawn(windowState);
       this.window = new BrowserWindow({
@@ -99,6 +103,7 @@ export class ApplicationWindow {
 
   close = (): void => {
     if (this.exists()) {
+      events.close_window(this.name, new Date().getTime() - this.startTime);
       this.window.close();
     }
   };

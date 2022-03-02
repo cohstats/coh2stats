@@ -25,6 +25,7 @@ export class ApplicationManager {
   inTrayMode: boolean;
   isQuitting: boolean;
   unsubscriber: Unsubscribe;
+  startTime: number;
 
   constructor(applicationStore: ApplicationStore) {
     this.isQuitting = false;
@@ -122,6 +123,7 @@ export class ApplicationManager {
       });
     });
 
+    this.startTime = new Date().getTime();
     this.windows.main.show();
     if (!settings.coh2LogFileFound) {
       this.windows.settings.show();
@@ -241,7 +243,11 @@ export class ApplicationManager {
     this.windows.web.destroy();
     this.windows.settings.destroy();
     this.windows.about.destroy();
-    app.quit();
+    events.app_quit(
+      this.applicationStore.runtimeStore.getState().settings,
+      new Date().getTime() - this.startTime,
+      () => app.quit(),
+    );
   };
 
   destroy(): void {
