@@ -8,7 +8,7 @@ import {
 import { actions, ReduxStore } from "../redux/slice";
 import { configureMainStore } from "../redux/configureStoreMain";
 import { AnyAction, Unsubscribe } from "@reduxjs/toolkit";
-import { app, nativeTheme } from "electron";
+import { app, dialog, nativeTheme } from "electron";
 import { defaultSettings, defaultWindowStates, startupGameData } from "../redux/defaultState";
 import axios from "axios";
 import config from "./config";
@@ -67,7 +67,11 @@ export class ApplicationStore {
     this.runtimeStore = configureMainStore(startupRuntimeState);
     this.runtimeStore.dispatch(actions.setAppVersion(app.getVersion()));
     process.on("uncaughtException", (error, origin) => {
-      events.error(error, origin, this.runtimeStore.getState());
+      const showDialog = async () => {
+        dialog.showErrorBox(error.name + " " + error.message, error.stack);
+      };
+      console.error("Error", error);
+      events.error(error, origin, this.runtimeStore.getState().settings, showDialog);
     });
     // check if app is up to date
     // const requestCurrentVersionURL = config.checkCurrentVersionLocalDevURL; // for development
