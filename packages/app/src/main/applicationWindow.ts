@@ -103,7 +103,7 @@ export class ApplicationWindow {
 
   close = (): void => {
     if (this.exists()) {
-      //events.close_window(this.name, new Date().getTime() - this.startTime, () => this.window.destroy());
+      events.close_window(this.name, new Date().getTime() - this.startTime);
       this.window.close();
     }
   };

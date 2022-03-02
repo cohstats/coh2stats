@@ -2,7 +2,7 @@ import { init } from "mixpanel";
 import config from "./config";
 import { machineIdSync } from "node-machine-id";
 import { app } from "electron";
-import { ApplicationState, ApplicationThemes, ApplicationWindows } from "../redux/state";
+import { ApplicationSettings, ApplicationState, ApplicationWindows } from "../redux/state";
 
 const mixpanel = init(config.mixpanelProjectToken);
 
@@ -47,12 +47,11 @@ const events = {
       distinct_id: clientId,
     });
   },
-  close_window: (windowName: ApplicationWindows, openTime: number, onEventSent: () => void): void => {
+  close_window: (windowName: ApplicationWindows, openTime: number): void => {
     mixpanel.track(windowName + "_close", {
       distinct_id: clientId,
-      open_time: openTime
-    },
-    onEventSent);
+      open_time: openTime,
+    });
   },
   click_on_player: (type: string): void => {
     mixpanel.track("open_player_profile", {
@@ -60,21 +59,28 @@ const events = {
       type: type,
     });
   },
-  app_quit: (theme: ApplicationThemes, onEventSent: () => void): void => {
-    mixpanel.track("app_quit", {
-      distinct_id: clientId,
-      theme: theme,
-    },
-    onEventSent);
+  app_quit: (settings: ApplicationSettings, onEventSent: () => void): void => {
+    mixpanel.track(
+      "app_quit",
+      {
+        distinct_id: clientId,
+        settings: settings,
+      },
+      onEventSent,
+    );
   },
-  error: (error: Error, origin: NodeJS.UncaughtExceptionOrigin, applicationState: ApplicationState): void => {
+  error: (
+    error: Error,
+    origin: NodeJS.UncaughtExceptionOrigin,
+    applicationState: ApplicationState,
+  ): void => {
     mixpanel.track("app_error", {
       distinct_id: clientId,
       error: error,
       origin: origin,
-      applicationState: applicationState
+      applicationState: applicationState,
     });
-  }
+  },
 };
 
 export { events };

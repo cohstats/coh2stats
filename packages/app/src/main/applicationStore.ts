@@ -12,6 +12,7 @@ import { app, nativeTheme } from "electron";
 import { defaultSettings, defaultWindowStates, startupGameData } from "../redux/defaultState";
 import axios from "axios";
 import config from "./config";
+import { events } from "./mixpanel";
 
 export class ApplicationStore {
   runtimeStore: ReduxStore;
@@ -65,9 +66,9 @@ export class ApplicationStore {
     }
     this.runtimeStore = configureMainStore(startupRuntimeState);
     this.runtimeStore.dispatch(actions.setAppVersion(app.getVersion()));
-    //process.on("uncaughtException", (error, origin) => {
-    //  events.error(error, origin, this.runtimeStore.getState());
-    //});
+    process.on("uncaughtException", (error, origin) => {
+      events.error(error, origin, this.runtimeStore.getState());
+    });
     // check if app is up to date
     // const requestCurrentVersionURL = config.checkCurrentVersionLocalDevURL; // for development
     const requestCurrentVersionURL = config.checkCurrentVersionURL;
