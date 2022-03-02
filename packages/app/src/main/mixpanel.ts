@@ -2,7 +2,7 @@ import { init } from "mixpanel";
 import config from "./config";
 import { machineIdSync } from "node-machine-id";
 import { app } from "electron";
-import { ApplicationSettings, ApplicationState, ApplicationWindows } from "../redux/state";
+import { ApplicationSettings, ApplicationWindows } from "../redux/state";
 
 const mixpanel = init(config.mixpanelProjectToken);
 
@@ -64,7 +64,7 @@ const events = {
       "app_quit",
       {
         distinct_id: clientId,
-        settings: settings,
+        settings: { ...settings, coh2LogFileLocation: "" },
         runtime: runtime,
       },
       onEventSent,
@@ -73,14 +73,21 @@ const events = {
   error: (
     error: Error,
     origin: NodeJS.UncaughtExceptionOrigin,
-    applicationState: ApplicationState,
+    settings: ApplicationSettings,
+    onEventSent: () => void,
   ): void => {
-    mixpanel.track("app_error", {
-      distinct_id: clientId,
-      error: error,
-      origin: origin,
-      applicationState: applicationState,
-    });
+    mixpanel.track(
+      "app_error",
+      {
+        distinct_id: clientId,
+        stack: error.stack,
+        name: error.name,
+        message: error.message,
+        origin: origin,
+        settings: { ...settings, coh2LogFileLocation: "" },
+      },
+      onEventSent,
+    );
   },
 };
 
