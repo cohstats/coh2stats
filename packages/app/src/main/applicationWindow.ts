@@ -99,6 +99,12 @@ export class ApplicationWindow {
 
   close = (): void => {
     if (this.exists()) {
+      this.window.close();
+    }
+  };
+
+  destroy = (): void => {
+    if (this.exists()) {
       this.window.destroy();
     }
   };
