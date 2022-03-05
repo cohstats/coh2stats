@@ -11,7 +11,42 @@ import firebaseAnalytics from "../../analytics";
 import { CountryFlag } from "../../components/country-flag";
 import { AlertBox } from "../../components/alert-box";
 
-type userAPIObject = Record<"steamProfile" | "relicProfile", Record<string, any>>;
+type RelicProfileType = {
+  id: number;
+  members: Array<{
+    alias: string;
+    country: string;
+    leaderboardregion_id: number;
+    level: number;
+    name: string;
+    personal_statgroup_id: number;
+    profile_id: number;
+    xp: number;
+  }>;
+  name: string;
+  type: number;
+};
+
+type SteamProfileType = {
+  avatar: string;
+  avatarfull: string;
+  avatarhash: string;
+  avatarmedium: string;
+  communityvisibilitystate: number;
+  personaname: string;
+  personastate: number;
+  personastateflags: number;
+  primaryclanid: string;
+  profilestate: number;
+  profileurl: string;
+  steamid: string;
+  timecreated: number;
+};
+
+type userAPIObject = {
+  steamProfile: SteamProfileType;
+  relicProfile: RelicProfileType;
+};
 
 const userCard = (
   userObject: userAPIObject,
@@ -60,6 +95,16 @@ const userCard = (
   );
 };
 
+const sortByXP = (array: Array<userAPIObject>) => {
+  return array.sort((a, b) => {
+    if (a.relicProfile.members[0].xp > b.relicProfile.members[0].xp) {
+      return -1;
+    } else {
+      return 1;
+    }
+  });
+};
+
 const CustomSearch: React.FC = () => {
   const { push } = useHistory();
 
@@ -85,7 +130,8 @@ const CustomSearch: React.FC = () => {
         );
       } else {
         const userCards = [];
-        for (const value of Object.values(data)) {
+        const foundProfiles = Object.values(data);
+        for (const value of sortByXP(foundProfiles)) {
           userCards.push(userCard(value, push));
         }
 
