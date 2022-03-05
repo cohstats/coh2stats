@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getRecentMatchHistoryUrl } from "../coh2-api";
+import { getMultipleRecentMatchHistoryUrl } from "../coh2-api";
 import { prepareMatchDBObject, isLastDayMatch } from "./single-match";
 
 import { performance } from "perf_hooks";
@@ -17,8 +17,10 @@ const db = firestore();
 // Keep Alive the TCP connection
 const httpsAgent = new Agent({ keepAlive: true });
 
-const fetchPlayerMatchStats = async (profileName: string): Promise<Record<string, any>> => {
-  const url = getRecentMatchHistoryUrl(profileName);
+const fetchPlayerMatchStats = async (
+  profileNames: Array<string>,
+): Promise<Record<string, any>> => {
+  const url = getMultipleRecentMatchHistoryUrl(profileNames);
 
   const response = await axios.get(url, { httpsAgent });
 
@@ -29,7 +31,7 @@ const fetchPlayerMatchStats = async (profileName: string): Promise<Record<string
 
     return data;
   } else if (response.data["result"]["message"] == "UNREGISTERED_PROFILE_NAME") {
-    functions.logger.error(`Tried to get matches for non existing player name ${profileName}`);
+    functions.logger.error(`Tried to get matches for non existing player name ${profileNames}`);
     throw Object.assign(new Error("Tried to fetch matches for UNREGISTERED_PROFILE_NAME"), {
       response,
     });
@@ -39,18 +41,18 @@ const fetchPlayerMatchStats = async (profileName: string): Promise<Record<string
 };
 
 const getAndPrepareMatchesForPlayer = async (
-  profileName: string,
+  profileNames: Array<string>,
   filterLastDayOnly = true,
 ): Promise<Array<ProcessedMatch>> => {
   // Monitoring fetching time - the response from the relic server
   const t0 = performance.now();
-  const data = await fetchPlayerMatchStats(profileName);
+  const data = await fetchPlayerMatchStats(profileNames);
   const t1 = performance.now();
 
   const allMatches = data["matchHistoryStats"];
   const profiles = data["profiles"];
 
-  let logMessage = `Player ${profileName} fetched ${allMatches.length} matches in ${
+  let logMessage = `Player ${profileNames} fetched ${allMatches.length} matches in ${
     (t1 - t0) | 0
   } ms.`;
 

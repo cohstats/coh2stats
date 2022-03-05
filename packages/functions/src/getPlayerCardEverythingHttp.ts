@@ -46,7 +46,7 @@ app.get(
     try {
       const PromiseRelicData = getPlayerStatsFromRelic(steamID);
       const PromiseSteamProfile = getSteamPlayerSummaries([steamID]);
-      const PromisePlayerMatches = getAndPrepareMatchesForPlayer(`/steam/${steamID}`, false);
+      const PromisePlayerMatches = getAndPrepareMatchesForPlayer([`/steam/${steamID}`], false);
       const [relicData, steamProfile, playerMatches] = await Promise.all([
         PromiseRelicData,
         PromiseSteamProfile,

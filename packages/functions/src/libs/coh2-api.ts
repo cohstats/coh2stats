@@ -50,6 +50,15 @@ const getRecentMatchHistoryUrl = (profileName: string): string => {
   );
 };
 
+const getMultipleRecentMatchHistoryUrl = (profileNames: Array<string>): string => {
+  return encodeURI(
+    baseUrl +
+      `/community/leaderboard/getRecentMatchHistory?title=coh2&profile_names=["${profileNames.join(
+        '","',
+      )}"]`,
+  );
+};
+
 const getPlayerPersonalStatsUrl = (steamID: string): string => {
   return encodeURI(
     baseUrl +
@@ -151,4 +160,5 @@ export {
   resultType,
   matchItemsLocation,
   getPlayerSearchUrl,
+  getMultipleRecentMatchHistoryUrl,
 };

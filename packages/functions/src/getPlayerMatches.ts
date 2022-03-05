@@ -62,14 +62,16 @@ const getPlayerMatches = functions
   .runWith(runtimeOpts)
   .pubsub.topic(PUBSUB_TOPIC_DOWNLOAD_MATCHES)
   .onPublish(async (message) => {
-    const profileNames = message.json.profileNames;
+    const profileNames: Array<string> = message.json.profileNames;
     functions.logger.log(`Received these profile names ${profileNames}`);
 
     const matches: Record<string, any> = {};
     let duplicatesCounter = 0;
 
-    for (const profileName of profileNames) {
-      const playerMatches = await getAndPrepareMatchesForPlayer(profileName);
+    const chunkedData = chunk(profileNames, 5);
+
+    for (const chunk of chunkedData) {
+      const playerMatches = await getAndPrepareMatchesForPlayer(chunk);
 
       for (const match of playerMatches) {
         if (Object.prototype.hasOwnProperty.call(matches, match.id)) {
