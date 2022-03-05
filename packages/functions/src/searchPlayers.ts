@@ -27,6 +27,45 @@ const extractSteamId = (relicStatGroupObject: Record<string, any>): string => {
   return convertSteamNameToID(steamName);
 };
 
+const searchFunction = async (name: string) => {
+  try {
+    const playerGroups = await playerSearchOnRelic(name);
+    const steamIDs = playerGroups.reduce((acc: Array<string>, currentValue) => {
+      acc.push(extractSteamId(currentValue));
+      return acc;
+    }, []);
+
+    const steamProfiles = await getSteamPlayerSummaries(steamIDs);
+    if (!steamProfiles) {
+      throw new Error(`Did not found any steam accounts for ids ${steamIDs}`);
+    }
+
+    const foundProfiles: Record<string, Record<"steamProfile" | "relicProfile", any>> = {};
+
+    for (const [key, value] of Object.entries(steamProfiles)) {
+      foundProfiles[key] = { steamProfile: value, relicProfile: {} };
+    }
+
+    for (const playerGroup of playerGroups) {
+      const steamId = extractSteamId(playerGroup);
+
+      if (Object.prototype.hasOwnProperty.call(foundProfiles, steamId)) {
+        foundProfiles[steamId]["relicProfile"] = playerGroup;
+      } else {
+        functions.logger.warn(
+          `Did not found steam profile. SteamID: ${steamId}, playerGroup: ${playerGroup}`,
+        );
+        foundProfiles["unknown"] = { relicProfile: playerGroup, steamProfile: "unknown" };
+      }
+    }
+
+    return { foundProfiles };
+  } catch (e) {
+    functions.logger.warn(e);
+    throw new Error(`Error getting player profiles ${e}`);
+  }
+};
+
 /**
  * This function does a search for the players via relic API and combines the result with the SteamAPI
  * {name: "my custom name"}
@@ -56,43 +95,16 @@ const searchPlayers = functions
     }
 
     try {
-      const playerGroups = await playerSearchOnRelic(name);
-      const steamIDs = playerGroups.reduce((acc: Array<string>, currentValue) => {
-        acc.push(extractSteamId(currentValue));
-        return acc;
-      }, []);
-
-      const steamProfiles = await getSteamPlayerSummaries(steamIDs);
-      if (!steamProfiles) {
-        throw new functions.https.HttpsError(
-          "internal",
-          `Did not found any steam accounts for ids ${steamIDs}`,
-        );
-      }
-
-      const foundProfiles: Record<string, Record<"steamProfile" | "relicProfile", any>> = {};
-
-      for (const [key, value] of Object.entries(steamProfiles)) {
-        foundProfiles[key] = { steamProfile: value, relicProfile: {} };
-      }
-
-      for (const playerGroup of playerGroups) {
-        const steamId = extractSteamId(playerGroup);
-
-        if (Object.prototype.hasOwnProperty.call(foundProfiles, steamId)) {
-          foundProfiles[steamId]["relicProfile"] = playerGroup;
-        } else {
-          functions.logger.warn(
-            `Did not found steam profile. SteamID: ${steamId}, playerGroup: ${playerGroup}`,
-          );
-          foundProfiles["unknown"] = { relicProfile: playerGroup, steamProfile: "unknown" };
-        }
-      }
-
-      return { foundProfiles };
+      return await searchFunction(name);
     } catch (e) {
-      functions.logger.error(e);
-      throw new functions.https.HttpsError("internal", `Error calling calling the API ${e}`);
+      try {
+        // Try one more time
+        return await searchFunction(name);
+      } catch (e) {
+        functions.logger.error(e);
+        // This wil end the firebase function execution with error
+        throw new functions.https.HttpsError("internal", `Error searching for players ${e}`);
+      }
     }
   });
 
