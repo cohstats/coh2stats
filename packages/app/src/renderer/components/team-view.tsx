@@ -8,8 +8,8 @@ import { LadderStats, Member, SideData } from "../../redux/state";
 import { CountryFlag } from "./country-flag";
 import { timeAgo } from "../utils/helpers";
 import { FactionIcon } from "./faction-icon";
-import { Helper } from "@coh2ladders/shared/src/components/helper";
-import { levelToText } from "@coh2ladders/shared/src/coh/helpers";
+import { Helper } from "@coh2stats/shared/src/components/helper";
+import { levelToText } from "@coh2stats/shared/src/coh/helpers";
 
 interface Props {
   side: SideData;

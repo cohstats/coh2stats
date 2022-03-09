@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Factions, GameData } from "../../redux/state";
 import TeamView from "../components/team-view";
-// import { convertDateToMonthTimestamp } from "@coh2ladders/shared/src/utils/date-helpers";
+// import { convertDateToMonthTimestamp } from "@coh2stats/shared/src/utils/date-helpers";
 import { doc, DocumentData, getDoc, getFirestore } from "firebase/firestore";
 import GameBalanceView from "../components/game-balance-view";
 import { events } from "../firebase/firebase";

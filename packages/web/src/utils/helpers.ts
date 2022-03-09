@@ -6,7 +6,7 @@ import en from "javascript-time-ago/locale/en.json";
 
 // Something like this is not currently support by create-react-app
 // Jesus that lib is such a shit https://github.com/facebook/create-react-app/issues/9127 ...
-// import {convertDateToMonthTimestamp as _convertDateToMonthTimestamp} from "@coh2ladders/shared/src/utils/date-helpers";
+// import {convertDateToMonthTimestamp as _convertDateToMonthTimestamp} from "@coh2stats/shared/src/utils/date-helpers";
 
 TimeAgo.addDefaultLocale(en);
 const timeAgo = new TimeAgo("en-US");

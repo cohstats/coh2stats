@@ -6,7 +6,7 @@ import {
   PersonalStatResponse,
   StatGroup,
   StatGroupMember,
-} from "@coh2ladders/shared/src/coh/coh2-api";
+} from "@coh2stats/shared/src/coh/coh2-api";
 
 const leaderboardIDLookupTable = {
   german: [4, 8, 12, 16],
