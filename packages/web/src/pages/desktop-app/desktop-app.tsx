@@ -3,7 +3,7 @@ import { Button, Col, Image, Row } from "antd";
 import Link from "antd/lib/typography/Link";
 import Title from "antd/lib/typography/Title";
 import React from "react";
-import AppVersionFile from "@coh2ladders/web/public/electron-app-version.json";
+import AppVersionFile from "@coh2stats/web/public/electron-app-version.json";
 
 const DesktopApp: React.FC = () => {
   return (
@@ -112,7 +112,7 @@ const DesktopApp: React.FC = () => {
                 in game. Learn more{" "}
                 <Link
                   href={
-                    "https://github.com/petrvecera/coh2ladders/blob/master/packages/app/README.md#stream-overlay"
+                    "https://github.com/cohstats/coh2stats/blob/master/packages/app/README.md#stream-overlay"
                   }
                 >
                   here

@@ -196,7 +196,7 @@ const CustomSearch: React.FC = () => {
                 </a>
                 . If the error persists, please report it{" "}
                 <a
-                  href={"https://github.com/petrvecera/coh2ladders/issues"}
+                  href={"https://github.com/cohstats/coh2stats/issues"}
                   target={"_blank"}
                   rel="noreferrer"
                 >

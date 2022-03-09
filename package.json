@@ -1,5 +1,5 @@
 {
-  "name": "coh2ladders",
+  "name": "coh2stats",
   "workspaces": {
     "packages": [
       "packages/*"
@@ -9,10 +9,10 @@
     ]
   },
   "scripts": {
-    "functions": "yarn workspace @coh2ladders/functions",
-    "web": "yarn workspace @coh2ladders/web",
-    "app": "yarn workspace @coh2ladders/app",
-    "shared": "yarn workspace @coh2ladders/shared",
+    "functions": "yarn workspace @coh2stats/functions",
+    "web": "yarn workspace @coh2stats/web",
+    "app": "yarn workspace @coh2stats/app",
+    "shared": "yarn workspace @coh2stats/shared",
     "fix": "run-s fix:*",
     "fix:eslint": "eslint --fix packages/**/*.{ts,tsx,js}",
     "fix:prettier": "prettier --loglevel warn --write .",

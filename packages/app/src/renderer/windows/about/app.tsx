@@ -89,7 +89,7 @@ const App = (): JSX.Element => {
                 <Link
                   onClick={() =>
                     window.electron.ipcRenderer.openInBrowser(
-                      "https://github.com/petrvecera/coh2ladders/issues",
+                      "https://github.com/cohstats/coh2stats/issues",
                     )
                   }
                 >
@@ -109,7 +109,7 @@ const App = (): JSX.Element => {
                 <Link
                   onClick={() =>
                     window.electron.ipcRenderer.openInBrowser(
-                      "https://github.com/petrvecera/coh2ladders",
+                      "https://github.com/cohstats/coh2stats",
                     )
                   }
                 >

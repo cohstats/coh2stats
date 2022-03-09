@@ -12,7 +12,7 @@ import { StreamOverlayPositions } from "../../../redux/state";
 import { actions, selectSettings } from "../../../redux/slice";
 import { useEffect, useState } from "react";
 import { events, firebaseInit } from "../../firebase/firebase";
-import { Helper } from "@coh2ladders/shared/src/components/helper";
+import { Helper } from "@coh2stats/shared/src/components/helper";
 import { Tooltip, Typography } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import WindowTitlebar from "../../titlebar/window-titlebar";
@@ -236,7 +236,7 @@ const App = (): JSX.Element => {
                       <Typography.Link
                         onClick={() =>
                           window.electron.ipcRenderer.openInBrowser(
-                            "https://github.com/petrvecera/coh2ladders/blob/master/packages/app/README.md#stream-overlay",
+                            "https://github.com/cohstats/coh2stats/blob/master/packages/app/README.md#stream-overlay",
                           )
                         }
                       >

@@ -50,7 +50,7 @@ const About: React.FC = () => {
         Update 25/Oct/21: Query top 600 positions.
       </Paragraph>
       More technical description of this process can be found{" "}
-      <Link href="https://github.com/petrvecera/coh2ladders#crawler-process" target="_blank">
+      <Link href="https://github.com/cohstats/coh2stats#crawler-process" target="_blank">
         here
       </Link>
       <br />
@@ -118,14 +118,14 @@ const About: React.FC = () => {
         </Title>
       </a>
       This project is completely open source, head over to the{" "}
-      <Link href="https://github.com/petrvecera/coh2ladders" target="_blank">
+      <Link href="https://github.com/cohstats/coh2stats" target="_blank">
         GitHub Repo
       </Link>{" "}
       for more info. Any contributions are welcomed.
       <br />
       <br />
       You can report any bugs or feature requests on{" "}
-      <Link href="https://github.com/petrvecera/coh2ladders/issues" target="_blank">
+      <Link href="https://github.com/cohstats/coh2stats/issues" target="_blank">
         GitHub issues
       </Link>
       .

@@ -17,7 +17,7 @@ export const MainFooter: React.FC = () => {
       © 2021 COH2stats.com
       <br />
       <a
-        href={"https://github.com/petrvecera/coh2ladders"}
+        href={"https://github.com/cohstats/coh2stats"}
         target="_blank"
         rel="noopener noreferrer"
       >
