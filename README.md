@@ -2,7 +2,7 @@
 
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/cohstats/coh2stats)
 ![Uptime Robot ratio (30 days)](https://img.shields.io/uptimerobot/ratio/m788579058-010f84f8b7e284e354b0946c?label=uptime%2030%20days)
-[![DeepScan grade](https://deepscan.io/api/teams/15780/projects/20479/branches/558227/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=15780&pid=19027&bid=481420)
+[![DeepScan grade](https://deepscan.io/api/teams/15780/projects/20479/branches/558227/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=15780&pid=20479&bid=558227)
 ![GitHub CodeQL Workflow Status (branch)](https://img.shields.io/github/workflow/status/cohstats/coh2stats/CodeQL/master?label=CodeQL)
 
 ### Website https://coh2stats.com/
