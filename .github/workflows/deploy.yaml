@@ -14,6 +14,9 @@ env:
 jobs:
   build-deploy-web:
     name: Deploy Web Prod
+    environment:
+      name: prod
+      url: https://coh2stats.com/
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo

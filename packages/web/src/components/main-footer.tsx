@@ -16,11 +16,7 @@ export const MainFooter: React.FC = () => {
       <br />
       © 2021 COH2stats.com
       <br />
-      <a
-        href={"https://github.com/cohstats/coh2stats"}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
+      <a href={"https://github.com/cohstats/coh2stats"} target="_blank" rel="noopener noreferrer">
         <img width={30} height={30} src={"/resources/github-dark.png"} alt={"GitHub Logo"} />
       </a>
       <br />
