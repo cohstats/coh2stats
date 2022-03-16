@@ -9,7 +9,6 @@
     ]
   },
   "scripts": {
-    "functions": "yarn workspace @coh2stats/functions",
     "web": "yarn workspace @coh2stats/web",
     "app": "yarn workspace @coh2stats/app",
     "shared": "yarn workspace @coh2stats/shared",
@@ -20,7 +19,7 @@
     "lint:eslint": "eslint packages/**/*.{ts,tsx,js}",
     "lint:prettier": "prettier --check .",
     "react-spring-issue-1078": "find node_modules -path \\*@react-spring/\\*/package.json -exec sed -i.bak 's/\"sideEffects\": false/\"sideEffects\": true/g' {} +",
-    "clean": "rm -fr node_modules && rm -fr packages/functions/node_modules && rm -fr packages/web/node_modules && rm -fr packages/app/node_modules",
+    "clean": "rm -fr node_modules && rm -fr packages/web/node_modules && rm -fr packages/app/node_modules",
     "reinstall": "yarn run clean && yarn install"
   },
   "version": "0.1.2",
