@@ -71,6 +71,9 @@ const App = (): JSX.Element => {
 
   const menuItems = (
     <>
+      <WindowTitlebarItem onClick={() => window.electron.ipcRenderer.reloadStats()}>
+        Reload
+      </WindowTitlebarItem>
       <WindowTitlebarItem onClick={() => window.electron.ipcRenderer.showWindow("settings")}>
         Settings
       </WindowTitlebarItem>

@@ -14,6 +14,7 @@ declare global {
         openInBrowser(link: string): void;
         locateLogFile(): void;
         scanForLogFile(): void;
+        reloadStats(): void;
       };
       store: EnhancedStore;
     };
