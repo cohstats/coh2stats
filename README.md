@@ -76,21 +76,7 @@ Use Node version 14.x or as described in `/packages/functions/package.json`
 
 #### Functions
 
-- To build the functions:
-  `yarn functions build`
-- To run the tests on functions:
-  `yarn functions test`
-
-### Env variables for Cloud Functions
-
-Env variables for the functions are deployed manually - not integrated in the CI/CD.
-See `config.ts`
-
-```javascript
-const config = firebaseConfig().env;
-```
-
-See https://firebase.google.com/docs/functions/config-env for more info.
+BE has been moved to repo `coh2-stats-be`
 
 ### Patch update steps for text bulletin / commander data
 
