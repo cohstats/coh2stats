@@ -61,6 +61,12 @@ export class GameWatcher {
       }
     });
 
+    ipcMain.on("reloadStats", () => {
+      this.lastGameId = "";
+      this.isFirstScan = true; // do not notify
+      this.intervalHandler();
+    });
+
     // listen to settings changes
     this.unsubscriber = this.applicationStore.runtimeStore.subscribe(this.runtimeStoreSubscriber);
   }

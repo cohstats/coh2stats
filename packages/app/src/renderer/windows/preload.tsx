@@ -34,5 +34,8 @@ contextBridge.exposeInMainWorld("electron", {
     scanForLogFile() {
       ipcRenderer.send("scanForLogFile");
     },
+    reloadStats() {
+      ipcRenderer.send("reloadStats");
+    },
   },
 });
