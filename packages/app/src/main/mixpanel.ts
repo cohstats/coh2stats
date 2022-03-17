@@ -64,7 +64,13 @@ const events = {
       "app_quit",
       {
         distinct_id: clientId,
-        settings: { ...settings, coh2LogFileLocation: "" },
+        settings: {
+          ...settings,
+          coh2LogFileLocation: "",
+          twitchExtensionPasswordHash: "",
+          twitchExtensionUUID: "",
+          twitchExtensionSecret: "",
+        },
         runtime: runtime,
       },
       onEventSent,
@@ -84,7 +90,13 @@ const events = {
         name: error.name,
         message: error.message,
         origin: origin,
-        settings: { ...settings, coh2LogFileLocation: "" },
+        settings: {
+          ...settings,
+          coh2LogFileLocation: "",
+          twitchExtensionPasswordHash: "",
+          twitchExtensionUUID: "",
+          twitchExtensionSecret: "",
+        },
       },
       onEventSent,
     );

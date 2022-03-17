@@ -34,5 +34,11 @@ contextBridge.exposeInMainWorld("electron", {
     scanForLogFile() {
       ipcRenderer.send("scanForLogFile");
     },
+    configureTwitchExtensionBackend(password: string) {
+      ipcRenderer.send("configureTwitchExtensionBackend", password);
+    },
+    resetTwitchExtensionBackendConfig() {
+      ipcRenderer.send("resetTwitchExtensionBackendConfig");
+    },
   },
 });

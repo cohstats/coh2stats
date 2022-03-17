@@ -1,4 +1,3 @@
-import { Unsubscribe } from "@reduxjs/toolkit";
 import { ApplicationStore } from "../applicationStore";
 import { Server } from "http";
 import net from "net";
@@ -8,13 +7,14 @@ import { getAntdDistPath, getAssetsPath } from "../paths";
 import express, { Request, Response, NextFunction } from "express";
 import { renderHtml } from "./renderHtml";
 import { actions } from "../../redux/slice";
+import { Unsubscribe } from "@reduxjs/toolkit";
 
 export class StreamerOverlay {
   expressServer: Server;
   socketIoServer: socketIo.Server;
-  applicationStore: ApplicationStore;
   running: boolean;
   currentPort: number;
+  applicationStore: ApplicationStore;
   unsubscriber: Unsubscribe;
 
   constructor(applicationStore: ApplicationStore) {
@@ -112,7 +112,7 @@ export class StreamerOverlay {
     this.running = false;
   }
 
-  destroy(): void {
+  public destroy(): void {
     this.stop();
     this.unsubscriber();
   }

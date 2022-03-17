@@ -29,7 +29,10 @@ const teamLeaderboardIdsLookupTable: Record<TeamSide, number[]> = {
  * @param logFileGameData Game data from reading the warnings.log file
  * @returns Promise with refined game data using the relic api if relic request was successful
  */
-export const refineLogFileData = (logFileGameData: LogFileGameData): Promise<GameData> => {
+export const refineLogFileData = (
+  logFileGameData: LogFileGameData,
+  uniqueId: string,
+): Promise<GameData> => {
   return new Promise((resolve, reject) => {
     fetchDataFromRelicAPI(logFileGameData).then(
       (response: AxiosResponse<PersonalStatResponse>) => {
@@ -37,6 +40,7 @@ export const refineLogFileData = (logFileGameData: LogFileGameData): Promise<Gam
         if (response.status === 200 && apiData.result.code === 0) {
           resolve({
             found: true,
+            uniqueId: uniqueId,
             state: logFileGameData.state,
             type: logFileGameData.type,
             map: logFileGameData.map,
