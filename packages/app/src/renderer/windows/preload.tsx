@@ -39,6 +39,7 @@ contextBridge.exposeInMainWorld("electron", {
     },
     resetTwitchExtensionBackendConfig() {
       ipcRenderer.send("resetTwitchExtensionBackendConfig");
+    },
     reloadStats() {
       ipcRenderer.send("reloadStats");
     },
