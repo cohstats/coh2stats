@@ -7,6 +7,7 @@ import crypto from "crypto";
 import axios, { AxiosPromise } from "axios";
 import config from "./config";
 import { actions } from "../redux/slice";
+import { events } from "./mixpanel";
 
 export class TwitchExtension {
   lastUniqueGameId: string;
@@ -51,16 +52,15 @@ export class TwitchExtension {
               this.applicationStore.runtimeStore.dispatch(
                 actions.setTwitchExtensionConfigStatus("error"),
               );
-              console.log("failed posting or finding a uuid for posting", error);
+              events.twitchExtensionConfiguationError("finding uuid and posting data", error);
             });
         })
         .catch((error) => {
-          // hashing failed
-          console.log("hashing failed", error);
+          this.applicationStore.runtimeStore.dispatch(
+            actions.setTwitchExtensionConfigStatus("error"),
+          );
+          events.twitchExtensionConfiguationError("password hashing", error);
         });
-
-      // generate a uuidv4 and try if it is free on the backend
-      console.log("Configure ");
     });
     ipcMain.on("resetTwitchExtensionBackendConfig", () => {
       this.applicationStore.runtimeStore.dispatch(
@@ -74,7 +74,6 @@ export class TwitchExtension {
       this.applicationStore.runtimeStore.dispatch(
         actions.setTwitchExtensionConfigStatus("start"),
       );
-      console.log("reset");
     });
   }
 
@@ -95,8 +94,7 @@ export class TwitchExtension {
     return new Promise<string>((resolve, reject) => {
       const generatedUUID = uuidv4() as string;
       this.updateTwitchExtensionData(generatedUUID, passwordHash, firstGameData)
-        .then((response) => {
-          console.log("response", response);
+        .then(() => {
           resolve(generatedUUID);
         })
         .catch((error) => {
@@ -117,7 +115,7 @@ export class TwitchExtension {
   ): AxiosPromise => {
     const data = JSON.stringify({
       uuid,
-      data: gameData,
+      data: { game: gameData },
     });
     return axios({
       method: "POST",

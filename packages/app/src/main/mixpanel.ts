@@ -101,6 +101,14 @@ const events = {
       onEventSent,
     );
   },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  twitchExtensionConfiguationError: (step: string, error: any): void => {
+    mixpanel.track("twitch_extension_config_error", {
+      distinct_id: clientId,
+      errorStep: step,
+      error,
+    });
+  },
 };
 
 export { events };

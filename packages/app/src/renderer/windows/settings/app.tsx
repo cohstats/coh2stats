@@ -284,10 +284,19 @@ const App = (): JSX.Element => {
                 <Switch
                   checked={settings.twitchExtension}
                   onChange={handleTwitchExtensionModeChange}
+                  checkedChildren={"enabled"}
+                  unCheckedChildren={"disabled"}
                 />
               }
               key="2"
             >
+              {settings.twitchExtension ? null : (
+                <Alert
+                  style={{ marginBottom: 20 }}
+                  message="The Twitch Extension is currently disabled"
+                  banner
+                />
+              )}
               <Steps
                 current={settings.twitchExtensionConfigStep}
                 status={
@@ -303,8 +312,15 @@ const App = (): JSX.Element => {
               {settings.twitchExtensionConfigStep === 0 &&
               settings.twitchExtensionConfigStatus !== "error" ? (
                 <>
+                  <Form.Item wrapperCol={{ span: 24 }}>
+                    <Text>
+                      Set a password that ensures only you can update the data displayed on your
+                      twitch extension.
+                    </Text>
+                  </Form.Item>
                   <Form.Item label={"Set a password"} required extra="Minimum 8 characters">
                     <Input.Password
+                      disabled={!settings.twitchExtension}
                       value={twitchEPassword}
                       onChange={handleTwitchExtensionPasswordChange}
                     />
@@ -312,7 +328,9 @@ const App = (): JSX.Element => {
                   <Form.Item wrapperCol={{ span: 10, offset: 8 }}>
                     <Button
                       type="primary"
-                      disabled={twitchEPassword.length < 8 ? true : undefined}
+                      disabled={
+                        twitchEPassword.length < 8 || !settings.twitchExtension ? true : undefined
+                      }
                       onClick={() =>
                         window.electron.ipcRenderer.configureTwitchExtensionBackend(
                           twitchEPassword,
@@ -336,14 +354,23 @@ const App = (): JSX.Element => {
               {settings.twitchExtensionConfigStep === 2 &&
               settings.twitchExtensionConfigStatus !== "error" ? (
                 <>
-                  Now go on twitch install the extension and in the extension settings set UUID
-                  field.
+                  <Form.Item wrapperCol={{ span: 24 }}>
+                    <Text>
+                      Now go on twitch install the extension and in the extension settings set
+                      UUID field.
+                    </Text>
+                  </Form.Item>
                   <Form.Item label={"Your UUID"}>
-                    <Input.Password value={settings.twitchExtensionUUID} readOnly />
+                    <Input.Password
+                      disabled={!settings.twitchExtension}
+                      value={settings.twitchExtensionUUID}
+                      readOnly
+                    />
                   </Form.Item>
                   <Form.Item wrapperCol={{ span: 10, offset: 8 }}>
                     <Button
-                      type="primary"
+                      disabled={!settings.twitchExtension}
+                      danger
                       onClick={() =>
                         window.electron.ipcRenderer.resetTwitchExtensionBackendConfig()
                       }
@@ -355,8 +382,25 @@ const App = (): JSX.Element => {
               ) : null}
               {settings.twitchExtensionConfigStatus === "error" ? (
                 <>
-                  Failed.
-                  <Button>Reset</Button>
+                  <Result
+                    status="error"
+                    title="Something went wrong."
+                    subTitle="Check your internet connection and try again. In case the issue persists please let us know."
+                    extra={[
+                      <>
+                        {" "}
+                        <Button
+                          disabled={!settings.twitchExtension}
+                          danger
+                          onClick={() =>
+                            window.electron.ipcRenderer.resetTwitchExtensionBackendConfig()
+                          }
+                        >
+                          Reset
+                        </Button>
+                      </>,
+                    ]}
+                  />
                 </>
               ) : null}
             </Collapse.Panel>
@@ -385,10 +429,22 @@ const App = (): JSX.Element => {
                 </>
               }
               extra={
-                <Switch checked={settings.streamOverlay} onChange={handleStreamerModeChange} />
+                <Switch
+                  checked={settings.streamOverlay}
+                  onChange={handleStreamerModeChange}
+                  checkedChildren={"enabled"}
+                  unCheckedChildren={"disabled"}
+                />
               }
               key="3"
             >
+              {settings.streamOverlay ? null : (
+                <Alert
+                  style={{ marginBottom: 20 }}
+                  message="The Steam Overlay is currently disabled"
+                  banner
+                />
+              )}
               <Form.Item label={"Streamer view server port"}>
                 <InputNumber
                   disabled={!settings.streamOverlay}
