@@ -16,6 +16,7 @@ declare global {
         scanForLogFile(): void;
         configureTwitchExtensionBackend(password: string): void;
         resetTwitchExtensionBackendConfig(): void;
+        reloadStats(): void;
       };
       store: EnhancedStore;
     };
