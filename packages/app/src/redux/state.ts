@@ -74,6 +74,8 @@ export interface SideData {
   side: TeamSide;
   solo: LadderStats[];
   teams: LadderStats[];
+  averageLevel: number | undefined;
+  averageWinRatio: number | undefined;
 }
 
 export type GameType = "classic" | "ai" | "custom";
@@ -89,6 +91,8 @@ export interface GameData {
   winCondition: string;
   left: SideData;
   right: SideData;
+  mapWinRatioLeft: number | undefined;
+  winProbabilityLeft: number | undefined;
 }
 
 export interface MapStatCache {

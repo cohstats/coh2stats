@@ -55,10 +55,16 @@ export const startupGameData: GameData = {
     side: "mixed",
     solo: [],
     teams: [],
+    averageLevel: undefined,
+    averageWinRatio: undefined,
   },
   right: {
     side: "mixed",
     solo: [],
     teams: [],
+    averageLevel: undefined,
+    averageWinRatio: undefined,
   },
+  mapWinRatioLeft: undefined,
+  winProbabilityLeft: undefined,
 };

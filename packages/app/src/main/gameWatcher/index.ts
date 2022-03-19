@@ -90,7 +90,11 @@ export class GameWatcher {
             notifyGameFound();
           }
           this.isFirstScan = false;
-          refineLogFileData(result.game, result.newGameId).then(
+          refineLogFileData(
+            result.game,
+            result.newGameId,
+            this.applicationStore.getState().cache.mapStats,
+          ).then(
             (gameData) => {
               events.new_match_found(gameData.map);
               this.applicationStore.dispatch(actions.setGameData(gameData));
