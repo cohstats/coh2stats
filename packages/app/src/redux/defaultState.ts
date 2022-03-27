@@ -12,6 +12,12 @@ export const defaultSettings: ApplicationSettings = {
   streamOverlayPort: 47824,
   streamOverlayPortFree: true,
   streamOverlayPosition: "top",
+  twitchExtension: false,
+  twitchExtensionConfigStep: 0,
+  twitchExtensionConfigStatus: "start",
+  twitchExtensionPasswordHash: "",
+  twitchExtensionUUID: "",
+  twitchExtensionSecret: "",
   theme: "light",
 };
 
@@ -40,6 +46,7 @@ export const defaultWindowStates: WindowStates = {
 
 export const startupGameData: GameData = {
   found: false,
+  uniqueId: "",
   state: "closed",
   map: "",
   winCondition: "",
@@ -48,10 +55,16 @@ export const startupGameData: GameData = {
     side: "mixed",
     solo: [],
     teams: [],
+    averageLevel: undefined,
+    averageWinRatio: undefined,
   },
   right: {
     side: "mixed",
     solo: [],
     teams: [],
+    averageLevel: undefined,
+    averageWinRatio: undefined,
   },
+  mapWinRatioLeft: undefined,
+  winProbabilityLeft: undefined,
 };

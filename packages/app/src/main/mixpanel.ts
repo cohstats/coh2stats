@@ -64,7 +64,13 @@ const events = {
       "app_quit",
       {
         distinct_id: clientId,
-        settings: { ...settings, coh2LogFileLocation: "" },
+        settings: {
+          ...settings,
+          coh2LogFileLocation: "",
+          twitchExtensionPasswordHash: "",
+          twitchExtensionUUID: "",
+          twitchExtensionSecret: "",
+        },
         runtime: runtime,
       },
       onEventSent,
@@ -84,10 +90,24 @@ const events = {
         name: error.name,
         message: error.message,
         origin: origin,
-        settings: { ...settings, coh2LogFileLocation: "" },
+        settings: {
+          ...settings,
+          coh2LogFileLocation: "",
+          twitchExtensionPasswordHash: "",
+          twitchExtensionUUID: "",
+          twitchExtensionSecret: "",
+        },
       },
       onEventSent,
     );
+  },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  twitchExtensionConfiguationError: (step: string, error: any): void => {
+    mixpanel.track("twitch_extension_config_error", {
+      distinct_id: clientId,
+      errorStep: step,
+      error,
+    });
   },
 };
 

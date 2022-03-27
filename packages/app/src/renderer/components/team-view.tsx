@@ -236,7 +236,7 @@ const TeamView: React.FC<Props> = ({ side }) => {
       /*sorter: (a, b) =>
         a.lastmatchdate - b.lastmatchdate,*/
       render: (data: LadderStats) => {
-        if (data.wins + data.losses > 0) {
+        if (data.wins + data.losses > 0 && data.lastmatchdate) {
           return (
             <Tooltip title={new Date(data.lastmatchdate * 1000).toLocaleString()}>
               {timeAgo.format(

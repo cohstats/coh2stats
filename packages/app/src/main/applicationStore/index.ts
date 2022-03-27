@@ -4,15 +4,15 @@ import {
   ApplicationSettings,
   ApplicationState,
   WindowStates,
-} from "../redux/state";
-import { actions, ReduxStore } from "../redux/slice";
-import { configureMainStore } from "../redux/configureStoreMain";
+} from "../../redux/state";
+import { actions, ReduxStore } from "../../redux/slice";
+import { configureMainStore } from "../../redux/configureStoreMain";
 import { AnyAction, Unsubscribe } from "@reduxjs/toolkit";
 import { app, dialog, nativeTheme } from "electron";
-import { defaultSettings, defaultWindowStates, startupGameData } from "../redux/defaultState";
+import { defaultSettings, defaultWindowStates, startupGameData } from "../../redux/defaultState";
 import axios from "axios";
-import config from "./config";
-import { events } from "./mixpanel";
+import config from "../config";
+import { events } from "../mixpanel";
 
 export class ApplicationStore {
   runtimeStore: ReduxStore;

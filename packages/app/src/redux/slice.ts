@@ -10,6 +10,7 @@ import {
   GameState,
   MapStatCache,
   StreamOverlayPositions,
+  TwitchExtensionConfigStatus,
   WindowState,
 } from "./state";
 
@@ -70,6 +71,26 @@ export const slice = createSlice({
     },
     setStreamOverlayPosition: (state, { payload }: PayloadAction<StreamOverlayPositions>) => {
       state.settings.streamOverlayPosition = payload;
+    },
+    setTwitchExtension: (state, { payload }: PayloadAction<boolean>) => {
+      state.settings.twitchExtension = payload;
+    },
+    setTwitchExtensionConfigStep: (state, { payload }: PayloadAction<0 | 1 | 2>) => {
+      state.settings.twitchExtensionConfigStep = payload;
+    },
+    setTwitchExtensionConfigStatus: (
+      state,
+      { payload }: PayloadAction<TwitchExtensionConfigStatus>,
+    ) => {
+      state.settings.twitchExtensionConfigStatus = payload;
+    },
+    setTwitchExtensionConfiguration: (
+      state,
+      { payload }: PayloadAction<{ passwordHash: string; uuid: string; secret: string }>,
+    ) => {
+      state.settings.twitchExtensionPasswordHash = payload.passwordHash;
+      state.settings.twitchExtensionUUID = payload.uuid;
+      state.settings.twitchExtensionSecret = payload.secret;
     },
     setWindowState: (
       state,

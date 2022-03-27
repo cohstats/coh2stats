@@ -13,8 +13,8 @@ import { actions, selectSettings } from "../../../redux/slice";
 import { useEffect, useState } from "react";
 import { events, firebaseInit } from "../../firebase/firebase";
 import { Helper } from "@coh2stats/shared/src/components/helper";
-import { Tooltip, Typography } from "antd";
-import { ExclamationCircleOutlined } from "@ant-design/icons";
+import { Collapse, Divider, Result, Spin, Steps, Tooltip, Typography } from "antd";
+import { ExclamationCircleOutlined, LoadingOutlined } from "@ant-design/icons";
 import WindowTitlebar from "../../titlebar/window-titlebar";
 
 const { Text } = Typography;
@@ -26,6 +26,7 @@ const App = (): JSX.Element => {
   const dispatch = useDispatch();
   const settings = useSelector(selectSettings);
   const [messageVisible, setMessageVisible] = useState(false);
+  const [twitchEPassword, setTwitchEPassword] = useState("");
 
   useEffect(() => {
     events.settings();
@@ -94,6 +95,17 @@ const App = (): JSX.Element => {
     window.electron.ipcRenderer.scanForLogFile();
   };
 
+  const handleTwitchExtensionModeChange = (checked: boolean) => {
+    dispatch(actions.setTwitchExtension(checked));
+    savedMessage();
+  };
+
+  const handleTwitchExtensionPasswordChange: React.ChangeEventHandler<HTMLInputElement> = (
+    event,
+  ) => {
+    setTwitchEPassword(event.target.value);
+  };
+
   return (
     <>
       <WindowTitlebar windowName="settings" cantMaximize>
@@ -117,144 +129,325 @@ const App = (): JSX.Element => {
           labelCol={{ span: 8 }}
           wrapperCol={{ span: 10 }}
           layout="horizontal"
-          style={{ paddingTop: "20px", paddingBottom: "20px" }}
+          style={{ paddingBottom: "20px" }}
         >
-          <Form.Item
-            label={
-              <>
-                Path to warnings.log
-                <Helper
-                  text={
-                    <>
-                      Path to COH warnings log. By default located in{" "}
-                      <Text code>
-                        "C:\\Users\\[user]\\Documents\\My Games\\Company of Heroes
-                        2\\warnings.log"
-                      </Text>
-                    </>
-                  }
-                  style={{ paddingLeft: "5px" }}
-                />
-              </>
-            }
-          >
-            <Input.Group compact>
-              <Form.Item noStyle>
-                <Input
-                  style={{ width: "70%" }}
-                  type={"text"}
-                  value={settings.coh2LogFileLocation}
-                  disabled
+          <Collapse defaultActiveKey={["1"]} accordion>
+            <Collapse.Panel header="General" key="1">
+              <Form.Item label={<>Theme</>}>
+                <Switch
+                  checkedChildren={"Dark"}
+                  unCheckedChildren={"Light"}
+                  checked={settings.theme === "dark"}
+                  onChange={handleThemeChange}
                 />
               </Form.Item>
-              <Form.Item noStyle>
-                <Button onClick={handleChangeOfPath}>Select</Button>
+              <Form.Item
+                label={
+                  <>
+                    Open detail info in browser{" "}
+                    <Helper
+                      text={
+                        "Open player cards in your default system browser instead of a new application window."
+                      }
+                      style={{ paddingLeft: "5px" }}
+                    />
+                  </>
+                }
+              >
+                <Switch
+                  checked={settings.openLinksInBrowser}
+                  onChange={handleOpenInBrowserChange}
+                />
               </Form.Item>
-              <Form.Item noStyle>
-                <Button onClick={handleScan}>Auto locate</Button>
+              <Form.Item
+                label={
+                  <>
+                    Run in tray{" "}
+                    <Helper
+                      text={
+                        "Application keeps running in system tray when all windows are closed."
+                      }
+                      style={{ paddingLeft: "5px" }}
+                    />
+                  </>
+                }
+              >
+                <Switch checked={settings.runInTray} onChange={handleRunInTrayChange} />
               </Form.Item>
-            </Input.Group>
-          </Form.Item>
-          <Form.Item
-            label={
-              <>
-                File check interval{" "}
-                <Helper
-                  text={"Interval in seconds to check the warnings.log file for a new game."}
-                  style={{ paddingLeft: "5px" }}
+              <Divider orientation="left" plain>
+                Log file checking
+              </Divider>
+              <Form.Item
+                label={
+                  <>
+                    Path to warnings.log
+                    <Helper
+                      text={
+                        <>
+                          Path to COH warnings log. By default located in{" "}
+                          <Text code style={{ color: "white" }}>
+                            "C:\Users\[user]\Documents\My Games\Company of Heroes 2\warnings.log"
+                          </Text>
+                        </>
+                      }
+                      style={{ paddingLeft: "5px" }}
+                    />
+                  </>
+                }
+              >
+                <Input.Group compact>
+                  <Form.Item noStyle>
+                    <Input
+                      style={{ width: "70%" }}
+                      type={"text"}
+                      value={settings.coh2LogFileLocation}
+                      readOnly
+                    />
+                  </Form.Item>
+                  <Form.Item noStyle>
+                    <Button onClick={handleChangeOfPath}>Select</Button>
+                  </Form.Item>
+                  <Form.Item noStyle>
+                    <Button onClick={handleScan}>Auto locate</Button>
+                  </Form.Item>
+                </Input.Group>
+              </Form.Item>
+              <Form.Item
+                label={
+                  <>
+                    File check interval{" "}
+                    <Helper
+                      text={"Interval in seconds to check the warnings.log file for a new game."}
+                      style={{ paddingLeft: "5px" }}
+                    />
+                  </>
+                }
+              >
+                <InputNumber
+                  min={1}
+                  addonAfter="Seconds"
+                  value={settings.updateInterval}
+                  onChange={handleUpdateIntervalChange}
                 />
-              </>
-            }
-          >
-            <InputNumber
-              min={1}
-              addonAfter="Seconds"
-              value={settings.updateInterval}
-              onChange={handleUpdateIntervalChange}
-            />
-          </Form.Item>
-          <Form.Item
-            label={
-              <>
-                Run in tray{" "}
-                <Helper
-                  text={"Application keeps running in system tray when all windows are closed."}
-                  style={{ paddingLeft: "5px" }}
+              </Form.Item>
+              <Divider orientation="left" plain>
+                <Text type="danger">Experimental</Text>
+              </Divider>
+              <Form.Item
+                label={
+                  <>
+                    Notify when game found{" "}
+                    <Tooltip
+                      title={
+                        'Windows will suppress notifications when focus assist do not disturb for games is enabled. To change that go to windows settings, search for focus assist and disable "When i\'m playing a game"'
+                      }
+                    >
+                      <ExclamationCircleOutlined
+                        style={{ color: "#eb2f96", paddingLeft: "5px" }}
+                      />
+                    </Tooltip>
+                  </>
+                }
+              >
+                <Switch
+                  checked={settings.gameNotification}
+                  onChange={handleGameNotificationChange}
                 />
-              </>
-            }
-          >
-            <Switch checked={settings.runInTray} onChange={handleRunInTrayChange} />
-          </Form.Item>
-          <Form.Item
-            label={
-              <>
-                Open detail info in browser{" "}
-                <Helper
-                  text={
-                    "Open player cards in your default system browser instead of a new application window."
-                  }
-                  style={{ paddingLeft: "5px" }}
+              </Form.Item>
+            </Collapse.Panel>
+            <Collapse.Panel
+              collapsible="header"
+              header={
+                <>
+                  Twitch Extension{" "}
+                  <Helper
+                    text={
+                      <>
+                        Use our twitch extension to display interactive stats for your viewers on
+                        stream. Get the extension{" "}
+                        <Typography.Link
+                          onClick={() =>
+                            window.electron.ipcRenderer.openInBrowser(
+                              "https://github.com/cohstats/coh2stats/blob/master/packages/app/README.md",
+                            )
+                          }
+                        >
+                          here
+                        </Typography.Link>
+                      </>
+                    }
+                    style={{ paddingLeft: "5px" }}
+                  />
+                </>
+              }
+              extra={
+                <Switch
+                  checked={settings.twitchExtension}
+                  onChange={handleTwitchExtensionModeChange}
+                  checkedChildren={"enabled"}
+                  unCheckedChildren={"disabled"}
                 />
-              </>
-            }
-          >
-            <Switch checked={settings.openLinksInBrowser} onChange={handleOpenInBrowserChange} />
-          </Form.Item>
-          <Form.Item
-            label={
-              <>
-                Notify when game found{" "}
-                <Tooltip
-                  title={
-                    'Windows will suppress notifications when focus assist do not disturb for games is enabled. To change that go to windows settings, search for focus assist and disable "When i\'m playing a game"'
-                  }
-                >
-                  <ExclamationCircleOutlined style={{ color: "#eb2f96", paddingLeft: "5px" }} />
-                </Tooltip>
-              </>
-            }
-          >
-            <Switch checked={settings.gameNotification} onChange={handleGameNotificationChange} />
-          </Form.Item>
-          <Form.Item label={<>Theme</>}>
-            <Switch
-              checkedChildren={"Dark"}
-              unCheckedChildren={"Light"}
-              checked={settings.theme === "dark"}
-              onChange={handleThemeChange}
-            />
-          </Form.Item>
-          <Form.Item
-            label={
-              <>
-                Use streamer mode{" "}
-                <Helper
-                  text={
-                    <>
-                      Learn more about the setup{" "}
-                      <Typography.Link
-                        onClick={() =>
-                          window.electron.ipcRenderer.openInBrowser(
-                            "https://github.com/cohstats/coh2stats/blob/master/packages/app/README.md#stream-overlay",
-                          )
-                        }
-                      >
-                        here
-                      </Typography.Link>
-                    </>
-                  }
-                  style={{ paddingLeft: "5px" }}
+              }
+              key="2"
+            >
+              {settings.twitchExtension ? null : (
+                <Alert
+                  style={{ marginBottom: 20 }}
+                  message="The Twitch Extension is currently disabled"
+                  banner
                 />
-              </>
-            }
-          >
-            <Switch checked={settings.streamOverlay} onChange={handleStreamerModeChange} />
-          </Form.Item>
-          {settings.streamOverlay ? (
-            <>
+              )}
+              <Steps
+                current={settings.twitchExtensionConfigStep}
+                status={
+                  settings.twitchExtensionConfigStatus === "start"
+                    ? undefined
+                    : settings.twitchExtensionConfigStatus
+                }
+              >
+                <Steps.Step title="Set Password" description="For sharing match stats" />
+                <Steps.Step title="Configure Backend" description="" />
+                <Steps.Step title="Set up twitch extension" description="" />
+              </Steps>
+              {settings.twitchExtensionConfigStep === 0 &&
+              settings.twitchExtensionConfigStatus !== "error" ? (
+                <>
+                  <Form.Item wrapperCol={{ span: 24 }}>
+                    <Text>
+                      Set a password that ensures only you can update the data displayed on your
+                      twitch extension.
+                    </Text>
+                  </Form.Item>
+                  <Form.Item label={"Set a password"} required extra="Minimum 8 characters">
+                    <Input.Password
+                      disabled={!settings.twitchExtension}
+                      value={twitchEPassword}
+                      onChange={handleTwitchExtensionPasswordChange}
+                    />
+                  </Form.Item>
+                  <Form.Item wrapperCol={{ span: 10, offset: 8 }}>
+                    <Button
+                      type="primary"
+                      disabled={
+                        twitchEPassword.length < 8 || !settings.twitchExtension ? true : undefined
+                      }
+                      onClick={() =>
+                        window.electron.ipcRenderer.configureTwitchExtensionBackend(
+                          twitchEPassword,
+                        )
+                      }
+                    >
+                      Configure
+                    </Button>
+                  </Form.Item>
+                </>
+              ) : null}
+              {settings.twitchExtensionConfigStep === 1 &&
+              settings.twitchExtensionConfigStatus !== "error" ? (
+                <>
+                  <Result
+                    icon={<Spin indicator={<LoadingOutlined spin />} />}
+                    title="Configurating..."
+                  />
+                </>
+              ) : null}
+              {settings.twitchExtensionConfigStep === 2 &&
+              settings.twitchExtensionConfigStatus !== "error" ? (
+                <>
+                  <Form.Item wrapperCol={{ span: 24 }}>
+                    <Text>
+                      Now go on twitch install the extension and in the extension settings set
+                      UUID field.
+                    </Text>
+                  </Form.Item>
+                  <Form.Item label={"Your UUID"}>
+                    <Input.Password
+                      disabled={!settings.twitchExtension}
+                      value={settings.twitchExtensionUUID}
+                      readOnly
+                    />
+                  </Form.Item>
+                  <Form.Item wrapperCol={{ span: 10, offset: 8 }}>
+                    <Button
+                      disabled={!settings.twitchExtension}
+                      danger
+                      onClick={() =>
+                        window.electron.ipcRenderer.resetTwitchExtensionBackendConfig()
+                      }
+                    >
+                      Reset
+                    </Button>
+                  </Form.Item>
+                </>
+              ) : null}
+              {settings.twitchExtensionConfigStatus === "error" ? (
+                <>
+                  <Result
+                    status="error"
+                    title="Something went wrong."
+                    subTitle="Check your internet connection and try again. In case the issue persists please let us know."
+                    extra={[
+                      <>
+                        {" "}
+                        <Button
+                          disabled={!settings.twitchExtension}
+                          danger
+                          onClick={() =>
+                            window.electron.ipcRenderer.resetTwitchExtensionBackendConfig()
+                          }
+                        >
+                          Reset
+                        </Button>
+                      </>,
+                    ]}
+                  />
+                </>
+              ) : null}
+            </Collapse.Panel>
+            <Collapse.Panel
+              collapsible="header"
+              header={
+                <>
+                  Streamer Mode{" "}
+                  <Helper
+                    text={
+                      <>
+                        Learn more about the setup{" "}
+                        <Typography.Link
+                          onClick={() =>
+                            window.electron.ipcRenderer.openInBrowser(
+                              "https://github.com/cohstats/coh2stats/blob/master/packages/app/README.md#stream-overlay",
+                            )
+                          }
+                        >
+                          here
+                        </Typography.Link>
+                      </>
+                    }
+                    style={{ paddingLeft: "5px" }}
+                  />{" "}
+                </>
+              }
+              extra={
+                <Switch
+                  checked={settings.streamOverlay}
+                  onChange={handleStreamerModeChange}
+                  checkedChildren={"enabled"}
+                  unCheckedChildren={"disabled"}
+                />
+              }
+              key="3"
+            >
+              {settings.streamOverlay ? null : (
+                <Alert
+                  style={{ marginBottom: 20 }}
+                  message="The Steam Overlay is currently disabled"
+                  banner
+                />
+              )}
               <Form.Item label={"Streamer view server port"}>
                 <InputNumber
+                  disabled={!settings.streamOverlay}
                   min={0}
                   max={65535}
                   value={settings.streamOverlayPort}
@@ -267,6 +460,7 @@ const App = (): JSX.Element => {
               </Form.Item>
               <Form.Item label={"Streamer view layout"}>
                 <Select
+                  disabled={!settings.streamOverlay}
                   value={settings.streamOverlayPosition}
                   onChange={handleStreamViewLayoutChange}
                 >
@@ -274,8 +468,8 @@ const App = (): JSX.Element => {
                   <Select.Option value="left">Left</Select.Option>
                 </Select>
               </Form.Item>
-            </>
-          ) : null}
+            </Collapse.Panel>
+          </Collapse>
         </Form>
       </WindowTitlebar>
     </>

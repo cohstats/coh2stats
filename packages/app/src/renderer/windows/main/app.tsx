@@ -1,6 +1,6 @@
 import * as React from "react";
-import { useSelector } from "react-redux";
-import { selectGame, selectSettings } from "../../../redux/slice";
+import { useDispatch, useSelector } from "react-redux";
+import { actions, selectCache, selectGame, selectSettings } from "../../../redux/slice";
 import CurrentGameOverview from "../../features/current-game-overview";
 import { events, firebaseInit } from "../../firebase/firebase";
 import compareVersions from "compare-versions";
@@ -18,21 +18,56 @@ import { Tag } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
 import WindowTitlebar from "../../titlebar/window-titlebar";
 import WindowTitlebarItem from "../../titlebar/window-titlebar-item";
+import { datesAreOnSameDay } from "../../utils/helpers";
+import { doc, getDoc, getFirestore } from "firebase/firestore";
 
 // We need to initialize our Firebase
 // This has to happen once on the main file of each render process
 firebaseInit();
 
 const App = (): JSX.Element => {
+  const dispatch = useDispatch();
   const gameData = useSelector(selectGame);
   const settings = useSelector(selectSettings);
   const [upToDate, setUpToDate] = useState(true);
+  const [requestState, setRequestState] = useState<"loading" | "idle" | "completed">("idle");
+  const applicationCache = useSelector(selectCache);
 
   // On init of the app
   useEffect(() => {
     events.init(settings.appVersion);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (
+      (!applicationCache.mapStats ||
+        !datesAreOnSameDay(
+          new Date(applicationCache.mapStats.requestDate),
+          new Date(Date.now()),
+        )) &&
+      requestState === "idle"
+    ) {
+      console.log("Request new mapstats data");
+      const monthTimestamp =
+        Date.UTC(new Date().getUTCFullYear(), new Date().getUTCMonth() - 1, 1) / 1000;
+      //Date.UTC(new Date().getUTCFullYear(), new Date().getUTCMonth() - 1, 1) / 1000;
+      setRequestState("loading");
+      getDoc(doc(getFirestore(), `stats/month/${monthTimestamp}/`, "mapStats")).then(
+        (docSnap) => {
+          if (docSnap.exists()) {
+            dispatch(
+              actions.setMapStatCache({
+                requestDate: Date.now(),
+                data: docSnap.data(),
+              }),
+            );
+            setRequestState("completed");
+          }
+        },
+      );
+    }
+  }, [applicationCache, dispatch, requestState]);
 
   useEffect(() => {
     if (settings.appNewestVersion) {

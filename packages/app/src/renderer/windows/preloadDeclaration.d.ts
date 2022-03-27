@@ -14,6 +14,8 @@ declare global {
         openInBrowser(link: string): void;
         locateLogFile(): void;
         scanForLogFile(): void;
+        configureTwitchExtensionBackend(password: string): void;
+        resetTwitchExtensionBackendConfig(): void;
         reloadStats(): void;
       };
       store: EnhancedStore;

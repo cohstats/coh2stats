@@ -3,24 +3,25 @@ import path from "path";
 import fs from "fs";
 import { ApplicationStore } from "../applicationStore";
 import { actions } from "../../redux/slice";
-import { Unsubscribe } from "@reduxjs/toolkit";
 import { notifyGameFound } from "./notification";
 import { locateWarningsFile } from "./locateWarningsDialog";
 import { parseLogFileReverse } from "./parseLogFile";
 import { refineLogFileData } from "./refineLogFileData";
 import { events } from "../mixpanel";
+import { Unsubscribe } from "@reduxjs/toolkit";
 
 export class GameWatcher {
-  applicationStore: ApplicationStore;
   currentIntervalTime: number;
   nodeInterval: NodeJS.Timer;
   lastGameId: string;
   isFirstScan: boolean;
+  applicationStore: ApplicationStore;
   unsubscriber: Unsubscribe;
 
   constructor(applicationStore: ApplicationStore) {
-    this.isFirstScan = true;
     this.applicationStore = applicationStore;
+    this.unsubscriber = this.applicationStore.runtimeStore.subscribe(this.runtimeStoreSubscriber);
+    this.isFirstScan = true;
     const settings = this.applicationStore.getState().settings;
     if (!settings.coh2LogFileFound) {
       // check for warnings.log file in expected folder
@@ -89,7 +90,11 @@ export class GameWatcher {
             notifyGameFound();
           }
           this.isFirstScan = false;
-          refineLogFileData(result.game).then(
+          refineLogFileData(
+            result.game,
+            result.newGameId,
+            this.applicationStore.getState().cache.mapStats,
+          ).then(
             (gameData) => {
               events.new_match_found(gameData.map);
               this.applicationStore.dispatch(actions.setGameData(gameData));
@@ -119,7 +124,7 @@ export class GameWatcher {
     this.setInterval(newCheckInterval);
   }
 
-  destroy(): void {
+  public destroy(): void {
     this.unsubscriber();
     clearInterval(this.nodeInterval);
   }

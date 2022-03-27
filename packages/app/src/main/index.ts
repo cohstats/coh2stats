@@ -4,6 +4,7 @@ import { GameWatcher } from "./gameWatcher";
 import { ApplicationManager } from "./applicationManager";
 import { StreamerOverlay } from "./streamerOverlay";
 import { events } from "./mixpanel";
+import { TwitchExtension } from "./twitchExtension";
 
 // manages file and runtime (redux) storage for main
 const applicationStore = new ApplicationStore();
@@ -11,6 +12,7 @@ const applicationStore = new ApplicationStore();
 let logFileWatcher: GameWatcher;
 let applicationManager: ApplicationManager;
 let streamerOverlay: StreamerOverlay;
+let twitchExtension: TwitchExtension;
 
 if (process.platform !== "win32") {
   // do not start if not windows platform
@@ -47,6 +49,7 @@ app.on("ready", () => {
   logFileWatcher = new GameWatcher(applicationStore);
   applicationManager = new ApplicationManager(applicationStore);
   streamerOverlay = new StreamerOverlay(applicationStore);
+  twitchExtension = new TwitchExtension(applicationStore);
 });
 
 app.on("activate", () => {
@@ -61,6 +64,7 @@ app.on("window-all-closed", (e: { preventDefault: () => void }) => e.preventDefa
 
 app.on("quit", () => {
   console.log("App is quiting");
+  twitchExtension.destroy();
   streamerOverlay.destroy();
   applicationManager.destroy();
   logFileWatcher.destroy();

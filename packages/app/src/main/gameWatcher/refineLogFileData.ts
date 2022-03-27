@@ -1,5 +1,13 @@
 import axios, { AxiosResponse } from "axios";
-import { GameData, SideData, LadderStats, Member, TeamSide } from "../../redux/state";
+import {
+  GameData,
+  SideData,
+  LadderStats,
+  Member,
+  TeamSide,
+  MapStatCache,
+  Factions,
+} from "../../redux/state";
 import { LogFileGameData, LogFilePlayerData, LogFileTeamData } from "./parseLogFile";
 import {
   LeaderboardStat,
@@ -29,21 +37,53 @@ const teamLeaderboardIdsLookupTable: Record<TeamSide, number[]> = {
  * @param logFileGameData Game data from reading the warnings.log file
  * @returns Promise with refined game data using the relic api if relic request was successful
  */
-export const refineLogFileData = (logFileGameData: LogFileGameData): Promise<GameData> => {
+export const refineLogFileData = (
+  logFileGameData: LogFileGameData,
+  uniqueId: string,
+  mapStatCache?: MapStatCache,
+): Promise<GameData> => {
   return new Promise((resolve, reject) => {
     fetchDataFromRelicAPI(logFileGameData).then(
       (response: AxiosResponse<PersonalStatResponse>) => {
         const apiData = response.data;
         if (response.status === 200 && apiData.result.code === 0) {
-          resolve({
+          const initialGameData: GameData = {
             found: true,
+            uniqueId: uniqueId,
             state: logFileGameData.state,
             type: logFileGameData.type,
             map: logFileGameData.map,
             winCondition: logFileGameData.winCondition,
             left: parseSideData(logFileGameData.left, apiData),
             right: parseSideData(logFileGameData.right, apiData),
-          });
+            mapWinRatioLeft: undefined,
+            winProbabilityLeft: undefined,
+          };
+          addBalanceStats(initialGameData, mapStatCache);
+          /*if (mapStatCache) {
+            const mapData = findMapInApiData(mapStatCache.data, initialGameData);
+            // found map?
+            if (mapData) {
+              const factionMatrix = getFactionMatrix(initialGameData);
+              const winLosses = mapData["factionMatrix"][factionMatrix];
+              if (winLosses) {
+                const totalMapCompositionDataPoints = winLosses.wins + winLosses.losses;
+                if (totalMapCompositionDataPoints > 5) {
+                  const axisMapWinRatio = (winLosses.wins / totalMapCompositionDataPoints) * 100;
+                  const alliesMapWinRatio =
+                    (winLosses.losses / totalMapCompositionDataPoints) * 100;
+                  initialGameData.mapWinRatioLeft = initialGameData.left.side === "axis" ? axisMapWinRatio : alliesMapWinRatio;
+                  if (initialGameData.left.averageLevel && initialGameData.left.averageWinRatio && initialGameData.right.averageLevel && initialGameData.right.averageWinRatio) {
+                    const leftStrength = initialGameData.left.averageLevel * initialGameData.left.averageWinRatio;
+                    const rightStrength = initialGameData.right.averageLevel * initialGameData.right.averageWinRatio;
+                    const leftStrengthRatio = (leftStrength / (leftStrength + rightStrength)) * 100;
+                    initialGameData.winProbabilityLeft = (leftStrengthRatio + initialGameData.mapWinRatioLeft) / 2;
+                  }
+                }
+              }
+            }
+          }*/
+          resolve(addBalanceStats(initialGameData, mapStatCache));
         } else {
           reject();
         }
@@ -53,6 +93,90 @@ export const refineLogFileData = (logFileGameData: LogFileGameData): Promise<Gam
       },
     );
   });
+};
+
+const addBalanceStats = (game: GameData, mapStatCache?: MapStatCache): GameData => {
+  if (mapStatCache) {
+    const mapData = findMapInApiData(mapStatCache.data, game);
+    // found map?
+    if (mapData) {
+      const factionMatrix = getFactionMatrix(game);
+      const winLosses = mapData["factionMatrix"][factionMatrix];
+      if (winLosses) {
+        const totalMapCompositionDataPoints = winLosses.wins + winLosses.losses;
+        if (totalMapCompositionDataPoints > 5) {
+          const axisMapWinRatio = (winLosses.wins / totalMapCompositionDataPoints) * 100;
+          const alliesMapWinRatio = (winLosses.losses / totalMapCompositionDataPoints) * 100;
+          game.mapWinRatioLeft = game.left.side === "axis" ? axisMapWinRatio : alliesMapWinRatio;
+          if (
+            game.left.averageLevel &&
+            game.left.averageWinRatio &&
+            game.right.averageLevel &&
+            game.right.averageWinRatio
+          ) {
+            const leftStrength = game.left.averageLevel * game.left.averageWinRatio;
+            const rightStrength = game.right.averageLevel * game.right.averageWinRatio;
+            const leftStrengthRatio = (leftStrength / (leftStrength + rightStrength)) * 100;
+            game.winProbabilityLeft = (leftStrengthRatio + game.mapWinRatioLeft) / 2;
+          }
+        }
+      }
+    }
+  }
+  return game;
+};
+
+const factionLetterLookupTable: Record<Factions, string> = {
+  german: "O",
+  west_german: "W",
+  british: "B",
+  soviet: "S",
+  aef: "U",
+};
+
+const getFactionMatrix = (gameData: GameData): string => {
+  let axis = gameData.left;
+  let allies = gameData.right;
+  if (gameData.left.side === "allies") {
+    axis = gameData.right;
+    allies = gameData.left;
+  }
+  let factionMatrixString = "";
+  factionMatrixString += axis.solo
+    .map((stats) => factionLetterLookupTable[stats.members[0].faction])
+    .sort((a, b) => a.localeCompare(b))
+    .join("");
+  factionMatrixString += "x";
+  factionMatrixString += allies.solo
+    .map((stats) => factionLetterLookupTable[stats.members[0].faction])
+    .sort((a, b) => a.localeCompare(b))
+    .join("");
+  return factionMatrixString;
+};
+
+const getBiggestTeamSize = (gameData: GameData) => {
+  if (gameData.left.solo.length > gameData.right.solo.length) {
+    return gameData.left.solo.length;
+  }
+  return gameData.right.solo.length;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const findMapInApiData = (apiData: any, gameData: GameData): any | undefined => {
+  const minMapSize = getBiggestTeamSize(gameData);
+  for (let i = minMapSize; i <= 4; i++) {
+    const mapCategory = i + "v" + i;
+    if (mapCategory in apiData) {
+      for (const [mapName, mapData] of Object.entries(apiData[mapCategory])) {
+        if (mapName.replace(/\s/g, "") === gameData.map.replace(/\s/g, "")) {
+          return mapData;
+        }
+      }
+    } else {
+      console.error("Unexpected error: Did not find the map category " + mapCategory + " in api");
+    }
+  }
+  return undefined;
 };
 
 const parseSideData = (logFileTeam: LogFileTeamData, apiData: PersonalStatResponse): SideData => {
@@ -115,11 +239,79 @@ const parseSideData = (logFileTeam: LogFileTeamData, apiData: PersonalStatRespon
     (a, b) => (b.members.length - a.members.length) * 100 + (b.ranklevel - a.ranklevel),
   );
   findTeamRankingForSoloStats(soloData, sortedTeamData);
+  // find actual ranking for the game
+  const countingRanks = findAllStatsForEachPlayerInSide({
+    side: logFileTeam.side,
+    solo: soloData,
+    teams: sortedTeamData,
+    averageLevel: undefined,
+    averageWinRatio: undefined,
+  });
+  if (allPlayersInSideHaveRanking(countingRanks)) {
+    // calculate average level
+    const averageLevel = GetAverageTeamValue(countingRanks, (stats) => stats.ranklevel);
+    // calculate average win ratio
+    const averageRatio = GetAverageTeamValue(
+      countingRanks,
+      (stats) => (stats.wins / (stats.wins + stats.losses)) * 100,
+    );
+    return {
+      side: logFileTeam.side,
+      solo: soloData,
+      teams: sortedTeamData,
+      averageLevel: averageLevel,
+      averageWinRatio: averageRatio,
+    };
+  }
   return {
     side: logFileTeam.side,
     solo: soloData,
     teams: sortedTeamData,
+    averageLevel: undefined,
+    averageWinRatio: undefined,
   };
+};
+
+const allPlayersInSideHaveRanking = (statsMatrix: LadderStats[][]): boolean => {
+  let allHaveARanking = true;
+  statsMatrix.forEach((stats) => {
+    if (stats.length === 0) {
+      allHaveARanking = false;
+    }
+  });
+  return allHaveARanking;
+};
+
+const findAllStatsForEachPlayerInSide = (side: SideData): LadderStats[][] => {
+  const result: LadderStats[][] = new Array(side.solo.length);
+  side.solo.forEach((soloStat, index) => {
+    result[index] = [];
+    // only include stats with a ranking
+    if (soloStat.rank > 0) {
+      result[index].push(soloStat);
+    }
+    side.teams.forEach((teamStat) => {
+      if (teamStat.rank > 0) {
+        teamStat.members.forEach((teamMember) => {
+          if (teamMember.relicID === soloStat.members[0].relicID) {
+            result[index].push(teamStat);
+          }
+        });
+      }
+    });
+  });
+  return result;
+};
+
+const GetAverageTeamValue = (
+  statsMatrix: LadderStats[][],
+  mapFunc: (stats: LadderStats) => number,
+): number => {
+  const flatLadderStatsArray = statsMatrix.flat(1);
+  return (
+    flatLadderStatsArray.map(mapFunc).reduce((a, b) => a + b, 0) / flatLadderStatsArray.length ||
+    0
+  );
 };
 
 /**

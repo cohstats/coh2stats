@@ -14,6 +14,8 @@ export type StreamOverlayPositions = "top" | "left";
 
 export type ApplicationThemes = "light" | "dark";
 
+export type TwitchExtensionConfigStatus = "start" | "process" | "finish" | "error";
+
 export interface ApplicationSettings {
   appVersion: string;
   appNewestVersion?: string;
@@ -29,6 +31,12 @@ export interface ApplicationSettings {
   streamOverlayPort: number;
   streamOverlayPortFree: boolean;
   streamOverlayPosition: StreamOverlayPositions;
+  twitchExtension: boolean;
+  twitchExtensionConfigStep: 0 | 1 | 2; // 0 = setPassword | 1 = configuration | 2 = success | 3 = fail
+  twitchExtensionConfigStatus: TwitchExtensionConfigStatus;
+  twitchExtensionPasswordHash: string;
+  twitchExtensionUUID: string;
+  twitchExtensionSecret: string;
   theme: ApplicationThemes;
 }
 
@@ -66,6 +74,8 @@ export interface SideData {
   side: TeamSide;
   solo: LadderStats[];
   teams: LadderStats[];
+  averageLevel: number | undefined;
+  averageWinRatio: number | undefined;
 }
 
 export type GameType = "classic" | "ai" | "custom";
@@ -74,12 +84,15 @@ export type GameState = "closed" | "menu" | "loading" | "ingame";
 
 export interface GameData {
   found: boolean;
+  uniqueId: string;
   state: GameState;
   type: GameType;
   map: string;
   winCondition: string;
   left: SideData;
   right: SideData;
+  mapWinRatioLeft: number | undefined;
+  winProbabilityLeft: number | undefined;
 }
 
 export interface MapStatCache {
