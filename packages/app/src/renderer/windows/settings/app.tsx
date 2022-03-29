@@ -256,7 +256,6 @@ const App = (): JSX.Element => {
               </Form.Item>
             </Collapse.Panel>
             <Collapse.Panel
-              collapsible="header"
               header={
                 <>
                   Twitch Extension{" "}
@@ -281,12 +280,18 @@ const App = (): JSX.Element => {
                 </>
               }
               extra={
-                <Switch
-                  checked={settings.twitchExtension}
-                  onChange={handleTwitchExtensionModeChange}
-                  checkedChildren={"enabled"}
-                  unCheckedChildren={"disabled"}
-                />
+                <div
+                  onClick={(event) => {
+                    event.stopPropagation();
+                  }}
+                >
+                  <Switch
+                    checked={settings.twitchExtension}
+                    onChange={handleTwitchExtensionModeChange}
+                    checkedChildren={"Enabled"}
+                    unCheckedChildren={"Disabled"}
+                  />
+                </div>
               }
               key="2"
             >
@@ -405,7 +410,6 @@ const App = (): JSX.Element => {
               ) : null}
             </Collapse.Panel>
             <Collapse.Panel
-              collapsible="header"
               header={
                 <>
                   Streamer Mode{" "}
@@ -429,12 +433,18 @@ const App = (): JSX.Element => {
                 </>
               }
               extra={
-                <Switch
-                  checked={settings.streamOverlay}
-                  onChange={handleStreamerModeChange}
-                  checkedChildren={"enabled"}
-                  unCheckedChildren={"disabled"}
-                />
+                <div
+                  onClick={(event) => {
+                    event.stopPropagation();
+                  }}
+                >
+                  <Switch
+                    checked={settings.streamOverlay}
+                    onChange={handleStreamerModeChange}
+                    checkedChildren={"Enabled"}
+                    unCheckedChildren={"Disabled"}
+                  />
+                </div>
               }
               key="3"
             >
