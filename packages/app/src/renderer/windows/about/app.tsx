@@ -7,7 +7,7 @@ import compareVersions from "compare-versions";
 import * as React from "react";
 import { useSelector } from "react-redux";
 import { selectSettings } from "../../../redux/slice";
-import iconBig from "../../../../assets/iconBig.png";
+import bigIcon from "../../../../assets/ms-icon-310x310.png";
 import { useEffect } from "react";
 import { events, firebaseInit } from "../../firebase/firebase";
 import { Tag, Tooltip } from "antd";
@@ -33,7 +33,7 @@ const App = (): JSX.Element => {
       <WindowTitlebar windowName="about" cantMaximize>
         <Row>
           <Col span={8} style={{ paddingRight: 20, paddingLeft: 20 }}>
-            <img src={iconBig} style={{ width: "100%" }} alt="App Icon" />
+            <img src={bigIcon} style={{ width: "100%" }} alt="App Icon" />
           </Col>
           <Col span={16} style={{ paddingRight: 10 }}>
             <Title style={{ marginBottom: 5 }}>Coh2 Game Stats </Title>

@@ -1,7 +1,7 @@
 import { Col, Row } from "antd";
 import React from "react";
 import "./window-titlebar.css";
-import icon from "../../../assets/icon.ico";
+import icon from "../../../assets/android-icon-48x48.png";
 import { ApplicationWindows } from "../../redux/state";
 
 interface Props {
