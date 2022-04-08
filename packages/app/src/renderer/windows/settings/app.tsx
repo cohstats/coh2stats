@@ -288,8 +288,8 @@ const App = (): JSX.Element => {
                   <Switch
                     checked={settings.twitchExtension}
                     onChange={handleTwitchExtensionModeChange}
-                    checkedChildren={"Enabled"}
-                    unCheckedChildren={"Disabled"}
+                    checkedChildren={"On"}
+                    unCheckedChildren={"Off"}
                   />
                 </div>
               }
@@ -361,8 +361,18 @@ const App = (): JSX.Element => {
                 <>
                   <Form.Item wrapperCol={{ span: 24 }}>
                     <Text>
-                      Now go on twitch install the extension and in the extension settings set
-                      UUID field.
+                      Now go on twitch install the{" "}
+                      <Typography.Link
+                        onClick={() =>
+                          window.electron.ipcRenderer.openInBrowser(
+                            "https://dashboard.twitch.tv/extensions/6x9q2nzzv9wewklo7gt7hz2vypdgg7-0.0.1",
+                          )
+                        }
+                      >
+                        extension
+                      </Typography.Link>{" "}
+                      and in the extension settings set UUID field to be the same as the following
+                      UUID:
                     </Text>
                   </Form.Item>
                   <Form.Item label={"Your UUID"}>
@@ -371,6 +381,12 @@ const App = (): JSX.Element => {
                       value={settings.twitchExtensionUUID}
                       readOnly
                     />
+                  </Form.Item>
+                  <Form.Item wrapperCol={{ span: 24 }}>
+                    <Text>
+                      You will need to run this app in the background to update the twitch
+                      extension when a new game was found!
+                    </Text>
                   </Form.Item>
                   <Form.Item wrapperCol={{ span: 10, offset: 8 }}>
                     <Button
@@ -441,8 +457,8 @@ const App = (): JSX.Element => {
                   <Switch
                     checked={settings.streamOverlay}
                     onChange={handleStreamerModeChange}
-                    checkedChildren={"Enabled"}
-                    unCheckedChildren={"Disabled"}
+                    checkedChildren={"On"}
+                    unCheckedChildren={"Off"}
                   />
                 </div>
               }
