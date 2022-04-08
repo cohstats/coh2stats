@@ -27,6 +27,7 @@ const DesktopApp: React.FC = () => {
                 <li>See detailed leaderboard stats of players in your game</li>
                 <li>Game results prediction based on map analysis</li>
                 <li>Loads automatically when joining a new game</li>
+                <li>Twitch stream overlay extension</li>
                 <li>Streamer mode with OBS support</li>
               </ul>
               <br />
@@ -101,6 +102,46 @@ const DesktopApp: React.FC = () => {
             <Col xs={24} xl={16}>
               <Image
                 width={"100%"}
+                alt="Desktop app displays detailed player info for selected player"
+                src="resources/desktopAppImages/DarkMode.png"
+              />
+            </Col>
+            <Col xs={24} xl={8} style={{ paddingTop: "70px" }}>
+              <Title level={2}>Light and Dark Mode</Title>
+              <p style={{ fontSize: "20px" }}>
+                Switch between light and dark mode in the apps settings.
+              </p>
+            </Col>
+          </Row>
+          <Row justify="center" style={{ paddingTop: "40px" }}>
+            <Col xs={24} xl={8} style={{ paddingTop: "70px" }}>
+              <Title level={2}>Twitch Overlay Extension</Title>
+              <p style={{ fontSize: "20px" }}>
+                A expandable Stream Overlay that allows curious viewers to interact with your game
+                stats on stream. Check out the extension{" "}
+                <Link
+                  href={
+                    "https://dashboard.twitch.tv/extensions/6x9q2nzzv9wewklo7gt7hz2vypdgg7-0.0.1"
+                  }
+                  target="_blank"
+                >
+                  here
+                </Link>
+                .
+              </p>
+            </Col>
+            <Col xs={24} xl={16}>
+              <Image
+                width={"100%"}
+                alt="Desktop app displays additional statistics on the current team compositions"
+                src="resources/desktopAppImages/TwitchExtension.png"
+              />
+            </Col>
+          </Row>
+          <Row justify="center" style={{ paddingTop: "40px" }}>
+            <Col xs={24} xl={16}>
+              <Image
+                width={"100%"}
                 alt="Desktop app can be used in OBS to overlay player statistics on stream"
                 src="resources/desktopAppImages/StreamerMode.png"
               />
@@ -114,6 +155,7 @@ const DesktopApp: React.FC = () => {
                   href={
                     "https://github.com/cohstats/coh2stats/blob/master/packages/app/README.md#stream-overlay"
                   }
+                  target="_blank"
                 >
                   here
                 </Link>
