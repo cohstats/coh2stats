@@ -108,12 +108,10 @@ const App = (): JSX.Element => {
                 or{" "}
                 <Link
                   onClick={() =>
-                    window.electron.ipcRenderer.openInBrowser(
-                      "https://github.com/cohstats/coh2stats",
-                    )
+                    window.electron.ipcRenderer.openInBrowser("https://discord.gg/jRrnwqMfkr")
                   }
                 >
-                  get involved!
+                  join our discord and get involved!
                 </Link>
               </Text>
             </p>
@@ -125,6 +123,3 @@ const App = (): JSX.Element => {
 };
 
 export default App;
-
-// <Text type="secondary"> (up to date)</Text> // for after version
-//<Link onClick={() => window.electron.ipcRenderer.openInBrowser(settings.appUpdateDownloadLink)}> </Link>
