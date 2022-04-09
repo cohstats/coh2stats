@@ -131,7 +131,11 @@ const About: React.FC = () => {
       .
       <br />
       <br />
-      For any discussion, ideas or anything else. Head over to the coh2.org{" "}
+      For any discussion, ideas or anything else. Visit our{" "}
+      <Link href="https://discord.gg/jRrnwqMfkr" target="_blank">
+        discord channel
+      </Link>{" "}
+      or head over to the coh2.org{" "}
       <Link
         href="https://www.coh2.org/topic/108057/coh2stats-com-match-and-player-statistics-2-0"
         target="_blank"
