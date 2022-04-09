@@ -36,6 +36,11 @@ jobs:
         run: |
           export NODE_OPTIONS=--max_old_space_size=4096
           CI=false yarn web build
+        # When we release the electron app - it's build slower than the web release, we should probably have something better than this
+        # probably we can merge it together into one deploy job/release.
+      - name: Sleep for 240 seconds
+        run: sleep 240s
+        shell: bash
       - name: Deploy to Firebase
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN_CI_PROD}}

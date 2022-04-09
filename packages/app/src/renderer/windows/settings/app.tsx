@@ -16,6 +16,7 @@ import { Helper } from "@coh2stats/shared/src/components/helper";
 import { Collapse, Divider, Result, Spin, Steps, Tooltip, Typography } from "antd";
 import { ExclamationCircleOutlined, LoadingOutlined } from "@ant-design/icons";
 import WindowTitlebar from "../../titlebar/window-titlebar";
+import config from "../../../main/config";
 
 const { Text } = Typography;
 
@@ -93,6 +94,10 @@ const App = (): JSX.Element => {
 
   const handleScan = () => {
     window.electron.ipcRenderer.scanForLogFile();
+  };
+
+  const openExtensionWebPage = () => {
+    window.electron.ipcRenderer.openInBrowser(config.extensionURL);
   };
 
   const handleTwitchExtensionModeChange = (checked: boolean) => {
@@ -264,15 +269,7 @@ const App = (): JSX.Element => {
                       <>
                         Use our twitch extension to display interactive stats for your viewers on
                         stream. Get the extension{" "}
-                        <Typography.Link
-                          onClick={() =>
-                            window.electron.ipcRenderer.openInBrowser(
-                              "https://github.com/cohstats/coh2stats/blob/master/packages/app/README.md",
-                            )
-                          }
-                        >
-                          here
-                        </Typography.Link>
+                        <Typography.Link onClick={openExtensionWebPage}>here</Typography.Link>
                       </>
                     }
                     style={{ paddingLeft: "5px" }}
@@ -362,15 +359,7 @@ const App = (): JSX.Element => {
                   <Form.Item wrapperCol={{ span: 24 }}>
                     <Text>
                       Now go on twitch install the{" "}
-                      <Typography.Link
-                        onClick={() =>
-                          window.electron.ipcRenderer.openInBrowser(
-                            "https://dashboard.twitch.tv/extensions/6x9q2nzzv9wewklo7gt7hz2vypdgg7-0.0.1",
-                          )
-                        }
-                      >
-                        extension
-                      </Typography.Link>{" "}
+                      <Typography.Link onClick={openExtensionWebPage}>extension</Typography.Link>{" "}
                       and in the extension settings set UUID field to be the same as the following
                       UUID:
                     </Text>
