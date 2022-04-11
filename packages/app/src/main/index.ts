@@ -3,7 +3,6 @@ import { ApplicationStore } from "./applicationStore";
 import { GameWatcher } from "./gameWatcher";
 import { ApplicationManager } from "./applicationManager";
 import { StreamerOverlay } from "./streamerOverlay";
-import { events } from "./mixpanel";
 import { TwitchExtension } from "./twitchExtension";
 
 // manages file and runtime (redux) storage for main
@@ -26,15 +25,11 @@ if (squirrelSetupCommand === "--squirrel-updated") {
 }
 if (squirrelSetupCommand === "--squirrel-install") {
   // on first time install
-  events.install(() => {
-    app.quit();
-  });
+  app.quit();
 }
 if (squirrelSetupCommand === "--squirrel-uninstall") {
   // called when uninstalling
-  events.uninstall(() => {
-    app.quit();
-  });
+  app.quit();
 }
 if (squirrelSetupCommand === "--squirrel-obsolete") {
   // called on the version that gets overridden by the new version
