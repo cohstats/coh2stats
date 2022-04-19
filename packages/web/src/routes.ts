@@ -60,6 +60,10 @@ const playerCardBase = () => {
   return "/players";
 };
 
+const liveMatchesBase = () => {
+  return "/live-matches";
+};
+
 const playerCardWithId = (steamId = ":steamid") => {
   return `${playerCardBase()}/${steamId}`;
 };
@@ -71,6 +75,7 @@ const playerMatches = (steamId = ":steamid") => {
 const routes = {
   statsBase,
   fullStatsOldDetails,
+  liveMatchesBase,
   commanderBase,
   commanderList,
   commanderByID,
