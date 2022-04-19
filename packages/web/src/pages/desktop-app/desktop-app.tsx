@@ -2,10 +2,26 @@ import { DownloadOutlined } from "@ant-design/icons";
 import { Button, Col, Image, Row } from "antd";
 import Link from "antd/lib/typography/Link";
 import Title from "antd/lib/typography/Title";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import AppVersionFile from "@coh2stats/web/public/electron-app-version.json";
+// eslint-disable-next-line react-hooks/exhaustive-deps
+const useMountEffect = (fun: { (): void }) => useEffect(fun, []);
 
 const DesktopApp: React.FC = () => {
+  const twitchOverlayRef = useRef(null);
+  const OBSOverlayRef = useRef(null);
+
+  useMountEffect(() => {
+    const hash = window.location.hash;
+    if (hash === "#twitch-overlay" && twitchOverlayRef) {
+      // @ts-ignore
+      twitchOverlayRef.current.scrollIntoView();
+    } else if (hash === "#obs-overlay" && OBSOverlayRef) {
+      // @ts-ignore
+      OBSOverlayRef.current.scrollIntoView();
+    }
+  }); // Scroll on mount
+
   return (
     <>
       <Row justify="center" style={{ paddingTop: "20px" }}>
@@ -113,22 +129,27 @@ const DesktopApp: React.FC = () => {
               </p>
             </Col>
           </Row>
+
           <Row justify="center" style={{ paddingTop: "40px" }}>
             <Col xs={24} xl={8} style={{ paddingTop: "70px" }}>
-              <Title level={2}>Twitch Overlay Extension</Title>
-              <p style={{ fontSize: "20px" }}>
-                A expandable Stream Overlay that allows curious viewers to interact with your game
-                stats on stream. Check out the extension{" "}
-                <Link
-                  href={
-                    "https://dashboard.twitch.tv/extensions/6x9q2nzzv9wewklo7gt7hz2vypdgg7-0.0.1"
-                  }
-                  target="_blank"
-                >
-                  here
-                </Link>
-                .
-              </p>
+              <div ref={twitchOverlayRef}>
+                <a href={"#twitch-overlay"}>
+                  <Title level={2}>Twitch Overlay Extension</Title>
+                </a>
+                <p style={{ fontSize: "20px" }}>
+                  A expandable Stream Overlay that allows curious viewers to interact with your
+                  game stats on stream. Check out the extension{" "}
+                  <Link
+                    href={
+                      "https://dashboard.twitch.tv/extensions/6x9q2nzzv9wewklo7gt7hz2vypdgg7-0.0.1"
+                    }
+                    target="_blank"
+                  >
+                    here
+                  </Link>
+                  .
+                </p>
+              </div>
             </Col>
             <Col xs={24} xl={16}>
               <Image
@@ -138,6 +159,7 @@ const DesktopApp: React.FC = () => {
               />
             </Col>
           </Row>
+
           <Row justify="center" style={{ paddingTop: "40px" }}>
             <Col xs={24} xl={16}>
               <Image
@@ -147,7 +169,11 @@ const DesktopApp: React.FC = () => {
               />
             </Col>
             <Col xs={24} xl={8} style={{ paddingTop: "70px" }}>
-              <Title level={2}>Dynamic overlay for streamers with OBS</Title>
+              <div ref={OBSOverlayRef}>
+                <a href={"#obs-overlay"}>
+                  <Title level={2}>Dynamic overlay for streamers with OBS</Title>
+                </a>
+              </div>
               <p style={{ fontSize: "20px" }}>
                 An easy to configure overlay for OBS that shows the players and their ranking when
                 in game. Learn more{" "}
