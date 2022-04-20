@@ -20,6 +20,7 @@ import CustomStats from "./pages/stats/custom-stats";
 import Leaderboards from "./pages/ladders";
 import PlayerCard from "./pages/players";
 import MapStats from "./pages/map-stats";
+import LiveMatches from "./pages/live-matches";
 
 const { Content } = Layout;
 
@@ -75,6 +76,9 @@ const App: React.FC = () => {
             </Route>
             <Route path={routes.desktopAppBase()}>
               <DesktopApp />
+            </Route>
+            <Route path={routes.liveMatchesBase()}>
+              <LiveMatches />
             </Route>
             <Route path={routes.aboutBase()}>
               <About />

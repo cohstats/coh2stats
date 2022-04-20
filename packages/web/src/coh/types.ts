@@ -102,7 +102,30 @@ interface StatsDataObject {
   "4v4": TypeAnalysisObject;
 }
 
+interface StatsCurrentLiveGames {
+  games: {
+    "1v1": number;
+    "2v2": number;
+    "3v3": number;
+    "4v4": number;
+    AI: number;
+    custom: number;
+  };
+  players: {
+    "1v1": number;
+    "2v2": number;
+    "3v3": number;
+    "4v4": number;
+    AI: number;
+    custom: number;
+  };
+  totalPlayersAutomatch: number;
+  totalPlayersIngame: number;
+  timeStamp?: number;
+}
+
 export type {
+  StatsCurrentLiveGames,
   CommanderData,
   CommanderAbility,
   IntelBulletinData,
