@@ -66,6 +66,10 @@ const teamCompositionUsed = (faction: string, type: string): void => {
   firebase.logEvent("tcmWidgetUsed", { faction, type });
 };
 
+const liveMatchesDisplayed = (): void => {
+  firebase.logEvent("liveMatches");
+};
+
 const leaderboardsDisplayed = (): void => {
   firebase.logEvent("leaderboards");
 };
@@ -104,6 +108,7 @@ const firebaseAnalytics = {
   mapStatsDisplayed,
   statsDisplayed,
   rangeStatsDisplayed,
+  liveMatchesDisplayed,
   teamCompositionUsed,
   leaderboardsDisplayed,
   playerCardDisplayed,
