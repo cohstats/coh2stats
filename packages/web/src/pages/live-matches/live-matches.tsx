@@ -4,7 +4,7 @@ import firebaseAnalytics from "../../analytics";
 import config from "../../config";
 import { useQuery} from "../../utils/helpers";
 import {Loading} from "../../components/loading";
-import {Row, Select} from "antd";
+import {Card, Col, Row, Select, Space} from "antd";
 import {AlertBox} from "../../components/alert-box";
 import routes from "../../routes";
 import {useHistory} from "react-router";
@@ -106,25 +106,45 @@ const LiveMatches: React.FC = () => {
   }
 
   return (
-    <div style={{ maxWidth: 900, margin: "0 auto" }}>
-      <LiveMatchesCard />
+    <Row justify="center" style={{padding: "10px"}}>
+      <Col xs={24} xxl={17}>
+        <Row justify="center">
+          <Col span={24}>
+            <Space direction={"vertical"} style={{ alignItems: "center", justifyContent: "center", width:"100%"}}>
 
-      <Select
-        value={playerGroup}
-        onChange={onPlayerGroupSelect}
-        style={{ width: 120 }}
-        size={"large"}
-      >
-        <Option value="1">1 vs 1</Option>
-        <Option value="2">2 vs 2</Option>
-        <Option value="3">3 vs 3</Option>
-        <Option value="4">4 vs 4</Option>
-        <Option value="5">VS AI</Option>
-        <Option value="0">Custom Games</Option>
-      </Select>
+            <LiveMatchesCard/>
+              <Space  style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: 10 }}>
+                <h3> Display live games</h3>
+                <Select
+                  value={playerGroup}
+                  onChange={onPlayerGroupSelect}
+                  style={{width: 150}}
+                  size={"large"}
+                >
+                  <Option value="1">1v1 Automatch</Option>
+                  <Option value="2">2v2 Automatch</Option>
+                  <Option value="3">3v3 Automatch</Option>
+                  <Option value="4">4v4 Automatch</Option>
+                  <Option value="5">Automatch vs AI</Option>
+                  <Option value="0">Custom Games</Option>
+                </Select>
+              </Space>
+            </Space>
 
-      {content}
-    </div>
+          </Col>
+          {/*<Col span={12}>*/}
+
+          {/*</Col>*/}
+
+
+        </Row>
+        <Row justify="center">
+          {content}
+        </Row>
+
+
+      </Col>
+    </Row>
   );
 };
 
