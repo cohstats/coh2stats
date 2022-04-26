@@ -1,13 +1,15 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import LiveMatchesCard from "./live-matches-card";
 import firebaseAnalytics from "../../analytics";
 import config from "../../config";
-import { useQuery} from "../../utils/helpers";
-import {Loading} from "../../components/loading";
-import {Card, Col, Row, Select, Space} from "antd";
-import {AlertBox} from "../../components/alert-box";
+import { useQuery } from "../../utils/helpers";
+import { Loading } from "../../components/loading";
+import { Col, Row, Select, Space } from "antd";
+import { AlertBox } from "../../components/alert-box";
 import routes from "../../routes";
-import {useHistory} from "react-router";
+import { useHistory } from "react-router";
+import LiveMatchesTable from "./live-matches-table";
+import { LiveGame } from "../../coh/types";
 
 const { Option } = Select;
 
@@ -17,12 +19,11 @@ const LiveMatches: React.FC = () => {
 
   const playerGroup = query.get("playerGroup") || "1";
   const startQuery = query.get("view") || 0;
-  const count = 10;
-
+  const count = 40;
 
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<null | string>(null);
-  const [data, setData] = useState<null | Record<string, any>>(null);
+  const [data, setData] = useState<null | Array<LiveGame>>(null);
 
   useEffect(() => {
     firebaseAnalytics.liveMatchesDisplayed();
@@ -39,6 +40,7 @@ const LiveMatches: React.FC = () => {
             `API request failed with code: ${response.status}, res: ${await response.text()}`,
           );
         }
+        setError(null);
         setData(await response.json());
       } catch (e) {
         let errorMessage = "Failed to do something exceptional";
@@ -53,43 +55,34 @@ const LiveMatches: React.FC = () => {
     })();
   }, [playerGroup, startQuery]);
 
-
-  console.log(isLoading)
-  console.log(error)
-  console.log(data)
-
-
   const changeRoute = (params: Record<string, any>) => {
-    const {
-      playerGroupToLoad,
-    } = params;
+    const { playerGroupToLoad } = params;
 
     const searchValue = `?${new URLSearchParams({
-      playerGroup: playerGroupToLoad || (playerGroup),
-    })}`
+      playerGroup: playerGroupToLoad || playerGroup,
+    })}`;
 
     push({
       pathname: routes.liveMatchesBase(),
       search: searchValue,
     });
-  }
+  };
 
   const onPlayerGroupSelect = (value: string) => {
-    changeRoute({playerGroupToLoad: value})
+    changeRoute({ playerGroupToLoad: value });
   };
 
   let content = <div></div>;
 
-
-  if(isLoading){
+  if (isLoading) {
     content = (
       <div style={{ paddingTop: 50 }}>
         <Loading />
-    </div>
-    )
+      </div>
+    );
   }
 
-  if(error){
+  if (error) {
     content = (
       <Row justify="center" style={{ paddingTop: "10px" }}>
         <AlertBox
@@ -98,27 +91,40 @@ const LiveMatches: React.FC = () => {
           description={`${JSON.stringify(error)}`}
         />
       </Row>
-    )
+    );
   }
 
-  if (!error && !isLoading){
-    content =(<div>{JSON.stringify(data)}</div>);
+  if (!error && !isLoading) {
+    content = (
+      <div>
+        <LiveMatchesTable data={data} />
+      </div>
+    );
   }
 
   return (
-    <Row justify="center" style={{padding: "10px"}}>
+    <Row justify="center" style={{ padding: "10px" }}>
       <Col xs={24} xxl={17}>
         <Row justify="center">
           <Col span={24}>
-            <Space direction={"vertical"} style={{ alignItems: "center", justifyContent: "center", width:"100%"}}>
-
-            <LiveMatchesCard/>
-              <Space  style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: 10 }}>
+            <Space
+              direction={"vertical"}
+              style={{ alignItems: "center", justifyContent: "center", width: "100%" }}
+            >
+              <LiveMatchesCard />
+              <Space
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: 10,
+                }}
+              >
                 <h3> Display live games</h3>
                 <Select
                   value={playerGroup}
                   onChange={onPlayerGroupSelect}
-                  style={{width: 150}}
+                  style={{ width: 150 }}
                   size={"large"}
                 >
                   <Option value="1">1v1 Automatch</Option>
@@ -130,19 +136,9 @@ const LiveMatches: React.FC = () => {
                 </Select>
               </Space>
             </Space>
-
           </Col>
-          {/*<Col span={12}>*/}
-
-          {/*</Col>*/}
-
-
         </Row>
-        <Row justify="center">
-          {content}
-        </Row>
-
-
+        <Row justify="center">{content}</Row>
       </Col>
     </Row>
   );

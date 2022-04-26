@@ -3,6 +3,7 @@ import { format } from "date-fns";
 
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en.json";
+import config from "../config";
 
 // Something like this is not currently support by create-react-app
 // Jesus that lib is such a shit https://github.com/facebook/create-react-app/issues/9127 ...
@@ -116,6 +117,11 @@ const sumValuesOfObjects = (
   return masterObject;
 };
 
+const isDev = () => {
+  const hostName = window.location.hostname;
+  return config.devHostnames.includes(hostName);
+};
+
 export {
   getYesterdayDateTimestamp,
   convertDateToDayTimestamp,
@@ -130,4 +136,5 @@ export {
   sumValuesOfObjects,
   formatFactionName,
   timeAgo,
+  isDev,
 };

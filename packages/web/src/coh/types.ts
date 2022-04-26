@@ -124,6 +124,55 @@ interface StatsCurrentLiveGames {
   timeStamp?: number;
 }
 
+type LivePlayerProfile = {
+  currentID: number;
+  profile_id: number;
+  name: string;
+  unknown3: string;
+  alias: string;
+  unknown5: string;
+  unknown6: number;
+  xp: number;
+  level: number;
+  unknown9: number;
+  unknown10?: null;
+  steamid: string;
+  unknown12: number;
+};
+
+type LiveGame = {
+  id: number;
+  unknown1: number;
+  unknown2: string;
+  creator_profile_id: number;
+  unknown4: number;
+  description: string;
+  unknown6: number;
+  mapname: string;
+  options?: string;
+  unknown9: number;
+  maxplayers: number;
+  slotinfo?: string;
+  unknown12: number;
+  players?: Array<{
+    matchid: number;
+    profile_id: number;
+    rank: number;
+    unknown3: number;
+    race_id: number;
+    teamid: number;
+    player_profile?: LivePlayerProfile;
+  }>;
+  current_observers: number;
+  max_observers: number;
+  unknown16: number;
+  unknown17: number;
+  unknown18: number;
+  unknown19: number;
+  startgametime: number;
+  server: string;
+};
+
 export type {
   StatsCurrentLiveGames,
   CommanderData,
@@ -137,5 +186,6 @@ export type {
   StatsDataObject,
   TypeAnalysisObject,
   statTypesInDbAsType,
+  LiveGame,
 };
 export { validRaceNames, validStatsTypes, statsTypesInDB };
