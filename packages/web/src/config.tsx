@@ -19,6 +19,8 @@ const firebaseFunctions = {
   location: "us-east4",
 };
 
+const devHostnames = ["localhost", "coh2-ladders-dev.web.app"];
+
 const rrfConfig: Partial<ReactReduxFirebaseConfig> = {
   enableLogging: true,
   userProfile: "users",
@@ -29,6 +31,7 @@ const config = {
   firebase,
   rrfConfig,
   firebaseFunctions,
+  devHostnames,
 };
 
 // The date when we exported the data for the bulletins and commanders

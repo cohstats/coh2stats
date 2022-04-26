@@ -41,7 +41,7 @@ const LiveMatchesCard: React.FC = () => {
       }
       loading={isLoading}
       size={"small"}
-      style={{ maxWidth: 440, margin: 5 }}
+      style={{ maxWidth: 440, minHeight: 150 }}
     >
       <Row>
         <Col span={12} md={12} xs={24}>
