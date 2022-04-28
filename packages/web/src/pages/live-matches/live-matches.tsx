@@ -19,6 +19,7 @@ const LiveMatches: React.FC = () => {
 
   const playerGroup = query.get("playerGroup") || "1";
   const startQuery = query.get("view") || 0;
+  const orderByQuery = query.get("orderBy") || "0";
   const count = 40;
 
   const [isLoading, setIsLoading] = useState(true);
@@ -33,7 +34,7 @@ const LiveMatches: React.FC = () => {
     (async () => {
       try {
         const response = await fetch(
-          `https://${config.firebaseFunctions.location}-coh2-ladders-prod.cloudfunctions.net/getLiveGamesHttp?playerGroup=${playerGroup}&start=${startQuery}&count=${count}`,
+          `https://${config.firebaseFunctions.location}-coh2-ladders-prod.cloudfunctions.net/getLiveGamesHttp?playerGroup=${playerGroup}&start=${startQuery}&count=${count}&sortOrder=${orderByQuery}`,
         );
         if (!response.ok) {
           throw new Error(
@@ -53,13 +54,18 @@ const LiveMatches: React.FC = () => {
         setIsLoading(false);
       }
     })();
-  }, [playerGroup, startQuery]);
+  }, [playerGroup, startQuery, orderByQuery]);
 
   const changeRoute = (params: Record<string, any>) => {
-    const { playerGroupToLoad } = params;
+    let { playerGroupToLoad, orderByToLoad } = params;
+
+    if ((playerGroupToLoad === "5" || playerGroupToLoad === "0") && orderByQuery === "0") {
+      orderByToLoad = "1";
+    }
 
     const searchValue = `?${new URLSearchParams({
       playerGroup: playerGroupToLoad || playerGroup,
+      orderBy: orderByToLoad || orderByQuery,
     })}`;
 
     push({
@@ -133,6 +139,26 @@ const LiveMatches: React.FC = () => {
                   <Option value="4">4v4 Automatch</Option>
                   <Option value="5">Automatch vs AI</Option>
                   <Option value="0">Custom Games</Option>
+                </Select>
+                <h3> sort by </h3>
+                <Select
+                  value={orderByQuery}
+                  onChange={(value) => changeRoute({ orderByToLoad: value })}
+                  style={{ width: 100 }}
+                  size={"large"}
+                >
+                  <Option
+                    value="0"
+                    disabled={(() => {
+                      // Automatch and custom can't be sorted by rank
+                      // eslint-disable-next-line eqeqeq
+                      return playerGroup == "0" || playerGroup == "5";
+                    })()}
+                  >
+                    Rank
+                  </Option>
+                  <Option value="1">Start Time</Option>
+                  <Option value="2">Viewers</Option>
                 </Select>
               </Space>
             </Space>

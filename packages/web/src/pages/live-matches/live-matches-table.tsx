@@ -46,8 +46,9 @@ const LiveMatchesTable: React.FC<{
     },
     {
       title: "Observers",
+      align: "center" as "center",
       render: (data: LiveGame) => {
-        return `${data.current_observers} /  ${data.max_observers}`;
+        return `${data.current_observers}`;
       },
     },
   ];
