@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Table } from "antd";
+import { Table } from "antd";
 import { LiveGame } from "../../coh/types";
 import { isDev } from "../../utils/helpers";
 import { TeamOutlined } from "@ant-design/icons";
@@ -54,17 +54,15 @@ const LiveMatchesTable: React.FC<{
   ];
 
   return (
-    <Row>
-      <Table
-        dataSource={dataSource}
-        columns={columns}
-        rowKey={(record) => record.id}
-        pagination={{
-          defaultPageSize: 40,
-          pageSizeOptions: ["40", "100", "200"],
-        }}
-      />
-    </Row>
+    <Table
+      dataSource={dataSource}
+      columns={columns}
+      rowKey={(record) => record.id}
+      pagination={{
+        defaultPageSize: 40,
+        pageSizeOptions: ["40", "100", "200"],
+      }}
+    />
   );
 };
 

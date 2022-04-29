@@ -41,10 +41,10 @@ const LiveMatchesCard: React.FC = () => {
       }
       loading={isLoading}
       size={"small"}
-      style={{ maxWidth: 440, minHeight: 150 }}
+      style={{ width: "100%", maxWidth: 440, minHeight: 150 }}
     >
       <Row>
-        <Col span={12} md={12} xs={24}>
+        <Col md={12} xs={24}>
           <Row>
             <Col>
               <div style={{ display: "flex", flexDirection: "row" }}>
@@ -114,7 +114,7 @@ const LiveMatchesCard: React.FC = () => {
             </Col>
           </Row>
         </Col>
-        <Col span={12} md={12} xs={24}>
+        <Col md={12} xs={24}>
           <Row>
             <Col>
               <div style={{ display: "flex", flexDirection: "row" }}>
