@@ -113,58 +113,70 @@ const LiveMatches: React.FC = () => {
       <Col xs={24} xxl={17}>
         <Row justify="center">
           <Col span={24}>
-            <Space
-              direction={"vertical"}
-              style={{ alignItems: "center", justifyContent: "center", width: "100%" }}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "flex-end",
+                flexWrap: "wrap",
+                paddingLeft: 20,
+                paddingRight: 20,
+              }}
             >
-              <LiveMatchesCard />
-              <Space
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  padding: 10,
-                }}
-              >
-                <h3> Display live games</h3>
-                <Select
-                  value={playerGroup}
-                  onChange={onPlayerGroupSelect}
-                  style={{ width: 150 }}
-                  size={"large"}
+              <div>
+                <Space
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                  wrap
                 >
-                  <Option value="1">1v1 Automatch</Option>
-                  <Option value="2">2v2 Automatch</Option>
-                  <Option value="3">3v3 Automatch</Option>
-                  <Option value="4">4v4 Automatch</Option>
-                  <Option value="5">Automatch vs AI</Option>
-                  <Option value="0">Custom Games</Option>
-                </Select>
-                <h3> sort by </h3>
-                <Select
-                  value={orderByQuery}
-                  onChange={(value) => changeRoute({ orderByToLoad: value })}
-                  style={{ width: 100 }}
-                  size={"large"}
-                >
-                  <Option
-                    value="0"
-                    disabled={(() => {
-                      // Automatch and custom can't be sorted by rank
-                      // eslint-disable-next-line eqeqeq
-                      return playerGroup == "0" || playerGroup == "5";
-                    })()}
+                  <h3> Display live games</h3>
+                  <Select
+                    value={playerGroup}
+                    onChange={onPlayerGroupSelect}
+                    style={{ width: 150 }}
+                    size={"large"}
                   >
-                    Rank
-                  </Option>
-                  <Option value="1">Start Time</Option>
-                  <Option value="2">Viewers</Option>
-                </Select>
-              </Space>
-            </Space>
+                    <Option value="1">1v1 Automatch</Option>
+                    <Option value="2">2v2 Automatch</Option>
+                    <Option value="3">3v3 Automatch</Option>
+                    <Option value="4">4v4 Automatch</Option>
+                    <Option value="5">Automatch vs AI</Option>
+                    <Option value="0">Custom Games</Option>
+                  </Select>
+                  <h3> sort by </h3>
+                  <Select
+                    value={orderByQuery}
+                    onChange={(value) => changeRoute({ orderByToLoad: value })}
+                    style={{ width: 120 }}
+                    size={"large"}
+                  >
+                    <Option
+                      value="0"
+                      disabled={(() => {
+                        // Automatch and custom can't be sorted by rank
+                        // eslint-disable-next-line eqeqeq
+                        return playerGroup == "0" || playerGroup == "5";
+                      })()}
+                    >
+                      Rank
+                    </Option>
+                    <Option value="1">Start Time</Option>
+                    <Option value="2">Viewers</Option>
+                  </Select>
+                </Space>
+              </div>
+              <div style={{ width: "100%", maxWidth: "440px" }}>
+                <LiveMatchesCard />
+              </div>
+            </div>
           </Col>
         </Row>
-        <Row justify="center">{content}</Row>
+        <Row justify="center" style={{ paddingTop: 10 }}>
+          <Col span={24}>{content}</Col>
+        </Row>
       </Col>
     </Row>
   );
