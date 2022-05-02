@@ -18,43 +18,8 @@ const LiveMatches: React.FC = () => {
   const query = useQuery();
 
   const playerGroup = query.get("playerGroup") || "1";
-  const startQuery = query.get("view") || 0;
+  const startQuery = query.get("start") || 0;
   const orderByQuery = query.get("orderBy") || "0";
-  const count = 40;
-
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<null | string>(null);
-  const [data, setData] = useState<null | Array<LiveGame>>(null);
-
-  useEffect(() => {
-    firebaseAnalytics.liveMatchesDisplayed();
-
-    setIsLoading(true);
-
-    (async () => {
-      try {
-        const response = await fetch(
-          `https://${config.firebaseFunctions.location}-coh2-ladders-prod.cloudfunctions.net/getLiveGamesHttp?playerGroup=${playerGroup}&start=${startQuery}&count=${count}&sortOrder=${orderByQuery}`,
-        );
-        if (!response.ok) {
-          throw new Error(
-            `API request failed with code: ${response.status}, res: ${await response.text()}`,
-          );
-        }
-        setError(null);
-        setData(await response.json());
-      } catch (e) {
-        let errorMessage = "Failed to do something exceptional";
-        if (e instanceof Error) {
-          errorMessage = e.message;
-        }
-        console.error(e);
-        setError(JSON.stringify(errorMessage));
-      } finally {
-        setIsLoading(false);
-      }
-    })();
-  }, [playerGroup, startQuery, orderByQuery]);
 
   const changeRoute = (params: Record<string, any>) => {
     let { playerGroupToLoad, orderByToLoad } = params;
@@ -77,36 +42,6 @@ const LiveMatches: React.FC = () => {
   const onPlayerGroupSelect = (value: string) => {
     changeRoute({ playerGroupToLoad: value });
   };
-
-  let content = <div></div>;
-
-  if (isLoading) {
-    content = (
-      <div style={{ paddingTop: 50 }}>
-        <Loading />
-      </div>
-    );
-  }
-
-  if (error) {
-    content = (
-      <Row justify="center" style={{ paddingTop: "10px" }}>
-        <AlertBox
-          type={"error"}
-          message={"There was an error loading the live matches"}
-          description={`${JSON.stringify(error)}`}
-        />
-      </Row>
-    );
-  }
-
-  if (!error && !isLoading) {
-    content = (
-      <div>
-        <LiveMatchesTable data={data} />
-      </div>
-    );
-  }
 
   return (
     <Row justify="center" style={{ padding: "10px" }}>
@@ -175,7 +110,9 @@ const LiveMatches: React.FC = () => {
           </Col>
         </Row>
         <Row justify="center" style={{ paddingTop: 10 }}>
-          <Col span={24}>{content}</Col>
+          <Col span={24}>
+            <LiveMatchesTable changeRoute={changeRoute} />
+          </Col>
         </Row>
       </Col>
     </Row>
