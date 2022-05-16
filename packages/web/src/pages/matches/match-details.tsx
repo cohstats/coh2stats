@@ -1,5 +1,5 @@
 import React, { ReactFragment, useEffect } from "react";
-import { getMatchPlayersByFaction } from "./table-functions";
+import { getMatchPlayersByFaction } from "../../utils/table-functions";
 import { Card, Space } from "antd";
 import { getGeneralIconPath } from "../../coh/helpers";
 import { SimplePieChart } from "../../components/charts-match/simple-pie";

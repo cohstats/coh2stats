@@ -1,7 +1,7 @@
 import React from "react";
 import { ColumnsType } from "antd/lib/table";
 import { convertSteamNameToID, getGeneralIconPath } from "../../coh/helpers";
-import { raceIds } from "./table-functions";
+import { raceIds } from "../../utils/table-functions";
 import { Table, Tooltip } from "antd";
 import { Helper } from "../../components/helper";
 import { Link } from "react-router-dom";

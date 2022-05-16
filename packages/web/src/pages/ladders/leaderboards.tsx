@@ -461,6 +461,7 @@ const Leaderboards = () => {
               rowKey={(record) => record?.rank}
               dataSource={findAndMergeStatGroups(data, dataHistoric)}
               loading={isLoadingData || isLoadingDataHistoric}
+              scroll={{ x: 800 }}
             />
           </Col>
         </Row>

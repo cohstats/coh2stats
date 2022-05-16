@@ -1,5 +1,5 @@
 import { Tag } from "antd";
-import { RaceName } from "../../coh/types";
+import { RaceName } from "../coh/types";
 
 /**
  * Returns duration string in HH:MM:SS format
@@ -66,7 +66,7 @@ export function getMatchPlayersByFaction(
   faction: "axis" | "allies",
 ) {
   let factions = [];
-  // loop thru all players
+  // loop through all players
   for (let index in reportedPlayerResults) {
     switch (faction) {
       // search for all axis players
@@ -126,16 +126,16 @@ export const formatMatchtypeID = (matchType: number): string => {
   let formattedMatchType: string;
   switch (matchType) {
     case 1:
-      formattedMatchType = "1 vs 1 ";
+      formattedMatchType = "1 vs 1";
       break;
     case 2:
-      formattedMatchType = "2 vs 2 ";
+      formattedMatchType = "2 vs 2";
       break;
     case 3:
-      formattedMatchType = "3 vs 3 ";
+      formattedMatchType = "3 vs 3";
       break;
     case 4:
-      formattedMatchType = "4 vs 4 ";
+      formattedMatchType = "4 vs 4";
       break;
     case 5:
       formattedMatchType = "2v2 AI Easy";
@@ -176,6 +176,9 @@ export const formatMatchtypeID = (matchType: number): string => {
     case 17:
       formattedMatchType = "4v4 AI Easy";
       break;
+    case 0:
+    // This is empty on purpose, lol case
+    // eslint-disable-next-line no-fallthrough
     case 22:
       formattedMatchType = "Custom Game";
       break;

@@ -10,7 +10,7 @@ import {
   getRaceImage,
   raceIds,
   getAliasFromName,
-} from "./table-functions";
+} from "../../utils/table-functions";
 import "./tableStyle.css";
 import { Link } from "react-router-dom";
 import routes from "../../routes";
@@ -294,6 +294,7 @@ const LastMatchesTable: React.FC<IProps> = ({ data, profileID }) => {
     },
     {
       title: "Axis Players",
+      key: "axis_players",
       dataIndex: "matchhistoryreportresults",
       render: (data: any, record: any) => {
         let axisPlayers = getMatchPlayersByFaction(data, "axis");
@@ -326,6 +327,7 @@ const LastMatchesTable: React.FC<IProps> = ({ data, profileID }) => {
     },
     {
       title: "Allies Players",
+      key: "allies_players",
       dataIndex: "matchhistoryreportresults",
       render: (data: any, record: any) => {
         let alliesPlayers = getMatchPlayersByFaction(data, "allies");

@@ -1,15 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import LiveMatchesCard from "./live-matches-card";
-import firebaseAnalytics from "../../analytics";
-import config from "../../config";
 import { useQuery } from "../../utils/helpers";
-import { Loading } from "../../components/loading";
 import { Col, Row, Select, Space } from "antd";
-import { AlertBox } from "../../components/alert-box";
 import routes from "../../routes";
 import { useHistory } from "react-router";
 import LiveMatchesTable from "./live-matches-table";
-import { LiveGame } from "../../coh/types";
+import firebaseAnalytics from "../../analytics";
 
 const { Option } = Select;
 
@@ -21,8 +17,12 @@ const LiveMatches: React.FC = () => {
   const startQuery = query.get("start") || 0;
   const orderByQuery = query.get("orderBy") || "0";
 
+  useEffect(() => {
+    firebaseAnalytics.liveMatchesDisplayed();
+  }, []);
+
   const changeRoute = (params: Record<string, any>) => {
-    let { playerGroupToLoad, orderByToLoad } = params;
+    let { playerGroupToLoad, orderByToLoad, startToLoad } = params;
 
     if ((playerGroupToLoad === "5" || playerGroupToLoad === "0") && orderByQuery === "0") {
       orderByToLoad = "1";
@@ -31,6 +31,8 @@ const LiveMatches: React.FC = () => {
     const searchValue = `?${new URLSearchParams({
       playerGroup: playerGroupToLoad || playerGroup,
       orderBy: orderByToLoad || orderByQuery,
+      // We need special handling for 0 as it's false, lol
+      start: startToLoad === 0 ? 0 : startToLoad || startQuery,
     })}`;
 
     push({
@@ -71,7 +73,7 @@ const LiveMatches: React.FC = () => {
                   <Select
                     value={playerGroup}
                     onChange={onPlayerGroupSelect}
-                    style={{ width: 150 }}
+                    style={{ width: 160 }}
                     size={"large"}
                   >
                     <Option value="1">1v1 Automatch</Option>
