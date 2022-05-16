@@ -67,24 +67,18 @@ export function getMatchPlayersByFaction(
 ) {
   let factions = [];
   // loop through all players
-  for (let index in reportedPlayerResults) {
+  for (let playerResult of reportedPlayerResults) {
     switch (faction) {
       // search for all axis players
       case "axis":
-        if (
-          reportedPlayerResults[index].race_id === 0 ||
-          reportedPlayerResults[index].race_id === 2
-        ) {
-          factions.push(reportedPlayerResults[index]);
+        if (playerResult.race_id === 0 || playerResult.race_id === 2) {
+          factions.push(playerResult);
         }
         break;
       // search for allies players
       case "allies":
-        if (
-          reportedPlayerResults[index].race_id !== 0 &&
-          reportedPlayerResults[index].race_id !== 2
-        ) {
-          factions.push(reportedPlayerResults[index]);
+        if (playerResult.race_id !== 0 && playerResult.race_id !== 2) {
+          factions.push(playerResult);
         }
         break;
     }
