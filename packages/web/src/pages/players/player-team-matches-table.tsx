@@ -190,6 +190,7 @@ const PlayerTeamMatchesTable: React.FC<IProps> = ({ title, data }) => {
         rowKey={(record) => `${record?.leaderboard_id}-${record?.statgroup_id}`}
         dataSource={sortedData}
         pagination={false}
+        scroll={{ x: 800 }}
         size={"small"}
         summary={(pageData) => {
           let totalWins = 0;

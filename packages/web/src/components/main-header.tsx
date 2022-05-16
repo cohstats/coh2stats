@@ -11,7 +11,13 @@ import { Badge, Menu, Space, Tooltip } from "antd";
 import routes from "../routes";
 import { useRouteMatch } from "react-router";
 import { PlayerSearchInput } from "./header-search";
-import { aboutBase, bulletinsBase, commanderBase, desktopAppBase } from "../titles";
+import {
+  aboutBase,
+  bulletinsBase,
+  commanderBase,
+  desktopAppBase,
+  liveMatchesAppBase,
+} from "../titles";
 import SubMenu from "antd/es/menu/SubMenu";
 import { useData, useLoading } from "../firebase";
 import { Link } from "react-router-dom";
@@ -32,6 +38,9 @@ const pageTitleSwitch = (path: string) => {
       break;
     case routes.desktopAppBase():
       document.title = desktopAppBase;
+      break;
+    case routes.liveMatchesBase():
+      document.title = liveMatchesAppBase;
       break;
   }
 };
@@ -72,6 +81,10 @@ export const MainHeader: React.FC = () => {
     path: routes.desktopAppBase(),
   });
 
+  const liveMatchesMatch = useRouteMatch({
+    path: routes.liveMatchesBase(),
+  });
+
   let pathMatch =
     commandersMatch ||
     statsMatch ||
@@ -79,6 +92,7 @@ export const MainHeader: React.FC = () => {
     bulletinsMatch ||
     mapStatsMatch ||
     desktopAppMatch ||
+    liveMatchesMatch ||
     leaderboardsMatch;
   const currentPath = pathMatch?.path || "";
   pageTitleSwitch(currentPath);
@@ -160,6 +174,9 @@ export const MainHeader: React.FC = () => {
             </Menu.Item>
             <Menu.Item key={routes.leaderboardsBase()}>
               <Link to={routes.leaderboardsBase()}>Leaderboards</Link>
+            </Menu.Item>
+            <Menu.Item key={routes.liveMatchesBase()}>
+              <Link to={routes.liveMatchesBase()}>Live Games</Link>
             </Menu.Item>
             <Menu.Item key={routes.commanderBase()}>
               <Link to={routes.commanderBase()}>Commanders</Link>
