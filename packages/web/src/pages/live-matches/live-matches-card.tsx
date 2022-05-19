@@ -9,14 +9,7 @@ import { Helper } from "../../components/helper";
 const { Text } = Typography;
 
 const LiveMatchesCard: React.FC = () => {
-  useFirestoreConnect([
-    {
-      collection: "stats",
-      doc: "inGamePlayers",
-      storeAs: "liveMatchesStats",
-    },
-  ]);
-
+  // The connection of this data is done in root component useFirestoreConnect
   const isLoading = useLoading("liveMatchesStats");
   const data: StatsCurrentLiveGames = useData("liveMatchesStats");
 

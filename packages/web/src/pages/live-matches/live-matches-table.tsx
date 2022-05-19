@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Row, Table, Typography } from "antd";
-import { LiveGame } from "../../coh/types";
+import { LiveGame, StatsCurrentLiveGames } from "../../coh/types";
 import { isDev, useQuery } from "../../utils/helpers";
 import { TeamOutlined } from "@ant-design/icons";
 import firebaseAnalytics from "../../analytics";
@@ -16,8 +16,38 @@ import { convertSteamNameToID, getGeneralIconPath } from "../../coh/helpers";
 import { Link } from "react-router-dom";
 import routes from "../../routes";
 import { ColumnsType } from "antd/lib/table";
+import { useData } from "../../firebase";
 
 const { Text } = Typography;
+
+// Pagesize
+const count = 40;
+
+const calculatePagination = (playerGroup: string, overviewData: StatsCurrentLiveGames) => {
+  console.log("CALCULATIONG", overviewData);
+
+  if (playerGroup == null || overviewData == null) {
+    return count;
+  }
+
+  const games = overviewData.games;
+
+  if (playerGroup === "1") {
+    return games["1v1"] + count;
+  } else if (playerGroup === "2") {
+    return games["2v2"] + count;
+  } else if (playerGroup === "3") {
+    return games["3v3"] + count;
+  } else if (playerGroup === "4") {
+    return games["4v4"] + count;
+  } else if (playerGroup === "5") {
+    return games["AI"] + count;
+  } else if (playerGroup === "0") {
+    return games["custom"] + count;
+  } else {
+    return 500;
+  }
+};
 
 const LiveMatchesTable: React.FC<{
   changeRoute: Function;
@@ -27,7 +57,8 @@ const LiveMatchesTable: React.FC<{
   const playerGroup = query.get("playerGroup") || "1";
   const startQuery = query.get("start") || "0";
   const orderByQuery = query.get("orderBy") || "0";
-  const count = 40;
+
+  const overViewData: StatsCurrentLiveGames = useData("liveMatchesStats");
 
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<null | string>(null);
@@ -43,6 +74,22 @@ const LiveMatchesTable: React.FC<{
     },
     data: null,
   });
+
+  // When our pagination data are loaded let's change it
+  useEffect(() => {
+    // We need to fully change the data object, so the table is re-rendered, weird I know
+    setData({
+      data: data.data,
+      pagination: {
+        current: data.pagination.current,
+        pageSize: count,
+        total: calculatePagination(playerGroup, overViewData),
+        pageSizeOptions: [`${count}`],
+      },
+    });
+
+    console.log("state fired");
+  }, [overViewData]);
 
   useEffect(() => {
     firebaseAnalytics.liveMatchesDisplayed();
@@ -65,11 +112,22 @@ const LiveMatchesTable: React.FC<{
 
         const current = Math.floor(parseInt(startQuery) / count) + 1;
 
+        console.log(
+          "finsihing the call, overviewdata",
+          overViewData,
+          overViewData === undefined,
+          data.pagination.total,
+        );
+
         setData({
           pagination: {
             current: current === 0 ? 1 : current,
             pageSize: count,
-            total: 500,
+            // On the first render the second API call might finish sooner
+            total:
+              overViewData === undefined
+                ? data.pagination.total
+                : calculatePagination(playerGroup, overViewData),
             pageSizeOptions: [`${count}`],
           },
           data: await response.json(),
@@ -88,7 +146,8 @@ const LiveMatchesTable: React.FC<{
   }, [playerGroup, startQuery, orderByQuery]);
 
   if (isDev()) {
-    console.log(data);
+    console.debug("re-render");
+    console.debug(data);
   }
 
   const handleTableChange = (pagination: any, filters: any, sorter: any) => {

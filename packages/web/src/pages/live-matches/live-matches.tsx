@@ -6,12 +6,21 @@ import routes from "../../routes";
 import { useHistory } from "react-router";
 import LiveMatchesTable from "./live-matches-table";
 import firebaseAnalytics from "../../analytics";
+import { useFirestoreConnect } from "react-redux-firebase";
 
 const { Option } = Select;
 
 const LiveMatches: React.FC = () => {
   const { push } = useHistory();
   const query = useQuery();
+
+  useFirestoreConnect([
+    {
+      collection: "stats",
+      doc: "inGamePlayers",
+      storeAs: "liveMatchesStats",
+    },
+  ]);
 
   const playerGroup = query.get("playerGroup") || "1";
   const startQuery = query.get("start") || 0;
@@ -26,6 +35,11 @@ const LiveMatches: React.FC = () => {
 
     if ((playerGroupToLoad === "5" || playerGroupToLoad === "0") && orderByQuery === "0") {
       orderByToLoad = "1";
+    }
+
+    // When we are changing the player group we want to reset the pagination
+    if (playerGroupToLoad !== undefined) {
+      startToLoad = 0;
     }
 
     const searchValue = `?${new URLSearchParams({
