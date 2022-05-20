@@ -20,12 +20,10 @@ import { useData } from "../../firebase";
 
 const { Text } = Typography;
 
-// Pagesize
+// Page size
 const count = 40;
 
 const calculatePagination = (playerGroup: string, overviewData: StatsCurrentLiveGames) => {
-  console.log("CALCULATIONG", overviewData);
-
   if (playerGroup == null || overviewData == null) {
     return count;
   }
@@ -77,18 +75,19 @@ const LiveMatchesTable: React.FC<{
 
   // When our pagination data are loaded let's change it
   useEffect(() => {
-    // We need to fully change the data object, so the table is re-rendered, weird I know
-    setData({
-      data: data.data,
-      pagination: {
-        current: data.pagination.current,
-        pageSize: count,
-        total: calculatePagination(playerGroup, overViewData),
-        pageSizeOptions: [`${count}`],
-      },
+    setData((prevState) => {
+      return {
+        data: prevState.data,
+        pagination: {
+          current: prevState.pagination.current,
+          pageSize: count,
+          total: calculatePagination(playerGroup, overViewData),
+          pageSizeOptions: [`${count}`],
+        },
+      };
     });
 
-    console.log("state fired");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [overViewData]);
 
   useEffect(() => {
@@ -112,25 +111,22 @@ const LiveMatchesTable: React.FC<{
 
         const current = Math.floor(parseInt(startQuery) / count) + 1;
 
-        console.log(
-          "finsihing the call, overviewdata",
-          overViewData,
-          overViewData === undefined,
-          data.pagination.total,
-        );
+        const finalData = await response.json();
 
-        setData({
-          pagination: {
-            current: current === 0 ? 1 : current,
-            pageSize: count,
-            // On the first render the second API call might finish sooner
-            total:
-              overViewData === undefined
-                ? data.pagination.total
-                : calculatePagination(playerGroup, overViewData),
-            pageSizeOptions: [`${count}`],
-          },
-          data: await response.json(),
+        setData((prevState) => {
+          return {
+            pagination: {
+              current: current === 0 ? 1 : current,
+              pageSize: count,
+              // On the first render the second API call might finish sooner
+              total:
+                overViewData === undefined
+                  ? prevState.pagination.total
+                  : calculatePagination(playerGroup, overViewData),
+              pageSizeOptions: [`${count}`],
+            },
+            data: finalData,
+          };
         });
       } catch (e) {
         let errorMessage = "Failed to fetch the data.";
@@ -143,6 +139,7 @@ const LiveMatchesTable: React.FC<{
         setIsLoading(false);
       }
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playerGroup, startQuery, orderByQuery]);
 
   if (isDev()) {

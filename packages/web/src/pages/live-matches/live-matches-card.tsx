@@ -1,7 +1,6 @@
 import React from "react";
 import { Card, Row, Col, Typography } from "antd";
 import { useData, useLoading } from "../../firebase";
-import { useFirestoreConnect } from "react-redux-firebase";
 import { StatsCurrentLiveGames } from "../../coh/types";
 import { Divider } from "antd";
 import { TeamOutlined } from "@ant-design/icons";
