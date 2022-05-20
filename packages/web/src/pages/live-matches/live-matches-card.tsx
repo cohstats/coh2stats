@@ -1,7 +1,6 @@
 import React from "react";
 import { Card, Row, Col, Typography } from "antd";
 import { useData, useLoading } from "../../firebase";
-import { useFirestoreConnect } from "react-redux-firebase";
 import { StatsCurrentLiveGames } from "../../coh/types";
 import { Divider } from "antd";
 import { TeamOutlined } from "@ant-design/icons";
@@ -9,14 +8,7 @@ import { Helper } from "../../components/helper";
 const { Text } = Typography;
 
 const LiveMatchesCard: React.FC = () => {
-  useFirestoreConnect([
-    {
-      collection: "stats",
-      doc: "inGamePlayers",
-      storeAs: "liveMatchesStats",
-    },
-  ]);
-
+  // The connection of this data is done in root component useFirestoreConnect
   const isLoading = useLoading("liveMatchesStats");
   const data: StatsCurrentLiveGames = useData("liveMatchesStats");
 

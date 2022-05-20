@@ -56,6 +56,9 @@ const App: React.FC = () => {
             <Route path={routes.statsBase()}>
               <CustomStats />
             </Route>
+            <Route path={routes.playerCardWithIdAndName()}>
+              <PlayerCard />
+            </Route>
             <Route path={routes.playerCardWithId()}>
               <PlayerCard />
             </Route>

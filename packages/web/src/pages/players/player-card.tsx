@@ -14,7 +14,6 @@ import Title from "antd/es/typography/Title";
 import { calculateOverallStatsForPlayerCard } from "./data-processing";
 import { convertTeamNames } from "./helpers";
 import LastMatchesTable from "../matches/last-matches-table";
-import routes from "../../routes";
 import PlayerStandingsTables from "./player-standings";
 import config from "../../config";
 import { AlertBox } from "../../components/alert-box";
@@ -58,6 +57,20 @@ const PlayerCard = () => {
 
     setIsLoading(true);
 
+    const addNameToUrl = (playerName: string) => {
+      if (!playerName) {
+        return;
+      }
+
+      const cleanName = playerName.replace(/[^a-zA-Z0-9-_]/g, "");
+      // If it's not in the path, let's push it there
+      if (!window.location.pathname.includes(cleanName)) {
+        push({
+          pathname: `${window.location.pathname}-${cleanName}`,
+        });
+      }
+    };
+
     (async () => {
       try {
         const response = await fetch(
@@ -68,7 +81,10 @@ const PlayerCard = () => {
             `API request failed with code: ${response.status}, res: ${await response.text()}`,
           );
         }
-        setData(await response.json());
+
+        const finalData: playerCardAPIObject = await response.json();
+        setData(finalData);
+        addNameToUrl(Object.values(finalData.steamProfile)[0].personaname);
       } catch (e) {
         let errorMessage = "Failed to do something exceptional";
         if (e instanceof Error) {
@@ -80,7 +96,7 @@ const PlayerCard = () => {
         setIsLoading(false);
       }
     })();
-  }, [steamid]);
+  }, [steamid, push]);
 
   if (!isLoading && error != null) {
     return (
@@ -107,7 +123,6 @@ const PlayerCard = () => {
     const searchValue = view !== "stats" ? `?${new URLSearchParams({ view })}` : "";
 
     push({
-      pathname: routes.playerCardWithId(steamid),
       search: searchValue,
     });
   };

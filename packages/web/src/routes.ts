@@ -68,6 +68,10 @@ const playerCardWithId = (steamId = ":steamid") => {
   return `${playerCardBase()}/${steamId}`;
 };
 
+const playerCardWithIdAndName = (steamId = ":steamid") => {
+  return `${playerCardBase()}/${steamId}-*`;
+};
+
 const playerMatches = (steamId = ":steamid") => {
   return `${matchesBase()}/player/${steamId}`;
 };
@@ -88,6 +92,7 @@ const routes = {
   leaderboardsBase,
   playerCardBase,
   playerCardWithId,
+  playerCardWithIdAndName,
   desktopAppBase,
 };
 
