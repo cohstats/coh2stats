@@ -4,12 +4,12 @@ import { useMediaQuery } from "react-responsive";
 import { FactionsPlayedPieChart } from "./general-charts/factions-pie";
 import { StatsDataObject } from "../../coh/types";
 import { TypeOfGamesPieChart } from "./general-charts/types-games-pie";
-import { Helper } from "../../components/helper";
 import { FactionsBarStackedChart } from "./general-charts/factions-bar-stacked";
 import { TotalFactionWinRateChart } from "./general-charts/winRate-bar";
 import { AverageGameTimeBarChart } from "./general-charts/average-gametime-bar";
 import { TotalTimePieChart } from "./general-charts/total-time-pie";
 import { FactionWinRateStackedChart } from "./general-charts/winRate-bar-stacked";
+import { TotalGamesPieChart } from "./general-charts/total-games-pie";
 
 interface IProps {
   data: StatsDataObject;
@@ -56,19 +56,10 @@ const GeneralStats: React.FC<IProps> = ({ data }) => {
           wrap
           style={{ display: "flex", maxWidth: 1800, justifyContent: "center" }}
         >
-          <RegularStatsCards
-            title={
-              <span>
-                {`Amount of games analyzed `}
-                <Helper
-                  text={
-                    "We are unable to track all the games which are played. See about page to understand which" +
-                    " games are tracked."
-                  }
-                />
-              </span>
-            }
-          >
+          <RegularStatsCards title={`Total games played`}>
+            <TotalGamesPieChart data={data} />
+          </RegularStatsCards>
+          <RegularStatsCards title={`Amount of games analyzed `}>
             <TypeOfGamesPieChart data={data} />
           </RegularStatsCards>
           <RegularStatsCards title={`Factions played across all game types`}>

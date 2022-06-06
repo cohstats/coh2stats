@@ -93,6 +93,7 @@ type TypeAnalysisObject = {
     usf: Record<string, number>;
   };
   factionMatrix: Record<string, { wins: number; losses: number }>;
+  totalGames?: number;
 };
 
 interface StatsDataObject {
