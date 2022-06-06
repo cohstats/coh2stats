@@ -47,8 +47,6 @@ const PatchNotification: React.FC<IProps> = ({ params }) => {
     );
   }
 
-  console.log(patchesJSX);
-
   return <div style={{ textAlign: "center" }}>{patchesJSX}</div>;
 };
 
