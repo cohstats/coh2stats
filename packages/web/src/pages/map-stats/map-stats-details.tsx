@@ -71,7 +71,12 @@ const MapStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
   const frequency = query.get("range") || "";
   let map = query.get("map") || "8p_redball_express";
 
-  const data = specificData;
+  const totalGames = specificData.totalGames || null;
+  // We added total games to the object with the maps / we need to remove it
+  // We need to do a copy of the object because we can't remove the key otherwise
+  const data: Record<string, any> = JSON.parse(JSON.stringify(specificData));
+  delete data["totalGames"];
+
   let amountOfGames = 0;
 
   const mapData: Record<string, number> = {};
