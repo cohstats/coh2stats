@@ -42,8 +42,8 @@ const About: React.FC = () => {
         etc). This gives us 5200(~3000 unique) top players for the given day. We then proceed with
         analysing/saving their matches for the given day. This gives us ~4000 matches / day.
         <br />
-        And we are tracking only auto-match games which are against players (filter out vs AI
-        games).
+        And we are tracking only <Text strong>auto-match games</Text> which are against players
+        (filter out vs AI games).
         <br />
         Update 22/Aug/21: Query top 400 positions.
         <br />
@@ -64,7 +64,7 @@ const About: React.FC = () => {
         <Text strong>we are processing around 8% of all games</Text>.
       </s>
       <br />
-      Update June 2022: Thanks to the access to the live games we know that we track 40% of all
+      Update June 2022: Thanks to the access to the live games we know that we analyze 40% of all
       games.
       <br />
       To be precise: 1v1 - 25%, 2v2 - 37%, 3v3 - 41%, 4v4 - 47%. We aim to get to 100%
