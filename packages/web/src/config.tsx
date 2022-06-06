@@ -19,6 +19,8 @@ const firebaseFunctions = {
   location: "us-east4",
 };
 
+const discordInviteLink = "https://discord.gg/jRrnwqMfkr";
+
 const devHostnames = ["localhost", "coh2-ladders-dev.web.app"];
 
 const rrfConfig: Partial<ReactReduxFirebaseConfig> = {
@@ -32,6 +34,7 @@ const config = {
   rrfConfig,
   firebaseFunctions,
   devHostnames,
+  discordInviteLink,
 };
 
 // The date when we exported the data for the bulletins and commanders

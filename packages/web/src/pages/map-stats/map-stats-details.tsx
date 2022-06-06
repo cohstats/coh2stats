@@ -71,7 +71,7 @@ const MapStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
   const frequency = query.get("range") || "";
   let map = query.get("map") || "8p_redball_express";
 
-  // const totalGames = specificData.totalGames || null;
+  const totalGames = specificData.totalGames || null;
   // We added total games to the object with the maps / we need to remove it
   // We need to do a copy of the object because we can't remove the key otherwise
   const data: Record<string, any> = JSON.parse(JSON.stringify(specificData));
@@ -117,6 +117,22 @@ const MapStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
     );
   };
 
+  let gamesAnalyzed = <>Games analyzed {amountOfGames}</>;
+
+  if (totalGames && totalGames > amountOfGames) {
+    gamesAnalyzed = (
+      <>
+        Games analyzed {amountOfGames}/{totalGames} -{" "}
+        {Math.round((amountOfGames / totalGames) * 100)}%{" "}
+        <Helper
+          text={
+            "From June 2022 we are aware of 90% of total played automatch games. It's possible that some games which are under 10 minutes in duration are not counted."
+          }
+        />
+      </>
+    );
+  }
+
   const cardWidth = 510;
   const cardHeight = 420;
 
@@ -127,9 +143,7 @@ const MapStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
       </Row>
       <Row justify={"center"}>
         <div style={{ textAlign: "center" }}>
-          <span style={{ fontSize: 20, fontWeight: 600 }}>
-            Amount of games for this analysis {amountOfGames}
-          </span>
+          <span style={{ fontSize: 20, fontWeight: 600 }}>{gamesAnalyzed}</span>
           <br />
           <span>
             {
@@ -179,7 +193,7 @@ const MapStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
             <MapsWinRateChart data={data} />
           </Card>
           <Card
-            title={`Games Played ${type}`}
+            title={`Games Analyzed ${type}`}
             bodyStyle={
               isMobile
                 ? { width: "90vw", height: 300 }

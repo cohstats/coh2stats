@@ -2,6 +2,7 @@ import React from "react";
 import { Footer } from "antd/lib/layout/layout";
 import { Divider } from "antd";
 import { Link } from "react-router-dom";
+import config from "../config";
 
 export const MainFooter: React.FC = () => {
   return (
@@ -19,7 +20,7 @@ export const MainFooter: React.FC = () => {
       <a href={"https://github.com/cohstats/coh2stats"} target="_blank" rel="noopener noreferrer">
         <img width={30} height={30} src={"/resources/github-dark.png"} alt={"GitHub Logo"} />
       </a>{" "}
-      <a href={"https://discord.gg/jRrnwqMfkr"} target="_blank" rel="noopener noreferrer">
+      <a href={config.discordInviteLink} target="_blank" rel="noopener noreferrer">
         <img width={30} height={30} src={"/resources/discord-icon.svg"} alt={"Discord Logo"} />
       </a>
       <br />

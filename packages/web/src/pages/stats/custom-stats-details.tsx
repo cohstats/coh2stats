@@ -118,7 +118,7 @@ const CustomStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
     <>
       <Row justify={"center"} style={{ paddingTop: 10 }}>
         <Space size={"large"} wrap style={{ display: "flex", justifyContent: "center" }}>
-          <RegularStatsCards title={`Games Played ${type}`}>
+          <RegularStatsCards title={`Games Analyzed ${type}`}>
             <WinsChart data={data} />
           </RegularStatsCards>
           <RegularStatsCards title={`Faction winrate ${type}`}>

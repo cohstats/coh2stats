@@ -4,6 +4,7 @@ import { capitalize, useQuery } from "../../utils/helpers";
 import { Radio, RadioChangeEvent, Row, Tooltip, Typography } from "antd";
 import PatchNotification from "../../components/patch-notifications";
 import { StatsDataObject, statTypesInDbAsType } from "../../coh/types";
+import { Helper } from "../../components/helper";
 
 const { Text } = Typography;
 
@@ -16,7 +17,7 @@ interface IProps {
 const StatsHeader: React.FC<IProps> = ({ urlChanger, data }) => {
   const query = useQuery();
 
-  const type = query.get("type") || "4v4";
+  const type = (query.get("type") as "1v1" | "2v2" | "3v3" | "4v4" | "general") || "4v4";
   const race = query.get("race") || "wermacht";
   const sourceIsAll = query.get("statsSource") !== "top200";
 
@@ -25,16 +26,24 @@ const StatsHeader: React.FC<IProps> = ({ urlChanger, data }) => {
   const toTimeStamp = query.get("toTimeStamp") || "";
   const frequency = query.get("range") || "";
 
+  let totalGames: null | number = null;
   let matchCount = 0;
   if (type && type !== "general") {
-    // @ts-ignore
     matchCount = data[type].matchCount;
+    totalGames = data[type].totalGames || null;
   } else {
     matchCount =
       data["1v1"].matchCount +
-      data["1v1"].matchCount +
+      data["2v2"].matchCount +
       data["3v3"].matchCount +
       data["4v4"].matchCount;
+
+    totalGames = 0;
+    totalGames += data["1v1"].totalGames || 0;
+    totalGames += data["2v2"].totalGames || 0;
+    totalGames += data["3v3"].totalGames || 0;
+    totalGames += data["4v4"].totalGames || 0;
+    totalGames = totalGames === 0 ? null : totalGames;
   }
 
   // Page title
@@ -69,6 +78,26 @@ const StatsHeader: React.FC<IProps> = ({ urlChanger, data }) => {
     );
   };
 
+  const GamesAnalyzed = () => {
+    let gamesAnalyzed = <>Games analyzed {matchCount}</>;
+
+    if (totalGames && totalGames > matchCount) {
+      gamesAnalyzed = (
+        <>
+          Games analyzed {matchCount}/{totalGames} - {Math.round((matchCount / totalGames) * 100)}
+          %{" "}
+          <Helper
+            text={
+              "From June 2022 we are tracking 90% of total played automatch games. It's possible that some games which are under 10 minutes in duration are not counted."
+            }
+          />
+        </>
+      );
+    }
+
+    return gamesAnalyzed;
+  };
+
   return (
     <>
       <Row justify={"center"}>
@@ -77,7 +106,7 @@ const StatsHeader: React.FC<IProps> = ({ urlChanger, data }) => {
       <Row justify={"center"}>
         <div style={{ textAlign: "center" }}>
           <span style={{ fontSize: 20, fontWeight: 600 }}>
-            Amount of games for this analysis {`${matchCount}`}
+            <GamesAnalyzed />
           </span>
           <br />
           <span>

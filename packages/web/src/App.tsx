@@ -21,6 +21,7 @@ import Leaderboards from "./pages/ladders";
 import PlayerCard from "./pages/players";
 import MapStats from "./pages/map-stats";
 import LiveMatches from "./pages/live-matches";
+import { ErrorBoundary } from "./components/error-boundary";
 
 const { Content } = Layout;
 
@@ -43,59 +44,61 @@ const App: React.FC = () => {
       <Layout className="layout">
         <MainHeader />
         <Content>
-          <Switch>
-            <Route path={"/"} exact={true}>
-              <MainHome />
-            </Route>
-            <Route path={routes.fullStatsOldDetails()}>
-              <OldStats />
-            </Route>
-            <Route path={routes.mapStats()}>
-              <MapStats />
-            </Route>
-            <Route path={routes.statsBase()}>
-              <CustomStats />
-            </Route>
-            <Route path={routes.playerCardWithIdAndName()}>
-              <PlayerCard />
-            </Route>
-            <Route path={routes.playerCardWithId()}>
-              <PlayerCard />
-            </Route>
-            <Route path={routes.playerCardBase()}>
-              <CustomSearch />
-            </Route>
-            <Route path={routes.leaderboardsBase()}>
-              <Leaderboards />
-            </Route>
-            <Route path={routes.commanderByID()}>
-              <CommanderDetails />
-            </Route>
-            <Route path={routes.commanderList()}>
-              <CommandersList />
-            </Route>
-            <Route path={routes.commanderBase()}>
-              <RacePicker />
-            </Route>
-            <Route path={routes.desktopAppBase()}>
-              <DesktopApp />
-            </Route>
-            <Route path={routes.liveMatchesBase()}>
-              <LiveMatches />
-            </Route>
-            <Route path={routes.aboutBase()}>
-              <About />
-            </Route>
-            <Route path={routes.bulletinsBase()}>
-              <BulletinList />
-            </Route>
-            <Route path={routes.searchWithParam()}>
-              <CustomSearch />
-            </Route>
-            <Route path={routes.searchBase()}>
-              <CustomSearch />
-            </Route>
-          </Switch>
+          <ErrorBoundary>
+            <Switch>
+              <Route path={"/"} exact={true}>
+                <MainHome />
+              </Route>
+              <Route path={routes.fullStatsOldDetails()}>
+                <OldStats />
+              </Route>
+              <Route path={routes.mapStats()}>
+                <MapStats />
+              </Route>
+              <Route path={routes.statsBase()}>
+                <CustomStats />
+              </Route>
+              <Route path={routes.playerCardWithIdAndName()}>
+                <PlayerCard />
+              </Route>
+              <Route path={routes.playerCardWithId()}>
+                <PlayerCard />
+              </Route>
+              <Route path={routes.playerCardBase()}>
+                <CustomSearch />
+              </Route>
+              <Route path={routes.leaderboardsBase()}>
+                <Leaderboards />
+              </Route>
+              <Route path={routes.commanderByID()}>
+                <CommanderDetails />
+              </Route>
+              <Route path={routes.commanderList()}>
+                <CommandersList />
+              </Route>
+              <Route path={routes.commanderBase()}>
+                <RacePicker />
+              </Route>
+              <Route path={routes.desktopAppBase()}>
+                <DesktopApp />
+              </Route>
+              <Route path={routes.liveMatchesBase()}>
+                <LiveMatches />
+              </Route>
+              <Route path={routes.aboutBase()}>
+                <About />
+              </Route>
+              <Route path={routes.bulletinsBase()}>
+                <BulletinList />
+              </Route>
+              <Route path={routes.searchWithParam()}>
+                <CustomSearch />
+              </Route>
+              <Route path={routes.searchBase()}>
+                <CustomSearch />
+              </Route>
+            </Switch>
+          </ErrorBoundary>
         </Content>
         <MainFooter />
       </Layout>
