@@ -13,7 +13,7 @@ const About: React.FC = () => {
   const donationsRef = useRef(null);
   const contributionRef = useRef(null);
 
-  const analyzedMatches = isLoading ? ". . ." : data["analyzedMatches"].toLocaleString();
+  const analyzedMatches = isLoading && data ? ". . ." : data["analyzedMatches"].toLocaleString();
   const analyzedTopMatches = isLoading ? ". . ." : data["analyzedTopMatches"].toLocaleString();
 
   useMountEffect(() => {
