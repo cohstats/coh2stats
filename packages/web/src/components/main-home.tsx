@@ -11,7 +11,7 @@ const MainHome: React.FC = () => {
   const isLoading = useLoading("globalStats");
   const data: Record<string, any> = useData("globalStats");
 
-  const analyzedMatches = isLoading ? ". . ." : data["analyzedMatches"].toLocaleString();
+  const analyzedMatches = isLoading && data ? ". . ." : data["analyzedMatches"].toLocaleString();
 
   return (
     <div style={{ textAlign: "center" }}>
