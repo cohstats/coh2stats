@@ -13,8 +13,13 @@ const About: React.FC = () => {
   const donationsRef = useRef(null);
   const contributionRef = useRef(null);
 
-  const analyzedMatches = isLoading && data ? ". . ." : data["analyzedMatches"].toLocaleString();
-  const analyzedTopMatches = isLoading ? ". . ." : data["analyzedTopMatches"].toLocaleString();
+  let analyzedMatches = ". . .";
+  let analyzedTopMatches = ". . .";
+
+  if (!isLoading && data?.analyzedMatches && data?.analyzedTopMatches) {
+    analyzedMatches = data?.analyzedMatches.toLocaleString();
+    analyzedTopMatches = data?.analyzedTopMatches.toLocaleString();
+  }
 
   useMountEffect(() => {
     const hash = window.location.hash;
