@@ -65,9 +65,19 @@ const PlayerCard = () => {
       const cleanName = playerName.replace(/[^a-zA-Z0-9-_]/g, "");
       // If it's not in the path, let's push it there
       if (!window.location.pathname.includes(cleanName)) {
-        push({
-          pathname: `${window.location.pathname}-${cleanName}`,
-        });
+        // This means there is already a name, but it was changed!
+        if (window.location.pathname.match(/.+\/\d+-/)) {
+          // There is already name in url let's replace it with a new one
+          // FYI: Usage of the push over here is wrong! We don't really want to put it into history? Fix it in future.
+          push({
+            pathname: `${window.location.pathname.replace(/(.+\/\d+-)(.+)/, `$1${cleanName}`)}`,
+          });
+        } else {
+          // No name in the url let's just push a new one
+          push({
+            pathname: `${window.location.pathname}-${cleanName}`,
+          });
+        }
       }
     };
 

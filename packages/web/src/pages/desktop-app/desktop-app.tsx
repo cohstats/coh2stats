@@ -140,9 +140,7 @@ const DesktopApp: React.FC = () => {
                   A expandable Stream Overlay that allows curious viewers to interact with your
                   game stats on stream. Check out the extension{" "}
                   <Link
-                    href={
-                      "https://dashboard.twitch.tv/extensions/6x9q2nzzv9wewklo7gt7hz2vypdgg7-0.0.1"
-                    }
+                    href={"https://dashboard.twitch.tv/extensions/6x9q2nzzv9wewklo7gt7hz2vypdgg7"}
                     target="_blank"
                   >
                     here

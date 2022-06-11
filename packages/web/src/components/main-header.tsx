@@ -128,7 +128,7 @@ export const MainHeader: React.FC = () => {
           >
             {/*Add div because of the layout shift*/}
             <div style={{ minHeight: 64, minWidth: 125 }}>
-              {!isOnlinePlayersLoading && (
+              {!isOnlinePlayersLoading && onlinePlayersData && (
                 <Tooltip
                   title={`Amount of online Steam players in game Company of Heroes 2 as of  ${new Date(
                     onlinePlayersData["timeStamp"] * 1000,
