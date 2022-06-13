@@ -187,6 +187,9 @@ export const MainHeader: React.FC = () => {
             <Menu.Item key={routes.desktopAppBase()}>
               <Link to={routes.desktopAppBase()}>Desktop App</Link>
             </Menu.Item>
+            <Menu.Item key={routes.replayAnalysis()}>
+              <Link to={routes.replayAnalysis()}>Replay Analysis</Link>
+            </Menu.Item>
             <SubMenu key={routes.aboutBase()} title={"About"}>
               <Menu.Item key={`${routes.aboutBase()}#base`}>
                 <Link to={routes.aboutBase()}>About</Link>

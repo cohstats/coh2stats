@@ -1,0 +1,13 @@
+{
+  "name": "@coh2stats/replay",
+  "version": "0.1.0",
+  "private": true,
+  "files": [
+    "replay_to_json_bg.wasm",
+    "replay_to_json.js",
+    "replay_to_json.d.ts"
+  ],
+  "module": "replay_to_json.js",
+  "types": "replay_to_json.d.ts",
+  "sideEffects": false
+}

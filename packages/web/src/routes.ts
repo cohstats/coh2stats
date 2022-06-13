@@ -32,6 +32,10 @@ const desktopAppBase = () => {
   return "/desktop-app";
 };
 
+const replayAnalysis = () => {
+  return "/replay-analysis";
+}
+
 const aboutBase = () => {
   return "/about";
 };
@@ -94,6 +98,7 @@ const routes = {
   playerCardWithId,
   playerCardWithIdAndName,
   desktopAppBase,
+  replayAnalysis
 };
 
 export default routes;

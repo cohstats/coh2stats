@@ -22,6 +22,7 @@ import PlayerCard from "./pages/players";
 import MapStats from "./pages/map-stats";
 import LiveMatches from "./pages/live-matches";
 import { ErrorBoundary } from "./components/error-boundary";
+import ReplayAnalysis from "./pages/replay-analysis";
 
 const { Content } = Layout;
 
@@ -81,6 +82,9 @@ const App: React.FC = () => {
               </Route>
               <Route path={routes.desktopAppBase()}>
                 <DesktopApp />
+              </Route>
+              <Route path={routes.replayAnalysis()}>
+                <ReplayAnalysis />
               </Route>
               <Route path={routes.liveMatchesBase()}>
                 <LiveMatches />
