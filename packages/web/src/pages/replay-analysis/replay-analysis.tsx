@@ -76,9 +76,9 @@ const ReplayAnalysis: React.FC = () => {
 
   let commands = [];
   if (replayData) {
-    //PCMD_SetCommander, PCMD_ConstructStructure, SCMD_Ability, CMD_Upgrade are commands of future interest
+    //PCMD_SetCommander, PCMD_ConstructStructure, SCMD_Ability, CMD_Upgrade, PCMD_Surrender are commands of future interest
     // for now only build commands
-    commands = replayData.commands[selectedPlayerId].filter((command: any) => command.command_type === "CMD_BuildSquad").map((command: any) => {
+    commands = replayData.commands[selectedPlayerId].filter((command: any) => command.command_type === "CMD_BuildSquad" || command.command_type === "CMD_BuildEntity" || command.command_type === "SCMD_Ability" || command.command_type === "PCMD_SetCommander" || command.command_type === "PCMD_ConstructStructure" || command.command_type === "SCMD_Upgrade").map((command: any) => {
       var date = new Date(0);
       date.setSeconds(command.tick / 8);
       let unitText = "Unknown PBGID " + command.entity_id;
@@ -87,7 +87,8 @@ const ReplayAnalysis: React.FC = () => {
       }
       return {
         time: date.toISOString().substring(11).substring(0,8),
-        unitText: unitText
+        unitText: unitText,
+        type: command.command_type === "CMD_BuildSquad" ? "build squad" : command.command_type === "CMD_BuildEntity" ? "build entity" : command.command_type === "PCMD_SetCommander" ? "pick commander" : command.command_type === "PCMD_ConstructStructure" ? "build structure" : command.command_type === "SCMD_Upgrade" ? "upgrade" : "use ability"
       }
     });
   }
@@ -103,7 +104,7 @@ const ReplayAnalysis: React.FC = () => {
         <Button onClick={handleRefreshMappings}>Refresh mappings</Button>
         <Timeline>
           {commands.map((command: any, index: any) => (
-            <Timeline.Item key={index}>{command.time} build {command.unitText}</Timeline.Item>
+            <Timeline.Item key={index}>{command.time} {command.type} {command.unitText}</Timeline.Item>
           ))}
 
         </Timeline>
