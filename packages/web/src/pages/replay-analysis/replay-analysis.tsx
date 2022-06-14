@@ -2,7 +2,7 @@ import { UploadOutlined } from "@ant-design/icons";
 import { Button, Col, Row, Timeline, Upload } from "antd";
 import { UploadChangeParam } from "antd/lib/upload";
 import { UploadFile } from "antd/lib/upload/interface";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import init, {parseReplay} from "@coh2stats/replay";
 
 const unitIds: Record<number, string> = {
@@ -26,14 +26,32 @@ const structureIds: Record<number, string> = {
   1473: "Infanterie Kompanie"
 }
 
+// https://docs.google.com/spreadsheets/d/1CvCwW41m8Qm7Tj3QNgE07ON6dU5hhsIROxzE4Fir7IQ/edit?usp=sharing
+const spreadsheetURL = "https://docs.google.com/spreadsheets/d/1CvCwW41m8Qm7Tj3QNgE07ON6dU5hhsIROxzE4Fir7IQ/gviz/tq?"
+
 const ReplayAnalysis: React.FC = () => {
   const [loaded, setLoaded] = useState(false);
   const [replayData, setReplayData] = useState<any>(undefined);
   const [selectedPlayerId, setSelectedPlayerId] = useState(0);
+  const [pbgidMappings, setPbgidMappings] = useState<Record<number,string> | undefined>(undefined);
+  const fetchMappings = () => {
+    fetch(spreadsheetURL).then(res => res.text()).then(rawData => {
+      const data = JSON.parse(rawData.substring(47).slice(0,-2));
+      const newMappings: Record<number,string> = {};
+      data.table.rows.forEach((row: any) => {
+        // console.log(row.c[0].v, row.c[1].v);
+        newMappings[row.c[0].v] = row.c[1].v;
+      });
+      setPbgidMappings(newMappings);
+      // console.log(data);
+      console.log(newMappings);
+    });
+  };
   useEffect(() => {
     init().then(() => {
       setLoaded(true);
     });
+    fetchMappings();
   }, []);
   const handleReplayUpload: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const {files} = e.target;
@@ -52,9 +70,26 @@ const ReplayAnalysis: React.FC = () => {
     setSelectedPlayerId(id);
   }
 
+  const handleRefreshMappings = () => {
+    fetchMappings();
+  }
+
   let commands = [];
   if (replayData) {
-    commands = replayData.commands[selectedPlayerId].filter((command: any) => command.command_type !== "SCMD_Move" && command.command_type !== "SCMD_AttackMove" && command.command_type !== "SCMD_Capture" && command.command_type !== "SCMD_Retreat" && command.command_type !== "SCMD_Attack" && command.command_type !== "SCMD_ReinforceUnit");
+    //PCMD_SetCommander, PCMD_ConstructStructure, SCMD_Ability, CMD_Upgrade are commands of future interest
+    // for now only build commands
+    commands = replayData.commands[selectedPlayerId].filter((command: any) => command.command_type === "CMD_BuildSquad").map((command: any) => {
+      var date = new Date(0);
+      date.setSeconds(command.tick / 8);
+      let unitText = "Unknown PBGID " + command.entity_id;
+      if (pbgidMappings && pbgidMappings.hasOwnProperty(command.entity_id)) {
+        unitText = pbgidMappings[command.entity_id as any];
+      }
+      return {
+        time: date.toISOString().substring(11).substring(0,8),
+        unitText: unitText
+      }
+    });
   }
 
   return (<>
@@ -65,9 +100,10 @@ const ReplayAnalysis: React.FC = () => {
         {replayData.players.map((player: any) =>
           <Button key={player.id} onClick={() => handlePlayerSelect(player.id)}>{player.name}</Button>
         )}
+        <Button onClick={handleRefreshMappings}>Refresh mappings</Button>
         <Timeline>
           {commands.map((command: any, index: any) => (
-            <Timeline.Item key={index}>{command.tick / 8} seconds command: {command.command_type} entity id: {command.entity_id} {command.command_type === "CMD_BuildSquad" && unitIds.hasOwnProperty(command.entity_id) ? unitIds[command.entity_id as any]: null}</Timeline.Item>
+            <Timeline.Item key={index}>{command.time} build {command.unitText}</Timeline.Item>
           ))}
 
         </Timeline>
