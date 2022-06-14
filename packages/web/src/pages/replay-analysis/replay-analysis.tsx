@@ -5,6 +5,27 @@ import { UploadFile } from "antd/lib/upload/interface";
 import React, { useEffect, useState } from "react";
 import init, {parseReplay} from "@coh2stats/replay";
 
+const unitIds: Record<number, string> = {
+  12: "Grenadier",
+  15: "MG 42",
+  28: "Pioneer",
+  30: "German Sniper",
+  108: "Conscript",
+  116: "Soviet Mortar",
+  2631: "Riflemen",
+  2664: "Volksgrenadier",
+  17793: "Infantry Section"
+}
+
+const commanderIds: Record<number, string> = {
+  6117: "German Mechanized Doctrine",
+  5928: "Spearhead Doctrine"
+}
+
+const structureIds: Record<number, string> = {
+  1473: "Infanterie Kompanie"
+}
+
 const ReplayAnalysis: React.FC = () => {
   const [loaded, setLoaded] = useState(false);
   const [replayData, setReplayData] = useState<any>(undefined);
@@ -46,7 +67,7 @@ const ReplayAnalysis: React.FC = () => {
         )}
         <Timeline>
           {commands.map((command: any, index: any) => (
-            <Timeline.Item key={index}>{command.tick / 8} seconds command: {command.command_type} entity id: {command.entity_id}</Timeline.Item>
+            <Timeline.Item key={index}>{command.tick / 8} seconds command: {command.command_type} entity id: {command.entity_id} {command.command_type === "CMD_BuildSquad" && unitIds.hasOwnProperty(command.entity_id) ? unitIds[command.entity_id as any]: null}</Timeline.Item>
           ))}
 
         </Timeline>
