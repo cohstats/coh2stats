@@ -11,15 +11,15 @@ import { AlertBox } from "../../components/alert-box";
 
 const { Option } = Select;
 
-const warningUnavailable = (
-  <AlertBox
-    type={"error"}
-    message={"Live matches are unavailable"}
-    description={
-      "After latest game update, the live matches are not available. We will try to bring them up as soon as possible. Hop into our discord for latest updates and news."
-    }
-  />
-);
+// const warningUnavailable = (
+//   <AlertBox
+//     type={"error"}
+//     message={"Live matches are unavailable"}
+//     description={
+//       "After latest game update, the live matches are not available. We will try to bring them up as soon as possible. Hop into our discord for latest updates and news."
+//     }
+//   />
+// );
 
 const LiveMatches: React.FC = () => {
   const { push } = useHistory();
@@ -74,7 +74,7 @@ const LiveMatches: React.FC = () => {
     <Row justify="center" style={{ padding: "10px" }}>
       <Col xs={24} xxl={17}>
         <Row justify="center">
-          {warningUnavailable}
+          {/*{warningUnavailable}*/}
           <Col span={24}>
             <div
               style={{
