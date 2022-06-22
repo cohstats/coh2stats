@@ -199,16 +199,16 @@ const LiveMatchesTable: React.FC<{
           <div>
             {axisPlayers.map((playerInfo: Record<string, any>) => {
               // WTF The rank is from 0 :D
-              const rank = playerInfo.rank === -1 ? "N/A" : playerInfo.rank + 1;
+              const rank = playerInfo?.rank === -1 ? "N/A" : playerInfo?.rank + 1;
 
               return (
-                <div key={playerInfo.profile_id}>
+                <div key={playerInfo?.profile_id}>
                   <img
-                    key={playerInfo.profile_id}
-                    src={getGeneralIconPath(raceIds[playerInfo.race_id], "small")}
+                    key={playerInfo?.profile_id}
+                    src={getGeneralIconPath(raceIds[playerInfo?.race_id], "small")}
                     height="20px"
                     width="20px"
-                    alt={playerInfo.race_id}
+                    alt={playerInfo?.race_id}
                   />{" "}
                   {displayRank && (
                     <>
@@ -217,10 +217,10 @@ const LiveMatchesTable: React.FC<{
                   )}
                   <Link
                     to={routes.playerCardWithId(
-                      convertSteamNameToID(playerInfo.player_profile["name"]),
+                      convertSteamNameToID(playerInfo?.player_profile["name"]),
                     )}
                   >
-                    {playerInfo.player_profile["alias"]}
+                    {playerInfo?.player_profile["alias"]}
                   </Link>
                 </div>
               );
@@ -239,16 +239,16 @@ const LiveMatchesTable: React.FC<{
         return (
           <div>
             {alliesPlayers.map((playerInfo: Record<string, any>) => {
-              const rank = playerInfo.rank === -1 ? "N/A" : playerInfo.rank + 1;
+              const rank = playerInfo?.rank === -1 ? "N/A" : playerInfo?.rank + 1;
 
               return (
-                <div key={playerInfo.profile_id}>
+                <div key={playerInfo?.profile_id}>
                   <img
-                    key={playerInfo.profile_id}
-                    src={getGeneralIconPath(raceIds[playerInfo.race_id], "small")}
+                    key={playerInfo?.profile_id}
+                    src={getGeneralIconPath(raceIds[playerInfo?.race_id], "small")}
                     height="20px"
                     width="20px"
-                    alt={playerInfo.race_id}
+                    alt={playerInfo?.race_id}
                   />{" "}
                   {displayRank && (
                     <>
@@ -257,10 +257,10 @@ const LiveMatchesTable: React.FC<{
                   )}
                   <Link
                     to={routes.playerCardWithId(
-                      convertSteamNameToID(playerInfo.player_profile["name"]),
+                      convertSteamNameToID(playerInfo?.player_profile["name"]),
                     )}
                   >
-                    {playerInfo.player_profile["alias"]}
+                    {playerInfo?.player_profile["alias"]}
                   </Link>
                 </div>
               );
