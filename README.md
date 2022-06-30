@@ -20,6 +20,46 @@ The author of the game doesn't provide any global statistics. And online leaderb
 This project is inspired by coh2chart.com which has data
 only for years 2016-2017 after which it was shut down.
 
+### Open source data
+
+All the matches downloaded by the system are exposed with `matches-${unixTimestamp}.json` file for every day.
+You can find them in this bucket https://storage.googleapis.com/storage/v1/b/coh2-stats-matches/o
+use the medialink to download.
+
+The data are in JSON format:
+
+```javascript
+{
+    "matches": [{
+        matchhistoryreportresults: Matchhistoryreportresult[];
+        matchtypeid:               number;
+        matchhistoryitems:         Matchhistoryitem[];
+        description:               string;
+        profileids:                number[];
+        creatorProfileid:          number;
+        mapname:                   string;
+        startgametime:             number;
+        id:                        number;
+        completiontime:            number;
+        steamids:                  string[];
+        maxplayers:                number;}]
+    "timeStamp": "1656460800"
+}
+```
+
+The new file is generated every day at ~4 AM UTC time for the previous day. So 30 June 4 AM we generate a file for 29 June.
+The timestamp is always that day 00:00:00 aka `1656460800` which is `Wed Jun 29 2022 00:00:00 GMT+0000` you can get previous day timestamp with the code below.
+
+```javascript
+const date = new Date(); // Example to get yesterday Unix timestamp
+const yesterDayTimeStamp =
+  Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() - 1, 0, 0, 0) / 1000;
+```
+
+Files are stored for 14 days. If you are interested in long term analysis, everyday download is recommended.
+
+_In case you will use the data, please mention the source and give a shoutout to the website coh2stats.com, thank you!_
+
 ## Technical description
 
 The project is created in Google Cloud with usage of Firebase.
