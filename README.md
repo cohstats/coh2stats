@@ -24,7 +24,7 @@ only for years 2016-2017 after which it was shut down.
 
 All the matches downloaded by the system are exposed with `matches-${unixTimestamp}.json` file for every day.
 You can find them in this bucket https://storage.googleapis.com/storage/v1/b/coh2-stats-matches/o
-use the medialink to download.
+use the medialink to download. Or this url `https://storage.googleapis.com/coh2-stats-matches/matches-${timeStamp}.json`
 
 The data are in JSON format:
 
