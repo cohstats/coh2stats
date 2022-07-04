@@ -217,10 +217,10 @@ const LiveMatchesTable: React.FC<{
                   )}
                   <Link
                     to={routes.playerCardWithId(
-                      convertSteamNameToID(playerInfo?.player_profile["name"] || ""),
+                      convertSteamNameToID(playerInfo?.player_profile?.name || ""),
                     )}
                   >
-                    {playerInfo?.player_profile["alias"]}
+                    {playerInfo?.player_profile?.alias}
                   </Link>
                 </div>
               );
@@ -257,10 +257,10 @@ const LiveMatchesTable: React.FC<{
                   )}
                   <Link
                     to={routes.playerCardWithId(
-                      convertSteamNameToID(playerInfo?.player_profile["name"] || ""),
+                      convertSteamNameToID(playerInfo?.player_profile?.name || ""),
                     )}
                   >
-                    {playerInfo?.player_profile["alias"]}
+                    {playerInfo?.player_profile?.alias}
                   </Link>
                 </div>
               );
