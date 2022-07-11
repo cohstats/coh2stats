@@ -98,7 +98,7 @@ const LiveMatchesTable: React.FC<{
     (async () => {
       try {
         const response = await fetch(
-          `https://${config.firebaseFunctions.location}-coh2-ladders-prod.cloudfunctions.net/getLiveGamesHttp?playerGroup=${playerGroup}&start=${startQuery}&count=${count}&sortOrder=${orderByQuery}`,
+          `https://${config.firebaseFunctions.location}-coh2-ladders-prod.cloudfunctions.net/getLiveGamesHttp?playerGroup=${playerGroup}&start=${startQuery}&count=${count}&sortOrder=${orderByQuery}&apiKey=c2sXe4zguRtYMBY`,
         );
         if (!response.ok) {
           throw new Error(
