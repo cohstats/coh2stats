@@ -197,6 +197,8 @@ const About: React.FC = () => {
         In case you want to be mentioned on the site, write your nickname into the payment note.
         <br />
         <Donation />
+        Bluefalcon
+        <br />
         Gammi
         <br />
         Cyanara
