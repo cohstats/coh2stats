@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { statsBase } from "../../titles";
-import { capitalize, useQuery } from "../../utils/helpers";
+import {capitalize, isDev, useQuery} from "../../utils/helpers";
 import { Radio, RadioChangeEvent, Row, Tooltip, Typography } from "antd";
 import PatchNotification from "../../components/patch-notifications";
 import { StatsDataObject, statTypesInDbAsType } from "../../coh/types";
@@ -81,7 +81,11 @@ const StatsHeader: React.FC<IProps> = ({ urlChanger, data }) => {
   const GamesAnalyzed = () => {
     let gamesAnalyzed = <>Games analyzed {matchCount}</>;
 
-    if (totalGames && totalGames > matchCount) {
+    if(isDev()){
+      console.log(`Total games tracked by system: ${totalGames}`)
+    }
+
+    if (totalGames && ((totalGames > matchCount) || isDev())) {
       gamesAnalyzed = (
         <>
           Games analyzed {matchCount}/{totalGames} - {Math.round((matchCount / totalGames) * 100)}
@@ -110,7 +114,8 @@ const StatsHeader: React.FC<IProps> = ({ urlChanger, data }) => {
           </span>
           <br />
           <span>
-            {sourceIsAll && (
+            {/*1657756800 From July 2022 we are tracking 95% of all games*/}
+            {sourceIsAll && parseInt(timestamp) < 1657756800 && (
               <>
                 This does not include all games which were played. See about page to understand
                 the scope

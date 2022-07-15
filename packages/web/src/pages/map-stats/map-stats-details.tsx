@@ -146,12 +146,15 @@ const MapStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
           <span style={{ fontSize: 20, fontWeight: 600 }}>{gamesAnalyzed}</span>
           <br />
           <span>
+            {/*1657756800 From July 2022 we are tracking 95% of all games*/}
             {
+             parseInt(timestamp) < 1657756800 && (
               <>
                 This does not include all games which were played. See about page to understand
                 the scope
                 <br />
               </>
+              )
             }
             {amountOfGames < 2000 && (
               <>

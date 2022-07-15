@@ -40,8 +40,27 @@ const About: React.FC = () => {
       </Title>
       <Paragraph>
         Relic doesn't provide insight or any easy way to get the match data. We are forced to
-        crawl the leaderboards and get <Text strong>limited data</Text> from there.
+        crawl leaderboards / monitor live games and other means.
       </Paragraph>
+      <h3>
+        <Text strong> Update July 2022</Text>
+      </h3>
+      <Paragraph>
+        We are now monitoring live Automatch games and gathering the players / and game data from them.
+        <Text strong> This means that we are tracking about 95% of all played games in Automatch. </Text>
+        It's possible that we might miss some games:
+        <br/>
+        <Text strong>Games under 10 minutes in length:</Text>
+        <br/>
+        We might miss some of these games as we are checking every 10 minutes. We might change this approach in future.
+
+        <br/>
+        <Text strong> Games longer than 6 hours: </Text>
+        <br/>Yes such automatch games exists. There is about 0.0125% of them aka 1 in 80k games.<br/>
+        Such games are never gathered. As 6 hours is hard stop in our crawler system.
+
+      </Paragraph>
+      <s>
       <Paragraph>
         We are currently crawling top 200 positions from all kinds of COH2 leaderboards (1v1,2v2
         etc). This gives us 5200(~3000 unique) top players for the given day. We then proceed with
@@ -78,6 +97,7 @@ const About: React.FC = () => {
       The amount of data with some types of games is really a problem. You can see that winrate
       each day can really fluctuate by tens of % if the amount of games is under 1k for the given
       date.
+      </s>
       <br />
       <br />
       <b>So far analyzed {analyzedMatches} matches.</b>
@@ -160,6 +180,12 @@ const About: React.FC = () => {
       <Link href="https://www.coh2.org/user/112252/pagep" target="_blank">
         at the forums.
       </Link>
+      <br/>
+      <Text strong> It's strictly forbidden to connect to our API without previous consultation!</Text>
+      <br/>
+      We are open to collaboration! You can download all matches that are gather  <Link href="https://github.com/cohstats/coh2stats#open-source-data" target="_blank">here</Link> and we can also expose you API but you have to write to use first. Thank you!
+      <br/>
+
       <div ref={donationsRef}>
         <a href={"#donations"}>
           <Title level={2} style={{ paddingTop: 15 }} id={"donations"}>
