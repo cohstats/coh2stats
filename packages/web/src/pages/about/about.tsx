@@ -50,9 +50,9 @@ const About: React.FC = () => {
         <Text strong> This means that we are tracking about 95% of all played games in Automatch. </Text>
         It's possible that we might miss some games:
         <br/>
-        <Text strong>Games under 10 minutes in length:</Text>
+        <Text strong>Games under 5 minutes in length:</Text>
         <br/>
-        We might miss some of these games as we are checking every 10 minutes. We might change this approach in future.
+        We might miss some of these games as we are checking every 5 minutes. We might change this approach in future.
 
         <br/>
         <Text strong> Games longer than 6 hours: </Text>
