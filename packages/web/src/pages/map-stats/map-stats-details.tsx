@@ -119,14 +119,14 @@ const MapStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
 
   let gamesAnalyzed = <>Games analyzed {amountOfGames}</>;
 
-  if (totalGames && totalGames > amountOfGames) {
+  if (totalGames && totalGames + 500 > amountOfGames) {
     gamesAnalyzed = (
       <>
         Games analyzed {amountOfGames}/{totalGames} -{" "}
         {Math.round((amountOfGames / totalGames) * 100)}%{" "}
         <Helper
           text={
-            "From June 2022 we are aware of 90% of total played automatch games. It's possible that some games which are under 10 minutes in duration are not counted."
+            "From June 2022 we are aware of 90% of total played automatch games. It's possible that some games which are under 5 minutes in duration are not counted."
           }
         />
       </>
@@ -147,15 +147,13 @@ const MapStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
           <br />
           <span>
             {/*1657756800 From July 2022 we are tracking 95% of all games*/}
-            {
-             parseInt(timestamp) < 1657756800 && (
+            {parseInt(timestamp) < 1657756800 && (
               <>
                 This does not include all games which were played. See about page to understand
                 the scope
                 <br />
               </>
-              )
-            }
+            )}
             {amountOfGames < 2000 && (
               <>
                 This analysis has <Text strong>low amount of matches</Text>. The results might not

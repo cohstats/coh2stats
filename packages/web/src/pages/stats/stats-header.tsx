@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { statsBase } from "../../titles";
-import {capitalize, isDev, useQuery} from "../../utils/helpers";
+import { capitalize, isDev, useQuery } from "../../utils/helpers";
 import { Radio, RadioChangeEvent, Row, Tooltip, Typography } from "antd";
 import PatchNotification from "../../components/patch-notifications";
 import { StatsDataObject, statTypesInDbAsType } from "../../coh/types";
@@ -81,18 +81,19 @@ const StatsHeader: React.FC<IProps> = ({ urlChanger, data }) => {
   const GamesAnalyzed = () => {
     let gamesAnalyzed = <>Games analyzed {matchCount}</>;
 
-    if(isDev()){
-      console.log(`Total games tracked by system: ${totalGames}`)
+    if (isDev()) {
+      console.log(`Total games tracked by system: ${totalGames}`);
     }
 
-    if (totalGames && ((totalGames > matchCount) || isDev())) {
+    // We are adding 500 to total games, so in case it's little more it's still displayed
+    if (totalGames && (totalGames + 500 > matchCount || isDev())) {
       gamesAnalyzed = (
         <>
           Games analyzed {matchCount}/{totalGames} - {Math.round((matchCount / totalGames) * 100)}
           %{" "}
           <Helper
             text={
-              "From June 2022 we are tracking 90% of total played automatch games. It's possible that some games which are under 10 minutes in duration are not counted."
+              "From June 2022 we are tracking 90% of total played automatch games. It's possible that some games which are under 5 minutes in duration are not counted."
             }
           />
         </>
