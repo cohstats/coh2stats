@@ -137,16 +137,15 @@ BE has been moved to repo `coh2-stats-be`
 Diagram:
 https://lucid.app/documents/embeddedchart/ec7ffc19-50c4-4104-bcf9-287e2af3ac62
 
-Crawler process is set to run every day. There is a huge amount of data
-so we need to do it everyday to avoid big stress on the Relic API.
+~Crawler process is set to run every day. There is a huge amount of data
+so we need to do it everyday to avoid big stress on the Relic API.~
 
 **The crawling is design in a way which should not stress the Relic API (aka
 slowly).**
 
-The crawler process should run everyday. Most likely ~5 AM UTC. As that
+~The crawler process should run everyday. Most likely ~5 AM UTC. As that
 should be the time with least players (EU, US asleep). But we will treat
-this date as a date -1 day data.  
- _Example: We crawl on 5 AM 24th, it's a data for the 23th._
+this date as a date -1 day data.~
 
 ~~##### 1. We request top 200 players from all leaderboards~~
 
