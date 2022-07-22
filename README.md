@@ -148,16 +148,16 @@ should be the time with least players (EU, US asleep). But we will treat
 this date as a date -1 day data.  
  _Example: We crawl on 5 AM 24th, it's a data for the 23th._
 
-##### 1. We request top 200 players from all leaderboards
+~~##### 1. We request top 200 players from all leaderboards~~
 
-This gives us 5200 positions. It's done by cloud function `getCOHLadders`.
+~~This gives us 5200 positions. It's done by cloud function `getCOHLadders`.
 We can request by 200 chunks from the API => 26 Relic API calls.  
-This operation takes around 30 seconds.
+This operation takes around 30 seconds.~~
 
-##### 2. Filter only unique players
+~~##### 2. Filter only unique players~~
 
-We extract the Steam IDs, only unique players are kept.
-This gives us ~2900 players for the top 5200 positions.
+~~We extract the Steam IDs, only unique players are kept.~~
+~~This gives us ~2900 players for the top 5200 positions.~~
 
 ##### 3. Send player ids to Pub/Sub que
 
