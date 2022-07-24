@@ -300,20 +300,7 @@ const CustomStats: React.FC = () => {
           )}
           Ranking:
           <Radio.Group onChange={onStatsSourceChange} value={statsSource}>
-            <Radio value={"all"}>
-              All*{" "}
-              <Helper
-                text={
-                  <>
-                    This does not include all games played. Please see{" "}
-                    <Link href={"/about"} target="_blank">
-                      about page
-                    </Link>{" "}
-                    to fully understand which matches are included in this statistics.
-                  </>
-                }
-              />
-            </Radio>
+            <Radio value={"all"}>All </Radio>
             <Radio value={"top200"}>
               Top 200{" "}
               <Helper

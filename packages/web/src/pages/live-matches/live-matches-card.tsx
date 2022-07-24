@@ -33,7 +33,7 @@ const LiveMatchesCard: React.FC = () => {
       }
       loading={isLoading}
       size={"small"}
-      style={{ width: "100%", maxWidth: 440, minHeight: 150 }}
+      style={{ width: "100%", maxWidth: 480, minHeight: 150 }}
     >
       <Row>
         <Col md={12} xs={24}>
@@ -44,11 +44,11 @@ const LiveMatchesCard: React.FC = () => {
                 <div>
                   <Divider type="vertical" />
                 </div>
-                <div style={{ textAlign: "right", width: 70 }}>{data?.games["1v1"]} games</div>
+                <div style={{ textAlign: "right", width: 75 }}>{data?.games["1v1"]} games</div>
                 <div>
                   <Divider type="vertical" />
                 </div>
-                <div style={{ textAlign: "right", width: 50 }}>
+                <div style={{ textAlign: "right", width: 55 }}>
                   {data?.players["1v1"]} <TeamOutlined />
                 </div>
               </div>
@@ -61,11 +61,11 @@ const LiveMatchesCard: React.FC = () => {
                 <div>
                   <Divider type="vertical" />
                 </div>
-                <div style={{ textAlign: "right", width: 70 }}>{data?.games["2v2"]} games</div>
+                <div style={{ textAlign: "right", width: 75 }}>{data?.games["2v2"]} games</div>
                 <div>
                   <Divider type="vertical" />
                 </div>
-                <div style={{ textAlign: "right", width: 50 }}>
+                <div style={{ textAlign: "right", width: 55 }}>
                   {data?.players["2v2"]} <TeamOutlined />
                 </div>
               </div>
@@ -78,11 +78,11 @@ const LiveMatchesCard: React.FC = () => {
                 <div>
                   <Divider type="vertical" />
                 </div>
-                <div style={{ textAlign: "right", width: 70 }}>{data?.games["3v3"]} games</div>
+                <div style={{ textAlign: "right", width: 75 }}>{data?.games["3v3"]} games</div>
                 <div>
                   <Divider type="vertical" />
                 </div>
-                <div style={{ textAlign: "right", width: 50 }}>
+                <div style={{ textAlign: "right", width: 55 }}>
                   {data?.players["3v3"]} <TeamOutlined />
                 </div>
               </div>
@@ -95,18 +95,18 @@ const LiveMatchesCard: React.FC = () => {
                 <div>
                   <Divider type="vertical" />
                 </div>
-                <div style={{ textAlign: "right", width: 70 }}>{data?.games["4v4"]} games</div>
+                <div style={{ textAlign: "right", width: 75 }}>{data?.games["4v4"]} games</div>
                 <div>
                   <Divider type="vertical" />
                 </div>
-                <div style={{ textAlign: "right", width: 50 }}>
+                <div style={{ textAlign: "right", width: 55 }}>
                   {data?.players["4v4"]} <TeamOutlined />
                 </div>
               </div>
             </Col>
           </Row>
         </Col>
-        <Col md={12} xs={24}>
+        <Col md={12} xs={24} style={{ paddingLeft: 5 }}>
           <Row>
             <Col>
               <div style={{ display: "flex", flexDirection: "row" }}>

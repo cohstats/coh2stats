@@ -131,7 +131,7 @@ const LiveMatches: React.FC = () => {
                   </Select>
                 </Space>
               </div>
-              <div style={{ width: "100%", maxWidth: "440px" }}>
+              <div style={{ width: "100%", maxWidth: "480px" }}>
                 <LiveMatchesCard />
               </div>
             </div>
