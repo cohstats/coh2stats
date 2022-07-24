@@ -6,7 +6,7 @@ import { Route, Switch } from "react-router-dom";
 import { createFirestoreInstance } from "redux-firestore";
 
 // Firebase
-import firebase from "firebase/app";
+import firebase from "firebase/compat/app";
 
 // Local
 import config from "./config";

@@ -23,7 +23,7 @@
     "connected-react-router": "^6.9.1",
     "date-fns": "^2.25.0",
     "dayjs": "^1.10.7",
-    "firebase": "^8.10.0",
+    "firebase": "^9.9.1",
     "history": "^4.10.1",
     "javascript-time-ago": "^2.3.13",
     "react": "^17.0.2",
