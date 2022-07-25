@@ -1,14 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Typography } from "antd";
-import { useData, useLoading } from "../../firebase";
 import { Loading } from "../../components/loading";
 import { StatsDataObject, statTypesInDbAsType, validStatsTypes } from "../../coh/types";
 import { useLocation } from "react-router-dom";
 import CustomStatsDetails from "./custom-stats-details";
-import { useFirestoreConnect } from "react-redux-firebase";
 import firebaseAnalytics from "../../analytics";
 import GeneralStats from "./general-stats";
 import { StatsHeader } from "./stats-header";
+import { doc, getDoc, getFirestore } from "firebase/firestore";
 
 const { Title } = Typography;
 
@@ -21,8 +20,8 @@ interface IProps {
 }
 
 const CustomStatsGeneralDataProvider: React.FC<IProps> = ({ urlChanger }) => {
-  const isLoading = useLoading("stats");
-  const data: StatsDataObject = useData("stats");
+  const [isLoading, setIsLoading] = useState(true);
+  const [data, setData] = useState<StatsDataObject>();
   const query = useQuery();
   const statsSource: string | null = query.get("statsSource") ? query.get("statsSource") : "";
 
@@ -40,19 +39,29 @@ const CustomStatsGeneralDataProvider: React.FC<IProps> = ({ urlChanger }) => {
     firebaseAnalytics.statsDisplayed(frequency, statsSource || "");
   }, [frequency, statsSource, timestamp, type]);
 
-  useFirestoreConnect([
-    {
-      collection: "stats",
-      doc: frequency,
-      subcollections: [
-        {
-          collection: timestamp,
-          doc: statDocToBeLoaded,
-        },
-      ],
-      storeAs: "stats",
-    },
-  ]);
+  useEffect(() => {
+    setIsLoading(true);
+
+    try {
+      (async () => {
+        const statsDocRef = doc(
+          getFirestore(),
+          `stats/${frequency}/${timestamp}`,
+          statDocToBeLoaded,
+        );
+        const statsDocSnap = await getDoc(statsDocRef);
+
+        if (statsDocSnap.exists()) {
+          setData(statsDocSnap.data() as StatsDataObject);
+        } else {
+          setData(undefined);
+        }
+        setIsLoading(false);
+      })();
+    } catch (e) {
+      console.error("Failed to get stats from firestore", e);
+    }
+  }, [frequency, timestamp, statDocToBeLoaded]);
 
   if (isLoading) return <Loading />;
 

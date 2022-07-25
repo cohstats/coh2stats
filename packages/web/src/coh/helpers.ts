@@ -52,8 +52,8 @@ const isTeamGame = (type: string) => {
 };
 
 const findAndMergeStatGroups = (
-  laddersDataObject: LaddersDataObject,
-  laddersHistoryObject: LaddersDataObject | null,
+  laddersDataObject: LaddersDataObject | undefined,
+  laddersHistoryObject: LaddersDataObject | null | undefined,
 ): Array<LaddersDataArrayObject> => {
   if (!laddersDataObject) return [];
 

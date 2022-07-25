@@ -1,4 +1,3 @@
-import type { ReactReduxFirebaseConfig } from "react-redux-firebase";
 export interface FirebaseConfig {
   apiKey: string;
   authDomain: string;
@@ -23,15 +22,8 @@ const discordInviteLink = "https://discord.gg/jRrnwqMfkr";
 
 const devHostnames = ["localhost", "coh2-ladders-dev.web.app"];
 
-const rrfConfig: Partial<ReactReduxFirebaseConfig> = {
-  enableLogging: true,
-  userProfile: "users",
-  useFirestoreForProfile: true,
-};
-
 const config = {
   firebase,
-  rrfConfig,
   firebaseFunctions,
   devHostnames,
   discordInviteLink,

@@ -16,15 +16,17 @@ import { convertSteamNameToID, getGeneralIconPath } from "../../coh/helpers";
 import { Link } from "react-router-dom";
 import routes from "../../routes";
 import { ColumnsType } from "antd/lib/table";
-import { useData } from "../../firebase";
 
 const { Text } = Typography;
 
 // Page size
 const count = 40;
 
-const calculatePagination = (playerGroup: string, overviewData: StatsCurrentLiveGames) => {
-  if (playerGroup == null || overviewData == null) {
+const calculatePagination = (
+  playerGroup: string,
+  overviewData: StatsCurrentLiveGames | undefined,
+) => {
+  if (playerGroup == null || overviewData == null || !overviewData) {
     return count;
   }
 
@@ -49,14 +51,15 @@ const calculatePagination = (playerGroup: string, overviewData: StatsCurrentLive
 
 const LiveMatchesTable: React.FC<{
   changeRoute: Function;
-}> = ({ changeRoute }) => {
+  currentLiveGamesData: StatsCurrentLiveGames | undefined;
+}> = ({ changeRoute, currentLiveGamesData }) => {
   const query = useQuery();
 
   const playerGroup = query.get("playerGroup") || "1";
   const startQuery = query.get("start") || "0";
   const orderByQuery = query.get("orderBy") || "0";
 
-  const overViewData: StatsCurrentLiveGames = useData("liveMatchesStats");
+  const overViewData = currentLiveGamesData;
 
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<null | string>(null);

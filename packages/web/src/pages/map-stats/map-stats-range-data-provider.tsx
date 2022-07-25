@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { httpsCallable } from "firebase/functions";
 import { Typography } from "antd";
 import { firebase } from "../../firebase";
+
 import { Loading } from "../../components/loading";
 
 import { validStatsTypes } from "../../coh/types";
@@ -42,7 +44,9 @@ const CustomMapStatsRangeDataProvider: React.FC<IProps> = ({ urlChanger }) => {
       setIsLoading(true);
 
       try {
-        const customAnalysis = firebase.functions().httpsCallable("getCustomAnalysis");
+        const customAnalysis = httpsCallable(firebase.functions(), "getCustomAnalysis");
+
+        // const customAnalysis = firebase.functions().httpsCallable("getCustomAnalysis");
 
         // Debug
         // console.log("CC-FROM", fromTimeStamp, new Date(parseInt(fromTimeStamp) * 1000));
@@ -54,6 +58,7 @@ const CustomMapStatsRangeDataProvider: React.FC<IProps> = ({ urlChanger }) => {
           type: "map",
         });
 
+        // @ts-ignore
         const analysis = data["analysis"];
 
         // Debug

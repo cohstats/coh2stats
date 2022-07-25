@@ -5,7 +5,7 @@
  *
  * Other which are static are handled here.
  */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Header } from "antd/lib/layout/layout";
 import { Badge, Menu, Space, Tooltip } from "antd";
 import routes from "../routes";
@@ -19,8 +19,8 @@ import {
   liveMatchesAppBase,
 } from "../titles";
 import SubMenu from "antd/es/menu/SubMenu";
-import { useData, useLoading } from "../firebase";
 import { Link } from "react-router-dom";
+import { doc, getFirestore, onSnapshot } from "firebase/firestore";
 
 const pageTitleSwitch = (path: string) => {
   switch (path) {
@@ -46,8 +46,19 @@ const pageTitleSwitch = (path: string) => {
 };
 
 export const MainHeader: React.FC = () => {
-  const isOnlinePlayersLoading = useLoading("onlinePlayers");
-  const onlinePlayersData: Record<string, any> = useData("onlinePlayers");
+  const [isOnlinePlayersLoading, setIsOnlinePlayersLoading] = useState(true);
+  const [onlinePlayersData, setOnlinePlayersData] = useState({ timeStamp: 0, onlinePlayers: 0 });
+
+  useEffect(() => {
+    try {
+      onSnapshot(doc(getFirestore(), "stats", "onlinePlayers"), (doc) => {
+        setIsOnlinePlayersLoading(false);
+        setOnlinePlayersData(doc.data() as { timeStamp: number; onlinePlayers: number });
+      });
+    } catch (e) {
+      console.error("Failed to update online players", e);
+    }
+  }, []);
 
   /**
    * It would be great if we could re-write this code as it has a lot of hard-coded stuff

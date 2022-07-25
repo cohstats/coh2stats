@@ -1,12 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Typography } from "antd";
-import { useData, useLoading } from "../../firebase";
 import { Loading } from "../../components/loading";
-import { validStatsTypes } from "../../coh/types";
+import { StatsDataObject, validStatsTypes } from "../../coh/types";
 import { useLocation } from "react-router-dom";
-import { useFirestoreConnect } from "react-redux-firebase";
 import firebaseAnalytics from "../../analytics";
 import MapStatsDetails from "./map-stats-details";
+import { doc, getDoc, getFirestore } from "firebase/firestore";
 
 const { Title } = Typography;
 
@@ -19,8 +18,8 @@ interface IProps {
 }
 
 const MapStatsGeneralDataProvider: React.FC<IProps> = ({ urlChanger }) => {
-  const isLoading = useLoading("mapStats");
-  const data: Record<string, any> = useData("mapStats");
+  const [isLoading, setIsLoading] = useState(true);
+  const [data, setData] = useState<Record<string, any>>();
   const query = useQuery();
 
   const frequency = query.get("range") || "month";
@@ -31,19 +30,25 @@ const MapStatsGeneralDataProvider: React.FC<IProps> = ({ urlChanger }) => {
     firebaseAnalytics.mapStatsDisplayed(frequency);
   }, [frequency, timestamp, type]);
 
-  useFirestoreConnect([
-    {
-      collection: "stats",
-      doc: frequency,
-      subcollections: [
-        {
-          collection: timestamp,
-          doc: "mapStats",
-        },
-      ],
-      storeAs: "mapStats",
-    },
-  ]);
+  useEffect(() => {
+    setIsLoading(true);
+
+    try {
+      (async () => {
+        const statsDocRef = doc(getFirestore(), `stats/${frequency}/${timestamp}`, "mapStats");
+        const statsDocSnap = await getDoc(statsDocRef);
+
+        if (statsDocSnap.exists()) {
+          setData(statsDocSnap.data() as StatsDataObject);
+        } else {
+          setData(undefined);
+        }
+        setIsLoading(false);
+      })();
+    } catch (e) {
+      console.error("Failed to get stats from firestore", e);
+    }
+  }, [frequency, timestamp]);
 
   if (isLoading) return <Loading />;
 

@@ -16,9 +16,6 @@ import {
   timeAgo,
   useQuery,
 } from "../../utils/helpers";
-import { useFirestoreConnect } from "react-redux-firebase";
-import { useData, useLoading } from "../../firebase";
-
 import { CountryFlag } from "../../components/country-flag";
 import { leaderBoardsBase } from "../../titles";
 import enGB from "antd/lib/locale/en_GB";
@@ -33,6 +30,8 @@ import {
 } from "../../coh/helpers";
 import { Helper } from "../../components/helper";
 import subDays from "date-fns/subDays";
+import { doc, getDoc, getFirestore } from "firebase/firestore";
+
 const { Text } = Typography;
 
 const Leaderboards = () => {
@@ -58,39 +57,45 @@ const Leaderboards = () => {
     selectedRace,
   )}`;
 
-  const isLoadingData = useLoading("leaderboards");
-  const isLoadingDataHistoric = useLoading("leaderboardsHistory");
-  const data: LaddersDataObject = useData("leaderboards");
-  const dataHistoric: LaddersDataObject = useData("leaderboardsHistory");
-
-  useFirestoreConnect([
-    {
-      collection: "ladders",
-      doc: selectedTimeStamp,
-      subcollections: [
-        {
-          collection: selectedType,
-          doc: selectedRace,
-        },
-      ],
-      storeAs: "leaderboards",
-    },
-    {
-      collection: "ladders",
-      doc: selectedHistoricTimeStamp,
-      subcollections: [
-        {
-          collection: selectedType,
-          doc: selectedRace,
-        },
-      ],
-      storeAs: "leaderboardsHistory",
-    },
-  ]);
+  const [isLoadingData, setIsLoadingData] = useState(true);
+  const [data, setData] = useState<LaddersDataObject>();
+  const [dataHistoric, setDataHistoric] = useState<LaddersDataObject>();
 
   useEffect(() => {
     firebaseAnalytics.leaderboardsDisplayed();
   }, []);
+
+  useEffect(() => {
+    setIsLoadingData(true);
+
+    try {
+      (async () => {
+        const ladderDocRef = doc(
+          getFirestore(),
+          `ladders/${selectedTimeStamp}/${selectedType}`,
+          selectedRace,
+        );
+        const historicLadderDocRef = doc(
+          getFirestore(),
+          `ladders/${selectedHistoricTimeStamp}/${selectedType}`,
+          selectedRace,
+        );
+        const ladderDocSnap = await getDoc(ladderDocRef);
+        const historicLadderDocSnap = await getDoc(historicLadderDocRef);
+
+        if (ladderDocSnap.exists() && historicLadderDocSnap.exists()) {
+          setData(ladderDocSnap.data() as LaddersDataObject);
+          setDataHistoric(historicLadderDocSnap.data() as LaddersDataObject);
+        } else {
+          setData(undefined);
+          setDataHistoric(undefined);
+        }
+        setIsLoadingData(false);
+      })();
+    } catch (e) {
+      console.error("Failed to get amount of analyzed matchess", e);
+    }
+  }, [selectedTimeStamp, selectedHistoricTimeStamp, selectedRace, selectedType]);
 
   const divStyle = {
     backgroundImage: `url(${getGeneralIconPath(race)})`,
@@ -460,7 +465,7 @@ const Leaderboards = () => {
               }}
               rowKey={(record) => record?.rank}
               dataSource={findAndMergeStatGroups(data, dataHistoric)}
-              loading={isLoadingData || isLoadingDataHistoric}
+              loading={isLoadingData}
               scroll={{ x: 800 }}
             />
           </Col>

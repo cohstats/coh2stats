@@ -1,21 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Space, Typography } from "antd";
-import { useData, useLoading } from "../firebase";
 import Meta from "antd/es/card/Meta";
 import { Link } from "react-router-dom";
 import routes from "../routes";
 import { commanderAndBulletinDate, lastPatchName } from "../config";
+import { doc, getFirestore, getDoc } from "firebase/firestore";
+
 const { Title, Paragraph, Text } = Typography;
 
 const MainHome: React.FC = () => {
-  const isLoading = useLoading("globalStats");
-  const data: Record<string, any> = useData("globalStats");
+  const [analyzedMatches, setAnalyzedMatches] = useState(". . .");
 
-  let analyzedMatches = ". . .";
+  useEffect(() => {
+    try {
+      (async () => {
+        const docRef = doc(getFirestore(), "stats", "global");
+        const docSnap = await getDoc(docRef);
 
-  if (!isLoading && data?.analyzedMatches) {
-    analyzedMatches = data?.analyzedMatches.toLocaleString();
-  }
+        if (docSnap.exists()) {
+          setAnalyzedMatches(docSnap.data()?.analyzedMatches.toLocaleString());
+        }
+      })();
+    } catch (e) {
+      console.error("Failed to get amount of analyzed matchess", e);
+    }
+  }, []);
 
   return (
     <div style={{ textAlign: "center" }}>

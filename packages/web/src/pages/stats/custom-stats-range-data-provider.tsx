@@ -14,6 +14,7 @@ import { useLocation } from "react-router-dom";
 import CustomStatsDetails from "./custom-stats-details";
 import { StatsHeader } from "./stats-header";
 import GeneralStats from "./general-stats";
+import { httpsCallable } from "firebase/functions";
 
 const { Title } = Typography;
 
@@ -48,7 +49,8 @@ const CustomStatsRangeDataProvider: React.FC<IProps> = ({ urlChanger }) => {
       firebaseAnalytics.rangeStatsDisplayed(statsSource || "");
 
       try {
-        const customAnalysis = firebase.functions().httpsCallable("getCustomAnalysis");
+        const customAnalysis = httpsCallable(firebase.functions(), "getCustomAnalysis");
+        // const customAnalysis = firebase.functions().httpsCallable("getCustomAnalysis");
 
         // Debug
         // console.log("CC-FROM", fromTimeStamp, new Date(parseInt(fromTimeStamp) * 1000));
@@ -60,6 +62,7 @@ const CustomStatsRangeDataProvider: React.FC<IProps> = ({ urlChanger }) => {
           type: statsSource === "top200" ? "top" : "normal",
         });
 
+        // @ts-ignore
         const analysis = data["analysis"];
 
         // Debug

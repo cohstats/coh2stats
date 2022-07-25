@@ -1,7 +1,6 @@
 import React from "react";
 import { Layout } from "antd";
 import "./App.css";
-import { useFirestoreConnect } from "react-redux-firebase";
 import { Route, Switch } from "react-router-dom";
 
 import routes from "./routes";
@@ -26,19 +25,6 @@ import { ErrorBoundary } from "./components/error-boundary";
 const { Content } = Layout;
 
 const App: React.FC = () => {
-  useFirestoreConnect([
-    {
-      collection: "stats",
-      doc: "global",
-      storeAs: "globalStats",
-    },
-    {
-      collection: "stats",
-      doc: "onlinePlayers",
-      storeAs: "onlinePlayers",
-    },
-  ]);
-
   return (
     <div className="App">
       <Layout className="layout">

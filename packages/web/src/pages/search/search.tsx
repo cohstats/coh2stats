@@ -10,6 +10,7 @@ import { History } from "history";
 import firebaseAnalytics from "../../analytics";
 import { CountryFlag } from "../../components/country-flag";
 import { AlertBox } from "../../components/alert-box";
+import { httpsCallable } from "firebase/functions";
 
 type RelicProfileType = {
   id: number;
@@ -150,10 +151,14 @@ const CustomSearch: React.FC = () => {
         firebaseAnalytics.searchUsed(searchParam);
 
         const payLoad = { name: searchParam };
-        const searchPlayers = firebase.functions().httpsCallable("searchPlayers");
+
+        const searchPlayers = httpsCallable(firebase.functions(), "searchPlayers");
+
+        // const searchPlayers = firebase.functions().httpsCallable("searchPlayers");
 
         try {
           const { data } = await searchPlayers(payLoad);
+          // @ts-ignore
           const foundProfiles: Record<string, any> = data["foundProfiles"];
           const resultHtml = buildSearchResults(foundProfiles);
 
