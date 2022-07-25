@@ -1,16 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { createBrowserHistory } from "history";
-
 import store from "./store";
-
 import "./index.css";
-import { firebase } from "./firebase";
 import Root from "./root";
 import analytics from "./analytics";
+import "firebase/compat/firestore";
 
-// Initialize Firebase
+import { firebase } from "./firebase";
 firebase.init();
+// Initialize Firebase
 
 const history = createBrowserHistory();
 history.listen(analytics.pageView);

@@ -1,3 +1,4 @@
+// These hooks are no longer used / we migrated from firestore redux
 import { useSelector } from "react-redux";
 
 // Types

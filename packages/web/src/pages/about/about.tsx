@@ -1,22 +1,36 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Typography } from "antd";
-import { useData, useLoading } from "../../firebase";
 import { Donation } from "./donations";
+import { doc, getDoc, getFirestore } from "firebase/firestore";
 const { Title, Link, Text, Paragraph } = Typography;
 
 // eslint-disable-next-line react-hooks/exhaustive-deps
 const useMountEffect = (fun: { (): void }) => useEffect(fun, []);
 
 const About: React.FC = () => {
-  const isLoading = useLoading("globalStats");
-  const data: Record<string, any> = useData("globalStats");
   const donationsRef = useRef(null);
   const contributionRef = useRef(null);
+  const [data, setData] = useState<Record<string, any>>();
+
+  useEffect(() => {
+    try {
+      (async () => {
+        const docRef = doc(getFirestore(), "stats", "global");
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          setData(docSnap.data());
+        }
+      })();
+    } catch (e) {
+      console.error("Failed to get amount of analyzed matchess", e);
+    }
+  }, []);
 
   let analyzedMatches = ". . .";
   let analyzedTopMatches = ". . .";
 
-  if (!isLoading && data?.analyzedMatches && data?.analyzedTopMatches) {
+  if (data && data?.analyzedMatches && data?.analyzedTopMatches) {
     analyzedMatches = data?.analyzedMatches.toLocaleString();
     analyzedTopMatches = data?.analyzedTopMatches.toLocaleString();
   }

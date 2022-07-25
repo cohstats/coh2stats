@@ -1,20 +1,22 @@
-// Firebase
-import firebase from "firebase/compat/app";
-
-import { Analytics, getAnalytics, logEvent as logFirebaseEvent, setUserProperties, setUserId as setFirebaseUserID } from "firebase/analytics";
-import {FirebaseApp, initializeApp} from "firebase/app";
-import { getFunctions, connectFunctionsEmulator  } from "firebase/functions";
-import { getPerformance } from "firebase/performance";
-import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
-
+import {
+  Analytics,
+  getAnalytics,
+  logEvent as logFirebaseEvent,
+  setUserProperties,
+  setUserId as setFirebaseUserID,
+} from "firebase/analytics";
+import { FirebaseApp, initializeApp } from "firebase/app";
+import { getFunctions, connectFunctionsEmulator } from "firebase/functions";
+// import { getPerformance } from "firebase/performance";
+import { getFirestore, connectFirestoreEmulator, Firestore } from "firebase/firestore";
 
 // Local
 import config from "../config";
 
-let performance
-let app: firebase.app.App | FirebaseApp | undefined;
+// let performance
+let app: FirebaseApp | undefined;
 let analytics: Analytics;
-let db;
+let db: Firestore | undefined;
 
 const useEmulators = process.env.REACT_APP_EMULATOR && process.env.REACT_APP_EMULATOR !== "false";
 
@@ -24,13 +26,13 @@ const useEmulators = process.env.REACT_APP_EMULATOR && process.env.REACT_APP_EMU
 const init = (): void => {
   app = initializeApp(config.firebase());
   analytics = getAnalytics(app);
-  performance = getPerformance(app);
+  // performance = getPerformance(app);
   db = getFirestore(app);
 
-  setUserProperties(analytics,{ custom_platform: "web_app" });
+  setUserProperties(analytics, { custom_platform: "web_app" });
 
   if (useEmulators) {
-    connectFirestoreEmulator(db, 'localhost', 8080);
+    connectFirestoreEmulator(db, "localhost", 8080);
     connectFunctionsEmulator(functions(), "localhost", 5001);
   }
 };
@@ -38,8 +40,8 @@ const init = (): void => {
 /**
  * Instance of the FB functions
  */
-export const functions = () => getFunctions(app,useEmulators ? undefined : config.firebaseFunctions.location);
-
+export const functions = () =>
+  getFunctions(app, useEmulators ? undefined : config.firebaseFunctions.location);
 
 /**
  * Log analytics event
@@ -65,6 +67,7 @@ const resetUserId = (): void => setUserId("");
 
 const firebaseExport = {
   init,
+  app,
   functions,
   logEvent,
   setUserId,

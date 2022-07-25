@@ -10,7 +10,7 @@ import { History } from "history";
 import firebaseAnalytics from "../../analytics";
 import { CountryFlag } from "../../components/country-flag";
 import { AlertBox } from "../../components/alert-box";
-import {httpsCallable} from "firebase/functions";
+import { httpsCallable } from "firebase/functions";
 
 type RelicProfileType = {
   id: number;

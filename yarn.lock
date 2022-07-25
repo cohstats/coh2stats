@@ -12844,13 +12844,13 @@ react-motion@^0.5.2:
     prop-types "^15.5.8"
     raf "^3.1.0"
 
-react-redux-firebase@^3.10.0:
-  version "3.10.0"
-  resolved "https://registry.yarnpkg.com/react-redux-firebase/-/react-redux-firebase-3.10.0.tgz#f4c69145292fd8d0c5f44f53b37a6b307dbf3c56"
-  integrity sha512-reEPqUgNQRR2IHsNHPvyMXRZRZUvbQmA9oWzDBOK1FCxd/MiE9py6R7ezEtKs5iLEH55eDRpVPl2n3bYsndEiQ==
+react-redux-firebase@^3.11.0:
+  version "3.11.0"
+  resolved "https://registry.yarnpkg.com/react-redux-firebase/-/react-redux-firebase-3.11.0.tgz#0723452a21158b7f6dd96fe38e65e4ddff2d2893"
+  integrity sha512-WJheUdKA8YdEQ0cGR75dwfLxokL8AALgo+8HK7OmC5IKYoS2YiputJhvjFWcdHtRKnf5mmt/bVc+LGzYWxlSXA==
   dependencies:
     hoist-non-react-statics "^3.3.2"
-    lodash "^4.17.20"
+    lodash "^4.17.21"
     prop-types "^15.7.2"
 
 react-redux@^7.2.5, react-redux@^7.2.6:
@@ -13087,10 +13087,10 @@ redux-devtools-extension@^2.13.9:
   resolved "https://registry.yarnpkg.com/redux-devtools-extension/-/redux-devtools-extension-2.13.9.tgz#6b764e8028b507adcb75a1cae790f71e6be08ae7"
   integrity sha512-cNJ8Q/EtjhQaZ71c8I9+BPySIBVEKssbPpskBfsXqb8HJ002A3KRVHfeRzwRo6mGPqsm7XuHTqNSNeS1Khig0A==
 
-redux-firestore@^0.15.2:
-  version "0.15.2"
-  resolved "https://registry.yarnpkg.com/redux-firestore/-/redux-firestore-0.15.2.tgz#812ad930bc406de5e56434ba812455ca8e187bd9"
-  integrity sha512-EQHWyp+I1P4UD8rMYNfFw7KGfVi2mcLvQ48yWIQ2KDMcblXgV6BqfiTpW1LaO8eo6qySjev8OqSlfJI0/0XWFQ==
+redux-firestore@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/redux-firestore/-/redux-firestore-1.0.0.tgz#21d2121eaae6a6fb60588f5e04f03d6e96a5382d"
+  integrity sha512-cYy6ppDl2EEVNDEpxYIMV4Jo0x6clzwQxfaK6UyPBLrlG3Fbry7LSdobpTjuVo2tW4mF0WPLmRqB188lGed0rw==
   dependencies:
     immer "9.0.12"
     lodash "^4.17.21"

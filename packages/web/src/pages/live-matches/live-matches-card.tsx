@@ -1,19 +1,16 @@
 import React from "react";
 import { Card, Row, Col, Typography } from "antd";
-import { useData, useLoading } from "../../firebase";
 import { StatsCurrentLiveGames } from "../../coh/types";
 import { Divider } from "antd";
 import { TeamOutlined } from "@ant-design/icons";
 import { Helper } from "../../components/helper";
 const { Text } = Typography;
 
-const LiveMatchesCard: React.FC = () => {
-  // The connection of this data is done in root component useFirestoreConnect
-  const isLoading = useLoading("liveMatchesStats");
-  const data: StatsCurrentLiveGames = useData("liveMatchesStats");
-
+const LiveMatchesCard: React.FC<{
+  data: StatsCurrentLiveGames | undefined;
+}> = ({ data }) => {
   // @ts-ignore
-  const timeStamp = isLoading ? "" : data?.timeStamp?.toDate().toLocaleString();
+  const timeStamp = data ? data?.timeStamp?.toDate().toLocaleString() : "";
 
   return (
     <Card
@@ -24,14 +21,14 @@ const LiveMatchesCard: React.FC = () => {
             {timeStamp}{" "}
             <Helper
               text={
-                "These overall stats are updated every 10 minutes. Counts only multiplayer games in progress. Total Players are unique filtered. Keep in mind that there " +
-                "are probably a lot of players in lobby / searching / loading and doing other things."
+                "Counts only multiplayer games in progress. Total Players are unique filtered. Keep in mind that there " +
+                "are probably a lot of players in lobby / searching / loading and doing other things. These overall stats are updated on server every 10 minutes - you need to refresh the page to update them."
               }
             />
           </div>
         </div>
       }
-      loading={isLoading}
+      loading={!data}
       size={"small"}
       style={{ width: "100%", maxWidth: 480, minHeight: 150 }}
     >

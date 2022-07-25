@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import LiveMatchesCard from "./live-matches-card";
 import { useQuery } from "../../utils/helpers";
 import { Col, Row, Select, Space } from "antd";
@@ -6,7 +6,8 @@ import routes from "../../routes";
 import { useHistory } from "react-router";
 import LiveMatchesTable from "./live-matches-table";
 import firebaseAnalytics from "../../analytics";
-import { useFirestoreConnect } from "react-redux-firebase";
+import { doc, getDoc, getFirestore } from "firebase/firestore";
+import { StatsCurrentLiveGames } from "../../coh/types";
 // import { AlertBox } from "../../components/alert-box";
 
 const { Option } = Select;
@@ -25,20 +26,29 @@ const LiveMatches: React.FC = () => {
   const { push } = useHistory();
   const query = useQuery();
 
-  useFirestoreConnect([
-    {
-      collection: "stats",
-      doc: "inGamePlayers",
-      storeAs: "liveMatchesStats",
-    },
-  ]);
-
   const playerGroup = query.get("playerGroup") || "1";
   const startQuery = query.get("start") || 0;
   const orderByQuery = query.get("orderBy") || "0";
 
   useEffect(() => {
     firebaseAnalytics.liveMatchesDisplayed();
+  }, []);
+
+  const [data, setData] = useState<StatsCurrentLiveGames>();
+
+  useEffect(() => {
+    try {
+      (async () => {
+        const docRef = doc(getFirestore(), "stats", "inGamePlayers");
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          setData(docSnap.data() as StatsCurrentLiveGames);
+        }
+      })();
+    } catch (e) {
+      console.error("Failed to get amount of analyzed matchess", e);
+    }
   }, []);
 
   const changeRoute = (params: Record<string, any>) => {
@@ -132,14 +142,14 @@ const LiveMatches: React.FC = () => {
                 </Space>
               </div>
               <div style={{ width: "100%", maxWidth: "480px" }}>
-                <LiveMatchesCard />
+                <LiveMatchesCard data={data} />
               </div>
             </div>
           </Col>
         </Row>
         <Row justify="center" style={{ paddingTop: 10 }}>
           <Col span={24}>
-            <LiveMatchesTable changeRoute={changeRoute} />
+            <LiveMatchesTable changeRoute={changeRoute} currentLiveGamesData={data} />
           </Col>
         </Row>
       </Col>

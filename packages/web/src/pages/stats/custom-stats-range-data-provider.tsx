@@ -14,7 +14,7 @@ import { useLocation } from "react-router-dom";
 import CustomStatsDetails from "./custom-stats-details";
 import { StatsHeader } from "./stats-header";
 import GeneralStats from "./general-stats";
-import {httpsCallable} from "firebase/functions";
+import { httpsCallable } from "firebase/functions";
 
 const { Title } = Typography;
 
