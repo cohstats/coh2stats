@@ -28,7 +28,9 @@ const MapSelectorComponent: React.FC<{
     <Select
       showSearch
       filterOption={(input, option) => {
-        return option?.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+        return (
+          (option!.children as unknown as string).toLowerCase().indexOf(input.toLowerCase()) >= 0
+        );
       }}
       defaultValue={map}
       onChange={(value) => {
