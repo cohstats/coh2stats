@@ -12,7 +12,6 @@ import routes from "../../routes";
 import { ChangeEvent } from "react";
 import { useHistory } from "react-router";
 import { useQuery } from "../../utils/helpers";
-import { useRef } from "react";
 
 interface FilteredInfoState {
   icon?: string;
@@ -29,7 +28,6 @@ const BulletinList = () => {
   const { push } = useHistory();
 
   const searchQuery = query.get("search") || "";
-  const searchInputFieldRef = useRef<Input>(null);
 
   const handleRaceFilter = (filters: any) => {
     setFilteredInfo({ ...filteredInfo, races: filters.races });
@@ -62,7 +60,6 @@ const BulletinList = () => {
   }, []);
 
   useEffect(() => {
-    searchInputFieldRef.current?.setValue(searchQuery);
     handleSearch(searchQuery, "bulletinName");
     // We don't want to put handleSearch as part of the dependencies since it will cause this effect to run
     // multiple times as it's recreated on every render.
@@ -216,7 +213,6 @@ const BulletinList = () => {
             <Input
               placeholder="Search name"
               size="large"
-              ref={searchInputFieldRef}
               defaultValue={searchQuery}
               style={{ maxWidth: 400 }}
               onChange={handleNameSearch}
