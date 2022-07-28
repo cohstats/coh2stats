@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { ColumnsType } from "antd/lib/table";
+import sub from "date-fns/sub";
 import { LaddersDataArrayObject, PlayerCardDataArrayObject } from "../../coh/types";
 import { CountryFlag } from "../../components/country-flag";
-import { Table, Tooltip, Typography } from "antd";
+import { Switch, Table, Tooltip, Typography } from "antd";
 import { convertSteamNameToID, levelToText } from "../../coh/helpers";
 import { Link } from "react-router-dom";
 import routes from "../../routes";
@@ -16,8 +17,17 @@ interface IProps {
 }
 
 const PlayerTeamMatchesTable: React.FC<IProps> = ({ title, data }) => {
+  const [showOldTeams, setShowOldTeams] = useState(false);
+
+  if (!showOldTeams) {
+    const onYearAgoTimeStamp = sub(new Date(), { years: 1 }).getTime() / 1000;
+    data = data.filter((teamStats) => {
+      return teamStats.lastmatchdate > onYearAgoTimeStamp;
+    });
+  }
+
   // Sort by total games
-  const sortedData = data.sort((a, b) => {
+  let sortedData = data.sort((a, b) => {
     if (a.wins + a.losses > b.wins + b.losses) {
       return -1;
     } else {
@@ -181,11 +191,18 @@ const PlayerTeamMatchesTable: React.FC<IProps> = ({ title, data }) => {
 
   return (
     <>
-      <div style={{ fontSize: "large", paddingBottom: 4, paddingLeft: 4 }}>
-        <Text strong>{title.toUpperCase()}</Text>{" "}
+      <div style={{ paddingLeft: 4 }}>
+        <span style={{ float: "left", fontSize: "large" }}>
+          <Text strong>{title.toUpperCase()}</Text>{" "}
+        </span>
+        <span style={{ float: "right" }}>
+          Display all teams{" "}
+          <Helper text={"Teams who didn't played a game in the last year are hidden."} />{" "}
+          <Switch checked={showOldTeams} onChange={setShowOldTeams} />
+        </span>
       </div>
       <Table
-        style={{ paddingBottom: 20, overflow: "auto" }}
+        style={{ paddingBottom: 20, paddingTop: 5, overflow: "auto" }}
         columns={TableColumns}
         rowKey={(record) => `${record?.leaderboard_id}-${record?.statgroup_id}`}
         dataSource={sortedData}
