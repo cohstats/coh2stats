@@ -1,5 +1,10 @@
-import { Tag } from "antd";
+import { Button, Card, Col, Modal, Row, Space, Tag } from "antd";
 import { RaceName } from "../coh/types";
+import React, { useEffect, useState } from "react";
+import firebaseAnalytics from "../analytics";
+import { MatchPlayerDetailsTable } from "../pages/matches/match-details-table";
+import { SimplePieChart } from "../components/charts-match/simple-pie";
+import MatchDetails from "../pages/matches/match-details";
 
 /**
  * Returns duration string in HH:MM:SS format
@@ -206,3 +211,182 @@ export function getAliasFromName(matchRecord: any, name: string) {
   );
   return resultItem[0].profile.alias;
 }
+
+export const ExpandedMatch: React.FC<{ record: any }> = ({ record }) => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  useEffect(() => {
+    firebaseAnalytics.playerCardMatchDetailsDisplayed();
+  }, []);
+
+  if (!record) {
+    return <></>;
+  }
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleDownloadGameData = () => {
+    const blob = new Blob([JSON.stringify(record)], { type: "application/json" });
+    const href = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = href;
+    link.download = `coh2stats_match_${record.id}.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  let axisPlayers = getMatchPlayersByFaction(record.matchhistoryreportresults, "axis");
+  let alliesPlayers = getMatchPlayersByFaction(record.matchhistoryreportresults, "allies");
+
+  const simplifiedDmgDataChartAxis = axisPlayers.map((stats) => {
+    return {
+      id: stats?.profile?.alias,
+      label: stats?.profile?.alias,
+      value: JSON.parse(stats?.counters).dmgdone,
+    };
+  });
+
+  const simplifiedDmgDataChartAllies = alliesPlayers.map((stats) => {
+    return {
+      id: stats?.profile?.alias,
+      label: stats?.profile?.alias,
+      value: JSON.parse(stats?.counters).dmgdone,
+    };
+  });
+
+  const simplifiedKillsDataChartAxis = axisPlayers.map((stats) => {
+    return {
+      id: stats?.profile?.alias,
+      label: stats?.profile?.alias,
+      value: JSON.parse(stats?.counters).ekills,
+    };
+  });
+
+  const simplifiedKillsDataChartAllies = alliesPlayers.map((stats) => {
+    return {
+      id: stats?.profile?.alias,
+      label: stats?.profile?.alias,
+      value: JSON.parse(stats?.counters).ekills,
+    };
+  });
+
+  return (
+    <div>
+      <Row key={"details"} style={{ paddingTop: 5 }}>
+        <Col span={12}>
+          <MatchPlayerDetailsTable data={axisPlayers} smallView={true} />
+        </Col>
+        <Col span={12}>
+          <MatchPlayerDetailsTable data={alliesPlayers} smallView={true} />
+        </Col>
+      </Row>
+      <Row justify={"center"} key={"charts"} style={{ paddingTop: 5, height: 200 }}>
+        <Col span={12} style={{ height: 200 }}>
+          <Space style={{ justifyContent: "center", display: "flex", paddingTop: 15 }}>
+            <Card
+              title={<div style={{ textAlign: "center" }}>Damage dealt</div>}
+              size={"small"}
+              bordered={false}
+              bodyStyle={{ height: 140, width: 140, padding: 0 }}
+            >
+              <SimplePieChart data={simplifiedDmgDataChartAxis} />
+            </Card>
+            <Card
+              title={<div style={{ textAlign: "center" }}>Kills</div>}
+              size={"small"}
+              bordered={false}
+              bodyStyle={{ height: 140, width: 140, padding: 0 }}
+            >
+              <SimplePieChart data={simplifiedKillsDataChartAxis} />
+            </Card>
+          </Space>
+        </Col>
+        <Col span={12}>
+          <Space style={{ justifyContent: "center", display: "flex", paddingTop: 15 }}>
+            <Card
+              title={<div style={{ textAlign: "center" }}>Damage Dealt</div>}
+              size={"small"}
+              bordered={false}
+              bodyStyle={{ height: 140, width: 140, padding: 0 }}
+            >
+              <SimplePieChart data={simplifiedDmgDataChartAllies} />
+            </Card>
+            <Card
+              title={<div style={{ textAlign: "center" }}>Unit Kills</div>}
+              size={"small"}
+              bordered={false}
+              bodyStyle={{ height: 140, width: 140, padding: 0 }}
+            >
+              <SimplePieChart data={simplifiedKillsDataChartAllies} />
+            </Card>
+          </Space>
+        </Col>
+      </Row>
+      <Row key={"expand_button"} justify="center">
+        <Button
+          size={"middle"}
+          type="primary"
+          onClick={showModal}
+          style={{ display: "flex", marginTop: -110 }}
+        >
+          Open Full Details
+        </Button>
+        <Modal
+          style={{ top: 20 }}
+          width={1810}
+          title="Match Details"
+          visible={isModalVisible}
+          onOk={handleOk}
+          onCancel={handleCancel}
+          destroyOnClose={true}
+          cancelButtonProps={{ hidden: true }}
+          okText={"Close"}
+          footer={[
+            <Button onClick={handleDownloadGameData}>Download game data</Button>,
+            <Button onClick={handleCancel} type="primary">
+              Close
+            </Button>,
+          ]}
+        >
+          <MatchDetails data={record} />
+        </Modal>
+      </Row>
+    </div>
+  );
+};
+
+// returns a filter setting for player maps
+export function getPlayerMapListFilter(matches: any) {
+  let mapSet = new Set();
+  let filterSettings: any[] = [];
+  for (const map of matches) {
+    mapSet.add(map.mapname);
+  }
+
+  // sort maps alphabetically
+  let sortedMapsArray = Array.from(mapSet).sort((a: any, b: any) => {
+    return a.localeCompare(b);
+  });
+
+  for (const map of sortedMapsArray) {
+    filterSettings.push({
+      text: formatMapName(map),
+      value: map,
+    });
+  }
+
+  return filterSettings;
+}
+
+export const isMobileMediaQuery = "(max-width: 1023px)";

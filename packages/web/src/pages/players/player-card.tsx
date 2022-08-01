@@ -17,6 +17,7 @@ import LastMatchesTable from "../matches/last-matches-table";
 import PlayerStandingsTables from "./player-standings";
 import config from "../../config";
 import { AlertBox } from "../../components/alert-box";
+import AllMatchesTable from "../matches/all-matches-table";
 const { Text } = Typography;
 const { TabPane } = Tabs;
 
@@ -234,8 +235,11 @@ const PlayerCard = () => {
             <TabPane tab={"Standings"} key="stats">
               <PlayerStandingsTables data={relicData as LaddersDataObject} />
             </TabPane>
-            <TabPane tab="Recent matches" key="matches">
+            <TabPane tab="Recent Matches" key="recentMatches">
               <LastMatchesTable data={data["playerMatches"]} profileID={`/steam/${steamid}`} />
+            </TabPane>
+            <TabPane tab="Matches" key="matches">
+              <AllMatchesTable steamID={`${steamid}`} />
             </TabPane>
           </Tabs>
         </Col>

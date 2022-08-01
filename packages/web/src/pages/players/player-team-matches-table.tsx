@@ -225,7 +225,9 @@ const PlayerTeamMatchesTable: React.FC<IProps> = ({ title, data }) => {
           return (
             <>
               <Table.Summary.Row>
-                <Table.Summary.Cell index={0}>Summary</Table.Summary.Cell>
+                <Table.Summary.Cell index={0} align={"left"}>
+                  Summary
+                </Table.Summary.Cell>
                 <Table.Summary.Cell index={1} colSpan={3} />
                 <Table.Summary.Cell index={2}>{totalWins}</Table.Summary.Cell>
                 <Table.Summary.Cell index={3}>{totalLosses}</Table.Summary.Cell>
