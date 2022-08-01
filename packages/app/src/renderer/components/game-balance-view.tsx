@@ -1,12 +1,12 @@
-import { ColumnsType } from "antd/lib/table";
-import { BaseType } from "antd/lib/typography/Base";
-import Text from "antd/lib/typography/Text";
-import Title from "antd/lib/typography/Title";
-import Tooltip from "antd/lib/tooltip/index";
+import { ColumnsType } from "antd/es/table";
+import { BaseType } from "antd/es/typography/Base";
+import Text from "antd/es/typography/Text";
+import Title from "antd/es/typography/Title";
+import Tooltip from "antd/es/tooltip/index";
 import React from "react";
 import { GameData, SideData, LadderStats } from "../../redux/state";
 import { FactionIcon } from "./faction-icon";
-import Table from "antd/lib/table/Table";
+import Table from "antd/es/table/Table";
 import { Helper } from "@coh2stats/shared/src/components/helper";
 import { Typography } from "antd";
 import InfoCircleOutlined from "@ant-design/icons/InfoCircleOutlined";

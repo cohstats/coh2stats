@@ -1,5 +1,5 @@
 import React from "react";
-import { ColumnsType } from "antd/lib/table";
+import { ColumnsType } from "antd/es/table";
 import { PlayerCardDataArrayObject } from "../../coh/types";
 import { Table, Tooltip, Typography } from "antd";
 import { getGeneralIconPath, levelToText } from "../../coh/helpers";

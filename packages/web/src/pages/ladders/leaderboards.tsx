@@ -7,7 +7,7 @@ import { useHistory } from "react-router";
 
 import { LaddersDataArrayObject, LaddersDataObject, RaceName } from "../../coh/types";
 import { getAllPatchDates } from "../../coh/patches";
-import { ColumnsType } from "antd/lib/table";
+import { ColumnsType } from "antd/es/table";
 import firebaseAnalytics from "../../analytics";
 import {
   capitalize,
@@ -18,7 +18,7 @@ import {
 } from "../../utils/helpers";
 import { CountryFlag } from "../../components/country-flag";
 import { leaderBoardsBase } from "../../titles";
-import enGB from "antd/lib/locale/en_GB";
+import enGB from "antd/es/locale/en_GB";
 import DatePicker from "../../components/date-picker";
 
 import routes from "../../routes";

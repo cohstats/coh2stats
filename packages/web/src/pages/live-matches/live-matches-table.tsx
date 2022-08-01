@@ -15,7 +15,7 @@ import {
 import { convertSteamNameToID, getGeneralIconPath } from "../../coh/helpers";
 import { Link } from "react-router-dom";
 import routes from "../../routes";
-import { ColumnsType } from "antd/lib/table";
+import { ColumnsType } from "antd/es/table";
 
 const { Text } = Typography;
 

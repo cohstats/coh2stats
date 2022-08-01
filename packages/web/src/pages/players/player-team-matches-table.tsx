@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ColumnsType } from "antd/lib/table";
+import { ColumnsType } from "antd/es/table";
 import sub from "date-fns/sub";
 import { LaddersDataArrayObject, PlayerCardDataArrayObject } from "../../coh/types";
 import { CountryFlag } from "../../components/country-flag";
