@@ -19,7 +19,7 @@ const formatTimeAgo = (date: number) => {
 
 const latestDate = (sortedData: Array<PlayerCardDataArrayObject>) => {
   // Sometimes the lastmatchdate is missing from the relic database
-  let latest = sortedData[0].lastmatchdate ? sortedData[0].lastmatchdate : 0;
+  let latest = sortedData[0]?.lastmatchdate ? sortedData[0].lastmatchdate : 0;
   sortedData.forEach((data) => {
     if (data.lastmatchdate > latest) {
       latest = data.lastmatchdate;

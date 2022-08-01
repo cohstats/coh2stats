@@ -232,15 +232,19 @@ const PlayerTeamMatchesTable: React.FC<IProps> = ({ title, data }) => {
                 <Table.Summary.Cell index={2}>{totalWins}</Table.Summary.Cell>
                 <Table.Summary.Cell index={3}>{totalLosses}</Table.Summary.Cell>
                 <Table.Summary.Cell index={4}>
-                  {percentageFormat(totalWins, totalLosses)}%
+                  {!isNaN(percentageFormat(totalWins, totalLosses)) && (
+                    <>{percentageFormat(totalWins, totalLosses)}%</>
+                  )}
                 </Table.Summary.Cell>
                 <Table.Summary.Cell index={5}>{totalWins + totalLosses}</Table.Summary.Cell>
                 <Table.Summary.Cell index={6}>{totalDrops}</Table.Summary.Cell>
                 <Table.Summary.Cell index={7}>{totalDisputes}</Table.Summary.Cell>
                 <Table.Summary.Cell index={8}>
-                  <Tooltip title={`Last game as ${title.toUpperCase()}`}>
-                    {formatTimeAgo(latestDate(sortedData))}
-                  </Tooltip>
+                  {latestDate(sortedData) !== 0 && (
+                    <Tooltip title={`Last game as ${title.toUpperCase()}`}>
+                      {formatTimeAgo(latestDate(sortedData))}
+                    </Tooltip>
+                  )}
                 </Table.Summary.Cell>
               </Table.Summary.Row>
             </>
