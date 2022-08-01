@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Typography } from "antd";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
-import { KoFiDonate } from "./kofiDonate";
+import { KofiDonate } from "./kofi-donate";
 
 const { Title, Link, Text, Paragraph } = Typography;
 
@@ -243,7 +243,7 @@ const About: React.FC = () => {
         If you would like to give financial support, you can do so. <br />
         100% of donations will go towards this project costs <br />
         <br />
-        <KoFiDonate />
+        <KofiDonate />
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import React from "react";
 
 import "./kofi-donate.css";
 
-export const KoFiDonate: React.FC = () => {
+export const KofiDonate: React.FC = () => {
   return (
     <div className={"btn-container"}>
       <a
