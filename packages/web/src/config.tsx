@@ -27,6 +27,7 @@ const config = {
   firebaseFunctions,
   devHostnames,
   discordInviteLink,
+  donationLink: "https://ko-fi.com/cohstats",
 };
 
 // The date when we exported the data for the bulletins and commanders

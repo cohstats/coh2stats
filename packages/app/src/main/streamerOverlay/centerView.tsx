@@ -1,6 +1,6 @@
-import Col from "antd/lib/grid/col";
-import Row from "antd/lib/grid/row";
-import Title from "antd/lib/typography/Title";
+import Col from "antd/es/grid/col";
+import Row from "antd/es/grid/row";
+import Title from "antd/es/typography/Title";
 import React from "react";
 import { GameData } from "../../redux/state";
 import { FactionIcon } from "./factionIcon";

@@ -93,8 +93,6 @@ const AllMatchesTable: React.FC<IProps> = ({ steamID }) => {
           gamesData.push(doc.data());
         });
 
-        console.log("creating a completly new array", gamesData.length);
-
         setMatchRecords(gamesData);
       } catch (e) {
         console.error(e);
@@ -111,41 +109,43 @@ const AllMatchesTable: React.FC<IProps> = ({ steamID }) => {
     setIsLoading(true);
     firebaseAnalytics.playerCardCOHStatsMatchesMoreGames();
     try {
-      const matchesRef = collection(getFirestore(), "matches");
+      if (lastVisibleDocRef) {
+        const matchesRef = collection(getFirestore(), "matches");
 
-      const q = (() => {
-        if (filterMatchType === null)
-          return query(
-            matchesRef,
-            orderBy("startgametime", "desc"),
-            where("steam_ids", "array-contains", `${steamID}`),
-            startAfter(lastVisibleDocRef),
-            limit(perPage),
-          );
-        else {
-          return query(
-            matchesRef,
-            orderBy("startgametime", "desc"),
-            where("steam_ids", "array-contains", `${steamID}`),
-            where("matchtype_id", "in", filterMatchType),
-            startAfter(lastVisibleDocRef),
-            limit(perPage),
-          );
-        }
-      })();
+        const q = (() => {
+          if (filterMatchType === null)
+            return query(
+              matchesRef,
+              orderBy("startgametime", "desc"),
+              where("steam_ids", "array-contains", `${steamID}`),
+              startAfter(lastVisibleDocRef),
+              limit(perPage),
+            );
+          else {
+            return query(
+              matchesRef,
+              orderBy("startgametime", "desc"),
+              where("steam_ids", "array-contains", `${steamID}`),
+              where("matchtype_id", "in", filterMatchType),
+              startAfter(lastVisibleDocRef),
+              limit(perPage),
+            );
+          }
+        })();
 
-      const querySnapshot = await getDocs(q);
-      // Last visible document for pagination
-      setLastVisibleDocRef(querySnapshot.docs[querySnapshot.docs.length - 1]);
-      setAmountOfNewGamesLoaded(querySnapshot.docs.length);
+        const querySnapshot = await getDocs(q);
+        // Last visible document for pagination
+        setLastVisibleDocRef(querySnapshot.docs[querySnapshot.docs.length - 1]);
+        setAmountOfNewGamesLoaded(querySnapshot.docs.length);
 
-      // We need to create a new reference
-      const gamesData = matchRecords.slice();
-      querySnapshot.forEach((doc) => {
-        gamesData.push(doc.data());
-      });
+        // We need to create a new reference
+        const gamesData = matchRecords.slice();
+        querySnapshot.forEach((doc) => {
+          gamesData.push(doc.data());
+        });
 
-      setMatchRecords(gamesData);
+        setMatchRecords(gamesData);
+      }
     } catch (e) {
       console.error(e);
       setError(
