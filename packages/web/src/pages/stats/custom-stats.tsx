@@ -12,7 +12,7 @@ import {
 } from "../../utils/helpers";
 import { RaceName, validRaceNames, validStatsTypes } from "../../coh/types";
 import { getAllPatchDates } from "../../coh/patches";
-import enGB from "antd/lib/locale/en_GB";
+import enGB from "antd/es/locale/en_GB";
 
 import { isBefore, isAfter } from "date-fns";
 import { Helper } from "../../components/helper";

@@ -1,5 +1,5 @@
-import Badge from "antd/lib/badge";
-import Spin from "antd/lib/spin";
+import Badge from "antd/es/badge";
+import Spin from "antd/es/spin";
 import { doc, getFirestore, onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import LoadingOutlined from "@ant-design/icons/LoadingOutlined";

@@ -10,7 +10,7 @@ import { capitalize } from "../../utils/helpers";
 import { Link } from "react-router-dom";
 import { Tip } from "../../components/tip";
 import { getExportedIconPath } from "../../coh/helpers";
-import Text from "antd/lib/typography/Text";
+import Text from "antd/es/typography/Text";
 
 const { Title } = Typography;
 

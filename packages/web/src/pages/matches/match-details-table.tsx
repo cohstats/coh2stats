@@ -1,5 +1,5 @@
 import React from "react";
-import { ColumnsType } from "antd/lib/table";
+import { ColumnsType } from "antd/es/table";
 import { convertSteamNameToID, getGeneralIconPath } from "../../coh/helpers";
 import { raceIds } from "../../utils/table-functions";
 import { Table, Tooltip } from "antd";

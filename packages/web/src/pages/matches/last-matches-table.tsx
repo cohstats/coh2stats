@@ -1,15 +1,16 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { Button, Card, Col, Modal, Row, Space, Table, Tag, Tooltip } from "antd";
-import { ColumnsType } from "antd/lib/table";
+import React, { useCallback, useEffect } from "react";
+import { Table, Tag, Tooltip } from "antd";
+import type { ColumnsType } from "antd/es/table";
 import {
-  formatMapName,
   formatMatchTime,
   formatMatchtypeID,
   getMatchDuration,
   getMatchPlayersByFaction,
   getRaceImage,
   raceIds,
-  getAliasFromName,
+  ExpandedMatch,
+  isMobileMediaQuery,
+  getPlayerMapListFilter,
 } from "../../utils/table-functions";
 import "./tableStyle.css";
 import { Link } from "react-router-dom";
@@ -17,165 +18,8 @@ import routes from "../../routes";
 import { convertSteamNameToID, getGeneralIconPath } from "../../coh/helpers";
 import { BulbOutlined, DatabaseOutlined } from "@ant-design/icons";
 import { RelicIcon } from "../../components/relic-icon";
-import MatchDetails from "./match-details";
-import { MatchPlayerDetailsTable } from "./match-details-table";
 import { useMediaQuery } from "react-responsive";
-import { SimplePieChart } from "../../components/charts-match/simple-pie";
 import firebaseAnalytics from "../../analytics";
-
-const ExpandedMatch: React.FC<{ record: any }> = ({ record }) => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
-
-  useEffect(() => {
-    firebaseAnalytics.playerCardMatchDetailsDisplayed();
-  }, []);
-
-  if (!record) {
-    return <></>;
-  }
-
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
-
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
-
-  const handleOk = () => {
-    setIsModalVisible(false);
-  };
-
-  const handleDownloadGameData = () => {
-    const blob = new Blob([JSON.stringify(record)], { type: "application/json" });
-    const href = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = href;
-    link.download = `coh2stats_match_${record.id}.json`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
-  let axisPlayers = getMatchPlayersByFaction(record.matchhistoryreportresults, "axis");
-  let alliesPlayers = getMatchPlayersByFaction(record.matchhistoryreportresults, "allies");
-
-  const simplifiedDmgDataChartAxis = axisPlayers.map((stats) => {
-    return {
-      id: stats?.profile?.alias,
-      label: stats?.profile?.alias,
-      value: JSON.parse(stats?.counters).dmgdone,
-    };
-  });
-
-  const simplifiedDmgDataChartAllies = alliesPlayers.map((stats) => {
-    return {
-      id: stats?.profile?.alias,
-      label: stats?.profile?.alias,
-      value: JSON.parse(stats?.counters).dmgdone,
-    };
-  });
-
-  const simplifiedKillsDataChartAxis = axisPlayers.map((stats) => {
-    return {
-      id: stats?.profile?.alias,
-      label: stats?.profile?.alias,
-      value: JSON.parse(stats?.counters).ekills,
-    };
-  });
-
-  const simplifiedKillsDataChartAllies = alliesPlayers.map((stats) => {
-    return {
-      id: stats?.profile?.alias,
-      label: stats?.profile?.alias,
-      value: JSON.parse(stats?.counters).ekills,
-    };
-  });
-
-  return (
-    <div>
-      <Row key={"details"} style={{ paddingTop: 5 }}>
-        <Col span={12}>
-          <MatchPlayerDetailsTable data={axisPlayers} smallView={true} />
-        </Col>
-        <Col span={12}>
-          <MatchPlayerDetailsTable data={alliesPlayers} smallView={true} />
-        </Col>
-      </Row>
-      <Row justify={"center"} key={"charts"} style={{ paddingTop: 5, height: 200 }}>
-        <Col span={12} style={{ height: 200 }}>
-          <Space style={{ justifyContent: "center", display: "flex", paddingTop: 15 }}>
-            <Card
-              title={<div style={{ textAlign: "center" }}>Damage dealt</div>}
-              size={"small"}
-              bordered={false}
-              bodyStyle={{ height: 140, width: 140, padding: 0 }}
-            >
-              <SimplePieChart data={simplifiedDmgDataChartAxis} />
-            </Card>
-            <Card
-              title={<div style={{ textAlign: "center" }}>Kills</div>}
-              size={"small"}
-              bordered={false}
-              bodyStyle={{ height: 140, width: 140, padding: 0 }}
-            >
-              <SimplePieChart data={simplifiedKillsDataChartAxis} />
-            </Card>
-          </Space>
-        </Col>
-        <Col span={12}>
-          <Space style={{ justifyContent: "center", display: "flex", paddingTop: 15 }}>
-            <Card
-              title={<div style={{ textAlign: "center" }}>Damage Dealt</div>}
-              size={"small"}
-              bordered={false}
-              bodyStyle={{ height: 140, width: 140, padding: 0 }}
-            >
-              <SimplePieChart data={simplifiedDmgDataChartAllies} />
-            </Card>
-            <Card
-              title={<div style={{ textAlign: "center" }}>Unit Kills</div>}
-              size={"small"}
-              bordered={false}
-              bodyStyle={{ height: 140, width: 140, padding: 0 }}
-            >
-              <SimplePieChart data={simplifiedKillsDataChartAllies} />
-            </Card>
-          </Space>
-        </Col>
-      </Row>
-      <Row key={"expand_button"} justify="center">
-        <Button
-          size={"middle"}
-          type="primary"
-          onClick={showModal}
-          style={{ display: "flex", marginTop: -110 }}
-        >
-          Open Full Details
-        </Button>
-        <Modal
-          style={{ top: 20 }}
-          width={1810}
-          title="Match Details"
-          visible={isModalVisible}
-          onOk={handleOk}
-          onCancel={handleCancel}
-          destroyOnClose={true}
-          cancelButtonProps={{ hidden: true }}
-          okText={"Close"}
-          footer={[
-            <Button onClick={handleDownloadGameData}>Download game data</Button>,
-            <Button onClick={handleCancel} type="primary">
-              Close
-            </Button>,
-          ]}
-        >
-          <MatchDetails data={record} />
-        </Modal>
-      </Row>
-    </div>
-  );
-};
 
 interface IProps {
   data: Array<Record<string, any>>;
@@ -183,7 +27,7 @@ interface IProps {
 }
 
 const LastMatchesTable: React.FC<IProps> = ({ data, profileID }) => {
-  const isMobile = useMediaQuery({ query: "(max-width: 1023px)" });
+  const isMobile = useMediaQuery({ query: isMobileMediaQuery });
 
   useEffect(() => {
     firebaseAnalytics.playerCardMatchesDisplayed();
@@ -201,31 +45,6 @@ const LastMatchesTable: React.FC<IProps> = ({ data, profileID }) => {
     text: "8p_redball_express",
     value: "8p_redball_express",
   };
-  // set play alias
-  let playerAlias = getAliasFromName(localLoadedMatches[0], profileID) || "unknown player alias";
-
-  // returns a filter setting for player maps
-  function getPlayerMapListFilter(matches: any) {
-    let mapSet = new Set();
-    let filterSettings: any[] = [];
-    for (const map of matches) {
-      mapSet.add(map.mapname);
-    }
-
-    // sort maps alphabetically
-    let sortedMapsArray = Array.from(mapSet).sort((a: any, b: any) => {
-      return a.localeCompare(b);
-    });
-
-    for (const map of sortedMapsArray) {
-      filterSettings.push({
-        text: formatMapName(map),
-        value: map,
-      });
-    }
-
-    return filterSettings;
-  }
 
   let matchRecords = localLoadedMatches;
 
@@ -312,7 +131,7 @@ const LastMatchesTable: React.FC<IProps> = ({ data, profileID }) => {
                   <Link
                     to={routes.playerCardWithId(convertSteamNameToID(playerInfo.profile["name"]))}
                   >
-                    {playerInfo.profile["alias"] === playerAlias ? (
+                    {playerInfo.profile.name === profileID ? (
                       <b>{playerInfo.profile["alias"]}</b>
                     ) : (
                       playerInfo.profile["alias"]
@@ -345,7 +164,7 @@ const LastMatchesTable: React.FC<IProps> = ({ data, profileID }) => {
                   <Link
                     to={routes.playerCardWithId(convertSteamNameToID(playerInfo.profile["name"]))}
                   >
-                    {playerInfo.profile["alias"] === playerAlias ? (
+                    {playerInfo.profile.name === profileID ? (
                       <b>{playerInfo.profile["alias"]}</b>
                     ) : (
                       playerInfo.profile["alias"]
@@ -415,6 +234,7 @@ const LastMatchesTable: React.FC<IProps> = ({ data, profileID }) => {
         return <p>{getMatchDuration(record.startgametime, record.completiontime)}</p>;
       },
     },
+    Table.EXPAND_COLUMN,
   ];
 
   return (
@@ -432,7 +252,9 @@ const LastMatchesTable: React.FC<IProps> = ({ data, profileID }) => {
         </div>
         <div style={{ float: "right" }}>
           <Tooltip
-            title={"In future we might might allow access to matches stored at coh2stats.com"}
+            title={
+              "This is realtime data from the game. It should be the same as you see in your recent games in game."
+            }
           >
             <DatabaseOutlined /> Data source <RelicIcon />
           </Tooltip>
@@ -440,10 +262,7 @@ const LastMatchesTable: React.FC<IProps> = ({ data, profileID }) => {
       </div>
       <Table
         style={{ paddingTop: 5, overflow: "auto" }}
-        pagination={{
-          defaultPageSize: 60,
-          pageSizeOptions: ["20", "40", "60", "100", "200"],
-        }}
+        pagination={false}
         columns={columns}
         dataSource={matchRecords}
         rowKey={(record) => record.id}
@@ -453,8 +272,16 @@ const LastMatchesTable: React.FC<IProps> = ({ data, profileID }) => {
           expandedRowRender: renderExpandedMatch,
           rowExpandable: (_) => !isMobile,
           expandRowByClick: true,
-          expandIconColumnIndex: 20,
         }}
+        summary={() => (
+          <Table.Summary fixed>
+            <Table.Summary.Row>
+              <Table.Summary.Cell index={0} colSpan={columns.length} align={"left"}>
+                Total amount of matches {matchRecords.length}
+              </Table.Summary.Cell>
+            </Table.Summary.Row>
+          </Table.Summary>
+        )}
       />
     </>
   );

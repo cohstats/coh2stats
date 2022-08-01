@@ -1,8 +1,8 @@
-import { ColumnsType } from "antd/lib/table";
+import { ColumnsType } from "antd/es/table";
 import { PlusSquareOutlined, MinusSquareOutlined } from "@ant-design/icons";
-import Tooltip from "antd/lib/tooltip/index";
-import Table from "antd/lib/table/Table";
-import Typography from "antd/lib/typography";
+import Tooltip from "antd/es/tooltip/index";
+import Table from "antd/es/table/Table";
+import Typography from "antd/es/typography";
 import React, { useState } from "react";
 import { LadderStats, Member, SideData } from "../../redux/state";
 import { CountryFlag } from "./country-flag";

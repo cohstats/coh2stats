@@ -1,8 +1,8 @@
-import Title from "antd/lib/typography/Title";
-import Text from "antd/lib/typography/Text";
-import Col from "antd/lib/grid/col";
-import Row from "antd/lib/grid/row";
-import Link from "antd/lib/typography/Link";
+import Title from "antd/es/typography/Title";
+import Text from "antd/es/typography/Text";
+import Col from "antd/es/grid/col";
+import Row from "antd/es/grid/row";
+import Link from "antd/es/typography/Link";
 import compareVersions from "compare-versions";
 import * as React from "react";
 import { useSelector } from "react-redux";

@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Typography } from "antd";
-import { Donation } from "./donations";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
+import { KofiDonate } from "./kofi-donate";
+
 const { Title, Link, Text, Paragraph } = Typography;
 
 // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -210,7 +211,7 @@ const About: React.FC = () => {
       <Link href="https://github.com/cohstats/coh2stats#open-source-data" target="_blank">
         here
       </Link>{" "}
-      and we can also expose you API but you have to write to use first. Thank you!
+      and we can also expose you API but you have to first ask for permission. Thank you!
       <br />
       <div ref={donationsRef}>
         <a href={"#donations"}>
@@ -218,11 +219,6 @@ const About: React.FC = () => {
             Donations and support
           </Title>
         </a>
-        <Paragraph>
-          We are able to support the basic hosting, domain and statistics/info functionality from
-          our own pocket. This will rank up for tens of dollars per year. Plus we don't charge
-          anything for our time.
-        </Paragraph>
         <Paragraph>
           The original idea was to give unlimited match history for each player. Because this is
           something which Relic with their "Recent Matches" doesn't support (They track only last
@@ -246,30 +242,8 @@ const About: React.FC = () => {
         <br />
         If you would like to give financial support, you can do so. <br />
         100% of donations will go towards this project costs <br />
-        In case you want to be mentioned on the site, write your nickname into the payment note.
         <br />
-        <Donation />
-        Bluefalcon
-        <br />
-        Gammi
-        <br />
-        Cyanara
-        <br />
-        The PaKman
-        <br />
-        KoRneY
-        <br />
-        <b>Past donations 2021:</b>
-        <br />
-        Gammi
-        <br />
-        MECH
-        <br />
-        KoRneY
-        <br />
-        ayy_howzit_braddah
-        <br />
-        gunther09
+        <KofiDonate />
       </div>
     </div>
   );

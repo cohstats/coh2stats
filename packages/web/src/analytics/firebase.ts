@@ -82,6 +82,14 @@ const playerCardMatchesDisplayed = (): void => {
   firebase.logEvent("playerCardMatches");
 };
 
+const playerCardCOHStatsMatchesDisplayed = (): void => {
+  firebase.logEvent("playerCardCOHStatsMatches");
+};
+
+const playerCardCOHStatsMatchesMoreGames = (): void => {
+  firebase.logEvent("playerCardCOHStatsMatchesMore");
+};
+
 const playerCardMatchDetailsDisplayed = (): void => {
   firebase.logEvent("playerCardMatchDetails");
 };
@@ -117,6 +125,8 @@ const firebaseAnalytics = {
   playerCardMatchesDisplayed,
   playerCardMatchDetailsDisplayed,
   playerCardFullMatchDetailsDisplayed,
+  playerCardCOHStatsMatchesDisplayed,
+  playerCardCOHStatsMatchesMoreGames,
 };
 
 export default firebaseAnalytics;
