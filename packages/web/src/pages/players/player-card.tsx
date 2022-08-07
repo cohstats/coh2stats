@@ -151,9 +151,6 @@ const PlayerCard = () => {
   const { totalGames, lastGameDate, bestRank, mostPlayed, totalWinRate } =
     calculateOverallStatsForPlayerCard(relicData.leaderboardStats);
 
-  console.log(playTime);
-  console.log(data);
-
   return (
     <div key={steamid}>
       <Row justify="center" style={{ paddingTop: "10px" }}>
