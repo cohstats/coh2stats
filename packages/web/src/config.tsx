@@ -28,6 +28,7 @@ const config = {
   devHostnames,
   discordInviteLink,
   donationLink: "https://ko-fi.com/cohstats",
+  coh2steamGameId: 231430,
 };
 
 // The date when we exported the data for the bulletins and commanders

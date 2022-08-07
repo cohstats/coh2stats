@@ -27,15 +27,15 @@ export const MainFooter: React.FC = () => {
         <img width={30} height={30} src={"/resources/discord-icon.svg"} alt={"Discord Logo"} />
       </a>
       {"  "}
-      <a href={config.donationLink} target="_blank" rel="noopener noreferrer">
+      <Link href={config.donationLink} target="_blank" rel="noopener noreferrer" strong>
         <img
           width={30}
           height={30}
           src={"/resources/kofi_s_logo_nolabel.webp"}
           alt={"Ko-fi support button"}
         />
-        <Link strong>Donate</Link>
-      </a>
+        Donate
+      </Link>
       <br />
       <br />
       The Company of Heroes is registered trademark of SEGA Holdings. Co
