@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { Col, Row, Tooltip, Typography, Avatar, Tabs } from "antd";
+import { Col, Row, Tooltip, Typography, Avatar, Tabs, Badge } from "antd";
 import { LaddersDataObject } from "../../coh/types";
 import firebaseAnalytics from "../../analytics";
 import { capitalize, timeAgo, useQuery } from "../../utils/helpers";
@@ -25,6 +25,7 @@ type playerCardAPIObject = {
   relicPersonalStats: Record<string, any>;
   steamProfile: Record<string, any>;
   playerMatches: Array<Record<string, any>>;
+  playTime: null | number;
 };
 
 type statGroupsType = Array<Record<string, any>>;
@@ -138,6 +139,7 @@ const PlayerCard = () => {
   };
 
   const steamProfile = data.steamProfile[steamid];
+  const playTime = data.playTime ? Math.floor(data.playTime / 60) : null;
 
   const relicData = data.relicPersonalStats;
   const statGroups = relicData.statGroups;
@@ -148,6 +150,9 @@ const PlayerCard = () => {
 
   const { totalGames, lastGameDate, bestRank, mostPlayed, totalWinRate } =
     calculateOverallStatsForPlayerCard(relicData.leaderboardStats);
+
+  console.log(playTime);
+  console.log(data);
 
   return (
     <div key={steamid}>
@@ -164,16 +169,46 @@ const PlayerCard = () => {
               />
             </a>
             <div style={{ display: "inline-block", paddingLeft: 15, textAlign: "left" }}>
-              <Title level={2}>
+              <Title level={2} style={{ marginBottom: 0, marginTop: "-7px" }}>
                 <CountryFlag countryCode={playerRelicProfile.country} />
                 {playerName}
               </Title>
               <b>XP:</b> {playerRelicProfile.xp.toLocaleString()}
               {playerRelicProfile.xp === 18785964 ? " (MAX)" : ""}
+              <br />
+              {playTime && <>Total playtime: {playTime} hrs</>}
+              {!playTime && (
+                <>
+                  <br />
+                </>
+              )}
               <div>
                 <a href={steamProfile["profileurl"]} target={"_blank"} rel="noreferrer">
-                  <Avatar size={24} src={"/resources/steam_icon.png"} alt={"steam icon"} />
+                  <Badge
+                    dot={steamProfile["personastate"] >= 1}
+                    color={"green"}
+                    offset={[-2, 22]}
+                  >
+                    <Avatar size={24} src={"/resources/steam_icon.png"} alt={"steam icon"} />
+                  </Badge>
                 </a>
+                {`${config.coh2steamGameId}` === steamProfile.gameid && (
+                  <>
+                    {" "}
+                    <Badge
+                      dot={steamProfile["personastate"] >= 1}
+                      color={"green"}
+                      offset={[-2, 22]}
+                    >
+                      {" "}
+                      <Avatar
+                        size={24}
+                        src={"/resources/coh2-icon-32.png"}
+                        alt={"Is online in COH2"}
+                      />{" "}
+                    </Badge>{" "}
+                  </>
+                )}
               </div>
             </div>
           </div>
