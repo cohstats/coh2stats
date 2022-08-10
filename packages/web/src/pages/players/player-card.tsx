@@ -150,10 +150,10 @@ const PlayerCard = () => {
     });
   };
 
-  const steamProfile = data?.steamProfile ? data?.steamProfile[steamid] : null;
-  const playTime = data?.playTime ? Math.floor(data?.playTime / 60) : null;
+  const steamProfile = data.steamProfile ? data.steamProfile[steamid] : null;
+  const playTime = data.playTime ? Math.floor(data.playTime / 60) : null;
 
-  const relicData = data?.relicPersonalStats;
+  const relicData = data.relicPersonalStats;
   const statGroups = relicData.statGroups;
   const playerRelicProfile = findPlayerProfile(statGroups);
 
