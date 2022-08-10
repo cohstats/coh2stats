@@ -177,7 +177,7 @@ const AllMatchesTable: React.FC<IProps> = ({ steamID }) => {
     let resultItem = matchRecord.matchhistoryreportresults.filter(
       (result: any) => result.profile.name === profileID,
     );
-    return resultItem[0].resulttype === 1;
+    return resultItem[0]?.resulttype === 1;
   }
 
   const renderExpandedMatch = useCallback((record: any) => {

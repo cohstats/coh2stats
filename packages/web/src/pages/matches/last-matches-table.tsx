@@ -54,7 +54,7 @@ const LastMatchesTable: React.FC<IProps> = ({ data, profileID }) => {
     let resultItem = matchRecord.matchhistoryreportresults.filter(
       (result: any) => result.profile.name === profileID,
     );
-    return resultItem[0].resulttype === 1;
+    return resultItem[0]?.resulttype === 1;
   }
 
   function getPlayerMatchHistoryResult(matchRecord: any) {
@@ -80,13 +80,13 @@ const LastMatchesTable: React.FC<IProps> = ({ data, profileID }) => {
         return (
           <>
             <div>
-              <Tooltip title={player.profile.alias} key={player.profile.alias}>
+              <Tooltip title={player?.profile?.alias} key={player?.profile?.alias}>
                 <img
-                  key={player.profile_id}
-                  src={getRaceImage(raceIds[player.race_id])}
+                  key={player?.profile_id}
+                  src={getRaceImage(raceIds[player?.race_id])}
                   height="48px"
                   width="48px"
-                  alt={player.race_id}
+                  alt={player?.race_id}
                 />
               </Tooltip>
             </div>

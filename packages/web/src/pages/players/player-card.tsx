@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { Col, Row, Tooltip, Typography, Avatar, Tabs, Badge } from "antd";
+import { Col, Row, Tooltip, Typography, Avatar, Tabs, Badge, notification } from "antd";
 import { LaddersDataObject } from "../../coh/types";
 import firebaseAnalytics from "../../analytics";
 import { capitalize, timeAgo, useQuery } from "../../utils/helpers";
@@ -122,12 +122,24 @@ const PlayerCard = () => {
   }
 
   // This protects all the requests accessing data
-  if (isLoading || !data || data.steamProfile[steamid] === undefined) {
-    return (
-      <div style={{ paddingTop: 50 }}>
-        <Loading />
-      </div>
-    );
+  if (isLoading || !data || (data?.steamProfile && data?.steamProfile[steamid] === undefined)) {
+    // This can happen in case steam API is not responding  and steamProfile is null but other fields are populated
+    if (
+      data?.steamProfile === null &&
+      Object.values(data?.relicPersonalStats?.statGroups).length > 0
+    ) {
+      notification["warning"]({
+        message: "Steam API is not responding",
+        description:
+          "The player card might not work correctly, please try again later or report it to our Discord.",
+      });
+    } else {
+      return (
+        <div style={{ paddingTop: 50 }}>
+          <Loading />
+        </div>
+      );
+    }
   }
 
   const changeTheUrl = (view: string) => {
@@ -138,7 +150,7 @@ const PlayerCard = () => {
     });
   };
 
-  const steamProfile = data.steamProfile[steamid];
+  const steamProfile = data?.steamProfile ? data?.steamProfile[steamid] : null;
   const playTime = data.playTime ? Math.floor(data.playTime / 60) : null;
 
   const relicData = data.relicPersonalStats;
@@ -156,11 +168,11 @@ const PlayerCard = () => {
       <Row justify="center" style={{ paddingTop: "10px" }}>
         <Col xs={23} md={22} xxl={14}>
           <div style={{ float: "left" }}>
-            <a href={steamProfile["profileurl"]} target={"_blank"} rel="noreferrer">
+            <a href={steamProfile?.profileurl || ""} target={"_blank"} rel="noreferrer">
               <Avatar
                 size={110}
                 shape="square"
-                src={steamProfile["avatarfull"]}
+                src={steamProfile?.avatarfull || ""}
                 style={{ display: "inline-block", verticalAlign: "top" }}
                 alt={"avatar"}
               />
@@ -180,20 +192,16 @@ const PlayerCard = () => {
                 </>
               )}
               <div>
-                <a href={steamProfile["profileurl"]} target={"_blank"} rel="noreferrer">
-                  <Badge
-                    dot={steamProfile["personastate"] >= 1}
-                    color={"green"}
-                    offset={[-2, 22]}
-                  >
+                <a href={steamProfile?.profileurl || ""} target={"_blank"} rel="noreferrer">
+                  <Badge dot={steamProfile?.personastate >= 1} color={"green"} offset={[-2, 22]}>
                     <Avatar size={24} src={"/resources/steam_icon.png"} alt={"steam icon"} />
                   </Badge>
                 </a>
-                {`${config.coh2steamGameId}` === steamProfile.gameid && (
+                {`${config.coh2steamGameId}` === steamProfile?.gameid && (
                   <>
                     {" "}
                     <Badge
-                      dot={steamProfile["personastate"] >= 1}
+                      dot={steamProfile?.personastate >= 1}
                       color={"green"}
                       offset={[-2, 22]}
                     >
