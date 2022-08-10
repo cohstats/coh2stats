@@ -22,5 +22,6 @@ RGDTools
 3. In Archive Viewer Open file `S:\SteamLibrary\steamapps\common\Company of Heroes 2\CoH2\Archives\AttribArchive.sga`
 4. Extract commander folder (or any folder where the files you are looking for) --> this will give you .rgd files
 5. Create folder `in` put the .rgd files inside
-6. Run `rgdConv.exe hash_dict.txt in out -x` to get .xml files or without the -x to get .txt files
+6. Download RGDTools_v1.3.7z, extract it 
+7. Run `rgdConv.exe hash_dict.txt in out -x` to get .xml files or without the -x to get .txt files
 
