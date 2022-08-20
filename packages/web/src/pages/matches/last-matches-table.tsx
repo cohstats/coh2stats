@@ -241,16 +241,17 @@ const LastMatchesTable: React.FC<IProps> = ({ data, profileID }) => {
     <>
       <div>
         <div style={{ float: "left" }}>
+          <BulbOutlined /> Click on the row to show more details.
+        </div>
+        <div style={{ float: "right" }}>
           <Tooltip
             title={
               "The results are also time bounded. If the match is too old Relic deletes it even " +
               "when you have less then 10 matches in that mode."
             }
           >
-            <BulbOutlined /> Relic keeps only last 10 matches for each mode.
-          </Tooltip>
-        </div>
-        <div style={{ float: "right" }}>
+            <BulbOutlined /> Relic keeps only last 10 matches for each mode
+          </Tooltip>{" "}
           <Tooltip
             title={
               "This is realtime data from the game. It should be the same as you see in your recent games in game."
