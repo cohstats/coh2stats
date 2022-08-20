@@ -134,7 +134,8 @@ BE has been moved to repo `coh2-stats-be`
 
 ### Images for maps
 
-Provided by [Janne252](https://github.com/Janne252) https://github.com/Janne252/coh2-replay-discord-bot/tree/master/data/scenario-preview-images
+Provided by [Janne252](https://github.com/Janne252) https://github.com/Janne252/coh2-replay-discord-bot/tree/master/data/scenario-preview-images  
+For mass reformats from .png to .webp - use Infraview https://www.irfanview.com/ (best image utility)
 
 ### Crawler process
 
