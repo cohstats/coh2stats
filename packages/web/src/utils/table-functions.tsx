@@ -39,7 +39,7 @@ export function formatMapName(mapname: any) {
  *
  * Time > 5 days      returns en-US locale date
  */
-export function formatMatchTime(startTime: number) {
+export function formatMatchTime(startTime: number, onlyDate = false) {
   const hourMillis = 3600 * 1000; // one day in a miliseconds range
   let difference = Date.now() - startTime * 1000; // start match vs NOW time difference in miliseconds
   const options: Intl.DateTimeFormatOptions = {
@@ -60,6 +60,11 @@ export function formatMatchTime(startTime: number) {
   } else {
     timeDifference = new Date(startTime * 1000).toLocaleDateString("en-US", options);
   }
+
+  if (onlyDate) {
+    timeDifference = new Date(startTime * 1000).toLocaleDateString("en-US", options);
+  }
+
   return timeDifference; //return duration in HH:MM:SS format
 }
 

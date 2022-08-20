@@ -132,6 +132,10 @@ BE has been moved to repo `coh2-stats-be`
 6. Observe the changes
 7. Update the `packages/web/src/config.tsx` with the right date / patch name
 
+### Images for maps
+
+Provided by [Janne252](https://github.com/Janne252) https://github.com/Janne252/coh2-replay-discord-bot/tree/master/data/scenario-preview-images
+
 ### Crawler process
 
 Diagram:
