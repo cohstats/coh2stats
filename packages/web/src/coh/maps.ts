@@ -4,7 +4,7 @@
  * @param version
  */
 const getMapIconPath = (name: string, version: "x64" | "x300" = "x300"): string => {
-  return `/resources/map-images/${name}_${name}_${version}.webp`;
+  return `/resources/map-images/${name}_${version}.webp`;
 };
 
 export { getMapIconPath };
