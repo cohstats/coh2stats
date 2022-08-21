@@ -5,6 +5,8 @@ import firebaseAnalytics from "../analytics";
 import { MatchPlayerDetailsTable } from "../pages/matches/match-details-table";
 import { SimplePieChart } from "../components/charts-match/simple-pie";
 import MatchDetails from "../pages/matches/match-details";
+import { Link } from "react-router-dom";
+import routes from "../routes";
 
 /**
  * Returns duration string in HH:MM:SS format
@@ -339,14 +341,25 @@ export const ExpandedMatch: React.FC<{ record: any }> = ({ record }) => {
         </Col>
       </Row>
       <Row key={"expand_button"} justify="center">
-        <Button
-          size={"middle"}
-          type="primary"
-          onClick={showModal}
-          style={{ display: "flex", marginTop: -110 }}
-        >
-          Open Full Details
-        </Button>
+        <div>
+          <Button
+            size={"middle"}
+            type="primary"
+            onClick={showModal}
+            style={{ display: "flex", marginTop: -70, width: 185 }}
+          >
+            Open Full Details Modal
+          </Button>
+          <Link to={routes.singleMatch(record.id)} target={"_blank"}>
+            <Button
+              size={"middle"}
+              type="primary"
+              style={{ display: "flex", marginTop: -70, width: 185 }}
+            >
+              Open Full Details Page
+            </Button>
+          </Link>
+        </div>
         <Modal
           style={{ top: 20 }}
           width={1810}

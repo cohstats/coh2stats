@@ -32,6 +32,7 @@ import { COHStatsIcon } from "../../components/cohstats-icon";
 import { AlertBox } from "../../components/alert-box";
 import firebaseAnalytics from "../../analytics";
 import { getMapIconPath } from "../../coh/maps";
+import config from "../../config";
 
 const { Text } = Typography;
 
@@ -41,7 +42,7 @@ interface IProps {
   steamID: string;
 }
 
-const renderMapImage = false;
+const renderMapImage = true;
 
 const AllMatchesTable: React.FC<IProps> = ({ steamID }) => {
   const profileID = `/steam/${steamID}`;
@@ -460,7 +461,8 @@ const AllMatchesTable: React.FC<IProps> = ({ steamID }) => {
               " let us know too. Keeping all these matches is increasing the server costs, please consider donating. Thanks!"
             }
           >
-            <BulbOutlined /> COH2 Stats keeps only last 14 days of matches
+            <BulbOutlined /> COH2 Stats keeps only last {config.matchAreStoredForDays} days of
+            matches
           </Tooltip>{" "}
           <DatabaseOutlined /> Data source <COHStatsIcon />
         </div>

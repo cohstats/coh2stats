@@ -29,6 +29,9 @@ const config = {
   discordInviteLink,
   donationLink: "https://ko-fi.com/cohstats",
   coh2steamGameId: 231430,
+  // this is just for info
+  matchAreStoredForDays: 14,
+  scrapeFrequencyMinutes: 5,
 };
 
 // The date when we exported the data for the bulletins and commanders
