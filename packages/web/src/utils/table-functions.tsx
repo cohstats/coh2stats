@@ -5,6 +5,8 @@ import firebaseAnalytics from "../analytics";
 import { MatchPlayerDetailsTable } from "../pages/matches/match-details-table";
 import { SimplePieChart } from "../components/charts-match/simple-pie";
 import MatchDetails from "../pages/matches/match-details";
+import { Link } from "react-router-dom";
+import routes from "../routes";
 
 /**
  * Returns duration string in HH:MM:SS format
@@ -39,7 +41,7 @@ export function formatMapName(mapname: any) {
  *
  * Time > 5 days      returns en-US locale date
  */
-export function formatMatchTime(startTime: number) {
+export function formatMatchTime(startTime: number, onlyDate = false) {
   const hourMillis = 3600 * 1000; // one day in a miliseconds range
   let difference = Date.now() - startTime * 1000; // start match vs NOW time difference in miliseconds
   const options: Intl.DateTimeFormatOptions = {
@@ -60,6 +62,11 @@ export function formatMatchTime(startTime: number) {
   } else {
     timeDifference = new Date(startTime * 1000).toLocaleDateString("en-US", options);
   }
+
+  if (onlyDate) {
+    timeDifference = new Date(startTime * 1000).toLocaleDateString("en-US", options);
+  }
+
   return timeDifference; //return duration in HH:MM:SS format
 }
 
@@ -334,14 +341,25 @@ export const ExpandedMatch: React.FC<{ record: any }> = ({ record }) => {
         </Col>
       </Row>
       <Row key={"expand_button"} justify="center">
-        <Button
-          size={"middle"}
-          type="primary"
-          onClick={showModal}
-          style={{ display: "flex", marginTop: -110 }}
-        >
-          Open Full Details
-        </Button>
+        <div>
+          <Button
+            size={"middle"}
+            type="primary"
+            onClick={showModal}
+            style={{ display: "flex", marginTop: -70, width: 185 }}
+          >
+            Open Full Details Modal
+          </Button>
+          <Link to={routes.singleMatch(record.id)} target={"_blank"}>
+            <Button
+              size={"middle"}
+              type="primary"
+              style={{ display: "flex", marginTop: -70, width: 185 }}
+            >
+              Open Full Details Page
+            </Button>
+          </Link>
+        </div>
         <Modal
           style={{ top: 20 }}
           width={1810}

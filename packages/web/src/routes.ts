@@ -48,10 +48,6 @@ const searchWithParam = (param = ":searchParam") => {
   return `${searchBase()}/${param}`;
 };
 
-const matchesBase = () => {
-  return "/matches";
-};
-
 const leaderboardsBase = () => {
   return "/leaderboards";
 };
@@ -72,8 +68,8 @@ const playerCardWithIdAndName = (steamId = ":steamid") => {
   return `${playerCardBase()}/${steamId}-*`;
 };
 
-const playerMatches = (steamId = ":steamid") => {
-  return `${matchesBase()}/player/${steamId}`;
+const singleMatch = (matchID = ":matchID") => {
+  return `/matches/${matchID}`;
 };
 
 const routes = {
@@ -88,12 +84,12 @@ const routes = {
   bulletinsBase,
   searchBase,
   searchWithParam,
-  playerMatches,
   leaderboardsBase,
   playerCardBase,
   playerCardWithId,
   playerCardWithIdAndName,
   desktopAppBase,
+  singleMatch,
 };
 
 export default routes;

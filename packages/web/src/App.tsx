@@ -21,6 +21,7 @@ import PlayerCard from "./pages/players";
 import MapStats from "./pages/map-stats";
 import LiveMatches from "./pages/live-matches";
 import { ErrorBoundary } from "./components/error-boundary";
+import SingleMatch from "./pages/match";
 
 const { Content } = Layout;
 
@@ -82,6 +83,9 @@ const App: React.FC = () => {
               </Route>
               <Route path={routes.searchBase()}>
                 <CustomSearch />
+              </Route>
+              <Route path={routes.singleMatch()}>
+                <SingleMatch />
               </Route>
             </Switch>
           </ErrorBoundary>

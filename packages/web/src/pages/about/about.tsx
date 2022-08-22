@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Typography } from "antd";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { KofiDonate } from "./kofi-donate";
+import config from "../../config";
 
 const { Title, Link, Text, Paragraph } = Typography;
 
@@ -232,7 +233,8 @@ const About: React.FC = () => {
           <br />
           Update Oct/2021: The server DB costs were growing by 20% every month. To have the
           expenses under control, we had to do these changes with storing the data: Leaderboards
-          (only last 3 months, older 1x a week is kept forever). Matches (only last 14 days).
+          (only last 3 months, older 1x a week is kept forever). Matches (only last{" "}
+          {config.matchAreStoredForDays} days).
         </Paragraph>
         We are still planning to deliver advanced match overview which would bring more
         functionality and better insight into your past games. But we will most likely not be able

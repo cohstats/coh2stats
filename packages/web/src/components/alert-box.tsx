@@ -12,9 +12,12 @@ export interface AlertEvent {
   description?: React.ReactNode | string;
   /** Whether Alert can be closed */
   closable?: boolean;
+  style?: Record<string, any>;
 }
 
 export const AlertBox: React.FC<AlertEvent> = (event: AlertEvent) => {
+  const finalStyle = { ...{ margin: 10, maxWidth: 450 }, ...event.style };
+
   return (
     <Alert
       data-testid="alert-box"
@@ -22,10 +25,7 @@ export const AlertBox: React.FC<AlertEvent> = (event: AlertEvent) => {
       type={event.type}
       description={event.description}
       closable={event.closable ?? defaultCloseable}
-      style={{
-        margin: 10,
-        maxWidth: 450,
-      }}
+      style={finalStyle}
     />
   );
 };
