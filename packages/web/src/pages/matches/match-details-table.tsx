@@ -73,7 +73,7 @@ const ExpandedPlayer: React.FC<{
         <Col key={"commanders"} flex={""}>
           {commanders.map((commander) => {
             const commanderData = getCommanderData(commander.itemdefinition_id);
-            if (!commanderData) return <div />;
+            if (!commanderData) return <div key={commander.itemdefinition_id}></div>;
 
             const iconPath = getCommanderIconPath(commanderData?.iconSmall);
 
@@ -128,7 +128,7 @@ const ExpandedPlayer: React.FC<{
         <Col key={"bulletins"} flex={""}>
           {bulletins.map((bulletin) => {
             const bulletinData = getBulletinData(bulletin.itemdefinition_id);
-            if (!bulletinData) return <div></div>;
+            if (!bulletinData) return <div key={bulletin.itemdefinition_id}></div>;
 
             const iconPath = getBulletinIconPath(bulletinData?.icon);
 
