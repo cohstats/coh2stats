@@ -7,6 +7,8 @@ import { SimplePieChart } from "../components/charts-match/simple-pie";
 import MatchDetails from "../pages/matches/match-details";
 import { Link } from "react-router-dom";
 import routes from "../routes";
+import { DatabaseOutlined } from "@ant-design/icons";
+import { RelicIcon } from "../components/relic-icon";
 
 /**
  * Returns duration string in HH:MM:SS format
@@ -363,7 +365,11 @@ export const ExpandedMatch: React.FC<{ record: any }> = ({ record }) => {
         <Modal
           style={{ top: 20 }}
           width={1810}
-          title="Match Details"
+          title={
+            <>
+              Match Details - <DatabaseOutlined /> Data source <RelicIcon />
+            </>
+          }
           visible={isModalVisible}
           onOk={handleOk}
           onCancel={handleCancel}
