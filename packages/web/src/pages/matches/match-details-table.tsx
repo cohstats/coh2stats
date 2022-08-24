@@ -1,15 +1,23 @@
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import { ColumnsType } from "antd/es/table";
-import { convertSteamNameToID, getGeneralIconPath } from "../../coh/helpers";
+import { convertSteamNameToID, getExportedIconPath, getGeneralIconPath } from "../../coh/helpers";
 import { raceIds } from "../../utils/table-functions";
-import { Table, Tooltip } from "antd";
+import { Avatar, Badge, Card, Col, Row, Table, Tooltip, Typography } from "antd";
 import { Helper } from "../../components/helper";
-import { Link } from "react-router-dom";
 import routes from "../../routes";
+import firebaseAnalytics from "../../analytics";
+import { getBulletinData, getBulletinIconPath } from "../../coh/bulletins";
+import { getCommanderData, getCommanderIconPath } from "../../coh/commanders";
+import { CommanderAbility } from "../../coh/types";
+import { Link as RouterLink } from "react-router-dom";
+import { BulbOutlined } from "@ant-design/icons";
+
+const { Text } = Typography;
 
 interface MatchPlayerDetailsTableProps {
   data: Array<Record<string, any>>;
   smallView?: boolean;
+  matchhistoryitems?: Array<Record<string, any>>;
 }
 
 // Handle sorting with 2 directions only -> this is default sorting for a table
@@ -42,9 +50,121 @@ const AdvancedSortNumeric = (a1: any, b1: any, a2: any, b2: any, order?: string 
   }
 };
 
+const ExpandedPlayer: React.FC<{
+  record: any;
+  matchhistoryitems: Array<Record<string, any>> | undefined;
+}> = ({ record, matchhistoryitems }) => {
+  useEffect(() => {
+    firebaseAnalytics.singleMatchPlayerDetailsDisplayed();
+  }, []);
+
+  if (!record || !matchhistoryitems) {
+    return <></>;
+  }
+
+  matchhistoryitems = matchhistoryitems.filter((item) => item.profile_id === record.profile_id);
+
+  const commanders = matchhistoryitems.filter((item) => item.itemlocation_id === 3);
+  const bulletins = matchhistoryitems.filter((item) => item.itemlocation_id === 4);
+
+  return (
+    <div>
+      <Row style={{ paddingTop: 5 }}>
+        <Col key={"commanders"} flex={""}>
+          {commanders.map((commander) => {
+            const commanderData = getCommanderData(commander.itemdefinition_id);
+            if (!commanderData) return <div key={commander.itemdefinition_id}></div>;
+
+            const iconPath = getCommanderIconPath(commanderData?.iconSmall);
+
+            return (
+              <Card
+                key={commander.itemdefinition_id}
+                bodyStyle={{ padding: 3 }}
+                style={{ height: 75, maxWidth: 600, minWidth: 500 }}
+              >
+                <Avatar
+                  size={66}
+                  shape="square"
+                  src={iconPath}
+                  style={{ display: "inline-block", verticalAlign: "top" }}
+                />
+                <div style={{ display: "inline-block", paddingLeft: 5 }}>
+                  <a
+                    href={routes.commanderByID(commanderData.races[0], commanderData.serverID)}
+                    target={"_blank"}
+                    rel="noreferrer"
+                  >
+                    <Text strong={true}>{commanderData.commanderName}</Text>
+                  </a>
+
+                  <Row style={{ paddingTop: 0 }}>
+                    {commanderData.abilities.map((item: CommanderAbility) => {
+                      return (
+                        <Col key={item.name}>
+                          <Tooltip placement={"bottom"} title={item.description}>
+                            <Avatar
+                              alt={item.name}
+                              src={getExportedIconPath(item.icon)}
+                              shape="square"
+                              size={48}
+                            />
+                            <Badge
+                              count={item.commandPoints}
+                              overflowCount={999}
+                              showZero
+                              offset={[-16, -26]}
+                            />
+                          </Tooltip>
+                        </Col>
+                      );
+                    })}
+                  </Row>
+                </div>
+              </Card>
+            );
+          })}
+        </Col>
+        <Col key={"bulletins"} flex={""}>
+          {bulletins.map((bulletin) => {
+            const bulletinData = getBulletinData(bulletin.itemdefinition_id);
+            if (!bulletinData) return <div key={bulletin.itemdefinition_id}></div>;
+
+            const iconPath = getBulletinIconPath(bulletinData?.icon);
+
+            return (
+              <Card
+                key={bulletin.itemdefinition_id}
+                bodyStyle={{ padding: 3 }}
+                style={{ height: 75, maxWidth: 500 }}
+              >
+                <div style={{ display: "flex" }}>
+                  <Avatar
+                    size={64}
+                    shape="square"
+                    src={iconPath}
+                    style={{ verticalAlign: "top", minWidth: 64 }}
+                  />
+                  <div style={{ paddingLeft: 5 }}>
+                    <Text strong={true}>{bulletinData.bulletinName}</Text>
+                    <br />
+                    <span>{bulletinData.descriptionShort}</span>
+                  </div>
+                </div>
+              </Card>
+            );
+          })}
+        </Col>
+        <Col span={0} />
+      </Row>
+    </div>
+  );
+};
+
 export const MatchPlayerDetailsTable: React.FC<MatchPlayerDetailsTableProps> = ({
   data,
   smallView = false,
+  matchhistoryitems,
 }) => {
   const convertedData = data.map((playerData) => {
     return {
@@ -54,6 +174,13 @@ export const MatchPlayerDetailsTable: React.FC<MatchPlayerDetailsTableProps> = (
   });
 
   const smallViewOnlyIndexes = ["profile", "ekills", "gt", "dmgdone"];
+
+  const renderExpandedMatch = useCallback(
+    (record: any) => {
+      return <ExpandedPlayer record={record} matchhistoryitems={matchhistoryitems} />;
+    },
+    [matchhistoryitems],
+  );
 
   const columns: ColumnsType<Record<string, any>> = [
     {
@@ -79,9 +206,9 @@ export const MatchPlayerDetailsTable: React.FC<MatchPlayerDetailsTableProps> = (
               alt={record.race_id}
             />{" "}
             <Tooltip title={profile.alias}>
-              <Link to={routes.playerCardWithId(convertSteamNameToID(profile["name"]))}>
+              <RouterLink to={routes.playerCardWithId(convertSteamNameToID(profile["name"]))}>
                 {profile["alias"]}
-              </Link>
+              </RouterLink>
             </Tooltip>
           </div>
         );
@@ -313,6 +440,7 @@ export const MatchPlayerDetailsTable: React.FC<MatchPlayerDetailsTableProps> = (
         return new Date(gt * 1000).toISOString().substr(11, 8);
       },
     },
+    Table.EXPAND_COLUMN,
   ];
 
   const finalColumns: ColumnsType<any> = smallView
@@ -331,7 +459,13 @@ export const MatchPlayerDetailsTable: React.FC<MatchPlayerDetailsTableProps> = (
   }
 
   return (
-    <>
+    <div>
+      {!smallView && (
+        <div style={{ float: "left" }}>
+          <BulbOutlined /> Click on the row to show players Commanders and Bulletins in this
+          match.
+        </div>
+      )}
       <Table
         style={{ margin: "0 !important" }}
         bordered={false}
@@ -343,7 +477,12 @@ export const MatchPlayerDetailsTable: React.FC<MatchPlayerDetailsTableProps> = (
         rowKey={(record) => record.id}
         rowClassName={(record) => showFactionResultColor(record, smallView)}
         size="small"
+        expandable={{
+          expandedRowRender: renderExpandedMatch,
+          rowExpandable: (_) => !smallView,
+          expandRowByClick: true,
+        }}
       />
-    </>
+    </div>
   );
 };

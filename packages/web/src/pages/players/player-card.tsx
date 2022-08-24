@@ -166,7 +166,7 @@ const PlayerCard = () => {
   return (
     <div key={steamid}>
       <Row justify="center" style={{ paddingTop: "10px" }}>
-        <Col xs={23} md={22} xxl={14}>
+        <Col xs={23} md={22} xxl={15}>
           <div style={{ float: "left" }}>
             <a href={steamProfile?.profileurl || ""} target={"_blank"} rel="noreferrer">
               <Avatar
@@ -270,7 +270,7 @@ const PlayerCard = () => {
         </Col>
       </Row>
       <Row justify="center">
-        <Col xs={24} md={22} xxl={14}>
+        <Col xs={24} md={22} xxl={15}>
           <Tabs defaultActiveKey={tabView} size={"large"} centered onChange={changeTheUrl}>
             <TabPane tab={"Standings"} key="stats">
               <PlayerStandingsTables data={relicData as LaddersDataObject} />

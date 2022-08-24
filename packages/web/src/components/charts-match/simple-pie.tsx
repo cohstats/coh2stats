@@ -23,7 +23,7 @@ export const SimplePieChart: React.FC<DamageDonePieChartProps> = ({
           translateX: 0,
           translateY: 30,
           itemsSpacing: 0,
-          itemWidth: 100,
+          itemWidth: 75,
           itemHeight: 18,
           itemTextColor: "#999",
           itemDirection: "left-to-right",

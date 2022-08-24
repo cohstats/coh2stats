@@ -1,16 +1,15 @@
 import React, { useEffect } from "react";
-import { Col, Row, List, Avatar, Badge, Tooltip, Typography } from "antd";
+import { Col, Row, List, Avatar, Typography } from "antd";
 import { getCommanderByRaces, getCommanderIconPath } from "../../coh/commanders";
 import { useParams } from "react-router";
-import { CommanderAbility, RaceName } from "../../coh/types";
+import { RaceName } from "../../coh/types";
 import routes from "../../routes";
 import { ExportDate } from "../../components/export-date";
 import { commanderBase } from "../../titles";
 import { capitalize } from "../../utils/helpers";
 import { Link } from "react-router-dom";
 import { Tip } from "../../components/tip";
-import { getExportedIconPath } from "../../coh/helpers";
-import Text from "antd/es/typography/Text";
+import { CommanderAbilitiesComponent } from "./components";
 
 const { Title } = Typography;
 
@@ -102,42 +101,5 @@ export const CommandersList = () => {
         </Col>
       </Row>
     </div>
-  );
-};
-
-type CommanderAbilityProps = {
-  commanderAbilities: Array<CommanderAbility>;
-  commanderDescription: string;
-};
-
-const CommanderAbilitiesComponent = (props: CommanderAbilityProps) => {
-  return (
-    <>
-      <Row style={{ paddingBottom: 25 }}>
-        <Text>{props.commanderDescription}</Text>
-      </Row>
-      <Row>
-        {props.commanderAbilities.map((item: CommanderAbility) => {
-          return (
-            <Col key={item.name}>
-              <Tooltip placement={"bottom"} title={item.description}>
-                <Avatar
-                  alt={item.name}
-                  src={getExportedIconPath(item.icon)}
-                  shape="square"
-                  size={64}
-                />
-                <Badge
-                  count={item.commandPoints}
-                  overflowCount={999}
-                  showZero
-                  offset={[-16, -32]}
-                />
-              </Tooltip>
-            </Col>
-          );
-        })}
-      </Row>
-    </>
   );
 };

@@ -15,6 +15,9 @@ import config from "../../config";
 import { getMapIconPath } from "../../coh/maps";
 import Link from "antd/es/typography/Link";
 import { AlertBox } from "../../components/alert-box";
+import firebaseAnalytics from "../../analytics";
+import { DatabaseOutlined } from "@ant-design/icons";
+import { COHStatsIcon } from "../../components/cohstats-icon";
 
 const { Text } = Typography;
 
@@ -27,6 +30,8 @@ const SingleMatch: React.FC = () => {
   const [matchData, setMatchData] = useState<undefined | ProcessedMatch>();
 
   useEffect(() => {
+    firebaseAnalytics.singleMatchPageDisplayed();
+
     (async () => {
       setIsLoading(true);
 
@@ -90,7 +95,7 @@ const SingleMatch: React.FC = () => {
   } else {
     content = (
       <>
-        <div>
+        <div style={{ height: 40 }}>
           <div style={{ float: "left" }}>
             <Title level={2} style={{ marginBottom: 0, marginTop: "-7px" }}>
               Match details - {matchData.mapname}
@@ -118,6 +123,9 @@ const SingleMatch: React.FC = () => {
         </div>
         <div style={{ paddingTop: 10 }}>
           <MatchDetails data={matchData || {}} />
+        </div>
+        <div style={{ textAlign: "right" }}>
+          <DatabaseOutlined /> Data source <COHStatsIcon />
         </div>
       </>
     );

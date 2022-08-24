@@ -50,7 +50,7 @@ const ChartCard: React.FC<ChartCardProps> = ({ data, title }) => {
       title={<div style={{ textAlign: "center" }}>{title}</div>}
       size={"small"}
       bordered={false}
-      bodyStyle={{ width: 250, height: 250, padding: 0 }}
+      bodyStyle={{ width: 200, height: 200, padding: 0 }}
     >
       <SimplePieChart data={data} displayLegend={true} />
     </Card>
@@ -63,7 +63,7 @@ const MapCard: React.FC<{ data: ProcessedMatch }> = ({ data }) => {
       title={<div style={{ textAlign: "center" }}>Map - {data.mapname}</div>}
       size={"small"}
       bordered={false}
-      bodyStyle={{ width: 250, height: 250, padding: 10 }}
+      bodyStyle={{ width: 200, height: 200, padding: 7 }}
     >
       <Image
         src={getMapIconPath(data.mapname)}
@@ -89,9 +89,10 @@ const MatchDetails: React.FC<MatchDetailsProps> = ({ data }) => {
 
   return (
     <>
-      <MatchPlayerDetailsTable data={axisPlayers} />
       <div style={{ paddingTop: 20 }} />
-      <MatchPlayerDetailsTable data={alliesPlayers} />
+      <MatchPlayerDetailsTable data={axisPlayers} matchhistoryitems={data.matchhistoryitems} />
+      <div style={{ paddingTop: 20 }} />
+      <MatchPlayerDetailsTable data={alliesPlayers} matchhistoryitems={data.matchhistoryitems} />
       <div style={{ height: 285 }}>
         <div style={{ float: "left" }}>
           <Space direction={"horizontal"}>

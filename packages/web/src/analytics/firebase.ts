@@ -106,6 +106,14 @@ const leaderboardsTypeInteraction = (type: string, race: string): void => {
   firebase.logEvent("leaderboardsTypeInteraction", { type, race });
 };
 
+const singleMatchPageDisplayed = () => {
+  firebase.logEvent("singleMatchDisplayed");
+};
+
+const singleMatchPlayerDetailsDisplayed = () => {
+  firebase.logEvent("singleMatchPlayerDetailsDisplayed");
+};
+
 const firebaseAnalytics = {
   login,
   logout,
@@ -113,6 +121,8 @@ const firebaseAnalytics = {
   searchUsed,
   commanderDisplayed,
   bulletinsDisplayed,
+  singleMatchPageDisplayed,
+  singleMatchPlayerDetailsDisplayed,
   mapStatsDisplayed,
   statsDisplayed,
   rangeStatsDisplayed,

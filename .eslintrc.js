@@ -27,6 +27,8 @@ module.exports = {
     eqeqeq: "off",
     "jest/expect-expect": "off",
     "sonarjs/cognitive-complexity": ["error", 25],
+    // We want to use referrer
+    "react/jsx-no-target-blank": 0,
   },
   overrides: [
     // We want always switch in Reducers
