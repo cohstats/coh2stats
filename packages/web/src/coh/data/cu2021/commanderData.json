@@ -1528,7 +1528,7 @@
         "name": "Forward Supply Station",
         "description": "Allow ambient buildings to be converted into a Forward Supply Station. This depot will allow infantry to reinforce and automatically repair nearby vehicles. Vehicles will also fire faster when near this structure. Repair bunkers are also available.",
         "commandPoints": "5",
-        "icon": "Icons_commander_cmdr_german_rally_forward_hq"
+        "icon": "Icons_commander_cmdr_german_forward_hq"
       },
       {
         "name": "Artillery Field Officer",
