@@ -157,7 +157,7 @@
       {
         "name": "Combined Arms",
         "description": "Nearby infantry and vehicles coordinate to improve the effectiveness of one another.",
-        "commandPoints": "4",
+        "commandPoints": "8",
         "icon": "Icons_commander_cmdr_aef_combined_arms"
       },
       {
@@ -318,7 +318,7 @@
         "name": "M3 Half-track",
         "description": "M3 Half-tracks can be requisitioned to the battlefield to provide transportation and mobile reinforcement to units.",
         "commandPoints": "0",
-        "icon": "Icons_abilities_ability_aef_sprint_hmg"
+        "icon": "Icons_vehicles_vehicle_aef_halftrack_m3"
       },
       {
         "name": "Riflemen Field Defenses",
@@ -676,7 +676,7 @@
         "name": "Raid Section",
         "description": "Request a mobile Raid Section that excels at harassing enemy lines and mobile warfare.",
         "commandPoints": "0",
-        "icon": "Icons_commander_cmdr_british_recovery_engineers"
+        "icon": "Icons_units_unit_british_raid_section"
       },
       {
         "name": "Designate Command Vehicle",
@@ -1014,7 +1014,7 @@
         "name": "Panzer IV Ausf. J",
         "description": "The Panzer IV J variant can be built from the HQ once either Support Armor Korps or Heavy Panzer Korps have been deployed.",
         "commandPoints": "0",
-        "icon": "Icons_vehicles_vehicle_german_panzer_commander"
+        "icon": "Icons_abilities_panzer_iv_j_icon"
       },
       {
         "name": "Railway Artillery Support",
@@ -1060,7 +1060,7 @@
         "name": "Forward Supply Station",
         "description": "Allows ambient buildings to be converted into a Forward Supply Station. This depot will allow infantry to reinforce and automatically repair nearby vehicles. Vehicles will also fire faster when near this structure. Repair bunkers are also available.",
         "commandPoints": "5",
-        "icon": "Icons_vehicles_vehicle_german_howitzer"
+        "icon": "Icons_commander_cmdr_german_rally_forward_hq"
       }
     ]
   },
@@ -1122,13 +1122,13 @@
         "name": "Luftwaffe Field Officer",
         "description": "A Luftwaffe Field Officer and his retinue are dispatched to provide support on the front-line.",
         "commandPoints": "2",
-        "icon": "Icons_commander_cmdr_german_air_dropped_resources"
+        "icon": "Icons_units_unit_german_luftwaffe_new"
       },
       {
         "name": "Supply Drop",
         "description": "A cargo plane will fly over the designated area and deliver a small amount of fuel and munitions. The crates also contain an MG34 and a Pak 40 that can be manned by infantry.",
         "commandPoints": "3",
-        "icon": "Icons_commander_cmdr_german_air_recon"
+        "icon": "Icons_abilities_ost_air_drop"
       },
       {
         "name": "Incendiary Bombing Run",
@@ -1140,7 +1140,7 @@
         "name": "Heavy Bombing Run",
         "description": "A Heinkel 111 will fly over the target area and bomb the location with a mixture of high-explosive and incendiary bombs.",
         "commandPoints": "12",
-        "icon": "Icons_commander_cmdr_german_stuka_bomb_strike"
+        "icon": "Icons_commander_cmdr_german_strategic_bombing"
       }
     ]
   },
@@ -1334,7 +1334,7 @@
         "name": "Mobile Observation Posts",
         "description": "SdKfz. 251 Halftracks are capable of camouflaging themselves and acting as an observation post to scout for hostile units. Riegal AT Mines allow the 251 to set traps for enemy armor.",
         "commandPoints": "2",
-        "icon": "Icons_units_unit_german_ostruppen"
+        "icon": "Icons_commander_recon_mode_icon"
       },
       {
         "name": "Sdkfz 234 'Puma' Armored Car",
@@ -1436,7 +1436,7 @@
         "name": "Mobile Observation Posts",
         "description": "SdKfz. 251 Halftracks are capable of camouflaging themselves and acting as an observation post to scout for hostile units. Riegal AT Mines allow the 251 to set traps for enemy armor.",
         "commandPoints": "2",
-        "icon": "Icons_commander_cmdr_german_heavy_riegel_43_at_mine"
+        "icon": "Icons_commander_recon_mode_icon"
       },
       {
         "name": "Reconnaissance Overflight",
@@ -1454,7 +1454,7 @@
         "name": "Breakthrough Equipment",
         "description": "Pioneers can be upgraded with special packages to clear obstacles, while Panzergrenadiers are granted Model 24 Smoke Grenades.",
         "commandPoints": "2",
-        "icon": "Icons_commander_cmdr_german_stuka_bomb_strike"
+        "icon": "Icons_commander_breakthrough_equipment"
       },
       {
         "name": "Elefant Tank Destroyer",
@@ -1528,7 +1528,7 @@
         "name": "Forward Supply Station",
         "description": "Allow ambient buildings to be converted into a Forward Supply Station. This depot will allow infantry to reinforce and automatically repair nearby vehicles. Vehicles will also fire faster when near this structure. Repair bunkers are also available.",
         "commandPoints": "5",
-        "icon": "Icons_commander_cmdr_german_light_artillery_support"
+        "icon": "Icons_commander_cmdr_german_rally_forward_hq"
       },
       {
         "name": "Artillery Field Officer",
@@ -1780,7 +1780,7 @@
         "name": "Team Weapon Drop",
         "description": "A cargo plane will fly overhead and drop team weapons that can be recrewed by infantry",
         "commandPoints": "3",
-        "icon": "Icons_commander_cons_repair_kit"
+        "icon": "Icons_abilities_ability_soviet_air_supply_drop"
       }
     ]
   },
@@ -1808,7 +1808,7 @@
         "name": "152mm Artillery Strike",
         "description": "Request artillery support from off-map 152mm batteries to saturate the target area with high-explosive shells.",
         "commandPoints": "10",
-        "icon": "Icons_commander_cmdr_soviet_il2_sturmovik_attacks"
+        "icon": "Icons_abilities_ability_aef_240mm_barrage"
       },
       {
         "name": "Armored Vehicle Detection",
@@ -1916,7 +1916,7 @@
         "name": "Assault Guards",
         "description": "Dispatch a squad of Assault Guards to the field who can be equipped with a variety of Lend-Lease weaponry.",
         "commandPoints": "2",
-        "icon": "Icons_commander_cmdr_soviet_shock_troops"
+        "icon": "Icons_units_unit_soviet_assault_infantry"
       },
       {
         "name": "Advanced Fortifications",
@@ -1980,7 +1980,7 @@
         "name": "152mm Artillery Strike",
         "description": "Request artillery support from off-map 152mm batteries to saturate the target area with high-explosive shells.",
         "commandPoints": "10",
-        "icon": "Icons_abilities_ability_incendiary_artillery"
+        "icon": "Icons_abilities_ability_aef_240mm_barrage"
       }
     ]
   },
@@ -2094,7 +2094,7 @@
         "name": "IL-2 Sturmovik Strafing Run",
         "description": "IL-2 Sturmovik will strafe the target location with its powerful 23mm cannons.",
         "commandPoints": "8",
-        "icon": "Icons_commander_cmdr_soviet_il2_sturmovik_attacks"
+        "icon": "Icons_abilities_ability_soviet_strafing_run"
       },
       {
         "name": "ML-20 152mm Gun-Howitzer",
@@ -2134,7 +2134,7 @@
         "name": "IL-2 Sturmovik Strafing Run",
         "description": "IL-2 Sturmovik will strafe the target location with its powerful 23mm cannons.",
         "commandPoints": "8",
-        "icon": "Icons_commander_cmdr_soviet_il2_bombing_run"
+        "icon": "Icons_abilities_ability_soviet_strafing_run"
       },
       {
         "name": "ISU-152 Heavy Assault Gun",
@@ -2202,7 +2202,7 @@
         "name": "IL-2 Sturmovik Strafing Run",
         "description": "IL-2 Sturmovik will strafe the target location with its powerful 23mm cannons.",
         "commandPoints": "8",
-        "icon": "Icons_commander_cmdr_soviet_il2_bombing_run"
+        "icon": "Icons_abilities_ability_soviet_strafing_run"
       },
       {
         "name": "Conscript Repair Kit",
@@ -2356,7 +2356,7 @@
         "name": "ZIS-6 Supply Truck",
         "description": "Dispatch a ZIS-6 Supply Truck to the battlefield to improve the resource generation of territory points.",
         "commandPoints": "3",
-        "icon": "Icons_commander_cmdr_soviet_allied_supply_drop"
+        "icon": "Icons_vehicles_unit_soviet_zis_supply_truck"
       },
       {
         "name": "KV-2 Heavy Assault Tank",
@@ -2414,13 +2414,13 @@
         "name": "Assault Guards",
         "description": "Dispatch a squad of Assault Guards to the field who can be equipped with a variety of Lend-Lease weaponry",
         "commandPoints": "2",
-        "icon": "Icons_abilities_m5_guards"
+        "icon": "Icons_units_unit_soviet_assault_infantry"
       },
       {
         "name": "ZIS-6 Supply Truck",
         "description": "Dispatch a ZIS-6 Supply Truck to the battlefield to improve the resource generation of territory points.",
         "commandPoints": "3",
-        "icon": "Icons_commander_cmdr_soviet_allied_supply_drop"
+        "icon": "Icons_vehicles_unit_soviet_zis_supply_truck"
       }
     ]
   },
@@ -2534,7 +2534,7 @@
         "name": "Anti-Tank Fortifications",
         "description": "Light AT Mines, Bunkers and Tank Traps can be constructed to delay enemy attacks.",
         "commandPoints": "2",
-        "icon": "Icons_buildings_building_soviet_at_mine"
+        "icon": "Icons_commander_cmdr_advanced_emplacements_at"
       },
       {
         "name": "Conscript PTRS Package",
