@@ -157,13 +157,13 @@
       {
         "name": "Combined Arms",
         "description": "Nearby infantry and vehicles coordinate to improve the effectiveness of one another.",
-        "commandPoints": "4",
+        "commandPoints": "8",
         "icon": "Icons_commander_cmdr_aef_combined_arms"
       },
       {
         "name": "M26 Pershing Heavy Tank",
         "description": "M26 Pershing can be deployed to the battlefield. This unit is effective against all targets.",
-        "commandPoints": "12",
+        "commandPoints": "11",
         "icon": "Icons_vehicles_vehicle_aef_m26_pershing"
       }
     ]
@@ -225,7 +225,7 @@
       {
         "name": "Combined Arms",
         "description": "Nearby infantry and vehicles coordinate to improve the effectiveness of one another.",
-        "commandPoints": "4",
+        "commandPoints": "8",
         "icon": "Icons_commander_cmdr_aef_combined_arms"
       },
       {
@@ -298,7 +298,7 @@
     "abilities": [
       {
         "name": "Advanced Infantry Equipment",
-        "description": "Riflemen squads are equipped with flares while Rear Echelon squads can be upgraded with a flamethrower.",
+        "description": "Riflemen squads are equipped with flares and can sprint while Rear Echelon squads can be upgraded with a flamethrower.",
         "commandPoints": "0",
         "icon": "Icons_upgrades_flare_flamethrower"
       },
@@ -315,10 +315,10 @@
         "icon": "Icons_abilities_ability_aef_white_phospherous_barrage"
       },
       {
-        "name": "Fire Up!",
-        "description": "Rifleman will now be able to move at maximum speed for a period of time.",
-        "commandPoints": "2",
-        "icon": "Icons_abilities_ability_aef_sprint_hmg"
+        "name": "M3 Half-track",
+        "description": "M3 Half-tracks can be requisitioned to the battlefield to provide transportation and mobile reinforcement to units.",
+        "commandPoints": "0",
+        "icon": "Icons_vehicles_vehicle_aef_halftrack_m3"
       },
       {
         "name": "Riflemen Field Defenses",
@@ -385,7 +385,7 @@
       {
         "name": "Cover to Cover",
         "description": "Smoke drops on the target position and all infantry in the vicinity move with increased speed.",
-        "commandPoints": "5",
+        "commandPoints": "4",
         "icon": "Icons_commander_cover_to_cover"
       },
       {
@@ -439,12 +439,6 @@
         "icon": "Icons_commander_cmdr_british_defensive_operations"
       },
       {
-        "name": "Counter Battery",
-        "description": "Available 25-pounder howitzers and Mortar Pits will now have access to the “Counter Battery\" Ability.",
-        "commandPoints": "0",
-        "icon": "Icons_commander_cmdr_british_counter_battery"
-      },
-      {
         "name": "Improved Fortification",
         "description": "Emplacements and Forward Assemblies will now have access to the “Improved Fortification” upgrade.",
         "commandPoints": "0",
@@ -455,6 +449,12 @@
         "description": "Forward Assemblies will now have access to the “Advance Assembly” upgrade. Once researched, the assembly will dispatch royal engineers to repair.",
         "commandPoints": "3",
         "icon": "Icons_commander_cmdr_british_advanced_assembly"
+      },
+      {
+        "name": "Hold the Line",
+        "description": "Infantry in friendly territories gain increased defense. After a period of time, Hawker Typhoons strafe enemies on the frontlines with rockets and machineguns.",
+        "commandPoints": "8",
+        "icon": "Icons_commander_cmdr_british_hold_the_line"
       },
       {
         "name": "Precision Barrage",
@@ -533,7 +533,7 @@
       {
         "name": "Assault",
         "description": "Infantry squads move more quickly and have better combat capabilities Recon planes will flyover frontline enemy territories.",
-        "commandPoints": "0",
+        "commandPoints": "6",
         "icon": "Icons_commander_cmdr_british_assault_operation"
       },
       {
@@ -559,10 +559,10 @@
         "icon": "Icons_commander_cmdr_british_demolitions_operation"
       },
       {
-        "name": "M2 Flamethrower",
-        "description": "Royal engineers can be upgraded with a flamethrower.",
+        "name": "Royal Engineer Recovery Squad",
+        "description": "Dispatch a Royal Engineer Recovery Squad who can salvage vehicle wrecks for resources.",
         "commandPoints": "0",
-        "icon": "Icons_upgrades_icon_upgrade_aef_m2_flamethrower"
+        "icon": "Icons_commander_cmdr_british_recovery_engineers"
       },
       {
         "name": "Anti-Building Flame Mortar Support",
@@ -573,7 +573,7 @@
       {
         "name": "Designate Command Vehicle",
         "description": "Designate a target vehicle as a Command Vehicle. The Command Vehicle will improve nearby units and increase the recharge rates of commander abilities.",
-        "commandPoints": "0",
+        "commandPoints": "2",
         "icon": "Icons_commander_cmdr_british_command_vehicle_operation"
       },
       {
@@ -633,22 +633,22 @@
     "iconlarge": "Icons_commander_portrait_ukf_commander_08",
     "abilities": [
       {
-        "name": "M2 Flamethrower",
-        "description": "Royal engineers can be upgraded with a flamethrower.",
+        "name": "Royal Engineer Recovery Squad",
+        "description": "Dispatch a Royal Engineer Recovery Squad who can salvage vehicle wrecks for resources.",
         "commandPoints": "0",
-        "icon": "Icons_upgrades_icon_upgrade_aef_m2_flamethrower"
+        "icon": "Icons_commander_cmdr_british_recovery_engineers"
+      },
+      {
+        "name": "M1 82mm Mortar Team",
+        "description": "Highly mobile mortar teams provide effective indirect fire support on the battlefield.",
+        "commandPoints": "0",
+        "icon": "Icons_commander_brit_mortar"
       },
       {
         "name": "Infiltration Commandos",
         "description": "Elite infiltration troops who are experts at disrupting enemy supply lines. Infiltration Commandos can be deployed from any ambient building.",
         "commandPoints": "3",
         "icon": "Icons_units_unit_british_commando_from_building"
-      },
-      {
-        "name": "Advanced Cover Combat",
-        "description": "Infantry sections will get an improved cover bonus while fighting in cover and will receive their regular cover bonus out of cover.",
-        "commandPoints": "2",
-        "icon": "Icons_commander_cmdr_british_advanced_cover_combat"
       },
       {
         "name": "Vehicle Crew Repairs",
@@ -673,21 +673,21 @@
     "iconlarge": "Icons_commander_portrait_british_commander_02_large",
     "abilities": [
       {
-        "name": "Field Recovery Operation",
-        "description": "Dispatch a Royal Engineer Recovery squad who can salvage vehicle wrecks for resources.",
-        "commandPoints": "1",
-        "icon": "Icons_commander_cmdr_british_recovery_engineers"
+        "name": "Raid Section",
+        "description": "Request a mobile Raid Section that excels at harassing enemy lines and mobile warfare.",
+        "commandPoints": "0",
+        "icon": "Icons_units_unit_british_raid_section"
       },
       {
         "name": "Designate Command Vehicle",
         "description": "Designate a target vehicle as a Command Vehicle. The Command Vehicle will improve nearby units and increase the recharge rates of commander abilities.",
-        "commandPoints": "0",
+        "commandPoints": "2",
         "icon": "Icons_commander_cmdr_british_command_vehicle_operation"
       },
       {
         "name": "Vanguard Operation “Crocodile”",
         "description": "Nearby batteries will fire a quick illumination shot to the target area while a Churchill Crocodile is deployed to the field.",
-        "commandPoints": "12",
+        "commandPoints": "11",
         "icon": "Icons_commander_cmdr_british_vanguard_operations_crocodile"
       },
       {
@@ -739,7 +739,7 @@
       {
         "name": "Vanguard Operation “Crocodile”",
         "description": "Nearby batteries will fire a quick illumination shot to the target area while a Churchill Crocodile is deployed to the field.",
-        "commandPoints": "12",
+        "commandPoints": "11",
         "icon": "Icons_commander_cmdr_british_vanguard_operations_crocodile"
       }
     ]
@@ -755,13 +755,13 @@
       {
         "name": "Vanguard Operation “Crocodile”",
         "description": "Nearby batteries will fire a quick illumination shot to the target area while a Churchill Crocodile is deployed to the field.",
-        "commandPoints": "12",
+        "commandPoints": "11",
         "icon": "Icons_commander_cmdr_british_vanguard_operations_crocodile"
       },
       {
         "name": "Tank Hunters Infantry Section",
         "description": "Tank Hunter Infantry Sections can be deployed. They are equipped with Boys AT Rifles and can detect nearby vehicles. They also have access to anti-vehicle HEAT grenades.",
-        "commandPoints": "0",
+        "commandPoints": "2",
         "icon": "Icons_commander_cmdr_british_tank_hunters"
       },
       {
@@ -795,7 +795,7 @@
       {
         "name": "Command Tank",
         "description": "A command tank that improves nearby forces can be deployed to the battlefield.",
-        "commandPoints": "7",
+        "commandPoints": "0",
         "icon": "Icons_vehicles_vehicle_german_panzer_commander"
       },
       {
@@ -875,20 +875,20 @@
       {
         "name": "Command Tank",
         "description": "A command tank that improves nearby forces can be deployed to the battlefield.",
-        "commandPoints": "7",
+        "commandPoints": "0",
         "icon": "Icons_vehicles_vehicle_german_panzer_commander"
       },
       {
-        "name": "Smoke Bombs",
-        "description": "Large smoke pots are dropped on the battlefield, blocking line of sight.",
+        "name": "Vehicle Critical Repair",
+        "description": "All vehicle crews can do emergency repairs to restore health and remove critical damage.",
         "commandPoints": "4",
         "icon": "Icons_commander_cmdr_german_stuka_smoke_bomb"
       },
       {
-        "name": "Mechanized Grenadier Group",
-        "description": "Deploys a Grenadier LMG squad in a 250 halftrack to the battlefield.",
-        "commandPoints": "2",
-        "icon": "Icons_commander_cmdr_german_mechanized_group"
+        "name": "Sd.Kfz. 250/1 Half-track",
+        "description": "The Sd.Kfz 250/1 can be deployed from the Kampfgruppe Headquarters to provide infantry support",
+        "commandPoints": "0",
+        "icon": "Icons_vehicles_vehicle_german_250_halftrack"
       },
       {
         "name": "Spotting Scope",
@@ -973,7 +973,7 @@
       {
         "name": "Tiger Tank",
         "description": "Allows the requisition of the Tiger Heavy Tank to the battlefield.",
-        "commandPoints": "12",
+        "commandPoints": "11",
         "icon": "Icons_commander_cmdr_german_tiger"
       },
       {
@@ -1011,10 +1011,10 @@
         "icon": "Icons_commander_cmdr_german_hull_down"
       },
       {
-        "name": "Command Tank",
-        "description": "A command tank that improves nearby forces can be deployed to the battlefield.",
-        "commandPoints": "7",
-        "icon": "Icons_vehicles_vehicle_german_panzer_commander"
+        "name": "Panzer IV Ausf. J",
+        "description": "The Panzer IV J variant can be built from the HQ once either Support Armor Korps or Heavy Panzer Korps have been deployed.",
+        "commandPoints": "0",
+        "icon": "Icons_abilities_panzer_iv_j_icon"
       },
       {
         "name": "Railway Artillery Support",
@@ -1033,10 +1033,10 @@
     "iconlarge": "Icons_commander_portrait_ostheer_commander_04",
     "abilities": [
       {
-        "name": "Smoke Bombs",
-        "description": "Large smoke pots are dropped on the battlefield, blocking line of sight.",
-        "commandPoints": "4",
-        "icon": "Icons_commander_cmdr_german_stuka_smoke_bomb"
+        "name": "Command Tank",
+        "description": "A command tank that improves nearby forces can be deployed on the battlefield.",
+        "commandPoints": "0",
+        "icon": "Icons_vehicles_vehicle_german_panzer_commander"
       },
       {
         "name": "SdKfz 250/7 Mortar Half-track",
@@ -1057,10 +1057,10 @@
         "icon": "Icons_commander_cmdr_german_sector_artillery"
       },
       {
-        "name": "leFH 18 Artillery",
-        "description": "This light 10.5cm Field Howitzer doesn't have the destructive power of some Soviet artillery, but it counters with a good rate of fire and reasonably long range.",
-        "commandPoints": "8",
-        "icon": "Icons_vehicles_vehicle_german_howitzer"
+        "name": "Forward Supply Station",
+        "description": "Allows ambient buildings to be converted into a Forward Supply Station. This depot will allow infantry to reinforce and automatically repair nearby vehicles. Vehicles will also fire faster when near this structure. Repair bunkers are also available.",
+        "commandPoints": "5",
+        "icon": "Icons_commander_cmdr_german_rally_forward_hq"
       }
     ]
   },
@@ -1093,7 +1093,7 @@
       {
         "name": "Command Tank",
         "description": "A command tank that improves nearby forces can be deployed to the battlefield.",
-        "commandPoints": "7",
+        "commandPoints": "0",
         "icon": "Icons_vehicles_vehicle_german_panzer_commander"
       },
       {
@@ -1119,16 +1119,16 @@
         "icon": "Icons_commander_cmdr_german_air_dropped_medical_supplies"
       },
       {
-        "name": "Supply Drop Zone",
-        "description": "Cargo planes will fly over a designated Fuel or Munitions point, dropping off resource crates that can be recovered by infantry.",
-        "commandPoints": "3",
-        "icon": "Icons_commander_cmdr_german_air_dropped_resources"
+        "name": "Luftwaffe Field Officer",
+        "description": "A Luftwaffe Field Officer and his retinue are dispatched to provide support on the front-line.",
+        "commandPoints": "2",
+        "icon": "Icons_units_unit_german_luftwaffe_new"
       },
       {
-        "name": "Reconnaissance Overflight",
-        "description": "Available aircraft will make a reconnaissance pass on the targeted location to reveal enemy forces.",
-        "commandPoints": "4",
-        "icon": "Icons_commander_cmdr_german_air_recon"
+        "name": "Supply Drop",
+        "description": "A cargo plane will fly over the designated area and deliver a small amount of fuel and munitions. The crates also contain an MG34 and a Pak 40 that can be manned by infantry.",
+        "commandPoints": "3",
+        "icon": "Icons_abilities_ost_air_drop"
       },
       {
         "name": "Incendiary Bombing Run",
@@ -1137,10 +1137,10 @@
         "icon": "Icons_commander_cmdr_german_stuka_incendiary_bomb_strike"
       },
       {
-        "name": "Stuka Bombing Strike",
-        "description": "A JU-87D Stuka will dive in and drop a 50kg bomb on the target location. Capture points are neutralized if hit.",
+        "name": "Heavy Bombing Run",
+        "description": "A Heinkel 111 will fly over the target area and bomb the location with a mixture of high-explosive and incendiary bombs.",
         "commandPoints": "12",
-        "icon": "Icons_commander_cmdr_german_stuka_bomb_strike"
+        "icon": "Icons_commander_cmdr_german_strategic_bombing"
       }
     ]
   },
@@ -1247,7 +1247,7 @@
       {
         "name": "Ambush Training",
         "description": "Infantry units are now capable of sprinting for a short period of time. Grenadiers, Panzergrenadiers or HMGs can be upgraded with better camouflage, concealing them in cover and deep snow.",
-        "commandPoints": "2",
+        "commandPoints": "1",
         "icon": "Icons_commander_cmdr_german_ambush_camouflage"
       },
       {
@@ -1275,7 +1275,7 @@
       {
         "name": "Tiger Tank",
         "description": "Allows the requisition of the Tiger Heavy Tank to the battlefield.",
-        "commandPoints": "12",
+        "commandPoints": "11",
         "icon": "Icons_commander_cmdr_german_tiger"
       },
       {
@@ -1321,7 +1321,7 @@
       {
         "name": "Command Tank",
         "description": "A command tank that improves nearby forces can be deployed to the battlefield.",
-        "commandPoints": "7",
+        "commandPoints": "0",
         "icon": "Icons_vehicles_vehicle_german_panzer_commander"
       },
       {
@@ -1331,10 +1331,10 @@
         "icon": "Icons_resources_capture_point"
       },
       {
-        "name": "Osttruppen Reserves",
-        "description": "Deploy reserves of Osttruppen previously stationed on the Western Front. These units vary in equipment.",
-        "commandPoints": "3",
-        "icon": "Icons_units_unit_german_ostruppen"
+        "name": "Mobile Observation Posts",
+        "description": "SdKfz. 251 Halftracks are capable of camouflaging themselves and acting as an observation post to scout for hostile units. Riegal AT Mines allow the 251 to set traps for enemy armor.",
+        "commandPoints": "2",
+        "icon": "Icons_commander_recon_mode_icon"
       },
       {
         "name": "Sdkfz 234 'Puma' Armored Car",
@@ -1433,10 +1433,10 @@
     "iconlarge": "Icons_commander_portrait_ostheer_commander_05",
     "abilities": [
       {
-        "name": "Half-track Riegel 43 Anti-Tank Mine",
-        "description": "Allows the SdKfz 251 to lay Riegel-43 heavy anti-tank mine.",
+        "name": "Mobile Observation Posts",
+        "description": "SdKfz. 251 Halftracks are capable of camouflaging themselves and acting as an observation post to scout for hostile units. Riegal AT Mines allow the 251 to set traps for enemy armor.",
         "commandPoints": "2",
-        "icon": "Icons_commander_cmdr_german_heavy_riegel_43_at_mine"
+        "icon": "Icons_commander_recon_mode_icon"
       },
       {
         "name": "Reconnaissance Overflight",
@@ -1451,10 +1451,10 @@
         "icon": "Icons_commander_cmdr_german_stationary_loss_gain"
       },
       {
-        "name": "Stuka Bombing Strike",
-        "description": "A JU-87D Stuka will dive in and drop a 50kg bomb on the target location. Capture points are neutralized if hit.",
-        "commandPoints": "12",
-        "icon": "Icons_commander_cmdr_german_stuka_bomb_strike"
+        "name": "Breakthrough Equipment",
+        "description": "Pioneers can be upgraded with special packages to clear obstacles, while Panzergrenadiers are granted Model 24 Smoke Grenades.",
+        "commandPoints": "2",
+        "icon": "Icons_commander_breakthrough_equipment"
       },
       {
         "name": "Elefant Tank Destroyer",
@@ -1479,9 +1479,9 @@
         "icon": "Icons_commander_cmdr_german_ambush_camouflage"
       },
       {
-        "name": "Stuka Close Air Support",
-        "description": "A Stuka JU-87 will patrol the designated area, targeting enemy units with heavy 37mm cannons.",
-        "commandPoints": "12",
+        "name": "Stuka JU-87 Anti-Tank Strafe",
+        "description": "A Stuka JU-87 will strafe the target location with its powerful 37mm cannons.",
+        "commandPoints": "10",
         "icon": "Icons_commander_cmdr_german_stuka_close_air_support"
       },
       {
@@ -1525,10 +1525,10 @@
         "icon": "Icons_commander_cmdr_german_pak_43_at_gun"
       },
       {
-        "name": "Light Artillery Barrage",
-        "description": "A light artillery barrage from nearby 7.5 cm le.IG 18 infantry support guns can scatter enemy forces.",
-        "commandPoints": "8",
-        "icon": "Icons_commander_cmdr_german_light_artillery_support"
+        "name": "Forward Supply Station",
+        "description": "Allow ambient buildings to be converted into a Forward Supply Station. This depot will allow infantry to reinforce and automatically repair nearby vehicles. Vehicles will also fire faster when near this structure. Repair bunkers are also available.",
+        "commandPoints": "5",
+        "icon": "Icons_commander_cmdr_german_rally_forward_hq"
       },
       {
         "name": "Artillery Field Officer",
@@ -1573,13 +1573,13 @@
       {
         "name": "Relief Infantry",
         "description": "Command releases reserve infantry to replace losses suffered during combat. Forces will be replaced with Osttruppen infantry.",
-        "commandPoints": "6",
+        "commandPoints": "5",
         "icon": "Icons_commander_cmdr_german_relief_infantry"
       },
       {
         "name": "Tiger Tank",
         "description": "Allows the requisition of the Tiger Heavy Tank to the battlefield.",
-        "commandPoints": "12",
+        "commandPoints": "11",
         "icon": "Icons_commander_cmdr_german_tiger"
       }
     ]
@@ -1613,7 +1613,7 @@
       {
         "name": "Tiger Tank",
         "description": "Allows the requisition of the Tiger Heavy Tank to the battlefield.",
-        "commandPoints": "12",
+        "commandPoints": "11",
         "icon": "Icons_commander_cmdr_german_tiger"
       },
       {
@@ -1639,15 +1639,15 @@
         "icon": "Icons_commander_cmdr_german_ambush_camouflage"
       },
       {
-        "name": "Half-track Riegel 43 Anti-Tank Mine",
-        "description": "Allows the SdKfz 251 to lay Riegel-43 heavy anti-tank mine.",
+        "name": "Jaeger Command Squad",
+        "description": "A veteran Jaeger unit is dispatched to provide support. This is a powerful combat unit that can provide support to other units in the field.",
         "commandPoints": "2",
-        "icon": "Icons_commander_cmdr_german_heavy_riegel_43_at_mine"
+        "icon": "Icons_units_unit_german_jaeger_light_infantry"
       },
       {
         "name": "Smoke Bombs",
         "description": "Large smoke pots are dropped on the battlefield, blocking line of sight.",
-        "commandPoints": "4",
+        "commandPoints": "2",
         "icon": "Icons_commander_cmdr_german_stuka_smoke_bomb"
       },
       {
@@ -1765,10 +1765,10 @@
         "icon": "Icons_commander_cmdr_soviet_conscript_assault_package"
       },
       {
-        "name": "Partisan Tank Hunters",
-        "description": "Anti Vehicle Partisans are irregular military units who excel at destroying vehicles behind the lines.",
+        "name": "Commissar Command Squad",
+        "description": "A commissar and his retinue are dispatched to the front to support and motivate troops.",
         "commandPoints": "2",
-        "icon": "Icons_units_unit_soviet_partisan_anti_vehicle_from_building"
+        "icon": "Icons_units_unit_soviet_officer"
       },
       {
         "name": "Rapid Conscription",
@@ -1777,17 +1777,17 @@
         "icon": "Icons_commander_cmdr_soviet_rapid_conscription"
       },
       {
-        "name": "Conscript Repair Kit",
-        "description": "Demonstrating pure ingenuity, Conscripts and Penal Battalions can repair any damaged structure, vehicle, or bridge.",
-        "commandPoints": "5",
-        "icon": "Icons_commander_cons_repair_kit"
+        "name": "Team Weapon Drop",
+        "description": "A cargo plane will fly overhead and drop team weapons that can be recrewed by infantry",
+        "commandPoints": "3",
+        "icon": "Icons_abilities_ability_soviet_air_supply_drop"
       }
     ]
   },
   "6119": {
     "serverID": "6119",
     "commanderName": "Soviet Shock Army",
-    "description": "Shock Armies were heavily stacked with heavy weapons and a much greater number of short-range sub machine guns to crush the defensive lines of the enemy.",
+    "description": "Shock armies were equipped to punch holes in enemy lines to allow for a breakthrough. Use Shock Troops, 120mm Mortars and Artillery to break enemy lines to allow T34/85s to push through. Armored counterattacks can be detected by infantry to allow tanks to maneuver in response.",
     "races": ["soviet"],
     "iconSmall": "Icons_commander_portrait_soviets_commander_13_small",
     "iconlarge": "Icons_commander_portrait_soviets_commander_13",
@@ -1799,22 +1799,22 @@
         "icon": "Icons_commander_cmdr_soviet_shock_troops"
       },
       {
-        "name": "ML-20 152mm Gun-Howitzer",
-        "description": "The powerful 152mm ML-20 Gun-Howitzer can be built by Combat Engineers. Its shells can reach vast areas of the battlefield.",
-        "commandPoints": "8",
-        "icon": "Icons_vehicles_vehicle_soviet_ml20_artillery_gun"
+        "name": "T34/85 Medium Tank",
+        "description": "A T34/85, with a powerful 85mm gun, can be requisitioned for the battlefield",
+        "commandPoints": "0",
+        "icon": "Icons_commander_cmdr_soviet_t34_85"
       },
       {
-        "name": "IL-2 Sturmovik Attacks",
-        "description": "IL-2 Sturmovik will loiter over the battlefield, strafing targets of opportunity with its powerful 23mm cannons.",
-        "commandPoints": "12",
-        "icon": "Icons_commander_cmdr_soviet_il2_sturmovik_attacks"
+        "name": "152mm Artillery Strike",
+        "description": "Request artillery support from off-map 152mm batteries to saturate the target area with high-explosive shells.",
+        "commandPoints": "10",
+        "icon": "Icons_abilities_ability_aef_240mm_barrage"
       },
       {
-        "name": "Conscript Assault Package Upgrade",
-        "description": "Unlocks an upgrade package on Conscripts that replace four of their rifles with PPSh-41 Submachine Guns for better short-range firepower and the Hit the Dirt ability for improved combat tactics.",
-        "commandPoints": "2",
-        "icon": "Icons_commander_cmdr_soviet_conscript_assault_package"
+        "name": "Armored Vehicle Detection",
+        "description": "Infantry are trained to detect hostile vehicles through the FOW. Vehicle crews can track armored vehicles that they hit.",
+        "commandPoints": "4",
+        "icon": "Icons_commander_cmdr_soviet_tank_awareness"
       },
       {
         "name": "HM-38 120mm Mortar Squad",
@@ -1875,7 +1875,7 @@
       {
         "name": "Weapons Crate Drop",
         "description": "Drops a crate that can be picked up by infantry. Arms infantry with SVT rifles. Penal squads receive PPSh-41 SMGs.",
-        "commandPoints": "1",
+        "commandPoints": "2",
         "icon": "Icons_commander_svt_drop"
       },
       {
@@ -1891,9 +1891,9 @@
         "icon": "Icons_commander_rally_point"
       },
       {
-        "name": "Airbourne Guards Troops",
-        "description": "Guards Airborne Troops who have previously infiltrated the battelfield by airdrop can be requisitioned. Can be upgraded for short or long range combat.",
-        "commandPoints": "3",
+        "name": "Airborne Guards Troops",
+        "description": "Guards Airborne Troops who have previously infiltrated the battlefield by airdrop can be requisitioned. Can be upgraded for short or long range combat.",
+        "commandPoints": "2",
         "icon": "Icons_commander_airborne_guards_icon_new"
       },
       {
@@ -1913,16 +1913,16 @@
     "iconlarge": "Icons_commander_portrait_soviets_commander_01",
     "abilities": [
       {
-        "name": "Shock Troops",
-        "description": "Special Command Troops can be deployed to the battlefield. Click and select location to deploy.",
+        "name": "Assault Guards",
+        "description": "Dispatch a squad of Assault Guards to the field who can be equipped with a variety of Lend-Lease weaponry.",
         "commandPoints": "2",
-        "icon": "Icons_commander_cmdr_soviet_shock_troops"
+        "icon": "Icons_units_unit_soviet_assault_infantry"
       },
       {
-        "name": "Recon Overflight",
-        "description": "Available planes will fly a high speed loiter of the targeted area.",
-        "commandPoints": "4",
-        "icon": "Icons_commander_cmdr_soviet_il2_recon_plane"
+        "name": "Advanced Fortifications",
+        "description": "Vehicle blocking Tank Traps, Bunkers and PMD-6 anti-personnel mines can be constructed by Combat Engineers.",
+        "commandPoints": "2",
+        "icon": "Icons_commander_tank_trap_mines"
       },
       {
         "name": "Incendiary Artillery Barrage",
@@ -1973,14 +1973,14 @@
       {
         "name": "Rapid Conscription",
         "description": "Command releases reserve Conscript squads to replace combat losses suffered while the ability is active.",
-        "commandPoints": "6",
+        "commandPoints": "5",
         "icon": "Icons_commander_cmdr_soviet_rapid_conscription"
       },
       {
-        "name": "Incendiary Artillery Barrage",
-        "description": "Areas of the map can be bombarded with incendiary rounds to burn infantry and deny access.",
-        "commandPoints": "7",
-        "icon": "Icons_abilities_ability_incendiary_artillery"
+        "name": "152mm Artillery Strike",
+        "description": "Request artillery support from off-map 152mm batteries to saturate the target area with high-explosive shells.",
+        "commandPoints": "10",
+        "icon": "Icons_abilities_ability_aef_240mm_barrage"
       }
     ]
   },
@@ -2085,16 +2085,16 @@
         "icon": "Icons_vehicles_vehicle_soviet_kv1_heavy_tank"
       },
       {
-        "name": "Conscript Assault Package Upgrade",
-        "description": "Unlocks an upgrade package on Conscripts that replace four of their rifles with PPSh-41 Submachine Guns for better short-range firepower and the Hit the Dirt ability for improved combat tactics.",
+        "name": "Advanced Fortifications",
+        "description": "Vehicle blocking Tank Traps, Bunkers and PMD-6 Anti-personnel mines can be constructed by Combat Engineers.",
         "commandPoints": "2",
-        "icon": "Icons_commander_cmdr_soviet_conscript_assault_package"
+        "icon": "Icons_commander_tank_trap_mines"
       },
       {
-        "name": "IL-2 Sturmovik Attacks",
-        "description": "IL-2 Sturmovik will loiter over the battlefield, strafing targets of opportunity with its powerful 23mm cannons.",
-        "commandPoints": "12",
-        "icon": "Icons_commander_cmdr_soviet_il2_sturmovik_attacks"
+        "name": "IL-2 Sturmovik Strafing Run",
+        "description": "IL-2 Sturmovik will strafe the target location with its powerful 23mm cannons.",
+        "commandPoints": "8",
+        "icon": "Icons_abilities_ability_soviet_strafing_run"
       },
       {
         "name": "ML-20 152mm Gun-Howitzer",
@@ -2131,10 +2131,10 @@
         "icon": "Icons_commander_cmdr_soviet_mark_vehicle"
       },
       {
-        "name": "IL-2 Precision Bombing Strike",
-        "description": "The IL-2 will make a high-speed bombing run, clustering four FAB-50 50kg bombs into the target area.",
-        "commandPoints": "12",
-        "icon": "Icons_commander_cmdr_soviet_il2_bombing_run"
+        "name": "IL-2 Sturmovik Strafing Run",
+        "description": "IL-2 Sturmovik will strafe the target location with its powerful 23mm cannons.",
+        "commandPoints": "8",
+        "icon": "Icons_abilities_ability_soviet_strafing_run"
       },
       {
         "name": "ISU-152 Heavy Assault Gun",
@@ -2199,10 +2199,10 @@
         "icon": "Icons_commander_cmdr_soviet_isu152_unlock"
       },
       {
-        "name": "IL-2 Precision Bombing Strike",
-        "description": "The IL-2 will make a high-speed bombing run, clustering four FAB-50 50kg bombs into the target area.",
-        "commandPoints": "12",
-        "icon": "Icons_commander_cmdr_soviet_il2_bombing_run"
+        "name": "IL-2 Sturmovik Strafing Run",
+        "description": "IL-2 Sturmovik will strafe the target location with its powerful 23mm cannons.",
+        "commandPoints": "8",
+        "icon": "Icons_abilities_ability_soviet_strafing_run"
       },
       {
         "name": "Conscript Repair Kit",
@@ -2259,7 +2259,7 @@
       {
         "name": "IS-2 Heavy Tank",
         "description": "An IS-2 Heavy Tank can be deployed to the battlefield.",
-        "commandPoints": "12",
+        "commandPoints": "11",
         "icon": "Icons_commander_cmdr_soviet_is2_unlock"
       }
     ]
@@ -2353,10 +2353,10 @@
     "iconlarge": "Icons_commander_portrait_soviets_commander_18",
     "abilities": [
       {
-        "name": "Allied Supply Drop",
-        "description": "A cargo plane will deliver available fuel to the target location, varying in amount based on availability. The cargo plane is highly vulnerable to anti-air units.",
-        "commandPoints": "4",
-        "icon": "Icons_commander_cmdr_soviet_allied_supply_drop"
+        "name": "ZIS-6 Supply Truck",
+        "description": "Dispatch a ZIS-6 Supply Truck to the battlefield to improve the resource generation of territory points.",
+        "commandPoints": "3",
+        "icon": "Icons_vehicles_unit_soviet_zis_supply_truck"
       },
       {
         "name": "KV-2 Heavy Assault Tank",
@@ -2371,10 +2371,10 @@
         "icon": "Icons_buildings_building_common_support_bay"
       },
       {
-        "name": "Vehicle Crew Repair Training",
-        "description": "Vehicle crews gain an ability to repair battlefield damage on their vehicles once they leave combat.",
-        "commandPoints": "7",
-        "icon": "Icons_commander_cmdr_soviet_self_repair"
+        "name": "Recon Overflight",
+        "description": "Available planes will fly a high speed loiter of the targeted area.",
+        "commandPoints": "4",
+        "icon": "Icons_commander_cmdr_soviet_il2_recon_plane"
       },
       {
         "name": "KV-8 Flamethrower Tank",
@@ -2411,16 +2411,16 @@
         "icon": "Icons_vehicles_vehicle_aef_m4a3e8_sherman"
       },
       {
-        "name": "M5 Half-track Assault Group",
-        "description": "Dispatch a M5 halftrack full of Guard Assault Troops armed with PPSh submachine guns and SVT rifles.",
-        "commandPoints": "3",
-        "icon": "Icons_abilities_m5_guards"
+        "name": "Assault Guards",
+        "description": "Dispatch a squad of Assault Guards to the field who can be equipped with a variety of Lend-Lease weaponry",
+        "commandPoints": "2",
+        "icon": "Icons_units_unit_soviet_assault_infantry"
       },
       {
-        "name": "Allied Supply Drop",
-        "description": "A cargo plane will deliver available fuel to the target location, varying in amount based on availability. The cargo plane is highly vulnerable to anti-air units.",
-        "commandPoints": "4",
-        "icon": "Icons_commander_cmdr_soviet_allied_supply_drop"
+        "name": "ZIS-6 Supply Truck",
+        "description": "Dispatch a ZIS-6 Supply Truck to the battlefield to improve the resource generation of territory points.",
+        "commandPoints": "3",
+        "icon": "Icons_vehicles_unit_soviet_zis_supply_truck"
       }
     ]
   },
@@ -2479,10 +2479,10 @@
         "icon": "Icons_units_unit_soviet_partisan_from_building"
       },
       {
-        "name": "Partisan Tank Hunters",
-        "description": "Anti Vehicle Partisans are irregular military units who excel at destroying vehicles behind the lines.",
+        "name": "Anti-Tank Ambush Tactics",
+        "description": "All mobile anti-tank gun crews can hide their weapon and camouflage themselves.",
         "commandPoints": "2",
-        "icon": "Icons_units_unit_soviet_partisan_anti_vehicle_from_building"
+        "icon": "Icons_abilities_ability_soviet_at_ambush_tactics_on"
       },
       {
         "name": "Spy Network",
@@ -2525,16 +2525,16 @@
         "icon": "Icons_commander_cmdr_soviet_at_bombing_run"
       },
       {
-        "name": "ML-20 152mm Gun-Howitzer",
-        "description": "The powerful 152mm ML-20 Gun-Howitzer can be built by Combat Engineers. Its shells can reach vast areas of the battlefield.",
+        "name": "B-4 203mm Howitzer",
+        "description": "The B-4 203mm Howitzer can be built by Combat Engineers. It fires massive shells with a large area of effect and can be used for direct fire against vehicles.",
         "commandPoints": "8",
-        "icon": "Icons_vehicles_vehicle_soviet_ml20_artillery_gun"
+        "icon": "Icons_vehicles_vehicle_soviet_b4_artillery_gun"
       },
       {
-        "name": "PMD-6M Light Anti-Vehicle Mines",
-        "description": "Allows Combat Engineers and Conscripts to build cheap and quick to place anti-vehicle mines that will temporarily stop vehicles.",
+        "name": "Anti-Tank Fortifications",
+        "description": "Light AT Mines, Bunkers and Tank Traps can be constructed to delay enemy attacks.",
         "commandPoints": "2",
-        "icon": "Icons_buildings_building_soviet_at_mine"
+        "icon": "Icons_commander_cmdr_advanced_emplacements_at"
       },
       {
         "name": "Conscript PTRS Package",
@@ -2567,7 +2567,7 @@
       {
         "name": "Forward Headquarters",
         "description": "Designate a Forward HQ or build a field camp. These structures can provide nearby infantry units with medical attention, reinforce understrength units, and inspiration in combat.",
-        "commandPoints": "1",
+        "commandPoints": "2",
         "icon": "Icons_commander_cmdr_soviet_forward_hq"
       },
       {
@@ -2607,7 +2607,7 @@
       {
         "name": "IS-2 Heavy Tank",
         "description": "An IS-2 Heavy Tank can be deployed to the battlefield.",
-        "commandPoints": "12",
+        "commandPoints": "11",
         "icon": "Icons_commander_cmdr_soviet_is2_unlock"
       },
       {
@@ -2627,16 +2627,16 @@
   "5925": {
     "serverID": "5925",
     "commanderName": "Terror Tactics",
-    "description": "Terror – to cause fear. Short-range Shock Troops, flamethrower-equipped KV-8 tanks, 152mm heavy artillery, morale-sapping propaganda, and 50kg bombs delivered by the IL-2; scared yet?",
+    "description": "Use fear to force the enemy back. Airborne troops can emerge from buildings to ambush enemies, propaganda strikes can sap the enemy's will to fight, while howitzers shell their positions from afar. Finish them off with KV-8s and IL-2 bomb strikes that can shatter enemy lines.",
     "races": ["soviet"],
     "iconSmall": "Icons_commander_portrait_soviets_commander_10_small",
     "iconlarge": "Icons_commander_portrait_soviets_commander_10",
     "abilities": [
       {
-        "name": "Shock Troops",
-        "description": "Special Command Troops can be deployed to the battlefield. Click and select location to deploy.",
+        "name": "Airborne Guard Troops",
+        "description": "Guards Airborne Troops who have previously infiltrated the battlefield by airdrop can be requisitioned. Can be upgraded for short or long range combat.",
         "commandPoints": "2",
-        "icon": "Icons_commander_cmdr_soviet_shock_troops"
+        "icon": "Icons_commander_airborne_guards_icon_new"
       },
       {
         "name": "IL-2 Precision Bombing Strike",
@@ -2788,7 +2788,7 @@
       {
         "name": "Sturmtiger",
         "description": "The Sturmmörserwagen 606/4 mit 38cm RW 61, more commonly known as the Sturmtiger, is an assault vehicle capable of firing a 376kg rocket-assisted shell devastating to enemy force concentrations or structures.",
-        "commandPoints": "8",
+        "commandPoints": "10",
         "icon": "Icons_vehicles_vehicle_west_german_sturmtiger"
       }
     ]
@@ -2842,10 +2842,10 @@
     "iconlarge": "Icons_commander_portrait_west_german_commander_05",
     "abilities": [
       {
-        "name": "Field Defenses",
-        "description": "Volksgrenadiers can build minefields and bunkers.",
-        "commandPoints": "3",
-        "icon": "Icons_commander_cmdr_west_german_field_defenses"
+        "name": "Heavy Fortifications",
+        "description": "Sturmpioneers can construct Tank Traps, S-Mine Fields, Flak Emplacements, and Trenches. Volksgrenadiers can construct bunkers and barbed wire.",
+        "commandPoints": "2",
+        "icon": "Icons_commander_cmdr_west_german_heavy_fortifications"
       },
       {
         "name": "Pak 43 Emplacement",
@@ -2941,7 +2941,7 @@
       },
       {
         "name": "Heavy Fortifications",
-        "description": "Sturmpioneers can construct Tank Traps, S-Mine Fields, Flak Emplacements, and Trenches. Volksgrenadiers can construct bunkers.",
+        "description": "Sturmpioneers can construct Tank Traps, S-Mine Fields, Flak Emplacements, and Trenches. Volksgrenadiers can construct bunkers and barbed wire.",
         "commandPoints": "2",
         "icon": "Icons_commander_cmdr_west_german_heavy_fortifications"
       },
@@ -3042,10 +3042,10 @@
     "iconlarge": "Icons_commander_portrait_west_german_commander_01",
     "abilities": [
       {
-        "name": "Artillery Flares",
-        "description": "Flares are fired at the target location, revealing the area.",
-        "commandPoints": "4",
-        "icon": "Icons_commander_cmdr_west_german_artillery_flares"
+        "name": "Sturm Offizier",
+        "description": "Deploy an Sturm Offizier and his Obersoldaten bodyguard. This front-line combat officer improves has a number of abilities to weaken the enemy and support nearby troops.",
+        "commandPoints": "2",
+        "icon": "Icons_units_unit_west_german_terror_officer"
       },
       {
         "name": "Infiltration Tactics",
