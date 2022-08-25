@@ -596,7 +596,7 @@
         "name": "Assault Infantry Sections",
         "description": "Infantry Sections equipped with Assault Packages.",
         "commandPoints": "0",
-        "icon": "Icons_commander_tommy_assault_package"
+        "icon": "Icons_units_unit_british_assault_tommy"
       },
       {
         "name": "M1 81mm Mortar Team",
@@ -2866,10 +2866,10 @@
         "icon": "Icons_vehicles_vehicle_german_howitzer"
       },
       {
-        "name": "Heavy Fortifications",
-        "description": "Sturmpioneers can construct Tank Traps, S-Mine Fields, Flak Emplacements, and Trenches. Volksgrenadiers can construct bunkers.",
+        "name": "For The Fatherland",
+        "description": "Infantry in friendly territory will recieve a defensive bonus for the duration of the ability.",
         "commandPoints": "2",
-        "icon": "Icons_commander_cmdr_west_german_heavy_fortifications"
+        "icon": "Icons_commander_cmdr_west_german_for_the_fatherland"
       }
     ]
   },
