@@ -163,7 +163,7 @@
       {
         "name": "M26 Pershing Heavy Tank",
         "description": "M26 Pershing can be deployed to the battlefield. This unit is effective against all targets.",
-        "commandPoints": "12",
+        "commandPoints": "11",
         "icon": "Icons_vehicles_vehicle_aef_m26_pershing"
       }
     ]
@@ -225,7 +225,7 @@
       {
         "name": "Combined Arms",
         "description": "Nearby infantry and vehicles coordinate to improve the effectiveness of one another.",
-        "commandPoints": "4",
+        "commandPoints": "8",
         "icon": "Icons_commander_cmdr_aef_combined_arms"
       },
       {
@@ -298,7 +298,7 @@
     "abilities": [
       {
         "name": "Advanced Infantry Equipment",
-        "description": "Riflemen squads are equipped with flares while Rear Echelon squads can be upgraded with a flamethrower.",
+        "description": "Riflemen squads are equipped with flares and can sprint while Rear Echelon squads can be upgraded with a flamethrower.",
         "commandPoints": "0",
         "icon": "Icons_upgrades_flare_flamethrower"
       },
@@ -315,9 +315,9 @@
         "icon": "Icons_abilities_ability_aef_white_phospherous_barrage"
       },
       {
-        "name": "Fire Up!",
-        "description": "Rifleman will now be able to move at maximum speed for a period of time.",
-        "commandPoints": "2",
+        "name": "M3 Half-track",
+        "description": "M3 Half-tracks can be requisitioned to the battlefield to provide transportation and mobile reinforcement to units.",
+        "commandPoints": "0",
         "icon": "Icons_abilities_ability_aef_sprint_hmg"
       },
       {
@@ -385,7 +385,7 @@
       {
         "name": "Cover to Cover",
         "description": "Smoke drops on the target position and all infantry in the vicinity move with increased speed.",
-        "commandPoints": "5",
+        "commandPoints": "4",
         "icon": "Icons_commander_cover_to_cover"
       },
       {
@@ -439,12 +439,6 @@
         "icon": "Icons_commander_cmdr_british_defensive_operations"
       },
       {
-        "name": "Counter Battery",
-        "description": "Available 25-pounder howitzers and Mortar Pits will now have access to the “Counter Battery\" Ability.",
-        "commandPoints": "0",
-        "icon": "Icons_commander_cmdr_british_counter_battery"
-      },
-      {
         "name": "Improved Fortification",
         "description": "Emplacements and Forward Assemblies will now have access to the “Improved Fortification” upgrade.",
         "commandPoints": "0",
@@ -455,6 +449,12 @@
         "description": "Forward Assemblies will now have access to the “Advance Assembly” upgrade. Once researched, the assembly will dispatch royal engineers to repair.",
         "commandPoints": "3",
         "icon": "Icons_commander_cmdr_british_advanced_assembly"
+      },
+      {
+        "name": "Hold the Line",
+        "description": "Infantry in friendly territories gain increased defense. After a period of time, Hawker Typhoons strafe enemies on the frontlines with rockets and machineguns.",
+        "commandPoints": "8",
+        "icon": "Icons_commander_cmdr_british_hold_the_line"
       },
       {
         "name": "Precision Barrage",
@@ -533,7 +533,7 @@
       {
         "name": "Assault",
         "description": "Infantry squads move more quickly and have better combat capabilities Recon planes will flyover frontline enemy territories.",
-        "commandPoints": "0",
+        "commandPoints": "6",
         "icon": "Icons_commander_cmdr_british_assault_operation"
       },
       {
@@ -559,10 +559,10 @@
         "icon": "Icons_commander_cmdr_british_demolitions_operation"
       },
       {
-        "name": "M2 Flamethrower",
-        "description": "Royal engineers can be upgraded with a flamethrower.",
+        "name": "Royal Engineer Recovery Squad",
+        "description": "Dispatch a Royal Engineer Recovery Squad who can salvage vehicle wrecks for resources.",
         "commandPoints": "0",
-        "icon": "Icons_upgrades_icon_upgrade_aef_m2_flamethrower"
+        "icon": "Icons_commander_cmdr_british_recovery_engineers"
       },
       {
         "name": "Anti-Building Flame Mortar Support",
@@ -573,7 +573,7 @@
       {
         "name": "Designate Command Vehicle",
         "description": "Designate a target vehicle as a Command Vehicle. The Command Vehicle will improve nearby units and increase the recharge rates of commander abilities.",
-        "commandPoints": "0",
+        "commandPoints": "2",
         "icon": "Icons_commander_cmdr_british_command_vehicle_operation"
       },
       {
@@ -633,22 +633,22 @@
     "iconlarge": "Icons_commander_portrait_ukf_commander_08",
     "abilities": [
       {
-        "name": "M2 Flamethrower",
-        "description": "Royal engineers can be upgraded with a flamethrower.",
+        "name": "Royal Engineer Recovery Squad",
+        "description": "Dispatch a Royal Engineer Recovery Squad who can salvage vehicle wrecks for resources.",
         "commandPoints": "0",
-        "icon": "Icons_upgrades_icon_upgrade_aef_m2_flamethrower"
+        "icon": "Icons_commander_cmdr_british_recovery_engineers"
+      },
+      {
+        "name": "M1 82mm Mortar Team",
+        "description": "Highly mobile mortar teams provide effective indirect fire support on the battlefield.",
+        "commandPoints": "0",
+        "icon": "Icons_commander_brit_mortar"
       },
       {
         "name": "Infiltration Commandos",
         "description": "Elite infiltration troops who are experts at disrupting enemy supply lines. Infiltration Commandos can be deployed from any ambient building.",
         "commandPoints": "3",
         "icon": "Icons_units_unit_british_commando_from_building"
-      },
-      {
-        "name": "Advanced Cover Combat",
-        "description": "Infantry sections will get an improved cover bonus while fighting in cover and will receive their regular cover bonus out of cover.",
-        "commandPoints": "2",
-        "icon": "Icons_commander_cmdr_british_advanced_cover_combat"
       },
       {
         "name": "Vehicle Crew Repairs",
@@ -673,21 +673,21 @@
     "iconlarge": "Icons_commander_portrait_british_commander_02_large",
     "abilities": [
       {
-        "name": "Field Recovery Operation",
-        "description": "Dispatch a Royal Engineer Recovery squad who can salvage vehicle wrecks for resources.",
-        "commandPoints": "1",
+        "name": "Raid Section",
+        "description": "Request a mobile Raid Section that excels at harassing enemy lines and mobile warfare.",
+        "commandPoints": "0",
         "icon": "Icons_commander_cmdr_british_recovery_engineers"
       },
       {
         "name": "Designate Command Vehicle",
         "description": "Designate a target vehicle as a Command Vehicle. The Command Vehicle will improve nearby units and increase the recharge rates of commander abilities.",
-        "commandPoints": "0",
+        "commandPoints": "2",
         "icon": "Icons_commander_cmdr_british_command_vehicle_operation"
       },
       {
         "name": "Vanguard Operation “Crocodile”",
         "description": "Nearby batteries will fire a quick illumination shot to the target area while a Churchill Crocodile is deployed to the field.",
-        "commandPoints": "12",
+        "commandPoints": "11",
         "icon": "Icons_commander_cmdr_british_vanguard_operations_crocodile"
       },
       {
@@ -739,7 +739,7 @@
       {
         "name": "Vanguard Operation “Crocodile”",
         "description": "Nearby batteries will fire a quick illumination shot to the target area while a Churchill Crocodile is deployed to the field.",
-        "commandPoints": "12",
+        "commandPoints": "11",
         "icon": "Icons_commander_cmdr_british_vanguard_operations_crocodile"
       }
     ]
@@ -755,13 +755,13 @@
       {
         "name": "Vanguard Operation “Crocodile”",
         "description": "Nearby batteries will fire a quick illumination shot to the target area while a Churchill Crocodile is deployed to the field.",
-        "commandPoints": "12",
+        "commandPoints": "11",
         "icon": "Icons_commander_cmdr_british_vanguard_operations_crocodile"
       },
       {
         "name": "Tank Hunters Infantry Section",
         "description": "Tank Hunter Infantry Sections can be deployed. They are equipped with Boys AT Rifles and can detect nearby vehicles. They also have access to anti-vehicle HEAT grenades.",
-        "commandPoints": "0",
+        "commandPoints": "2",
         "icon": "Icons_commander_cmdr_british_tank_hunters"
       },
       {
@@ -795,7 +795,7 @@
       {
         "name": "Command Tank",
         "description": "A command tank that improves nearby forces can be deployed to the battlefield.",
-        "commandPoints": "7",
+        "commandPoints": "0",
         "icon": "Icons_vehicles_vehicle_german_panzer_commander"
       },
       {
@@ -875,20 +875,20 @@
       {
         "name": "Command Tank",
         "description": "A command tank that improves nearby forces can be deployed to the battlefield.",
-        "commandPoints": "7",
+        "commandPoints": "0",
         "icon": "Icons_vehicles_vehicle_german_panzer_commander"
       },
       {
-        "name": "Smoke Bombs",
-        "description": "Large smoke pots are dropped on the battlefield, blocking line of sight.",
+        "name": "Vehicle Critical Repair",
+        "description": "All vehicle crews can do emergency repairs to restore health and remove critical damage.",
         "commandPoints": "4",
         "icon": "Icons_commander_cmdr_german_stuka_smoke_bomb"
       },
       {
-        "name": "Mechanized Grenadier Group",
-        "description": "Deploys a Grenadier LMG squad in a 250 halftrack to the battlefield.",
-        "commandPoints": "2",
-        "icon": "Icons_commander_cmdr_german_mechanized_group"
+        "name": "Sd.Kfz. 250/1 Half-track",
+        "description": "The Sd.Kfz 250/1 can be deployed from the Kampfgruppe Headquarters to provide infantry support",
+        "commandPoints": "0",
+        "icon": "Icons_vehicles_vehicle_german_250_halftrack"
       },
       {
         "name": "Spotting Scope",
