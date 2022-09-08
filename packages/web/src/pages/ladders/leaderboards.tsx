@@ -1,11 +1,20 @@
 import React, { useEffect, useState } from "react";
 
-import { Table, Space, Col, Row, Tooltip, ConfigProvider, Select, Typography } from "antd";
+import {
+  Table,
+  Space,
+  Col,
+  Row,
+  Tooltip,
+  ConfigProvider,
+  Select,
+  Typography,
+  Switch,
+} from "antd";
 import { Link } from "react-router-dom";
-import { isAfter, isBefore, isMonday } from "date-fns";
 import { useHistory } from "react-router";
 
-import { LaddersDataArrayObject, LaddersDataObject, RaceName } from "../../coh/types";
+import { LaddersDataArrayObject, LaddersDataObject } from "../../coh/types";
 import { getAllPatchDates } from "../../coh/patches";
 import { ColumnsType } from "antd/es/table";
 import firebaseAnalytics from "../../analytics";
@@ -29,8 +38,10 @@ import {
   isTeamGame,
 } from "../../coh/helpers";
 import { Helper } from "../../components/helper";
-import subDays from "date-fns/subDays";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
+import { disabledDate, generateIconsForTitle } from "./components";
+import config from "../../config";
+import { leaderboardsID } from "../../coh/coh2-api";
 
 const { Text } = Typography;
 
@@ -39,7 +50,7 @@ const Leaderboards = () => {
 
   const { push } = useHistory();
   const query = useQuery();
-  const timestamp = query.get("timeStamp") || `${getYesterdayDateTimestamp()}`;
+  const timestamp = query.get("timeStamp") || `now`;
   const historicTimestamp =
     query.get("historicTimeStamp") || `${getYesterdayDateTimestamp() - 86400}`;
   const type = query.get("type") || "1v1";
@@ -80,21 +91,41 @@ const Leaderboards = () => {
           `ladders/${selectedHistoricTimeStamp}/${selectedType}`,
           selectedRace,
         );
-        const ladderDocSnap = await getDoc(ladderDocRef);
+
+        let ladderDocSnap;
+        if (timestamp !== "now") {
+          ladderDocSnap = await getDoc(ladderDocRef);
+          if (ladderDocSnap && ladderDocSnap.exists()) {
+            setData(ladderDocSnap.data() as LaddersDataObject);
+          } else {
+            setData(undefined);
+          }
+        } else {
+          const leaderboardID = leaderboardsID[type][race];
+          if (leaderboardID) {
+            const response = await fetch(
+              `https://${config.firebaseFunctions.location}-coh2-ladders-prod.cloudfunctions.net/getCOHLaddersHttp?leaderBoardID=${leaderboardID}&start=0`,
+            );
+            const finalData = await response.json();
+            setData(finalData);
+          } else {
+            setData(undefined);
+          }
+        }
+
         const historicLadderDocSnap = await getDoc(historicLadderDocRef);
 
-        if (ladderDocSnap.exists() && historicLadderDocSnap.exists()) {
-          setData(ladderDocSnap.data() as LaddersDataObject);
+        if (historicLadderDocSnap.exists()) {
           setDataHistoric(historicLadderDocSnap.data() as LaddersDataObject);
         } else {
-          setData(undefined);
           setDataHistoric(undefined);
         }
         setIsLoadingData(false);
       })();
     } catch (e) {
-      console.error("Failed to get amount of analyzed matchess", e);
+      console.error("Failed to get the leaderboards", e);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedTimeStamp, selectedHistoricTimeStamp, selectedRace, selectedType]);
 
   const divStyle = {
@@ -120,6 +151,16 @@ const Leaderboards = () => {
       pathname: routes.leaderboardsBase(),
       search: searchValue,
     });
+  };
+
+  const onSwitchChange = (liveGames: boolean) => {
+    if (liveGames) {
+      changeLeaderBoardsRoute({ timeStampToLoad: "now" });
+      setSelectedTimeStamp("now");
+    } else {
+      changeLeaderBoardsRoute({ timeStampToLoad: getYesterdayDateTimestamp() });
+      setSelectedTimeStamp(`${getYesterdayDateTimestamp()}`);
+    }
   };
 
   const TableColumns: ColumnsType<LaddersDataArrayObject> = [
@@ -276,46 +317,14 @@ const Leaderboards = () => {
     },
   ];
 
-  const generateIconsForTitle = (race: string, type: string) => {
-    if (isTeamGame(type)) {
-      if (race === "axis") {
-        return (
-          <>
-            <img src={getGeneralIconPath("wehrmacht")} height="24px" alt={race} />
-            <img src={getGeneralIconPath("wgerman")} height="24px" alt={race} />
-          </>
-        );
-      } else {
-        return (
-          <>
-            <img src={getGeneralIconPath("soviet")} height="24px" alt={race} />
-            <img src={getGeneralIconPath("british")} height="24px" alt={race} />
-            <img src={getGeneralIconPath("usf")} height="24px" alt={race} />
-          </>
-        );
-      }
-    } else if (race !== "axis" && race !== "allies") {
-      return <img src={getGeneralIconPath(race as RaceName)} height="24px" alt={race} />;
-    }
-  };
-
-  const disabledDate = (current: Date) => {
-    // we started logging Monday 8.3.2021
-    const canBeOld = isBefore(current, new Date(2021, 2, 8));
-    const canBeNew = isAfter(current, new Date());
-
-    const isOldExceptMonday =
-      current.getTime() < subDays(new Date(), 60).getTime() && !isMonday(current);
-
-    return canBeOld || canBeNew || isOldExceptMonday;
-  };
-
   const CustomDatePicker = ({
     onChange,
     defaultValue,
+    disabled,
   }: {
     onChange: any;
     defaultValue: Date;
+    disabled?: boolean;
   }) => {
     return (
       <ConfigProvider locale={enGB}>
@@ -325,6 +334,7 @@ const Leaderboards = () => {
           defaultValue={defaultValue}
           disabledDate={disabledDate}
           size={"large"}
+          disabled={disabled}
           dateRender={(current) => {
             const style = {
               border: "",
@@ -361,6 +371,13 @@ const Leaderboards = () => {
               wrap
               style={{ display: "flex", justifyContent: "center" }}
             >
+              <Switch
+                checkedChildren="Live"
+                unCheckedChildren={"Historic"}
+                style={{ width: 75 }}
+                onChange={onSwitchChange}
+                defaultChecked={timestamp === "now"}
+              />
               <CustomDatePicker
                 onChange={(value: any) => {
                   setSelectedTimeStamp(convertDateToDayTimestamp(`${value}`).toString());
@@ -370,11 +387,34 @@ const Leaderboards = () => {
                   firebaseAnalytics.leaderboardsDateInteraction("regular");
                 }}
                 defaultValue={new Date(parseInt(selectedTimeStamp) * 1000)}
+                disabled={timestamp === "now"}
               />
               <Select
                 value={selectedType}
                 onChange={(value) => {
-                  changeLeaderBoardsRoute({ typeToLoad: value });
+                  let raceToLoad = selectedRace;
+                  if (
+                    (value === "team2" || value === "team3" || value === "team4") &&
+                    selectedRace !== "allies"
+                  ) {
+                    if (
+                      (value === "team2" || value === "team3" || value === "team4") &&
+                      selectedRace !== "axis"
+                    ) {
+                      setSelectedRace("axis");
+                      raceToLoad = "axis";
+                    }
+                  }
+
+                  if (
+                    (value === "1v1" || value === "2v2" || value === "3v3" || value === "4v4") &&
+                    (selectedRace === "allies" || selectedRace === "axis")
+                  ) {
+                    setSelectedRace("soviet");
+                    raceToLoad = "soviet";
+                  }
+
+                  changeLeaderBoardsRoute({ typeToLoad: value, raceToLoad });
                   setSelectedType(value);
                   firebaseAnalytics.leaderboardsTypeInteraction(value, selectedRace);
                 }}
@@ -449,7 +489,12 @@ const Leaderboards = () => {
                 <Text strong>
                   Leaderboards for {capitalize(selectedRace)} {selectedType}
                 </Text>{" "}
-                as of {`${new Date(parseInt(selectedTimeStamp) * 1000).toLocaleString()}`}{" "}
+                as of{" "}
+                {`${
+                  selectedTimeStamp === "now"
+                    ? "now"
+                    : new Date(parseInt(selectedTimeStamp) * 1000).toLocaleString()
+                }`}{" "}
               </div>
               <div style={{ float: "right" }}>
                 <Text strong>{data?.rankTotal}</Text> ranked{" "}
@@ -460,8 +505,8 @@ const Leaderboards = () => {
               style={{ minHeight: 600, overflow: "auto" }}
               columns={TableColumns}
               pagination={{
-                defaultPageSize: 40,
-                pageSizeOptions: ["20", "40", "60", "100", "200"],
+                defaultPageSize: 60,
+                pageSizeOptions: ["40", "60", "100", "200"],
               }}
               rowKey={(record) => record?.rank}
               dataSource={findAndMergeStatGroups(data, dataHistoric)}
