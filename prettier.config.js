@@ -5,7 +5,6 @@ module.exports = {
   semi: true,
   singleQuote: false,
   bracketSpacing: true,
-  jsxBracketSameLine: false,
   tabWidth: 2,
   printWidth: 98,
 };

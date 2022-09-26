@@ -5,13 +5,13 @@ import { WinsChart } from "../../components/charts/wins-bar";
 import { WinRateChart } from "../../components/charts/winRate-bar";
 import { useHistory } from "react-router";
 import { CommandersBarChart } from "../../components/charts/commanders-bar";
-import { BulletinsBarChart } from "../../components/charts/bulletins-bar";
 import { Helper } from "../../components/helper";
 import { FactionVsFactionCard } from "../../components/factions";
 import { useMediaQuery } from "react-responsive";
 import { PlayTimeHistogram } from "../../components/charts/map-stats/play-time-histogram";
 import { TypeAnalysisObject } from "../../coh/types";
 import { useQuery } from "../../utils/helpers";
+import BulletinCard from "./components/bulletin-card";
 
 interface IProps {
   urlChanger: Function;
@@ -169,12 +169,12 @@ const CustomStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
           >
             <CommandersBarChart commanders={data.commanders[race as "soviet"]} push={push} />
           </Card>
-          <Card
-            title={`Intel Bulletins  ${type} - ${race}`}
+          <BulletinCard
+            data={data}
+            race={race}
+            type={type}
             bodyStyle={isMobile ? { width: "90vw", height: 1200 } : { width: 800, height: 900 }}
-          >
-            <BulletinsBarChart bulletins={data["intelBulletins"][race as "soviet"]} />
-          </Card>
+          />
         </Space>
       </Row>
     </>
