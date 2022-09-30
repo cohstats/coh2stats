@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { Loading } from "../../components/loading";
 import MatchDetails from "../matches/match-details";
-import { Col, Empty, Image, Row, Typography } from "antd";
+import { Col, Empty, Image, Row, Tooltip, Typography } from "antd";
 import { ProcessedMatch } from "../../coh/types";
 import {
   formatMatchTime,
@@ -18,6 +18,7 @@ import { AlertBox } from "../../components/alert-box";
 import firebaseAnalytics from "../../analytics";
 import { DatabaseOutlined } from "@ant-design/icons";
 import { COHStatsIcon } from "../../components/cohstats-icon";
+import { differenceInDays } from 'date-fns'
 
 const { Text } = Typography;
 
@@ -25,7 +26,7 @@ const SingleMatch: React.FC = () => {
   const { matchID } = useParams<{
     matchID: string;
   }>();
-
+  
   const [isLoading, setIsLoading] = useState(true);
   const [matchData, setMatchData] = useState<undefined | ProcessedMatch>();
 
@@ -40,7 +41,7 @@ const SingleMatch: React.FC = () => {
       const matchDoc = await getDoc(matchDocRef);
 
       if (matchDoc.exists()) {
-        setMatchData(matchDoc.data() as ProcessedMatch);
+        setMatchData(matchDoc.data() as ProcessedMatch); 
       } else {
         setMatchData(undefined);
       }
@@ -93,6 +94,12 @@ const SingleMatch: React.FC = () => {
       </div>
     );
   } else {
+
+    let startgamedate = new Date(matchData.startgametime * 1000); 
+    let currentday = new Date();
+    let days = config.matchAreStoredForDays - differenceInDays(currentday, startgamedate);
+    let expiryDate = new Date(new Date().setDate(currentday.getDate() + days)).toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"});
+    
     content = (
       <>
         <div style={{ height: 40 }}>
@@ -124,7 +131,10 @@ const SingleMatch: React.FC = () => {
         <div style={{ paddingTop: 10 }}>
           <MatchDetails data={matchData || {}} />
         </div>
-        <div style={{ textAlign: "right" }}>
+        <div style={{ textAlign: "right" }}> <br/>
+          <Tooltip title={`i.e. on ${expiryDate}`}>
+              <span style={{color : "red"}}> This match is going to expire in {days} days. </span> 
+          </Tooltip> <br/>
           <DatabaseOutlined /> Data source <COHStatsIcon />
         </div>
       </>
