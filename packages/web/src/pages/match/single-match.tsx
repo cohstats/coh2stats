@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { Loading } from "../../components/loading";
 import MatchDetails from "../matches/match-details";
-import { Col, Empty, Image, Row, Typography } from "antd";
+import { Col, Empty, Image, Row, Tooltip, Typography } from "antd";
 import { ProcessedMatch } from "../../coh/types";
 import {
   formatMatchTime,
@@ -18,6 +18,7 @@ import { AlertBox } from "../../components/alert-box";
 import firebaseAnalytics from "../../analytics";
 import { DatabaseOutlined } from "@ant-design/icons";
 import { COHStatsIcon } from "../../components/cohstats-icon";
+import { differenceInDays } from "date-fns";
 
 const { Text } = Typography;
 
@@ -93,6 +94,13 @@ const SingleMatch: React.FC = () => {
       </div>
     );
   } else {
+    const startgamedate = new Date(matchData.startgametime * 1000);
+    const currentday = new Date();
+    const days = config.matchAreStoredForDays - differenceInDays(currentday, startgamedate);
+    const expiryDate = new Date(
+      new Date().setDate(currentday.getDate() + days),
+    ).toLocaleDateString();
+
     content = (
       <>
         <div style={{ height: 40 }}>
@@ -125,6 +133,12 @@ const SingleMatch: React.FC = () => {
           <MatchDetails data={matchData || {}} />
         </div>
         <div style={{ textAlign: "right" }}>
+          {" "}
+          <br />
+          <Tooltip title={`i.e. on ${expiryDate}`}>
+            <span style={{ color: "red" }}> This match is going to expire in {days} days. </span>
+          </Tooltip>{" "}
+          <br />
           <DatabaseOutlined /> Data source <COHStatsIcon />
         </div>
       </>
