@@ -135,8 +135,12 @@ const SingleMatch: React.FC = () => {
         <div style={{ textAlign: "right" }}>
           {" "}
           <br />
-          <Tooltip title={`i.e. on ${expiryDate}`}>
-            <span style={{ color: "red" }}> This match is going to expire in {days} days. </span>
+          <Tooltip
+            title={`We store matches only for ${config.matchAreStoredForDays} days.
+             This match is going to expire on ${expiryDate}.
+              If you would like to increase this time please consider donating.`}
+          >
+            This match is going to expire in {days} days
           </Tooltip>{" "}
           <br />
           <DatabaseOutlined /> Data source <COHStatsIcon />
