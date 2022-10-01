@@ -1,6 +1,6 @@
 import React, { ReactFragment, useEffect } from "react";
 import { getMatchPlayersByFaction } from "../../utils/table-functions";
-import { Card, Image, Space } from "antd";
+import { Card, Image, Space, Empty } from "antd";
 import { getGeneralIconPath } from "../../coh/helpers";
 import { SimplePieChart } from "../../components/charts-match/simple-pie";
 import { MatchPlayerDetailsTable } from "./match-details-table";
@@ -45,6 +45,10 @@ interface ChartCardProps {
 }
 
 const ChartCard: React.FC<ChartCardProps> = ({ data, title }) => {
+  let emptyChart = false;
+  if (data) {
+    emptyChart = data.every((item) => item.value === 0);
+  }
   return (
     <Card
       title={<div style={{ textAlign: "center" }}>{title}</div>}
@@ -52,7 +56,11 @@ const ChartCard: React.FC<ChartCardProps> = ({ data, title }) => {
       bordered={false}
       bodyStyle={{ width: 200, height: 200, padding: 0 }}
     >
-      <SimplePieChart data={data} displayLegend={true} />
+      {emptyChart ? (
+        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+      ) : (
+        <SimplePieChart data={data} displayLegend={true} />
+      )}
     </Card>
   );
 };
