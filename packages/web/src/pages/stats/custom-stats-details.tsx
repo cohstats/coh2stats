@@ -3,7 +3,6 @@ import { Row, Card, Radio, RadioChangeEvent, Space } from "antd";
 import { MapBarChart } from "../../components/charts/maps-bar";
 import { WinsChart } from "../../components/charts/wins-bar";
 import { WinRateChart } from "../../components/charts/winRate-bar";
-import { useHistory } from "react-router";
 import { CommandersBarChart } from "../../components/charts/commanders-bar";
 import { Helper } from "../../components/helper";
 import { FactionVsFactionCard } from "../../components/factions";
@@ -21,7 +20,6 @@ interface IProps {
 }
 
 const CustomStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
-  const { push } = useHistory();
   const query = useQuery();
   const isMobile = useMediaQuery({ query: "(max-width: 1023px)" });
 
@@ -167,7 +165,7 @@ const CustomStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
             }
             bodyStyle={isMobile ? { width: "90vw", height: 600 } : { width: 800, height: 900 }}
           >
-            <CommandersBarChart commanders={data.commanders[race as "soviet"]} push={push} />
+            <CommandersBarChart commanders={data.commanders[race as "soviet"]} />
           </Card>
           <BulletinCard
             data={data}

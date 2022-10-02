@@ -8,17 +8,12 @@ import {
 } from "../../coh/commanders";
 import { Avatar, Card } from "antd";
 import routes from "../../routes";
-import type { History } from "history";
 
 interface CommandersBarChartProps {
   commanders: Record<number, number>;
-  push: {
-    (path: string, state?: unknown): void;
-    (location: History.LocationDescriptor<unknown>): void;
-  };
 }
 
-export const CommandersBarChart: React.FC<CommandersBarChartProps> = ({ commanders, push }) => {
+export const CommandersBarChart: React.FC<CommandersBarChartProps> = ({ commanders }) => {
   const simpleMapsData = [];
 
   for (const [key, value] of Object.entries(commanders)) {
@@ -88,7 +83,7 @@ export const CommandersBarChart: React.FC<CommandersBarChartProps> = ({ commande
       onClick={(event) => {
         const commanderId: string = event.data["commanderId"] as string;
         const commanderData = getCommanderData(commanderId);
-        push(routes.commanderByID(commanderData?.races[0], commanderId));
+        window.open(routes.commanderByID(commanderData?.races[0], commanderId), "_blank");
       }}
     />
   );
