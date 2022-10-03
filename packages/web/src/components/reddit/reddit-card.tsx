@@ -39,7 +39,7 @@ const RedditCard: React.FC<Props> = (size) => {
 
   const cardStyle = {
     maxWidth: size.width,
-    minWidth: isBigScreen ? size.width : 400,
+    minWidth: isBigScreen ? size.width : 100,
     minHeight: 720,
     flexGrow: 1,
   };

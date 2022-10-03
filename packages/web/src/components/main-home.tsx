@@ -160,7 +160,7 @@ const MainHome: React.FC = () => {
                       <img
                         style={{ maxHeight: 160, objectFit: "contain" }}
                         alt="All bulletins"
-                        src="/resources/bulletins.png"
+                        src="/resources/live-games.webp"
                       />
                     }
                   >
