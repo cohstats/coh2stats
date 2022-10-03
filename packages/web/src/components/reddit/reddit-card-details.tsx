@@ -1,7 +1,7 @@
 import React from "react";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en.json";
-import { Typography } from "antd";
+import { Image, Typography } from "antd";
 TimeAgo.addLocale(en);
 const timeAgo = new TimeAgo("en-US");
 
@@ -35,7 +35,7 @@ const RedditCardDetails: React.FC<Props> = (data) => {
         borderBottom: "1px solid black",
         display: "flex",
         justifyContent: "space-between",
-        padding: "5px",
+        padding: "4px",
       }}
     >
       <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
@@ -76,10 +76,10 @@ const RedditCardDetails: React.FC<Props> = (data) => {
           (data?.imgs.includes(".png") ||
           data?.imgs.includes(".jpg") ||
           data?.imgs.includes(".jpeg") ? (
-            <img
+            <Image
               src={data?.imgs}
               alt="cover_img"
-              style={{ height: "60px", width: "60px", objectFit: "cover", borderRadius: "2px" }}
+              style={{ height: "60px", width: "80px", objectFit: "cover", borderRadius: "2px" }}
             />
           ) : (
             ""

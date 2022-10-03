@@ -9,7 +9,7 @@ import { commanderBase } from "../../titles";
 import { capitalize } from "../../utils/helpers";
 import { Link } from "react-router-dom";
 import { Tip } from "../../components/tip";
-import { CommanderAbilitiesComponent } from "./components";
+import { CommanderAbilitiesComponent } from "../../components/commander-abillities-component";
 
 const { Title } = Typography;
 

@@ -1,8 +1,11 @@
-import { CommanderAbility } from "../../coh/types";
+import { CommanderAbility } from "../coh/types";
 import { Avatar, Badge, Col, Row, Tooltip } from "antd";
 import Text from "antd/es/typography/Text";
-import { getExportedIconPath } from "../../coh/helpers";
+import { getExportedIconPath } from "../coh/helpers";
 import React from "react";
+
+const OFFSET_DEFAULT: [number, number] = [-16, -32];
+const OFFSET_SMALL: [number, number] = [-12, -24];
 
 type CommanderAbilityProps = {
   commanderAbilities: Array<CommanderAbility>;
@@ -48,6 +51,3 @@ export const CommanderAbilitiesComponent = ({
     </>
   );
 };
-
-const OFFSET_DEFAULT: [number, number] = [-16, -32];
-const OFFSET_SMALL: [number, number] = [-12, -24];
