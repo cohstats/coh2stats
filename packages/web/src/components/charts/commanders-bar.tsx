@@ -8,6 +8,7 @@ import {
 } from "../../coh/commanders";
 import { Avatar, Card } from "antd";
 import routes from "../../routes";
+import { CommanderAbilitiesComponent } from "../../pages/commanders/components";
 
 interface CommandersBarChartProps {
   commanders: Record<number, number>;
@@ -37,7 +38,7 @@ export const CommandersBarChart: React.FC<CommandersBarChartProps> = ({ commande
     return (
       <Card bodyStyle={{ padding: 5 }}>
         <Avatar
-          size={54}
+          size={86}
           shape="square"
           src={iconPath}
           style={{ display: "inline-block", verticalAlign: "top" }}
@@ -47,6 +48,7 @@ export const CommandersBarChart: React.FC<CommandersBarChartProps> = ({ commande
             {commanderData.commanderName} - {toolTipData.value}{" "}
           </b>
           <br />
+          <CommanderAbilitiesComponent commanderAbilities={commanderData.abilities} isSmall />
           <i>Click for more info ...</i>
         </div>
       </Card>
