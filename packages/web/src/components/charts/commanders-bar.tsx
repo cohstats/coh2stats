@@ -8,7 +8,7 @@ import {
 } from "../../coh/commanders";
 import { Avatar, Card } from "antd";
 import routes from "../../routes";
-import { CommanderAbilitiesComponent } from "../../pages/commanders/components";
+import { CommanderAbilitiesComponent } from "../commander-abillities-component";
 
 interface CommandersBarChartProps {
   commanders: Record<number, number>;

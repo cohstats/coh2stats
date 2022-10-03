@@ -8,7 +8,7 @@ const { Link } = Typography;
 
 export const MainFooter: React.FC = () => {
   return (
-    <Footer style={{ textAlign: "center" }}>
+    <Footer style={{ textAlign: "center", padding: 20 }}>
       <Divider />
       This is unofficial fan-made site for Company Of Heroes 2. Not associated with Relic
       Entertainment.
