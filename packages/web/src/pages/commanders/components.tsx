@@ -6,17 +6,24 @@ import React from "react";
 
 type CommanderAbilityProps = {
   commanderAbilities: Array<CommanderAbility>;
-  commanderDescription: string;
+  commanderDescription?: string;
+  isSmall?: boolean;
 };
 
-export const CommanderAbilitiesComponent = (props: CommanderAbilityProps) => {
+export const CommanderAbilitiesComponent = ({
+  commanderAbilities,
+  commanderDescription,
+  isSmall,
+}: CommanderAbilityProps) => {
   return (
     <>
-      <Row style={{ paddingBottom: 25 }}>
-        <Text>{props.commanderDescription}</Text>
-      </Row>
+      {commanderDescription && (
+        <Row style={{ paddingBottom: 25 }}>
+          <Text>{commanderDescription}</Text>
+        </Row>
+      )}
       <Row>
-        {props.commanderAbilities.map((item: CommanderAbility) => {
+        {commanderAbilities.map((item: CommanderAbility) => {
           return (
             <Col key={item.name}>
               <Tooltip placement={"bottom"} title={item.description}>
@@ -24,13 +31,14 @@ export const CommanderAbilitiesComponent = (props: CommanderAbilityProps) => {
                   alt={item.name}
                   src={getExportedIconPath(item.icon)}
                   shape="square"
-                  size={64}
+                  size={isSmall ? 48 : 64}
                 />
                 <Badge
                   count={item.commandPoints}
                   overflowCount={999}
                   showZero
-                  offset={[-16, -32]}
+                  offset={isSmall ? OFFSET_SMALL : OFFSET_DEFAULT}
+                  size={isSmall ? "small" : "default"}
                 />
               </Tooltip>
             </Col>
@@ -40,3 +48,6 @@ export const CommanderAbilitiesComponent = (props: CommanderAbilityProps) => {
     </>
   );
 };
+
+const OFFSET_DEFAULT: [number, number] = [-16, -32];
+const OFFSET_SMALL: [number, number] = [-12, -24];
