@@ -3,7 +3,7 @@ import { firebase } from "../../firebase";
 import Search from "antd/es/input/Search";
 import { useHistory, useParams } from "react-router";
 import routes from "../../routes";
-import { Avatar, Empty, Row, Space } from "antd";
+import { Avatar, Divider, Empty, Row, Space } from "antd";
 
 import "./search.css";
 import { History } from "history";
@@ -11,6 +11,8 @@ import firebaseAnalytics from "../../analytics";
 import { CountryFlag } from "../../components/country-flag";
 import { AlertBox } from "../../components/alert-box";
 import { httpsCallable } from "firebase/functions";
+import { searchCommanders } from "../../coh/commanders";
+import { getBulletinIconPath, searchBulletins } from "../../coh/bulletins";
 
 type RelicProfileType = {
   id: number;
@@ -96,6 +98,37 @@ const userCard = (
   );
 };
 
+const intelBulletin = (
+  name: string,
+  descriptionShort: string,
+  icon: string,
+  serverID: string
+) => {
+  const iconBulletin = getBulletinIconPath(icon);
+  const nameBulletin = name;
+  const descriptionBulletin = descriptionShort;
+
+  let truncatedText = (text: string) => {
+    return text.length > 35 ? text.substring(0, 33) + "..." : text;
+  }
+  
+  return (
+    <div style={{backgroundColor: 'white', height: 80}}>
+      <Avatar
+        size={80}
+        shape="square"
+        src={iconBulletin}
+        style={{display: "inline-block", verticalAlign: "top"}}
+        />
+        <div style={{display: "inline-block", paddingLeft: 5, width: 260, textAlign: "left"}}>
+          <b>{nameBulletin}</b>
+          <br/>
+          <p>{truncatedText(descriptionBulletin)}</p>
+        </div>
+    </div>
+  )
+};
+
 const sortByXP = (array: Array<userAPIObject>) => {
   return array.sort((a, b) => {
     if (a.relicProfile.members[0].xp > b.relicProfile.members[0].xp) {
@@ -117,6 +150,8 @@ const CustomSearch: React.FC = () => {
   const [error, setError] = useState("");
   const [loading, setIsLoading] = useState(false);
   const [searchData, setSearchData] = useState<JSX.Element | undefined>(undefined);
+  const [searchDataCommanders, setSearchDataCommanders] = useState<JSX.Element | undefined>(undefined);
+  const [searchIntelBulletin, setSearchIntelBulletin] = useState<JSX.Element | undefined>(undefined);
 
   useEffect(() => {
     const buildSearchResults = (data: Record<string, any>): JSX.Element => {
@@ -137,9 +172,47 @@ const CustomSearch: React.FC = () => {
         }
 
         return (
-          <Space wrap size={10} style={{ maxWidth: 720 }}>
-            {userCards}
-          </Space>
+          <>
+            <Divider type="horizontal" plain> 
+              Players
+            </Divider>
+            <Space wrap size={10} style={{ maxWidth: 720 }}>
+              {userCards}
+            </Space>
+          </>
+        );
+      }
+    };
+
+    const buildSearchBulletin = (data: Record<string, any>) : JSX.Element => {
+      if(Object.entries(data).length === 0){
+        return (
+          <div>
+            <Divider type="horizontal" plain> 
+              Intel Bulletins
+            </Divider>
+            <Empty
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+              description={`No intel bulletins with text ${searchParam} found`}
+            />
+          </div>
+        );
+      } else {
+        const bulletinCards = [];
+        const foundBulletins = Object.values(data);
+        for(const value of foundBulletins){
+          bulletinCards.push(intelBulletin(value.bulletinName, value.descriptionShort, value.icon, value.serverID ));
+        }
+        
+        return (
+          <div>
+            <Divider type="horizontal" plain> 
+              Inter Bulletins
+            </Divider>
+            <Space wrap size={10} style={{ maxWidth: 720 }}>
+              {bulletinCards}
+            </Space>
+          </div>
         );
       }
     };
@@ -162,7 +235,14 @@ const CustomSearch: React.FC = () => {
           const foundProfiles: Record<string, any> = data["foundProfiles"];
           const resultHtml = buildSearchResults(foundProfiles);
 
+          // Search Bulletins 
+          let bulletinData = await searchBulletins(searchParam);
+          console.log(bulletinData);
+          // Parse Data into html 
+          const resultBulletinHtml = buildSearchBulletin(bulletinData);
+
           setSearchData(resultHtml);
+          setSearchIntelBulletin(resultBulletinHtml);
         } catch (e: any) {
           console.error(e);
           setError(e.message);
@@ -227,6 +307,7 @@ const CustomSearch: React.FC = () => {
         allowClear
       />
       <div>{searchData}</div>
+      <div>{searchIntelBulletin}</div>
     </div>
   );
 };
