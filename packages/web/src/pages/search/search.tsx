@@ -11,7 +11,7 @@ import firebaseAnalytics from "../../analytics";
 import { CountryFlag } from "../../components/country-flag";
 import { AlertBox } from "../../components/alert-box";
 import { httpsCallable } from "firebase/functions";
-import { searchCommanders } from "../../coh/commanders";
+import { getCommanderData, getCommanderIconPath, searchCommanders } from "../../coh/commanders";
 import { getBulletinIconPath, searchBulletins } from "../../coh/bulletins";
 
 type RelicProfileType = {
@@ -50,6 +50,10 @@ type userAPIObject = {
   steamProfile: SteamProfileType;
   relicProfile: RelicProfileType;
 };
+
+let truncatedText = (text: string, size: number) => {
+  return text.length > size ? text.substring(0, size - 3) + "..." : text;
+}
 
 const userCard = (
   userObject: userAPIObject,
@@ -102,15 +106,16 @@ const intelBulletin = (
   name: string,
   descriptionShort: string,
   icon: string,
-  serverID: string
+  serverID: string,
+  push: {
+    (path: string, state?: unknown): void;
+    (location: History.LocationDescriptor<unknown>): void;
+    (arg0: string): void;
+  }
 ) => {
   const iconBulletin = getBulletinIconPath(icon);
   const nameBulletin = name;
   const descriptionBulletin = descriptionShort;
-
-  let truncatedText = (text: string) => {
-    return text.length > 35 ? text.substring(0, 33) + "..." : text;
-  }
   
   return (
     <div style={{backgroundColor: 'white', height: 80}}>
@@ -123,8 +128,47 @@ const intelBulletin = (
         <div style={{display: "inline-block", paddingLeft: 5, width: 260, textAlign: "left"}}>
           <b>{nameBulletin}</b>
           <br/>
-          <p>{truncatedText(descriptionBulletin)}</p>
+          <p>{truncatedText(descriptionBulletin, 35)}</p>
         </div>
+    </div>
+  )
+};
+
+const cardCommander = (
+  serverID: string,
+  iconSmall: string,
+  commanderName: string,
+  description: string,
+  races: Array<string>,
+  push: {
+    (path: string, state?: unknown): void;
+    (location: History.LocationDescriptor<unknown>): void;
+    (arg0: string): void;
+  }
+) => {
+
+  const commanderIcon = getCommanderIconPath(iconSmall);
+  let commanderRace: string;
+
+  races.map((race) => { commanderRace = race });
+
+  const onCommanderClick = (race: string, steamId: string) => {
+    push(routes.commanderByID(race, steamId));
+  };
+
+  return (
+    <div style={{backgroundColor: 'white', height: 80, cursor: "pointer"}} 
+      onClick={() =>{onCommanderClick(commanderRace, serverID)}}>
+      <Avatar
+      size={80}
+      shape="square"
+      src={commanderIcon}
+      />
+      <div style={{display: "inline-block", paddingLeft: 5, width: 260, textAlign: "left"}}>
+        <b>{commanderName}</b>
+        <br/>
+        <p>{truncatedText(description, 35)}</p>
+      </div>
     </div>
   )
 };
@@ -158,6 +202,9 @@ const CustomSearch: React.FC = () => {
       if (Object.entries(data).length === 0) {
         return (
           <div>
+            <Divider type="horizontal" plain> 
+              Players
+            </Divider>
             <Empty
               image={Empty.PRESENTED_IMAGE_SIMPLE}
               description={`No user profile with name ${searchParam} found`}
@@ -201,7 +248,7 @@ const CustomSearch: React.FC = () => {
         const bulletinCards = [];
         const foundBulletins = Object.values(data);
         for(const value of foundBulletins){
-          bulletinCards.push(intelBulletin(value.bulletinName, value.descriptionShort, value.icon, value.serverID ));
+          bulletinCards.push(intelBulletin(value.bulletinName, value.descriptionShort, value.icon, value.serverID , push));
         }
         
         return (
@@ -216,6 +263,38 @@ const CustomSearch: React.FC = () => {
         );
       }
     };
+
+    const buildCommanders = (data: Record<string, any>) : JSX.Element => {
+      if( Object.entries(data).length === 0){
+        return (
+          <div>
+            <Divider type="horizontal" plain> 
+              Commanders
+            </Divider>
+            <Empty
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+              description={`No Commanders with name ${searchParam} found`}
+            />
+          </div>
+        )
+      } else {
+        const commanders = [];
+        const foundCommanders = Object.values(data);
+        for(const value of foundCommanders){
+          commanders.push(cardCommander(value.serverID, value.iconSmall, value.commanderName, value.description, value.races, push));
+        }
+        return (
+          <>
+            <Divider type="horizontal" plain>
+              Commanders
+            </Divider>
+            <Space wrap size={10} style={{maxWidth: 720}}>
+              {commanders}
+            </Space>
+          </>
+        );
+      }
+    }
 
     (async () => {
       if (searchParam) {
@@ -235,14 +314,20 @@ const CustomSearch: React.FC = () => {
           const foundProfiles: Record<string, any> = data["foundProfiles"];
           const resultHtml = buildSearchResults(foundProfiles);
 
-          // Search Bulletins 
+          // Search Intel Bulletins from defined Function
           let bulletinData = await searchBulletins(searchParam);
-          console.log(bulletinData);
           // Parse Data into html 
           const resultBulletinHtml = buildSearchBulletin(bulletinData);
 
+          // Search Commanders from defined function
+          let commanderData = await searchCommanders(searchParam);
+          console.log(commanderData);
+          // Parse Data into html
+          const resultCommanderHtml = buildCommanders(commanderData);
+
           setSearchData(resultHtml);
           setSearchIntelBulletin(resultBulletinHtml);
+          setSearchDataCommanders(resultCommanderHtml);
         } catch (e: any) {
           console.error(e);
           setError(e.message);
@@ -307,6 +392,7 @@ const CustomSearch: React.FC = () => {
         allowClear
       />
       <div>{searchData}</div>
+      <div>{searchDataCommanders}</div>
       <div>{searchIntelBulletin}</div>
     </div>
   );
