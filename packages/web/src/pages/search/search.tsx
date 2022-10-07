@@ -106,7 +106,7 @@ const intelBulletin = (
   name: string,
   descriptionShort: string,
   icon: string,
-  serverID: string,
+  searchParam: string,
   push: {
     (path: string, state?: unknown): void;
     (location: History.LocationDescriptor<unknown>): void;
@@ -117,18 +117,34 @@ const intelBulletin = (
   const nameBulletin = name;
   const descriptionBulletin = descriptionShort;
 
+  const onBulletinClick = (searchPhrase: string) => {
+    const urlParam = new URLSearchParams({
+      search: searchParam,
+    });
+    push(routes.bulletinsBase() + "?" + urlParam);
+  };
+
   return (
-    <div style={{ backgroundColor: "white", height: 80 }}>
+    <div style={{ backgroundColor: "white", height: 60 }}>
       <Avatar
-        size={80}
+        size={60}
         shape="square"
         src={iconBulletin}
         style={{ display: "inline-block", verticalAlign: "top" }}
       />
-      <div style={{ display: "inline-block", paddingLeft: 5, width: 260, textAlign: "left" }}>
-        <b>{nameBulletin}</b>
+      <div
+        style={{
+          display: "inline-block",
+          paddingLeft: 5,
+          width: 180,
+          textAlign: "left",
+          cursor: "pointer",
+        }}
+        onClick={() => onBulletinClick(searchParam)}
+      >
+        <b>{truncatedText(nameBulletin, 23)}</b>
         <br />
-        <p>{truncatedText(descriptionBulletin, 35)}</p>
+        <p style={{ fontSize: "13px" }}>{truncatedText(descriptionBulletin, 45)}</p>
       </div>
     </div>
   );
@@ -157,16 +173,21 @@ const cardCommander = (
 
   return (
     <div
-      style={{ backgroundColor: "white", height: 80, cursor: "pointer" }}
+      style={{ backgroundColor: "white", height: 60, cursor: "pointer" }}
       onClick={() => {
         onCommanderClick(commanderRace, serverID);
       }}
     >
-      <Avatar size={80} shape="square" src={commanderIcon} />
-      <div style={{ display: "inline-block", paddingLeft: 5, width: 260, textAlign: "left" }}>
-        <b>{commanderName}</b>
+      <Avatar
+        size={60}
+        shape="square"
+        src={commanderIcon}
+        style={{ display: "inline-block", verticalAlign: "top" }}
+      />
+      <div style={{ display: "inline-block", paddingLeft: 5, width: 180, textAlign: "left" }}>
+        <b>{truncatedText(commanderName, 23)}</b>
         <br />
-        <p>{truncatedText(description, 35)}</p>
+        <p style={{ fontSize: "13px" }}>{truncatedText(description, 45)}</p>
       </div>
     </div>
   );
@@ -256,7 +277,7 @@ const CustomSearch: React.FC = () => {
               value.bulletinName,
               value.descriptionShort,
               value.icon,
-              value.serverID,
+              searchParam,
               push,
             ),
           );
@@ -267,7 +288,7 @@ const CustomSearch: React.FC = () => {
             <Divider type="horizontal" plain>
               Inter Bulletins
             </Divider>
-            <Space wrap size={10} style={{ maxWidth: 720 }}>
+            <Space wrap size={10} style={{ maxWidth: 740 }}>
               {bulletinCards}
             </Space>
           </div>
@@ -308,7 +329,7 @@ const CustomSearch: React.FC = () => {
             <Divider type="horizontal" plain>
               Commanders
             </Divider>
-            <Space wrap size={10} style={{ maxWidth: 720 }}>
+            <Space wrap size={10} style={{ maxWidth: 740 }}>
               {commanders}
             </Space>
           </>
@@ -335,12 +356,12 @@ const CustomSearch: React.FC = () => {
           const resultHtml = buildSearchResults(foundProfiles);
 
           // Search Intel Bulletins from defined Function
-          let bulletinData = await searchBulletins(searchParam);
+          let bulletinData = searchBulletins(searchParam);
           // Parse Data into html
           const resultBulletinHtml = buildSearchBulletin(bulletinData);
 
           // Search Commanders from defined function
-          let commanderData = await searchCommanders(searchParam);
+          let commanderData = searchCommanders(searchParam);
           console.log(commanderData);
           // Parse Data into html
           const resultCommanderHtml = buildCommanders(commanderData);
