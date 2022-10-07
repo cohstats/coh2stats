@@ -119,7 +119,7 @@ const intelBulletin = (
 
   const onBulletinClick = (searchPhrase: string) => {
     const urlParam = new URLSearchParams({
-      search: searchParam,
+      search: searchPhrase,
     });
     push(routes.bulletinsBase() + "?" + urlParam);
   };
