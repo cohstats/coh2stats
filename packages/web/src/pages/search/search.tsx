@@ -11,7 +11,7 @@ import firebaseAnalytics from "../../analytics";
 import { CountryFlag } from "../../components/country-flag";
 import { AlertBox } from "../../components/alert-box";
 import { httpsCallable } from "firebase/functions";
-import { getCommanderData, getCommanderIconPath, searchCommanders } from "../../coh/commanders";
+import { getCommanderIconPath, searchCommanders } from "../../coh/commanders";
 import { getBulletinIconPath, searchBulletins } from "../../coh/bulletins";
 
 type RelicProfileType = {
@@ -53,7 +53,7 @@ type userAPIObject = {
 
 let truncatedText = (text: string, size: number) => {
   return text.length > size ? text.substring(0, size - 3) + "..." : text;
-}
+};
 
 const userCard = (
   userObject: userAPIObject,
@@ -111,27 +111,27 @@ const intelBulletin = (
     (path: string, state?: unknown): void;
     (location: History.LocationDescriptor<unknown>): void;
     (arg0: string): void;
-  }
+  },
 ) => {
   const iconBulletin = getBulletinIconPath(icon);
   const nameBulletin = name;
   const descriptionBulletin = descriptionShort;
-  
+
   return (
-    <div style={{backgroundColor: 'white', height: 80}}>
+    <div style={{ backgroundColor: "white", height: 80 }}>
       <Avatar
         size={80}
         shape="square"
         src={iconBulletin}
-        style={{display: "inline-block", verticalAlign: "top"}}
-        />
-        <div style={{display: "inline-block", paddingLeft: 5, width: 260, textAlign: "left"}}>
-          <b>{nameBulletin}</b>
-          <br/>
-          <p>{truncatedText(descriptionBulletin, 35)}</p>
-        </div>
+        style={{ display: "inline-block", verticalAlign: "top" }}
+      />
+      <div style={{ display: "inline-block", paddingLeft: 5, width: 260, textAlign: "left" }}>
+        <b>{nameBulletin}</b>
+        <br />
+        <p>{truncatedText(descriptionBulletin, 35)}</p>
+      </div>
     </div>
-  )
+  );
 };
 
 const cardCommander = (
@@ -144,33 +144,32 @@ const cardCommander = (
     (path: string, state?: unknown): void;
     (location: History.LocationDescriptor<unknown>): void;
     (arg0: string): void;
-  }
+  },
 ) => {
-
   const commanderIcon = getCommanderIconPath(iconSmall);
   let commanderRace: string;
 
-  races.map((race) => { commanderRace = race });
+  races.map((race) => (commanderRace = race));
 
   const onCommanderClick = (race: string, steamId: string) => {
     push(routes.commanderByID(race, steamId));
   };
 
   return (
-    <div style={{backgroundColor: 'white', height: 80, cursor: "pointer"}} 
-      onClick={() =>{onCommanderClick(commanderRace, serverID)}}>
-      <Avatar
-      size={80}
-      shape="square"
-      src={commanderIcon}
-      />
-      <div style={{display: "inline-block", paddingLeft: 5, width: 260, textAlign: "left"}}>
+    <div
+      style={{ backgroundColor: "white", height: 80, cursor: "pointer" }}
+      onClick={() => {
+        onCommanderClick(commanderRace, serverID);
+      }}
+    >
+      <Avatar size={80} shape="square" src={commanderIcon} />
+      <div style={{ display: "inline-block", paddingLeft: 5, width: 260, textAlign: "left" }}>
         <b>{commanderName}</b>
-        <br/>
+        <br />
         <p>{truncatedText(description, 35)}</p>
       </div>
     </div>
-  )
+  );
 };
 
 const sortByXP = (array: Array<userAPIObject>) => {
@@ -194,15 +193,19 @@ const CustomSearch: React.FC = () => {
   const [error, setError] = useState("");
   const [loading, setIsLoading] = useState(false);
   const [searchData, setSearchData] = useState<JSX.Element | undefined>(undefined);
-  const [searchDataCommanders, setSearchDataCommanders] = useState<JSX.Element | undefined>(undefined);
-  const [searchIntelBulletin, setSearchIntelBulletin] = useState<JSX.Element | undefined>(undefined);
+  const [searchDataCommanders, setSearchDataCommanders] = useState<JSX.Element | undefined>(
+    undefined,
+  );
+  const [searchIntelBulletin, setSearchIntelBulletin] = useState<JSX.Element | undefined>(
+    undefined,
+  );
 
   useEffect(() => {
     const buildSearchResults = (data: Record<string, any>): JSX.Element => {
       if (Object.entries(data).length === 0) {
         return (
           <div>
-            <Divider type="horizontal" plain> 
+            <Divider type="horizontal" plain>
               Players
             </Divider>
             <Empty
@@ -220,7 +223,7 @@ const CustomSearch: React.FC = () => {
 
         return (
           <>
-            <Divider type="horizontal" plain> 
+            <Divider type="horizontal" plain>
               Players
             </Divider>
             <Space wrap size={10} style={{ maxWidth: 720 }}>
@@ -231,11 +234,11 @@ const CustomSearch: React.FC = () => {
       }
     };
 
-    const buildSearchBulletin = (data: Record<string, any>) : JSX.Element => {
-      if(Object.entries(data).length === 0){
+    const buildSearchBulletin = (data: Record<string, any>): JSX.Element => {
+      if (Object.entries(data).length === 0) {
         return (
           <div>
-            <Divider type="horizontal" plain> 
+            <Divider type="horizontal" plain>
               Intel Bulletins
             </Divider>
             <Empty
@@ -247,13 +250,21 @@ const CustomSearch: React.FC = () => {
       } else {
         const bulletinCards = [];
         const foundBulletins = Object.values(data);
-        for(const value of foundBulletins){
-          bulletinCards.push(intelBulletin(value.bulletinName, value.descriptionShort, value.icon, value.serverID , push));
+        for (const value of foundBulletins) {
+          bulletinCards.push(
+            intelBulletin(
+              value.bulletinName,
+              value.descriptionShort,
+              value.icon,
+              value.serverID,
+              push,
+            ),
+          );
         }
-        
+
         return (
           <div>
-            <Divider type="horizontal" plain> 
+            <Divider type="horizontal" plain>
               Inter Bulletins
             </Divider>
             <Space wrap size={10} style={{ maxWidth: 720 }}>
@@ -264,11 +275,11 @@ const CustomSearch: React.FC = () => {
       }
     };
 
-    const buildCommanders = (data: Record<string, any>) : JSX.Element => {
-      if( Object.entries(data).length === 0){
+    const buildCommanders = (data: Record<string, any>): JSX.Element => {
+      if (Object.entries(data).length === 0) {
         return (
           <div>
-            <Divider type="horizontal" plain> 
+            <Divider type="horizontal" plain>
               Commanders
             </Divider>
             <Empty
@@ -276,25 +287,34 @@ const CustomSearch: React.FC = () => {
               description={`No Commanders with name ${searchParam} found`}
             />
           </div>
-        )
+        );
       } else {
         const commanders = [];
         const foundCommanders = Object.values(data);
-        for(const value of foundCommanders){
-          commanders.push(cardCommander(value.serverID, value.iconSmall, value.commanderName, value.description, value.races, push));
+        for (const value of foundCommanders) {
+          commanders.push(
+            cardCommander(
+              value.serverID,
+              value.iconSmall,
+              value.commanderName,
+              value.description,
+              value.races,
+              push,
+            ),
+          );
         }
         return (
           <>
             <Divider type="horizontal" plain>
               Commanders
             </Divider>
-            <Space wrap size={10} style={{maxWidth: 720}}>
+            <Space wrap size={10} style={{ maxWidth: 720 }}>
               {commanders}
             </Space>
           </>
         );
       }
-    }
+    };
 
     (async () => {
       if (searchParam) {
@@ -316,7 +336,7 @@ const CustomSearch: React.FC = () => {
 
           // Search Intel Bulletins from defined Function
           let bulletinData = await searchBulletins(searchParam);
-          // Parse Data into html 
+          // Parse Data into html
           const resultBulletinHtml = buildSearchBulletin(bulletinData);
 
           // Search Commanders from defined function
