@@ -2,14 +2,41 @@ import { DownloadOutlined } from "@ant-design/icons";
 import { Button, Col, Image, Row } from "antd";
 import Link from "antd/es/typography/Link";
 import Title from "antd/es/typography/Title";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import AppVersionFile from "@coh2stats/web/public/electron-app-version.json";
+import { arrayBuffer } from "stream/consumers";
 // eslint-disable-next-line react-hooks/exhaustive-deps
 const useMountEffect = (fun: { (): void }) => useEffect(fun, []);
 
 const DesktopApp: React.FC = () => {
   const twitchOverlayRef = useRef(null);
   const OBSOverlayRef = useRef(null);
+  const [downloads, setDownloads] = useState([]);
+  const [downloadCount, setDownloadCount] = useState(0);
+  const url = "https://api.github.com/repositories/326416762/releases?page=1&per_page=100";
+
+  useEffect(() => {
+    const getData = async () => {
+      const response = await fetch(url);
+      const data = await response.json();
+      setDownloads(
+        data.map((item: any) => {
+          if (item.assets.length > 0) {
+            return item.assets[0].download_count;
+          }
+        }),
+      );
+    };
+    getData();
+  }, []);
+
+  useEffect(() => {
+    for (let i = 0; i < downloads.length; i++) {
+      if (downloads[i] !== undefined) {
+        setDownloadCount((prev) => prev + downloads[i]);
+      }
+    }
+  }, [downloads]);
 
   useMountEffect(() => {
     const hash = window.location.hash;
@@ -49,7 +76,7 @@ const DesktopApp: React.FC = () => {
               <br />
             </Col>
             <Col xl={10} xs={24} style={{ textAlign: "center", paddingTop: 80 }}>
-              <p>
+              <p style={{ marginBottom: 0 }}>
                 <Button
                   type="primary"
                   icon={<DownloadOutlined />}
@@ -59,6 +86,7 @@ const DesktopApp: React.FC = () => {
                   Download v{AppVersionFile.version}
                 </Button>
               </p>
+              <p style={{ marginBottom: 0 }}>{downloadCount}</p>
               <Link href={AppVersionFile.link} target="_blank">
                 Release Notes
               </Link>
