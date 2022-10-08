@@ -4,7 +4,6 @@ import Link from "antd/es/typography/Link";
 import Title from "antd/es/typography/Title";
 import React, { useEffect, useRef, useState } from "react";
 import AppVersionFile from "@coh2stats/web/public/electron-app-version.json";
-import { arrayBuffer } from "stream/consumers";
 // eslint-disable-next-line react-hooks/exhaustive-deps
 const useMountEffect = (fun: { (): void }) => useEffect(fun, []);
 
