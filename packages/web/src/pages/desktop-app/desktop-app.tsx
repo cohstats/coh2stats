@@ -2,6 +2,7 @@ import { DownloadOutlined } from "@ant-design/icons";
 import { Button, Col, Image, Row } from "antd";
 import Link from "antd/es/typography/Link";
 import Title from "antd/es/typography/Title";
+import Text from "antd/es/typography/Text";
 import React, { useEffect, useRef, useState } from "react";
 import AppVersionFile from "@coh2stats/web/public/electron-app-version.json";
 // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -10,32 +11,28 @@ const useMountEffect = (fun: { (): void }) => useEffect(fun, []);
 const DesktopApp: React.FC = () => {
   const twitchOverlayRef = useRef(null);
   const OBSOverlayRef = useRef(null);
-  const [downloads, setDownloads] = useState([]);
-  const [downloadCount, setDownloadCount] = useState(0);
-  const url = "https://api.github.com/repositories/326416762/releases?page=1&per_page=100";
+  const [downloadCount, setDownloadCount] = useState<undefined | number>();
 
   useEffect(() => {
-    const getData = async () => {
-      const response = await fetch(url);
-      const data = await response.json();
-      setDownloads(
-        data.map((item: any) => {
-          if (item.assets.length > 0) {
-            return item.assets[0].download_count;
+    try {
+      (async () => {
+        const url = "https://api.github.com/repositories/326416762/releases?page=1&per_page=100";
+        const response = await fetch(url);
+        const data = await response.json();
+        let sum = 0;
+
+        data.forEach((item: any) => {
+          if (item.assets.length > 0 && item.assets[0].download_count > 0) {
+            sum += item.assets[0].download_count;
           }
-        }),
-      );
-    };
-    getData();
-  }, []);
+        });
 
-  useEffect(() => {
-    for (let i = 0; i < downloads.length; i++) {
-      if (downloads[i] !== undefined) {
-        setDownloadCount((prev) => prev + downloads[i]);
-      }
+        setDownloadCount(sum);
+      })();
+    } catch (e) {
+      console.error(e);
     }
-  }, [downloads]);
+  }, []);
 
   useMountEffect(() => {
     const hash = window.location.hash;
@@ -85,7 +82,13 @@ const DesktopApp: React.FC = () => {
                   Download v{AppVersionFile.version}
                 </Button>
               </p>
-              <p style={{ marginBottom: 0 }}>{downloadCount}</p>
+              <p style={{ marginBottom: 0 }}>
+                {downloadCount && (
+                  <>
+                    <Text strong>{downloadCount.toLocaleString()}</Text> downloads
+                  </>
+                )}
+              </p>
               <Link href={AppVersionFile.link} target="_blank">
                 Release Notes
               </Link>
