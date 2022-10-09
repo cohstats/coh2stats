@@ -26,7 +26,7 @@ const inputList = [
   },
   {
     label: "CoH 2 Org Profile",
-    pattern: /http(?:s)?:\/\/(?:www\.)?coh2stats\.com\/profile\/([a-zA-Z0-9_]+)/,
+    pattern: /http(?:s)?:\/\/(?:www\.)?coh2\.org\/profile\/([a-zA-Z0-9_]+)/,
     name: "coh2orgProfile",
   },
 ];
