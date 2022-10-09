@@ -112,7 +112,7 @@ describe("Search Commanders Function test", () => {
 
   test("Find at least 1 commander per commander ability", () => {
     const searchQuery = "Target Artillery";
-    const foundCommanders = searchCommanders(searchQuery);
+    const foundCommanders = searchCommanders(searchQuery, true);
     expect(
       foundCommanders.find((commander: any) => commander["commanderName"] === "Infantry Company"),
     ).toBeTruthy();

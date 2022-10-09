@@ -4,6 +4,7 @@ div.player {
   cursor: pointer;
 }
 
-div.player:hover {
+div.resultBox:hover {
   background-color: #fafafa;
+  cursor: pointer;
 }

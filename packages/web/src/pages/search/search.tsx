@@ -11,8 +11,10 @@ import firebaseAnalytics from "../../analytics";
 import { CountryFlag } from "../../components/country-flag";
 import { AlertBox } from "../../components/alert-box";
 import { httpsCallable } from "firebase/functions";
-import { getCommanderIconPath, searchCommanders } from "../../coh/commanders";
-import { getBulletinIconPath, searchBulletins } from "../../coh/bulletins";
+import { searchCommanders } from "../../coh/commanders";
+import { searchBulletins } from "../../coh/bulletins";
+import SearchCommanderCard from "./components/search-commander-card";
+import SearchBulletinCard from "./components/search-bulletin-card";
 
 type RelicProfileType = {
   id: number;
@@ -51,10 +53,6 @@ type userAPIObject = {
   relicProfile: RelicProfileType;
 };
 
-let truncatedText = (text: string, size: number) => {
-  return text.length > size ? text.substring(0, size - 3) + "..." : text;
-};
-
 const userCard = (
   userObject: userAPIObject,
   push: {
@@ -78,7 +76,7 @@ const userCard = (
   return (
     <div
       key={steamProfile["steamid"]}
-      className={"player"}
+      className={"player resultBox"}
       onClick={() => {
         onProfileClick(steamProfile["steamid"]);
       }}
@@ -97,97 +95,6 @@ const userCard = (
           XP:
         </b>{" "}
         {xp.toLocaleString()}
-      </div>
-    </div>
-  );
-};
-
-const intelBulletin = (
-  name: string,
-  descriptionShort: string,
-  icon: string,
-  searchParam: string,
-  push: {
-    (path: string, state?: unknown): void;
-    (location: History.LocationDescriptor<unknown>): void;
-    (arg0: string): void;
-  },
-) => {
-  const iconBulletin = getBulletinIconPath(icon);
-  const nameBulletin = name;
-  const descriptionBulletin = descriptionShort;
-
-  const onBulletinClick = (searchPhrase: string) => {
-    const urlParam = new URLSearchParams({
-      search: searchPhrase,
-    });
-    push(routes.bulletinsBase() + "?" + urlParam);
-  };
-
-  return (
-    <div style={{ backgroundColor: "white", height: 60 }}>
-      <Avatar
-        size={60}
-        shape="square"
-        src={iconBulletin}
-        style={{ display: "inline-block", verticalAlign: "top" }}
-      />
-      <div
-        style={{
-          display: "inline-block",
-          paddingLeft: 5,
-          width: 180,
-          textAlign: "left",
-          cursor: "pointer",
-        }}
-        onClick={() => onBulletinClick(searchParam)}
-      >
-        <b>{truncatedText(nameBulletin, 23)}</b>
-        <br />
-        <p style={{ fontSize: "13px" }}>{truncatedText(descriptionBulletin, 45)}</p>
-      </div>
-    </div>
-  );
-};
-
-const cardCommander = (
-  serverID: string,
-  iconSmall: string,
-  commanderName: string,
-  description: string,
-  races: Array<string>,
-  push: {
-    (path: string, state?: unknown): void;
-    (location: History.LocationDescriptor<unknown>): void;
-    (arg0: string): void;
-  },
-) => {
-  const commanderIcon = getCommanderIconPath(iconSmall);
-  let commanderRace: string;
-
-  races.map((race) => (commanderRace = race));
-
-  const onCommanderClick = (race: string, steamId: string) => {
-    push(routes.commanderByID(race, steamId));
-  };
-
-  return (
-    <div
-      style={{ backgroundColor: "white", height: 60, cursor: "pointer" }}
-      onClick={() => {
-        onCommanderClick(commanderRace, serverID);
-      }}
-    >
-      <Avatar
-        size={60}
-        shape="square"
-        src={commanderIcon}
-        style={{ display: "inline-block", verticalAlign: "top" }}
-      />
-      <div style={{ display: "inline-block", paddingLeft: 5, width: 180, textAlign: "left" }}>
-        <b>{truncatedText(commanderName, 23)}</b>
-        <br />
-        <p style={{ fontSize: "13px" }}>{truncatedText(description, 45)}</p>
       </div>
     </div>
   );
@@ -225,15 +132,10 @@ const CustomSearch: React.FC = () => {
     const buildSearchResults = (data: Record<string, any>): JSX.Element => {
       if (Object.entries(data).length === 0) {
         return (
-          <div>
-            <Divider type="horizontal" plain>
-              Players
-            </Divider>
-            <Empty
-              image={Empty.PRESENTED_IMAGE_SIMPLE}
-              description={`No user profile with name ${searchParam} found`}
-            />
-          </div>
+          <Empty
+            image={Empty.PRESENTED_IMAGE_SIMPLE}
+            description={`No user profile with name ${searchParam} found`}
+          />
         );
       } else {
         const userCards = [];
@@ -243,66 +145,40 @@ const CustomSearch: React.FC = () => {
         }
 
         return (
-          <>
-            <Divider type="horizontal" plain>
-              Players
-            </Divider>
-            <Space wrap size={10} style={{ maxWidth: 720 }}>
-              {userCards}
-            </Space>
-          </>
+          <Space wrap size={10} style={{ maxWidth: 720 }} align={"center"}>
+            {userCards}
+          </Space>
         );
       }
     };
 
-    const buildSearchBulletin = (data: Record<string, any>): JSX.Element => {
+    const buildBulletinSearchResults = (data: Record<string, any>): JSX.Element => {
       if (Object.entries(data).length === 0) {
         return (
-          <div>
-            <Divider type="horizontal" plain>
-              Intel Bulletins
-            </Divider>
-            <Empty
-              image={Empty.PRESENTED_IMAGE_SIMPLE}
-              description={`No intel bulletins with text ${searchParam} found`}
-            />
-          </div>
+          <Empty
+            image={Empty.PRESENTED_IMAGE_SIMPLE}
+            description={`No intel bulletins with text ${searchParam} found`}
+          />
         );
       } else {
         const bulletinCards = [];
         const foundBulletins = Object.values(data);
         for (const value of foundBulletins) {
-          bulletinCards.push(
-            intelBulletin(
-              value.bulletinName,
-              value.descriptionShort,
-              value.icon,
-              searchParam,
-              push,
-            ),
-          );
+          bulletinCards.push(<SearchBulletinCard bulletinData={value} />);
         }
 
         return (
-          <div>
-            <Divider type="horizontal" plain>
-              Inter Bulletins
-            </Divider>
-            <Space wrap size={10} style={{ maxWidth: 740 }}>
-              {bulletinCards}
-            </Space>
-          </div>
+          <Space wrap size={10} style={{ maxWidth: 540 }} align={"center"}>
+            {bulletinCards}
+          </Space>
         );
       }
     };
 
-    const buildCommanders = (data: Record<string, any>): JSX.Element => {
+    const buildCommandersSearchResults = (data: Record<string, any>): JSX.Element => {
       if (Object.entries(data).length === 0) {
         return (
           <div>
-            <Divider type="horizontal" plain>
-              Commanders
-            </Divider>
             <Empty
               image={Empty.PRESENTED_IMAGE_SIMPLE}
               description={`No Commanders with name ${searchParam} found`}
@@ -314,25 +190,19 @@ const CustomSearch: React.FC = () => {
         const foundCommanders = Object.values(data);
         for (const value of foundCommanders) {
           commanders.push(
-            cardCommander(
-              value.serverID,
-              value.iconSmall,
-              value.commanderName,
-              value.description,
-              value.races,
-              push,
-            ),
+            <SearchCommanderCard
+              serverID={value.serverID}
+              iconSmall={value.iconSmall}
+              commanderName={value.commanderName}
+              description={value.description}
+              races={value.races}
+            />,
           );
         }
         return (
-          <>
-            <Divider type="horizontal" plain>
-              Commanders
-            </Divider>
-            <Space wrap size={10} style={{ maxWidth: 740 }}>
-              {commanders}
-            </Space>
-          </>
+          <Space wrap size={10} style={{ maxWidth: 540 }} align={"center"}>
+            {commanders}
+          </Space>
         );
       }
     };
@@ -347,8 +217,6 @@ const CustomSearch: React.FC = () => {
 
         const searchPlayers = httpsCallable(firebase.functions(), "searchPlayers");
 
-        // const searchPlayers = firebase.functions().httpsCallable("searchPlayers");
-
         try {
           const { data } = await searchPlayers(payLoad);
           // @ts-ignore
@@ -358,13 +226,12 @@ const CustomSearch: React.FC = () => {
           // Search Intel Bulletins from defined Function
           let bulletinData = searchBulletins(searchParam);
           // Parse Data into html
-          const resultBulletinHtml = buildSearchBulletin(bulletinData);
+          const resultBulletinHtml = buildBulletinSearchResults(bulletinData);
 
           // Search Commanders from defined function
           let commanderData = searchCommanders(searchParam);
-          console.log(commanderData);
           // Parse Data into html
-          const resultCommanderHtml = buildCommanders(commanderData);
+          const resultCommanderHtml = buildCommandersSearchResults(commanderData);
 
           setSearchData(resultHtml);
           setSearchIntelBulletin(resultBulletinHtml);
@@ -424,7 +291,7 @@ const CustomSearch: React.FC = () => {
   return (
     <div style={{ textAlign: "center", maxWidth: 900, margin: "auto", paddingBottom: 20 }}>
       <Search
-        placeholder="Steam name or steam id"
+        placeholder="Steam name, steam id, commander, bulletin"
         defaultValue={searchParam}
         onSearch={onSearch}
         style={{ width: 320, padding: 20 }}
@@ -432,9 +299,22 @@ const CustomSearch: React.FC = () => {
         enterButton
         allowClear
       />
-      <div>{searchData}</div>
-      <div>{searchDataCommanders}</div>
-      <div>{searchIntelBulletin}</div>
+      {!loading && searchParam && (
+        <>
+          <Divider type="horizontal" plain>
+            Players
+          </Divider>
+          <div>{searchData}</div>
+          <Divider type="horizontal" plain>
+            Commanders
+          </Divider>
+          <div>{searchDataCommanders}</div>
+          <Divider type="horizontal" plain>
+            Intel Bulletins
+          </Divider>
+          <div>{searchIntelBulletin}</div>
+        </>
+      )}
     </div>
   );
 };

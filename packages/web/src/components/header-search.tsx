@@ -10,7 +10,7 @@ export const PlayerSearchInput: React.FC = () => {
 
   return (
     <Search
-      placeholder="Player name"
+      placeholder="Players, Commanders, Bulletins"
       onSearch={onSearch}
       style={{ width: "100%", verticalAlign: "middle", paddingLeft: 15 }}
       enterButton
