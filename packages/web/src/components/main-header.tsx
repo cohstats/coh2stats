@@ -18,9 +18,9 @@ import {
   desktopAppBase,
   liveMatchesAppBase,
 } from "../titles";
-import SubMenu from "antd/es/menu/SubMenu";
 import { Link } from "react-router-dom";
 import { doc, getFirestore, onSnapshot } from "firebase/firestore";
+import { ItemType } from "antd/lib/menu/hooks/useItems";
 
 const pageTitleSwitch = (path: string) => {
   switch (path) {
@@ -44,6 +44,46 @@ const pageTitleSwitch = (path: string) => {
       break;
   }
 };
+
+const menuItems: ItemType[] = [
+  { key: routes.playerCardBase(), label: <Link to={routes.playerCardBase()}>Players</Link> },
+  { key: routes.statsBase(), label: <Link to={routes.statsBase()}>Stats</Link> },
+  { key: routes.mapStats(), label: <Link to={routes.mapStats()}>Map Stats</Link> },
+  {
+    key: routes.leaderboardsBase(),
+    label: <Link to={routes.leaderboardsBase()}>Leaderboards</Link>,
+  },
+  { key: routes.liveMatchesBase(), label: <Link to={routes.liveMatchesBase()}>Live Games</Link> },
+  { key: routes.commanderBase(), label: <Link to={routes.commanderBase()}>Commanders</Link> },
+  {
+    key: routes.bulletinsBase(),
+    label: <Link to={routes.bulletinsBase()}>Intel Bulletins</Link>,
+  },
+  { key: routes.desktopAppBase(), label: <Link to={routes.desktopAppBase()}>Desktop App</Link> },
+  {
+    label: "About",
+    key: routes.aboutBase(),
+    children: [
+      { key: `${routes.aboutBase()}#base`, label: <Link to={routes.aboutBase()}>About</Link> },
+      {
+        key: `${routes.aboutBase()}#bugs`,
+        label: <Link to={`${routes.aboutBase()}#bugs`}>Contribution</Link>,
+      },
+      {
+        key: `${routes.aboutBase()}#donations`,
+        label: <Link to={`${routes.aboutBase()}#donations`}>Donation</Link>,
+      },
+      {
+        key: "relic-api-status",
+        label: (
+          <a href="https://stats.uptimerobot.com/03lN1ckr5j" target="_blank" rel={"noreferrer"}>
+            Relic API Status
+          </a>
+        ),
+      },
+    ],
+  },
+];
 
 export const MainHeader: React.FC = () => {
   const [isOnlinePlayersLoading, setIsOnlinePlayersLoading] = useState(true);
@@ -172,53 +212,9 @@ export const MainHeader: React.FC = () => {
             theme="dark"
             mode="horizontal"
             selectedKeys={[currentPath]}
+            items={menuItems}
             defaultSelectedKeys={[currentPath]}
-          >
-            <Menu.Item key={routes.playerCardBase()}>
-              <Link to={routes.playerCardBase()}>Players</Link>
-            </Menu.Item>
-            <Menu.Item key={routes.statsBase()}>
-              <Link to={routes.statsBase()}>Stats</Link>
-            </Menu.Item>
-            <Menu.Item key={routes.mapStats()}>
-              <Link to={routes.mapStats()}>Map Stats</Link>
-            </Menu.Item>
-            <Menu.Item key={routes.leaderboardsBase()}>
-              <Link to={routes.leaderboardsBase()}>Leaderboards</Link>
-            </Menu.Item>
-            <Menu.Item key={routes.liveMatchesBase()}>
-              <Link to={routes.liveMatchesBase()}>Live Games</Link>
-            </Menu.Item>
-            <Menu.Item key={routes.commanderBase()}>
-              <Link to={routes.commanderBase()}>Commanders</Link>
-            </Menu.Item>
-            <Menu.Item key={routes.bulletinsBase()}>
-              <Link to={routes.bulletinsBase()}>Intel Bulletins</Link>
-            </Menu.Item>
-            <Menu.Item key={routes.desktopAppBase()}>
-              <Link to={routes.desktopAppBase()}>Desktop App</Link>
-            </Menu.Item>
-            <SubMenu key={routes.aboutBase()} title={"About"}>
-              <Menu.Item key={`${routes.aboutBase()}#base`}>
-                <Link to={routes.aboutBase()}>About</Link>
-              </Menu.Item>
-              <Menu.Item key={`${routes.aboutBase()}#bugs`}>
-                <Link to={`${routes.aboutBase()}#bugs`}>Contribution</Link>
-              </Menu.Item>
-              <Menu.Item key={`${routes.aboutBase()}#donations`}>
-                <Link to={`${routes.aboutBase()}#donations`}>Donation</Link>
-              </Menu.Item>
-              <Menu.Item key={"relic-api-status"}>
-                <a
-                  href="https://stats.uptimerobot.com/03lN1ckr5j"
-                  target="_blank"
-                  rel={"noreferrer"}
-                >
-                  Relic API Status
-                </a>
-              </Menu.Item>
-            </SubMenu>
-          </Menu>
+          />
         </div>
       </div>
     </Header>
