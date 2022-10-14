@@ -19,7 +19,6 @@ import config from "../../config";
 import { AlertBox } from "../../components/alert-box";
 import AllMatchesTable from "../matches/all-matches-table";
 const { Text } = Typography;
-const { TabPane } = Tabs;
 
 type playerCardAPIObject = {
   relicPersonalStats: Record<string, any>;
@@ -163,6 +162,24 @@ const PlayerCard = () => {
   const { totalGames, lastGameDate, bestRank, mostPlayed, totalWinRate } =
     calculateOverallStatsForPlayerCard(relicData.leaderboardStats);
 
+  const playerTabItems = [
+    {
+      label: "Standings",
+      key: "stats",
+      children: <PlayerStandingsTables data={relicData as LaddersDataObject} />,
+    },
+    {
+      label: "Recent Matches",
+      key: "recentMatches",
+      children: <LastMatchesTable data={data["playerMatches"]} profileID={`/steam/${steamid}`} />,
+    },
+    {
+      label: "Matches",
+      key: "matches",
+      children: <AllMatchesTable steamID={`${steamid}`} />,
+    },
+  ];
+
   return (
     <div key={steamid}>
       <Row justify="center" style={{ paddingTop: "10px" }}>
@@ -271,17 +288,13 @@ const PlayerCard = () => {
       </Row>
       <Row justify="center">
         <Col xs={24} md={22} xxl={15}>
-          <Tabs defaultActiveKey={tabView} size={"large"} centered onChange={changeTheUrl}>
-            <TabPane tab={"Standings"} key="stats">
-              <PlayerStandingsTables data={relicData as LaddersDataObject} />
-            </TabPane>
-            <TabPane tab="Recent Matches" key="recentMatches">
-              <LastMatchesTable data={data["playerMatches"]} profileID={`/steam/${steamid}`} />
-            </TabPane>
-            <TabPane tab="Matches" key="matches">
-              <AllMatchesTable steamID={`${steamid}`} />
-            </TabPane>
-          </Tabs>
+          <Tabs
+            items={playerTabItems}
+            defaultActiveKey={tabView}
+            size={"large"}
+            centered
+            onChange={changeTheUrl}
+          />
         </Col>
       </Row>
     </div>
