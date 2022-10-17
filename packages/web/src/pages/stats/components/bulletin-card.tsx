@@ -23,11 +23,15 @@ const BulletinCard: React.FC<IProps> = ({ data, type, race, bodyStyle }) => {
   )
 
   return (
-    <Card title={`Intel Bulletins  ${type} - ${race}`} bodyStyle={bodyStyle}>
-      <button onClick={() => setToggle(!toggle)}> Display Top 20</button>
-      <BulletinsBarChart bulletins={toggle ? sliced : bulletinData} />
 
-    </Card>
+      <Card
+        title={`Intel Bulletins  ${type} - ${race} `}
+        bodyStyle={bodyStyle}
+        extra = {<button onClick={() => setToggle(!toggle)}> {!toggle ? <span>Display Top 20</span> : <span>Display All Results</span> }</button>}
+        >
+        <BulletinsBarChart bulletins={toggle ? sliced : bulletinData} />
+
+      </Card>
   );
 };
 
