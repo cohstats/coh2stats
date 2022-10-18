@@ -86,6 +86,10 @@ const playerCardCOHStatsMatchesDisplayed = (): void => {
   firebase.logEvent("playerCardCOHStatsMatches");
 };
 
+const mostRecentGamesPageDisplayed = (): void => {
+  firebase.logEvent("mostRecentGamesPage");
+};
+
 const playerCardCOHStatsMatchesMoreGames = (): void => {
   firebase.logEvent("playerCardCOHStatsMatchesMore");
 };
@@ -137,6 +141,7 @@ const firebaseAnalytics = {
   playerCardFullMatchDetailsDisplayed,
   playerCardCOHStatsMatchesDisplayed,
   playerCardCOHStatsMatchesMoreGames,
+  mostRecentGamesPageDisplayed,
 };
 
 export default firebaseAnalytics;

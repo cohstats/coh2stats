@@ -17,6 +17,7 @@ import {
   commanderBase,
   desktopAppBase,
   liveMatchesAppBase,
+  mostRecentGamesAppBase,
 } from "../titles";
 import { Link } from "react-router-dom";
 import { doc, getFirestore, onSnapshot } from "firebase/firestore";
@@ -42,6 +43,8 @@ const pageTitleSwitch = (path: string) => {
     case routes.liveMatchesBase():
       document.title = liveMatchesAppBase;
       break;
+    case routes.recentMatchesBase():
+      document.title = mostRecentGamesAppBase;
   }
 };
 
@@ -60,6 +63,10 @@ const menuItems: ItemType[] = [
     label: <Link to={routes.bulletinsBase()}>Intel Bulletins</Link>,
   },
   { key: routes.desktopAppBase(), label: <Link to={routes.desktopAppBase()}>Desktop App</Link> },
+  {
+    key: routes.recentMatchesBase(),
+    label: <Link to={routes.recentMatchesBase()}>Recent Games</Link>,
+  },
   {
     label: "About",
     key: routes.aboutBase(),
@@ -136,6 +143,10 @@ export const MainHeader: React.FC = () => {
     path: routes.liveMatchesBase(),
   });
 
+  const recentMatches = useRouteMatch({
+    path: routes.recentMatchesBase(),
+  });
+
   let pathMatch =
     commandersMatch ||
     statsMatch ||
@@ -144,6 +155,7 @@ export const MainHeader: React.FC = () => {
     mapStatsMatch ||
     desktopAppMatch ||
     liveMatchesMatch ||
+    recentMatches ||
     leaderboardsMatch;
   const currentPath = pathMatch?.path || "";
   pageTitleSwitch(currentPath);
