@@ -60,6 +60,10 @@ const liveMatchesBase = () => {
   return "/live-matches";
 };
 
+const recentMatchesBase = () => {
+  return "/recent-matches";
+};
+
 const playerCardWithId = (steamId = ":steamid") => {
   return `${playerCardBase()}/${steamId}`;
 };
@@ -90,6 +94,7 @@ const routes = {
   playerCardWithIdAndName,
   desktopAppBase,
   singleMatch,
+  recentMatchesBase,
 };
 
 export default routes;

@@ -23,6 +23,7 @@ import LiveMatches from "./pages/live-matches";
 import { ErrorBoundary } from "./components/error-boundary";
 import SingleMatch from "./pages/match";
 import UserProfile from "./pages/profile";
+import RecentMatches from "./pages/recent-matches/recent-matches";
 
 const { Content } = Layout;
 
@@ -87,6 +88,9 @@ const App: React.FC = () => {
               </Route>
               <Route path={routes.singleMatch()}>
                 <SingleMatch />
+              </Route>
+              <Route path={routes.recentMatchesBase()}>
+                <RecentMatches />
               </Route>
               <Route path="/userProfile">
                 <UserProfile />

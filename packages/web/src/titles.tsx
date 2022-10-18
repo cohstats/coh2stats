@@ -18,6 +18,8 @@ const desktopAppBase = `${baseTitle} Stats Desktop App`;
 
 const liveMatchesAppBase = `${baseTitle} Games in progress`;
 
+const mostRecentGamesAppBase = `${baseTitle} Most recent games`;
+
 export {
   baseTitle,
   statsBase,
@@ -29,4 +31,5 @@ export {
   playerCardBase,
   desktopAppBase,
   liveMatchesAppBase,
+  mostRecentGamesAppBase,
 };

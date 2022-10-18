@@ -4,6 +4,7 @@ import { format } from "date-fns";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en.json";
 import config from "../config";
+import { axisRaceIds, ProcessedMatch, resultType } from "../coh/types";
 
 // Something like this is not currently support by create-react-app
 // Jesus that lib is such a shit https://github.com/facebook/create-react-app/issues/9127 ...
@@ -122,6 +123,23 @@ const isDev = () => {
   return config.devHostnames.includes(hostName);
 };
 
+const determineMatchWinner = (match: ProcessedMatch): "axis" | "allies" | "none" => {
+  for (const playerReport of match.matchhistoryreportresults) {
+    if (playerReport.resulttype === resultType.win) {
+      if (axisRaceIds.includes(playerReport.race_id)) {
+        // axis won
+        return "axis";
+      } else {
+        // allies won
+        return "allies";
+      }
+    }
+  }
+
+  // No-one won, this can happen in case that match was interrupted or something
+  return "none";
+};
+
 export {
   getYesterdayDateTimestamp,
   convertDateToDayTimestamp,
@@ -137,4 +155,5 @@ export {
   formatFactionName,
   timeAgo,
   isDev,
+  determineMatchWinner,
 };

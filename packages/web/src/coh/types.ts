@@ -193,6 +193,14 @@ interface ProcessedMatch {
   steam_ids: Array<string>;
 }
 
+const resultType = {
+  lose: 0,
+  win: 1,
+};
+
+const axisRaceIds = [0, 2];
+const alliesRaceIds = [1, 3, 4];
+
 /**
  * This is the object inside matchhistoryreportresults
  */
@@ -222,4 +230,11 @@ export type {
   statTypesInDbAsType,
   LiveGame,
 };
-export { validRaceNames, validStatsTypes, statsTypesInDB };
+export {
+  validRaceNames,
+  validStatsTypes,
+  statsTypesInDB,
+  resultType,
+  axisRaceIds,
+  alliesRaceIds,
+};
