@@ -7,7 +7,8 @@ import {
   limit,
   orderBy,
   query,
-  getCountFromServer,
+  doc,
+  getDoc,
 } from "firebase/firestore";
 import { ColumnsType } from "antd/es/table";
 import {
@@ -46,19 +47,23 @@ const RecentMatches: React.FC = () => {
 
       try {
         const matchesRef = collection(getFirestore(), "matches");
+        const docTotalMatchesRef = doc(getFirestore(), "stats", "totalStoredMatches");
 
         const q = query(matchesRef, orderBy("completiontime", "desc"), limit(20));
 
-        const [snapshot, querySnapshot] = await Promise.all([
-          getCountFromServer(matchesRef),
+        const [docSnapTotalMatches, querySnapshot] = await Promise.all([
+          getDoc(docTotalMatchesRef),
           getDocs(q),
         ]);
-        setTotalMatches(snapshot.data().count);
 
         const gamesData: Array<Record<string, any>> = [];
         querySnapshot.forEach((doc) => {
           gamesData.push(doc.data());
         });
+
+        if (docSnapTotalMatches.exists()) {
+          setTotalMatches(docSnapTotalMatches.data()?.count);
+        }
 
         setMatchRecords(gamesData);
       } catch (e) {

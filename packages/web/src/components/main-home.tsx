@@ -27,7 +27,7 @@ const MainHome: React.FC = () => {
     }
   }, []);
 
-  const cardStyle = { width: 240, height: 265 };
+  const cardStyle = { width: 240, height: 275 };
 
   return (
     <Row>
