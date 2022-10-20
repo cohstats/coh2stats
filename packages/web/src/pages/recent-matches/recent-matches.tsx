@@ -260,7 +260,7 @@ const RecentMatches: React.FC = () => {
 
   return (
     <Row justify="center" style={{ paddingTop: "10px" }}>
-      <Col xs={23} md={22} xxl={15}>
+      <Col xs={23} md={22} xxl={16}>
         <div style={{ textAlign: "center" }}>
           <Title>Most recent games</Title>
           <Title level={5}>Currently {totalMatches} games are stored in our database</Title>
