@@ -22,6 +22,7 @@ import MapStats from "./pages/map-stats";
 import LiveMatches from "./pages/live-matches";
 import { ErrorBoundary } from "./components/error-boundary";
 import SingleMatch from "./pages/match";
+import NotFound from "./pages/not-found";
 import UserProfile from "./pages/profile";
 import RecentMatches from "./pages/recent-matches/recent-matches";
 
@@ -94,6 +95,9 @@ const App: React.FC = () => {
               </Route>
               <Route path="/userProfile">
                 <UserProfile />
+              </Route>
+              <Route path="*">
+                <NotFound />
               </Route>
             </Switch>
           </ErrorBoundary>
