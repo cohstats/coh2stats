@@ -1,9 +1,10 @@
 import React from "react";
 import RedditCardDetails from "./reddit-card-details";
 import { useState, useEffect } from "react";
-import { Card, Typography } from "antd";
+import { Card, Tooltip, Typography } from "antd";
 import { Loading } from "../loading";
 import { useMediaQuery } from "react-responsive";
+
 const { Title } = Typography;
 
 interface Props {
@@ -24,7 +25,7 @@ const RedditCard: React.FC<Props> = (size) => {
         const resData = await res.json();
         const requiredData = resData?.data?.children
           .filter(function (e: any) {
-            return e?.data?.link_flair_text === "CoH2";
+            return `${e?.data?.link_flair_text}`.includes("CoH2");
           })
           .slice(0, 10);
         setData(requiredData);
@@ -50,7 +51,9 @@ const RedditCard: React.FC<Props> = (size) => {
         <div style={{ overflow: "hidden" }}>
           <div style={{ float: "left" }}>
             {" "}
-            <Title level={3}>Top Reddit Posts</Title>
+            <Tooltip title={"Filtered only to COH2 Posts"}>
+              <Title level={3}>Top COH2 Reddit Posts</Title>
+            </Tooltip>
           </div>
           <div style={{ float: "right" }}>
             {" "}
