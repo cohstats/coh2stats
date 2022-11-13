@@ -223,7 +223,7 @@ const parseSideData = (logFileTeam: LogFileTeamData, apiData: PersonalStatRespon
 
   findMemberInfos(statGroups, unfinishedSoloMemberDatas, soloData);
 
-  leaderboardStats.forEach((leaderboardStat) => {
+  leaderboardStats.forEach((leaderboardStat: any) => {
     // add additional data to solo entries
     processSoloLeaderboardStats(
       leaderboardStat,
@@ -352,7 +352,7 @@ const findMemberInfos = (
   for (let i = 0; i < statGroups.length; i++) {
     if (unfinishedSoloMemberDatas.size > 0) {
       const members = statGroups[i].members;
-      members.forEach((member) => {
+      members.forEach((member: any) => {
         const keysToDelete: number[] = [];
         unfinishedSoloMemberDatas.forEach((v, k) => {
           if (member.profile_id === soloData[k].members[0].relicID) {
@@ -426,9 +426,9 @@ const processTeamLeaderboardStats = (
       if (result) {
         // generate unique index by concatenating sorted relicIds
         const uniqueTeamId = teamStatGroup.members
-          .map((member) => member.profile_id)
-          .sort((a, b) => a - b)
-          .map((relicId) => "" + relicId)
+          .map((member: any) => member.profile_id)
+          .sort((a : any, b : any) => a - b)
+          .map((relicId: any) => "" + relicId)
           .join("");
         const teamMembers: Member[] = new Array(teamStatGroup.members.length);
         for (let k = 0; k < teamStatGroup.members.length; k++) {
