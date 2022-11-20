@@ -108,14 +108,6 @@ module.exports = {
                 js: "./src/renderer/windows/preload.tsx",
               },
             },
-            {
-              html: "./src/renderer/windows/about/index.html",
-              js: "./src/renderer/windows/about/index.tsx",
-              name: "about_window",
-              preload: {
-                js: "./src/renderer/windows/preload.tsx",
-              },
-            },
           ],
         },
       },

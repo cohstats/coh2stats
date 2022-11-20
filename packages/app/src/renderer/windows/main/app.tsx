@@ -126,10 +126,7 @@ const App = (): JSX.Element => {
           upToDate ? undefined : (
             <>
               <Tag icon={<DownloadOutlined />} color="#3b5999">
-                <Link
-                  style={{ color: "white" }}
-                  onClick={() => window.electron.ipcRenderer.showWindow("about")}
-                >
+                <Link style={{ color: "white" }} onClick={() => setIsAboutModalOpen(true)}>
                   Update available!
                 </Link>
               </Tag>
