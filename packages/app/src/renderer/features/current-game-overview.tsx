@@ -124,7 +124,7 @@ const CurrentGameOverview: React.FC<Props> = ({ game }) => {
   return (
     <>
       <TeamView side={game.left} />
-      <h1 style={{ paddingLeft: 20 }}>VS</h1>
+      <h1 style={{ paddingLeft: 20, paddingTop: 15, paddingBottom: 10 }}>VS</h1>
       <TeamView side={game.right} />
       <GameBalanceView
         game={game}

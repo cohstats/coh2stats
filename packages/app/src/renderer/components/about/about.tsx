@@ -1,40 +1,47 @@
-import Title from "antd/es/typography/Title";
-import Text from "antd/es/typography/Text";
-import Col from "antd/es/grid/col";
+import React from "react";
+import Modal from "antd/es/modal/Modal";
 import Row from "antd/es/grid/row";
-import Link from "antd/es/typography/Link";
-import compareVersions from "compare-versions";
-import * as React from "react";
-import { useSelector } from "react-redux";
-import { selectSettings } from "../../../redux/slice";
+import Col from "antd/es/grid/col";
 import bigIcon from "../../../../assets/ms-icon-310x310.png";
-import { useEffect } from "react";
-import { events, firebaseInit } from "../../firebase/firebase";
+import Title from "antd/es/typography/Title";
 import { Tag, Tooltip } from "antd";
 import { DownloadOutlined, InfoCircleOutlined } from "@ant-design/icons";
-import WindowTitlebar from "../../titlebar/window-titlebar";
-import { KofiDonate } from "../../components/donate/kofi-donate";
+import Link from "antd/es/typography/Link";
+import Text from "antd/es/typography/Text";
+import { KofiDonate } from "../donate/kofi-donate";
+import compareVersions from "compare-versions";
+import { useSelector } from "react-redux";
+import { selectSettings } from "../../../redux/slice";
 
-// Because about window is completely new render process we need to init firebase again
-firebaseInit();
+interface Props {
+  modalState: boolean;
+  setModalState: any;
+}
 
-const App = (): JSX.Element => {
+const AboutModal: React.FC<Props> = ({ modalState, setModalState }) => {
   const settings = useSelector(selectSettings);
   let upToDate = true;
   if (settings.appNewestVersion) {
     upToDate = compareVersions(settings.appVersion, settings.appNewestVersion) >= 0;
   }
 
-  useEffect(() => {
-    events.about();
-  }, []);
-
   return (
     <>
-      <WindowTitlebar windowName="about" cantMaximize>
+      <Modal
+        title="About the app"
+        open={modalState}
+        centered
+        onOk={() => {
+          setModalState(false);
+        }}
+        onCancel={() => {
+          setModalState(false);
+        }}
+        width={750}
+      >
         <Row>
           <Col span={8} style={{ paddingRight: 20, paddingLeft: 20 }}>
-            <img src={bigIcon} style={{ width: 250, height: 250 }} alt="App Icon" />
+            <img src={bigIcon} style={{ width: 200, height: 200 }} alt="App Icon" />
           </Col>
           <Col span={16} style={{ paddingRight: 10 }}>
             <Title style={{ marginBottom: 5 }}>COH2 Game Stats </Title>
@@ -119,9 +126,9 @@ const App = (): JSX.Element => {
             <KofiDonate />
           </Col>
         </Row>
-      </WindowTitlebar>
+      </Modal>
     </>
   );
 };
 
-export default App;
+export default AboutModal;
