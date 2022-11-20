@@ -104,7 +104,7 @@ const Leaderboards = () => {
           const leaderboardID = leaderboardsID[type][race];
           if (leaderboardID) {
             const response = await fetch(
-              `https://${config.firebaseFunctions.location}-coh2-ladders-prod.cloudfunctions.net/getCOHLaddersHttp?leaderBoardID=${leaderboardID}&start=0`,
+              `https://${config.firebaseFunctions.location}-coh2-ladders-prod.cloudfunctions.net/getCOHLaddersHttpV2?leaderBoardID=${leaderboardID}&start=0`,
             );
             const finalData = await response.json();
             setData(finalData);
