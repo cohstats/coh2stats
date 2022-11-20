@@ -32,11 +32,6 @@ export const defaultWindowStates: WindowStates = {
     width: 700,
     maximized: false,
   },
-  about: {
-    height: 220,
-    width: 650,
-    maximized: false,
-  },
   web: {
     height: 800,
     width: 1260,

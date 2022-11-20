@@ -427,7 +427,7 @@ const processTeamLeaderboardStats = (
         // generate unique index by concatenating sorted relicIds
         const uniqueTeamId = teamStatGroup.members
           .map((member: any) => member.profile_id)
-          .sort((a : any, b : any) => a - b)
+          .sort((a: any, b: any) => a - b)
           .map((relicId: any) => "" + relicId)
           .join("");
         const teamMembers: Member[] = new Array(teamStatGroup.members.length);

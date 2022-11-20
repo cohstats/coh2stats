@@ -20,6 +20,7 @@ import WindowTitlebar from "../../titlebar/window-titlebar";
 import WindowTitlebarItem from "../../titlebar/window-titlebar-item";
 import { datesAreOnSameDay } from "../../utils/helpers";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
+import AboutModal from "../../components/about/about";
 
 // We need to initialize our Firebase
 // This has to happen once on the main file of each render process
@@ -32,6 +33,8 @@ const App = (): JSX.Element => {
   const [upToDate, setUpToDate] = useState(true);
   const [requestState, setRequestState] = useState<"loading" | "idle" | "completed">("idle");
   const applicationCache = useSelector(selectCache);
+
+  const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
 
   // On init of the app
   useEffect(() => {
@@ -112,9 +115,7 @@ const App = (): JSX.Element => {
       <WindowTitlebarItem onClick={() => window.electron.ipcRenderer.showWindow("settings")}>
         Settings
       </WindowTitlebarItem>
-      <WindowTitlebarItem onClick={() => window.electron.ipcRenderer.showWindow("about")}>
-        About
-      </WindowTitlebarItem>
+      <WindowTitlebarItem onClick={() => setIsAboutModalOpen(true)}>About</WindowTitlebarItem>
     </>
   );
 
@@ -125,10 +126,7 @@ const App = (): JSX.Element => {
           upToDate ? undefined : (
             <>
               <Tag icon={<DownloadOutlined />} color="#3b5999">
-                <Link
-                  style={{ color: "white" }}
-                  onClick={() => window.electron.ipcRenderer.showWindow("about")}
-                >
+                <Link style={{ color: "white" }} onClick={() => setIsAboutModalOpen(true)}>
                   Update available!
                 </Link>
               </Tag>
@@ -142,6 +140,7 @@ const App = (): JSX.Element => {
           {content}
         </Col>
       </Row>
+      <AboutModal setModalState={setIsAboutModalOpen} modalState={isAboutModalOpen} />
     </WindowTitlebar>
   );
 };

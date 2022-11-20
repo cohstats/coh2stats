@@ -15,8 +15,6 @@ declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 declare const SETTINGS_WINDOW_WEBPACK_ENTRY: string;
 declare const SETTINGS_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
-declare const ABOUT_WINDOW_WEBPACK_ENTRY: string;
-declare const ABOUT_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
 export class ApplicationManager {
   windows: Record<ApplicationWindows, ApplicationWindow>;
@@ -62,18 +60,6 @@ export class ApplicationManager {
         maximizable: false,
         fullscreenable: false,
         resizable: true,
-        closeHandlerCreator: this.sideWindowCloseHandlerCreator,
-        getLastWindowSateFunc: this.getLastWindowState,
-      }),
-      about: new ApplicationWindow("about", {
-        minWidth: 650,
-        minHeight: 250,
-        displayExternalContent: false,
-        preload: ABOUT_WINDOW_PRELOAD_WEBPACK_ENTRY,
-        url: ABOUT_WINDOW_WEBPACK_ENTRY,
-        maximizable: false,
-        fullscreenable: false,
-        resizable: false,
         closeHandlerCreator: this.sideWindowCloseHandlerCreator,
         getLastWindowSateFunc: this.getLastWindowState,
       }),
@@ -180,10 +166,6 @@ export class ApplicationManager {
         click: () => this.windows.settings.show(),
       },
       {
-        label: "About",
-        click: () => this.windows.about.show(),
-      },
-      {
         label: "Exit",
         click: this.quit,
       },
@@ -242,7 +224,6 @@ export class ApplicationManager {
     this.windows.main.destroy();
     this.windows.web.destroy();
     this.windows.settings.destroy();
-    this.windows.about.destroy();
     events.app_quit(
       this.applicationStore.runtimeStore.getState().settings,
       new Date().getTime() - this.startTime,

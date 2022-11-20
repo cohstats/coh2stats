@@ -3,81 +3,25 @@ import { PlusSquareOutlined, MinusSquareOutlined } from "@ant-design/icons";
 import Tooltip from "antd/es/tooltip/index";
 import Table from "antd/es/table/Table";
 import Typography from "antd/es/typography";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { LadderStats, Member, SideData } from "../../redux/state";
 import { CountryFlag } from "./country-flag";
 import { timeAgo } from "../utils/helpers";
 import { FactionIcon } from "./faction-icon";
 import { Helper } from "@coh2stats/shared/src/components/helper";
 import { levelToText } from "@coh2stats/shared/src/coh/helpers";
-import { calculateOverallStatsForPlayerCard } from "@coh2stats/web/src/pages/players/data-processing";
-import config from "../../../../web/src/config";
-const { Text } = Typography;
+import ExtraPLayerInfo from "./extra-info";
+import InfoCircleOutlined from "@ant-design/icons/InfoCircleOutlined";
+
 interface Props {
   side: SideData;
 }
-type playerCardAPIObject = {
-  relicPersonalStats: Record<string, any>;
-  steamProfile: Record<string, any>;
-  playerMatches: Array<Record<string, any>>;
-  playTime: null | number;
-};
-
-
 
 const TeamView: React.FC<Props> = ({ side }) => {
   const [showTeams, setShowTeams] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [steamid, setSteamid] = useState(0);
-  const [expandedRowKeys, setExpandedRowKeys] = useState([]);
-
-  const [totalGames, setTotalGames] = useState<any>();
-  const [lastGameDate, setLastGameDate] = useState<any>();
-  const [bestRank, setBestRank] = useState<any>();
-  const [mostPlayed, setMostPlayed] = useState<any>();
-  const [totalWinRate, setTotalWinRate] = useState<any>();
-
-  useEffect(() => {
-    setIsLoading(true);
-    (async () => {
-      if(steamid !== 0){
-        try {
-          const response = await fetch(
-            `https://${config.firebaseFunctions.location}-coh2-ladders-prod.cloudfunctions.net/getPlayerCardEverythingHttp?steamid=${steamid}`,
-          );
-          const finalData: playerCardAPIObject = await response.json();
-          const relicData = finalData.relicPersonalStats;
-          const { totalGames, lastGameDate, bestRank, mostPlayed, totalWinRate } =
-          calculateOverallStatsForPlayerCard(relicData.leaderboardStats);
-          setTotalGames(totalGames)
-          setLastGameDate(lastGameDate)
-          setBestRank(bestRank)
-          setMostPlayed(mostPlayed)
-          setTotalWinRate(totalWinRate)
-        } catch (e) {
-          console.error(e);
-        } finally {
-          setIsLoading(false);
-        }
-      }
-      })();
-    
-  }, [steamid]);
 
   const showPlayerProfile = (steamId: string) => {
     window.electron.ipcRenderer.showProfile(steamId);
-  };
-
-  const convertTeamNames = (mode: string) => {
-    if (mode.startsWith("team")) {
-      return `Team of ${mode[4]}`;
-    } else {
-      return mode;
-    }
-  };
-
-  const capitalize = (s: string) => {
-    return s.charAt(0).toUpperCase() + s.slice(1);
   };
 
   const TableColumns: ColumnsType<LadderStats> = [
@@ -310,6 +254,7 @@ const TeamView: React.FC<Props> = ({ side }) => {
         }
       },
     },
+    Table.EXPAND_COLUMN,
   ];
 
   const footer = () => {
@@ -335,7 +280,7 @@ const TeamView: React.FC<Props> = ({ side }) => {
   return (
     <div>
       <Table
-        style={{ paddingBottom: 20, overflow: "auto" }}
+        style={{ overflow: "auto" }}
         columns={TableColumns}
         dataSource={showTeams ? side.solo.concat(side.teams) : side.solo}
         rowKey={(record) =>
@@ -346,63 +291,15 @@ const TeamView: React.FC<Props> = ({ side }) => {
         pagination={false}
         size={"small"}
         footer={footer}
-        expandedRowKeys={expandedRowKeys}
         expandable={{
-          expandedRowRender: record => {
-              return <>
-                {
-                  isLoading
-                  ?<></>
-                  : <div style={{ float: "right", textAlign: "right" }}> <div>
-                  {bestRank.rank !== Infinity ? (
-                    <>
-                      Current best rank <Text strong>{bestRank.rank}</Text> in{" "}
-                      <Text strong>
-                        {convertTeamNames(bestRank.mode)} as {capitalize(bestRank.race)}
-                      </Text>
-                    </>
-                  ) : (
-                    <>
-                      Currently <Text strong>unranked</Text>
-                    </>
-                  )}
-                </div>
-                <div>
-                  Most played{" "}
-                  <Text strong>
-                    {convertTeamNames(mostPlayed.mode)} as {capitalize(mostPlayed.race)}
-                  </Text>
-                </div>
-                <div>
-                  <Text strong>{totalGames} ranked games</Text>
-                </div>
-                <div>
-                  <Text strong>{(totalWinRate * 100).toFixed(0)}% ranked winrate</Text>
-                </div>
-                <br />
-                <div>
-                  <Tooltip title={new Date(lastGameDate * 1000).toLocaleString()}>
-                    Last match{" "}
-                    {timeAgo.format(Date.now() - (Date.now() - lastGameDate * 1000), "round-minute")}
-                  </Tooltip>
-                </div>
-              </div>
-                }
-          </>
-       
-        },
-          onExpand: (expanded, record) => {
-            var keys = [];
-		        if(expanded){
-			        keys.push( record.members[0].relicID + "" +  record.members[0].faction + "" +  record.members[0].name);
-		        }
-            setExpandedRowKeys(keys);
-            setSteamid(record.members[0].steamID as any)},
-          rowExpandable: record => record.members.length === 1,
-         
+          expandedRowRender: (record) => {
+            return <ExtraPLayerInfo record={record} />;
+          },
+          rowExpandable: (record) => record.members.length === 1,
+          expandRowByClick: true,
         }}
-    
       />
+      <InfoCircleOutlined /> Click on the row to display quick player info.
     </div>
   );
 };

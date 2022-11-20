@@ -1,4 +1,4 @@
-export type ApplicationWindows = "main" | "settings" | "about" | "web";
+export type ApplicationWindows = "main" | "settings" | "web";
 
 export interface WindowState {
   x?: number;
