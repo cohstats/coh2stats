@@ -1,7 +1,7 @@
 {
   "name": "@coh2stats/app",
   "productName": "Coh2 Game Stats",
-  "version": "1.3.5",
+  "version": "1.5.0",
   "description": "Displays stats of players in the current Coh2 game",
   "main": ".webpack/main",
   "private": true,
