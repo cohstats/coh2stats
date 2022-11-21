@@ -61,7 +61,7 @@ module.exports = {
       // make sure all external libraries are packaged
       const libDest = path.join(rootDir, ".resources", "node_modules");
       if (!fs.existsSync(libDest)) {
-        fs.mkdirSync(libDest, { recursive: true });
+        fs.mkdirSync(libDest, {recursive: true});
       }
       const modules = path.join(rootDir, "..", "..", "node_modules");
       const externalEntries = Object.entries(webpackMainSettings.externals);
@@ -81,9 +81,9 @@ module.exports = {
     },
   },
   plugins: [
-    [
-      "@electron-forge/plugin-webpack",
-      {
+    {
+      name: "@electron-forge/plugin-webpack",
+      config: {
         mainConfig: "./webpack.main.config.js",
         // This allows us to connect to the firebase from the render process
         // It's a security risk, but also only way to make it work?
@@ -111,6 +111,6 @@ module.exports = {
           ],
         },
       },
-    ],
+    },
   ],
 };
