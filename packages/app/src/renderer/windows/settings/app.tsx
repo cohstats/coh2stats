@@ -13,7 +13,7 @@ import { actions, selectSettings } from "../../../redux/slice";
 import { useEffect, useState } from "react";
 import { events, firebaseInit } from "../../firebase/firebase";
 import { Helper } from "@coh2stats/shared/src/components/helper";
-import { Collapse, Divider, Result, Spin, Steps, Tooltip, Typography } from "antd";
+import { Collapse, Divider, Result, Slider, Spin, Steps, Tooltip, Typography } from "antd";
 import { ExclamationCircleOutlined, LoadingOutlined } from "@ant-design/icons";
 import WindowTitlebar from "../../titlebar/window-titlebar";
 import config from "../../../main/config";
@@ -61,6 +61,17 @@ const App = (): JSX.Element => {
   const handleGameNotificationChange = (checked: boolean) => {
     dispatch(actions.setGameNotification(checked));
     events.settings_changed("setGameNotifications");
+    savedMessage();
+  };
+
+  const handleSoundNotificationChange = (checked: boolean) => {
+    dispatch(actions.setSoundNotification(checked));
+    events.settings_changed("setSoundNotification");
+    savedMessage();
+  };
+
+  const handleSoundVolumeChange = (value: number) => {
+    dispatch(actions.setSoundVolumeNotification(value));
     savedMessage();
   };
 
@@ -241,7 +252,43 @@ const App = (): JSX.Element => {
               <Form.Item
                 label={
                   <>
-                    Notify when game found{" "}
+                    Play sound when game is found{" "}
+                    <Helper
+                      text={
+                        "Doesn't need to have Windows notification enabled. Plays Hoorah! sound."
+                      }
+                      style={{ paddingLeft: "5px" }}
+                    />
+                  </>
+                }
+              >
+                <Switch
+                  checked={settings.soundNotification}
+                  onChange={handleSoundNotificationChange}
+                />
+              </Form.Item>
+              <Form.Item
+                label={
+                  <>
+                    Volume of the sound notification{" "}
+                    <Helper
+                      text={"You can test the volume when spectating games."}
+                      style={{ paddingLeft: "5px" }}
+                    />
+                  </>
+                }
+              >
+                <Slider
+                  step={10}
+                  min={10}
+                  defaultValue={settings.soundNotificationVolume}
+                  onAfterChange={handleSoundVolumeChange}
+                />
+              </Form.Item>
+              <Form.Item
+                label={
+                  <>
+                    Send Windows notification when game found{" "}
                     <Tooltip
                       title={
                         'Windows will suppress notifications when focus assist do not disturb for games is enabled. To change that go to windows settings, search for focus assist and disable "When i\'m playing a game"'

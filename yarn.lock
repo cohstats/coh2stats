@@ -4301,6 +4301,13 @@
   dependencies:
     "@types/node" "*"
 
+"@types/sound-play@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@types/sound-play/-/sound-play-1.1.0.tgz#5e8a8354c92492b40a477c747ac6059d9e251768"
+  integrity sha512-r9BuZ7T8KmS3qxW52hg3LoFX8kl+jUPZilI2QawmjnNEjbHLDYrGOX1HOguF5BRI8ECM0OSXONl13UwT0XkPgw==
+  dependencies:
+    "@types/node" "*"
+
 "@types/stack-utils@^2.0.0":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@types/stack-utils/-/stack-utils-2.0.1.tgz#20f18294f797f2209b5f65c8e3b5c8e8261d127c"
@@ -14408,6 +14415,11 @@ socks@^2.6.1:
   dependencies:
     ip "^1.1.5"
     smart-buffer "^4.1.0"
+
+sound-play@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/sound-play/-/sound-play-1.1.0.tgz#58ffa31d1bf51822d49d91ff7865591fd9376381"
+  integrity sha512-Bd/L0AoCwITFeOnpNLMsfPXrV5GG5NhrC/T6odveahYbhPZkdTnrFXRia9FCC5WBWdUTw1d+yvLBvi4wnD1xOA==
 
 source-list-map@^2.0.0, source-list-map@^2.0.1:
   version "2.0.1"

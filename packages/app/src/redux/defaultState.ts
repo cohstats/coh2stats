@@ -8,6 +8,8 @@ export const defaultSettings: ApplicationSettings = {
   runInTray: false,
   openLinksInBrowser: false,
   gameNotification: false,
+  soundNotification: false,
+  soundNotificationVolume: 70,
   streamOverlay: false,
   streamOverlayPort: 47824,
   streamOverlayPortFree: true,
@@ -18,7 +20,7 @@ export const defaultSettings: ApplicationSettings = {
   twitchExtensionPasswordHash: "",
   twitchExtensionUUID: "",
   twitchExtensionSecret: "",
-  theme: "light",
+  theme: "dark",
 };
 
 export const defaultWindowStates: WindowStates = {

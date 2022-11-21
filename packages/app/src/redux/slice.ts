@@ -58,6 +58,12 @@ export const slice = createSlice({
     setGameNotification: (state, { payload }: PayloadAction<boolean>) => {
       state.settings.gameNotification = payload;
     },
+    setSoundNotification: (state, { payload }: PayloadAction<boolean>) => {
+      state.settings.soundNotification = payload;
+    },
+    setSoundVolumeNotification: (state, { payload }: PayloadAction<number>) => {
+      state.settings.soundNotificationVolume = payload;
+    },
     setStreamOverlay: (state, { payload }: PayloadAction<boolean>) => {
       state.settings.streamOverlay = payload;
     },

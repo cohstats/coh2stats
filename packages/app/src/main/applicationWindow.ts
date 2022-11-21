@@ -1,4 +1,4 @@
-import { BrowserWindow, Menu, screen } from "electron";
+import { BrowserWindow, Menu, screen, session } from "electron";
 import { ApplicationWindows, WindowState } from "../redux/state";
 import { isPackaged } from "electron-is-packaged";
 import { getIconPath } from "./paths";
@@ -62,6 +62,16 @@ export class ApplicationWindow {
           nodeIntegration: false,
         },
       });
+
+      // Set origin headers otherwise Electron will wipe them
+      // only in prod build / it messes the dev build / also it works there
+      if (isPackaged) {
+        session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
+          details.requestHeaders["Origin"] = "Electron";
+          callback({ cancel: false, requestHeaders: details.requestHeaders });
+        });
+      }
+
       this.window.setMenu(Menu.buildFromTemplate([]));
       this.window.loadURL(this.options.displayExternalContent ? url : this.options.url);
       if (!isPackaged) {
