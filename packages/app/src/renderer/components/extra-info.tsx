@@ -35,7 +35,6 @@ const ExtraPLayerInfo: React.FC<Props> = ({ record }) => {
         try {
           const response = await fetch(
             `https://${config.firebaseFunctions.location}-coh2-ladders-prod.cloudfunctions.net/getPlayerCardEverythingHttp?steamid=${steamid}&includeMatches=false`,
-            { headers: { origin: "Electron" } },
           );
           const finalData: playerCardAPIObject = await response.json();
           const relicData = finalData.relicPersonalStats;

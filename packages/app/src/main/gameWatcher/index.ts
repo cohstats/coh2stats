@@ -3,7 +3,7 @@ import path from "path";
 import fs from "fs";
 import { ApplicationStore } from "../applicationStore";
 import { actions } from "../../redux/slice";
-import { notifyGameFound } from "./notification";
+import { notifyGameFound, notifySoundGameFound } from "./notification";
 import { locateWarningsFile } from "./locateWarningsDialog";
 import { parseLogFileReverse } from "./parseLogFile";
 import { refineLogFileData } from "./refineLogFileData";
@@ -89,6 +89,13 @@ export class GameWatcher {
           if (!this.isFirstScan && this.applicationStore.getState().settings.gameNotification) {
             notifyGameFound();
           }
+
+          if (!this.isFirstScan && this.applicationStore.getState().settings.soundNotification) {
+            notifySoundGameFound(
+              this.applicationStore.getState().settings.soundNotificationVolume,
+            );
+          }
+
           this.isFirstScan = false;
           refineLogFileData(
             result.game,

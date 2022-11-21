@@ -27,6 +27,8 @@ export interface ApplicationSettings {
   runInTray: boolean;
   openLinksInBrowser: boolean;
   gameNotification: boolean;
+  soundNotification: boolean;
+  soundNotificationVolume: number;
   streamOverlay: boolean;
   streamOverlayPort: number;
   streamOverlayPortFree: boolean;
