@@ -476,8 +476,9 @@ const App = (): JSX.Element => {
                             )
                           }
                         >
-                          here
-                        </Typography.Link>
+                          here.
+                        </Typography.Link>{" "}
+                        You might need to restart the app when you turn this on.
                       </>
                     }
                     style={{ paddingLeft: "5px" }}
