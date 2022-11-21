@@ -61,7 +61,7 @@ module.exports = {
       // make sure all external libraries are packaged
       const libDest = path.join(rootDir, ".resources", "node_modules");
       if (!fs.existsSync(libDest)) {
-        fs.mkdirSync(libDest, {recursive: true});
+        fs.mkdirSync(libDest, { recursive: true });
       }
       const modules = path.join(rootDir, "..", "..", "node_modules");
       const externalEntries = Object.entries(webpackMainSettings.externals);
