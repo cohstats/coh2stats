@@ -26,6 +26,7 @@ const ExtraPLayerInfo: React.FC<Props> = ({ record }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [calculatedResult, setCalculatedResult] = useState<any>();
   const [allData, setAllData] = useState<playerCardAPIObject | null>(null);
+  const [error, setError] = useState<string>("");
 
   useEffect(() => {
     setIsLoading(true);
@@ -34,6 +35,7 @@ const ExtraPLayerInfo: React.FC<Props> = ({ record }) => {
         try {
           const response = await fetch(
             `https://${config.firebaseFunctions.location}-coh2-ladders-prod.cloudfunctions.net/getPlayerCardEverythingHttp?steamid=${steamid}&includeMatches=false`,
+            { headers: { origin: "Electron" } },
           );
           const finalData: playerCardAPIObject = await response.json();
           const relicData = finalData.relicPersonalStats;
@@ -41,6 +43,7 @@ const ExtraPLayerInfo: React.FC<Props> = ({ record }) => {
           // const { calculatedResult.totalGames, lastGameDate, calculatedResult.bestRank, calculatedResult.mostPlayed, totalWinRate } =
           setCalculatedResult(calculateOverallStatsForPlayerCard(relicData.leaderboardStats));
         } catch (e) {
+          setError(e);
           console.error(e);
         } finally {
           setIsLoading(false);
@@ -55,6 +58,8 @@ const ExtraPLayerInfo: React.FC<Props> = ({ record }) => {
         <Loading />
       </>
     );
+  } else if (error) {
+    return <>{JSON.stringify(error)}</>;
   } else {
     const playerRelicProfile = findPlayerProfile(allData.relicPersonalStats.statGroups);
 

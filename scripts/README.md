@@ -25,3 +25,14 @@ RGDTools
 6. Download RGDTools_v1.3.7z, extract it 
 7. Run `rgdConv.exe hash_dict.txt in out -x` to get .xml files or without the -x to get .txt files
 
+
+## How to extract sound files
+1. Download COH2 Tools - steam
+2. Open the Tools. In top menu, Click on Tools -> open Archive viewer
+3. In Archive Viewer Open file `S:\SteamLibrary\steamapps\common\Company of Heroes 2\CoH2\Archives\SoundHigh.sga`
+4. Extract the files
+5. You will get `.smf` files
+6. Open the file HEX editor, for example https://hexed.it/
+7. Delete the first 16 bytes (first line)
+8. Save the file as .wav and play it
+
