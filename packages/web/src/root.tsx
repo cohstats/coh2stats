@@ -9,6 +9,7 @@ import App from "./App";
 // Types
 import type { AppStore } from "./store";
 import type { History } from "history";
+import { ConfigsProvider } from "./config-context";
 
 interface Props {
   store: AppStore;
@@ -21,7 +22,9 @@ const Root: React.FC<Props> = ({ store, history }) => (
         <Switch>
           <Route path={"/login"}>LOGIN</Route>
           <Route path="/">
-            <App />
+            <ConfigsProvider configJson={{}}>
+              <App />
+            </ConfigsProvider>
           </Route>
           <Route>NOT FOUND</Route>
         </Switch>

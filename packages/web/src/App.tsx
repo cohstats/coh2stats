@@ -25,6 +25,7 @@ import SingleMatch from "./pages/match";
 import NotFound from "./pages/not-found";
 import UserProfile from "./pages/profile";
 import RecentMatches from "./pages/recent-matches/recent-matches";
+import Regions from "./pages/regions";
 
 const { Content } = Layout;
 
@@ -74,6 +75,9 @@ const App: React.FC = () => {
               </Route>
               <Route path={routes.liveMatchesBase()}>
                 <LiveMatches />
+              </Route>
+              <Route path={routes.regionsBase()}>
+                <Regions />
               </Route>
               <Route path={routes.aboutBase()}>
                 <About />

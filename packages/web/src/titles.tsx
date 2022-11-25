@@ -14,6 +14,8 @@ const playerCardBase = `${baseTitle} Player Card`;
 
 const aboutBase = `${baseTitle} About`;
 
+const regionsBase = `${baseTitle} Regions Settings`;
+
 const desktopAppBase = `${baseTitle} Stats Desktop App`;
 
 const liveMatchesAppBase = `${baseTitle} Games in progress`;
@@ -32,4 +34,5 @@ export {
   desktopAppBase,
   liveMatchesAppBase,
   mostRecentGamesAppBase,
+  regionsBase,
 };

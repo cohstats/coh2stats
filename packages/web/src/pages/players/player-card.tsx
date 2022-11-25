@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { Col, Row, Tooltip, Typography, Avatar, Tabs, Badge, notification } from "antd";
 import { LaddersDataObject } from "../../coh/types";
 import firebaseAnalytics from "../../analytics";
-import { capitalize, timeAgo, useQuery } from "../../utils/helpers";
+import { capitalize, getAPIUrl, timeAgo, useQuery } from "../../utils/helpers";
 
 import { CountryFlag } from "../../components/country-flag";
 import { playerCardBase } from "../../titles";
@@ -18,6 +18,7 @@ import PlayerStandingsTables from "./player-standings";
 import config from "../../config";
 import { AlertBox } from "../../components/alert-box";
 import AllMatchesTable from "../matches/all-matches-table";
+import { ConfigContext } from "../../config-context";
 const { Text } = Typography;
 
 type playerCardAPIObject = {
@@ -43,6 +44,8 @@ const PlayerCard = () => {
   const { steamid } = useParams<{
     steamid: string;
   }>();
+
+  const { userConfig } = useContext(ConfigContext);
 
   const query = useQuery();
   const tabView = query.get("view") || "stats";
@@ -84,7 +87,7 @@ const PlayerCard = () => {
     (async () => {
       try {
         const response = await fetch(
-          `https://${config.firebaseFunctions.location}-coh2-ladders-prod.cloudfunctions.net/getPlayerCardEverythingHttp?steamid=${steamid}`,
+          `${getAPIUrl(userConfig)}getPlayerCardEverythingHttp?steamid=${steamid}`,
         );
         if (!response.ok) {
           throw new Error(
@@ -106,7 +109,7 @@ const PlayerCard = () => {
         setIsLoading(false);
       }
     })();
-  }, [steamid, replace]);
+  }, [steamid, replace, userConfig]);
 
   if (!isLoading && error != null) {
     return (

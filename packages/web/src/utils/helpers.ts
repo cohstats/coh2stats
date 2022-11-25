@@ -5,6 +5,7 @@ import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en.json";
 import config from "../config";
 import { axisRaceIds, ProcessedMatch, resultType } from "../coh/types";
+import { userConfigType } from "../config-context";
 
 // Something like this is not currently support by create-react-app
 // Jesus that lib is such a shit https://github.com/facebook/create-react-app/issues/9127 ...
@@ -140,6 +141,15 @@ const determineMatchWinner = (match: ProcessedMatch): "axis" | "allies" | "none"
   return "none";
 };
 
+const getAPIUrl = (userConfig: userConfigType) => {
+  if (userConfig.api !== "gcp") {
+    return config.api.cf;
+  } else {
+    // By default return GCP API
+    return config.api.gpc;
+  }
+};
+
 export {
   getYesterdayDateTimestamp,
   convertDateToDayTimestamp,
@@ -156,4 +166,5 @@ export {
   timeAgo,
   isDev,
   determineMatchWinner,
+  getAPIUrl,
 };

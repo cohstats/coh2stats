@@ -18,6 +18,7 @@ import {
   desktopAppBase,
   liveMatchesAppBase,
   mostRecentGamesAppBase,
+  regionsBase,
 } from "../titles";
 import { Link } from "react-router-dom";
 import { doc, getFirestore, onSnapshot } from "firebase/firestore";
@@ -45,6 +46,9 @@ const pageTitleSwitch = (path: string) => {
       break;
     case routes.recentMatchesBase():
       document.title = mostRecentGamesAppBase;
+      break;
+    case routes.regionsBase():
+      document.title = regionsBase;
   }
 };
 
@@ -79,6 +83,10 @@ const menuItems: ItemType[] = [
       {
         key: `${routes.aboutBase()}#donations`,
         label: <Link to={`${routes.aboutBase()}#donations`}>Donation</Link>,
+      },
+      {
+        key: `${routes.regionsBase()}`,
+        label: <Link to={`${routes.regionsBase()}`}>Regions</Link>,
       },
       {
         key: "relic-api-status",
@@ -127,6 +135,10 @@ export const MainHeader: React.FC = () => {
     path: routes.leaderboardsBase(),
   });
 
+  const regionMatch = useRouteMatch({
+    path: routes.regionsBase(),
+  });
+
   const aboutMatch = useRouteMatch({
     path: routes.aboutBase(),
   });
@@ -150,6 +162,8 @@ export const MainHeader: React.FC = () => {
   let pathMatch =
     commandersMatch ||
     statsMatch ||
+    // needs to be before about match
+    regionMatch ||
     aboutMatch ||
     bulletinsMatch ||
     mapStatsMatch ||

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import {
   Table,
@@ -21,6 +21,7 @@ import firebaseAnalytics from "../../analytics";
 import {
   capitalize,
   convertDateToDayTimestamp,
+  getAPIUrl,
   getYesterdayDateTimestamp,
   timeAgo,
   useQuery,
@@ -40,13 +41,15 @@ import {
 import { Helper } from "../../components/helper";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { disabledDate, generateIconsForTitle } from "./components";
-import config from "../../config";
 import { leaderboardsID } from "../../coh/coh2-api";
+import { ConfigContext } from "../../config-context";
 
 const { Text } = Typography;
 
 const Leaderboards = () => {
   const { Option } = Select;
+
+  const { userConfig } = useContext(ConfigContext);
 
   const { push } = useHistory();
   const query = useQuery();
@@ -104,7 +107,9 @@ const Leaderboards = () => {
           const leaderboardID = leaderboardsID[type][race];
           if (leaderboardID) {
             const response = await fetch(
-              `https://${config.firebaseFunctions.location}-coh2-ladders-prod.cloudfunctions.net/getCOHLaddersHttpV2?leaderBoardID=${leaderboardID}&start=0`,
+              `${getAPIUrl(
+                userConfig,
+              )}getCOHLaddersHttpV2?leaderBoardID=${leaderboardID}&start=0`,
             );
             const finalData = await response.json();
             setData(finalData);
