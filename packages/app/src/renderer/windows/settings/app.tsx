@@ -247,12 +247,12 @@ const App = (): JSX.Element => {
                 />
               </Form.Item>
               <Divider orientation="left" plain>
-                <Text type="danger">Experimental</Text>
+                Notifications when game is found
               </Divider>
               <Form.Item
                 label={
                   <>
-                    Play sound when game is found{" "}
+                    Play sound{" "}
                     <Helper
                       text={
                         "Doesn't need to have Windows notification enabled. Plays Hoorah! sound."
@@ -270,7 +270,7 @@ const App = (): JSX.Element => {
               <Form.Item
                 label={
                   <>
-                    Volume of the sound notification{" "}
+                    Volume of the sound{" "}
                     <Helper
                       text={"You can test the volume when spectating games."}
                       style={{ paddingLeft: "5px" }}
@@ -285,10 +285,14 @@ const App = (): JSX.Element => {
                   onAfterChange={handleSoundVolumeChange}
                 />
               </Form.Item>
+              <Divider orientation="left" plain>
+                <Text type="danger">Experimental - Notifications when game is found</Text>
+              </Divider>
+
               <Form.Item
                 label={
                   <>
-                    Send Windows notification when game found{" "}
+                    Send Windows notification{" "}
                     <Tooltip
                       title={
                         'Windows will suppress notifications when focus assist do not disturb for games is enabled. To change that go to windows settings, search for focus assist and disable "When i\'m playing a game"'
