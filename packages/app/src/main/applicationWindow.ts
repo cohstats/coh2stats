@@ -67,7 +67,10 @@ export class ApplicationWindow {
       // only in prod build / it messes the dev build / also it works there
       if (isPackaged) {
         session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
-          details.requestHeaders["Origin"] = "Electron";
+          // Set it only when it's empty - aka just in the main process
+          if(!details.requestHeaders["Origin"]) {
+            details.requestHeaders["Origin"] = "Electron";
+          }
           callback({ cancel: false, requestHeaders: details.requestHeaders });
         });
       }
