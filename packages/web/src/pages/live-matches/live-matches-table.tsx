@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 import routes from "../../routes";
 import { ColumnsType } from "antd/es/table";
 import { ConfigContext } from "../../config-context";
+import config from "../../config";
 
 const { Text } = Typography;
 
@@ -105,6 +106,7 @@ const LiveMatchesTable: React.FC<{
           `${getAPIUrl(
             userConfig,
           )}getLiveGamesHttp?playerGroup=${playerGroup}&start=${startQuery}&count=${count}&sortOrder=${orderByQuery}&apiKey=c2sXe4zguRtYMBY`,
+          { signal: AbortSignal.timeout(config.defaultTimeoutRequestMs) },
         );
         if (!response.ok) {
           throw new Error(
@@ -146,7 +148,7 @@ const LiveMatchesTable: React.FC<{
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [playerGroup, startQuery, orderByQuery]);
+  }, [playerGroup, startQuery, orderByQuery, userConfig]);
 
   if (isDev()) {
     console.debug("re-render");

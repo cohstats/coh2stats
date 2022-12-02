@@ -15,6 +15,7 @@ import SearchCommanderCard from "./components/search-commander-card";
 import SearchBulletinCard from "./components/search-bulletin-card";
 import { getAPIUrl } from "../../utils/helpers";
 import { ConfigContext } from "../../config-context";
+import config from "../../config";
 
 type RelicProfileType = {
   id: number;
@@ -217,6 +218,7 @@ const CustomSearch: React.FC = () => {
 
         try {
           const response = await fetch(`${getAPIUrl(userConfig)}searchPlayers`, {
+            signal: AbortSignal.timeout(config.defaultTimeoutRequestMs),
             method: "POST",
             headers: {
               "Content-Type": "application/json",

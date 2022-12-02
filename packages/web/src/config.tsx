@@ -34,6 +34,7 @@ const config = {
   // this is just for info
   matchAreStoredForDays: 30,
   scrapeFrequencyMinutes: 5,
+  defaultTimeoutRequestMs: 30000,
 };
 
 // The date when we exported the data for the bulletins and commanders

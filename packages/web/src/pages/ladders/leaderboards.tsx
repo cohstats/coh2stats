@@ -43,6 +43,7 @@ import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { disabledDate, generateIconsForTitle } from "./components";
 import { leaderboardsID } from "../../coh/coh2-api";
 import { ConfigContext } from "../../config-context";
+import config from "../../config";
 
 const { Text } = Typography;
 
@@ -110,9 +111,14 @@ const Leaderboards = () => {
               `${getAPIUrl(
                 userConfig,
               )}getCOHLaddersHttpV2?leaderBoardID=${leaderboardID}&start=0`,
+              { signal: AbortSignal.timeout(config.defaultTimeoutRequestMs) },
             );
             const finalData = await response.json();
             setData(finalData);
+            // Disable the loading to fix the Chinese players
+            setTimeout(() => {
+              setIsLoadingData(false);
+            }, 500);
           } else {
             setData(undefined);
           }
@@ -128,10 +134,11 @@ const Leaderboards = () => {
         setIsLoadingData(false);
       })();
     } catch (e) {
+      setIsLoadingData(false);
       console.error("Failed to get the leaderboards", e);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedTimeStamp, selectedHistoricTimeStamp, selectedRace, selectedType]);
+  }, [selectedTimeStamp, selectedHistoricTimeStamp, selectedRace, selectedType, userConfig]);
 
   const divStyle = {
     backgroundImage: `url(${getGeneralIconPath(race)})`,
