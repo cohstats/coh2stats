@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Row, Table, Typography } from "antd";
 import { LiveGame, StatsCurrentLiveGames } from "../../coh/types";
-import { isDev, useQuery } from "../../utils/helpers";
+import { getAPIUrl, isDev, useQuery } from "../../utils/helpers";
 import { TeamOutlined } from "@ant-design/icons";
 import firebaseAnalytics from "../../analytics";
-import config from "../../config";
 import { AlertBox } from "../../components/alert-box";
 import {
   formatMatchtypeID,
@@ -16,6 +15,7 @@ import { convertSteamNameToID, getGeneralIconPath } from "../../coh/helpers";
 import { Link } from "react-router-dom";
 import routes from "../../routes";
 import { ColumnsType } from "antd/es/table";
+import { ConfigContext } from "../../config-context";
 
 const { Text } = Typography;
 
@@ -54,6 +54,7 @@ const LiveMatchesTable: React.FC<{
   currentLiveGamesData: StatsCurrentLiveGames | undefined;
 }> = ({ changeRoute, currentLiveGamesData }) => {
   const query = useQuery();
+  const { userConfig } = useContext(ConfigContext);
 
   const playerGroup = query.get("playerGroup") || "1";
   const startQuery = query.get("start") || "0";
@@ -101,7 +102,9 @@ const LiveMatchesTable: React.FC<{
     (async () => {
       try {
         const response = await fetch(
-          `https://${config.firebaseFunctions.location}-coh2-ladders-prod.cloudfunctions.net/getLiveGamesHttp?playerGroup=${playerGroup}&start=${startQuery}&count=${count}&sortOrder=${orderByQuery}&apiKey=c2sXe4zguRtYMBY`,
+          `${getAPIUrl(
+            userConfig,
+          )}getLiveGamesHttp?playerGroup=${playerGroup}&start=${startQuery}&count=${count}&sortOrder=${orderByQuery}&apiKey=c2sXe4zguRtYMBY`,
         );
         if (!response.ok) {
           throw new Error(

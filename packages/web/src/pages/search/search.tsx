@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { firebase } from "../../firebase";
+import React, { useContext, useEffect, useState } from "react";
 import Search from "antd/es/input/Search";
 import { useHistory, useParams } from "react-router";
 import routes from "../../routes";
@@ -10,11 +9,12 @@ import { History } from "history";
 import firebaseAnalytics from "../../analytics";
 import { CountryFlag } from "../../components/country-flag";
 import { AlertBox } from "../../components/alert-box";
-import { httpsCallable } from "firebase/functions";
 import { searchCommanders } from "../../coh/commanders";
 import { searchBulletins } from "../../coh/bulletins";
 import SearchCommanderCard from "./components/search-commander-card";
 import SearchBulletinCard from "./components/search-bulletin-card";
+import { getAPIUrl } from "../../utils/helpers";
+import { ConfigContext } from "../../config-context";
 
 type RelicProfileType = {
   id: number;
@@ -112,6 +112,8 @@ const sortByXP = (array: Array<userAPIObject>) => {
 
 const CustomSearch: React.FC = () => {
   const { push } = useHistory();
+
+  const { userConfig } = useContext(ConfigContext);
 
   // We should use normal query params and not / in the path
   const { searchParam } = useParams<{
@@ -213,14 +215,18 @@ const CustomSearch: React.FC = () => {
 
         firebaseAnalytics.searchUsed(searchParam);
 
-        const payLoad = { name: searchParam };
-
-        const searchPlayers = httpsCallable(firebase.functions(), "searchPlayers");
-
         try {
-          const { data } = await searchPlayers(payLoad);
+          const response = await fetch(`${getAPIUrl(userConfig)}searchPlayers`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ data: { name: searchParam } }),
+          });
+
+          const { result } = await response.json();
           // @ts-ignore
-          const foundProfiles: Record<string, any> = data["foundProfiles"];
+          const foundProfiles: Record<string, any> = result["foundProfiles"];
           const resultHtml = buildSearchResults(foundProfiles);
 
           // Search Intel Bulletins from defined Function
@@ -244,7 +250,7 @@ const CustomSearch: React.FC = () => {
         }
       }
     })();
-  }, [searchParam, push]);
+  }, [searchParam, push, userConfig]);
 
   const onSearch = async (value: string) => {
     push(routes.searchWithParam(value));

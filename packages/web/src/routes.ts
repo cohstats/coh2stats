@@ -64,6 +64,10 @@ const recentMatchesBase = () => {
   return "/recent-matches";
 };
 
+const regionsBase = () => {
+  return `${aboutBase()}/regions`;
+};
+
 const playerCardWithId = (steamId = ":steamid") => {
   return `${playerCardBase()}/${steamId}`;
 };
@@ -95,6 +99,7 @@ const routes = {
   desktopAppBase,
   singleMatch,
   recentMatchesBase,
+  regionsBase,
 };
 
 export default routes;

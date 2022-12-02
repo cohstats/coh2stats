@@ -18,17 +18,19 @@ const firebaseFunctions = {
   location: "us-east4",
 };
 
-const discordInviteLink = "https://discord.gg/jRrnwqMfkr";
-
 const devHostnames = ["localhost", "coh2-ladders-dev.web.app"];
 
 const config = {
   firebase,
   firebaseFunctions,
   devHostnames,
-  discordInviteLink,
+  discordInviteLink: "https://discord.gg/jRrnwqMfkr",
   donationLink: "https://ko-fi.com/cohstats",
   coh2steamGameId: 231430,
+  api: {
+    gcp: `https://${firebaseFunctions.location}-coh2-ladders-prod.cloudfunctions.net/`,
+    cf: "https://coh2stats.com/api-cf/",
+  },
   // this is just for info
   matchAreStoredForDays: 30,
   scrapeFrequencyMinutes: 5,

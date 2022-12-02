@@ -3,6 +3,8 @@ import { Footer } from "antd/es/layout/layout";
 import { Divider, Typography } from "antd";
 import { Link as RouterLink } from "react-router-dom";
 import config from "../config";
+import { RegionSelector } from "./region-selector";
+import { Helper } from "./helper";
 
 const { Link } = Typography;
 
@@ -36,8 +38,16 @@ export const MainFooter: React.FC = () => {
         />
         Donate
       </Link>
-      <br />
-      <br />
+      <div style={{ padding: 10 }}>
+        <RegionSelector />{" "}
+        <Helper
+          text={
+            <>
+              Learn more about region selector <Link href={"/about/regions"}>here</Link>
+            </>
+          }
+        />
+      </div>
       The Company of Heroes is registered trademark of SEGA Holdings. Co
       <br />
       The COH2 Images and other assets are owned by Relic Entertainment and/or SEGA

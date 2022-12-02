@@ -68,7 +68,7 @@ export class ApplicationWindow {
       if (isPackaged) {
         session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
           // Set it only when it's empty - aka just in the main process
-          if(!details.requestHeaders["Origin"]) {
+          if (!details.requestHeaders["Origin"]) {
             details.requestHeaders["Origin"] = "Electron";
           }
           callback({ cancel: false, requestHeaders: details.requestHeaders });
