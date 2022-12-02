@@ -28,7 +28,7 @@ const config = {
   donationLink: "https://ko-fi.com/cohstats",
   coh2steamGameId: 231430,
   api: {
-    gpc: `https://${firebaseFunctions.location}-coh2-ladders-prod.cloudfunctions.net/`,
+    gcp: `https://${firebaseFunctions.location}-coh2-ladders-prod.cloudfunctions.net/`,
     cf: "https://coh2stats.com/api-cf/",
   },
   // this is just for info

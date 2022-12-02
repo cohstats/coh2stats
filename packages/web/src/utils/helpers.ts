@@ -146,7 +146,7 @@ const getAPIUrl = (userConfig: userConfigType) => {
     return config.api.cf;
   } else {
     // By default return GCP API
-    return config.api.gpc;
+    return config.api.gcp;
   }
 };
 
