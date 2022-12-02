@@ -11,5 +11,11 @@ https://coh2stats.com/stats
 https://coh2stats.com/leaderboards
 https://coh2stats.com/map-stats
 https://coh2stats.com/players
-
-
+https://coh2stats.com/search
+https://coh2stats.com/live-matches
+https://coh2stats.com/desktop-app
+https://coh2stats.com/recent-matches
+https://coh2stats.com/about/regions
+https://coh2stats.com/players/76561197984317656-HelpingHans
+https://coh2stats.com/players/76561198018614046-Isildur
+https://coh2stats.com/players/76561197982704567-Luvnest
