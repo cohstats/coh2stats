@@ -25,7 +25,7 @@ import SingleMatch from "./pages/match";
 import NotFound from "./pages/not-found";
 import UserProfile from "./pages/profile";
 import RecentMatches from "./pages/recent-matches/recent-matches";
-import Regions from "./pages/regions";
+import Regions from "./pages/about/regions";
 
 const { Content } = Layout;
 

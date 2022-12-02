@@ -1,6 +1,6 @@
 import React from "react";
 import { Typography } from "antd";
-import { RegionSelector } from "../../components/region-selector";
+import { RegionSelector } from "../../../components/region-selector";
 import { CheckCircleTwoTone, CloseCircleTwoTone } from "@ant-design/icons";
 
 const { Title, Text, Paragraph } = Typography;
@@ -62,6 +62,7 @@ const Regions: React.FC = () => {
               <li>{notSupported} Other direct stats </li>
             </ul>
           </li>
+          <li>Recent Games {notSupported}</li>
           <li>Map Stats {notSupported}</li>
           <li>Amount of online players & other small stats over the page {notSupported}</li>
         </ul>
