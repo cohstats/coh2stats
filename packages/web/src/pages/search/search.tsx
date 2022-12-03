@@ -16,6 +16,7 @@ import SearchBulletinCard from "./components/search-bulletin-card";
 import { getAPIUrl } from "../../utils/helpers";
 import { ConfigContext } from "../../config-context";
 import config from "../../config";
+import { AlertBoxChina } from "../../components/alert-box-china";
 
 type RelicProfileType = {
   id: number;
@@ -291,6 +292,7 @@ const CustomSearch: React.FC = () => {
               </div>
             }
           />
+          <AlertBoxChina />
         </div>
       </Row>
     );

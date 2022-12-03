@@ -10,7 +10,7 @@ const Regions: React.FC = () => {
   const notSupported = <CloseCircleTwoTone twoToneColor="#c40c0f" />;
 
   return (
-    <div style={{ maxWidth: 500, margin: "0 auto" }}>
+    <div style={{ maxWidth: 600, margin: "0 auto", paddingTop: 10 }}>
       <Title>Regions setting</Title>
       <Paragraph>
         In some regions, such as China and Russia (+ other restricted countries) the BE systems of

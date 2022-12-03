@@ -19,6 +19,8 @@ import config from "../../config";
 import { AlertBox } from "../../components/alert-box";
 import AllMatchesTable from "../matches/all-matches-table";
 import { ConfigContext } from "../../config-context";
+import { Space } from "antd/es";
+import { AlertBoxChina } from "../../components/alert-box-china";
 const { Text } = Typography;
 
 type playerCardAPIObject = {
@@ -88,6 +90,7 @@ const PlayerCard = () => {
       try {
         const response = await fetch(
           `${getAPIUrl(userConfig)}getPlayerCardEverythingHttp?steamid=${steamid}`,
+          { signal: AbortSignal.timeout(config.defaultTimeoutRequestMs) },
         );
         if (!response.ok) {
           throw new Error(
@@ -114,11 +117,14 @@ const PlayerCard = () => {
   if (!isLoading && error != null) {
     return (
       <Row justify="center" style={{ paddingTop: "10px" }}>
-        <AlertBox
-          type={"error"}
-          message={"There was an error loading the player card"}
-          description={`${JSON.stringify(error)}`}
-        />
+        <Space direction={"vertical"}>
+          <AlertBox
+            type={"error"}
+            message={"There was an error loading the player card"}
+            description={`${JSON.stringify(error)}`}
+          />
+          <AlertBoxChina />
+        </Space>
       </Row>
     );
   }

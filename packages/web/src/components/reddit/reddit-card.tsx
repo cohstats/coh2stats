@@ -53,7 +53,7 @@ const RedditCard: React.FC<Props> = (size) => {
         <div style={{ overflow: "hidden" }}>
           <div style={{ float: "left" }}>
             {" "}
-            <Tooltip title={"Filtered only to COH2 Posts"}>
+            <Tooltip title={"Filtered only to posts with COH2 tag. Aka doesn't show COH3."}>
               <Title level={3}>Top COH2 Reddit Posts</Title>
             </Tooltip>
           </div>

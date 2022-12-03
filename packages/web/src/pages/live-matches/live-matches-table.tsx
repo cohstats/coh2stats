@@ -17,18 +17,23 @@ import routes from "../../routes";
 import { ColumnsType } from "antd/es/table";
 import { ConfigContext } from "../../config-context";
 import config from "../../config";
+import { AlertBoxChina } from "../../components/alert-box-china";
+import { Space } from "antd/es";
 
 const { Text } = Typography;
 
 // Page size
 const count = 40;
 
+// This is used in case we don't get overviewData
+const defaultAmountOfMatches = 300;
+
 const calculatePagination = (
   playerGroup: string,
   overviewData: StatsCurrentLiveGames | undefined,
 ) => {
   if (playerGroup == null || overviewData == null || !overviewData) {
-    return count;
+    return defaultAmountOfMatches;
   }
 
   const games = overviewData.games;
@@ -46,7 +51,7 @@ const calculatePagination = (
   } else if (playerGroup === "0") {
     return games["custom"] + count;
   } else {
-    return 500;
+    return defaultAmountOfMatches;
   }
 };
 
@@ -72,7 +77,7 @@ const LiveMatchesTable: React.FC<{
     pagination: {
       current: 1,
       pageSize: count,
-      total: count,
+      total: defaultAmountOfMatches,
       pageSizeOptions: ["40"],
     },
     data: null,
@@ -122,6 +127,8 @@ const LiveMatchesTable: React.FC<{
         const finalData = await response.json();
 
         setData((prevState) => {
+          console.log("prevState", prevState);
+
           return {
             pagination: {
               current: current === 0 ? 1 : current,
@@ -165,11 +172,19 @@ const LiveMatchesTable: React.FC<{
   if (error) {
     content = (
       <Row justify="center" style={{ paddingTop: "10px" }}>
-        <AlertBox
-          type={"error"}
-          message={"There was an error loading the live matches"}
-          description={`${JSON.stringify(error)}`}
-        />
+        <Space direction={"vertical"}>
+          <AlertBox
+            type={"error"}
+            message={
+              <>
+                There was an error loading the live matches.
+                <br /> Please try again.
+              </>
+            }
+            description={`${JSON.stringify(error)}`}
+          />
+          <AlertBoxChina />
+        </Space>
       </Row>
     );
   }

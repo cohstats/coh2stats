@@ -8,7 +8,7 @@ export const COHStatsIcon: React.FC = () => {
         // style={{ backgroundColor: "#011529" }}
         src={"/logo/favicon-32x32.png"}
         height="20px"
-        alt={"Relic Icon"}
+        alt={"COH2 Icon"}
       />
     </Tooltip>
   );
