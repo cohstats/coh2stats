@@ -120,7 +120,7 @@ const PlayerCard = () => {
         <Space direction={"vertical"}>
           <AlertBox
             type={"error"}
-            message={"There was an error loading the player card"}
+            message={"There was an error loading the player card. Try refreshing the page."}
             description={`${JSON.stringify(error)}`}
           />
           <AlertBoxChina />
