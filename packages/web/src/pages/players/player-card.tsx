@@ -90,7 +90,7 @@ const PlayerCard = () => {
       try {
         const response = await fetch(
           `${getAPIUrl(userConfig)}getPlayerCardEverythingHttp?steamid=${steamid}`,
-          { signal: AbortSignal.timeout(config.defaultTimeoutRequestMs) },
+          {},
         );
         if (!response.ok) {
           throw new Error(
