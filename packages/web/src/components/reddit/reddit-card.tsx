@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { Card, Tooltip, Typography } from "antd";
 import { Loading } from "../loading";
 import { useMediaQuery } from "react-responsive";
-import config from "../../config";
 
 const { Title } = Typography;
 
@@ -22,7 +21,7 @@ const RedditCard: React.FC<Props> = (size) => {
       try {
         const res = await fetch(
           "https://www.reddit.com/r/CompanyOfHeroes/top.json?limit=50&t=week",
-          { signal: AbortSignal.timeout(config.defaultTimeoutRequestMs) },
+          {},
         );
         const resData = await res.json();
         const requiredData = resData?.data?.children

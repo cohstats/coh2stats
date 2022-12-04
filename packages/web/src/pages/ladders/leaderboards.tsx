@@ -43,7 +43,6 @@ import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { disabledDate, generateIconsForTitle } from "./components";
 import { leaderboardsID } from "../../coh/coh2-api";
 import { ConfigContext } from "../../config-context";
-import config from "../../config";
 
 const { Text } = Typography;
 
@@ -111,7 +110,7 @@ const Leaderboards = () => {
               `${getAPIUrl(
                 userConfig,
               )}getCOHLaddersHttpV2?leaderBoardID=${leaderboardID}&start=0`,
-              { signal: AbortSignal.timeout(config.defaultTimeoutRequestMs) },
+              {},
             );
             const finalData = await response.json();
             setData(finalData);

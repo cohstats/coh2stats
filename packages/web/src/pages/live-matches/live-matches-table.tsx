@@ -16,7 +16,6 @@ import { Link } from "react-router-dom";
 import routes from "../../routes";
 import { ColumnsType } from "antd/es/table";
 import { ConfigContext } from "../../config-context";
-import config from "../../config";
 import { AlertBoxChina } from "../../components/alert-box-china";
 import { Space } from "antd/es";
 
@@ -111,7 +110,7 @@ const LiveMatchesTable: React.FC<{
           `${getAPIUrl(
             userConfig,
           )}getLiveGamesHttp?playerGroup=${playerGroup}&start=${startQuery}&count=${count}&sortOrder=${orderByQuery}&apiKey=c2sXe4zguRtYMBY`,
-          { signal: AbortSignal.timeout(config.defaultTimeoutRequestMs) },
+          {},
         );
         if (!response.ok) {
           throw new Error(
