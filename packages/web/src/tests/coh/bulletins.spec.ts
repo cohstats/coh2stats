@@ -5,6 +5,7 @@ import {
   getBulletinsByRaces,
   getAllBulletins,
   getBulletinIconPath,
+  
 } from "../../coh/bulletins";
 import { RaceName } from "../../coh/types";
 import * as data from "../../coh/data/cu2021/bulletinData.json";

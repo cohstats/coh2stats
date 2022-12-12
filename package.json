@@ -48,6 +48,7 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
+    "@electron-forge/test-utils": "^6.0.4",
     "date-fns": "^2.25.0"
   }
 }
