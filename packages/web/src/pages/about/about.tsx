@@ -246,6 +246,12 @@ const About: React.FC = () => {
         100% of donations will go towards this project costs <br />
         <br />
         <KofiDonate />
+        <br />
+        <i>
+          You can Donate via PayPal or Card at Ko-Fi,
+          <br />
+          no registration required.
+        </i>
       </div>
     </div>
   );
