@@ -2,12 +2,10 @@ import React, { useContext, useEffect, useState } from "react";
 import Search from "antd/es/input/Search";
 import { useHistory, useParams } from "react-router";
 import routes from "../../routes";
-import { Avatar, Divider, Empty, Row, Space } from "antd";
+import { Divider, Empty, Row, Space } from "antd";
 
 import "./search.css";
-import { History } from "history";
 import firebaseAnalytics from "../../analytics";
-import { CountryFlag } from "../../components/country-flag";
 import { AlertBox } from "../../components/alert-box";
 import { searchCommanders } from "../../coh/commanders";
 import { searchBulletins } from "../../coh/bulletins";
@@ -16,90 +14,8 @@ import SearchBulletinCard from "./components/search-bulletin-card";
 import { getAPIUrl } from "../../utils/helpers";
 import { ConfigContext } from "../../config-context";
 import { AlertBoxChina } from "../../components/alert-box-china";
-
-type RelicProfileType = {
-  id: number;
-  members: Array<{
-    alias: string;
-    country: string;
-    leaderboardregion_id: number;
-    level: number;
-    name: string;
-    personal_statgroup_id: number;
-    profile_id: number;
-    xp: number;
-  }>;
-  name: string;
-  type: number;
-};
-
-type SteamProfileType = {
-  avatar: string;
-  avatarfull: string;
-  avatarhash: string;
-  avatarmedium: string;
-  communityvisibilitystate: number;
-  personaname: string;
-  personastate: number;
-  personastateflags: number;
-  primaryclanid: string;
-  profilestate: number;
-  profileurl: string;
-  steamid: string;
-  timecreated: number;
-};
-
-type userAPIObject = {
-  steamProfile: SteamProfileType;
-  relicProfile: RelicProfileType;
-};
-
-const userCard = (
-  userObject: userAPIObject,
-  push: {
-    (path: string, state?: unknown): void;
-    (location: History.LocationDescriptor<unknown>): void;
-    (arg0: string): void;
-  },
-) => {
-  const steamProfile = userObject.steamProfile;
-  const relicProfile = userObject.relicProfile;
-
-  const relicProfileMember = relicProfile["members"][0];
-  const playerName = relicProfileMember["alias"];
-  const countryCode = relicProfileMember["country"];
-  const xp = relicProfileMember["xp"];
-
-  const onProfileClick = (steamId: string) => {
-    push(routes.playerCardWithId(steamId));
-  };
-
-  return (
-    <div
-      key={steamProfile["steamid"]}
-      className={"player resultBox"}
-      onClick={() => {
-        onProfileClick(steamProfile["steamid"]);
-      }}
-    >
-      <Avatar
-        size={45}
-        shape="square"
-        src={steamProfile["avatarmedium"]}
-        style={{ display: "inline-block", verticalAlign: "top" }}
-      />
-      <div style={{ display: "inline-block", paddingLeft: 5, width: 180, textAlign: "left" }}>
-        <CountryFlag countryCode={countryCode} />
-        <b>
-          {playerName}
-          <br />
-          XP:
-        </b>{" "}
-        {xp.toLocaleString()}
-      </div>
-    </div>
-  );
-};
+import { userAPIObject } from "./types";
+import SearchUserCard from "./components/search-user-card";
 
 const sortByXP = (array: Array<userAPIObject>) => {
   return array.sort((a, b) => {
@@ -144,7 +60,7 @@ const CustomSearch: React.FC = () => {
         const userCards = [];
         const foundProfiles = Object.values(data);
         for (const value of sortByXP(foundProfiles)) {
-          userCards.push(userCard(value, push));
+          userCards.push(SearchUserCard(value, push));
         }
 
         return (
@@ -211,6 +127,12 @@ const CustomSearch: React.FC = () => {
     };
 
     (async () => {
+      if (searchParam.length < 2) {
+        setError("The search needs to have at least 2 characters.");
+        setIsLoading(false);
+        return;
+      }
+
       if (searchParam) {
         setIsLoading(true);
 
