@@ -105,7 +105,7 @@ Do `yarn install` from the project root to install dependencies.
 To run beautifier and linting:
 `yarn fix`
 
-Use Node version 14.x or as described in `/packages/functions/package.json`
+Use Node version 16.x or as described in `/packages/functions/package.json`
 
 #### Web
 
