@@ -1,8 +1,8 @@
 import React from "react";
 import PlayerSingleMatchesTable from "./player-single-matches-table";
 import PlayerTeamMatchesTable from "./player-team-matches-table";
-import { findAndMergeStatGroups } from "../../coh/helpers";
-import { LaddersDataObject } from "../../coh/types";
+import { findAndMergeStatGroups } from "../../../coh/helpers";
+import { LaddersDataObject } from "../../../coh/types";
 import { prepareLeaderBoardDataForSinglePlayer } from "./data-processing";
 import { Typography } from "antd";
 

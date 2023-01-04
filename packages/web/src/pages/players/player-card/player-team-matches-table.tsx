@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { ColumnsType } from "antd/es/table";
 import sub from "date-fns/sub";
-import { LaddersDataArrayObject, PlayerCardDataArrayObject } from "../../coh/types";
-import { CountryFlag } from "../../components/country-flag";
+import { LaddersDataArrayObject, PlayerCardDataArrayObject } from "../../../coh/types";
+import { CountryFlag } from "../../../components/country-flag";
 import { Switch, Table, Tooltip, Typography } from "antd";
-import { convertSteamNameToID, levelToText } from "../../coh/helpers";
+import { convertSteamNameToID, levelToText } from "../../../coh/helpers";
 import { Link } from "react-router-dom";
-import routes from "../../routes";
+import routes from "../../../routes";
 import { convertTeamNames, formatTimeAgo, latestDate, percentageFormat } from "./helpers";
-import { Helper } from "../../components/helper";
+import { Helper } from "../../../components/helper";
 const { Text } = Typography;
 
 interface IProps {

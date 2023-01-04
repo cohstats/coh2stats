@@ -1,6 +1,6 @@
-import { leaderboardsID } from "../../coh/coh2-api";
-import { LeaderBoardStats, validStatsTypes } from "../../coh/types";
-import { capitalize } from "../../utils/helpers";
+import { leaderboardsID } from "../../../coh/coh2-api";
+import { LeaderBoardStats, validStatsTypes } from "../../../coh/types";
+import { capitalize } from "../../../utils/helpers";
 
 const findByLeaderBoardID = (
   id: number,

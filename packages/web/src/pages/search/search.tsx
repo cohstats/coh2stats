@@ -127,7 +127,7 @@ const CustomSearch: React.FC = () => {
     };
 
     (async () => {
-      if (searchParam.length < 2) {
+      if (searchParam && searchParam.length < 2) {
         setError("The search needs to have at least 2 characters.");
         setIsLoading(false);
         return;

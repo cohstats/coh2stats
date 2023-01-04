@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Tooltip from "antd/es/tooltip";
 import { capitalize, convertTeamNames, findPlayerProfile, timeAgo } from "../utils/helpers";
 import config from "@coh2stats/web/src/config";
-import { calculateOverallStatsForPlayerCard } from "@coh2stats/web/src/pages/players/data-processing";
+import { calculateOverallStatsForPlayerCard } from "@coh2stats/web/src/pages/players/player-card/data-processing";
 import Typography from "antd/es/typography";
 import { Loading } from "./loading";
 import { Col, Row } from "antd/es";

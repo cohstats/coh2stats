@@ -1,26 +1,26 @@
 import React, { useContext, useEffect, useState } from "react";
 
 import { Col, Row, Tooltip, Typography, Avatar, Tabs, Badge, notification } from "antd";
-import { LaddersDataObject } from "../../coh/types";
-import firebaseAnalytics from "../../analytics";
-import { capitalize, getAPIUrl, timeAgo, useQuery } from "../../utils/helpers";
+import { LaddersDataObject } from "../../../coh/types";
+import firebaseAnalytics from "../../../analytics";
+import { capitalize, getAPIUrl, timeAgo, useQuery } from "../../../utils/helpers";
 
-import { CountryFlag } from "../../components/country-flag";
-import { playerCardBase } from "../../titles";
+import { CountryFlag } from "../../../components/country-flag";
+import { playerCardBase } from "../../../titles";
 import { useHistory, useParams } from "react-router";
-import { getGeneralIconPath } from "../../coh/helpers";
-import { Loading } from "../../components/loading";
+import { getGeneralIconPath } from "../../../coh/helpers";
+import { Loading } from "../../../components/loading";
 import Title from "antd/es/typography/Title";
 import { calculateOverallStatsForPlayerCard } from "./data-processing";
 import { convertTeamNames } from "./helpers";
-import LastMatchesTable from "../matches/last-matches-table";
+import LastMatchesTable from "../../matches/last-matches-table";
 import PlayerStandingsTables from "./player-standings";
-import config from "../../config";
-import { AlertBox } from "../../components/alert-box";
-import AllMatchesTable from "../matches/all-matches-table";
-import { ConfigContext } from "../../config-context";
+import config from "../../../config";
+import { AlertBox } from "../../../components/alert-box";
+import AllMatchesTable from "../../matches/all-matches-table";
+import { ConfigContext } from "../../../config-context";
 import { Space } from "antd/es";
-import { AlertBoxChina } from "../../components/alert-box-china";
+import { AlertBoxChina } from "../../../components/alert-box-china";
 const { Text } = Typography;
 
 type playerCardAPIObject = {

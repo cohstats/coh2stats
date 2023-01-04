@@ -222,6 +222,7 @@ const BulletinList = () => {
           </div>
           <Table
             columns={TableColumns}
+            size={"middle"}
             pagination={{
               defaultPageSize: 60,
               pageSizeOptions: ["10", "20", "40", "60", "100", "200"],

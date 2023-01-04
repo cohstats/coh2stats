@@ -1,1 +1,1 @@
-export { default } from "./player-card";
+export { default } from "./players-page";

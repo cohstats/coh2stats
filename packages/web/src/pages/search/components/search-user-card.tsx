@@ -1,11 +1,9 @@
 import React from "react";
 import routes from "../../../routes";
 import { Avatar } from "antd";
-import {History} from "history";
-import {CountryFlag} from "../../../components/country-flag";
-import {userAPIObject} from "../types";
-
-
+import { History } from "history";
+import { CountryFlag } from "../../../components/country-flag";
+import { userAPIObject } from "../types";
 
 const SearchUserCard = (
   userObject: userAPIObject,
