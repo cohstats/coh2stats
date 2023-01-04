@@ -16,6 +16,8 @@ import { ConfigContext } from "../../config-context";
 import { AlertBoxChina } from "../../components/alert-box-china";
 import { userAPIObject } from "./types";
 import SearchUserCard from "./components/search-user-card";
+import { Tip } from "../../components/tip";
+import { Link } from "react-router-dom";
 
 const sortByXP = (array: Array<userAPIObject>) => {
   return array.sort((a, b) => {
@@ -64,9 +66,23 @@ const CustomSearch: React.FC = () => {
         }
 
         return (
-          <Space wrap size={10} style={{ maxWidth: 720 }} align={"center"}>
-            {userCards}
-          </Space>
+          <div>
+            <Space wrap size={10} style={{ maxWidth: 720 }} align={"center"}>
+              {userCards}
+            </Space>
+            {userCards.length > 50 && (
+              <div style={{ paddingTop: 15 }}>
+                <Tip
+                  text={
+                    <>
+                      Advanced search (not exact name) is limited to 50 results only. Try adding
+                      more characters.
+                    </>
+                  }
+                />
+              </div>
+            )}
+          </div>
         );
       }
     };

@@ -45,8 +45,8 @@ const GeoWorldMap: React.FC<GeoWorldMapProps> = ({ data }) => {
   // Add name to the data
   data = data.map((d) => {
     return {
-      // @ts-ignore
       ...d,
+      // @ts-ignore
       ...{ name: stateNamesByCode[d.id.toUpperCase()], key: d.id },
     };
   });
