@@ -115,9 +115,9 @@ const PlayerStats: React.FC = () => {
                     text={
                       <>
                         We are tracking only players who played at least 1 automatch game. Players
-                        who play only AI/Custom games are not tracked. Tracking from 1.1.2023.
-                        Data are refreshed once a day. Current data timestamp{" "}
-                        {timeStamp.toLocaleString()}
+                        who play only AI/Custom games are not tracked. Tracking from{" "}
+                        {new Date(Date.UTC(2023, 0, 1, 0, 0)).toLocaleString()}. Data are
+                        refreshed once a day. Current data timestamp {timeStamp.toLocaleString()}
                       </>
                     }
                   />
