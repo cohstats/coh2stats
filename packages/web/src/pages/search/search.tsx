@@ -16,6 +16,7 @@ import { ConfigContext } from "../../config-context";
 import { AlertBoxChina } from "../../components/alert-box-china";
 import { userAPIObject } from "./types";
 import SearchUserCard from "./components/search-user-card";
+import { Tip } from "../../components/tip";
 
 const sortByXP = (array: Array<userAPIObject>) => {
   return array.sort((a, b) => {
@@ -64,9 +65,23 @@ const CustomSearch: React.FC = () => {
         }
 
         return (
-          <Space wrap size={10} style={{ maxWidth: 720 }} align={"center"}>
-            {userCards}
-          </Space>
+          <div>
+            <Space wrap size={10} style={{ maxWidth: 720 }} align={"center"}>
+              {userCards}
+            </Space>
+            {userCards.length > 50 && (
+              <div style={{ paddingTop: 15 }}>
+                <Tip
+                  text={
+                    <>
+                      Advanced search (not exact name) is limited to 50 results only. Try adding
+                      more characters.
+                    </>
+                  }
+                />
+              </div>
+            )}
+          </div>
         );
       }
     };
@@ -127,7 +142,7 @@ const CustomSearch: React.FC = () => {
     };
 
     (async () => {
-      if (searchParam.length < 2) {
+      if (searchParam && searchParam.length < 2) {
         setError("The search needs to have at least 2 characters.");
         setIsLoading(false);
         return;

@@ -17,7 +17,7 @@ import CustomSearch from "./pages/search";
 import MainHome from "./components/main-home";
 import CustomStats from "./pages/stats/custom-stats";
 import Leaderboards from "./pages/ladders";
-import PlayerCard from "./pages/players";
+import PlayerCard from "./pages/players/player-card";
 import MapStats from "./pages/map-stats";
 import LiveMatches from "./pages/live-matches";
 import { ErrorBoundary } from "./components/error-boundary";
@@ -26,6 +26,7 @@ import NotFound from "./pages/not-found";
 import UserProfile from "./pages/profile";
 import RecentMatches from "./pages/recent-matches/recent-matches";
 import Regions from "./pages/about/regions";
+import PlayersPage from "./pages/players";
 
 const { Content } = Layout;
 
@@ -56,7 +57,7 @@ const App: React.FC = () => {
                 <PlayerCard />
               </Route>
               <Route path={routes.playerCardBase()}>
-                <CustomSearch />
+                <PlayersPage />
               </Route>
               <Route path={routes.leaderboardsBase()}>
                 <Leaderboards />

@@ -1,5 +1,5 @@
-import { timeAgo } from "../../utils/helpers";
-import { PlayerCardDataArrayObject } from "../../coh/types";
+import { timeAgo } from "../../../utils/helpers";
+import { PlayerCardDataArrayObject } from "../../../coh/types";
 
 const convertTeamNames = (mode: string) => {
   if (mode.startsWith("team")) {

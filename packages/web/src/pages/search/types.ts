@@ -35,8 +35,4 @@ type userAPIObject = {
   relicProfile: RelicProfileType;
 };
 
-export type{
-  userAPIObject,
-  RelicProfileType,
-  SteamProfileType
-}
+export type { userAPIObject, RelicProfileType, SteamProfileType };

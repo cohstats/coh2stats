@@ -31,8 +31,8 @@ const Regions: React.FC = () => {
         <br />
         <Text strong>Support:</Text>
         <ul>
-          <li>Search {checkMark}</li>
-          <li>Commanders & Bulletins {checkMark}</li>
+          <li>{checkMark} Search</li>
+          <li>{checkMark} Commanders & Bulletins </li>
           <li>
             Player cards
             <ul>
@@ -60,11 +60,12 @@ const Regions: React.FC = () => {
             <ul>
               <li>{notSupported} Custom stats range - To be Fixed</li>
               <li>{notSupported} Other direct stats </li>
+              <li>{notSupported} Player stats </li>
             </ul>
           </li>
-          <li>Recent Games {notSupported}</li>
-          <li>Map Stats {notSupported}</li>
-          <li>Amount of online players & other small stats over the page {notSupported}</li>
+          <li>{notSupported} Recent Games </li>
+          <li>{notSupported} Map Stats </li>
+          <li>{notSupported} Amount of online players & other small stats over the page </li>
         </ul>
       </Paragraph>
     </div>

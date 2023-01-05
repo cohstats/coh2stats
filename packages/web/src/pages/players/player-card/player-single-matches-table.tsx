@@ -1,9 +1,9 @@
 import React from "react";
 import { ColumnsType } from "antd/es/table";
-import { PlayerCardDataArrayObject } from "../../coh/types";
+import { PlayerCardDataArrayObject } from "../../../coh/types";
 import { Table, Tooltip, Typography } from "antd";
-import { getGeneralIconPath, levelToText } from "../../coh/helpers";
-import { Helper } from "../../components/helper";
+import { getGeneralIconPath, levelToText } from "../../../coh/helpers";
+import { Helper } from "../../../components/helper";
 import { formatTimeAgo, latestDate, percentageFormat } from "./helpers";
 const { Text } = Typography;
 
