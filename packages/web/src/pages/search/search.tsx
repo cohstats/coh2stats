@@ -17,7 +17,6 @@ import { AlertBoxChina } from "../../components/alert-box-china";
 import { userAPIObject } from "./types";
 import SearchUserCard from "./components/search-user-card";
 import { Tip } from "../../components/tip";
-import { Link } from "react-router-dom";
 
 const sortByXP = (array: Array<userAPIObject>) => {
   return array.sort((a, b) => {
