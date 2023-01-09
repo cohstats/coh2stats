@@ -3,6 +3,7 @@ import { Typography } from "antd";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { KofiDonate } from "./kofi-donate";
 import config from "../../config";
+import { PayPalDonation } from "./paypal-donations";
 
 const { Title, Link, Text, Paragraph } = Typography;
 
@@ -242,7 +243,8 @@ const About: React.FC = () => {
         kind of income (donations/ads?).
         <br />
         <br />
-        If you would like to give financial support, you can do so. <br />
+        If you like the site please consider donating.
+        <br />
         100% of donations will go towards this project costs <br />
         <br />
         <KofiDonate />
@@ -252,6 +254,10 @@ const About: React.FC = () => {
           <br />
           no registration required.
         </i>
+        <br />
+        <br />
+        <PayPalDonation />
+        <i>Direct PayPal</i>
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import React from "react";
 import { ResponsiveChoropleth } from "@nivo/geo";
 import { geoMapFeatures } from "./geo-map-features";
 import { stateNamesByCode } from "./states";
-import { Row, Space, Table } from "antd";
+import { Row, Table } from "antd";
 import { CountryFlag } from "../../country-flag";
 import { UserOutlined } from "@ant-design/icons";
 
@@ -65,8 +65,8 @@ const GeoWorldMap: React.FC<GeoWorldMapProps> = ({ data }) => {
   return (
     <div>
       <Row justify={"center"}>
-        <Space size={"large"} align={"center"} wrap={true}>
-          <div style={{ width: 650, height: 420 }}>
+        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
+          <div style={{ width: "100%", maxWidth: 650, height: 420, marginRight: 20 }}>
             <ResponsiveChoropleth
               data={data}
               features={geoMapFeatures.features}
@@ -127,7 +127,7 @@ const GeoWorldMap: React.FC<GeoWorldMapProps> = ({ data }) => {
               //     ]}
             />
           </div>
-          <div>
+          <div style={{ flex: "1", maxWidth: 450 }}>
             <Table
               dataSource={data.slice(0, 10)}
               columns={columns}
@@ -135,7 +135,7 @@ const GeoWorldMap: React.FC<GeoWorldMapProps> = ({ data }) => {
               pagination={false}
             />
           </div>
-        </Space>
+        </div>
       </Row>
     </div>
   );
