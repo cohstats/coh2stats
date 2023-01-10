@@ -9,6 +9,7 @@ import { Loading } from "../../../components/loading";
 import { AlertBox } from "../../../components/alert-box";
 import { Link } from "react-router-dom";
 import routes from "../../../routes";
+import firebaseAnalytics from "../../../analytics";
 
 const { Text, Title } = Typography;
 
@@ -27,6 +28,8 @@ const PlayerStats: React.FC = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    firebaseAnalytics.playersPageDisplayed();
+
     try {
       (async () => {
         setIsLoading(true);
