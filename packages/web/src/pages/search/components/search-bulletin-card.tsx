@@ -29,7 +29,7 @@ const SearchBulletinCard: React.FC<IProps> = ({ bulletinData }) => {
     <div
       style={{ backgroundColor: "white", height: 67, padding: 1 }}
       className={"resultBox"}
-      key={nameBulletin + iconBulletin}
+      key={bulletinData.serverID}
       onClick={() => onBulletinClick()}
     >
       <Avatar

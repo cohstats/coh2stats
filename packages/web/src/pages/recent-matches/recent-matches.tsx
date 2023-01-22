@@ -62,7 +62,7 @@ const RecentMatches: React.FC = () => {
         });
 
         if (docSnapTotalMatches.exists()) {
-          setTotalMatches(docSnapTotalMatches.data()?.count);
+          setTotalMatches(docSnapTotalMatches.data()?.count.toLocaleString());
         }
 
         setMatchRecords(gamesData);
