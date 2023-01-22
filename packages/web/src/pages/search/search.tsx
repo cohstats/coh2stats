@@ -98,7 +98,7 @@ const CustomSearch: React.FC = () => {
         const bulletinCards = [];
         const foundBulletins = Object.values(data);
         for (const value of foundBulletins) {
-          bulletinCards.push(<SearchBulletinCard bulletinData={value} />);
+          bulletinCards.push(<SearchBulletinCard bulletinData={value} key={value.serverID} />);
         }
 
         return (
@@ -130,6 +130,7 @@ const CustomSearch: React.FC = () => {
               commanderName={value.commanderName}
               description={value.description}
               races={value.races}
+              key={value.serverID}
             />,
           );
         }
@@ -142,12 +143,6 @@ const CustomSearch: React.FC = () => {
     };
 
     (async () => {
-      if (searchParam && searchParam.length < 2) {
-        setError("The search needs to have at least 2 characters.");
-        setIsLoading(false);
-        return;
-      }
-
       if (searchParam) {
         setIsLoading(true);
 

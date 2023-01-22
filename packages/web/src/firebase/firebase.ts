@@ -7,13 +7,13 @@ import {
 } from "firebase/analytics";
 import { FirebaseApp, initializeApp } from "firebase/app";
 import { getFunctions, connectFunctionsEmulator } from "firebase/functions";
-// import { getPerformance } from "firebase/performance";
+import { getPerformance } from "firebase/performance";
 import { getFirestore, connectFirestoreEmulator, Firestore } from "firebase/firestore";
 
 // Local
 import config from "../config";
 
-// let performance
+let performance;
 let app: FirebaseApp | undefined;
 let analytics: Analytics;
 let db: Firestore | undefined;
@@ -26,7 +26,8 @@ const useEmulators = process.env.REACT_APP_EMULATOR && process.env.REACT_APP_EMU
 const init = (): void => {
   app = initializeApp(config.firebase());
   analytics = getAnalytics(app);
-  // performance = getPerformance(app);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  performance = getPerformance(app);
   db = getFirestore(app);
 
   setUserProperties(analytics, { custom_platform: "web_app" });
