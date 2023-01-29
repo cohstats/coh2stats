@@ -89,7 +89,9 @@ const PlayerCard = () => {
     (async () => {
       try {
         const response = await fetch(
-          `${getAPIUrl(userConfig)}getPlayerCardEverythingHttp?steamid=${steamid}`,
+          `${getAPIUrl(
+            userConfig,
+          )}getPlayerCardEverythingHttp?steamid=${steamid}&includeMatches=false`,
           {},
         );
         if (!response.ok) {
@@ -180,7 +182,7 @@ const PlayerCard = () => {
     {
       label: "Recent Matches",
       key: "recentMatches",
-      children: <LastMatchesTable data={data["playerMatches"]} profileID={`/steam/${steamid}`} />,
+      children: <LastMatchesTable steamID={`${steamid}`} />,
     },
     {
       label: "Matches",

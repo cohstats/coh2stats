@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect } from "react";
-import { Image, Table, Tag, Tooltip } from "antd";
+import React, { useContext, useEffect, useState } from "react";
+import { Image, Row, Table, Tag, Tooltip } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import {
   formatMatchTime,
@@ -21,33 +21,89 @@ import { RelicIcon } from "../../components/relic-icon";
 import { useMediaQuery } from "react-responsive";
 import firebaseAnalytics from "../../analytics";
 import { getMapIconPath } from "../../coh/maps";
+import { ConfigContext } from "../../config-context";
+import { getAPIUrl } from "../../utils/helpers";
+import { Space } from "antd/es";
+import { AlertBox } from "../../components/alert-box";
+import { AlertBoxChina } from "../../components/alert-box-china";
 
 interface IProps {
-  data: Array<Record<string, any>>;
-  profileID: string; // has to be in format "/steam/{steamID}"
+  steamID: string;
 }
 
-const LastMatchesTable: React.FC<IProps> = ({ data, profileID }) => {
+const renderExpandedMatch = (record: any) => {
+  return <ExpandedMatch record={record} />;
+};
+
+const LastMatchesTable: React.FC<IProps> = ({ steamID }) => {
   const isMobile = useMediaQuery({ query: isMobileMediaQuery });
+
+  const { userConfig } = useContext(ConfigContext);
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [data, setData] = useState<undefined | Array<Record<string, any>>>();
+  const [error, setError] = useState<string | undefined>();
 
   useEffect(() => {
     firebaseAnalytics.playerCardMatchesDisplayed();
-  }, []);
 
-  let localLoadedMatches = data
-    .filter(
-      (match) =>
-        match.description !== "SESSION_MATCH_KEY" && match.matchhistoryreportresults.length !== 0,
-    )
-    .sort((a: any, b: any) => b.completiontime - a.completiontime);
+    (async () => {
+      setIsLoading(true);
+
+      try {
+        const response = await fetch(
+          `${getAPIUrl(userConfig)}getPlayerMatchesRelicHttp?steamid=${steamID}`,
+          {},
+        );
+        if (!response.ok) {
+          throw new Error(
+            `API request failed with code: ${response.status}, res: ${await response.text()}`,
+          );
+        }
+        const finalData = await response.json();
+        // Filter out incorrect data
+        const matchData = finalData.playerMatches
+          .filter(
+            (match: any) =>
+              match.description !== "SESSION_MATCH_KEY" &&
+              match.matchhistoryreportresults.length !== 0,
+          )
+          .sort((a: any, b: any) => b.completiontime - a.completiontime);
+
+        setData(matchData);
+      } catch (e) {
+        console.error(e);
+        setError(JSON.stringify(e));
+        // antd table takes undefined, not null
+        setData(undefined);
+      } finally {
+        setIsLoading(false);
+      }
+    })();
+  }, [steamID, userConfig]);
+
+  if (error) {
+    return (
+      <Row justify="center" style={{ paddingTop: "10px" }}>
+        <Space direction={"vertical"}>
+          <AlertBox
+            type={"error"}
+            message={"There was an error loading the player matches. Try refreshing the page."}
+            description={`${JSON.stringify(error)}`}
+          />
+          <AlertBoxChina />
+        </Space>
+      </Row>
+    );
+  }
+
+  const profileID = `/steam/${steamID}`;
 
   // set state variable for map filter options
-  const playerMaps = getPlayerMapListFilter(localLoadedMatches) || {
-    text: "8p_redball_express",
-    value: "8p_redball_express",
-  };
+  const playerMaps = getPlayerMapListFilter(data);
 
-  let matchRecords = localLoadedMatches;
+  let matchRecords = data;
+  console.log("DATA" + data);
 
   function isPlayerVictorious(matchRecord: any): boolean {
     if (!matchRecord) return false;
@@ -64,10 +120,6 @@ const LastMatchesTable: React.FC<IProps> = ({ data, profileID }) => {
     );
     return player[0];
   }
-
-  const renderExpandedMatch = useCallback((record: any) => {
-    return <ExpandedMatch record={record} />;
-  }, []);
 
   const columns: ColumnsType<any> = [
     {
@@ -283,6 +335,7 @@ const LastMatchesTable: React.FC<IProps> = ({ data, profileID }) => {
         pagination={false}
         columns={columns}
         dataSource={matchRecords}
+        loading={isLoading}
         rowKey={(record) => record.id}
         size="middle"
         rowClassName={(record) => (isPlayerVictorious(record) ? "green" : "red")}
@@ -295,7 +348,7 @@ const LastMatchesTable: React.FC<IProps> = ({ data, profileID }) => {
           <Table.Summary fixed>
             <Table.Summary.Row>
               <Table.Summary.Cell index={0} colSpan={columns.length} align={"left"}>
-                Total amount of matches {matchRecords.length}
+                Total amount of matches {matchRecords?.length}
               </Table.Summary.Cell>
             </Table.Summary.Row>
           </Table.Summary>

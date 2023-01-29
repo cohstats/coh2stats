@@ -392,6 +392,15 @@ export const ExpandedMatch: React.FC<{ record: any }> = ({ record }) => {
 
 // returns a filter setting for player maps
 export function getPlayerMapListFilter(matches: any) {
+  // if no matches return default
+  if (!matches)
+    return [
+      {
+        text: "8p_redball_express",
+        value: "8p_redball_express",
+      },
+    ];
+
   let mapSet = new Set();
   let filterSettings: any[] = [];
   for (const map of matches) {
