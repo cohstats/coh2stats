@@ -1,5 +1,9 @@
 import { timeAgo } from "../../../utils/helpers";
-import { PlayerCardDataArrayObject } from "../../../coh/types";
+import {
+  HistoricLeaderBoardStats,
+  LaddersDataObject,
+  PlayerCardDataArrayObject,
+} from "../../../coh/types";
 
 const convertTeamNames = (mode: string) => {
   if (mode.startsWith("team")) {
@@ -32,4 +36,31 @@ const percentageFormat = (wins: number, losses: number) => {
   return Math.round(100 * Number(wins / (losses + wins)));
 };
 
-export { convertTeamNames, formatTimeAgo, latestDate, percentageFormat };
+/**
+ * Working with references.
+ *
+ * Warning: Mutating the data object.
+ * @param data
+ * @param historicLeaderboardStats
+ */
+const mergeLadderDataAndHistoricData = (
+  data: LaddersDataObject,
+  historicLeaderboardStats?: HistoricLeaderBoardStats | null,
+) => {
+  if (!historicLeaderboardStats) return;
+
+  for (const stat of data.leaderboardStats) {
+    const key = `${stat.statgroup_id}-${stat.leaderboard_id}`;
+    if (Object.hasOwn(historicLeaderboardStats, key)) {
+      stat.historic = historicLeaderboardStats[key];
+    }
+  }
+};
+
+export {
+  convertTeamNames,
+  formatTimeAgo,
+  latestDate,
+  percentageFormat,
+  mergeLadderDataAndHistoricData,
+};

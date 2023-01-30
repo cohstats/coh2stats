@@ -2,15 +2,12 @@ import React from "react";
 import PlayerSingleMatchesTable from "./player-single-matches-table";
 import PlayerTeamMatchesTable from "./player-team-matches-table";
 import { findAndMergeStatGroups } from "../../../coh/helpers";
-import { LaddersDataObject } from "../../../coh/types";
+import { HistoricLeaderBoardStats, LaddersDataObject } from "../../../coh/types";
 import { prepareLeaderBoardDataForSinglePlayer } from "./data-processing";
 import { Typography } from "antd";
+import { mergeLadderDataAndHistoricData } from "./helpers";
 
 const { Title } = Typography;
-
-interface IProps {
-  data: LaddersDataObject;
-}
 
 const specificOrderOfAITables = (keys: Array<string>) => {
   const sortBy = [
@@ -45,7 +42,14 @@ const splitAIGames = (keys: Array<string>) => {
   };
 };
 
-const PlayerStandingsTables: React.FC<IProps> = ({ data }) => {
+interface IProps {
+  data: LaddersDataObject;
+  historicLeaderboardStats?: HistoricLeaderBoardStats | null;
+}
+
+const PlayerStandingsTables: React.FC<IProps> = ({ data, historicLeaderboardStats }) => {
+  // Mutating the data object, vomit incoming
+  mergeLadderDataAndHistoricData(data, historicLeaderboardStats);
   const mergedGamesData = findAndMergeStatGroups(data as LaddersDataObject, null);
   const { finalStatsSingleGame, finalStatsTeamGames, finalStatsCustomGames, finalStatsAIGame } =
     prepareLeaderBoardDataForSinglePlayer(mergedGamesData);

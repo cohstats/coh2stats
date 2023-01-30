@@ -28,6 +28,7 @@ type playerCardAPIObject = {
   steamProfile: Record<string, any>;
   playerMatches: Array<Record<string, any>>;
   playTime: null | number;
+  playerInfo: null | Record<string, any>;
 };
 
 type statGroupsType = Array<Record<string, any>>;
@@ -89,7 +90,9 @@ const PlayerCard = () => {
     (async () => {
       try {
         const response = await fetch(
-          `${getAPIUrl(userConfig)}getPlayerCardEverythingHttp?steamid=${steamid}`,
+          `${getAPIUrl(
+            userConfig,
+          )}getPlayerCardEverythingHttp?steamid=${steamid}&includeMatches=false`,
           {},
         );
         if (!response.ok) {
@@ -175,12 +178,17 @@ const PlayerCard = () => {
     {
       label: "Standings",
       key: "stats",
-      children: <PlayerStandingsTables data={relicData as LaddersDataObject} />,
+      children: (
+        <PlayerStandingsTables
+          data={relicData as LaddersDataObject}
+          historicLeaderboardStats={data.playerInfo?.leaderboardStats}
+        />
+      ),
     },
     {
       label: "Recent Matches",
       key: "recentMatches",
-      children: <LastMatchesTable data={data["playerMatches"]} profileID={`/steam/${steamid}`} />,
+      children: <LastMatchesTable steamID={`${steamid}`} />,
     },
     {
       label: "Matches",
