@@ -4,7 +4,7 @@ import { format } from "date-fns";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en.json";
 import config from "../config";
-import { axisRaceIds, ProcessedMatch, resultType } from "../coh/types";
+import { axisRaceIds, FirebaseTimeStampObject, ProcessedMatch, resultType } from "../coh/types";
 import { userConfigType } from "../config-context";
 
 // Something like this is not currently support by create-react-app
@@ -80,6 +80,10 @@ const calculateRMS = (...args: number[]) => {
         return sum + value * value;
       }, 0),
   );
+};
+
+const firebaseTimeStampObjectToDate = (timeStampObject: FirebaseTimeStampObject) => {
+  return new Date(timeStampObject._seconds * 1000);
 };
 
 /**
@@ -167,4 +171,5 @@ export {
   isDev,
   determineMatchWinner,
   getAPIUrl,
+  firebaseTimeStampObjectToDate,
 };

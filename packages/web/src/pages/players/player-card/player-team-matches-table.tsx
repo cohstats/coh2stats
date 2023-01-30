@@ -9,6 +9,8 @@ import { Link } from "react-router-dom";
 import routes from "../../../routes";
 import { convertTeamNames, formatTimeAgo, latestDate, percentageFormat } from "./helpers";
 import { Helper } from "../../../components/helper";
+import { firebaseTimeStampObjectToDate } from "../../../utils/helpers";
+import { HistoryOutlined } from "@ant-design/icons";
 const { Text } = Typography;
 
 interface IProps {
@@ -73,15 +75,33 @@ const PlayerTeamMatchesTable: React.FC<IProps> = ({ title, data }) => {
     },
     {
       title: "Rank",
-      dataIndex: "rank",
       key: "rank",
       align: "center" as "center",
       width: 70,
-      render: (data: any) => {
-        if (data < 0) {
-          return "-";
+      render: (data: PlayerCardDataArrayObject) => {
+        if (data.rank < 0) {
+          if (data.historic) {
+            const historicRecords = data.historic.history;
+            const lastKnownData = historicRecords[historicRecords.length - 1];
+
+            return (
+              <>
+                <Tooltip
+                  title={`Historic record from ${firebaseTimeStampObjectToDate(
+                    lastKnownData.ts,
+                  ).toLocaleString()}. Currently UNRANKED.`}
+                >
+                  <Text type="secondary">
+                    {lastKnownData.r} <HistoryOutlined />
+                  </Text>
+                </Tooltip>
+              </>
+            );
+          } else {
+            return "-";
+          }
         } else {
-          return data;
+          return data.rank;
         }
       },
     },
@@ -97,15 +117,33 @@ const PlayerTeamMatchesTable: React.FC<IProps> = ({ title, data }) => {
           />
         </>
       ),
-      dataIndex: "ranklevel",
       key: "ranklevel",
       align: "center" as "center",
       width: 70,
-      render: (data: any) => {
-        if (data <= 0) {
-          return "-";
+      render: (data: PlayerCardDataArrayObject) => {
+        if (data.ranklevel <= 0) {
+          if (data.historic) {
+            const historicRecords = data.historic.history;
+            const lastKnownData = historicRecords[historicRecords.length - 1];
+
+            return (
+              <>
+                <Tooltip
+                  title={`Historic record from ${firebaseTimeStampObjectToDate(
+                    lastKnownData.ts,
+                  ).toLocaleString()}. Currently UNRANKED.`}
+                >
+                  <Text type="secondary">
+                    {lastKnownData.rl} <HistoryOutlined />
+                  </Text>
+                </Tooltip>
+              </>
+            );
+          } else {
+            return "-";
+          }
         } else {
-          return <Tooltip title={levelToText(data)}>{data}</Tooltip>;
+          return <Tooltip title={levelToText(data.ranklevel)}>{data.ranklevel}</Tooltip>;
         }
       },
     },

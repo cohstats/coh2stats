@@ -8,6 +8,9 @@
       "**/firebase/**"
     ]
   },
+  "engines": {
+    "npm": "Please-use-yarn"
+  },
   "scripts": {
     "web": "yarn workspace @coh2stats/web",
     "app": "yarn workspace @coh2stats/app",

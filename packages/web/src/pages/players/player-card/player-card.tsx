@@ -28,6 +28,7 @@ type playerCardAPIObject = {
   steamProfile: Record<string, any>;
   playerMatches: Array<Record<string, any>>;
   playTime: null | number;
+  playerInfo: null | Record<string, any>;
 };
 
 type statGroupsType = Array<Record<string, any>>;
@@ -177,7 +178,12 @@ const PlayerCard = () => {
     {
       label: "Standings",
       key: "stats",
-      children: <PlayerStandingsTables data={relicData as LaddersDataObject} />,
+      children: (
+        <PlayerStandingsTables
+          data={relicData as LaddersDataObject}
+          historicLeaderboardStats={data.playerInfo?.leaderboardStats}
+        />
+      ),
     },
     {
       label: "Recent Matches",

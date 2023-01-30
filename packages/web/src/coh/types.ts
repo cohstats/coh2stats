@@ -46,6 +46,8 @@ interface LeaderBoardStats {
   lastmatchdate: number;
   ranktotal: number;
   losses: number;
+  // Added for player cards with historic player data
+  historic?: HistoricLeaderBoardStat;
 }
 
 interface LaddersDataObject {
@@ -58,6 +60,31 @@ interface LaddersDataObject {
   }>;
   rankTotal: number;
 }
+
+interface FirebaseTimeStampObject {
+  _seconds: number;
+  _nanoseconds: number;
+}
+
+interface HistoryOfLeaderBoardStat {
+  w: number; // wins
+  l: number; // losses
+  r: number; // ranks
+  rl: number; // rank level
+  ts: FirebaseTimeStampObject; // timestamp
+}
+
+interface HistoricLeaderBoardStat {
+  leaderboard_id: number;
+  wins: number;
+  losses: number;
+  rank: number;
+  ranklevel: number;
+  statgroup_id: number;
+  history: Array<HistoryOfLeaderBoardStat>;
+}
+
+type HistoricLeaderBoardStats = Record<string, HistoricLeaderBoardStat>;
 
 interface LaddersDataArrayObject extends LeaderBoardStats {
   change: number | string;
@@ -229,6 +256,8 @@ export type {
   TypeAnalysisObject,
   statTypesInDbAsType,
   LiveGame,
+  HistoricLeaderBoardStats,
+  FirebaseTimeStampObject,
 };
 export {
   validRaceNames,
