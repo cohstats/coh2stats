@@ -21,6 +21,8 @@ import AllMatchesTable from "../../matches/all-matches-table";
 import { ConfigContext } from "../../../config-context";
 import { Space } from "antd/es";
 import { AlertBoxChina } from "../../../components/alert-box-china";
+import { InfoCircleOutlined } from "@ant-design/icons";
+
 const { Text } = Typography;
 
 type playerCardAPIObject = {
@@ -226,6 +228,29 @@ const PlayerCard = () => {
                 </>
               )}
               <div>
+                <Tooltip
+                  color={"#001529"}
+                  title={
+                    <>
+                      Steam ID:{" "}
+                      <Text code style={{ color: "whitesmoke" }}>
+                        {steamid}
+                      </Text>
+                      <br />
+                      Relic ID:{" "}
+                      <Text code style={{ color: "whitesmoke" }}>
+                        {data.playerInfo?.profile_id}
+                      </Text>
+                    </>
+                  }
+                >
+                  <Avatar
+                    size={24}
+                    alt={"info icon"}
+                    style={{ backgroundColor: "#162452" }}
+                    icon={<InfoCircleOutlined width={25} height={25} />}
+                  />
+                </Tooltip>{" "}
                 <a href={steamProfile?.profileurl || ""} target={"_blank"} rel="noreferrer">
                   <Badge dot={steamProfile?.personastate >= 1} color={"green"} offset={[-2, 22]}>
                     <Avatar size={24} src={"/resources/steam_icon.png"} alt={"steam icon"} />
