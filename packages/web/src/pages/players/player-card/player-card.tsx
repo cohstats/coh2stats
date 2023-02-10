@@ -21,7 +21,6 @@ import AllMatchesTable from "../../matches/all-matches-table";
 import { ConfigContext } from "../../../config-context";
 import { Space } from "antd/es";
 import { AlertBoxChina } from "../../../components/alert-box-china";
-import { InfoCircleOutlined } from "@ant-design/icons";
 
 const { Text } = Typography;
 
@@ -248,7 +247,8 @@ const PlayerCard = () => {
                     size={24}
                     alt={"info icon"}
                     style={{ backgroundColor: "#162452" }}
-                    icon={<InfoCircleOutlined width={25} height={25} />}
+                    // Yeah, we should use svg icon, but I just didn't have the strength to properly format it
+                    src={"/resources/icons/info_i.webp"}
                   />
                 </Tooltip>{" "}
                 <a href={steamProfile?.profileurl || ""} target={"_blank"} rel="noreferrer">
