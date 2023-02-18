@@ -55,7 +55,7 @@ const yesterDayTimeStamp =
   Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() - 1, 0, 0, 0) / 1000;
 ```
 
-Files are stored for 14 days. If you are interested in long term analysis, everyday download is recommended.
+Files are stored for 10 days. If you are interested in long term analysis, everyday download is recommended.
 
 _In case you will use the data, please mention the source and give a shoutout to the website coh2stats.com, thank you!_
 
