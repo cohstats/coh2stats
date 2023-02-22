@@ -1,8 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import {PlayerCardDataArrayObject} from "../../../coh/types";
-import {Empty} from "antd";
+import {Card, Empty, Switch} from "antd";
 import { Line } from '@ant-design/plots';
-import {firebaseTimeStampObjectToDate} from "../../../utils/helpers";
+import {firebaseTimeStampObjectToDate, getDatesInRange} from "../../../utils/helpers";
+import {getDefaultSliderPosition} from "../../../utils/charts-utils";
+import {Helper} from "../../../components/helper";
 
 
 interface IProps {
@@ -11,13 +13,19 @@ interface IProps {
 
 export const PlayerGroupHistoryChart: React.FC<IProps> = ({record})=>{
 
+  // If all dates are set we will generate data points for each date
+  const [allDates, setAllDates] = useState(false)
+
   const data = record.historic?.history;
 
   if(!data){
     return   <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={"No historic data for this PlayerGroup"}/>
   }
 
-  console.log(data)
+  if(allDates){
+    getDatesInRange(firebaseTimeStampObjectToDate(data[0].ts), new Date())
+
+  }
 
   const chartData = data.map((record) =>{
     return {
@@ -26,9 +34,12 @@ export const PlayerGroupHistoryChart: React.FC<IProps> = ({record})=>{
     }
   })
 
+  // @ts-ignore
+  // chartData[4] = {...chartData[4], ...{rank: null}}
+
   console.log(chartData)
 
-  const config = {
+  const chartConfig = {
     data: chartData,
     padding: 'auto' as "auto",
     xField: 'time',
@@ -42,17 +53,26 @@ export const PlayerGroupHistoryChart: React.FC<IProps> = ({record})=>{
     tooltip: {
 
     },
-    slider: {
-      start: 0,
-      end: 1,
-    },
+    slider: getDefaultSliderPosition(chartData.length, 30)
   };
 
+  const onSwitchChange = (all: boolean) => {
+    setAllDates(all)
+  }
+
+  const extra = (<>  Dates <Helper text={"sdfsdf"}/>   <Switch
+    checkedChildren="All"
+    unCheckedChildren="Record"
+    style={{ width: 75 }}
+    onChange={onSwitchChange}
+    // defaultChecked={timestamp === "now"}
+  />
+  </>)
 
   return(
-    <>
-      <Line {...config} />
-    </>
+    <Card title={""} extra={extra}>
+      <Line {...chartConfig} />
+    </Card>
   )
 }
 

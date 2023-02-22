@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { format } from "date-fns";
+import {eachDayOfInterval, format} from "date-fns";
 
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en.json";
@@ -145,6 +145,13 @@ const determineMatchWinner = (match: ProcessedMatch): "axis" | "allies" | "none"
   return "none";
 };
 
+const getDatesInRange = (startDate: Date | number, endDate: Date | number): Array<Date> => {
+  return eachDayOfInterval({
+    start: startDate,
+    end: endDate,
+  });
+};
+
 const getAPIUrl = (userConfig: userConfigType) => {
   if (userConfig.api !== "gcp") {
     return config.api.cf;
@@ -172,4 +179,5 @@ export {
   determineMatchWinner,
   getAPIUrl,
   firebaseTimeStampObjectToDate,
+  getDatesInRange
 };
