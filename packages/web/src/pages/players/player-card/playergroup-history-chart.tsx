@@ -83,16 +83,15 @@ export const PlayerGroupHistoryChart: React.FC<IProps> = ({ record }) => {
     xField: "time",
     yField: ["rank", "level"],
     geometryOptions: [{ connectNulls: true }, { connectNulls: true }],
-    yAxis: {
+    meta: {
       rank: {
-        // connectNulls: true,
-        // maxLimit: -1,
-        label: {
-          formatter: (record: any) => {
-            return `${Math.round(Math.abs(record))}`;
-          },
+        // The formatting function affects the display of data on Axis, Legend, and Tooltip. https://charts.ant.design/en/docs/api/options/meta#metaoptionformatter
+        formatter: (record: any) => {
+          return `${Math.round(Math.abs(record))}`;
         },
       },
+    },
+    yAxis: {
       level: {
         min: 1,
         max: 20,
