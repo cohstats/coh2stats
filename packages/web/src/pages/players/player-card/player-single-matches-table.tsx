@@ -7,6 +7,7 @@ import { Helper } from "../../../components/helper";
 import { formatTimeAgo, latestDate, percentageFormat } from "./helpers";
 import { HistoryOutlined } from "@ant-design/icons";
 import { firebaseTimeStampObjectToDate } from "../../../utils/helpers";
+import { PlayerGroupHistoryChart } from "./playergroup-history-chart";
 const { Text } = Typography;
 
 interface IProps {
@@ -183,6 +184,7 @@ const PlayerSingleMatchesTable: React.FC<IProps> = ({ title, data }) => {
         }
       },
     },
+    Table.EXPAND_COLUMN,
   ];
 
   const tableTitle = (() => {
@@ -216,6 +218,10 @@ const PlayerSingleMatchesTable: React.FC<IProps> = ({ title, data }) => {
         dataSource={sortedData}
         pagination={false}
         size={"small"}
+        expandable={{
+          expandedRowRender: (record) => <PlayerGroupHistoryChart record={record} />,
+          expandRowByClick: true,
+        }}
         summary={(pageData) => {
           let totalWins = 0;
           let totalLosses = 0;

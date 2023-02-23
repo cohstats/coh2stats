@@ -57,13 +57,6 @@ const PlayerStandingsTables: React.FC<IProps> = ({ data, historicLeaderboardStat
   const singleTables: Array<any> = [];
   const teamTables: Array<any> = [];
 
-  const customTables = (
-    <PlayerSingleMatchesTable
-      key={"customGames"}
-      title={"Custom Games"}
-      data={finalStatsCustomGames}
-    />
-  );
   const { alliesAIGames, axisAIGames } = splitAIGames(
     specificOrderOfAITables(Object.keys(finalStatsAIGame)),
   );
@@ -117,7 +110,11 @@ const PlayerStandingsTables: React.FC<IProps> = ({ data, historicLeaderboardStat
           <div style={{ textAlign: "center" }}>
             <Title level={3}>Custom Games</Title>
           </div>
-          {customTables}
+          <PlayerSingleMatchesTable
+            key={"customGames"}
+            title={"Custom Games"}
+            data={finalStatsCustomGames}
+          />
         </>
       )}
     </>

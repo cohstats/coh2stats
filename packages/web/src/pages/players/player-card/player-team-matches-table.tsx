@@ -11,6 +11,7 @@ import { convertTeamNames, formatTimeAgo, latestDate, percentageFormat } from ".
 import { Helper } from "../../../components/helper";
 import { firebaseTimeStampObjectToDate } from "../../../utils/helpers";
 import { HistoryOutlined } from "@ant-design/icons";
+import { PlayerGroupHistoryChart } from "./playergroup-history-chart";
 const { Text } = Typography;
 
 interface IProps {
@@ -225,6 +226,7 @@ const PlayerTeamMatchesTable: React.FC<IProps> = ({ title, data }) => {
         }
       },
     },
+    Table.EXPAND_COLUMN,
   ];
 
   return (
@@ -247,6 +249,10 @@ const PlayerTeamMatchesTable: React.FC<IProps> = ({ title, data }) => {
         pagination={false}
         scroll={{ x: 800 }}
         size={"small"}
+        expandable={{
+          expandedRowRender: (record) => <PlayerGroupHistoryChart record={record} />,
+          expandRowByClick: true,
+        }}
         summary={(pageData) => {
           let totalWins = 0;
           let totalLosses = 0;
