@@ -7,7 +7,7 @@ import { Helper } from "../../../components/helper";
 import { formatTimeAgo, latestDate, percentageFormat } from "./helpers";
 import { HistoryOutlined } from "@ant-design/icons";
 import { firebaseTimeStampObjectToDate } from "../../../utils/helpers";
-import {PlayerGroupHistoryChart} from "./playergroup-history-chart";
+import { PlayerGroupHistoryChart } from "./playergroup-history-chart";
 const { Text } = Typography;
 
 interface IProps {

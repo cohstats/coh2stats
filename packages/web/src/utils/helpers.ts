@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import {eachDayOfInterval, format} from "date-fns";
+import { eachDayOfInterval, format } from "date-fns";
 
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en.json";
@@ -179,5 +179,5 @@ export {
   determineMatchWinner,
   getAPIUrl,
   firebaseTimeStampObjectToDate,
-  getDatesInRange
+  getDatesInRange,
 };
