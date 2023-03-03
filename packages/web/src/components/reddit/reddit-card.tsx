@@ -20,7 +20,7 @@ const RedditCard: React.FC<Props> = (size) => {
     (async () => {
       try {
         const res = await fetch(
-          "https://www.reddit.com/r/CompanyOfHeroes/top.json?limit=50&t=week",
+          "https://www.reddit.com/r/CompanyOfHeroes/top.json?limit=100&t=month",
           {},
         );
         const resData = await res.json();

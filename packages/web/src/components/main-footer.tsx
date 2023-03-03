@@ -51,6 +51,13 @@ export const MainFooter: React.FC = () => {
       The Company of Heroes is registered trademark of SEGA Holdings. Co
       <br />
       The COH2 Images and other assets are owned by Relic Entertainment and/or SEGA
+      <br />
+      <br />
+      Visit{" "}
+      <Link href={"https://coh3stats.com"} target="_blank" rel="noopener noreferrer">
+        coh3stats.com
+      </Link>{" "}
+      for Company of Heroes 3 stats and analytics
     </Footer>
   );
 };
