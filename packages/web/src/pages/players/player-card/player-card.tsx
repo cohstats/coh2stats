@@ -104,7 +104,9 @@ const PlayerCard = () => {
 
         const finalData: playerCardAPIObject = await response.json();
         setData(finalData);
-        addNameToUrl(Object.values(finalData.steamProfile)[0].personaname);
+        if(finalData.steamProfile && Object.values(finalData.steamProfile)[0].personaname){
+          addNameToUrl(Object.values(finalData.steamProfile)[0].personaname);
+        }
       } catch (e) {
         let errorMessage = "Failed to do something exceptional";
         if (e instanceof Error) {
