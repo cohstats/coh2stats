@@ -51,7 +51,7 @@ const mergeLadderDataAndHistoricData = (
 
   for (const stat of data.leaderboardStats) {
     const key = `${stat.statgroup_id}-${stat.leaderboard_id}`;
-    if (Object.hasOwn(historicLeaderboardStats, key)) {
+    if (historicLeaderboardStats.hasOwnProperty(key)) {
       stat.historic = historicLeaderboardStats[key];
     }
   }
