@@ -67,7 +67,7 @@ const DesktopApp: React.FC = () => {
                 <li>Game results prediction based on map analysis</li>
                 <li>Loads automatically when joining a new game</li>
                 <li>Twitch stream overlay extension</li>
-                <li>Streamer mode with OBS support</li>
+                <li>Streamer mode with OBS and Twitch Studio support</li>
               </ul>
               <br />
             </Col>
@@ -203,8 +203,8 @@ const DesktopApp: React.FC = () => {
                 </a>
               </div>
               <p style={{ fontSize: "20px" }}>
-                An easy to configure overlay for OBS that shows the players and their ranking when
-                in game. Learn more{" "}
+                An easy to configure overlay for OBS or Twitch Studio that shows the players and
+                their ranking when in game. Learn more{" "}
                 <Link
                   href={
                     "https://github.com/cohstats/coh2stats/blob/master/packages/app/README.md#stream-overlay"
