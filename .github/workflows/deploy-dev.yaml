@@ -40,7 +40,7 @@ jobs:
         id: get_version
         run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
       - name: Install Deps
-        run: yarn install
+        run: yarn install --frozen-lockfile
       - name: Fix the bug ISSUE 1078
         run: yarn run "react-spring-issue-1078"
       - name: Build the app
