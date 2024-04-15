@@ -53,9 +53,9 @@ jobs:
           export NODE_OPTIONS=--max_old_space_size=4096
           CI=false yarn web build
       - name: Deploy to Firebase
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN_CI_PROD}}
-        # Something is wrong with firebase-tools in the CI
-        run: |
-          npx firebase use $FB_PROJECT --token $FIREBASE_TOKEN
-          npx firebase deploy --only $FB_HOSTING --token $FIREBASE_TOKEN -m "CI deploy ${{ steps.get_version.outputs.VERSION }}" --non-interactive
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_COH2_LADDERS_PROD }}"
+          target: coh2-ladders-dev
+          projectId: coh2-ladders-prod
