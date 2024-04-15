@@ -5,7 +5,6 @@
 [![DeepScan grade](https://deepscan.io/api/teams/15780/projects/20479/branches/558227/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=15780&pid=20479&bid=558227)
 [![Discord](https://img.shields.io/discord/959118129240350740?style=flat&label=Chat%20on%20Discord)](https://discord.gg/jRrnwqMfkr)
 
-
 ### Website https://coh2stats.com/
 
 With all the data, player cards, leaderboards, maps, stats, commanders, inte-bulletins and much more!

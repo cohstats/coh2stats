@@ -24,11 +24,11 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@master
         with:
-          node-version: "16.x"
+          node-version: "20.x"
       - name: Cache node modules
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         env:
-          cache-name: cache-node-modules-v1
+          cache-name: cache-node-modules-v2
         with:
           path: |
             node_modules
@@ -40,7 +40,7 @@ jobs:
         id: get_version
         run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
       - name: Install Deps
-        run: yarn install
+        run: yarn install --frozen-lockfile
       - name: Fix the bug ISSUE 1078
         run: yarn run "react-spring-issue-1078"
       - name: Build the app
@@ -52,6 +52,5 @@ jobs:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN_CI_PROD}}
         # Something is wrong with firebase-tools in the CI
         run: |
-          npm install -g firebase-tools
-          firebase use $FB_PROJECT --token $FIREBASE_TOKEN
-          firebase deploy --only $FB_HOSTING --token $FIREBASE_TOKEN -m "CI deploy ${{ steps.get_version.outputs.VERSION }}" --non-interactive
+          npx firebase use $FB_PROJECT --token $FIREBASE_TOKEN
+          npx firebase deploy --only $FB_HOSTING --token $FIREBASE_TOKEN -m "CI deploy ${{ steps.get_version.outputs.VERSION }}" --non-interactive
