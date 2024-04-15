@@ -18,6 +18,11 @@ jobs:
       name: dev
       url: https://coh2-ladders-dev.web.app/
     runs-on: ubuntu-latest
+
+    concurrency:
+      group: deploy-dev-${{ github.ref }}
+      cancel-in-progress: true
+
     steps:
       - name: Checkout Repo
         uses: actions/checkout@master

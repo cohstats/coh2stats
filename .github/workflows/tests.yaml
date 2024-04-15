@@ -6,6 +6,11 @@ jobs:
   unit_tests:
     name: Prettier and Unit Tests
     runs-on: ubuntu-latest
+
+    concurrency:
+      group: tests-${{ github.ref }}
+      cancel-in-progress: true
+
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
