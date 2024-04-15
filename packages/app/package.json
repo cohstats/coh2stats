@@ -35,7 +35,7 @@
     "@types/uuid": "8.3.4",
     "@vercel/webpack-asset-relocator-loader": "1.7.0",
     "css-loader": "6.5.1",
-    "electron": "19.1.6",
+    "electron": "22.3.25",
     "file-loader": "6.2.0",
     "fork-ts-checker-webpack-plugin": "6.5.0",
     "node-loader": "2.0.0",
