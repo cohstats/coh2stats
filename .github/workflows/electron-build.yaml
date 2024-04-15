@@ -31,7 +31,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn --prefer-offline --frozen-lockfile install
       - name: Build
         run: yarn app make
       - name: Upload the build

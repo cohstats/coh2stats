@@ -20,9 +20,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@master
+        uses: actions/checkout@v4
       - name: Setup Node
-        uses: actions/setup-node@master
+        uses: actions/setup-node@v4
         with:
           node-version: "20.x"
       - name: Cache node modules
@@ -40,7 +40,7 @@ jobs:
         id: get_version
         run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
       - name: Install Deps
-        run: yarn install --frozen-lockfile
+        run: yarn --prefer-offline --frozen-lockfile install
       - name: Fix the bug ISSUE 1078
         run: yarn run "react-spring-issue-1078"
       - name: Build the app
@@ -58,4 +58,5 @@ jobs:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_COH2_LADDERS_PROD }}"
           target: coh2-ladders-prod
+          channelId: live
           projectId: coh2-ladders-prod
