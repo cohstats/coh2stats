@@ -10,7 +10,7 @@ import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { StreamOverlayPositions } from "../../../redux/state";
 import { actions, selectSettings } from "../../../redux/slice";
-import {useCallback, useEffect, useState} from "react";
+import { useCallback, useEffect, useState } from "react";
 import { events, firebaseInit } from "../../firebase/firebase";
 import { Helper } from "@coh2stats/shared/src/components/helper";
 import { Collapse, Divider, Result, Slider, Spin, Steps, Tooltip, Typography } from "antd";
@@ -20,8 +20,6 @@ import config from "../../../main/config";
 import { debounce } from "lodash";
 
 const { Text } = Typography;
-
-
 
 // Because about window is completely new render process we need to init firebase again
 firebaseInit();
@@ -127,7 +125,7 @@ const App = (): JSX.Element => {
 
   const debouncedHandleStreamModePortChange = useCallback(
     debounce(handleStreamModePortChange, 1000),
-    []
+    [],
   );
 
   return (

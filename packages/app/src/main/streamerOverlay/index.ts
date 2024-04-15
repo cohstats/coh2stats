@@ -31,11 +31,15 @@ export class StreamerOverlay {
     const settings = this.applicationStore.getState().settings;
     if (settings.streamOverlay) {
       if (this.running && this.currentPort !== settings.streamOverlayPort) {
-        console.debug(`Stream overlay - change of port - Starting stream overlay server on port ${settings.streamOverlayPort}`)
+        console.debug(
+          `Stream overlay - change of port - Starting stream overlay server on port ${settings.streamOverlayPort}`,
+        );
         this.stop();
         this.start();
       } else if (!this.running) {
-        console.debug(`Stream overlay not running - Starting stream overlay server on port ${settings.streamOverlayPort}`)
+        console.debug(
+          `Stream overlay not running - Starting stream overlay server on port ${settings.streamOverlayPort}`,
+        );
         this.start();
       }
       if (this.running) {

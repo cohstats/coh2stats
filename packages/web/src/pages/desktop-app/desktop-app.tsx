@@ -203,8 +203,8 @@ const DesktopApp: React.FC = () => {
                 </a>
               </div>
               <p style={{ fontSize: "20px" }}>
-                An easy to configure overlay for OBS or Twitch Studio that shows the players and their ranking when
-                in game. Learn more{" "}
+                An easy to configure overlay for OBS or Twitch Studio that shows the players and
+                their ranking when in game. Learn more{" "}
                 <Link
                   href={
                     "https://github.com/cohstats/coh2stats/blob/master/packages/app/README.md#stream-overlay"
