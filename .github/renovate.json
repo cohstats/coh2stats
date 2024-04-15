@@ -1,0 +1,25 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:base"],
+  "rangeStrategy": "pin",
+  "prHourlyLimit": 5,
+  "minimumReleaseAge": "5 days",
+  "labels": ["renovate"],
+  "packageRules": [
+    {
+      "packageNames": ["@types/node"],
+      "enabled": false
+    },
+    {
+      "packageNames": ["node"],
+      "enabled": false
+    },
+    {
+      "datasources": ["github-actions"],
+      "packagePatterns": ["^actions/"],
+      "groupName": "github-actions",
+      "groupSlug": "actions-updates"
+    }
+  ],
+  "schedule": ["on the first day of the month before 4AM"]
+}
