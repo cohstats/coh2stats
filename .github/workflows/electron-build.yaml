@@ -20,6 +20,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: "yarn"
       - name: Cache node modules
         uses: actions/cache@v4
         env:
@@ -30,10 +31,16 @@ jobs:
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
+      #  On windows GitHub actions the yarn install is timing out
+      - name: Setup huge Yarn timeout
+        run: |
+          yarn config set network-timeout 600000 -g
       - name: Install dependencies
         run: yarn --prefer-offline --frozen-lockfile install
+
       - name: Build
         run: yarn app make
+
       - name: Upload the build
         uses: actions/upload-artifact@v2
         with:
