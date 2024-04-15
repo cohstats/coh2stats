@@ -4,18 +4,17 @@ on:
     tags:
       - v*
     paths-ignore:
-      - packages/functions/**
       - packages/web/**
 
 jobs:
   build_on_win:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@master
-      - name: Setup Node
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - name: Setup node
+        uses: actions/setup-node@v4
         with:
-          node-version: "20.x"
+          node-version: 20
       - name: Cache node modules
         uses: actions/cache@v4
         env:
