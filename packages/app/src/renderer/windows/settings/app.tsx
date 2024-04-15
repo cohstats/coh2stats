@@ -10,15 +10,18 @@ import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { StreamOverlayPositions } from "../../../redux/state";
 import { actions, selectSettings } from "../../../redux/slice";
-import { useEffect, useState } from "react";
+import {useCallback, useEffect, useState} from "react";
 import { events, firebaseInit } from "../../firebase/firebase";
 import { Helper } from "@coh2stats/shared/src/components/helper";
 import { Collapse, Divider, Result, Slider, Spin, Steps, Tooltip, Typography } from "antd";
 import { ExclamationCircleOutlined, LoadingOutlined } from "@ant-design/icons";
 import WindowTitlebar from "../../titlebar/window-titlebar";
 import config from "../../../main/config";
+import { debounce } from "lodash";
 
 const { Text } = Typography;
+
+
 
 // Because about window is completely new render process we need to init firebase again
 firebaseInit();
@@ -121,6 +124,11 @@ const App = (): JSX.Element => {
   ) => {
     setTwitchEPassword(event.target.value);
   };
+
+  const debouncedHandleStreamModePortChange = useCallback(
+    debounce(handleStreamModePortChange, 1000),
+    []
+  );
 
   return (
     <>
@@ -515,12 +523,12 @@ const App = (): JSX.Element => {
               <Form.Item label={"Streamer view server port"}>
                 <InputNumber
                   disabled={!settings.streamOverlay}
-                  min={0}
+                  min={1024}
                   max={65535}
                   value={settings.streamOverlayPort}
                   formatter={(value) => Math.round(value) + ""}
                   parser={(value) => Number.parseInt(value, 10)}
-                  onChange={handleStreamModePortChange}
+                  onChange={debouncedHandleStreamModePortChange}
                 />
                 <br />
                 {" => URL: http://localhost:" + settings.streamOverlayPort}

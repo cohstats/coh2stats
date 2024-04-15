@@ -11,8 +11,17 @@ export const renderHtml = (state: ApplicationState): string => {
         <head>
           <meta charSet="utf-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <title>CoH2 Game Stats Streamer Overlay</title>
+          <title>COH2 Game Stats Streamer Overlay</title>
           <link rel="stylesheet" href={"/antd/antd.dark.min.css"} />
+          <style>
+            {`
+              body {
+                background-color: rgba(0, 0, 0, 0);
+                margin: 0px auto;
+                overflow: hidden;
+              }
+            `}
+          </style>
         </head>
         <body>
           <div dangerouslySetInnerHTML={{ __html: content }} />
