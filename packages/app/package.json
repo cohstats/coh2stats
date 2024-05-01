@@ -32,7 +32,7 @@
     "@types/react": "17.0.38",
     "@types/react-dom": "17.0.11",
     "@types/react-redux": "7.1.22",
-    "@types/tcp-port-used": "1.0.0",
+    "@types/tcp-port-used": "1.0.4",
     "@types/uuid": "8.3.4",
     "@vercel/webpack-asset-relocator-loader": "1.7.0",
     "css-loader": "6.5.1",
