@@ -39,7 +39,7 @@
     "@testing-library/jest-dom": "5.15.0",
     "@testing-library/react": "12.1.2",
     "@testing-library/user-event": "13.5.0",
-    "@types/history": "4.7.9",
+    "@types/history": "4.7.11",
     "@types/javascript-time-ago": "2.0.3",
     "@types/jest": "27.0.2",
     "@types/node": "^16.7.2",
