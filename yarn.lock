@@ -44,10 +44,10 @@
     classnames "^2.2.6"
     rc-util "^5.9.4"
 
-"@ant-design/plots@1.2.5":
-  version "1.2.5"
-  resolved "https://registry.yarnpkg.com/@ant-design/plots/-/plots-1.2.5.tgz#404caf0e2c8d052590fe080c6f0fdf0e0c3119ab"
-  integrity sha512-8Jvu2xC5y5/B38/9Qr6CBiXCZopsGEA3IR4pjLFlkLoT4OHIKr4y8oIvhahM9mh9ZATyjkrZLWJBI8yETrReGg==
+"@ant-design/plots@1.2.6":
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/@ant-design/plots/-/plots-1.2.6.tgz#35e541484069249989f92b7d9cdc835ea87191c5"
+  integrity sha512-fFzB9DxRSPQa47S3WypRk4Rh+P8vBUuY/DT+IXgUrlKJtvVZUFnuYfjypX3Q/Pie2PEbI6gmskzXLxVF+3Ztvw==
   dependencies:
     "@antv/g2plot" "^2.2.11"
     "@antv/util" "^2.0.9"
