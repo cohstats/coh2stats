@@ -38,17 +38,17 @@ const calculatePagination = (
   const games = overviewData.games;
 
   if (playerGroup === "1") {
-    return games["1v1"] + count;
+    return games["1v1"] ?? count;
   } else if (playerGroup === "2") {
-    return games["2v2"] + count;
+    return games["2v2"] ?? count;
   } else if (playerGroup === "3") {
-    return games["3v3"] + count;
+    return games["3v3"] ?? count;
   } else if (playerGroup === "4") {
-    return games["4v4"] + count;
+    return games["4v4"] ?? count;
   } else if (playerGroup === "5") {
-    return games["AI"] + count;
+    return games["AI"] ?? count;
   } else if (playerGroup === "0") {
-    return games["custom"] + count;
+    return games["custom"] ?? count;
   } else {
     return defaultAmountOfMatches;
   }
