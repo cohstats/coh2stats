@@ -57,7 +57,7 @@
     "electron-store": "8.0.1",
     "express": "4.19.2",
     "firebase": "9.14.0",
-    "javascript-time-ago": "2.5.9",
+    "javascript-time-ago": "2.5.10",
     "mixpanel": "0.18.0",
     "lodash": "4.17.21",
     "node-machine-id": "1.1.12",
