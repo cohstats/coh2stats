@@ -2237,7 +2237,7 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
-"@edgio/rum@^7.0.13":
+"@edgio/rum@7.0.13":
   version "7.0.13"
   resolved "https://registry.yarnpkg.com/@edgio/rum/-/rum-7.0.13.tgz#95377434b55e8ab90f1d91df7f802d1803f6be8c"
   integrity sha512-FBpDX1W2N7NyJ09Fpx8+yCf2usbURAVyFj9lICEMe2L3YHMkdGGW39UpuJvtl0wRDLv0pRl6CyeHcqqaXsgOfg==
