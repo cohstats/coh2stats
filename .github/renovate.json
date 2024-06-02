@@ -11,6 +11,10 @@
       "allowedVersions": "20.x"
     },
     {
+      "packageNames": ["electron"],
+      "allowedVersions": "22.x"
+    },
+    {
       "datasources": ["github-actions"],
       "packagePatterns": ["^actions/"],
       "groupName": "github-actions",
