@@ -58,10 +58,12 @@ module.exports = {
     {
       name: "@electron-forge/maker-deb",
       executableName: "coh2-game-stats",
+      platforms: ["linux"],
       config: {
         name: "coh2-game-stats",
         setupIcon: "assets/icon.ico",
         loadingGif: "assets/installSplash.gif",
+        productName: "coh2-game-stats",
       },
     },
   ],
