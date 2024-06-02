@@ -61,10 +61,13 @@ module.exports = {
       executableName: "coh2-game-stats",
       platforms: ["linux"],
       config: {
-        name: "coh2-game-stats",
         setupIcon: "assets/icon.ico",
         loadingGif: "assets/installSplash.gif",
-        productName: "coh2-game-stats",
+        options: {
+          name: "coh2-game-stats",
+          productName: "coh2-game-stats",
+          bin: "coh2-game-stats",
+        }
       },
     },
   ],
