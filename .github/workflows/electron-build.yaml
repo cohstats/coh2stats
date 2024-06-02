@@ -43,7 +43,7 @@ jobs:
         run: yarn app make
 
       - name: Upload the build
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: coh2-game-stats-dev-${{github.sha}}
           path: |

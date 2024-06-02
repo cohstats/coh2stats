@@ -45,6 +45,7 @@ module.exports = {
     asar: true,
     icon: "assets/icon.ico",
     extraResource: [".resources/node_modules", "assets"],
+    executableName: "coh2-game-stats",
   },
   makers: [
     {
@@ -53,6 +54,25 @@ module.exports = {
         name: "coh2-game-stats",
         setupIcon: "assets/icon.ico",
         loadingGif: "assets/installSplash.gif",
+        platform: ["win32"],
+        win32metadata: {
+          CompanyName: "COH Stats",
+          FileDescription: "Displays live stats of players in the current COH2 game",
+        },
+      },
+    },
+    {
+      name: "@electron-forge/maker-deb",
+      executableName: "coh2-game-stats",
+      platforms: ["linux"],
+      config: {
+        setupIcon: "assets/icon.ico",
+        loadingGif: "assets/installSplash.gif",
+        options: {
+          name: "coh2-game-stats",
+          productName: "coh2-game-stats",
+          bin: "coh2-game-stats",
+        },
       },
     },
   ],

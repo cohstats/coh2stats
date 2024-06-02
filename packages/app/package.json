@@ -1,6 +1,6 @@
 {
   "name": "@coh2stats/app",
-  "productName": "Coh2 Game Stats",
+  "productName": "coh2-game-stats",
   "version": "1.5.15",
   "description": "Displays stats of players in the current Coh2 game",
   "main": ".webpack/main",
@@ -9,6 +9,7 @@
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
+    "make:linux": "electron-forge make -- --arch=x64 --platform=linux --out=release-builds",
     "publish": "electron-forge publish",
     "lint": "eslint --ext .ts,.tsx ."
   },
