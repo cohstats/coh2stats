@@ -13,6 +13,11 @@ import { firebase } from "./firebase";
 firebase.init();
 // Initialize Firebase
 
+// Collect RUM metrics
+new Metrics({
+  token: "cdbeca7f-be87-45d8-a36a-0ba520f1ec5c",
+}).collect();
+
 const history = createBrowserHistory();
 history.listen(analytics.pageView);
 
@@ -34,8 +39,3 @@ if (process.env.NODE_ENV !== "production" && module.hot) {
 
 // Render our app
 renderApp();
-
-// Collect RUM metrics
-new Metrics({
-  token: "cdbeca7f-be87-45d8-a36a-0ba520f1ec5c",
-}).collect();
