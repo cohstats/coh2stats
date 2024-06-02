@@ -6,17 +6,11 @@ import "./index.css";
 import Root from "./root";
 import analytics from "./analytics";
 import "firebase/compat/firestore";
-import { Metrics } from "@edgio/rum";
 
 import { firebase } from "./firebase";
 
 firebase.init();
 // Initialize Firebase
-
-// Collect RUM metrics
-new Metrics({
-  token: "cdbeca7f-be87-45d8-a36a-0ba520f1ec5c",
-}).collect();
 
 const history = createBrowserHistory();
 history.listen(analytics.pageView);
