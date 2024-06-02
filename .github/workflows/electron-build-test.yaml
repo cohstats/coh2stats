@@ -4,6 +4,7 @@ on:
 
 jobs:
   linux_build:
+    # This is run only on Windows, because windows takes soo long to build
     name: Build Electron App on Linux
     runs-on: ubuntu-latest
 

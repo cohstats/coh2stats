@@ -54,6 +54,11 @@ module.exports = {
         name: "coh2-game-stats",
         setupIcon: "assets/icon.ico",
         loadingGif: "assets/installSplash.gif",
+        platform: ["win32"],
+        win32metadata: {
+          CompanyName: "COH Stats",
+          FileDescription: "Displays live stats of players in the current COH2 game",
+        },
       },
     },
     {
@@ -67,7 +72,7 @@ module.exports = {
           name: "coh2-game-stats",
           productName: "coh2-game-stats",
           bin: "coh2-game-stats",
-        }
+        },
       },
     },
   ],
