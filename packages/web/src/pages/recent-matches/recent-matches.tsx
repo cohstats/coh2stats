@@ -35,7 +35,7 @@ const RecentMatches: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [matchRecords, setMatchRecords] = useState<Array<Record<string, any>>>([]);
   const [error, setError] = useState<null | string>(null);
-  const [totalMatches, setTotalMatches] = useState<string | number>("...");
+  const [totalMatches, setTotalMatches] = useState<string | number>("200,000");
 
   const isMobile = useMediaQuery({ query: isMobileMediaQuery });
 
@@ -259,7 +259,7 @@ const RecentMatches: React.FC = () => {
   })();
 
   return (
-    <Row justify="center" style={{ paddingTop: "10px" }}>
+    <Row justify="center" style={{ paddingTop: "10px", minHeight: "1500px" }}>
       <Col xs={23} md={22} xxl={16}>
         <div style={{ textAlign: "center" }}>
           <Title>Most recent games</Title>

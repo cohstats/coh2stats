@@ -149,7 +149,7 @@ const PlayerCard = () => {
       });
     } else {
       return (
-        <div style={{ paddingTop: 50 }}>
+        <div style={{ paddingTop: 250, minHeight: '1500px' }}>
           <Loading />
         </div>
       );

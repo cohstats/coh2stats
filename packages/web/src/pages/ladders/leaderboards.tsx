@@ -492,7 +492,7 @@ const Leaderboards = () => {
             </Space>
           </Col>
         </Row>
-        <Row justify="center" style={{ padding: "10px" }}>
+        <Row justify="center" style={{ padding: "10px", minHeight: "2500px" }}>
           <Col xs={24} xxl={17}>
             <div style={{ fontSize: "large", paddingBottom: 15, paddingTop: 15 }}>
               <div style={{ float: "left" }}>
