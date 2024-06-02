@@ -45,6 +45,7 @@ module.exports = {
     asar: true,
     icon: "assets/icon.ico",
     extraResource: [".resources/node_modules", "assets"],
+    executableName: "coh2-game-stats",
   },
   makers: [
     {
