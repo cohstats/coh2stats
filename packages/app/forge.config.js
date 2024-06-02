@@ -55,6 +55,14 @@ module.exports = {
         loadingGif: "assets/installSplash.gif",
       },
     },
+    {
+      name: '@electron-forge/maker-deb',
+      config: {
+        name: "coh2-game-stats",
+        setupIcon: "assets/icon.ico",
+        loadingGif: "assets/installSplash.gif",
+      },
+    },
   ],
   hooks: {
     prePackage: () => {

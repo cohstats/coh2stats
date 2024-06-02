@@ -1,0 +1,36 @@
+name: Build Electron App - Test
+on:
+  pull_request:
+
+jobs:
+  linux_build:
+    name: Build Electron App on Linux
+    runs-on: ubuntu-latest
+
+    concurrency:
+      group: electron-build-${{ github.ref }}
+      cancel-in-progress: true
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+          cache: "yarn"
+      - name: Cache node modules
+        uses: actions/cache@v4
+        env:
+          cache-name: cache-node-modules-v2
+        with:
+          path: |
+            node_modules
+            */*/node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+      - name: Install Web Project
+        run: yarn --prefer-offline --frozen-lockfile install
+      - name: Build Electron App
+        run: yarn app make
