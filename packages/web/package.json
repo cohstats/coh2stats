@@ -19,7 +19,7 @@
     "@nivo/geo": "0.72.0",
     "@nivo/heatmap": "0.72.0",
     "@nivo/pie": "0.72.0",
-    "antd": "4.23.4",
+    "antd": "4.24.16",
     "connected-react-router": "6.9.3",
     "date-fns": "2.29.3",
     "dayjs": "1.11.11",
