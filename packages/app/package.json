@@ -49,7 +49,7 @@
   "dependencies": {
     "@ant-design/icons": "4.8.0",
     "@reduxjs/toolkit": "1.7.1",
-    "antd": "4.24.3",
+    "antd": "4.24.16",
     "axios": "1.6.8",
     "compare-versions": "4.1.4",
     "date-fns": "2.29.3",
