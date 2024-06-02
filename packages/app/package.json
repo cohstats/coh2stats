@@ -9,7 +9,7 @@
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "make:linux": "electron-forge make -- --arch=x64 --platform=linux",
+    "make:linux": "electron-forge make -- --arch=x64 --platform=linux --out=release-builds",
     "publish": "electron-forge publish",
     "lint": "eslint --ext .ts,.tsx ."
   },
