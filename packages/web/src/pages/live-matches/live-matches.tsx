@@ -147,8 +147,8 @@ const LiveMatches: React.FC = () => {
             </div>
           </Col>
         </Row>
-        <Row justify="center" style={{ paddingTop: 10, minHeight: '1500px' }}>
-          <Col span={24} >
+        <Row justify="center" style={{ paddingTop: 10, minHeight: "1500px" }}>
+          <Col span={24}>
             <LiveMatchesTable changeRoute={changeRoute} currentLiveGamesData={data} />
           </Col>
         </Row>
