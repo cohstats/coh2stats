@@ -33,4 +33,4 @@ jobs:
       - name: Install Web Project
         run: yarn --prefer-offline --frozen-lockfile install
       - name: Build Electron App
-        run: yarn app make
+        run: yarn app make:linux
