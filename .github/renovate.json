@@ -7,12 +7,8 @@
   "labels": ["renovate"],
   "packageRules": [
     {
-      "packageNames": ["@types/node"],
-      "enabled": false
-    },
-    {
-      "packageNames": ["node"],
-      "enabled": false
+      "packageNames": ["@types/node", "node"],
+      "allowedVersions": "20.x"
     },
     {
       "datasources": ["github-actions"],
