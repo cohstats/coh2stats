@@ -51,7 +51,7 @@
     "@ant-design/icons": "4.8.0",
     "@reduxjs/toolkit": "1.7.1",
     "antd": "4.24.3",
-    "axios": "1.7.2",
+    "axios": "1.7.4",
     "compare-versions": "4.1.4",
     "date-fns": "2.29.3",
     "electron-is-packaged": "1.0.2",
