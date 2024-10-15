@@ -37,7 +37,7 @@ const App: React.FC = () => {
         <MainHeader />
         <Content>
           <ErrorBoundary>
-          {/* <CompatRouter> */}
+          <CompatRouter>
             <Switch>
               <CompatRoute path={"/"} exact={true}>
                 <MainHome />
@@ -106,7 +106,7 @@ const App: React.FC = () => {
                 <NotFound />
               </CompatRoute>
             </Switch>
-          {/* </CompatRouter> */}
+          </CompatRouter>
           </ErrorBoundary>
         </Content>
         <MainFooter />

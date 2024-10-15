@@ -1,7 +1,7 @@
 import React from "react";
 import { ConnectedRouter } from "connected-react-router";
 import { Provider } from "react-redux";
-import { Route, Switch } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import { CompatRoute, CompatRouter } from "react-router-dom-v5-compat";
 
 // Subcomponents
@@ -20,20 +20,18 @@ const Root: React.FC<Props> = ({ store, history }) => (
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <React.StrictMode>
-        <CompatRouter>
         <Switch>
           <CompatRoute path="/login">LOGIN</CompatRoute>
-          {/* <Route path="/">
+          <Route path="/">
             <ConfigsProvider configJson={{}}>
               <App />
             </ConfigsProvider>
-          </Route> */}
-          <CompatRoute path="/" configJson={{}}>
+          </Route>
+          {/* <CompatRoute path="/" configJson={{}}>
             <App />
-          </CompatRoute>
+          </CompatRoute> */}
           <CompatRoute>NOT FOUND</CompatRoute>
         </Switch>
-        </CompatRouter>
       </React.StrictMode>
     </ConnectedRouter>
   </Provider>
