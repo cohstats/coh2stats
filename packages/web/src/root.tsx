@@ -19,8 +19,8 @@ const Root: React.FC<Props> = ({ store, history }) => (
     <ConnectedRouter history={history}>
       <React.StrictMode>
         <ConfigsProvider configJson={{}}>
-           <App />
-          </ConfigsProvider>
+          <App />
+        </ConfigsProvider>
       </React.StrictMode>
     </ConnectedRouter>
   </Provider>
