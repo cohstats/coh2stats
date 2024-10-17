@@ -49,6 +49,8 @@ const PlayerCard = () => {
     steamid: string;
   }>();
 
+  const steamidParsed = steamid.split("-")[0];
+
   const { userConfig } = useContext(ConfigContext);
 
   const query = useQuery();
@@ -93,7 +95,7 @@ const PlayerCard = () => {
         const response = await fetch(
           `${getAPIUrl(
             userConfig,
-          )}getPlayerCardEverythingHttp?steamid=${steamid}&includeMatches=false`,
+          )}getPlayerCardEverythingHttp?steamid=${steamidParsed}&includeMatches=false`,
           {},
         );
         if (!response.ok) {
@@ -118,7 +120,7 @@ const PlayerCard = () => {
         setIsLoading(false);
       }
     })();
-  }, [steamid, replace, userConfig]);
+  }, [steamidParsed, userConfig]);
 
   if (!isLoading && error != null) {
     return (
@@ -136,7 +138,11 @@ const PlayerCard = () => {
   }
 
   // This protects all the requests accessing data
-  if (isLoading || !data || (data?.steamProfile && data?.steamProfile[steamid] === undefined)) {
+  if (
+    isLoading ||
+    !data ||
+    (data?.steamProfile && data?.steamProfile[steamidParsed] === undefined)
+  ) {
     // This can happen in case steam API is not responding  and steamProfile is null but other fields are populated
     if (
       data?.steamProfile === null &&
@@ -164,7 +170,7 @@ const PlayerCard = () => {
     });
   };
 
-  const steamProfile = data.steamProfile ? data.steamProfile[steamid] : null;
+  const steamProfile = data.steamProfile ? data.steamProfile[steamidParsed] : null;
   const playTime = data.playTime ? Math.floor(data.playTime / 60) : null;
 
   const relicData = data.relicPersonalStats;
@@ -191,17 +197,17 @@ const PlayerCard = () => {
     {
       label: "Recent Matches",
       key: "recentMatches",
-      children: <LastMatchesTable steamID={`${steamid}`} />,
+      children: <LastMatchesTable steamID={`${steamidParsed}`} />,
     },
     {
       label: "Matches",
       key: "matches",
-      children: <AllMatchesTable steamID={`${steamid}`} />,
+      children: <AllMatchesTable steamID={`${steamidParsed}`} />,
     },
   ];
 
   return (
-    <div key={steamid}>
+    <div key={steamidParsed}>
       <Row justify="center" style={{ paddingTop: "10px" }}>
         <Col xs={23} md={22} xxl={15}>
           <div style={{ float: "left" }}>
@@ -235,7 +241,7 @@ const PlayerCard = () => {
                     <>
                       Steam ID:{" "}
                       <Text code style={{ color: "whitesmoke" }}>
-                        {steamid}
+                        {steamidParsed}
                       </Text>
                       <br />
                       Relic ID:{" "}
