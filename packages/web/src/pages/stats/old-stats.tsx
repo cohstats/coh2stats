@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { Redirect, Switch } from "react-router-dom";
 import { useHistory, useParams } from "react-router";
 import routes from "../../routes";
 import { getPreviousWeekTimeStamp, useQuery } from "../../utils/helpers";
+import { CompatRoute } from "react-router-dom-v5-compat";
 
 /**
  * This is old stats format, it's used for redirect from the old links
@@ -39,11 +40,11 @@ const OldStats: React.FC = () => {
 
   return (
     <Switch>
-      <Route path={"/stats/"}>
+      <CompatRoute path={"/stats/"}>
         <Redirect
           to={routes.fullStatsOldDetails("week", getPreviousWeekTimeStamp(), "4v4", "wermacht")}
         />
-      </Route>
+      </CompatRoute>
     </Switch>
   );
 };
