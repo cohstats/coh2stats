@@ -120,7 +120,7 @@ const PlayerCard = () => {
         setIsLoading(false);
       }
     })();
-  }, [steamidParsed, userConfig]);
+  }, [steamidParsed, replace, userConfig]);
 
   if (!isLoading && error != null) {
     return (
