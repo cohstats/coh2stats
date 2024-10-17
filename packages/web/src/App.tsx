@@ -37,76 +37,73 @@ const App: React.FC = () => {
         <MainHeader />
         <Content>
           <ErrorBoundary>
-          <CompatRouter>
-            <Switch>
-              <CompatRoute path={"/"} exact={true}>
-                <MainHome />
-              </CompatRoute>
-              <CompatRoute path={routes.fullStatsOldDetails()}>
-                <OldStats />
-              </CompatRoute>
-              <CompatRoute path={routes.mapStats()}>
-                <MapStats />
-              </CompatRoute>
-              <CompatRoute path={routes.statsBase()}>
-                <CustomStats />
-              </CompatRoute>
-              <CompatRoute path={routes.playerCardWithIdAndName()}>
-                <PlayerCard />
-              </CompatRoute>
-              <CompatRoute path={routes.playerCardWithId()}>
-                <PlayerCard />
-              </CompatRoute>
-              <CompatRoute path={routes.playerCardBase()}>
-                <PlayersPage />
-              </CompatRoute>
-              <CompatRoute path={routes.leaderboardsBase()}>
-                <Leaderboards />
-              </CompatRoute>
-              <CompatRoute path={routes.commanderByID()}>
-                <CommanderDetails />
-              </CompatRoute>
-              <CompatRoute path={routes.commanderList()}>
-                <CommandersList />
-              </CompatRoute>
-              <CompatRoute path={routes.commanderBase()}>
-                <RacePicker />
-              </CompatRoute>
-              <CompatRoute path={routes.desktopAppBase()}>
-                <DesktopApp />
-              </CompatRoute>
-              <CompatRoute path={routes.liveMatchesBase()}>
-                <LiveMatches />
-              </CompatRoute>
-              <CompatRoute path={routes.regionsBase()}>
-                <Regions />
-              </CompatRoute>
-              <CompatRoute path={routes.aboutBase()}>
-                <About />
-              </CompatRoute>
-              <CompatRoute path={routes.bulletinsBase()}>
-                <BulletinList />
-              </CompatRoute>
-              <CompatRoute path={routes.searchWithParam()}>
-                <CustomSearch />
-              </CompatRoute>
-              <CompatRoute path={routes.searchBase()}>
-                <CustomSearch />
-              </CompatRoute>
-              <CompatRoute path={routes.singleMatch()}>
-                <SingleMatch />
-              </CompatRoute>
-              <CompatRoute path={routes.recentMatchesBase()}>
-                <RecentMatches />
-              </CompatRoute>
-              <CompatRoute path="/userProfile">
-                <UserProfile />
-              </CompatRoute>
-              <CompatRoute path="*">
-                <NotFound />
-              </CompatRoute>
-            </Switch>
-          </CompatRouter>
+            <CompatRouter>
+              <Switch>
+                <CompatRoute path={"/"} exact={true}>
+                  <MainHome />
+                </CompatRoute>
+                <CompatRoute path={routes.fullStatsOldDetails()}>
+                  <OldStats />
+                </CompatRoute>
+                <CompatRoute path={routes.mapStats()}>
+                  <MapStats />
+                </CompatRoute>
+                <CompatRoute path={routes.statsBase()}>
+                  <CustomStats />
+                </CompatRoute>
+                <CompatRoute path={routes.playerCardWithId()}>
+                  <PlayerCard />
+                </CompatRoute>
+                <CompatRoute path={routes.playerCardBase()}>
+                  <PlayersPage />
+                </CompatRoute>
+                <CompatRoute path={routes.leaderboardsBase()}>
+                  <Leaderboards />
+                </CompatRoute>
+                <CompatRoute path={routes.commanderByID()}>
+                  <CommanderDetails />
+                </CompatRoute>
+                <CompatRoute path={routes.commanderList()}>
+                  <CommandersList />
+                </CompatRoute>
+                <CompatRoute path={routes.commanderBase()}>
+                  <RacePicker />
+                </CompatRoute>
+                <CompatRoute path={routes.desktopAppBase()}>
+                  <DesktopApp />
+                </CompatRoute>
+                <CompatRoute path={routes.liveMatchesBase()}>
+                  <LiveMatches />
+                </CompatRoute>
+                <CompatRoute path={routes.regionsBase()}>
+                  <Regions />
+                </CompatRoute>
+                <CompatRoute path={routes.aboutBase()}>
+                  <About />
+                </CompatRoute>
+                <CompatRoute path={routes.bulletinsBase()}>
+                  <BulletinList />
+                </CompatRoute>
+                <CompatRoute path={routes.searchWithParam()}>
+                  <CustomSearch />
+                </CompatRoute>
+                <CompatRoute path={routes.searchBase()}>
+                  <CustomSearch />
+                </CompatRoute>
+                <CompatRoute path={routes.singleMatch()}>
+                  <SingleMatch />
+                </CompatRoute>
+                <CompatRoute path={routes.recentMatchesBase()}>
+                  <RecentMatches />
+                </CompatRoute>
+                <CompatRoute path="/userProfile">
+                  <UserProfile />
+                </CompatRoute>
+                <CompatRoute path="*">
+                  <NotFound />
+                </CompatRoute>
+              </Switch>
+            </CompatRouter>
           </ErrorBoundary>
         </Content>
         <MainFooter />
