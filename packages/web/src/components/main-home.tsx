@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Card, Col, Row, Space, Typography } from "antd";
 import Meta from "antd/es/card/Meta";
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom-v5-compat";
 import routes from "../routes";
 import { commanderAndBulletinDate, lastPatchName } from "../config";
 import { doc, getFirestore, getDoc } from "firebase/firestore";

@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom-v5-compat";
 import { eachDayOfInterval, format } from "date-fns";
 
 import TimeAgo from "javascript-time-ago";

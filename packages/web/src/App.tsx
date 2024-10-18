@@ -1,7 +1,6 @@
 import React from "react";
 import { Layout } from "antd";
 import "./App.css";
-import { Switch } from "react-router-dom";
 import routes from "./routes";
 import { CommanderDetails } from "./pages/commanders/commanderDetails";
 import { CommandersList } from "./pages/commanders/commandersList";
@@ -26,7 +25,7 @@ import UserProfile from "./pages/profile";
 import RecentMatches from "./pages/recent-matches/recent-matches";
 import Regions from "./pages/about/regions";
 import PlayersPage from "./pages/players";
-import { CompatRoute, CompatRouter } from "react-router-dom-v5-compat";
+import { Routes, Route, CompatRouter } from "react-router-dom-v5-compat";
 
 const { Content } = Layout;
 
@@ -37,76 +36,32 @@ const App: React.FC = () => {
         <MainHeader />
         <Content>
           <ErrorBoundary>
-          <CompatRouter>
-            <Switch>
-              <CompatRoute path={"/"} exact={true}>
-                <MainHome />
-              </CompatRoute>
-              <CompatRoute path={routes.fullStatsOldDetails()}>
-                <OldStats />
-              </CompatRoute>
-              <CompatRoute path={routes.mapStats()}>
-                <MapStats />
-              </CompatRoute>
-              <CompatRoute path={routes.statsBase()}>
-                <CustomStats />
-              </CompatRoute>
-              <CompatRoute path={routes.playerCardWithIdAndName()}>
-                <PlayerCard />
-              </CompatRoute>
-              <CompatRoute path={routes.playerCardWithId()}>
-                <PlayerCard />
-              </CompatRoute>
-              <CompatRoute path={routes.playerCardBase()}>
-                <PlayersPage />
-              </CompatRoute>
-              <CompatRoute path={routes.leaderboardsBase()}>
-                <Leaderboards />
-              </CompatRoute>
-              <CompatRoute path={routes.commanderByID()}>
-                <CommanderDetails />
-              </CompatRoute>
-              <CompatRoute path={routes.commanderList()}>
-                <CommandersList />
-              </CompatRoute>
-              <CompatRoute path={routes.commanderBase()}>
-                <RacePicker />
-              </CompatRoute>
-              <CompatRoute path={routes.desktopAppBase()}>
-                <DesktopApp />
-              </CompatRoute>
-              <CompatRoute path={routes.liveMatchesBase()}>
-                <LiveMatches />
-              </CompatRoute>
-              <CompatRoute path={routes.regionsBase()}>
-                <Regions />
-              </CompatRoute>
-              <CompatRoute path={routes.aboutBase()}>
-                <About />
-              </CompatRoute>
-              <CompatRoute path={routes.bulletinsBase()}>
-                <BulletinList />
-              </CompatRoute>
-              <CompatRoute path={routes.searchWithParam()}>
-                <CustomSearch />
-              </CompatRoute>
-              <CompatRoute path={routes.searchBase()}>
-                <CustomSearch />
-              </CompatRoute>
-              <CompatRoute path={routes.singleMatch()}>
-                <SingleMatch />
-              </CompatRoute>
-              <CompatRoute path={routes.recentMatchesBase()}>
-                <RecentMatches />
-              </CompatRoute>
-              <CompatRoute path="/userProfile">
-                <UserProfile />
-              </CompatRoute>
-              <CompatRoute path="*">
-                <NotFound />
-              </CompatRoute>
-            </Switch>
-          </CompatRouter>
+            <CompatRouter>
+              <Routes>
+                <Route path={"/"} element={<MainHome />} />
+                <Route path={routes.fullStatsOldDetails()} element={<OldStats />} />
+                <Route path={routes.mapStats()} element={<MapStats />} />
+                <Route path={routes.statsBase()} element={<CustomStats />} />
+                <Route path={routes.playerCardWithIdAndName()} element={<PlayerCard />} />
+                <Route path={routes.playerCardWithId()} element={<PlayerCard />} />
+                <Route path={routes.playerCardBase()} element={<PlayersPage />} />
+                <Route path={routes.leaderboardsBase()} element={<Leaderboards />} />
+                <Route path={routes.commanderByID()} element={<CommanderDetails />} />
+                <Route path={routes.commanderList()} element={<CommandersList />} />
+                <Route path={routes.commanderBase()} element={<RacePicker />} />
+                <Route path={routes.desktopAppBase()} element={<DesktopApp />} />
+                <Route path={routes.liveMatchesBase()} element={<LiveMatches />} />
+                <Route path={routes.regionsBase()} element={<Regions />} />
+                <Route path={routes.aboutBase()} element={<About />} />
+                <Route path={routes.bulletinsBase()} element={<BulletinList />} />
+                <Route path={routes.searchWithParam()} element={<CustomSearch />} />
+                <Route path={routes.searchBase()} element={<CustomSearch />} />
+                <Route path={routes.singleMatch()} element={<SingleMatch />} />
+                <Route path={routes.recentMatchesBase()} element={<RecentMatches />} />
+                <Route path="/userProfile" element={<UserProfile />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </CompatRouter>
           </ErrorBoundary>
         </Content>
         <MainFooter />

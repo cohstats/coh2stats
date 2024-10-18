@@ -5,7 +5,7 @@ import { LaddersDataArrayObject, PlayerCardDataArrayObject } from "../../../coh/
 import { CountryFlag } from "../../../components/country-flag";
 import { Switch, Table, Tooltip, Typography } from "antd";
 import { convertSteamNameToID, levelToText } from "../../../coh/helpers";
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom-v5-compat";
 import routes from "../../../routes";
 import { convertTeamNames, formatTimeAgo, latestDate, percentageFormat } from "./helpers";
 import { Helper } from "../../../components/helper";

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Row, Card, Radio, RadioChangeEvent, Space, Typography, Tooltip, Select } from "antd";
 import { MapBarChart } from "../../components/charts/maps-bar";
 import { mapStatsBase } from "../../titles";
-import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom-v5-compat";
 import { FactionVsFactionCard } from "../../components/factions";
 import { useMediaQuery } from "react-responsive";
 import { MapsWinRateChart } from "../../components/charts/map-stats/maps-winrate-bar";

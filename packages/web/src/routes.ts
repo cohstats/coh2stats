@@ -73,7 +73,7 @@ const playerCardWithId = (steamId = ":steamid") => {
 };
 
 const playerCardWithIdAndName = (steamId = ":steamid") => {
-  return `${playerCardBase()}/${steamId}-*`;
+  return `${playerCardBase()}/${steamId}-/*`;
 };
 
 const singleMatch = (matchID = ":matchID") => {
