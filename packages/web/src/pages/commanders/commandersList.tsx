@@ -7,7 +7,7 @@ import { RaceName } from "../../coh/types";
 import routes from "../../routes";
 import { ExportDate } from "../../components/export-date";
 import { commanderBase } from "../../titles";
-// import { capitalize } from "../../utils/helpers";
+import { capitalize } from "../../utils/helpers";
 import { Link } from "react-router-dom-v5-compat";
 import { Tip } from "../../components/tip";
 import { CommanderAbilitiesComponent } from "../../components/commander-abillities-component";
@@ -20,8 +20,8 @@ export const CommandersList = () => {
   }>();
 
   useEffect(() => {
-    // document.title = `${commanderBase} - ${capitalize(race)}`;
-    document.title = `${commanderBase} - ${race}`;
+    document.title = `${commanderBase} - ${capitalize(race || "")}`;
+    // document.title = `${commanderBase} - ${race}`;
   }, [race]);
 
   let myData = getCommanderByRaces(race as RaceName);
