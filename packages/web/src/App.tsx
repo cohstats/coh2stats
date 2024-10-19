@@ -34,9 +34,9 @@ const App: React.FC = () => {
     <div className="App">
       <Layout className="layout">
         <CompatRouter>
-        <MainHeader />
-        <Content>
-          <ErrorBoundary>
+          <MainHeader />
+          <Content>
+            <ErrorBoundary>
               <Routes>
                 <Route path={"/"} element={<MainHome />} />
                 <Route path={routes.fullStatsOldDetails()} element={<OldStats />} />
@@ -61,9 +61,9 @@ const App: React.FC = () => {
                 <Route path="/userProfile" element={<UserProfile />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
-          </ErrorBoundary>
-        </Content>
-        <MainFooter />
+            </ErrorBoundary>
+          </Content>
+          <MainFooter />
         </CompatRouter>
       </Layout>
     </div>
