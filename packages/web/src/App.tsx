@@ -42,7 +42,7 @@ const App: React.FC = () => {
                 <Route path={routes.fullStatsOldDetails()} element={<OldStats />} />
                 <Route path={routes.mapStats()} element={<MapStats />} />
                 <Route path={routes.statsBase()} element={<CustomStats />} />
-                <Route path={routes.playerCardWithIdAndName()} element={<PlayerCard />} />
+                {/* <Route path={routes.playerCardWithIdAndName()} element={<PlayerCard />} /> */}
                 <Route path={routes.playerCardWithId()} element={<PlayerCard />} />
                 <Route path={routes.playerCardBase()} element={<PlayersPage />} />
                 <Route path={routes.leaderboardsBase()} element={<Leaderboards />} />
