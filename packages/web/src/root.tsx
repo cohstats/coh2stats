@@ -8,6 +8,7 @@ import App from "./App";
 // Types
 import type { AppStore } from "./store";
 import type { History } from "history";
+import { ConfigsProvider } from "./config-context";
 
 interface Props {
   store: AppStore;
