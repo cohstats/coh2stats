@@ -10,7 +10,7 @@ import {
   TypeAnalysisObject,
   validStatsTypes,
 } from "../../coh/types";
-import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom-v5-compat";
 import CustomStatsDetails from "./custom-stats-details";
 import { StatsHeader } from "./stats-header";
 import GeneralStats from "./general-stats";

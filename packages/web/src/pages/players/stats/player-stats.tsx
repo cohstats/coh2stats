@@ -7,7 +7,7 @@ import { Row } from "antd/es";
 import { Helper } from "../../../components/helper";
 import { Loading } from "../../../components/loading";
 import { AlertBox } from "../../../components/alert-box";
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom-v5-compat";
 import routes from "../../../routes";
 import firebaseAnalytics from "../../../analytics";
 

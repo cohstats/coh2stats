@@ -13,7 +13,7 @@ import {
   getPlayerMapListFilter,
 } from "../../utils/table-functions";
 import "./tableStyle.css";
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom-v5-compat";
 import routes from "../../routes";
 import { convertSteamNameToID, getGeneralIconPath } from "../../coh/helpers";
 import { BulbOutlined, DatabaseOutlined } from "@ant-design/icons";

@@ -6,7 +6,7 @@ import { firebase } from "../../firebase";
 import { Loading } from "../../components/loading";
 
 import { validStatsTypes } from "../../coh/types";
-import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom-v5-compat";
 import MapStatsDetails from "./map-stats-details";
 
 const { Title } = Typography;

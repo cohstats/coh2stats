@@ -21,7 +21,7 @@ import {
   raceIds,
 } from "../../utils/table-functions";
 import { convertSteamNameToID, getGeneralIconPath } from "../../coh/helpers";
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom-v5-compat";
 import routes from "../../routes";
 import { getMapIconPath } from "../../coh/maps";
 import { AlertBox } from "../../components/alert-box";

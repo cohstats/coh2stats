@@ -9,7 +9,7 @@ import firebaseAnalytics from "../../analytics";
 import { getBulletinData, getBulletinIconPath } from "../../coh/bulletins";
 import { getCommanderData, getCommanderIconPath } from "../../coh/commanders";
 import { CommanderAbility } from "../../coh/types";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom-v5-compat";
 import { BulbOutlined } from "@ant-design/icons";
 
 const { Text } = Typography;

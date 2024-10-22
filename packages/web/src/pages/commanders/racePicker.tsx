@@ -2,7 +2,7 @@ import React from "react";
 import { Col, Row } from "antd";
 
 import routes from "../../routes";
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom-v5-compat";
 import { Tip } from "../../components/tip";
 import { getGeneralIconPath } from "../../coh/helpers";
 
