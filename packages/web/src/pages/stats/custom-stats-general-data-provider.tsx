@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Typography } from "antd";
 import { Loading } from "../../components/loading";
 import { StatsDataObject, statTypesInDbAsType, validStatsTypes } from "../../coh/types";
-import { useLocation } from "react-router-dom-v5-compat";
+import { useLocation } from "react-router-dom";
 import CustomStatsDetails from "./custom-stats-details";
 import firebaseAnalytics from "../../analytics";
 import GeneralStats from "./general-stats";

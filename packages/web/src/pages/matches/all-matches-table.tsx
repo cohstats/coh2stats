@@ -24,7 +24,7 @@ import {
   raceIds,
 } from "../../utils/table-functions";
 import { convertSteamNameToID, getGeneralIconPath } from "../../coh/helpers";
-import { Link } from "react-router-dom-v5-compat";
+import { Link } from "react-router-dom";
 import routes from "../../routes";
 import { useMediaQuery } from "react-responsive";
 import { BulbOutlined, DatabaseOutlined, PlusCircleOutlined } from "@ant-design/icons";

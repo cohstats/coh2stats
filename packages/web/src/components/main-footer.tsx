@@ -1,7 +1,7 @@
 import React from "react";
 import { Footer } from "antd/es/layout/layout";
 import { Divider, Typography } from "antd";
-import { Link as RouterLink } from "react-router-dom-v5-compat";
+import { Link as RouterLink } from "react-router-dom";
 import config from "../config";
 import { RegionSelector } from "./region-selector";
 import { Helper } from "./helper";

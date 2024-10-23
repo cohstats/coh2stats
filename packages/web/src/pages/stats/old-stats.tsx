@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useHistory, useParams } from "react-router";
 import routes from "../../routes";
 import { getPreviousWeekTimeStamp, useQuery } from "../../utils/helpers";
-import { Link, Routes, Route } from "react-router-dom-v5-compat";
+import { Link, Routes, Route } from "react-router-dom";
 
 /**
  * This is old stats format, it's used for redirect from the old links

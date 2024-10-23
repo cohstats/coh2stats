@@ -11,7 +11,7 @@ import {
   Typography,
   Switch,
 } from "antd";
-import { Link } from "react-router-dom-v5-compat";
+import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
 
 import { LaddersDataArrayObject, LaddersDataObject } from "../../coh/types";
