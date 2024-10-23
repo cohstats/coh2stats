@@ -25,7 +25,7 @@ import UserProfile from "./pages/profile";
 import RecentMatches from "./pages/recent-matches/recent-matches";
 import Regions from "./pages/about/regions";
 import PlayersPage from "./pages/players";
-import { Routes, Route, CompatRouter } from "react-router-dom-v5-compat";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 
 const { Content } = Layout;
 
@@ -33,7 +33,7 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <Layout className="layout">
-        <CompatRouter>
+        <BrowserRouter>
           <MainHeader />
           <Content>
             <ErrorBoundary>
@@ -64,7 +64,7 @@ const App: React.FC = () => {
             </ErrorBoundary>
           </Content>
           <MainFooter />
-        </CompatRouter>
+        </BrowserRouter>
       </Layout>
     </div>
   );

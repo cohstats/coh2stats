@@ -1,6 +1,6 @@
 import React from "react";
 import { AlertBox } from "./alert-box";
-import { Link } from "react-router-dom-v5-compat";
+import { Link } from "react-router-dom";
 import routes from "../routes";
 
 export const AlertBoxChina: React.FC = () => {

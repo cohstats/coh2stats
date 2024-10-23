@@ -7,7 +7,7 @@ import { ColumnsType } from "antd/es/table";
 import { ExportDate } from "../../components/export-date";
 import firebaseAnalytics from "../../analytics";
 import { Tip } from "../../components/tip";
-import { Link } from "react-router-dom-v5-compat";
+import { Link } from "react-router-dom";
 import routes from "../../routes";
 import { ChangeEvent } from "react";
 import { useHistory } from "react-router";
