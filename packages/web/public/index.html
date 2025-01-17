@@ -57,15 +57,6 @@
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <script defer>
-      function initEdgioRum() {
-        new Edgio.Metrics({
-          token: "cdbeca7f-be87-45d8-a36a-0ba520f1ec5c",
-        }).collect();
-      }
-    </script>
-    <script src="https://rum.edgio.net/latest.js" defer onload="initEdgioRum()"></script>
-
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
