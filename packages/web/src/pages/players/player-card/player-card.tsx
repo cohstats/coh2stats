@@ -7,7 +7,7 @@ import { capitalize, getAPIUrl, timeAgo, useQuery } from "../../../utils/helpers
 
 import { CountryFlag } from "../../../components/country-flag";
 import { playerCardBase } from "../../../titles";
-import { useHistory} from "react-router";
+import { useHistory } from "react-router";
 import { useParams } from "react-router-dom-v5-compat";
 import { getGeneralIconPath } from "../../../coh/helpers";
 import { Loading } from "../../../components/loading";
