@@ -10,7 +10,7 @@ import RedditCard from "./reddit/reddit-card";
 const { Title, Paragraph, Text } = Typography;
 
 const MainHome: React.FC = () => {
-  const [analyzedMatches, setAnalyzedMatches] = useState("8,562,482");
+  const [analyzedMatches, setAnalyzedMatches] = useState("10,106,009");
 
   useEffect(() => {
     try {
