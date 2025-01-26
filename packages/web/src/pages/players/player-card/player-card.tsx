@@ -7,7 +7,8 @@ import { capitalize, getAPIUrl, timeAgo, useQuery } from "../../../utils/helpers
 
 import { CountryFlag } from "../../../components/country-flag";
 import { playerCardBase } from "../../../titles";
-import { useHistory, useParams } from "react-router";
+import { useHistory } from "react-router";
+import { useParams } from "react-router-dom-v5-compat";
 import { getGeneralIconPath } from "../../../coh/helpers";
 import { Loading } from "../../../components/loading";
 import Title from "antd/es/typography/Title";
@@ -49,7 +50,7 @@ const PlayerCard = () => {
     steamid: string;
   }>();
 
-  const steamidParsed = steamid.split("-")[0];
+  const steamidParsed = steamid?.split("-")[0] || "";
 
   const { userConfig } = useContext(ConfigContext);
 
@@ -141,7 +142,7 @@ const PlayerCard = () => {
   if (
     isLoading ||
     !data ||
-    (data?.steamProfile && data?.steamProfile[steamidParsed] === undefined)
+    (data?.steamProfile && steamidParsed && data?.steamProfile[steamidParsed] === undefined)
   ) {
     // This can happen in case steam API is not responding  and steamProfile is null but other fields are populated
     if (

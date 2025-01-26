@@ -5,7 +5,7 @@ import firebaseAnalytics from "../analytics";
 import { MatchPlayerDetailsTable } from "../pages/matches/match-details-table";
 import { SimplePieChart } from "../components/charts-match/simple-pie";
 import MatchDetails from "../pages/matches/match-details";
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom-v5-compat";
 import routes from "../routes";
 import { DatabaseOutlined } from "@ant-design/icons";
 import { RelicIcon } from "../components/relic-icon";
