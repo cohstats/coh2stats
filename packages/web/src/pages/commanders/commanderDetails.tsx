@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Col, Row, List, Divider, Avatar, Badge } from "antd";
 import { getCommanderData, getCommanderIconPath } from "../../coh/commanders";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom-v5-compat";
 import { ExportDate } from "../../components/export-date";
 import firebaseAnalytics from "../../analytics";
 import { getExportedIconPath, getGeneralIconPath } from "../../coh/helpers";
@@ -13,7 +13,7 @@ export const CommanderDetails = () => {
     commanderID: string;
   }>();
 
-  const commanderData = getCommanderData(commanderID);
+  const commanderData = getCommanderData(commanderID || "");
 
   // We want to scroll top when we go to this page from the stats page
   useEffect(() => {
@@ -29,7 +29,7 @@ export const CommanderDetails = () => {
   }>();
 
   const divStyle = {
-    backgroundImage: `url(${getGeneralIconPath(race)})`,
+    backgroundImage: `url(${getGeneralIconPath(race || "")})`,
     backgroundRepeat: "no-repeat",
     backgroundSize: "350px",
     backgroundPosition: "left top 200px",
