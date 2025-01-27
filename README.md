@@ -96,7 +96,7 @@ Tagged versions are automatically deployed to https://coh2stats.com/
 
 #### Dev
 
-`master` branch is automatically deployed to https://coh2-ladders-dev.web.app/
+`master` branch is automatically deployed to https://dev.coh2stats.com
 
 ### Development
 

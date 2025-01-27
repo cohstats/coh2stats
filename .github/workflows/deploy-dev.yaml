@@ -16,7 +16,7 @@ jobs:
     name: Deploy Web Dev
     environment:
       name: dev
-      url: https://coh2-ladders-dev.web.app/
+      url: https://dev.coh2stats.com
     runs-on: ubuntu-latest
 
     concurrency:

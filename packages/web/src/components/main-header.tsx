@@ -7,7 +7,7 @@
  */
 import React from "react";
 import { Header } from "antd/es/layout/layout";
-import {  Menu, Space,  } from "antd";
+import { Menu, Space } from "antd";
 import routes from "../routes";
 import { useRouteMatch } from "react-router";
 import { PlayerSearchInput } from "./header-search";
@@ -101,7 +101,6 @@ const menuItems: ItemType[] = [
 ];
 
 export const MainHeader: React.FC = () => {
-
   /**
    * It would be great if we could re-write this code as it has a lot of hard-coded stuff
    */
@@ -192,7 +191,7 @@ export const MainHeader: React.FC = () => {
           >
             {/*Add div because of the layout shift*/}
             <div style={{ minHeight: 64, minWidth: 125 }}>
-               <OnlinePlayers />
+              <OnlinePlayers />
             </div>
 
             <PlayerSearchInput />
