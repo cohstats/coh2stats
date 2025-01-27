@@ -103,7 +103,6 @@ const LastMatchesTable: React.FC<IProps> = ({ steamID }) => {
   const playerMaps = getPlayerMapListFilter(data);
 
   let matchRecords = data;
-  console.log("DATA" + data);
 
   function isPlayerVictorious(matchRecord: any): boolean {
     if (!matchRecord) return false;

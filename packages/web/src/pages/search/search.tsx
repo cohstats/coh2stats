@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import Search from "antd/es/input/Search";
-import { useHistory, useParams } from "react-router";
+import { useHistory } from "react-router";
+import { useParams } from "react-router-dom-v5-compat";
 import routes from "../../routes";
 import { Divider, Empty, Row, Space } from "antd";
 

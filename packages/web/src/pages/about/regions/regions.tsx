@@ -65,7 +65,7 @@ const Regions: React.FC = () => {
           </li>
           <li>{notSupported} Recent Games </li>
           <li>{notSupported} Map Stats </li>
-          <li>{notSupported} Amount of online players & other small stats over the page </li>
+          <li>{checkMark} Amount of online players</li>
         </ul>
       </Paragraph>
     </div>
