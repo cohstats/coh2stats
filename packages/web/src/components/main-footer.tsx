@@ -19,7 +19,7 @@ export const MainFooter: React.FC = () => {
       <br />
       See <RouterLink to={"/about"}>about page</RouterLink> for more info.
       <br />
-      © 2024 COH2stats.com
+      © 2025 COH2stats.com
       <br />
       <a href={"https://github.com/cohstats/coh2stats"} target="_blank" rel="noopener noreferrer">
         <img width={30} height={30} src={"/resources/github-dark.png"} alt={"GitHub Logo"} />

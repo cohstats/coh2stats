@@ -5,9 +5,9 @@
  *
  * Other which are static are handled here.
  */
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Header } from "antd/es/layout/layout";
-import { Badge, Menu, Space, Tooltip } from "antd";
+import {  Menu, Space,  } from "antd";
 import routes from "../routes";
 import { useRouteMatch } from "react-router";
 import { PlayerSearchInput } from "./header-search";
@@ -21,8 +21,8 @@ import {
   regionsBase,
 } from "../titles";
 import { Link } from "react-router-dom-v5-compat";
-import { doc, getFirestore, onSnapshot } from "firebase/firestore";
 import { ItemType } from "antd/lib/menu/hooks/useItems";
+import OnlinePlayers from "./online-players";
 
 const pageTitleSwitch = (path: string) => {
   switch (path) {
@@ -101,19 +101,6 @@ const menuItems: ItemType[] = [
 ];
 
 export const MainHeader: React.FC = () => {
-  const [isOnlinePlayersLoading, setIsOnlinePlayersLoading] = useState(true);
-  const [onlinePlayersData, setOnlinePlayersData] = useState({ timeStamp: 0, onlinePlayers: 0 });
-
-  useEffect(() => {
-    try {
-      onSnapshot(doc(getFirestore(), "stats", "onlinePlayers"), (doc) => {
-        setIsOnlinePlayersLoading(false);
-        setOnlinePlayersData(doc.data() as { timeStamp: number; onlinePlayers: number });
-      });
-    } catch (e) {
-      console.error("Failed to update online players", e);
-    }
-  }, []);
 
   /**
    * It would be great if we could re-write this code as it has a lot of hard-coded stuff
@@ -205,28 +192,7 @@ export const MainHeader: React.FC = () => {
           >
             {/*Add div because of the layout shift*/}
             <div style={{ minHeight: 64, minWidth: 125 }}>
-              {!isOnlinePlayersLoading && onlinePlayersData && (
-                <Tooltip
-                  title={`Amount of online Steam players in game Company of Heroes 2 as of  ${new Date(
-                    onlinePlayersData["timeStamp"] * 1000,
-                  ).toLocaleString()}`}
-                >
-                  <span
-                    style={{
-                      color: "#f0f2f5",
-                    }}
-                  >
-                    Ingame players
-                  </span>
-
-                  <Badge
-                    className="site-badge-count-109"
-                    count={onlinePlayersData["onlinePlayers"]}
-                    style={{ backgroundColor: "#52c41a", boxShadow: "0 0 0 0", marginLeft: 10 }}
-                    overflowCount={99999}
-                  />
-                </Tooltip>
-              )}
+               <OnlinePlayers />
             </div>
 
             <PlayerSearchInput />
