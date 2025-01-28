@@ -10,54 +10,31 @@ const OnlinePlayers: React.FC = () => {
     timeStampMs: number;
   }>(null);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        if (
-          (onlinePlayersData &&
-            onlinePlayersData.timeStampMs < new Date().getTime() - 1000 * 60 * 4) ||
-          !onlinePlayersData
-        ) {
-          const fetchData = await fetch(onlineGamePlayersOnSteamUrl);
-          // reader header last-modified:
-          const data = await fetchData.json();
-          setOnlinePlayersData({
-            playerCount: data.response.player_count,
-            timeStampMs: new Date(fetchData.headers.get("last-modified") || "").getTime(),
-          });
-        }
-
-        // Update the data every 5 minutes
-        const intervalId = setInterval(async () => {
-          try {
-            if (
-              (onlinePlayersData &&
-                onlinePlayersData.timeStampMs < new Date().getTime() - 1000 * 60 * 4) ||
-              !onlinePlayersData
-            ) {
-              const fetchData = await fetch(onlineGamePlayersOnSteamUrl);
-              const data = await fetchData.json();
-              if (data && data.player_count > 0) {
-                setOnlinePlayersData({
-                  playerCount: data.response.player_count,
-                  timeStampMs: new Date(fetchData.headers.get("last-modified") || "").getTime(),
-                });
-              }
-            }
-          } catch (e) {
-            console.error(e);
-          }
-        }, 1000 * 60 * 5);
-
-        return () => {
-          clearInterval(intervalId);
-        };
-      } catch (e) {
-        console.error(e);
+  const fetchPlayerCount = async () => {
+    try {
+      const fetchData = await fetch(onlineGamePlayersOnSteamUrl);
+      const data = await fetchData.json();
+      if (data && data.response.player_count > 0) {
+        setOnlinePlayersData({
+          playerCount: data.response.player_count,
+          timeStampMs: new Date(fetchData.headers.get("last-modified") || "").getTime(),
+        });
       }
-    })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    } catch (e) {
+      console.error("Failed to fetch player count:", e);
+    }
+  };
+
+  useEffect(() => {
+    // Initial fetch
+    fetchPlayerCount();
+
+    // Set up interval for updates every 5 minutes
+    const intervalId = setInterval(fetchPlayerCount, 1000 * 60 * 5);
+
+    // Cleanup interval on unmount
+    return () => clearInterval(intervalId);
+  }, []); // Empty dependency array is fine here since fetchPlayerCount is stable
 
   return (
     <>
