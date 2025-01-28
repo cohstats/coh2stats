@@ -27,16 +27,16 @@ const SearchUserCard = (
 
   return (
     <div
-      key={steamProfile["steamid"]}
+      key={steamProfile?.["steamid"]}
       className={"player resultBox"}
       onClick={() => {
-        onProfileClick(steamProfile["steamid"]);
+        onProfileClick(steamProfile?.["steamid"]);
       }}
     >
       <Avatar
         size={45}
         shape="square"
-        src={steamProfile["avatarmedium"]}
+        src={steamProfile?.["avatarmedium"]}
         style={{ display: "inline-block", verticalAlign: "top" }}
       />
       <div style={{ display: "inline-block", paddingLeft: 5, width: 180, textAlign: "left" }}>
