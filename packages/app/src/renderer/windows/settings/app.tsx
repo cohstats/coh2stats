@@ -536,10 +536,11 @@ const App = (): JSX.Element => {
                   disabled={!settings.streamOverlay}
                   value={settings.streamOverlayPosition}
                   onChange={handleStreamViewLayoutChange}
-                >
-                  <Select.Option value="top">Top</Select.Option>
-                  <Select.Option value="left">Left</Select.Option>
-                </Select>
+                  options={[
+                    { value: "top", label: "Top" },
+                    { value: "left", label: "Left" },
+                  ]}
+                />
               </Form.Item>
             </Collapse.Panel>
           </Collapse>

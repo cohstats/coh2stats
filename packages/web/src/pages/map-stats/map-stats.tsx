@@ -24,7 +24,6 @@ type DatePickerType = "date" | "month" | "range" | undefined;
 
 const MapStats: React.FC = () => {
   const { push } = useHistory();
-  const { Option } = Select;
 
   const query = useQuery();
 
@@ -257,11 +256,12 @@ const MapStats: React.FC = () => {
             onChange={onDatePickerTypeSelect}
             style={{ width: 150 }}
             size={"large"}
-          >
-            <Option value="daily">Daily</Option>
-            <Option value="month">Month</Option>
-            <Option value="range">Custom Range</Option>
-          </Select>
+            options={[
+              { value: 'daily', label: 'Daily' },
+              { value: 'month', label: 'Month' },
+              { value: 'range', label: 'Custom Range' }
+            ]}
+          />
           {datePickerType !== "range" ? (
             <PickerWithType type={datePickerType} onChange={onDateSelect} />
           ) : (
