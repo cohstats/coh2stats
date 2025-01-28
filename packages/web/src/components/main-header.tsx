@@ -174,7 +174,7 @@ export const MainHeader: React.FC = () => {
                 whiteSpace: "nowrap",
               }}
             >
-              CoH 2 Logs & Stats
+              COH 2 Stats
             </div>
           </Link>
         </div>

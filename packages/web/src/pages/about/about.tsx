@@ -3,7 +3,6 @@ import { Typography } from "antd";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { KofiDonate } from "./kofi-donate";
 import config from "../../config";
-import { PayPalDonation } from "./paypal-donations";
 
 const { Title, Link, Text, Paragraph } = Typography;
 
@@ -82,46 +81,6 @@ const About: React.FC = () => {
         <br />
         Such games are never gathered. As 6 hours is hard stop in our crawler system.
       </Paragraph>
-      <s>
-        <Paragraph>
-          We are currently crawling top 200 positions from all kinds of COH2 leaderboards (1v1,2v2
-          etc). This gives us 5200(~3000 unique) top players for the given day. We then proceed
-          with analysing/saving their matches for the given day. This gives us ~4000 matches /
-          day.
-          <br />
-          And we are tracking only <Text strong>auto-match games</Text> which are against players
-          (filter out vs AI games).
-          <br />
-          Update 22/Aug/21: Query top 400 positions.
-          <br />
-          Update 25/Oct/21: Query top 600 positions.
-        </Paragraph>
-        More technical description of this process can be found{" "}
-        <Link href="https://github.com/cohstats/coh2stats#crawler-process" target="_blank">
-          here
-        </Link>
-        <br />
-        <br />
-        <s>
-          However based on{" "}
-          <Link href="http://coh2chart.com/" target="_blank">
-            this data
-          </Link>{" "}
-          from 2017 we expect that there is around ~50k matches/day. Which means{" "}
-          <Text strong>we are processing around 8% of all games</Text>.
-        </s>
-        <br />
-        Update June 2022: Thanks to the access to the live games we know that we analyze 40% of
-        all games.
-        <br />
-        To be precise: 1v1 - 25%, 2v2 - 37%, 3v3 - 41%, 4v4 - 47%. We aim to get to 100%
-        <br />
-        <br />
-        The amount of data with some types of games is really a problem. You can see that winrate
-        each day can really fluctuate by tens of % if the amount of games is under 1k for the
-        given date.
-      </s>
-      <br />
       <br />
       <b>So far analyzed {analyzedMatches} matches.</b>
       <a href={"#top200"}>
@@ -178,7 +137,6 @@ const About: React.FC = () => {
       </Link>{" "}
       for more info. Any contributions are welcomed.
       <br />
-      <br />
       You can report any bugs or feature requests on{" "}
       <Link href="https://github.com/cohstats/coh2stats/issues" target="_blank">
         GitHub issues
@@ -187,7 +145,7 @@ const About: React.FC = () => {
       <br />
       <br />
       For any discussion, ideas or anything else. Visit our{" "}
-      <Link href="https://discord.gg/jRrnwqMfkr" target="_blank">
+      <Link href={config.discordInviteLink} target="_blank">
         discord channel
       </Link>{" "}
       or head over to the coh2.org{" "}
@@ -199,10 +157,6 @@ const About: React.FC = () => {
       </Link>
       .
       <br />
-      You can also use this site email or dm me{" "}
-      <Link href="https://www.coh2.org/user/112252/pagep" target="_blank">
-        at the forums.
-      </Link>
       <br />
       <Text strong>
         {" "}
@@ -254,10 +208,6 @@ const About: React.FC = () => {
           <br />
           no registration required.
         </i>
-        <br />
-        <br />
-        <PayPalDonation />
-        <i>Direct PayPal</i>
       </div>
     </div>
   );

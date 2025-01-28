@@ -21,7 +21,6 @@ import CustomStatsGeneralDataProvider from "./custom-stats-general-data-provider
 
 const { Link } = Typography;
 const { RangePicker } = DatePicker;
-const { Option } = Select;
 
 type DatePickerType = "time" | "date" | "week" | "month" | "range" | undefined;
 
@@ -286,13 +285,14 @@ const CustomStats: React.FC = () => {
             value={datePickerType}
             onChange={onDatePickerTypeSelect}
             style={{ width: 150 }}
-            size={"large"}
-          >
-            <Option value="daily">Daily</Option>
-            <Option value="week">Week</Option>
-            <Option value="month">Month</Option>
-            <Option value="range">Custom Range</Option>
-          </Select>
+            size="large"
+            options={[
+              { value: "daily", label: "Daily" },
+              { value: "week", label: "Week" },
+              { value: "month", label: "Month" },
+              { value: "range", label: "Custom Range" },
+            ]}
+          />
           {datePickerType !== "range" ? (
             <PickerWithType type={datePickerType} onChange={onDateSelect} />
           ) : (

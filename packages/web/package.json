@@ -11,14 +11,14 @@
     "analyze": "source-map-explorer build/static/js/*.js"
   },
   "dependencies": {
-    "@ant-design/icons": "4.7.0",
+    "@ant-design/icons": "5.6.0",
     "@ant-design/plots": "1.2.6",
     "@nivo/bar": "0.72.0",
     "@nivo/core": "0.72.0",
     "@nivo/geo": "0.72.0",
     "@nivo/heatmap": "0.72.0",
     "@nivo/pie": "0.72.0",
-    "antd": "4.24.16",
+    "antd": "5.13.3",
     "connected-react-router": "6.9.3",
     "date-fns": "2.29.3",
     "dayjs": "1.11.11",

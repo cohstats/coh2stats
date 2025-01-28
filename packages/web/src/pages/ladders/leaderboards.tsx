@@ -47,8 +47,6 @@ import { ConfigContext } from "../../config-context";
 const { Text } = Typography;
 
 const Leaderboards = () => {
-  const { Option } = Select;
-
   const { userConfig } = useContext(ConfigContext);
 
   const { push } = useHistory();
@@ -385,7 +383,7 @@ const Leaderboards = () => {
               <Switch
                 checkedChildren="Live"
                 unCheckedChildren={"Historic"}
-                style={{ width: 75 }}
+                // style={{ width: 80 }}
                 onChange={onSwitchChange}
                 defaultChecked={timestamp === "now"}
               />
@@ -430,16 +428,17 @@ const Leaderboards = () => {
                   firebaseAnalytics.leaderboardsTypeInteraction(value, selectedRace);
                 }}
                 style={{ width: 120 }}
-                size={"large"}
-              >
-                <Option value="1v1">1v1</Option>
-                <Option value="2v2">2v2</Option>
-                <Option value="3v3">3v3</Option>
-                <Option value="4v4">4v4</Option>
-                <Option value="team2">Team of 2</Option>
-                <Option value="team3">Team of 3</Option>
-                <Option value="team4">Team of 4</Option>
-              </Select>
+                size="large"
+                options={[
+                  { value: "1v1", label: "1v1" },
+                  { value: "2v2", label: "2v2" },
+                  { value: "3v3", label: "3v3" },
+                  { value: "4v4", label: "4v4" },
+                  { value: "team2", label: "Team of 2" },
+                  { value: "team3", label: "Team of 3" },
+                  { value: "team4", label: "Team of 4" },
+                ]}
+              />
               <Select
                 value={selectedRace}
                 onChange={(value) => {
@@ -448,23 +447,22 @@ const Leaderboards = () => {
                   firebaseAnalytics.leaderboardsTypeInteraction(selectedType, value);
                 }}
                 style={{ width: 130 }}
-                size={"large"}
-              >
-                {!isTeamGame(selectedType) ? (
-                  <>
-                    <Option value="wehrmacht">Wehrmacht</Option>
-                    <Option value="wgerman">OKW</Option>
-                    <Option value="soviet">Soviet</Option>
-                    <Option value="usf">USF</Option>
-                    <Option value="british">British</Option>
-                  </>
-                ) : (
-                  <>
-                    <Option value="axis">Axis</Option>
-                    <Option value="allies">Allies</Option>
-                  </>
-                )}
-              </Select>
+                size="large"
+                options={
+                  !isTeamGame(selectedType)
+                    ? [
+                        { value: "wehrmacht", label: "Wehrmacht" },
+                        { value: "wgerman", label: "OKW" },
+                        { value: "soviet", label: "Soviet" },
+                        { value: "usf", label: "USF" },
+                        { value: "british", label: "British" },
+                      ]
+                    : [
+                        { value: "axis", label: "Axis" },
+                        { value: "allies", label: "Allies" },
+                      ]
+                }
+              />
               <div>
                 in compare with{" "}
                 <Helper
@@ -497,7 +495,7 @@ const Leaderboards = () => {
             <div style={{ fontSize: "large", paddingBottom: 15, paddingTop: 15 }}>
               <div style={{ float: "left" }}>
                 {generateIconsForTitle(selectedRace, selectedType)}{" "}
-                <Text strong>
+                <Text strong style={{ fontSize: "large" }}>
                   Leaderboards for {capitalize(selectedRace)} {selectedType}
                 </Text>{" "}
                 as of{" "}
@@ -508,8 +506,10 @@ const Leaderboards = () => {
                 }`}{" "}
               </div>
               <div style={{ float: "right" }}>
-                <Text strong>{data?.rankTotal}</Text> ranked{" "}
-                {isTeamGame(selectedType) ? "teams" : "players"}
+                <Text strong style={{ fontSize: "large" }}>
+                  {data?.rankTotal}
+                </Text>{" "}
+                ranked {isTeamGame(selectedType) ? "teams" : "players"}
               </div>
             </div>
             <Table

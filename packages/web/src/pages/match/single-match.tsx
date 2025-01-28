@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom-v5-compat";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { Loading } from "../../components/loading";
 import MatchDetails from "../matches/match-details";

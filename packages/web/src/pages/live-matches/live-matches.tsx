@@ -10,8 +10,6 @@ import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { StatsCurrentLiveGames } from "../../coh/types";
 // import { AlertBox } from "../../components/alert-box";
 
-const { Option } = Select;
-
 // const warningUnavailable = (
 //   <AlertBox
 //     type={"error"}
@@ -110,35 +108,32 @@ const LiveMatches: React.FC = () => {
                     value={playerGroup}
                     onChange={onPlayerGroupSelect}
                     style={{ width: 160 }}
-                    size={"large"}
-                  >
-                    <Option value="1">1v1 Automatch</Option>
-                    <Option value="2">2v2 Automatch</Option>
-                    <Option value="3">3v3 Automatch</Option>
-                    <Option value="4">4v4 Automatch</Option>
-                    <Option value="5">Automatch vs AI</Option>
-                    <Option value="0">Custom Games</Option>
-                  </Select>
+                    size="large"
+                    options={[
+                      { value: "1", label: "1v1 Automatch" },
+                      { value: "2", label: "2v2 Automatch" },
+                      { value: "3", label: "3v3 Automatch" },
+                      { value: "4", label: "4v4 Automatch" },
+                      { value: "5", label: "Automatch vs AI" },
+                      { value: "0", label: "Custom Games" },
+                    ]}
+                  />
                   <h3> sort by </h3>
                   <Select
                     value={orderByQuery}
                     onChange={(value) => changeRoute({ orderByToLoad: value })}
                     style={{ width: 120 }}
-                    size={"large"}
-                  >
-                    <Option
-                      value="0"
-                      disabled={(() => {
-                        // Automatch and custom can't be sorted by rank
-                        // eslint-disable-next-line eqeqeq
-                        return playerGroup == "0" || playerGroup == "5";
-                      })()}
-                    >
-                      Rank
-                    </Option>
-                    <Option value="1">Start Time</Option>
-                    <Option value="2">Viewers</Option>
-                  </Select>
+                    size="large"
+                    options={[
+                      {
+                        value: "0",
+                        label: "Rank",
+                        disabled: playerGroup === "0" || playerGroup === "5", // Automatch and custom can't be sorted by rank
+                      },
+                      { value: "1", label: "Start Time" },
+                      { value: "2", label: "Viewers" },
+                    ]}
+                  />
                 </Space>
               </div>
               <div style={{ width: "100%", maxWidth: "480px" }}>
