@@ -8,7 +8,7 @@ const PlayersPage = () => {
       <div style={{ paddingTop: 10 }}>
         <CustomSearch />
       </div>
-      <Row justify="center">
+      <Row justify="center" style={{minHeight: "600px"}}>
         <Col xs={23} md={22} xxl={15}>
           <PlayerStats />
         </Col>

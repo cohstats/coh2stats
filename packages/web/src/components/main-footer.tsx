@@ -10,8 +10,8 @@ const { Link } = Typography;
 
 export const MainFooter: React.FC = () => {
   return (
-    <Footer style={{ textAlign: "center", padding: 20 }}>
-      <Divider />
+    <Footer style={{ textAlign: "center", padding: 0, paddingBottom: 10, marginTop: 20 }}>
+      <Divider style={{marginTop: 0}} />
       This is unofficial fan-made site for Company Of Heroes 2. Not associated with Relic
       Entertainment.
       <br />
@@ -21,23 +21,36 @@ export const MainFooter: React.FC = () => {
       <br />
       © 2025 COH2stats.com
       <br />
-      <a href={"https://github.com/cohstats/coh2stats"} target="_blank" rel="noopener noreferrer">
-        <img width={30} height={30} src={"/resources/github-dark.png"} alt={"GitHub Logo"} />
-      </a>
-      {"  "}
-      <a href={config.discordInviteLink} target="_blank" rel="noopener noreferrer">
-        <img width={30} height={30} src={"/resources/discord-icon.svg"} alt={"Discord Logo"} />
-      </a>
-      {"  "}
-      <Link href={config.donationLink} target="_blank" rel="noopener noreferrer" strong>
-        <img
-          width={30}
-          height={30}
-          src={"/resources/kofi_s_logo_nolabel.webp"}
-          alt={"Ko-fi support button"}
-        />
-        Donate
-      </Link>
+     <Link
+  href={"https://github.com/cohstats/coh2stats"}
+  target="_blank"
+  rel="noopener noreferrer"
+  style={{ marginRight: 15 }}
+>
+  <img width={30} height={30} src={"/resources/github-dark.png"} alt={"GitHub Logo"} />
+</Link>
+<Link
+  href={config.discordInviteLink}
+  target="_blank"
+  rel="noopener noreferrer"
+  style={{ marginRight: 15 }}
+>
+  <img width={30} height={30} src={"/resources/discord-icon.svg"} alt={"Discord Logo"} />
+</Link>
+<Link
+  href={config.donationLink}
+  target="_blank"
+  rel="noopener noreferrer"
+  strong
+>
+  <img
+    width={30}
+    height={30}
+    src={"/resources/kofi_s_logo_nolabel.webp"}
+    alt={"Ko-fi support button"}
+  />
+  Donate
+</Link>
       <div style={{ padding: 10 }}>
         <RegionSelector />{" "}
         <Helper
@@ -48,9 +61,11 @@ export const MainFooter: React.FC = () => {
           }
         />
       </div>
-      The Company of Heroes is registered trademark of SEGA Holdings. Co
-      <br />
-      The COH2 Images and other assets are owned by Relic Entertainment and/or SEGA
+      <Typography.Text type="secondary" style={{ fontSize: '12px' }}>
+        The Company of Heroes is registered trademark of SEGA Holdings. Co
+        <br />
+        The COH2 Images and other assets are owned by Relic Entertainment and/or SEGA
+      </Typography.Text>
       <br />
       <br />
       Visit{" "}

@@ -238,7 +238,7 @@ const PlayerTeamMatchesTable: React.FC<IProps> = ({ title, data }) => {
         <span style={{ float: "right" }}>
           Display all teams{" "}
           <Helper text={"Teams who didn't played a game in the last year are hidden."} />{" "}
-          <Switch checked={showOldTeams} onChange={setShowOldTeams} />
+          <Switch size="small" checked={showOldTeams} onChange={setShowOldTeams} />
         </span>
       </div>
       <Table

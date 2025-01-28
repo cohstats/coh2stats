@@ -385,7 +385,7 @@ const Leaderboards = () => {
               <Switch
                 checkedChildren="Live"
                 unCheckedChildren={"Historic"}
-                style={{ width: 75 }}
+                // style={{ width: 80 }}
                 onChange={onSwitchChange}
                 defaultChecked={timestamp === "now"}
               />

@@ -67,6 +67,7 @@ const UserProfile: React.FC = () => {
         setIsDisabled(false); //If no initial data exists, set disabled to false
       }
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Maybe use as useEffect? It's up to you

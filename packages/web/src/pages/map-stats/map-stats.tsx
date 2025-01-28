@@ -246,7 +246,7 @@ const MapStats: React.FC = () => {
   };
 
   return (
-    <div>
+    <div style={{ minHeight: "1500px" }}>
       <div>
         <Space
           style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}
