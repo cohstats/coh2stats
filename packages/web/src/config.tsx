@@ -24,7 +24,7 @@ const config = {
   firebase,
   firebaseFunctions,
   devHostnames,
-  discordInviteLink: "https://discord.gg/jRrnwqMfkr",
+  discordInviteLink: "https://discord.gg/4Bj2y84WAR",
   donationLink: "https://ko-fi.com/cohstats",
   coh2steamGameId: 231430,
   api: {
