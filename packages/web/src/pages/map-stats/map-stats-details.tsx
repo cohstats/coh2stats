@@ -24,25 +24,25 @@ const MapSelectorComponent: React.FC<{
   const mapNames = Object.keys(data).sort().reverse();
 
   return (
-<Select
-  showSearch
-  filterOption={(input: string, option?: { label: string; value: string }) => {
-    if (!option?.label) return false;
-    return option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0;
-  }}
-  defaultValue={map}
-  onChange={(value) => {
-    changer({
-      mapToLoad: value,
-    });
-  }}
-  style={{ width: 250 }}
-  size="large"
-  options={mapNames.map((mapName) => ({
-    value: mapName,
-    label: mapName
-  }))}
-/>
+    <Select
+      showSearch
+      filterOption={(input: string, option?: { label: string; value: string }) => {
+        if (!option?.label) return false;
+        return option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+      }}
+      defaultValue={map}
+      onChange={(value) => {
+        changer({
+          mapToLoad: value,
+        });
+      }}
+      style={{ width: 250 }}
+      size="large"
+      options={mapNames.map((mapName) => ({
+        value: mapName,
+        label: mapName,
+      }))}
+    />
   );
 };
 

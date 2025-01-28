@@ -257,9 +257,9 @@ const MapStats: React.FC = () => {
             style={{ width: 150 }}
             size={"large"}
             options={[
-              { value: 'daily', label: 'Daily' },
-              { value: 'month', label: 'Month' },
-              { value: 'range', label: 'Custom Range' }
+              { value: "daily", label: "Daily" },
+              { value: "month", label: "Month" },
+              { value: "range", label: "Custom Range" },
             ]}
           />
           {datePickerType !== "range" ? (

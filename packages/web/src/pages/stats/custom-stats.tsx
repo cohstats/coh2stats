@@ -281,18 +281,18 @@ const CustomStats: React.FC = () => {
           style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: 10 }}
           wrap
         >
-  <Select
-  value={datePickerType}
-  onChange={onDatePickerTypeSelect}
-  style={{ width: 150 }}
-  size="large"
-  options={[
-    { value: "daily", label: "Daily" },
-    { value: "week", label: "Week" },
-    { value: "month", label: "Month" },
-    { value: "range", label: "Custom Range" }
-  ]}
-/>
+          <Select
+            value={datePickerType}
+            onChange={onDatePickerTypeSelect}
+            style={{ width: 150 }}
+            size="large"
+            options={[
+              { value: "daily", label: "Daily" },
+              { value: "week", label: "Week" },
+              { value: "month", label: "Month" },
+              { value: "range", label: "Custom Range" },
+            ]}
+          />
           {datePickerType !== "range" ? (
             <PickerWithType type={datePickerType} onChange={onDateSelect} />
           ) : (

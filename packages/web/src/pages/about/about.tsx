@@ -208,7 +208,6 @@ const About: React.FC = () => {
           <br />
           no registration required.
         </i>
-
       </div>
     </div>
   );
