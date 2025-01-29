@@ -25,7 +25,7 @@ const About: React.FC = () => {
         }
       })();
     } catch (e) {
-      console.error("Failed to get amount of analyzed matchess", e);
+      console.error("Failed to get amount of analyzed matches", e);
     }
   }, []);
 

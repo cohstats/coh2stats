@@ -11,7 +11,7 @@ const Regions: React.FC = () => {
 
   return (
     <div style={{ maxWidth: 600, margin: "0 auto", paddingTop: 10 }}>
-      <Title>Regions setting</Title>
+      <Title style={{ textAlign: "center" }}>Regions setting</Title>
       <Paragraph>
         In some regions, such as China and Russia (+ other restricted countries) the BE systems of
         coh2stats might be blocked, because we are hosted at Google Cloud Platform.

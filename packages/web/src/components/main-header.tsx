@@ -72,6 +72,28 @@ const menuItems: ItemType[] = [
     label: <Link to={routes.recentMatchesBase()}>Recent Games</Link>,
   },
   {
+    label: "Other",
+    key: "other",
+    children: [
+      {
+        key: routes.openData(),
+        label: <Link to={routes.openData()}>Open Data</Link>,
+      },
+      {
+        key: `${routes.regionsBase()}`,
+        label: <Link to={`${routes.regionsBase()}`}>Regions Settings</Link>,
+      },
+      {
+        key: "relic-api-status",
+        label: (
+          <a href="https://stats.uptimerobot.com/03lN1ckr5j" target="_blank" rel={"noreferrer"}>
+            Relic API Status
+          </a>
+        ),
+      },
+    ],
+  },
+  {
     label: "About",
     key: routes.aboutBase(),
     children: [
@@ -83,18 +105,6 @@ const menuItems: ItemType[] = [
       {
         key: `${routes.aboutBase()}#donations`,
         label: <Link to={`${routes.aboutBase()}#donations`}>Donation</Link>,
-      },
-      {
-        key: `${routes.regionsBase()}`,
-        label: <Link to={`${routes.regionsBase()}`}>Regions</Link>,
-      },
-      {
-        key: "relic-api-status",
-        label: (
-          <a href="https://stats.uptimerobot.com/03lN1ckr5j" target="_blank" rel={"noreferrer"}>
-            Relic API Status
-          </a>
-        ),
       },
     ],
   },

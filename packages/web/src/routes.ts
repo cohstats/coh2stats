@@ -60,6 +60,10 @@ const liveMatchesBase = () => {
   return "/live-matches";
 };
 
+const openData = () => {
+  return "/other/open-data";
+};
+
 const recentMatchesBase = () => {
   return "/recent-matches";
 };
@@ -95,6 +99,7 @@ const routes = {
   singleMatch,
   recentMatchesBase,
   regionsBase,
+  openData,
 };
 
 export default routes;

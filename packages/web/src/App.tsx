@@ -26,6 +26,7 @@ import RecentMatches from "./pages/recent-matches/recent-matches";
 import Regions from "./pages/about/regions";
 import PlayersPage from "./pages/players";
 import { Routes, Route, CompatRouter } from "react-router-dom-v5-compat";
+import OpenData from "./pages/other/open-data";
 
 const { Content } = Layout;
 
@@ -58,6 +59,7 @@ const App: React.FC = () => {
                 <Route path={routes.searchBase()} element={<CustomSearch />} />
                 <Route path={routes.singleMatch()} element={<SingleMatch />} />
                 <Route path={routes.recentMatchesBase()} element={<RecentMatches />} />
+                <Route path={routes.openData()} element={<OpenData />} />
                 <Route path="/userProfile" element={<UserProfile />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>

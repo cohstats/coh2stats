@@ -49,7 +49,9 @@ const DesktopApp: React.FC = () => {
     <>
       <Row justify="center" style={{ paddingTop: "20px" }}>
         <Col xs={23} xxl={17}>
-          <Title level={1}>COH2 Game Stats Desktop App</Title>
+          <Title level={1} style={{ textAlign: "center" }}>
+            COH2 Game Stats Desktop App
+          </Title>
           <Row justify="center">
             <img
               width={1920}
