@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import Search from "antd/es/input/Search";
-import { useHistory } from "react-router";
-import { useParams } from "react-router-dom-v5-compat";
+import { useNavigate, useParams } from "react-router-dom-v5-compat";
 import routes from "../../routes";
 import { Divider, Empty, Row, Space } from "antd";
 
@@ -30,8 +29,7 @@ const sortByXP = (array: Array<userAPIObject>) => {
 };
 
 const CustomSearch: React.FC = () => {
-  const { push } = useHistory();
-
+  const navigate = useNavigate();
   const { userConfig } = useContext(ConfigContext);
 
   // We should use normal query params and not / in the path
@@ -62,7 +60,7 @@ const CustomSearch: React.FC = () => {
         const userCards = [];
         const foundProfiles = Object.values(data);
         for (const value of sortByXP(foundProfiles)) {
-          userCards.push(SearchUserCard(value, push));
+          userCards.push(<SearchUserCard profile={value} onNavigate={(path) => navigate(path)} />);
         }
 
         return (
@@ -184,10 +182,14 @@ const CustomSearch: React.FC = () => {
         }
       }
     })();
-  }, [searchParam, push, userConfig]);
+  }, [searchParam, navigate, userConfig]);
 
   const onSearch = async (value: string) => {
-    push(routes.searchWithParam(value));
+    if (value === "") {
+      return;
+    }
+
+    navigate(routes.searchWithParam(value));
   };
 
   if (error) {

@@ -3,7 +3,7 @@ import LiveMatchesCard from "./live-matches-card";
 import { useQuery } from "../../utils/helpers";
 import { Col, Row, Select, Space } from "antd";
 import routes from "../../routes";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router-dom-v5-compat";
 import LiveMatchesTable from "./live-matches-table";
 import firebaseAnalytics from "../../analytics";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
@@ -21,7 +21,7 @@ import { StatsCurrentLiveGames } from "../../coh/types";
 // );
 
 const LiveMatches: React.FC = () => {
-  const { push } = useHistory();
+  const navigate = useNavigate();
   const query = useQuery();
 
   const playerGroup = query.get("playerGroup") || "1";
@@ -68,7 +68,7 @@ const LiveMatches: React.FC = () => {
       start: startToLoad === 0 ? 0 : startToLoad || startQuery,
     })}`;
 
-    push({
+    navigate({
       pathname: routes.liveMatchesBase(),
       search: searchValue,
     });

@@ -52,17 +52,27 @@ This document outlines the necessary changes to migrate from React Router v5 to 
 - Already using v6 compat `useParams` and `Link`
 - No immediate changes needed
 
-#### Search Components
-- Using `useHistory` in various components
-- Changes needed:
-  - Replace `useHistory` with `useNavigate`
-  - Update navigation logic
+#### ✅ Search Components (search.tsx)
+- ~Using `useHistory`~
+- ~Changes needed:~
+  - ~Replace `useHistory` with `useNavigate`~
+  - ~Update navigation logic~
+- Changes completed:
+  - Replaced `useHistory` with `useNavigate`
+  - Updated navigation calls to use `navigate()`
+  - Added empty string check before navigation
+  - Updated component props to use navigate instead of push
+  - Kept using v5-compat package for smooth transition
 
-#### Live Matches Component (live-matches.tsx)
-- Using `useHistory`
-- Changes needed:
-  - Replace `useHistory` with `useNavigate`
-  - Update navigation calls
+#### ✅ Live Matches Component (live-matches.tsx)
+- ~Using `useHistory`~
+- ~Changes needed:~
+  - ~Replace `useHistory` with `useNavigate`~
+  - ~Update navigation calls~
+- Changes completed:
+  - Replaced `useHistory` with `useNavigate`
+  - Updated navigation calls from `push()` to `navigate()`
+  - Kept using v5-compat package for smooth transition
 
 ### 4. Store Configuration
 
