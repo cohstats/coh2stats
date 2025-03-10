@@ -83,16 +83,14 @@ This document outlines the necessary changes to migrate from React Router v5 to 
   - Update Redux integration with React Router v6
   - Consider using Redux Toolkit for routing if needed
 
-## Migration Steps
+## Remaining Migration Steps
 
 1. **Initial Setup**
-   - ✅ Install `react-router-dom-v5-compat` (already done)
    - Install `react-router-dom@6`
 
 2. **Component Updates**
-   - Replace `useHistory` with `useNavigate`
-   - Replace `useRouteMatch` with `useMatch`
-   - Update route definitions to use new element prop syntax
+   - Replace `useRouteMatch` with `useMatch` in main-header.tsx
+   - Update route definitions to use new element prop syntax where needed
    - Remove `exact` prop from routes (not needed in v6)
 
 3. **Redux Integration**
@@ -118,17 +116,6 @@ This document outlines the necessary changes to migrate from React Router v5 to 
 
 ## Common Migration Patterns
 
-### History to Navigate
-```javascript
-// Old (v5)
-const history = useHistory();
-history.push('/path');
-
-// New (v6)
-const navigate = useNavigate();
-navigate('/path');
-```
-
 ### Route Matching
 ```javascript
 // Old (v5)
@@ -150,5 +137,5 @@ const match = useMatch('/path/:id');
 ## Notes
 - The codebase is partially migrated with the compatibility layer
 - Most components are already using the v6 compat imports
-- Main focus should be on replacing navigation patterns and route matching
+- Main focus should be on replacing route matching and Redux integration
 - Redux integration needs careful consideration during migration 
