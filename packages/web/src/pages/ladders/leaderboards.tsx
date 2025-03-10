@@ -11,8 +11,7 @@ import {
   Typography,
   Switch,
 } from "antd";
-import { Link } from "react-router-dom-v5-compat";
-import { useHistory } from "react-router";
+import { Link, useNavigate } from "react-router-dom-v5-compat";
 
 import { LaddersDataArrayObject, LaddersDataObject } from "../../coh/types";
 import { getAllPatchDates } from "../../coh/patches";
@@ -49,7 +48,7 @@ const { Text } = Typography;
 const Leaderboards = () => {
   const { userConfig } = useContext(ConfigContext);
 
-  const { push } = useHistory();
+  const navigate = useNavigate();
   const query = useQuery();
   const timestamp = query.get("timeStamp") || `now`;
   const historicTimestamp =
@@ -156,7 +155,7 @@ const Leaderboards = () => {
       historicTimeStamp: historicTimeStampToLoad || selectedHistoricTimeStamp,
     })}`;
 
-    push({
+    navigate({
       pathname: routes.leaderboardsBase(),
       search: searchValue,
     });
