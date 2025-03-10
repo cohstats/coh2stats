@@ -12,12 +12,17 @@ This document outlines the necessary changes to migrate from React Router v5 to 
 
 ### 2. Main Components Using Router Features
 
-#### main-header.tsx
-- Currently using `useRouteMatch` which is deprecated in v6
-- Changes needed:
-  - Replace `useRouteMatch` with `useMatch`
-  - Update match pattern syntax to new format
-  - Consider using new route matching patterns with `*` for nested routes
+#### ✅ main-header.tsx
+- ~Currently using `useRouteMatch` which is deprecated in v6~
+- ~Changes needed:~
+  - ~Replace `useRouteMatch` with `useMatch`~
+  - ~Update match pattern syntax to new format~
+  - ~Consider using new route matching patterns with `*` for nested routes~
+- Changes completed:
+  - Replaced `useRouteMatch` with `useMatch` from v5-compat
+  - Updated match pattern syntax to use `/*` for nested routes
+  - Updated path extraction to use `pattern.path`
+  - Kept using v5-compat package for smooth transition
 
 #### root.tsx
 - Currently using `ConnectedRouter` from `connected-react-router`
@@ -26,7 +31,7 @@ This document outlines the necessary changes to migrate from React Router v5 to 
   - Update Redux integration if needed
   - Remove history prop passing as it's handled internally in v6
 
-### 4. Store Configuration
+### 3. Store Configuration
 
 #### store/reducer.ts and store/configure.ts
 - Using `connected-react-router`
@@ -41,7 +46,6 @@ This document outlines the necessary changes to migrate from React Router v5 to 
    - Install `react-router-dom@6`
 
 2. **Component Updates**
-   - Replace `useRouteMatch` with `useMatch` in main-header.tsx
    - Update route definitions to use new element prop syntax where needed
    - Remove `exact` prop from routes (not needed in v6)
 
@@ -68,15 +72,6 @@ This document outlines the necessary changes to migrate from React Router v5 to 
 
 ## Common Migration Patterns
 
-### Route Matching
-```javascript
-// Old (v5)
-const match = useRouteMatch('/path/:id');
-
-// New (v6)
-const match = useMatch('/path/:id');
-```
-
 ### Route Definitions
 ```javascript
 // Old (v5)
@@ -89,5 +84,5 @@ const match = useMatch('/path/:id');
 ## Notes
 - The codebase is partially migrated with the compatibility layer
 - Most components are already using the v6 compat imports
-- Main focus should be on replacing route matching and Redux integration
+- Main focus should be on Redux integration
 - Redux integration needs careful consideration during migration 

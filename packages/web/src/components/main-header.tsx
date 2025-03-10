@@ -9,7 +9,7 @@ import React from "react";
 import { Header } from "antd/es/layout/layout";
 import { Menu, Space } from "antd";
 import routes from "../routes";
-import { useRouteMatch } from "react-router";
+import { useMatch } from "react-router-dom-v5-compat";
 import { PlayerSearchInput } from "./header-search";
 import {
   aboutBase,
@@ -115,45 +115,25 @@ export const MainHeader: React.FC = () => {
    * It would be great if we could re-write this code as it has a lot of hard-coded stuff
    */
 
-  const commandersMatch = useRouteMatch({
-    path: routes.commanderBase(),
-  });
+  const commandersMatch = useMatch(routes.commanderBase() + "/*");
 
-  const statsMatch = useRouteMatch({
-    path: routes.statsBase(),
-  });
+  const statsMatch = useMatch(routes.statsBase() + "/*");
 
-  const mapStatsMatch = useRouteMatch({
-    path: routes.mapStats(),
-  });
+  const mapStatsMatch = useMatch(routes.mapStats() + "/*");
 
-  const leaderboardsMatch = useRouteMatch({
-    path: routes.leaderboardsBase(),
-  });
+  const leaderboardsMatch = useMatch(routes.leaderboardsBase() + "/*");
 
-  const regionMatch = useRouteMatch({
-    path: routes.regionsBase(),
-  });
+  const regionMatch = useMatch(routes.regionsBase() + "/*");
 
-  const aboutMatch = useRouteMatch({
-    path: routes.aboutBase(),
-  });
+  const aboutMatch = useMatch(routes.aboutBase() + "/*");
 
-  const bulletinsMatch = useRouteMatch({
-    path: routes.bulletinsBase(),
-  });
+  const bulletinsMatch = useMatch(routes.bulletinsBase() + "/*");
 
-  const desktopAppMatch = useRouteMatch({
-    path: routes.desktopAppBase(),
-  });
+  const desktopAppMatch = useMatch(routes.desktopAppBase() + "/*");
 
-  const liveMatchesMatch = useRouteMatch({
-    path: routes.liveMatchesBase(),
-  });
+  const liveMatchesMatch = useMatch(routes.liveMatchesBase() + "/*");
 
-  const recentMatches = useRouteMatch({
-    path: routes.recentMatchesBase(),
-  });
+  const recentMatches = useMatch(routes.recentMatchesBase() + "/*");
 
   let pathMatch =
     commandersMatch ||
@@ -167,7 +147,7 @@ export const MainHeader: React.FC = () => {
     liveMatchesMatch ||
     recentMatches ||
     leaderboardsMatch;
-  const currentPath = pathMatch?.path || "";
+  const currentPath = pathMatch?.pattern?.path?.replace("/*", "") || "";
   pageTitleSwitch(currentPath);
 
   return (
