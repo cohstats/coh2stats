@@ -15,7 +15,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Install dependencies
         run: yarn --prefer-offline --frozen-lockfile install
@@ -27,8 +27,8 @@ jobs:
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
-          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_COH2_LADDERS_PROD }}"          
-          projectId: 'coh2-ladders-prod'
-          target: 'coh2-ladders-dev'
-          channelId: 'pr-${{ github.event.number }}'
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_COH2_LADDERS_PROD }}"
+          projectId: "coh2-ladders-prod"
+          target: "coh2-ladders-dev"
+          channelId: "pr-${{ github.event.number }}"
           expires: 7d
