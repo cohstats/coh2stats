@@ -1,11 +1,13 @@
 # React Router v6 Migration Guide
 
 ## Overview
+
 This document outlines the necessary changes to migrate from React Router v5 to v6 in the coh2stats web application. The project is currently using `react-router-dom-v5-compat` as a transition package.
 
 ## Files Requiring Changes
 
 ### 1. App.tsx
+
 - Already using `Routes` and `Route` from v6 compat package
 - No immediate changes needed as it's already using the new syntax
 - Future enhancement: Remove `CompatRouter` once migration is complete
@@ -13,6 +15,7 @@ This document outlines the necessary changes to migrate from React Router v5 to 
 ### 2. Main Components Using Router Features
 
 #### ✅ main-header.tsx
+
 - ~Currently using `useRouteMatch` which is deprecated in v6~
 - ~Changes needed:~
   - ~Replace `useRouteMatch` with `useMatch`~
@@ -25,6 +28,7 @@ This document outlines the necessary changes to migrate from React Router v5 to 
   - Kept using v5-compat package for smooth transition
 
 #### root.tsx
+
 - Currently using `ConnectedRouter` from `connected-react-router`
 - Changes needed:
   - Replace with `BrowserRouter` from `react-router-dom`
@@ -34,6 +38,7 @@ This document outlines the necessary changes to migrate from React Router v5 to 
 ### 3. Store Configuration
 
 #### store/reducer.ts and store/configure.ts
+
 - Using `connected-react-router`
 - Changes needed:
   - Remove `connected-react-router` dependency
@@ -43,23 +48,28 @@ This document outlines the necessary changes to migrate from React Router v5 to 
 ## Remaining Migration Steps
 
 1. **Initial Setup**
+
    - Install `react-router-dom@6`
 
 2. **Component Updates**
+
    - Update route definitions to use new element prop syntax where needed
    - Remove `exact` prop from routes (not needed in v6)
 
 3. **Redux Integration**
+
    - Remove `connected-react-router`
    - Update store configuration
    - Implement new routing state management if needed
 
 4. **Route Configuration**
+
    - Review and update nested routes
    - Update route parameters syntax
    - Implement new routing patterns
 
 5. **Testing**
+
    - Test all navigation flows
    - Verify route parameters
    - Check nested routes
@@ -73,6 +83,7 @@ This document outlines the necessary changes to migrate from React Router v5 to 
 ## Common Migration Patterns
 
 ### Route Definitions
+
 ```javascript
 // Old (v5)
 <Route path="/path" component={Component} />
@@ -82,7 +93,8 @@ This document outlines the necessary changes to migrate from React Router v5 to 
 ```
 
 ## Notes
+
 - The codebase is partially migrated with the compatibility layer
 - Most components are already using the v6 compat imports
 - Main focus should be on Redux integration
-- Redux integration needs careful consideration during migration 
+- Redux integration needs careful consideration during migration

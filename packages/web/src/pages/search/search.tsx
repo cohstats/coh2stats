@@ -60,7 +60,9 @@ const CustomSearch: React.FC = () => {
         const userCards = [];
         const foundProfiles = Object.values(data);
         for (const value of sortByXP(foundProfiles)) {
-          userCards.push(<SearchUserCard profile={value} onNavigate={(path) => navigate(path)} />);
+          userCards.push(
+            <SearchUserCard profile={value} onNavigate={(path) => navigate(path)} />,
+          );
         }
 
         return (
