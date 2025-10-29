@@ -143,7 +143,7 @@ const Leaderboards = () => {
     backgroundSize: "350px",
     backgroundPosition: "left top 200px",
     backgroundBlendMode: "overlay",
-    backgroundColor: "rgba(255,255,255,0.8)",
+    //backgroundColor: "rgba(255,255,255,0.8)",
   };
 
   const changeLeaderBoardsRoute = (params: Record<string, any>) => {
@@ -451,20 +451,20 @@ const Leaderboards = () => {
                 options={
                   !isTeamGame(selectedType)
                     ? [
-                        { value: "wehrmacht", label: "Wehrmacht" },
-                        { value: "wgerman", label: "OKW" },
-                        { value: "soviet", label: "Soviet" },
-                        { value: "usf", label: "USF" },
-                        { value: "british", label: "British" },
-                      ]
+                      { value: "wehrmacht", label: "Wehrmacht" },
+                      { value: "wgerman", label: "OKW" },
+                      { value: "soviet", label: "Soviet" },
+                      { value: "usf", label: "USF" },
+                      { value: "british", label: "British" },
+                    ]
                     : [
-                        { value: "axis", label: "Axis" },
-                        { value: "allies", label: "Allies" },
-                      ]
+                      { value: "axis", label: "Axis" },
+                      { value: "allies", label: "Allies" },
+                    ]
                 }
               />
               <div>
-                in compare with{" "}
+                <Text> in compare with{" "}</Text>
                 <Helper
                   text={
                     <>
@@ -498,18 +498,20 @@ const Leaderboards = () => {
                 <Text strong style={{ fontSize: "large" }}>
                   Leaderboards for {capitalize(selectedRace)} {selectedType}
                 </Text>{" "}
-                as of{" "}
-                {`${
-                  selectedTimeStamp === "now"
+                <Text> as of {" "}
+                  {`${selectedTimeStamp === "now"
                     ? "now"
                     : new Date(parseInt(selectedTimeStamp) * 1000).toLocaleString()
-                }`}{" "}
+                    }`}{" "}
+                </Text>
               </div>
               <div style={{ float: "right" }}>
                 <Text strong style={{ fontSize: "large" }}>
                   {data?.rankTotal}
                 </Text>{" "}
-                ranked {isTeamGame(selectedType) ? "teams" : "players"}
+                <Text>
+                  ranked {isTeamGame(selectedType) ? "teams" : "players"}
+                </Text>
               </div>
             </div>
             <Table

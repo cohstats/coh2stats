@@ -1,7 +1,8 @@
-import React from "react";
-import { Layout } from "antd";
+import React, { useState } from "react";
+import { ConfigProvider, theme, Button, Layout } from "antd";
 import "./App.css";
 import routes from "./routes";
+
 import { CommanderDetails } from "./pages/commanders/commanderDetails";
 import { CommandersList } from "./pages/commanders/commandersList";
 import { RacePicker } from "./pages/commanders/racePicker";
@@ -31,44 +32,52 @@ import OpenData from "./pages/other/open-data";
 const { Content } = Layout;
 
 const App: React.FC = () => {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const handleToggleTheme = () => {
+    setIsDarkMode((prev) => !prev);
+  };
   return (
-    <div className="App">
-      <Layout className="layout">
-        <CompatRouter>
-          <MainHeader />
-          <Content>
-            <ErrorBoundary>
-              <Routes>
-                <Route path={"/"} element={<MainHome />} />
-                <Route path={routes.fullStatsOldDetails()} element={<OldStats />} />
-                <Route path={routes.mapStats()} element={<MapStats />} />
-                <Route path={routes.statsBase()} element={<CustomStats />} />
-                {/* <Route path={routes.playerCardWithIdAndName()} element={<PlayerCard />} /> */}
-                <Route path={routes.playerCardWithId()} element={<PlayerCard />} />
-                <Route path={routes.playerCardBase()} element={<PlayersPage />} />
-                <Route path={routes.leaderboardsBase()} element={<Leaderboards />} />
-                <Route path={routes.commanderByID()} element={<CommanderDetails />} />
-                <Route path={routes.commanderList()} element={<CommandersList />} />
-                <Route path={routes.commanderBase()} element={<RacePicker />} />
-                <Route path={routes.desktopAppBase()} element={<DesktopApp />} />
-                <Route path={routes.liveMatchesBase()} element={<LiveMatches />} />
-                <Route path={routes.regionsBase()} element={<Regions />} />
-                <Route path={routes.aboutBase()} element={<About />} />
-                <Route path={routes.bulletinsBase()} element={<BulletinList />} />
-                <Route path={routes.searchWithParam()} element={<CustomSearch />} />
-                <Route path={routes.searchBase()} element={<CustomSearch />} />
-                <Route path={routes.singleMatch()} element={<SingleMatch />} />
-                <Route path={routes.recentMatchesBase()} element={<RecentMatches />} />
-                <Route path={routes.openData()} element={<OpenData />} />
-                <Route path="/userProfile" element={<UserProfile />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </ErrorBoundary>
-          </Content>
-          <MainFooter />
-        </CompatRouter>
-      </Layout>
-    </div>
+    <ConfigProvider theme={{ algorithm: isDarkMode ? theme.darkAlgorithm : theme.defaultAlgorithm, }}>
+      <div className="App">
+        <Layout className="layout">
+          <CompatRouter>
+            <MainHeader isDarkMode={isDarkMode} onToggleTheme={handleToggleTheme} />
+            <Content>
+              <ErrorBoundary>
+
+                <Routes>
+                  <Route path={"/"} element={<MainHome />} />
+                  <Route path={routes.fullStatsOldDetails()} element={<OldStats />} />
+                  <Route path={routes.mapStats()} element={<MapStats />} />
+                  <Route path={routes.statsBase()} element={<CustomStats />} />
+                  {/* <Route path={routes.playerCardWithIdAndName()} element={<PlayerCard />} /> */}
+                  <Route path={routes.playerCardWithId()} element={<PlayerCard />} />
+                  <Route path={routes.playerCardBase()} element={<PlayersPage />} />
+                  <Route path={routes.leaderboardsBase()} element={<Leaderboards />} />
+                  <Route path={routes.commanderByID()} element={<CommanderDetails />} />
+                  <Route path={routes.commanderList()} element={<CommandersList />} />
+                  <Route path={routes.commanderBase()} element={<RacePicker />} />
+                  <Route path={routes.desktopAppBase()} element={<DesktopApp />} />
+                  <Route path={routes.liveMatchesBase()} element={<LiveMatches />} />
+                  <Route path={routes.regionsBase()} element={<Regions />} />
+                  <Route path={routes.aboutBase()} element={<About />} />
+                  <Route path={routes.bulletinsBase()} element={<BulletinList />} />
+                  <Route path={routes.searchWithParam()} element={<CustomSearch />} />
+                  <Route path={routes.searchBase()} element={<CustomSearch />} />
+                  <Route path={routes.singleMatch()} element={<SingleMatch />} />
+                  <Route path={routes.recentMatchesBase()} element={<RecentMatches />} />
+                  <Route path={routes.openData()} element={<OpenData />} />
+                  <Route path="/userProfile" element={<UserProfile />} />
+                  <Route path="*" element={<NotFound />} />
+
+                </Routes>
+              </ErrorBoundary>
+            </Content>
+            <MainFooter />
+          </CompatRouter>
+        </Layout>
+      </div>
+    </ConfigProvider >
   );
 };
 

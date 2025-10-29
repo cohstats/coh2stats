@@ -82,7 +82,7 @@ const About: React.FC = () => {
         Such games are never gathered. As 6 hours is hard stop in our crawler system.
       </Paragraph>
       <br />
-      <b>So far analyzed {analyzedMatches} matches.</b>
+      <Text strong>So far analyzed {analyzedMatches} matches.</Text>
       <a href={"#top200"}>
         <Title level={2} style={{ paddingTop: 15 }} id={"top200"}>
           Analysis for top 200 rank only
@@ -125,50 +125,51 @@ const About: React.FC = () => {
         analysis you could have one team be top 200 and other team rank 2000. Or in 4v4, only 1
         player from the match could be top 200 and other players might be much lower skill.
       </Paragraph>
-      <b>So far analyzed {analyzedTopMatches} matches.</b>
+      <Text strong>So far analyzed {analyzedTopMatches} matches.</Text>
       <a href={"#bugs"} ref={contributionRef}>
         <Title level={2} style={{ paddingTop: 15 }} id={"bugs"}>
           Bugs, ideas and contribution
         </Title>
       </a>
-      This project is completely open source, head over to the{" "}
-      <Link href="https://github.com/cohstats/coh2stats" target="_blank">
-        GitHub Repo
-      </Link>{" "}
-      for more info. Any contributions are welcomed.
-      <br />
-      You can report any bugs or feature requests on{" "}
-      <Link href="https://github.com/cohstats/coh2stats/issues" target="_blank">
-        GitHub issues
-      </Link>
-      .
-      <br />
-      <br />
-      For any discussion, ideas or anything else. Visit our{" "}
-      <Link href={config.discordInviteLink} target="_blank">
-        discord channel
-      </Link>{" "}
-      or head over to the coh2.org{" "}
-      <Link
-        href="https://www.coh2.org/topic/108057/coh2stats-com-match-and-player-statistics-2-0"
-        target="_blank"
-      >
-        forums topic
-      </Link>
-      .
-      <br />
-      <br />
-      <Text strong>
-        {" "}
-        It's strictly forbidden to connect to our API without previous consultation!
-      </Text>
-      <br />
-      We are open to collaboration! You can download all matches that are gather{" "}
-      <Link href="https://github.com/cohstats/coh2stats#open-source-data" target="_blank">
-        here
-      </Link>{" "}
-      and we can also expose you API but you have to first ask for permission. Thank you!
-      <br />
+      <Text>
+        This project is completely open source, head over to the{" "}
+        <Link href="https://github.com/cohstats/coh2stats" target="_blank">
+          GitHub Repo
+        </Link>{" "}
+        for more info. Any contributions are welcomed.
+        <br />
+        You can report any bugs or feature requests on{" "}
+        <Link href="https://github.com/cohstats/coh2stats/issues" target="_blank">
+          GitHub issues
+        </Link>
+        .
+        <br />
+        <br />
+        For any discussion, ideas or anything else. Visit our{" "}
+        <Link href={config.discordInviteLink} target="_blank">
+          discord channel
+        </Link>{" "}
+        or head over to the coh2.org{" "}
+        <Link
+          href="https://www.coh2.org/topic/108057/coh2stats-com-match-and-player-statistics-2-0"
+          target="_blank"
+        >
+          forums topic
+        </Link>
+        .
+        <br />
+        <br />
+        <Text strong>
+          {" "}
+          It's strictly forbidden to connect to our API without previous consultation!
+        </Text>
+        <br />
+        We are open to collaboration! You can download all matches that are gather{" "}
+        <Link href="https://github.com/cohstats/coh2stats#open-source-data" target="_blank">
+          here
+        </Link>{" "}
+        and we can also expose you API but you have to first ask for permission. Thank you!
+        <br /></Text>
       <div ref={donationsRef}>
         <a href={"#donations"}>
           <Title level={2} style={{ paddingTop: 15 }} id={"donations"}>
@@ -191,23 +192,24 @@ const About: React.FC = () => {
           (only last 3 months, older 1x a week is kept forever). Matches (only last{" "}
           {config.matchAreStoredForDays} days).
         </Paragraph>
-        We are still planning to deliver advanced match overview which would bring more
-        functionality and better insight into your past games. But we will most likely not be able
-        to hold more matches than relic already does because of the increased cost without some
-        kind of income (donations/ads?).
-        <br />
-        <br />
-        If you like the site please consider donating.
-        <br />
-        100% of donations will go towards this project costs <br />
-        <br />
-        <KofiDonate />
-        <br />
-        <i>
-          You can Donate via PayPal or Card at Ko-Fi,
+        <Text>
+          We are still planning to deliver advanced match overview which would bring more
+          functionality and better insight into your past games. But we will most likely not be able
+          to hold more matches than relic already does because of the increased cost without some
+          kind of income (donations/ads?).
           <br />
-          no registration required.
-        </i>
+          <br />
+          If you like the site please consider donating.
+          <br />
+          100% of donations will go towards this project costs <br />
+          <br />
+          <KofiDonate />
+          <br />
+          <i>
+            You can Donate via PayPal or Card at Ko-Fi,
+            <br />
+            no registration required.
+          </i></Text>
       </div>
     </div>
   );

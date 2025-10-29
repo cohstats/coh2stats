@@ -139,7 +139,7 @@ const MapStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
       </Row>
       <Row justify={"center"}>
         <div style={{ textAlign: "center" }}>
-          <span style={{ fontSize: 20, fontWeight: 600 }}>{gamesAnalyzed}</span>
+          <Text style={{ fontSize: 20, fontWeight: 600 }}>{gamesAnalyzed}</Text>
           <br />
           <span>
             {/*1657756800 From July 2022 we are tracking 95% of all games*/}

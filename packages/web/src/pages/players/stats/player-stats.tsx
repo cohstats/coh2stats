@@ -112,7 +112,7 @@ const PlayerStats: React.FC = () => {
             >
               <div style={{ gridColumn: 1, textAlign: "right" }}>
                 {" "}
-                <Title level={5}>
+                <Text strong style={{ fontSize: "large" }}>
                   Total amount of tracked players{" "}
                   <Helper
                     text={
@@ -124,38 +124,38 @@ const PlayerStats: React.FC = () => {
                       </>
                     }
                   />
-                </Title>
+                </Text>
               </div>
               <div style={{ gridColumn: 2 }}>
                 {" "}
-                <Text strong>
+                <Text strong style={{ fontSize: "large" }}>
                   <UserOutlined /> {count.toLocaleString()}
                 </Text>
               </div>
               <div style={{ gridColumn: 1, textAlign: "right" }}>
-                <Title level={5}>Automatch players in the last 30 days</Title>
+                <Text strong style={{ fontSize: "large" }}>Automatch players in the last 30 days</Text>
               </div>
               <div style={{ gridColumn: 2 }}>
                 {" "}
-                <Text strong>
+                <Text strong style={{ fontSize: "large" }}>
                   <UserOutlined /> {last30days.toLocaleString()}
                 </Text>
               </div>
               <div style={{ gridColumn: 1, textAlign: "right" }}>
-                <Title level={5}>Automatch players in the last &nbsp;7 days</Title>
+                <Text strong style={{ fontSize: "large" }}>Automatch players in the last &nbsp;7 days</Text>
               </div>
               <div style={{ gridColumn: 2 }}>
                 {" "}
-                <Text strong>
+                <Text strong style={{ fontSize: "large" }}>
                   <UserOutlined /> {last7days.toLocaleString()}
                 </Text>
               </div>
               <div style={{ gridColumn: 1, textAlign: "right" }}>
-                <Title level={5}>Automatch players in the last 24 hours</Title>
+                <Text strong style={{ fontSize: "large" }}>Automatch players in the last 24 hours</Text>
               </div>
               <div style={{ gridColumn: 2 }}>
                 {" "}
-                <Text strong>
+                <Text strong style={{ fontSize: "large" }}>
                   <UserOutlined /> {last24hours.toLocaleString()}
                 </Text>
               </div>

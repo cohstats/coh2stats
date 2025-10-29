@@ -41,7 +41,7 @@ const PatchNotification: React.FC<IProps> = ({ params }) => {
           </Link>
         </Col>
         <Col>
-          &nbsp;- From {startDate} to {endDate}
+          <Text>&nbsp;- From {startDate} to {endDate} </Text>
         </Col>
       </Row>,
     );

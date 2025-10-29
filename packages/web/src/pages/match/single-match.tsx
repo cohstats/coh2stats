@@ -120,13 +120,13 @@ const SingleMatch: React.FC = () => {
             />
           </div>
           <div style={{ float: "right", textAlign: "right" }}>
-            Match type {formatMatchtypeID(matchData.matchtype_id)}
-            <br />
-            Map {matchData.mapname}
-            <br />
-            Match duration {getMatchDuration(matchData.startgametime, matchData.completiontime)}
-            <br />
-            Played on {formatMatchTime(matchData.completiontime, true)}
+            <Text>Match type {formatMatchtypeID(matchData.matchtype_id)}
+              <br />
+              Map {matchData.mapname}
+              <br />
+              Match duration {getMatchDuration(matchData.startgametime, matchData.completiontime)}
+              <br />
+              Played on {formatMatchTime(matchData.completiontime, true)}</Text>
           </div>
         </div>
         <div style={{ paddingTop: 10 }}>
@@ -140,10 +140,10 @@ const SingleMatch: React.FC = () => {
              This match is going to expire on ${expiryDate}.
               If you would like to increase this time please consider donating.`}
           >
-            This match is going to expire in {days} days
+            <Text>This match is going to expire in {days} days</Text>
           </Tooltip>{" "}
           <br />
-          <DatabaseOutlined /> Data source <COHStatsIcon />
+          <Text><DatabaseOutlined /> Data source <COHStatsIcon /></Text>
         </div>
       </>
     );

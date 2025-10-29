@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from "react";
 import { ColumnsType } from "antd/es/table";
 import { convertSteamNameToID, getExportedIconPath, getGeneralIconPath } from "../../coh/helpers";
 import { raceIds } from "../../utils/table-functions";
-import { Avatar, Badge, Card, Col, Row, Table, Tooltip, Typography } from "antd";
+import { Avatar, Badge, Card, Col, Row, Table, Tooltip, Typography, theme } from "antd";
 import { Helper } from "../../components/helper";
 import routes from "../../routes";
 import firebaseAnalytics from "../../analytics";
@@ -66,7 +66,7 @@ const ExpandedPlayer: React.FC<{
 
   const commanders = matchhistoryitems.filter((item) => item.itemlocation_id === 3);
   const bulletins = matchhistoryitems.filter((item) => item.itemlocation_id === 4);
-
+  const { token } = theme.useToken();
   return (
     <div>
       <Row style={{ paddingTop: 5 }}>
@@ -172,7 +172,7 @@ export const MatchPlayerDetailsTable: React.FC<MatchPlayerDetailsTableProps> = (
       ...JSON.parse(playerData["counters"]),
     };
   });
-
+  const { token } = theme.useToken();
   const smallViewOnlyIndexes = ["profile", "ekills", "gt", "dmgdone"];
 
   const renderExpandedMatch = useCallback(
@@ -445,9 +445,9 @@ export const MatchPlayerDetailsTable: React.FC<MatchPlayerDetailsTableProps> = (
 
   const finalColumns: ColumnsType<any> = smallView
     ? columns.filter((column) => {
-        // @ts-ignore
-        return smallViewOnlyIndexes.includes(column.dataIndex as string);
-      })
+      // @ts-ignore
+      return smallViewOnlyIndexes.includes(column.dataIndex as string);
+    })
     : columns;
 
   function showFactionResultColor(matchRecord: any, _smallView: boolean): string {
@@ -462,8 +462,8 @@ export const MatchPlayerDetailsTable: React.FC<MatchPlayerDetailsTableProps> = (
     <div>
       {!smallView && (
         <div style={{ float: "left" }}>
-          <BulbOutlined /> Click on the row to show players Commanders and Bulletins in this
-          match.
+          <BulbOutlined style={{ color: token.colorTextSecondary }} /> <Text>Click on the row to show players Commanders and Bulletins in this
+            match.</Text>
         </div>
       )}
       <Table

@@ -111,7 +111,8 @@ const StatsHeader: React.FC<IProps> = ({ urlChanger, data }) => {
       <Row justify={"center"}>
         <div style={{ textAlign: "center" }}>
           <span style={{ fontSize: 20, fontWeight: 600 }}>
-            <GamesAnalyzed />
+            <Text strong style={{ fontSize: "large" }}><GamesAnalyzed /></Text>
+
           </span>
           <br />
           <span>

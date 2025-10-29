@@ -1,7 +1,18 @@
 import React, { useEffect, useState } from "react";
 import LiveMatchesCard from "./live-matches-card";
 import { useQuery } from "../../utils/helpers";
-import { Col, Row, Select, Space } from "antd";
+import {
+  Table,
+  Space,
+  Col,
+  Row,
+  Tooltip,
+  ConfigProvider,
+  Select,
+  Typography,
+  Switch,
+} from "antd";
+
 import routes from "../../routes";
 import { useHistory } from "react-router";
 import LiveMatchesTable from "./live-matches-table";
@@ -27,7 +38,7 @@ const LiveMatches: React.FC = () => {
   const playerGroup = query.get("playerGroup") || "1";
   const startQuery = query.get("start") || 0;
   const orderByQuery = query.get("orderBy") || "0";
-
+  const { Text } = Typography;
   useEffect(() => {
     firebaseAnalytics.liveMatchesDisplayed();
   }, []);
@@ -103,7 +114,7 @@ const LiveMatches: React.FC = () => {
                   }}
                   wrap
                 >
-                  <h3> Display live games</h3>
+                  <Text strong style={{ fontSize: "large" }}>Display live games </Text>
                   <Select
                     value={playerGroup}
                     onChange={onPlayerGroupSelect}
@@ -118,7 +129,7 @@ const LiveMatches: React.FC = () => {
                       { value: "0", label: "Custom Games" },
                     ]}
                   />
-                  <h3> sort by </h3>
+                  <Text strong style={{ fontSize: "large" }}>sort by </Text>
                   <Select
                     value={orderByQuery}
                     onChange={(value) => changeRoute({ orderByToLoad: value })}

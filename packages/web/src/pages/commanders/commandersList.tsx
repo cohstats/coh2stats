@@ -38,7 +38,7 @@ export const CommandersList = () => {
     backgroundSize: "350px",
     backgroundPosition: "left top 200px",
     backgroundBlendMode: "overlay",
-    backgroundColor: "rgba(255,255,255,0.8)",
+    //backgroundColor: "rgba(255,255,255,0.8)",
   };
 
   if (myData.length === 0) {

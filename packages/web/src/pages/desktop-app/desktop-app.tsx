@@ -7,7 +7,6 @@ import React, { useEffect, useRef, useState } from "react";
 import AppVersionFile from "@coh2stats/web/public/electron-app-version.json";
 // eslint-disable-next-line react-hooks/exhaustive-deps
 const useMountEffect = (fun: { (): void }) => useEffect(fun, []);
-
 const DesktopApp: React.FC = () => {
   const twitchOverlayRef = useRef(null);
   const OBSOverlayRef = useRef(null);
@@ -64,12 +63,12 @@ const DesktopApp: React.FC = () => {
             <Col xl={14} xs={24}>
               <Title level={2}>Gain additional intel on your games with the desktop app!</Title>
               <ul style={{ fontSize: "20px" }}>
-                <li>Easy to use, no configuration required - just start the app</li>
-                <li>See detailed leaderboard stats of players in your game</li>
-                <li>Game results prediction based on map analysis</li>
-                <li>Loads automatically when joining a new game</li>
-                <li>Twitch stream overlay extension</li>
-                <li>Streamer mode with OBS and Twitch Studio support</li>
+                <li><Text strong style={{ fontSize: "large" }}>Easy to use, no configuration required - just start the app</Text></li>
+                <li><Text strong style={{ fontSize: "large" }}>See detailed leaderboard stats of players in your game</Text></li>
+                <li><Text strong style={{ fontSize: "large" }}>Game results prediction based on map analysis</Text></li>
+                <li><Text strong style={{ fontSize: "large" }}>Loads automatically when joining a new game</Text></li>
+                <li><Text strong style={{ fontSize: "large" }}>Twitch stream overlay extension</Text></li>
+                <li><Text strong style={{ fontSize: "large" }}>Streamer mode with OBS and Twitch Studio support</Text></li>
               </ul>
               <br />
             </Col>
@@ -87,7 +86,7 @@ const DesktopApp: React.FC = () => {
               <p style={{ marginBottom: 0 }}>
                 {downloadCount && (
                   <>
-                    <Text strong>{downloadCount.toLocaleString()}</Text> downloads
+                    <Text strong>{downloadCount.toLocaleString()}</Text> <Text>downloads</Text>
                   </>
                 )}
               </p>
@@ -99,11 +98,11 @@ const DesktopApp: React.FC = () => {
           <Row justify="center" style={{ paddingTop: "40px" }}>
             <Col xs={24} xl={8} style={{ paddingTop: "70px" }}>
               <Title level={2}>Displays detailed team rankings</Title>
-              <p style={{ fontSize: "20px" }}>
+              <Text style={{ fontSize: "20px" }}>
                 When a player belongs to a team, the team ranking will be displayed in the T Rank
                 column. Select show team rankings to see a list of all teams with detailed
                 leaderboard stats.
-              </p>
+              </Text>
             </Col>
             <Col xs={24} xl={16}>
               <Image
@@ -124,19 +123,19 @@ const DesktopApp: React.FC = () => {
             </Col>
             <Col xs={24} xl={8} style={{ paddingTop: "70px" }}>
               <Title level={2}>Easy access to player cards</Title>
-              <p style={{ fontSize: "20px" }}>
+              <Text style={{ fontSize: "20px" }}>
                 Select a player to open his player card either in a new window or in browser
                 (depending on user settings).
-              </p>
+              </Text>
             </Col>
           </Row>
           <Row justify="center" style={{ paddingTop: "40px" }}>
             <Col xs={24} xl={8} style={{ paddingTop: "70px" }}>
               <Title level={2}>Game Analysis</Title>
-              <p style={{ fontSize: "20px" }}>
+              <Text style={{ fontSize: "20px" }}>
                 View the average team level, average team win ratio, win ratio based on faction
                 composition and victory chance probability below the player list.
-              </p>
+              </Text>
             </Col>
             <Col xs={24} xl={16}>
               <Image
@@ -156,9 +155,9 @@ const DesktopApp: React.FC = () => {
             </Col>
             <Col xs={24} xl={8} style={{ paddingTop: "70px" }}>
               <Title level={2}>Light and Dark Mode</Title>
-              <p style={{ fontSize: "20px" }}>
+              <Text style={{ fontSize: "20px" }}>
                 Switch between light and dark mode in the apps settings.
-              </p>
+              </Text>
             </Col>
           </Row>
 
@@ -168,7 +167,7 @@ const DesktopApp: React.FC = () => {
                 <a href={"#twitch-overlay"}>
                   <Title level={2}>Twitch Overlay Extension</Title>
                 </a>
-                <p style={{ fontSize: "20px" }}>
+                <Text style={{ fontSize: "20px" }}>
                   A expandable Stream Overlay that allows curious viewers to interact with your
                   game stats on stream. Check out the extension{" "}
                   <Link
@@ -178,7 +177,7 @@ const DesktopApp: React.FC = () => {
                     here
                   </Link>
                   .
-                </p>
+                </Text>
               </div>
             </Col>
             <Col xs={24} xl={16}>
@@ -204,7 +203,7 @@ const DesktopApp: React.FC = () => {
                   <Title level={2}>Dynamic overlay for streamers with OBS</Title>
                 </a>
               </div>
-              <p style={{ fontSize: "20px" }}>
+              <Text style={{ fontSize: "20px" }}>
                 An easy to configure overlay for OBS or Twitch Studio that shows the players and
                 their ranking when in game. Learn more{" "}
                 <Link
@@ -216,7 +215,7 @@ const DesktopApp: React.FC = () => {
                   here
                 </Link>
                 .
-              </p>
+              </Text>
             </Col>
           </Row>
 

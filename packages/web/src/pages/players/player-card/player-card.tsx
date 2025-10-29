@@ -226,15 +226,15 @@ const PlayerCard = () => {
                 <CountryFlag countryCode={playerRelicProfile.country} />
                 {playerName}
               </Title>
-              <b>XP:</b> {playerRelicProfile.xp.toLocaleString()}
-              {playerRelicProfile.xp === 18785964 ? " (MAX)" : ""}
-              <br />
-              {playTime && <>Total playtime: {playTime} hrs</>}
-              {!playTime && (
-                <>
-                  <br />
-                </>
-              )}
+              <Text style={{ fontWeight: 700 }}>XP:</Text> <Text>{playerRelicProfile.xp.toLocaleString()}
+                {playerRelicProfile.xp === 18785964 ? " (MAX)" : ""}
+                <br />
+                {playTime && <>Total playtime: {playTime} hrs</>}
+                {!playTime && (
+                  <>
+                    <br />
+                  </>
+                )}</Text>
               <div>
                 <Tooltip
                   color={"#001529"}
@@ -304,19 +304,19 @@ const PlayerCard = () => {
             <div>
               {bestRank.rank !== Infinity ? (
                 <>
-                  Current best rank <Text strong>{bestRank.rank}</Text> in{" "}
+                  <Text>Current best rank </Text><Text strong>{bestRank.rank}</Text> <Text>in{" "}</Text>
                   <Text strong>
                     {convertTeamNames(bestRank.mode)} as {capitalize(bestRank.race)}
                   </Text>
                 </>
               ) : (
                 <>
-                  Currently <Text strong>unranked</Text>
+                  <Text>Currently</Text> <Text strong>unranked</Text>
                 </>
               )}
             </div>
             <div>
-              Most played{" "}
+              <Text>Most played{" "}</Text>
               <Text strong>
                 {convertTeamNames(mostPlayed.mode)} as {capitalize(mostPlayed.race)}
               </Text>
@@ -330,8 +330,9 @@ const PlayerCard = () => {
             <br />
             <div>
               <Tooltip title={new Date(lastGameDate * 1000).toLocaleString()}>
-                Last match{" "}
-                {timeAgo.format(Date.now() - (Date.now() - lastGameDate * 1000), "round-minute")}
+                <Text>Last match{" "}
+                  {timeAgo.format(Date.now() - (Date.now() - lastGameDate * 1000), "round-minute")}
+                </Text>
               </Tooltip>
             </div>
           </div>

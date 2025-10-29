@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Col, Row, List, Divider, Avatar, Badge } from "antd";
+import { Col, Row, List, Divider, Avatar, Badge, Typography } from "antd";
 import { getCommanderData, getCommanderIconPath } from "../../coh/commanders";
 import { useParams } from "react-router-dom-v5-compat";
 import { ExportDate } from "../../components/export-date";
@@ -12,7 +12,7 @@ export const CommanderDetails = () => {
   const { commanderID } = useParams<{
     commanderID: string;
   }>();
-
+  const { Text } = Typography;
   const commanderData = getCommanderData(commanderID || "");
 
   // We want to scroll top when we go to this page from the stats page
@@ -34,7 +34,7 @@ export const CommanderDetails = () => {
     backgroundSize: "350px",
     backgroundPosition: "left top 200px",
     backgroundBlendMode: "overlay",
-    backgroundColor: "rgba(255,255,255,0.8)",
+    //backgroundColor: "rgba(255, 255, 255, 0.8)",
   };
 
   if (!commanderData) {
@@ -72,8 +72,12 @@ export const CommanderDetails = () => {
               </Col>
               <Col span={1} />
               <Col xs={20} xl={17}>
-                <h1>{commanderData.commanderName}</h1>
-                {commanderData.description}
+                <Row>
+                  <Text strong style={{ fontSize: "large" }}>{commanderData.commanderName}</Text>
+                </Row>
+                <Row>
+                  <Text>{commanderData.description}</Text>
+                </Row>
               </Col>
             </Row>
           </Col>

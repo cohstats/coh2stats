@@ -7,7 +7,7 @@
  */
 import React from "react";
 import { Header } from "antd/es/layout/layout";
-import { Menu, Space } from "antd";
+import { Menu, Space, Button } from "antd";
 import routes from "../routes";
 import { useRouteMatch } from "react-router";
 import { PlayerSearchInput } from "./header-search";
@@ -23,7 +23,11 @@ import {
 import { Link } from "react-router-dom-v5-compat";
 import { ItemType } from "antd/lib/menu/hooks/useItems";
 import OnlinePlayers from "./online-players";
-
+import { MoonOutlined, SunOutlined } from '@ant-design/icons';
+interface MainHeaderProps {
+  isDarkMode: boolean;
+  onToggleTheme: () => void;
+}
 const pageTitleSwitch = (path: string) => {
   switch (path) {
     case routes.commanderBase():
@@ -110,7 +114,7 @@ const menuItems: ItemType[] = [
   },
 ];
 
-export const MainHeader: React.FC = () => {
+export const MainHeader: React.FC<MainHeaderProps> = ({ isDarkMode, onToggleTheme }) => {
   /**
    * It would be great if we could re-write this code as it has a lot of hard-coded stuff
    */
@@ -188,6 +192,7 @@ export const MainHeader: React.FC = () => {
             </div>
           </Link>
         </div>
+
         <div
           style={{
             float: "right",
@@ -200,11 +205,17 @@ export const MainHeader: React.FC = () => {
             style={{ display: "flex", justifyContent: "center" }}
           >
             {/*Add div because of the layout shift*/}
+
             <div style={{ minHeight: 64, minWidth: 125 }}>
               <OnlinePlayers />
             </div>
 
             <PlayerSearchInput />
+            <Button
+              shape="circle"
+              icon={isDarkMode ? <SunOutlined /> : <MoonOutlined />}
+              onClick={onToggleTheme}
+            />
           </Space>
         </div>
         <div>
@@ -216,7 +227,9 @@ export const MainHeader: React.FC = () => {
             items={menuItems}
             defaultSelectedKeys={[currentPath]}
           />
+
         </div>
+
       </div>
     </Header>
   );
