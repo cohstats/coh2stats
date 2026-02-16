@@ -515,6 +515,7 @@ const Leaderboards = () => {
             <Table
               style={{ minHeight: 600, overflow: "auto" }}
               columns={TableColumns}
+              size={"middle"}
               pagination={{
                 defaultPageSize: 60,
                 pageSizeOptions: ["40", "60", "100", "200"],

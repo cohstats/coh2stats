@@ -180,11 +180,12 @@ export const MainHeader: React.FC = () => {
                 color: "whitesmoke",
                 fontSize: "x-large",
                 fontFamily: "sans-serif",
+                fontWeight: "bold",
                 cursor: "pointer",
                 whiteSpace: "nowrap",
               }}
             >
-              COH 2 Stats
+              COH2 Stats
             </div>
           </Link>
         </div>

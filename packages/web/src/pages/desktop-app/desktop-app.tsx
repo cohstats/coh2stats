@@ -54,8 +54,8 @@ const DesktopApp: React.FC = () => {
           </Title>
           <Row justify="center">
             <img
-              width={1920}
-              style={{ maxWidth: "100%" }}
+              width={1200}
+              // style={{ maxWidth: "100%" }}
               alt="Desktop app displays stats on current loading game"
               src="resources/desktopAppImages/Hero.png"
             />
