@@ -1,3 +1,5 @@
+'use client';
+
 import React, { createContext, useState, FC } from "react";
 
 type userConfigType = {
@@ -15,6 +17,10 @@ const ConfigContext = createContext<{
 });
 
 const getLocalStorageConfig = () => {
+  // Check if we're in the browser before accessing localStorage
+  if (typeof window === 'undefined') {
+    return { api: "gcp" };
+  }
   try {
     return JSON.parse(localStorage.getItem(localStorageKey) || "");
   } catch (e) {
@@ -23,7 +29,10 @@ const getLocalStorageConfig = () => {
 };
 
 const setLocalStorageConfig = (config: any) => {
-  localStorage.setItem(localStorageKey, JSON.stringify(config));
+  // Check if we're in the browser before accessing localStorage
+  if (typeof window !== 'undefined') {
+    localStorage.setItem(localStorageKey, JSON.stringify(config));
+  }
 };
 
 const ConfigsProvider: FC<any> = (props) => {

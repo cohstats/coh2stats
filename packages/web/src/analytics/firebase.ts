@@ -1,7 +1,10 @@
 import { firebase } from "../firebase";
 
 // Types
-import type { Location } from "history";
+interface Location {
+  pathname: string;
+  search: string;
+}
 
 type LoginMethod = "Google" | "Facebook" | "password";
 

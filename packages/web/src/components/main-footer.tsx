@@ -1,7 +1,9 @@
+"use client";
+
 import React from "react";
 import { Footer } from "antd/es/layout/layout";
 import { Divider, Typography } from "antd";
-import { Link as RouterLink } from "react-router-dom-v5-compat";
+import NextLink from "next/link";
 import config from "../config";
 import { RegionSelector } from "./region-selector";
 import { Helper } from "./helper";
@@ -17,7 +19,7 @@ export const MainFooter: React.FC = () => {
       <br />
       The data display here are not accurate and do not represent the actual state of the game.
       <br />
-      See <RouterLink to={"/about"}>about page</RouterLink> for more info.
+      See <NextLink href={"/about"}>about page</NextLink> for more info.
       <br />
       © 2021 - 2026 COH2stats.com
       <br />

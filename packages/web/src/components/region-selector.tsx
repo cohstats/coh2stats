@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useContext } from "react";
 import { Select } from "antd";
 import { ConfigContext } from "../config-context";

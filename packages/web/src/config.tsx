@@ -12,7 +12,12 @@ export interface FirebaseConfig {
 /**
  * Get current firebase config
  */
-const firebase = (): FirebaseConfig => JSON.parse(process.env.REACT_APP_FIREBASE_CONFIG || "{}");
+const firebase = (): FirebaseConfig => {
+  // Next.js uses NEXT_PUBLIC_ prefix for client-side env vars
+  const configString =
+    process.env.NEXT_PUBLIC_FIREBASE_CONFIG || process.env.REACT_APP_FIREBASE_CONFIG || "{}";
+  return JSON.parse(configString);
+};
 
 const firebaseFunctions = {
   location: "us-east4",

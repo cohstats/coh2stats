@@ -2,10 +2,10 @@ import { Button, Card, Col, Modal, Row, Space, Tag } from "antd";
 import { RaceName } from "../coh/types";
 import React, { useEffect, useState } from "react";
 import firebaseAnalytics from "../analytics";
-import { MatchPlayerDetailsTable } from "../pages/matches/match-details-table";
+import { MatchPlayerDetailsTable } from "../_pages_old/matches/match-details-table";
 import { SimplePieChart } from "../components/charts-match/simple-pie";
-import MatchDetails from "../pages/matches/match-details";
-import { Link } from "react-router-dom-v5-compat";
+import MatchDetails from "../_pages_old/matches/match-details";
+import Link from "next/link";
 import routes from "../routes";
 import { DatabaseOutlined } from "@ant-design/icons";
 import { RelicIcon } from "../components/relic-icon";
@@ -352,7 +352,7 @@ export const ExpandedMatch: React.FC<{ record: any }> = ({ record }) => {
           >
             Open Full Details Modal
           </Button>
-          <Link to={routes.singleMatch(record.id)} target={"_blank"}>
+          <Link href={routes.singleMatch(record.id)} target={"_blank"}>
             <Button
               size={"middle"}
               type="primary"

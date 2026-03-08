@@ -18,7 +18,10 @@ let app: FirebaseApp | undefined;
 let analytics: Analytics;
 let db: Firestore | undefined;
 
-const useEmulators = process.env.REACT_APP_EMULATOR && process.env.REACT_APP_EMULATOR !== "false";
+const useEmulators =
+  (process.env.NEXT_PUBLIC_EMULATOR || process.env.REACT_APP_EMULATOR) &&
+  process.env.NEXT_PUBLIC_EMULATOR !== "false" &&
+  process.env.REACT_APP_EMULATOR !== "false";
 
 /**
  * Initialize Firebase

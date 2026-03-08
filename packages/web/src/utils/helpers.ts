@@ -1,4 +1,6 @@
-import { useLocation } from "react-router-dom-v5-compat";
+"use client";
+
+import { useSearchParams } from "next/navigation";
 import { eachDayOfInterval, format } from "date-fns";
 
 import TimeAgo from "javascript-time-ago";
@@ -56,7 +58,8 @@ const capitalize = (s: string) => {
 };
 
 function useQuery() {
-  return new URLSearchParams(useLocation().search);
+  const searchParams = useSearchParams();
+  return searchParams;
 }
 
 const formatFactionName = (name: string) => {

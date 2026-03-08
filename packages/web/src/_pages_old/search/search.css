@@ -1,0 +1,10 @@
+div.player {
+    background-color: white;
+    border: 0.1em solid #fafafa;
+    cursor: pointer;
+}
+
+div.resultBox:hover {
+    background-color: #fafafa;
+    cursor: pointer;
+}
