@@ -5,7 +5,7 @@
  *
  * Other which are static are handled here.
  */
-'use client';
+"use client";
 
 import React from "react";
 import { Header } from "antd/es/layout/layout";
@@ -62,13 +62,19 @@ const menuItems: ItemType[] = [
     key: routes.leaderboardsBase(),
     label: <Link href={routes.leaderboardsBase()}>Leaderboards</Link>,
   },
-  { key: routes.liveMatchesBase(), label: <Link href={routes.liveMatchesBase()}>Live Games</Link> },
+  {
+    key: routes.liveMatchesBase(),
+    label: <Link href={routes.liveMatchesBase()}>Live Games</Link>,
+  },
   { key: routes.commanderBase(), label: <Link href={routes.commanderBase()}>Commanders</Link> },
   {
     key: routes.bulletinsBase(),
     label: <Link href={routes.bulletinsBase()}>Intel Bulletins</Link>,
   },
-  { key: routes.desktopAppBase(), label: <Link href={routes.desktopAppBase()}>Desktop App</Link> },
+  {
+    key: routes.desktopAppBase(),
+    label: <Link href={routes.desktopAppBase()}>Desktop App</Link>,
+  },
   {
     key: routes.recentMatchesBase(),
     label: <Link href={routes.recentMatchesBase()}>Recent Games</Link>,
@@ -122,7 +128,7 @@ export const MainHeader: React.FC = () => {
   // Helper function to check if pathname matches a route
   const matchesRoute = (route: string): boolean => {
     if (route === pathname) return true;
-    if (pathname.startsWith(route + '/')) return true;
+    if (pathname.startsWith(route + "/")) return true;
     return false;
   };
 

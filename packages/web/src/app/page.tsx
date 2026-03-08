@@ -7,11 +7,14 @@ import Link from "next/link";
 import routes from "../routes";
 import { commanderAndBulletinDate, lastPatchName } from "../config";
 import { doc, getFirestore, getDoc } from "firebase/firestore";
-import RedditCard from "./reddit/reddit-card";
+import RedditCard from "../components/reddit/reddit-card";
 
 const { Title, Paragraph, Text } = Typography;
 
-const MainHome: React.FC = () => {
+// Force dynamic rendering for this page
+export const dynamic = "force-dynamic";
+
+export default function Home() {
   const [analyzedMatches, setAnalyzedMatches] = useState("10,106,009");
 
   useEffect(() => {
@@ -190,6 +193,4 @@ const MainHome: React.FC = () => {
       </Col>
     </Row>
   );
-};
-
-export default MainHome;
+}

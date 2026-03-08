@@ -1,10 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Standalone output for Node.js deployment
-  output: 'standalone',
+  output: "standalone",
 
   // Ant Design compatibility
-  transpilePackages: ['antd', '@ant-design'],
+  transpilePackages: ["antd", "@ant-design"],
 
   // Image optimization
   images: {
@@ -16,8 +16,9 @@ const nextConfig = {
     // Ignore old page components during migration
     config.plugins.push(
       new webpack.IgnorePlugin({
-        resourceRegExp: /^(react-router|react-router-dom|react-router-dom-v5-compat|connected-react-router|redux|react-redux)$/,
-      })
+        resourceRegExp:
+          /^(react-router|react-router-dom|react-router-dom-v5-compat|connected-react-router|redux|react-redux)$/,
+      }),
     );
 
     return config;
@@ -25,4 +26,3 @@ const nextConfig = {
 };
 
 export default nextConfig;
-
