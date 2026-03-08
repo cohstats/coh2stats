@@ -3,7 +3,6 @@
 import React, { useEffect, Suspense } from "react";
 import { ConfigProvider } from "antd";
 import { ConfigsProvider } from "../config-context";
-import { firebase } from "../firebase";
 import { usePathname, useSearchParams } from "next/navigation";
 import analytics from "../analytics";
 
@@ -25,12 +24,8 @@ function AnalyticsTracker() {
 }
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  useEffect(() => {
-    // Initialize Firebase on client-side only
-    if (typeof window !== "undefined") {
-      firebase.init();
-    }
-  }, []);
+  // Firebase is now initialized at module level in firebase.ts
+  // No need to initialize here anymore
 
   return (
     <ConfigsProvider configJson={{}}>

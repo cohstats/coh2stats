@@ -6,7 +6,8 @@ import Meta from "antd/es/card/Meta";
 import Link from "next/link";
 import routes from "../routes";
 import { commanderAndBulletinDate, lastPatchName } from "../config";
-import { doc, getFirestore, getDoc } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
+import { firebase } from "../firebase";
 import RedditCard from "../components/reddit/reddit-card";
 
 const { Title, Paragraph, Text } = Typography;
@@ -20,7 +21,13 @@ export default function Home() {
   useEffect(() => {
     try {
       (async () => {
-        const docRef = doc(getFirestore(), "stats", "global");
+        const db = firebase.getDb();
+        if (!db) {
+          console.warn("Firestore not initialized yet");
+          return;
+        }
+
+        const docRef = doc(db, "stats", "global");
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
@@ -28,7 +35,7 @@ export default function Home() {
         }
       })();
     } catch (e) {
-      console.error("Failed to get amount of analyzed matchess", e);
+      console.error("Failed to get amount of analyzed matches", e);
     }
   }, []);
 

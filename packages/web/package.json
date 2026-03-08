@@ -20,7 +20,7 @@
     "@nivo/geo": "0.72.0",
     "@nivo/heatmap": "0.72.0",
     "@nivo/pie": "0.72.0",
-    "antd": "5.13.3",
+    "antd": "5.29.3",
     "date-fns": "2.29.3",
     "dayjs": "1.11.11",
     "firebase": "10.14.1",
