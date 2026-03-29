@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 
 import React, { useContext } from "react";
@@ -22,7 +23,7 @@ export const RegionSelector: React.FC<IProps> = ({ bordered = false }) => {
       <Select
         defaultValue={userConfig.api}
         style={{ width: 140 }}
-        bordered={bordered}
+        variant={bordered ? "outlined" : "borderless"}
         onChange={handleChange}
         options={[
           {

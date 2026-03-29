@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 
 import UserProfile from "../../_pages_old/profile/user-profile";

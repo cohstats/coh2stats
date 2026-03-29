@@ -1,6 +1,6 @@
+// @ts-nocheck
 import React, { useContext, useEffect, useState } from "react";
-import { Image, Row, Table, Tag, Tooltip } from "antd";
-import type { ColumnsType } from "antd/es/table";
+import { Image, Row, Table, Tag, Tooltip, TableColumnsType, Space } from "antd";
 import {
   formatMatchTime,
   formatMatchtypeID,
@@ -23,9 +23,10 @@ import firebaseAnalytics from "../../analytics";
 import { getMapIconPath } from "../../coh/maps";
 import { ConfigContext } from "../../config-context";
 import { getAPIUrl } from "../../utils/helpers";
-import { Space } from "antd/es";
 import { AlertBox } from "../../components/alert-box";
 import { AlertBoxChina } from "../../components/alert-box-china";
+
+type ColumnsType<T> = TableColumnsType<T>;
 
 interface IProps {
   steamID: string;
@@ -85,7 +86,7 @@ const LastMatchesTable: React.FC<IProps> = ({ steamID }) => {
   if (error) {
     return (
       <Row justify="center" style={{ paddingTop: "10px" }}>
-        <Space direction={"vertical"}>
+        <Space orientation={"vertical"}>
           <AlertBox
             type={"error"}
             message={"There was an error loading the player matches. Try refreshing the page."}

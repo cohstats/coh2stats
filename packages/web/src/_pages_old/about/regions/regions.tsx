@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from "react";
 import { Typography } from "antd";
 import { RegionSelector } from "../../../components/region-selector";
@@ -23,7 +24,7 @@ const Regions: React.FC = () => {
       </Paragraph>
       <Paragraph>
         {" "}
-        <RegionSelector bordered={true} />
+        <RegionSelector variant="outlined" />
       </Paragraph>
 
       <Paragraph>

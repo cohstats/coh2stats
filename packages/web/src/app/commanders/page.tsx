@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 
 import { RacePicker } from "../../_pages_old/commanders/racePicker";

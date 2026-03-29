@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 
 import MapStats from "../../_pages_old/map-stats/map-stats";

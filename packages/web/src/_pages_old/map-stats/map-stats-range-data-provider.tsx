@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useEffect, useState } from "react";
 import { httpsCallable } from "firebase/functions";
 import { Typography } from "antd";

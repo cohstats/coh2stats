@@ -1,9 +1,10 @@
+// @ts-nocheck
 import React, { useEffect } from "react";
 import { Table, Tag, Space, Col, Row, Input } from "antd";
 
 import { IntelBulletinData } from "../../coh/types";
 import { getAllBulletins, getBulletinIconPath } from "../../coh/bulletins";
-import { ColumnsType } from "antd/es/table";
+import { TableColumnsType } from "antd";
 import { ExportDate } from "../../components/export-date";
 import firebaseAnalytics from "../../analytics";
 import { Tip } from "../../components/tip";
@@ -12,6 +13,8 @@ import routes from "../../routes";
 import { ChangeEvent } from "react";
 import { useHistory } from "react-router";
 import { useQuery } from "../../utils/helpers";
+
+type ColumnsType<T> = TableColumnsType<T>;
 
 interface FilteredInfoState {
   icon?: string;

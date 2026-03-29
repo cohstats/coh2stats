@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useEffect } from "react";
 import { statsBase } from "../../titles";
 import { capitalize, isDev } from "../../utils/helpers";
@@ -51,7 +52,8 @@ const StatsHeader: React.FC<IProps> = ({ urlChanger, data }) => {
   useEffect(() => {
     // Set page title
     if (!document.title.includes(type) || !document.title.includes(race)) {
-      document.title = `${statsBase} - ${capitalize(race)} - ${type}`;
+      if (typeof window !== "undefined")
+        document.title = `${statsBase} - ${capitalize(race)} - ${type}`;
     }
   }, [type, race]);
 

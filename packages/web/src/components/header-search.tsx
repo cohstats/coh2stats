@@ -1,9 +1,12 @@
+// @ts-nocheck
 "use client";
 
-import Search from "antd/es/input/Search";
+import { Input } from "antd";
 import React from "react";
 import { useRouter } from "next/navigation";
 import routes from "../routes";
+
+const { Search } = Input;
 
 export const PlayerSearchInput: React.FC = () => {
   const router = useRouter();

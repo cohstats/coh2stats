@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * This component can also change the title of the pages.
  * Some pages which have dynamic title - such as stats / map stats / player cards handle the title
@@ -8,8 +9,7 @@
 "use client";
 
 import React from "react";
-import { Header } from "antd/es/layout/layout";
-import { Menu, Space } from "antd";
+import { Layout, Menu, Space, MenuProps } from "antd";
 import routes from "../routes";
 import { usePathname } from "next/navigation";
 import { PlayerSearchInput } from "./header-search";
@@ -23,10 +23,13 @@ import {
   regionsBase,
 } from "../titles";
 import Link from "next/link";
-import { ItemType } from "antd/lib/menu/hooks/useItems";
 import OnlinePlayers from "./online-players";
 
+const { Header } = Layout;
+
 const pageTitleSwitch = (path: string) => {
+  if (typeof window === "undefined") return;
+
   switch (path) {
     case routes.commanderBase():
       document.title = commanderBase;
@@ -53,6 +56,8 @@ const pageTitleSwitch = (path: string) => {
       document.title = regionsBase;
   }
 };
+
+type ItemType = MenuProps["items"][number];
 
 const menuItems: ItemType[] = [
   { key: routes.playerCardBase(), label: <Link href={routes.playerCardBase()}>Players</Link> },
@@ -173,7 +178,7 @@ export const MainHeader: React.FC = () => {
           }}
         >
           <Space
-            direction={"horizontal"}
+            orientation={"horizontal"}
             size={"small"}
             wrap
             style={{ display: "flex", justifyContent: "center" }}

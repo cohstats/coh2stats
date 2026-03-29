@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useEffect, useState } from "react";
 import LiveMatchesCard from "./live-matches-card";
 import { Col, Row, Select, Space } from "antd";

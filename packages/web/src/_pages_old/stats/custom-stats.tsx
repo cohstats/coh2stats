@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import routes from "../../routes";

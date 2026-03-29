@@ -65,7 +65,7 @@ export const functions = () =>
  */
 const logEvent = (name: string, params?: Record<string, string | boolean>): void => {
   if (!analytics) {
-    console.warn('Firebase Analytics not initialized');
+    console.warn("Firebase Analytics not initialized");
     return;
   }
   logFirebaseEvent(analytics, name, params);
@@ -78,7 +78,7 @@ const logEvent = (name: string, params?: Record<string, string | boolean>): void
  */
 const setUserId = (id: string): void => {
   if (!analytics) {
-    console.warn('Firebase Analytics not initialized');
+    console.warn("Firebase Analytics not initialized");
     return;
   }
   setFirebaseUserID(analytics, id);

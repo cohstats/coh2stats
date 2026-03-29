@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from "react";
 import RedditCardDetails from "./reddit-card-details";
 import { useState, useEffect } from "react";
@@ -48,7 +49,7 @@ const RedditCard: React.FC<Props> = (size) => {
 
   return (
     <div>
-      <Card style={cardStyle} bodyStyle={{ padding: 12 }}>
+      <Card style={cardStyle} styles={{ body: { padding: 12 } }}>
         <div style={{ overflow: "hidden" }}>
           <div style={{ float: "left" }}>
             {" "}

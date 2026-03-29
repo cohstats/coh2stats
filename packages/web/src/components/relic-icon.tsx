@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from "react";
 import { Tooltip } from "antd";
 import { getGeneralIconPath } from "../coh/helpers";

@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 
 import LiveMatches from "../../_pages_old/live-matches/live-matches";

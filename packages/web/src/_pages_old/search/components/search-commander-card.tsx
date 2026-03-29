@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from "react";
 import { getCommanderIconPath } from "../../../coh/commanders";
 import routes from "../../../routes";

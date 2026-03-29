@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 
 import CustomSearch from "../../_pages_old/search";

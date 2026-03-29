@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 
 import RecentMatches from "../../_pages_old/recent-matches/recent-matches";

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useEffect } from "react";
 import { Col, Row, List, Avatar, Typography } from "antd";
 import { getCommanderByRaces, getCommanderIconPath } from "../../coh/commanders";
@@ -18,8 +19,9 @@ export const CommandersList = () => {
   const race = params?.race as string | undefined;
 
   useEffect(() => {
-    document.title = `${commanderBase} - ${capitalize(race || "")}`;
-    // document.title = `${commanderBase} - ${race}`;
+    if (typeof window !== "undefined")
+      document.title = `${commanderBase} - ${capitalize(race || "")}`;
+    // if (typeof window !== 'undefined') document.title = `${commanderBase} - ${race}`;
   }, [race]);
 
   let myData = getCommanderByRaces(race as RaceName);

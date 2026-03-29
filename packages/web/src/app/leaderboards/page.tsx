@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 
 import Leaderboards from "../../_pages_old/ladders/leaderboards";

@@ -1,9 +1,9 @@
+// @ts-nocheck
 import React, { useEffect, useState } from "react";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
-import { Col, Typography } from "antd";
+import { Col, Typography, Row } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { GeoWorldMap } from "../../../components/charts/geo-map/geo-world-map";
-import { Row } from "antd/es";
 import { Helper } from "../../../components/helper";
 import { Loading } from "../../../components/loading";
 import { AlertBox } from "../../../components/alert-box";

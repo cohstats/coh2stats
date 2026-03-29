@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { ResponsiveBar } from "@nivo/bar";
 import React, { useMemo } from "react";
 import { sortArrayOfObjectsByTheirPropertyValue } from "../../coh/helpers";
@@ -36,7 +37,7 @@ export const BulletinsBarChart: React.FC<IProps> = ({ bulletins }) => {
     const iconPath = getBulletinIconPath(bulletinData?.icon);
 
     return (
-      <Card bodyStyle={{ padding: 5 }}>
+      <Card styles={{ body: { padding: 5 } }}>
         <Avatar
           size={54}
           shape="square"

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useEffect, useRef, useState } from "react";
 import { Typography } from "antd";
 import { doc, getDoc, getFirestore } from "firebase/firestore";

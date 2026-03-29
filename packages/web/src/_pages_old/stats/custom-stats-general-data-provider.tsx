@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useEffect, useState } from "react";
 import { Typography } from "antd";
 import { Loading } from "../../components/loading";

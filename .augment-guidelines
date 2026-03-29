@@ -1,2 +1,3 @@
 - Use Yarn as package manager
 - Test the build of the web app
+- **DO NOT** touch `packages/app` or `packages/shared`

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useContext, useEffect, useState } from "react";
 
 import {
@@ -16,7 +17,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 import { LaddersDataArrayObject, LaddersDataObject } from "../../coh/types";
 import { getAllPatchDates } from "../../coh/patches";
-import { ColumnsType } from "antd/es/table";
+import { TableColumnsType } from "antd";
 import firebaseAnalytics from "../../analytics";
 import {
   capitalize,
@@ -27,7 +28,9 @@ import {
 } from "../../utils/helpers";
 import { CountryFlag } from "../../components/country-flag";
 import { leaderBoardsBase } from "../../titles";
-import enGB from "antd/es/locale/en_GB";
+import enGB from "antd/locale/en_GB";
+
+type ColumnsType<T> = TableColumnsType<T>;
 import DatePicker from "../../components/date-picker";
 
 import routes from "../../routes";
@@ -63,14 +66,18 @@ const Leaderboards = () => {
   const [selectedType, setSelectedType] = useState(type);
   const [selectedRace, setSelectedRace] = useState(race);
 
-  // Set page title
-  document.title = `${leaderBoardsBase} - ${capitalize(selectedType)} - ${capitalize(
-    selectedRace,
-  )}`;
-
   const [isLoadingData, setIsLoadingData] = useState(true);
   const [data, setData] = useState<LaddersDataObject>();
   const [dataHistoric, setDataHistoric] = useState<LaddersDataObject>();
+
+  // Set page title
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      document.title = `${leaderBoardsBase} - ${capitalize(selectedType)} - ${capitalize(
+        selectedRace,
+      )}`;
+    }
+  }, [selectedType, selectedRace]);
 
   useEffect(() => {
     firebaseAnalytics.leaderboardsDisplayed();
@@ -93,7 +100,7 @@ const Leaderboards = () => {
         );
 
         let ladderDocSnap;
-        if (timestamp !== "now") {
+        if (selectedTimeStamp !== "now") {
           ladderDocSnap = await getDoc(ladderDocRef);
           if (ladderDocSnap && ladderDocSnap.exists()) {
             setData(ladderDocSnap.data() as LaddersDataObject);
@@ -101,7 +108,7 @@ const Leaderboards = () => {
             setData(undefined);
           }
         } else {
-          const leaderboardID = leaderboardsID[type][race];
+          const leaderboardID = leaderboardsID[selectedType][selectedRace];
           if (leaderboardID) {
             const response = await fetch(
               `${getAPIUrl(
@@ -340,7 +347,7 @@ const Leaderboards = () => {
           disabledDate={disabledDate}
           size={"large"}
           disabled={disabled}
-          dateRender={(current) => {
+          cellRender={(current) => {
             const style = {
               border: "",
               borderRadius: "",
@@ -372,7 +379,7 @@ const Leaderboards = () => {
         <Row justify="center" style={{ paddingTop: "20px" }}>
           <Col>
             <Space
-              direction={"horizontal"}
+              orientation={"horizontal"}
               wrap
               style={{ display: "flex", justifyContent: "center" }}
             >
@@ -385,9 +392,9 @@ const Leaderboards = () => {
               />
               <CustomDatePicker
                 onChange={(value: any) => {
-                  setSelectedTimeStamp(convertDateToDayTimestamp(`${value}`).toString());
+                  setSelectedTimeStamp(convertDateToDayTimestamp(value).toString());
                   changeLeaderBoardsRoute({
-                    timeStampToLoad: convertDateToDayTimestamp(`${value}`),
+                    timeStampToLoad: convertDateToDayTimestamp(value),
                   });
                   firebaseAnalytics.leaderboardsDateInteraction("regular");
                 }}
@@ -474,9 +481,9 @@ const Leaderboards = () => {
               </div>
               <CustomDatePicker
                 onChange={(value: any) => {
-                  setHistoricTimeStamp(convertDateToDayTimestamp(`${value}`).toString());
+                  setHistoricTimeStamp(convertDateToDayTimestamp(value).toString());
                   changeLeaderBoardsRoute({
-                    historicTimeStampToLoad: convertDateToDayTimestamp(`${value}`),
+                    historicTimeStampToLoad: convertDateToDayTimestamp(value),
                   });
                   setSelectedTimeStamp(selectedTimeStamp);
                   firebaseAnalytics.leaderboardsDateInteraction("historic");

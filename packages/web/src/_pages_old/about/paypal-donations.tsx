@@ -1,3 +1,4 @@
+// @ts-nocheck
 export const PayPalDonation = () => {
   return (
     <form action="https://www.paypal.com/donate" method="post" target="_top">

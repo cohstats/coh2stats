@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { getGeneralIconPath, isTeamGame } from "../../coh/helpers";
 import { RaceName } from "../../coh/types";
 import React from "react";

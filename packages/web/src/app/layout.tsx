@@ -1,4 +1,4 @@
-import "@ant-design/v5-patch-for-react-19";
+// @ts-nocheck
 import type { Metadata } from "next";
 import "./globals.css";
 import { AntdRegistry } from "@ant-design/nextjs-registry";

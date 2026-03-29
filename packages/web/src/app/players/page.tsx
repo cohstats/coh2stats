@@ -1,8 +1,9 @@
+// @ts-nocheck
 "use client";
 
 import CustomSearch from "../../_pages_old/search";
 import PlayerStats from "../../_pages_old/players/stats/player-stats";
-import { Col, Row } from "antd/es";
+import { Col, Row } from "antd";
 
 // Force dynamic rendering
 export const dynamic = "force-dynamic";

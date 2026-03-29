@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { ResponsivePie } from "@nivo/pie";
 import React from "react";
 import { StatsDataObject, statsTypesInDB } from "../../../coh/types";

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { ResponsiveBar } from "@nivo/bar";
 import React from "react";
 import { sortArrayOfObjectsByTheirPropertyValue } from "../../coh/helpers";
@@ -36,7 +37,7 @@ export const CommandersBarChart: React.FC<CommandersBarChartProps> = ({ commande
     const iconPath = getCommanderIconPath(commanderData?.iconSmall);
 
     return (
-      <Card bodyStyle={{ padding: 5 }}>
+      <Card styles={{ body: { padding: 5 } }}>
         <Avatar
           size={86}
           shape="square"

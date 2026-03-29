@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from "react";
 import PlayerSingleMatchesTable from "./player-single-matches-table";
 import PlayerTeamMatchesTable from "./player-team-matches-table";

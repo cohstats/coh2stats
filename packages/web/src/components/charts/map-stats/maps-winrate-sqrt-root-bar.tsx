@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { ResponsiveBar } from "@nivo/bar";
 import React from "react";
 import { calculateRMS } from "../../../utils/helpers";

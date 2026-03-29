@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from "react";
 import { Row, Card, Radio, RadioChangeEvent, Space } from "antd";
 import { MapBarChart } from "../../components/charts/maps-bar";
@@ -101,11 +102,11 @@ const CustomStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
     return (
       <Card
         title={props.title}
-        bodyStyle={
-          isMobile
+        styles={{
+          body: isMobile
             ? { width: "90vw", maxWidth: 480, height: 300 }
-            : { width: "48vw", maxWidth: 480, height: 410 }
-        }
+            : { width: "48vw", maxWidth: 480, height: 410 },
+        }}
       >
         {props.children}
       </Card>

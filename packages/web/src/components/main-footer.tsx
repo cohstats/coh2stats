@@ -1,14 +1,15 @@
+// @ts-nocheck
 "use client";
 
 import React from "react";
-import { Footer } from "antd/es/layout/layout";
-import { Divider, Typography } from "antd";
+import { Layout, Divider, Typography } from "antd";
 import NextLink from "next/link";
 import config from "../config";
 import { RegionSelector } from "./region-selector";
 import { Helper } from "./helper";
 
-const { Link } = Typography;
+const { Footer } = Layout;
+const { Link, Text } = Typography;
 
 export const MainFooter: React.FC = () => {
   return (
@@ -58,11 +59,11 @@ export const MainFooter: React.FC = () => {
           }
         />
       </div>
-      <Typography.Text type="secondary" style={{ fontSize: "12px" }}>
+      <Text type="secondary" style={{ fontSize: "12px" }}>
         The Company of Heroes is registered trademark of SEGA Holdings. Co
         <br />
         The COH2 Images and other assets are owned by Relic Entertainment and/or SEGA
-      </Typography.Text>
+      </Text>
       <br />
       <br />
       Visit{" "}

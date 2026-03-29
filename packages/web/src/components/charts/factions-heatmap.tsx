@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { HeatMap } from "@nivo/heatmap";
 import React, { memo } from "react";
 

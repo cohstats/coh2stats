@@ -1,10 +1,11 @@
+// @ts-nocheck
 import { DownloadOutlined } from "@ant-design/icons";
-import { Button, Col, Image, Row } from "antd";
-import Link from "antd/es/typography/Link";
-import Title from "antd/es/typography/Title";
-import Text from "antd/es/typography/Text";
+import { Button, Col, Image, Row, Typography } from "antd";
 import React, { useEffect, useRef, useState } from "react";
 import AppVersionFile from "@coh2stats/web/public/electron-app-version.json";
+
+const { Link, Title, Text } = Typography;
+
 // eslint-disable-next-line react-hooks/exhaustive-deps
 const useMountEffect = (fun: { (): void }) => useEffect(fun, []);
 

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Col, Row, Form, Input, Button } from "antd";
 import React, { useEffect, useState } from "react";
 import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";

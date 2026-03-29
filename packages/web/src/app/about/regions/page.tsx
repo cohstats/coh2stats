@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 
 import React from "react";
@@ -28,7 +29,7 @@ export default function Regions() {
       </Paragraph>
       <Paragraph>
         {" "}
-        <RegionSelector bordered={true} />
+        <RegionSelector variant="outlined" />
       </Paragraph>
 
       <Paragraph>

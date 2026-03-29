@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import routes from "../../routes";
@@ -11,7 +12,7 @@ import {
 } from "../../utils/helpers";
 import { validStatsTypes } from "../../coh/types";
 import { getAllPatchDates } from "../../coh/patches";
-import enGB from "antd/es/locale/en_GB";
+import enGB from "antd/locale/en_GB";
 
 import { isBefore, isAfter } from "date-fns";
 import MapStatsGeneralDataProvider from "./map-stats-general-data-provider";

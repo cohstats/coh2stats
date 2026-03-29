@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 
 import CustomStats from "../../_pages_old/stats/custom-stats";

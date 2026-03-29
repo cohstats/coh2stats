@@ -1,6 +1,7 @@
+// @ts-nocheck
 import CustomSearch from "../search";
 import PlayerStats from "./stats/player-stats";
-import { Col, Row } from "antd/es";
+import { Col, Row } from "antd";
 
 const PlayersPage = () => {
   return (

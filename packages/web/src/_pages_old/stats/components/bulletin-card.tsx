@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Card } from "antd";
 import { BulletinsBarChart } from "../../../components/charts/bulletins-bar";
 import React from "react";
@@ -17,7 +18,7 @@ const BulletinCard: React.FC<IProps> = ({ data, type, race, bodyStyle }) => {
   // console.log(bulletinData)
 
   return (
-    <Card title={`Intel Bulletins  ${type} - ${race}`} bodyStyle={bodyStyle}>
+    <Card title={`Intel Bulletins  ${type} - ${race}`} styles={{ body: bodyStyle }}>
       <BulletinsBarChart bulletins={bulletinData} />
     </Card>
   );

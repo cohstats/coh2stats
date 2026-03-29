@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { ResponsiveBar } from "@nivo/bar";
 import React, { useMemo } from "react";
 

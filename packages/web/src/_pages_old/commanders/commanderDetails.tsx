@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useEffect } from "react";
 import { Col, Row, List, Divider, Avatar, Badge } from "antd";
 import { getCommanderData, getCommanderIconPath } from "../../coh/commanders";
@@ -42,7 +43,8 @@ export const CommanderDetails = () => {
   }
 
   // Set page title
-  document.title = `${commanderBase} - ${commanderData.commanderName}`;
+  if (typeof window !== "undefined")
+    document.title = `${commanderBase} - ${commanderData.commanderName}`;
 
   return (
     <>

@@ -1,0 +1,2 @@
+- Leaderboards - datepicker doesn't work correctly
+- http://localhost:3000/commanders/wermacht  / lst issue

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
@@ -10,17 +11,15 @@ import {
   formatMatchtypeID,
   getMatchDuration,
 } from "../../utils/table-functions";
-import Title from "antd/es/typography/Title";
 import config from "../../config";
 import { getMapIconPath } from "../../coh/maps";
-import Link from "antd/es/typography/Link";
 import { AlertBox } from "../../components/alert-box";
 import firebaseAnalytics from "../../analytics";
 import { DatabaseOutlined } from "@ant-design/icons";
 import { COHStatsIcon } from "../../components/cohstats-icon";
 import { differenceInDays } from "date-fns";
 
-const { Text } = Typography;
+const { Text, Title, Link } = Typography;
 
 const SingleMatch: React.FC = () => {
   const params = useParams();

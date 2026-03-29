@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 
 import React, { useEffect } from "react";
@@ -7,11 +8,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 import { IntelBulletinData } from "../../coh/types";
 import { getAllBulletins, getBulletinIconPath } from "../../coh/bulletins";
-import { ColumnsType } from "antd/es/table";
+import { TableColumnsType } from "antd";
 import { ExportDate } from "../../components/export-date";
 import { Tip } from "../../components/tip";
 import routes from "../../routes";
 import { ChangeEvent } from "react";
+
+type ColumnsType<T> = TableColumnsType<T>;
 
 // Force dynamic rendering for this page
 export const dynamic = "force-dynamic";

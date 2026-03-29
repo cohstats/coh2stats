@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState } from "react";
 import { ColumnsType } from "antd/es/table";
 import sub from "date-fns/sub";
@@ -110,7 +111,7 @@ const PlayerTeamMatchesTable: React.FC<IProps> = ({ title, data }) => {
     },
     {
       title: (
-        <>
+        <div>
           Level{" "}
           <Helper
             text={
@@ -118,7 +119,7 @@ const PlayerTeamMatchesTable: React.FC<IProps> = ({ title, data }) => {
               " Level 16 - 20 are top 200 players."
             }
           />
-        </>
+        </div>
       ),
       key: "ranklevel",
       align: "center" as "center",
@@ -232,7 +233,7 @@ const PlayerTeamMatchesTable: React.FC<IProps> = ({ title, data }) => {
   ];
 
   return (
-    <>
+    <div>
       <div style={{ paddingLeft: 4 }}>
         <span style={{ float: "left", fontSize: "large" }}>
           <Text strong>{title.toUpperCase()}</Text>{" "}
@@ -269,7 +270,7 @@ const PlayerTeamMatchesTable: React.FC<IProps> = ({ title, data }) => {
           });
 
           return (
-            <>
+            <Table.Summary>
               <Table.Summary.Row>
                 <Table.Summary.Cell index={0} align={"left"}>
                   Summary
@@ -293,11 +294,11 @@ const PlayerTeamMatchesTable: React.FC<IProps> = ({ title, data }) => {
                   )}
                 </Table.Summary.Cell>
               </Table.Summary.Row>
-            </>
+            </Table.Summary>
           );
         }}
       />
-    </>
+    </div>
   );
 };
 

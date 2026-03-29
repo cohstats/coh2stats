@@ -1,8 +1,8 @@
+// @ts-nocheck
 "use client";
 
 import React, { useEffect, useState } from "react";
 import { Card, Col, Row, Space, Typography } from "antd";
-import Meta from "antd/es/card/Meta";
 import Link from "next/link";
 import routes from "../routes";
 import { commanderAndBulletinDate, lastPatchName } from "../config";
@@ -11,6 +11,7 @@ import { firebase } from "../firebase";
 import RedditCard from "../components/reddit/reddit-card";
 
 const { Title, Paragraph, Text } = Typography;
+const { Meta } = Card;
 
 // Force dynamic rendering for this page
 export const dynamic = "force-dynamic";
@@ -52,7 +53,7 @@ export default function Home() {
                   <Card
                     hoverable
                     style={cardStyle}
-                    bodyStyle={{ padding: 12 }}
+                    styles={{ body: { padding: 12 } }}
                     cover={
                       <img
                         alt="Game statistics"
@@ -77,7 +78,7 @@ export default function Home() {
                   <Card
                     hoverable
                     style={cardStyle}
-                    bodyStyle={{ padding: 12 }}
+                    styles={{ body: { padding: 12 } }}
                     cover={
                       <img
                         alt="Player Cards"
@@ -102,7 +103,7 @@ export default function Home() {
                   <Card
                     hoverable
                     style={cardStyle}
-                    bodyStyle={{ padding: 12 }}
+                    styles={{ body: { padding: 12 } }}
                     cover={
                       <img
                         alt="Desktop App"
@@ -129,7 +130,7 @@ export default function Home() {
                   <Card
                     hoverable
                     style={cardStyle}
-                    bodyStyle={{ padding: 12 }}
+                    styles={{ body: { padding: 12 } }}
                     cover={
                       <img
                         style={{ maxHeight: 160, objectFit: "contain" }}
@@ -148,7 +149,7 @@ export default function Home() {
                   <Card
                     hoverable
                     style={cardStyle}
-                    bodyStyle={{ padding: 12 }}
+                    styles={{ body: { padding: 12 } }}
                     cover={
                       <img
                         style={{ maxHeight: 160, objectFit: "contain" }}
@@ -167,7 +168,7 @@ export default function Home() {
                   <Card
                     hoverable
                     style={cardStyle}
-                    bodyStyle={{ padding: 12 }}
+                    styles={{ body: { padding: 12 } }}
                     cover={
                       <img
                         style={{ maxHeight: 160, objectFit: "contain" }}

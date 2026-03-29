@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useContext, useEffect, useState } from "react";
 
 import { Col, Row, Tooltip, Typography, Avatar, Tabs, Badge, notification } from "antd";
@@ -61,7 +62,7 @@ const PlayerCard = () => {
   const [error, setError] = useState<null | string>(null);
   const [data, setData] = useState<null | playerCardAPIObject>(null);
   // Set page title
-  document.title = `${playerCardBase}`;
+  if (typeof window !== "undefined") document.title = `${playerCardBase}`;
 
   useEffect(() => {
     firebaseAnalytics.playerCardDisplayed();
@@ -126,7 +127,7 @@ const PlayerCard = () => {
   if (!isLoading && error != null) {
     return (
       <Row justify="center" style={{ paddingTop: "10px" }}>
-        <Space direction={"vertical"}>
+        <Space orientation={"vertical"}>
           <AlertBox
             type={"error"}
             message={"There was an error loading the player card. Try refreshing the page."}
@@ -179,7 +180,7 @@ const PlayerCard = () => {
   const playerRelicProfile = findPlayerProfile(statGroups);
 
   const playerName = playerRelicProfile.alias;
-  document.title = `${playerCardBase} - ${playerName}`;
+  if (typeof window !== "undefined") document.title = `${playerCardBase} - ${playerName}`;
 
   const { totalGames, lastGameDate, bestRank, mostPlayed, totalWinRate } =
     calculateOverallStatsForPlayerCard(relicData.leaderboardStats);

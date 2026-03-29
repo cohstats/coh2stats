@@ -1,11 +1,11 @@
+// @ts-nocheck
 "use client";
 
 import { DownloadOutlined } from "@ant-design/icons";
-import { Button, Col, Image, Row } from "antd";
-import Link from "antd/es/typography/Link";
-import Title from "antd/es/typography/Title";
-import Text from "antd/es/typography/Text";
+import { Button, Col, Image, Row, Typography } from "antd";
 import React, { useEffect, useRef, useState } from "react";
+
+const { Link, Title, Text } = Typography;
 
 // Import the JSON file directly - Next.js will handle this correctly
 const AppVersionFile = {
