@@ -48,15 +48,6 @@ const StatsHeader: React.FC<IProps> = ({ urlChanger, data }) => {
     totalGames = totalGames === 0 ? null : totalGames;
   }
 
-  // Page title
-  useEffect(() => {
-    // Set page title
-    if (!document.title.includes(type) || !document.title.includes(race)) {
-      if (typeof window !== "undefined")
-        document.title = `${statsBase} - ${capitalize(race)} - ${type}`;
-    }
-  }, [type, race]);
-
   const onTypeRadioChange = (e: RadioChangeEvent) => {
     urlChanger({
       typeToLoad: e.target?.value,

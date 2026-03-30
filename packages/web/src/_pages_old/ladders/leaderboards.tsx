@@ -70,15 +70,6 @@ const Leaderboards = () => {
   const [data, setData] = useState<LaddersDataObject>();
   const [dataHistoric, setDataHistoric] = useState<LaddersDataObject>();
 
-  // Set page title
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      document.title = `${leaderBoardsBase} - ${capitalize(selectedType)} - ${capitalize(
-        selectedRace,
-      )}`;
-    }
-  }, [selectedType, selectedRace]);
-
   useEffect(() => {
     firebaseAnalytics.leaderboardsDisplayed();
   }, []);

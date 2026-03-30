@@ -9,9 +9,36 @@ import { AppLayout } from "./app-layout";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "COH2 Game Statistics",
+  title: {
+    template: "%s | COH2 Stats",
+    default: "COH2 Game Statistics",
+  },
   description:
     "Company of Heroes 2 Match Statistics, Player Cards, Recent Matches, Leaderboards and Charts about most used Win rates, Commanders, Intel Bulletins and maps based on the real-time data from the recent games.",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://coh2stats.com",
+    siteName: "COH2 Stats",
+    title: "COH2 Game Statistics",
+    description:
+      "Company of Heroes 2 Match Statistics, Player Cards, Recent Matches, Leaderboards and Charts about most used Win rates, Commanders, Intel Bulletins and maps based on the real-time data from the recent games.",
+    images: [
+      {
+        url: "https://coh2stats.com/logo/android-icon-192x192.png",
+        width: 192,
+        height: 192,
+        alt: "COH2 Stats Logo",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary",
+    title: "COH2 Game Statistics",
+    description:
+      "Company of Heroes 2 Match Statistics, Player Cards, Recent Matches, Leaderboards and Charts about most used Win rates, Commanders, Intel Bulletins and maps based on the real-time data from the recent games.",
+    images: ["https://coh2stats.com/logo/android-icon-192x192.png"],
+  },
   icons: {
     icon: [
       { url: "/logo/favicon-16x16.png", sizes: "16x16", type: "image/png" },

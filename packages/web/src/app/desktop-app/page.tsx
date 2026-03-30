@@ -1,9 +1,22 @@
 // @ts-nocheck
 import React from "react";
+import { Metadata } from "next";
 import { DesktopAppContent } from "./_components/desktop-app-content";
+import { desktopAppBase } from "../../titles";
 
 // Cache for 60 minutes (3600 seconds)
 export const revalidate = 3600;
+
+export const metadata: Metadata = {
+  title: desktopAppBase.replace("COH2 ", ""),
+  description:
+    "Download the COH2 Stats Desktop App to get real-time intel on your opponents. See player ranks, match history, and team compositions during live games.",
+  openGraph: {
+    title: desktopAppBase,
+    description: "Get real-time intel on your opponents with the COH2 Stats Desktop App",
+    url: "https://coh2stats.com/desktop-app",
+  },
+};
 
 async function getDownloadCount(): Promise<number | undefined> {
   try {

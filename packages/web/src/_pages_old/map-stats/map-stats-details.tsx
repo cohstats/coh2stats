@@ -79,14 +79,6 @@ const MapStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
     amountOfGames += mapValue.matchCount;
   }
 
-  // Page title
-  useEffect(() => {
-    // Set page title
-    if (!document.title.includes(type)) {
-      if (typeof window !== "undefined") document.title = `${mapStatsBase} - ${type}`;
-    }
-  }, [type]);
-
   const onTypeRadioChange = (e: RadioChangeEvent) => {
     urlChanger({
       typeToLoad: e.target?.value,

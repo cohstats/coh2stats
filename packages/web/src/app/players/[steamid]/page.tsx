@@ -64,12 +64,7 @@ const PlayerCard = () => {
   const [data, setData] = useState<null | playerCardAPIObject>(null);
   const [playerName, setPlayerName] = useState<string>("");
 
-  // Set page title
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      document.title = `${playerCardBase}`;
-    }
-  }, []);
+
 
   useEffect(() => {
     firebaseAnalytics.playerCardDisplayed();
@@ -142,12 +137,7 @@ const PlayerCard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [steamidParsed, userConfig]);
 
-  // Update page title when player name is available
-  useEffect(() => {
-    if (typeof window !== "undefined" && playerName) {
-      document.title = `${playerCardBase} - ${playerName}`;
-    }
-  }, [playerName]);
+
 
   const onTabChange = (key: string) => {
     router.push(`/players/${steamid}?view=${key}`);

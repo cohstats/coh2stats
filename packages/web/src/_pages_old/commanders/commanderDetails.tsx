@@ -46,10 +46,6 @@ export const CommanderDetails = () => {
     );
   }
 
-  // Set page title
-  if (typeof window !== "undefined")
-    document.title = `${commanderBase} - ${commanderData.commanderName}`;
-
   return (
     <>
       <div style={divStyle}>

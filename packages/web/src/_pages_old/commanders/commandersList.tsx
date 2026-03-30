@@ -18,12 +18,6 @@ export const CommandersList = () => {
   const params = useParams();
   const race = params?.race as string | undefined;
 
-  useEffect(() => {
-    if (typeof window !== "undefined")
-      document.title = `${commanderBase} - ${capitalize(race || "")}`;
-    // if (typeof window !== 'undefined') document.title = `${commanderBase} - ${race}`;
-  }, [race]);
-
   let myData = getCommanderByRaces(race as RaceName);
   myData = myData.filter((commanderData) => {
     return (

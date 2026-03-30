@@ -1,11 +1,4 @@
 // @ts-nocheck
-/**
- * This component can also change the title of the pages.
- * Some pages which have dynamic title - such as stats / map stats / player cards handle the title
- * in their components.
- *
- * Other which are static are handled here.
- */
 "use client";
 
 import React from "react";
@@ -13,49 +6,10 @@ import { Layout, Menu, Space, MenuProps } from "antd";
 import routes from "../routes";
 import { usePathname } from "next/navigation";
 import { PlayerSearchInput } from "./header-search";
-import {
-  aboutBase,
-  bulletinsBase,
-  commanderBase,
-  desktopAppBase,
-  liveMatchesAppBase,
-  mostRecentGamesAppBase,
-  regionsBase,
-} from "../titles";
 import Link from "next/link";
 import OnlinePlayers from "./online-players";
 
 const { Header } = Layout;
-
-const pageTitleSwitch = (path: string) => {
-  if (typeof window === "undefined") return;
-
-  switch (path) {
-    case routes.commanderBase():
-      document.title = commanderBase;
-      break;
-    case routes.statsBase():
-      // we are setting up this in the stats page component
-      break;
-    case routes.bulletinsBase():
-      document.title = bulletinsBase;
-      break;
-    case routes.aboutBase():
-      document.title = aboutBase;
-      break;
-    case routes.desktopAppBase():
-      document.title = desktopAppBase;
-      break;
-    case routes.liveMatchesBase():
-      document.title = liveMatchesAppBase;
-      break;
-    case routes.recentMatchesBase():
-      document.title = mostRecentGamesAppBase;
-      break;
-    case routes.regionsBase():
-      document.title = regionsBase;
-  }
-};
 
 type ItemType = MenuProps["items"][number];
 
@@ -150,8 +104,6 @@ export const MainHeader: React.FC = () => {
   else if (matchesRoute(routes.recentMatchesBase())) currentPath = routes.recentMatchesBase();
   else if (matchesRoute(routes.leaderboardsBase())) currentPath = routes.leaderboardsBase();
   else if (matchesRoute(routes.playerCardBase())) currentPath = routes.playerCardBase();
-
-  pageTitleSwitch(currentPath);
 
   return (
     <Header style={{ height: "auto" }}>
