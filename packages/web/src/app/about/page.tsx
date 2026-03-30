@@ -44,6 +44,9 @@ export default function About() {
   }
 
   useMountEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
     const hash = window.location.hash;
     console.log("scrolling", hash, donationsRef);
     if (hash === "#donations" && donationsRef) {

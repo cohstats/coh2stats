@@ -378,7 +378,9 @@ export const ExpandedMatch: React.FC<{ record: any }> = ({ record }) => {
           cancelButtonProps={{ hidden: true }}
           okText={"Close"}
           footer={[
-            <Button key={"downloadGameData"} onClick={handleDownloadGameData}>Download game data</Button>,
+            <Button key={"downloadGameData"} onClick={handleDownloadGameData}>
+              Download game data
+            </Button>,
             <Button key={"close"} onClick={handleCancel} type="primary">
               Close
             </Button>,

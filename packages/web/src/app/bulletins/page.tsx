@@ -16,9 +16,6 @@ import { ChangeEvent } from "react";
 
 type ColumnsType<T> = TableColumnsType<T>;
 
-// Force dynamic rendering for this page
-export const dynamic = "force-dynamic";
-
 interface FilteredInfoState {
   icon?: string;
   bulletinName?: string;

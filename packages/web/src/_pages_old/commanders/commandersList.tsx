@@ -1,6 +1,6 @@
 // @ts-nocheck
 import React, { useEffect } from "react";
-import { Col, Row, List, Avatar, Typography } from "antd";
+import { Col, Row, Flex, Avatar, Typography } from "antd";
 import { getCommanderByRaces, getCommanderIconPath } from "../../coh/commanders";
 import { useParams } from "next/navigation";
 import { RaceName } from "../../coh/types";
@@ -63,42 +63,41 @@ export const CommandersList = () => {
               }
             />
           </div>
-          <List
-            itemLayout="horizontal"
-            dataSource={myData}
-            style={{ paddingTop: 10 }}
-            renderItem={(item) => (
-              <div>
-                <List.Item>
-                  <List.Item.Meta
-                    avatar={
-                      <Link href={routes.commanderByID(race, item.serverID)}>
-                        <Avatar
-                          src={getCommanderIconPath(item.iconlarge)}
-                          shape="square"
-                          size={192}
-                          style={{ height: "192px", width: "144px" }}
-                        />
-                      </Link>
-                    }
-                    title={
-                      <Link href={routes.commanderByID(race, item.serverID)}>
-                        <Title level={3}>{item.commanderName}</Title>
-                      </Link>
-                    }
-                    description={
-                      <>
-                        <CommanderAbilitiesComponent
-                          commanderDescription={item.description}
-                          commanderAbilities={item.abilities}
-                        />
-                      </>
-                    }
+          <Flex vertical gap="large" style={{ paddingTop: 10 }}>
+            {myData.map((item) => (
+              <Flex
+                key={item.serverID}
+                gap="middle"
+                align="start"
+                style={{
+                  padding: "12px 0",
+                  borderBottom: "1px solid rgba(5, 5, 5, 0.06)",
+                }}
+              >
+                <Link href={routes.commanderByID(race, item.serverID)}>
+                  <Avatar
+                    src={getCommanderIconPath(item.iconlarge)}
+                    shape="square"
+                    size={192}
+                    style={{ height: "192px", width: "144px" }}
                   />
-                </List.Item>
-              </div>
-            )}
-          />
+                </Link>
+                <Flex vertical gap="small" style={{ flex: 1 }}>
+                  <Link href={routes.commanderByID(race, item.serverID)}>
+                    <Title level={3} style={{ margin: 0 }}>
+                      {item.commanderName}
+                    </Title>
+                  </Link>
+                  <div>
+                    <CommanderAbilitiesComponent
+                      commanderDescription={item.description}
+                      commanderAbilities={item.abilities}
+                    />
+                  </div>
+                </Flex>
+              </Flex>
+            ))}
+          </Flex>
           <ExportDate typeOfData={"Commander"} />
         </Col>
       </Row>

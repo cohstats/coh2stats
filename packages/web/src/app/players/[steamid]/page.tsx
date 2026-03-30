@@ -81,6 +81,10 @@ const PlayerCard = () => {
         return;
       }
 
+      if (typeof window === "undefined") {
+        return;
+      }
+
       const cleanName = playerName.replace(/[^a-zA-Z0-9-_]/g, "");
       // If it's not in the path, let's push it there
       if (!window.location.pathname.includes(cleanName)) {

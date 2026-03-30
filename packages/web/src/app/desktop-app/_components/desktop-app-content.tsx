@@ -1,41 +1,30 @@
 // @ts-nocheck
+"use client";
+
 import { DownloadOutlined } from "@ant-design/icons";
 import { Button, Col, Image, Row, Typography } from "antd";
-import React, { useEffect, useRef, useState } from "react";
-import AppVersionFile from "@coh2stats/web/public/electron-app-version.json";
+import React, { useEffect, useRef } from "react";
+import config from "../../../config";
 
 const { Link, Title, Text } = Typography;
 
 // eslint-disable-next-line react-hooks/exhaustive-deps
 const useMountEffect = (fun: { (): void }) => useEffect(fun, []);
 
-const DesktopApp: React.FC = () => {
+const AppVersionFile = config.DesktopAppVersionFile;
+
+interface DesktopAppContentProps {
+  downloadCount: number | undefined;
+}
+
+export function DesktopAppContent({ downloadCount }: DesktopAppContentProps) {
   const twitchOverlayRef = useRef(null);
   const OBSOverlayRef = useRef(null);
-  const [downloadCount, setDownloadCount] = useState<undefined | number>();
-
-  useEffect(() => {
-    try {
-      (async () => {
-        const url = "https://api.github.com/repositories/326416762/releases?page=1&per_page=100";
-        const response = await fetch(url);
-        const data = await response.json();
-        let sum = 0;
-
-        data.forEach((item: any) => {
-          if (item.assets.length > 0 && item.assets[0].download_count > 0) {
-            sum += item.assets[0].download_count;
-          }
-        });
-
-        setDownloadCount(sum);
-      })();
-    } catch (e) {
-      console.error(e);
-    }
-  }, []);
 
   useMountEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
     const hash = window.location.hash;
     if (hash === "#twitch-overlay" && twitchOverlayRef) {
       // @ts-ignore
@@ -48,7 +37,7 @@ const DesktopApp: React.FC = () => {
 
   return (
     <>
-      <Row justify="center" style={{ paddingTop: "20px" }}>
+      <Row justify="center">
         <Col xs={23} xxl={17}>
           <Title level={1} style={{ textAlign: "center" }}>
             COH2 Game Stats Desktop App
@@ -169,18 +158,18 @@ const DesktopApp: React.FC = () => {
                 <a href={"#twitch-overlay"}>
                   <Title level={2}>Twitch Overlay Extension</Title>
                 </a>
-                <p style={{ fontSize: "20px" }}>
-                  A expandable Stream Overlay that allows curious viewers to interact with your
-                  game stats on stream. Check out the extension{" "}
-                  <Link
-                    href={"https://dashboard.twitch.tv/extensions/6x9q2nzzv9wewklo7gt7hz2vypdgg7"}
-                    target="_blank"
-                  >
-                    here
-                  </Link>
-                  .
-                </p>
               </div>
+              <p style={{ fontSize: "20px" }}>
+                A expandable Stream Overlay that allows curious viewers to interact with your game
+                stats on stream. Check out the extension{" "}
+                <Link
+                  href={"https://dashboard.twitch.tv/extensions/6x9q2nzzv9wewklo7gt7hz2vypdgg7"}
+                  target="_blank"
+                >
+                  here
+                </Link>
+                .
+              </p>
             </Col>
             <Col xs={24} xl={16}>
               <Image
@@ -235,6 +224,5 @@ const DesktopApp: React.FC = () => {
       </Row>
     </>
   );
-};
+}
 
-export default DesktopApp;

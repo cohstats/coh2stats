@@ -84,6 +84,9 @@ export const CommandersBarChart: React.FC<CommandersBarChartProps> = ({ commande
         legendOffset: -40,
       }}
       onClick={(event) => {
+        if (typeof window === "undefined") {
+          return;
+        }
         const commanderId: string = event.data["commanderId"] as string;
         const commanderData = getCommanderData(commanderId);
         window.open(routes.commanderByID(commanderData?.races[0], commanderId), "_blank");

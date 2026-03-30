@@ -5,7 +5,13 @@
       "packages/*"
     ],
     "nohoist": [
-      "**/firebase/**"
+      "**/firebase/**",
+      "**/react",
+      "**/react-dom",
+      "**/antd",
+      "**/antd/**",
+      "**/@ant-design/**",
+      "**/date-fns"
     ]
   },
   "engines": {

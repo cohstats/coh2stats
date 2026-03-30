@@ -40,6 +40,12 @@ const config = {
   matchAreStoredForDays: 30,
   scrapeFrequencyMinutes: 5,
   defaultTimeoutRequestMs: 30000,
+  DesktopAppVersionFile: {
+    version: "1.5.15",
+    link: "https://github.com/cohstats/coh2stats/releases/tag/v1.5.15",
+    downloadLink:
+      "https://github.com/cohstats/coh2stats/releases/download/v1.5.15/Coh2.Game.Stats-1.5.15.Setup.exe",
+  }
 };
 
 // The date when we exported the data for the bulletins and commanders

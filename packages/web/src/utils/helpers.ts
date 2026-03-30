@@ -127,6 +127,9 @@ const sumValuesOfObjects = (
 };
 
 const isDev = () => {
+  if (typeof window === "undefined") {
+    return false;
+  }
   const hostName = window.location.hostname;
   return config.devHostnames.includes(hostName);
 };
