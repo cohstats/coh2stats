@@ -1,9 +1,12 @@
-"use client";
+import { CommandersList } from "./_components/commandersList";
 
-import { CommandersList } from "../../../_pages_old/commanders/commandersList";
+interface PageProps {
+  params: Promise<{ race: string }>;
+}
 
-const CommandersListPage = () => {
-  return <CommandersList />;
+const CommandersListPage = async ({ params }: PageProps) => {
+  const { race } = await params;
+  return <CommandersList race={race} />;
 };
 
 export default CommandersListPage;

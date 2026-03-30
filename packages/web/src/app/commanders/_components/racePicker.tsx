@@ -1,11 +1,10 @@
-// @ts-nocheck
 import React from "react";
 import { Col, Row } from "antd";
 
-import routes from "../../routes";
+import routes from "../../../routes";
 import Link from "next/link";
-import { Tip } from "../../components/tip";
-import { getGeneralIconPath } from "../../coh/helpers";
+import { Tip } from "../../../components/tip";
+import { getGeneralIconPath } from "../../../coh/helpers";
 
 const imageWidth = 220;
 const imageHeight = 220;
@@ -102,3 +101,4 @@ export const RacePicker = () => {
     </>
   );
 };
+

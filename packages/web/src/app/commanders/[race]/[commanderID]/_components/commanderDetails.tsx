@@ -1,20 +1,21 @@
-// @ts-nocheck
+'use client';
+
 import React, { useEffect } from "react";
 import { Col, Row, Flex, Divider, Avatar, Badge, Typography } from "antd";
-import { getCommanderData, getCommanderIconPath } from "../../coh/commanders";
-import { useParams } from "next/navigation";
-import { ExportDate } from "../../components/export-date";
-import firebaseAnalytics from "../../analytics";
-import { getExportedIconPath, getGeneralIconPath } from "../../coh/helpers";
-import { commanderBase } from "../../titles";
-import { CommanderAbility } from "../../coh/types";
+import { getCommanderData, getCommanderIconPath } from "@/coh/commanders";
+import { ExportDate } from "@/components/export-date";
+import firebaseAnalytics from "../../../../../analytics";
+import { getExportedIconPath, getGeneralIconPath } from "@/coh/helpers";
+import { CommanderAbility } from "@/coh/types";
 
 const { Title, Text } = Typography;
 
-export const CommanderDetails = () => {
-  const params = useParams();
-  const commanderID = params?.commanderID as string | undefined;
-  const race = params?.race as string | undefined;
+interface CommanderDetailsProps {
+  race: string;
+  commanderID: string;
+}
+
+export const CommanderDetails = ({ race, commanderID }: CommanderDetailsProps) => {
 
   const commanderData = getCommanderData(commanderID || "");
 
@@ -126,3 +127,4 @@ export const CommanderDetails = () => {
     </>
   );
 };
+

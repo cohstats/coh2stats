@@ -1,5 +1,4 @@
-// @ts-nocheck
-import { RacePicker } from "../../_pages_old/commanders/racePicker";
+import { RacePicker } from "./_components/racePicker";
 
 const CommandersPage = () => {
   return <RacePicker />;

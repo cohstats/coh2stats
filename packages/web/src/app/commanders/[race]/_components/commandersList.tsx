@@ -1,22 +1,22 @@
-// @ts-nocheck
-import React, { useEffect } from "react";
+'use client';
+
+import React from "react";
 import { Col, Row, Flex, Avatar, Typography } from "antd";
-import { getCommanderByRaces, getCommanderIconPath } from "../../coh/commanders";
-import { useParams } from "next/navigation";
-import { RaceName } from "../../coh/types";
-import routes from "../../routes";
-import { ExportDate } from "../../components/export-date";
-import { commanderBase } from "../../titles";
-import { capitalize } from "../../utils/helpers";
+import { getCommanderByRaces, getCommanderIconPath } from "../../../../coh/commanders";
+import { RaceName } from "../../../../coh/types";
+import routes from "../../../../routes";
+import { ExportDate } from "../../../../components/export-date";
 import Link from "next/link";
-import { Tip } from "../../components/tip";
-import { CommanderAbilitiesComponent } from "../../components/commander-abillities-component";
+import { Tip } from "../../../../components/tip";
+import { CommanderAbilitiesComponent } from "../../../../components/commander-abillities-component";
 
 const { Title } = Typography;
 
-export const CommandersList = () => {
-  const params = useParams();
-  const race = params?.race as string | undefined;
+interface CommandersListProps {
+  race: string;
+}
+
+export const CommandersList = ({ race }: CommandersListProps) => {
 
   let myData = getCommanderByRaces(race as RaceName);
   myData = myData.filter((commanderData) => {
@@ -98,3 +98,4 @@ export const CommandersList = () => {
     </div>
   );
 };
+
