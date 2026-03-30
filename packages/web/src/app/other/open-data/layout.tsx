@@ -14,4 +14,3 @@ export const metadata: Metadata = {
 export default function OpenDataLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
-

@@ -64,8 +64,6 @@ const PlayerCard = () => {
   const [data, setData] = useState<null | playerCardAPIObject>(null);
   const [playerName, setPlayerName] = useState<string>("");
 
-
-
   useEffect(() => {
     firebaseAnalytics.playerCardDisplayed();
 
@@ -136,8 +134,6 @@ const PlayerCard = () => {
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [steamidParsed, userConfig]);
-
-
 
   const onTabChange = (key: string) => {
     router.push(`/players/${steamid}?view=${key}`);

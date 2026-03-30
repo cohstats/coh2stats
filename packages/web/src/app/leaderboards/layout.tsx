@@ -3,7 +3,8 @@ import { leaderBoardsBase } from "../../titles";
 
 export const metadata: Metadata = {
   title: leaderBoardsBase.replace("COH2 ", ""),
-  description: "View Company of Heroes 2 leaderboards and rankings for all game modes and factions",
+  description:
+    "View Company of Heroes 2 leaderboards and rankings for all game modes and factions",
   openGraph: {
     title: leaderBoardsBase,
     description: "COH2 leaderboards and rankings for all game modes",
@@ -14,4 +15,3 @@ export const metadata: Metadata = {
 export default function LeaderboardsLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
-

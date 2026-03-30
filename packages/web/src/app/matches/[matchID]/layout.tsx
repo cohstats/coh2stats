@@ -20,4 +20,3 @@ export async function generateMetadata({
 export default function MatchDetailsLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
-

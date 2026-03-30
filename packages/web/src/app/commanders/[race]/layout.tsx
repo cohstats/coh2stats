@@ -30,4 +30,3 @@ export async function generateMetadata({
 export default function CommandersRaceLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
-

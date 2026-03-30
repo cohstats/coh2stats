@@ -10,10 +10,9 @@ export async function generateMetadata({
 
   // Fetch player data to get the name
   try {
-    const response = await fetch(
-      `https://coh2stats.com/api/getPlayerCard?steamid=${steamid}`,
-      { next: { revalidate: 3600 } },
-    );
+    const response = await fetch(`https://coh2stats.com/api/getPlayerCard?steamid=${steamid}`, {
+      next: { revalidate: 3600 },
+    });
     const data = await response.json();
     const playerName = data?.steamProfile?.[steamid]?.name || "Unknown Player";
 
@@ -37,4 +36,3 @@ export async function generateMetadata({
 export default function PlayerCardLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
-

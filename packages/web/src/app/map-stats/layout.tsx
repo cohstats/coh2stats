@@ -14,4 +14,3 @@ export const metadata: Metadata = {
 export default function MapStatsLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
-
