@@ -1,12 +1,8 @@
-// @ts-nocheck
 import type { Metadata } from "next";
 import "./globals.css";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { Providers } from "./providers";
 import { AppLayout } from "./app-layout";
-
-// Force dynamic rendering for all pages
-export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: {
