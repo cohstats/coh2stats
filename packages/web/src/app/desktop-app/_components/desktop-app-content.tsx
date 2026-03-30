@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import { DownloadOutlined } from "@ant-design/icons";

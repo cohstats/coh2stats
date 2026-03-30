@@ -1,8 +1,7 @@
-// @ts-nocheck
 import React from "react";
 import { Metadata } from "next";
 import { DesktopAppContent } from "./_components/desktop-app-content";
-import { desktopAppBase } from "../../titles";
+import { desktopAppBase } from "@/titles";
 
 // Cache for 60 minutes (3600 seconds)
 export const revalidate = 3600;
