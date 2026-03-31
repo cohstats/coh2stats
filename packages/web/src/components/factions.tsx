@@ -1,4 +1,6 @@
 // @ts-nocheck
+"use client";
+
 import React, { memo } from "react";
 import { Card, Empty, Radio, Tooltip } from "antd";
 import { HeatMapChart } from "./charts/factions-heatmap";
