@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import routes from "../../routes";
 import { ConfigProvider, Select, Space, Radio, Typography } from "antd";
@@ -24,7 +24,7 @@ const { RangePicker } = DatePicker;
 
 type DatePickerType = "time" | "date" | "week" | "month" | "range" | undefined;
 
-const CustomStats: React.FC = () => {
+const CustomStatsContent: React.FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -322,6 +322,14 @@ const CustomStats: React.FC = () => {
         <CustomStatsGeneralDataProvider urlChanger={changeStatsRoute} />
       )}
     </div>
+  );
+};
+
+const CustomStats: React.FC = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <CustomStatsContent />
+    </Suspense>
   );
 };
 

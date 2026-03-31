@@ -1,7 +1,7 @@
 // @ts-nocheck
 "use client";
 
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, Suspense } from "react";
 
 import { Col, Row, Tooltip, Typography, Avatar, Tabs, Badge, notification } from "antd";
 import { LaddersDataObject } from "../../../coh/types";
@@ -47,7 +47,7 @@ const findPlayerProfile = (statGroups: statGroupsType) => {
   }
 };
 
-const PlayerCard = () => {
+const PlayerCardContent = () => {
   const router = useRouter();
   const params = useParams();
   const searchParams = useSearchParams();
@@ -364,6 +364,14 @@ const PlayerCard = () => {
         </Col>
       </Row>
     </div>
+  );
+};
+
+const PlayerCard = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <PlayerCardContent />
+    </Suspense>
   );
 };
 

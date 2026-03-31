@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, Suspense } from "react";
 
 import {
   Table,
@@ -48,7 +48,7 @@ import { ConfigContext } from "../../config-context";
 
 const { Text } = Typography;
 
-const Leaderboards = () => {
+const LeaderboardsContent = () => {
   const { userConfig } = useContext(ConfigContext);
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -523,6 +523,14 @@ const Leaderboards = () => {
         </Row>
       </div>
     </>
+  );
+};
+
+const Leaderboards = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LeaderboardsContent />
+    </Suspense>
   );
 };
 

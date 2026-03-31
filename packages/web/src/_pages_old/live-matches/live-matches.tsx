@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import LiveMatchesCard from "./live-matches-card";
 import { Col, Row, Select, Space } from "antd";
 import routes from "../../routes";
@@ -20,7 +20,7 @@ import { StatsCurrentLiveGames } from "../../coh/types";
 //   />
 // );
 
-const LiveMatches: React.FC = () => {
+const LiveMatchesContent: React.FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -146,6 +146,14 @@ const LiveMatches: React.FC = () => {
         </Row>
       </Col>
     </Row>
+  );
+};
+
+const LiveMatches: React.FC = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LiveMatchesContent />
+    </Suspense>
   );
 };
 
