@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import { ResponsiveHeatMap } from "@nivo/heatmap";
@@ -12,15 +11,14 @@ interface IProps {
 export const _HeatMapChart: React.FC<IProps> = ({ data, keys }) => {
   return (
     // probably Nivo bug
-    // @ts-ignore
     <ResponsiveHeatMap
+      // @ts-expect-error - Nivo types are not compatible with our data structure
       data={data}
       keys={keys}
       indexBy="leftAxis"
       margin={{ top: 40, right: 0, bottom: 60, left: 70 }}
       forceSquare={true}
       axisTop={{
-        orient: "top",
         tickSize: 5,
         tickPadding: 5,
         legend: "Allies factions",
@@ -30,7 +28,6 @@ export const _HeatMapChart: React.FC<IProps> = ({ data, keys }) => {
       axisRight={null}
       axisBottom={null}
       axisLeft={{
-        orient: "left",
         tickSize: 5,
         tickPadding: 5,
         tickRotation: 0,
@@ -57,8 +54,6 @@ export const _HeatMapChart: React.FC<IProps> = ({ data, keys }) => {
       fill={[{ id: "lines" }]}
       animate={true}
       motionConfig="wobbly"
-      motionStiffness={80}
-      motionDamping={9}
       hoverTarget="cell"
       cellHoverOthersOpacity={0.5}
     />
