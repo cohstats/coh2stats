@@ -1,16 +1,15 @@
-// @ts-nocheck
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, Suspense } from "react";
 import { Table, Tag, Space, Col, Row, Input } from "antd";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 
-import { IntelBulletinData } from "../../coh/types";
-import { getAllBulletins, getBulletinIconPath } from "../../coh/bulletins";
+import { IntelBulletinData } from "@/coh/types";
+import { getAllBulletins, getBulletinIconPath } from "@/coh/bulletins";
 import { TableColumnsType } from "antd";
-import { ExportDate } from "../../components/export-date";
-import { Tip } from "../../components/tip";
+import { ExportDate } from "@/components/export-date";
+import { Tip } from "@/components/tip";
 import routes from "../../routes";
 import { ChangeEvent } from "react";
 
@@ -23,7 +22,7 @@ interface FilteredInfoState {
   races?: string[];
 }
 
-export default function BulletinList() {
+function BulletinListContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [filteredInfo, setFilteredInfo] = React.useState<FilteredInfoState>({});
@@ -209,5 +208,13 @@ export default function BulletinList() {
         </Col>
       </Row>
     </div>
+  );
+}
+
+export default function BulletinList() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <BulletinListContent />
+    </Suspense>
   );
 }

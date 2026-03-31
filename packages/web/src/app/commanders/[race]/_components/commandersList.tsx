@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React from "react";
 import { Col, Row, Flex, Avatar, Typography } from "antd";
@@ -17,7 +17,6 @@ interface CommandersListProps {
 }
 
 export const CommandersList = ({ race }: CommandersListProps) => {
-
   let myData = getCommanderByRaces(race as RaceName);
   myData = myData.filter((commanderData) => {
     return (

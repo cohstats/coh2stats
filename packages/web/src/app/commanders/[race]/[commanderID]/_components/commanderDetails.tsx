@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React, { useEffect } from "react";
 import { Col, Row, Flex, Divider, Avatar, Badge, Typography } from "antd";
@@ -16,7 +16,6 @@ interface CommanderDetailsProps {
 }
 
 export const CommanderDetails = ({ race, commanderID }: CommanderDetailsProps) => {
-
   const commanderData = getCommanderData(commanderID || "");
 
   // We want to scroll top when we go to this page from the stats page
