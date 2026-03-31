@@ -4,19 +4,26 @@ import { ResponsiveHeatMap } from "@nivo/heatmap";
 import React, { memo } from "react";
 
 interface IProps {
-  data: Array<Record<string, any>>;
+  data: Array<{ id: string; data: Array<{ x: string; y: number }> }>;
   keys: Array<string>;
 }
 
 export const _HeatMapChart: React.FC<IProps> = ({ data, keys }) => {
+  // Data is already transformed to Nivo format in factions.tsx
+  // Determine colors based on data - assuming winRate type data (0-1 range)
+  const colorsDefinition = {
+    type: "diverging" as const,
+    scheme: "red_yellow_green" as const,
+    minValue: 0.35,
+    maxValue: 0.65,
+    divergeAt: 0.5,
+  };
+
   return (
-    // probably Nivo bug
     <ResponsiveHeatMap
-      // @ts-expect-error - Nivo types are not compatible with our data structure
       data={data}
-      keys={keys}
-      indexBy="leftAxis"
-      margin={{ top: 40, right: 0, bottom: 60, left: 70 }}
+      colors={colorsDefinition}
+      margin={{ top: 20, right: 0, bottom: 0, left: 70 }}
       forceSquare={true}
       axisTop={{
         tickSize: 5,
@@ -51,11 +58,12 @@ export const _HeatMapChart: React.FC<IProps> = ({ data, keys }) => {
           spacing: 7,
         },
       ]}
-      fill={[{ id: "lines" }]}
-      animate={true}
+      animate={false}
       motionConfig="wobbly"
+      motionStiffness={80}
+      motionDamping={9}
       hoverTarget="cell"
-      cellHoverOthersOpacity={0.5}
+      inactiveOpacity={0.6}
     />
   );
 };

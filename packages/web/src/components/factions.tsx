@@ -153,15 +153,15 @@ const _FactionVsFactionCard: React.FC<IProps> = ({ title, data, style }) => {
     }
   }
 
-  // Transform for the heatmap
-  const dataForHeatmap: Array<Record<string, any>> = [];
+  // Transform for the heatmap - prepare intermediate data
+  const dataForHeatmapIntermediate: Array<Record<string, any>> = [];
 
   for (const [key, value] of Object.entries(factionDataByKey)) {
     value["leftAxis"] = key;
-    dataForHeatmap.push(value);
+    dataForHeatmapIntermediate.push(value);
   }
 
-  dataForHeatmap.sort((firstObject, secondObject) => {
+  dataForHeatmapIntermediate.sort((firstObject, secondObject) => {
     if (firstObject["leftAxis"] > secondObject["leftAxis"]) {
       return -1;
     }
@@ -176,7 +176,7 @@ const _FactionVsFactionCard: React.FC<IProps> = ({ title, data, style }) => {
   if (factionWinRate === "allies") {
     const finalSumForAllies: Record<string, any> = {};
 
-    for (const oneLine of dataForHeatmap) {
+    for (const oneLine of dataForHeatmapIntermediate) {
       for (const [key, value] of Object.entries(oneLine)) {
         const numValue = parseFloat(value);
         if (!isNaN(numValue)) {
@@ -190,14 +190,26 @@ const _FactionVsFactionCard: React.FC<IProps> = ({ title, data, style }) => {
         const numValue = parseFloat(value);
         if (!isNaN(numValue)) {
           // -1 because we have leftAxis there
-          finalSumForAllies[key] = (numValue / dataForHeatmap.length).toFixed(2);
+          finalSumForAllies[key] = (numValue / dataForHeatmapIntermediate.length).toFixed(2);
         }
       }
     }
 
     finalSumForAllies["leftAxis"] = "sum";
-    dataForHeatmap.push(finalSumForAllies);
+    dataForHeatmapIntermediate.push(finalSumForAllies);
   }
+
+  // Transform to Nivo heatmap format
+  const dataForHeatmap = dataForHeatmapIntermediate.map((row) => {
+    const { leftAxis, ...rest } = row;
+    return {
+      id: leftAxis,
+      data: Object.entries(rest).map(([key, value]) => ({
+        x: key,
+        y: value,
+      })),
+    };
+  });
 
   const menu = (
     <>
@@ -233,15 +245,15 @@ const _FactionVsFactionCard: React.FC<IProps> = ({ title, data, style }) => {
           />
         </>
       }
-      style={{ ...{ width: 995, height: 440 }, ...style }}
+      style={{ ...{ width: 995, height: 470 }, ...style }}
       extra={menu}
     >
       {!factionData ? (
         <Empty />
       ) : (
-        <div>
+        <div style={{ display: "flex", alignItems: "flex-start" }}>
           {legend}
-          <div style={{ display: "inline-block", width: 820, height: 400 }}>
+          <div style={{ width: 820, height: 380 }}>
             <HeatMapChart data={dataForHeatmap} keys={keysForHeatMap} />
           </div>
         </div>
