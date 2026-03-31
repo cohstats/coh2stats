@@ -3,8 +3,16 @@ const nextConfig = {
   // Standalone output for Node.js deployment
   output: "standalone",
 
-  // Ant Design compatibility
-  transpilePackages: ["antd", "@ant-design"],
+  // Ant Design and Nivo compatibility
+  transpilePackages: [
+    "antd",
+    "@ant-design",
+    "@nivo/bar",
+    "@nivo/pie",
+    "@nivo/geo",
+    "@nivo/heatmap",
+    "@nivo/core",
+  ],
 
   // Image optimization
   images: {

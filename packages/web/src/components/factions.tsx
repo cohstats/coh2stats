@@ -239,8 +239,8 @@ const _FactionVsFactionCard: React.FC<IProps> = ({ title, data, style }) => {
       ) : (
         <div>
           {legend}
-          <div style={{ display: "inline-block" }}>
-            <HeatMapChart data={dataForHeatmap} keys={keysForHeatMap} width={820} height={400} />
+          <div style={{ display: "inline-block", width: 820, height: 400 }}>
+            <HeatMapChart data={dataForHeatmap} keys={keysForHeatMap} />
           </div>
         </div>
       )}

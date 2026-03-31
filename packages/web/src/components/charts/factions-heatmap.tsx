@@ -1,21 +1,19 @@
 // @ts-nocheck
-import { HeatMap } from "@nivo/heatmap";
+"use client";
+
+import { ResponsiveHeatMap } from "@nivo/heatmap";
 import React, { memo } from "react";
 
 interface IProps {
   data: Array<Record<string, any>>;
   keys: Array<string>;
-  width: number;
-  height: number;
 }
 
-export const _HeatMapChart: React.FC<IProps> = ({ data, keys, width, height }) => {
+export const _HeatMapChart: React.FC<IProps> = ({ data, keys }) => {
   return (
     // probably Nivo bug
     // @ts-ignore
-    <HeatMap
-      width={width}
-      height={height}
+    <ResponsiveHeatMap
       data={data}
       keys={keys}
       indexBy="leftAxis"

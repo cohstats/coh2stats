@@ -2,15 +2,15 @@
 import React from "react";
 import { Card, Row, Space } from "antd";
 import { useMediaQuery } from "react-responsive";
-import { FactionsPlayedPieChart } from "./general-charts/factions-pie";
+import { FactionsPlayedPieChart } from "../../components/charts/general/factions-pie";
 import { StatsDataObject } from "../../coh/types";
-import { TypeOfGamesPieChart } from "./general-charts/types-games-pie";
-import { FactionsBarStackedChart } from "./general-charts/factions-bar-stacked";
-import { TotalFactionWinRateChart } from "./general-charts/winRate-bar";
-import { AverageGameTimeBarChart } from "./general-charts/average-gametime-bar";
-import { TotalTimePieChart } from "./general-charts/total-time-pie";
-import { FactionWinRateStackedChart } from "./general-charts/winRate-bar-stacked";
-import { TotalGamesPieChart } from "./general-charts/total-games-pie";
+import { TypeOfGamesPieChart } from "../../components/charts/general/types-games-pie";
+import { FactionsBarStackedChart } from "../../components/charts/general/factions-bar-stacked";
+import { TotalFactionWinRateChart } from "../../components/charts/general/winRate-bar";
+import { AverageGameTimeBarChart } from "../../components/charts/general/average-gametime-bar";
+import { TotalTimePieChart } from "../../components/charts/general/total-time-pie";
+import { FactionWinRateStackedChart } from "../../components/charts/general/winRate-bar-stacked";
+import { TotalGamesPieChart } from "../../components/charts/general/total-games-pie";
 
 interface IProps {
   data: StatsDataObject;

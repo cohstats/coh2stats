@@ -1,4 +1,6 @@
 // @ts-nocheck
+"use client";
+
 import React from "react";
 import { ResponsiveChoropleth } from "@nivo/geo";
 import { geoMapFeatures } from "./geo-map-features";
