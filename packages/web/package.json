@@ -7,7 +7,6 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "deploy": "firebase deploy --only hosting"
   },
   "dependencies": {
     "@ant-design/cssinjs": "2.1.2",
