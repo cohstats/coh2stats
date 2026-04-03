@@ -274,14 +274,18 @@ const MapStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
           <Card
             title={`${map} - ${type} game time`}
             style={{ marginTop: 40 }}
-            bodyStyle={isMobile ? { width: "90vw", height: 300 } : { width: 480, height: 450 }}
+            styles={{
+              body: isMobile ? { width: "90vw", height: 300 } : { width: 480, height: 450 },
+            }}
           >
             <PlayTimeHistogram data={data[map]} />
           </Card>
           <Card
             title={`Percentage of ${type} games with particular game time`}
             style={{ marginTop: 40 }}
-            bodyStyle={isMobile ? { width: "90vw", height: 300 } : { width: 645, height: 450 }}
+            styles={{
+              body: isMobile ? { width: "90vw", height: 300 } : { width: 645, height: 450 },
+            }}
           >
             <MapsPlayTimeHistogramStacked data={data} />
           </Card>

@@ -174,7 +174,9 @@ const CustomStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
             data={data}
             race={race}
             type={type}
-            cardBodyStyles={isMobile ? { width: "90vw", height: 1200 } : { width: 800, height: 900 }}
+            cardBodyStyles={
+              isMobile ? { width: "90vw", height: 1200 } : { width: 800, height: 900 }
+            }
           />
         </Space>
       </Row>
