@@ -60,6 +60,7 @@ const PlayerTeamMatchesTable: React.FC<IProps> = ({ title, data }) => {
                     />{" "}
                     <Link
                       href={routes.playerCardWithId(convertSteamNameToID(playerInfo["name"]))}
+                      prefetch={false}
                     >
                       {playerInfo["alias"]}
                     </Link>

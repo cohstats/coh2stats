@@ -3,6 +3,10 @@ import { getCachedLiveGamesFirestoreData, getLiveGamesFromAPI } from "@/firebase
 
 // Revalidate every 90 seconds for API data
 // Note: Firestore data has its own cache (30 minutes) via unstable_cache
+// This also sets Cache-Control headers for CDN caching:
+// - Next.js automatically sets s-maxage to match revalidate value
+// - CDN will cache the page for 90 seconds
+// - stale-while-revalidate allows serving stale content while revalidating
 export const revalidate = 90;
 
 interface LiveMatchesPageProps {
