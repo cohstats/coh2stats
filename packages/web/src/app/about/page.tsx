@@ -4,7 +4,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Typography } from "antd";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
-import { KofiDonate } from "../../_pages_old/about/kofi-donate";
+import { KofiDonate } from "./_components/kofi-donate";
 import config from "../../config";
 
 const { Title, Link, Text, Paragraph } = Typography;

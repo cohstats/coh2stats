@@ -1,7 +1,7 @@
 // @ts-nocheck
 "use client";
 
-import MapStats from "../../_pages_old/map-stats/map-stats";
+import MapStats from "./_components/map-stats";
 
 // Force dynamic rendering
 export const dynamic = "force-dynamic";

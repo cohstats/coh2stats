@@ -68,7 +68,9 @@ const GeoWorldMap: React.FC<GeoWorldMapProps> = ({ data }) => {
   return (
     <div>
       <Row justify={"center"}>
-        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", width: "100%" }}>
+        <div
+          style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", width: "100%" }}
+        >
           <div style={{ flex: "1", minWidth: 400, height: 420, marginRight: 20 }}>
             <ResponsiveChoropleth
               data={data}

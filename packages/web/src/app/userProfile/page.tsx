@@ -1,7 +1,7 @@
 // @ts-nocheck
 "use client";
 
-import UserProfile from "../../_pages_old/profile/user-profile";
+import UserProfile from "./_components/user-profile";
 
 // Force dynamic rendering
 export const dynamic = "force-dynamic";

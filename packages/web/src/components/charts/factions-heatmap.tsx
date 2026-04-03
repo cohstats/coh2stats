@@ -42,28 +42,12 @@ export const _HeatMapChart: React.FC<IProps> = ({ data, keys }) => {
         legendPosition: "middle",
         legendOffset: -60,
       }}
-      cellOpacity={1}
-      cellBorderColor={{ from: "color", modifiers: [["darker", 0.4]] }}
+      borderColor={{ from: "color", modifiers: [["darker", 0.4]] }}
+      label={(cell) => (cell.value !== null ? `${(cell.value * 100).toFixed(1)}%` : "N/A")}
       labelTextColor={{ from: "color", modifiers: [["darker", 1.8]] }}
-      minValue={0}
-      maxValue={1}
-      defs={[
-        {
-          id: "lines",
-          type: "patternLines",
-          background: "inherit",
-          color: "rgba(0, 0, 0, 0.1)",
-          rotation: -45,
-          lineWidth: 4,
-          spacing: 7,
-        },
-      ]}
+      valueFormat=">-.2%"
       animate={false}
-      motionConfig="wobbly"
-      motionStiffness={80}
-      motionDamping={9}
       hoverTarget="cell"
-      inactiveOpacity={0.6}
     />
   );
 };

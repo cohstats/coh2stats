@@ -1,6 +1,6 @@
 "use client";
 
-import CustomSearch from "../../../_pages_old/search";
+import CustomSearch from "../../../components/search/search";
 
 // Force dynamic rendering
 export const dynamic = "force-dynamic";

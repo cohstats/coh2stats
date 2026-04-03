@@ -1,8 +1,8 @@
 // @ts-nocheck
 "use client";
 
-import CustomSearch from "../../_pages_old/search";
-import PlayerStats from "../../_pages_old/players/stats/player-stats";
+import CustomSearch from "../../components/search/search";
+import PlayerStats from "./_components/player-stats";
 import { Col, Row } from "antd";
 
 // Force dynamic rendering

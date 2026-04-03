@@ -1,33 +1,30 @@
 // @ts-nocheck
-"use client";
-
-import React, { useContext, useEffect, useState, Suspense } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { Col, Row, Tooltip, Typography, Avatar, Tabs, Badge, notification } from "antd";
 import { LaddersDataObject } from "../../../coh/types";
 import firebaseAnalytics from "../../../analytics";
-import { capitalize, getAPIUrl, timeAgo } from "../../../utils/helpers";
+import { capitalize, getAPIUrl, timeAgo, useQuery } from "../../../utils/helpers";
 
 import { CountryFlag } from "../../../components/country-flag";
 import { playerCardBase } from "../../../titles";
-import { useRouter, useParams, useSearchParams } from "next/navigation";
+import { useHistory } from "react-router";
+import { useParams } from "react-router-dom-v5-compat";
 import { getGeneralIconPath } from "../../../coh/helpers";
 import { Loading } from "../../../components/loading";
-import { calculateOverallStatsForPlayerCard } from "./_components/data-processing";
-import { convertTeamNames } from "./_components/helpers";
-import LastMatchesTable from "../../../components/matches/last-matches-table";
-import PlayerStandingsTables from "./_components/player-standings";
-import config from "../../../config";
-import { AlertBox } from "../../../components/alert-box";
-import AllMatchesTable from "../../../components/matches/all-matches-table";
+import Title from "antd/es/typography/Title";
+import { calculateOverallStatsForPlayerCard } from "./data-processing";
+import { convertTeamNames } from "./helpers";
+import LastMatchesTable from "../../../../components/matches/last-matches-table";
+import PlayerStandingsTables from "./player-standings";
+import config from "../../../../config";
+import { AlertBox } from "../../../../components/alert-box";
+import AllMatchesTable from "../../../../components/matches/all-matches-table";
 import { ConfigContext } from "../../../config-context";
-import { Space } from "antd";
+import { Space } from "antd/es";
 import { AlertBoxChina } from "../../../components/alert-box-china";
 
-// Force dynamic rendering
-export const dynamic = "force-dynamic";
-
-const { Text, Title } = Typography;
+const { Text } = Typography;
 
 type playerCardAPIObject = {
   relicPersonalStats: Record<string, any>;
@@ -47,22 +44,25 @@ const findPlayerProfile = (statGroups: statGroupsType) => {
   }
 };
 
-const PlayerCardContent = () => {
-  const router = useRouter();
-  const params = useParams();
-  const searchParams = useSearchParams();
+const PlayerCard = () => {
+  const { push, replace } = useHistory();
 
-  const steamid = params.steamid as string;
+  const { steamid } = useParams<{
+    steamid: string;
+  }>();
+
   const steamidParsed = steamid?.split("-")[0] || "";
 
   const { userConfig } = useContext(ConfigContext);
 
-  const tabView = searchParams?.get("view") || "stats";
+  const query = useQuery();
+  const tabView = query.get("view") || "stats";
 
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<null | string>(null);
   const [data, setData] = useState<null | playerCardAPIObject>(null);
-  const [playerName, setPlayerName] = useState<string>("");
+  // Set page title
+  if (typeof window !== "undefined") document.title = `${playerCardBase}`;
 
   useEffect(() => {
     firebaseAnalytics.playerCardDisplayed();
@@ -74,22 +74,20 @@ const PlayerCardContent = () => {
         return;
       }
 
-      if (typeof window === "undefined") {
-        return;
-      }
-
       const cleanName = playerName.replace(/[^a-zA-Z0-9-_]/g, "");
       // If it's not in the path, let's push it there
       if (!window.location.pathname.includes(cleanName)) {
         // This means there is already a name, but it was changed!
         if (window.location.pathname.match(/.+\/\d+-/)) {
           // There is already name in url let's replace it with a new one
-          router.replace(
-            `${window.location.pathname.replace(/(.+\/\d+-)(.+)/, `$1${cleanName}`)}`,
-          );
+          replace({
+            pathname: `${window.location.pathname.replace(/(.+\/\d+-)(.+)/, `$1${cleanName}`)}`,
+          });
         } else {
           // No name in the url let's just push a new one
-          router.replace(`${window.location.pathname}-${cleanName}`);
+          replace({
+            pathname: `${window.location.pathname}-${cleanName}`,
+          });
         }
       }
     };
@@ -113,14 +111,6 @@ const PlayerCardContent = () => {
         if (finalData.steamProfile && Object.values(finalData.steamProfile)[0].personaname) {
           addNameToUrl(Object.values(finalData.steamProfile)[0].personaname);
         }
-
-        // Extract player name for title update
-        if (finalData.relicPersonalStats?.statGroups) {
-          const profile = findPlayerProfile(finalData.relicPersonalStats.statGroups);
-          if (profile?.alias) {
-            setPlayerName(profile.alias);
-          }
-        }
       } catch (e) {
         let errorMessage = "Failed to do something exceptional";
         if (e instanceof Error) {
@@ -132,22 +122,7 @@ const PlayerCardContent = () => {
         setIsLoading(false);
       }
     })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [steamidParsed, userConfig]);
-
-  const onTabChange = (key: string) => {
-    router.push(`/players/${steamid}?view=${key}`);
-  };
-
-  if (isLoading || data === null) {
-    return (
-      <>
-        <Row justify={"center"} style={{ paddingTop: 30 }}>
-          <Loading />
-        </Row>
-      </>
-    );
-  }
+  }, [steamidParsed, replace, userConfig]);
 
   if (!isLoading && error != null) {
     return (
@@ -189,12 +164,23 @@ const PlayerCardContent = () => {
     }
   }
 
+  const changeTheUrl = (view: string) => {
+    const searchValue = view !== "stats" ? `?${new URLSearchParams({ view })}` : "";
+
+    push({
+      search: searchValue,
+    });
+  };
+
   const steamProfile = data.steamProfile ? data.steamProfile[steamidParsed] : null;
   const playTime = data.playTime ? Math.floor(data.playTime / 60) : null;
 
   const relicData = data.relicPersonalStats;
   const statGroups = relicData.statGroups;
   const playerRelicProfile = findPlayerProfile(statGroups);
+
+  const playerName = playerRelicProfile.alias;
+  if (typeof window !== "undefined") document.title = `${playerCardBase} - ${playerName}`;
 
   const { totalGames, lastGameDate, bestRank, mostPlayed, totalWinRate } =
     calculateOverallStatsForPlayerCard(relicData.leaderboardStats);
@@ -239,7 +225,7 @@ const PlayerCardContent = () => {
             <div style={{ display: "inline-block", paddingLeft: 15, textAlign: "left" }}>
               <Title level={2} style={{ marginBottom: 0, marginTop: "-7px" }}>
                 <CountryFlag countryCode={playerRelicProfile.country} />
-                {playerRelicProfile.alias}
+                {playerName}
               </Title>
               <b>XP:</b> {playerRelicProfile.xp.toLocaleString()}
               {playerRelicProfile.xp === 18785964 ? " (MAX)" : ""}
@@ -359,19 +345,11 @@ const PlayerCardContent = () => {
             defaultActiveKey={tabView}
             size={"large"}
             centered
-            onChange={onTabChange}
+            onChange={changeTheUrl}
           />
         </Col>
       </Row>
     </div>
-  );
-};
-
-const PlayerCard = () => {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <PlayerCardContent />
-    </Suspense>
   );
 };
 

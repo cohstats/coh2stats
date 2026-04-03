@@ -1,7 +1,7 @@
 // @ts-nocheck
 "use client";
 
-import CustomStats from "../../_pages_old/stats/custom-stats";
+import CustomStats from "./_components/custom-stats";
 
 // Force dynamic rendering
 export const dynamic = "force-dynamic";

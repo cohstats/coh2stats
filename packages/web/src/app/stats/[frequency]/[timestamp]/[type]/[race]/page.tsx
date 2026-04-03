@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense } from "react";
-import OldStats from "../../../../../../_pages_old/stats/old-stats";
+import OldStats from "../../../../_components/old-stats";
 
 // Force dynamic rendering
 export const dynamic = "force-dynamic";
