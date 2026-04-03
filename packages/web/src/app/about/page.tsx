@@ -1,63 +1,12 @@
-// @ts-nocheck
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
 import { Typography } from "antd";
-import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { KofiDonate } from "./_components/kofi-donate";
 import config from "../../config";
 
 const { Title, Link, Text, Paragraph } = Typography;
 
-// Force dynamic rendering for this page
-export const dynamic = "force-dynamic";
-
-// eslint-disable-next-line react-hooks/exhaustive-deps
-const useMountEffect = (fun: { (): void }) => useEffect(fun, []);
-
 export default function About() {
-  const donationsRef = useRef(null);
-  const contributionRef = useRef(null);
-  const [data, setData] = useState<Record<string, any>>();
-
-  useEffect(() => {
-    try {
-      (async () => {
-        const docRef = doc(getFirestore(), "stats", "global");
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-          setData(docSnap.data());
-        }
-      })();
-    } catch (e) {
-      console.error("Failed to get amount of analyzed matches", e);
-    }
-  }, []);
-
-  let analyzedMatches = ". . .";
-  let analyzedTopMatches = ". . .";
-
-  if (data && data?.analyzedMatches && data?.analyzedTopMatches) {
-    analyzedMatches = data?.analyzedMatches.toLocaleString();
-    analyzedTopMatches = data?.analyzedTopMatches.toLocaleString();
-  }
-
-  useMountEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
-    const hash = window.location.hash;
-    console.log("scrolling", hash, donationsRef);
-    if (hash === "#donations" && donationsRef) {
-      // @ts-ignore
-      donationsRef.current.scrollIntoView();
-    } else if (hash === "#bugs" && donationsRef) {
-      // @ts-ignore
-      contributionRef.current.scrollIntoView();
-    }
-  }); // Scroll on mount
-
   return (
     <div style={{ textAlign: "center", maxWidth: 900, margin: "0 auto" }}>
       <Title level={2} style={{ paddingTop: 15 }} id={"crawler"}>
@@ -90,8 +39,6 @@ export default function About() {
         <br />
         Such games are never gathered. As 6 hours is hard stop in our crawler system.
       </Paragraph>
-      <br />
-      <b>So far analyzed {analyzedMatches} matches.</b>
       <a href={"#top200"}>
         <Title level={2} style={{ paddingTop: 15 }} id={"top200"}>
           Analysis for top 200 rank only
@@ -134,8 +81,7 @@ export default function About() {
         analysis you could have one team be top 200 and other team rank 2000. Or in 4v4, only 1
         player from the match could be top 200 and other players might be much lower skill.
       </Paragraph>
-      <b>So far analyzed {analyzedTopMatches} matches.</b>
-      <a href={"#bugs"} ref={contributionRef}>
+      <a href={"#bugs"}>
         <Title level={2} style={{ paddingTop: 15 }} id={"bugs"}>
           Bugs, ideas and contribution
         </Title>
@@ -178,7 +124,7 @@ export default function About() {
       </Link>{" "}
       and we can also expose you API but you have to first ask for permission. Thank you!
       <br />
-      <div ref={donationsRef}>
+      <div>
         <a href={"#donations"}>
           <Title level={2} style={{ paddingTop: 15 }} id={"donations"}>
             Donations and support
