@@ -199,6 +199,7 @@ const LiveMatchesTable: React.FC<{
                     href={routes.playerCardWithId(
                       convertSteamNameToID(playerInfo?.player_profile?.name || ""),
                     )}
+                    rel="nofollow noindex"
                   >
                     {playerInfo?.player_profile?.alias}
                   </Link>
@@ -239,6 +240,7 @@ const LiveMatchesTable: React.FC<{
                     href={routes.playerCardWithId(
                       convertSteamNameToID(playerInfo?.player_profile?.name || ""),
                     )}
+                    rel="nofollow noindex"
                   >
                     {playerInfo?.player_profile?.alias}
                   </Link>

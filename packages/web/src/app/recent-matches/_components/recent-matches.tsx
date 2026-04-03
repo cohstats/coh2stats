@@ -122,6 +122,7 @@ const RecentMatches: React.FC = () => {
                     href={routes.playerCardWithId(
                       convertSteamNameToID(playerInfo.profile["name"]),
                     )}
+                    rel="nofollow noindex"
                   >
                     {playerInfo.profile["alias"]}
                   </Link>
@@ -153,6 +154,7 @@ const RecentMatches: React.FC = () => {
                     href={routes.playerCardWithId(
                       convertSteamNameToID(playerInfo.profile["name"]),
                     )}
+                    rel="nofollow noindex"
                   >
                     {playerInfo.profile["alias"]}
                   </Link>

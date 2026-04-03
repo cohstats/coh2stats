@@ -216,7 +216,10 @@ const LeaderboardsContent = () => {
                     countryCode={playerInfo["country"]}
                     style={{ width: "1.2em", height: "1.2em", paddingRight: 0 }}
                   />{" "}
-                  <Link href={routes.playerCardWithId(convertSteamNameToID(playerInfo["name"]))}>
+                  <Link
+                    href={routes.playerCardWithId(convertSteamNameToID(playerInfo["name"]))}
+                    rel="nofollow noindex"
+                  >
                     {playerInfo["alias"]}
                   </Link>
                 </div>
