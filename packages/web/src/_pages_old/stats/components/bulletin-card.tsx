@@ -8,10 +8,10 @@ interface IProps {
   data: TypeAnalysisObject;
   type: string;
   race: string;
-  bodyStyle: Record<string, any>;
+  cardBodyStyles: Record<string, any>;
 }
 
-const BulletinCard: React.FC<IProps> = ({ data, type, race, bodyStyle }) => {
+const BulletinCard: React.FC<IProps> = ({ data, type, race, cardBodyStyles }) => {
   const bulletinData = data["intelBulletins"][race as "soviet"];
   const [filterMode, setFilterMode] = useState<"first-half" | "second-half" | "all">(
     "first-half",
@@ -46,7 +46,7 @@ const BulletinCard: React.FC<IProps> = ({ data, type, race, bodyStyle }) => {
   return (
     <Card
       title={`Intel Bulletins  ${type} - ${race}`}
-      styles={{ body: bodyStyle }}
+      styles={{ body: cardBodyStyles }}
       extra={buttonGroup}
     >
       <BulletinsBarChart bulletins={bulletinData} filterMode={filterMode} />

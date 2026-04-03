@@ -170,21 +170,21 @@ const MapStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
         <Space size={"large"} wrap style={{ display: "flex", justifyContent: "center" }}>
           <Card
             title={`Win rate Axis vs Allies - diff ${type}`}
-            bodyStyle={
-              isMobile
+            styles={{
+              body: isMobile
                 ? { width: "90vw", height: 300 }
-                : { width: "48vw", maxWidth: cardWidth, height: cardHeight }
-            }
+                : { width: "48vw", maxWidth: cardWidth, height: cardHeight },
+            }}
           >
             <MapsWinRateChart data={data} />
           </Card>
           <Card
             title={`Games Analyzed ${type}`}
-            bodyStyle={
-              isMobile
+            styles={{
+              body: isMobile
                 ? { width: "90vw", height: 300 }
-                : { width: "48vw", maxWidth: cardWidth, height: cardHeight }
-            }
+                : { width: "48vw", maxWidth: cardWidth, height: cardHeight },
+            }}
           >
             <MapBarChart maps={mapData} />
           </Card>
@@ -214,11 +214,11 @@ const MapStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
                 />
               </>
             }
-            bodyStyle={
-              isMobile
+            styles={{
+              body: isMobile
                 ? { width: "90vw", height: 300 }
-                : { width: "48vw", maxWidth: cardWidth, height: cardHeight }
-            }
+                : { width: "48vw", maxWidth: cardWidth, height: cardHeight },
+            }}
           >
             <MapsWinRateSqrtChart data={data} />
           </Card>
@@ -234,11 +234,11 @@ const MapStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
                 />
               </>
             }
-            bodyStyle={
-              isMobile
+            styles={{
+              body: isMobile
                 ? { width: "90vw", height: 300 }
-                : { width: "48vw", maxWidth: cardWidth, height: cardHeight }
-            }
+                : { width: "48vw", maxWidth: cardWidth, height: cardHeight },
+            }}
           >
             <MapsPlayTime data={data} average={true} />
           </Card>
@@ -250,7 +250,9 @@ const MapStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
             <Card
               title={`Winrate diff per factions on maps ${type}`}
               style={{ marginTop: 40 }}
-              bodyStyle={isMobile ? { width: "90vw", height: 300 } : { width: 1155, height: 650 }}
+              styles={{
+                body: isMobile ? { width: "90vw", height: 300 } : { width: 1155, height: 650 },
+              }}
             >
               <MapsFactionWinRateChart data={data} />
             </Card>
