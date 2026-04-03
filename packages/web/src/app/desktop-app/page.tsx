@@ -3,8 +3,8 @@ import { Metadata } from "next";
 import { DesktopAppContent } from "./_components/desktop-app-content";
 import { desktopAppBase } from "@/titles";
 
-// Cache for 60 minutes (3600 seconds)
-export const revalidate = 3600;
+// Cache for 3 hours (10800 seconds) with stale-while-revalidate
+export const revalidate = 10800;
 
 export const metadata: Metadata = {
   title: desktopAppBase.replace("COH2 ", ""),
@@ -21,7 +21,7 @@ async function getDownloadCount(): Promise<number | undefined> {
   try {
     const url = "https://api.github.com/repositories/326416762/releases?page=1&per_page=100";
     const response = await fetch(url, {
-      next: { revalidate: 3600 }, // 60 minutes cache
+      next: { revalidate: 10800 }, // 3 hours cache
     });
 
     if (!response.ok) {
