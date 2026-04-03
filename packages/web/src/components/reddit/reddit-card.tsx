@@ -28,9 +28,18 @@ const RedditCard: React.FC<Props> = ({ width, data }) => {
     <div>
       <Card style={cardStyle} styles={{ body: { padding: 12 } }}>
         <div>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: 16,
+            }}
+          >
             <Tooltip title={"Filtered only to posts with COH2 tag. Aka doesn't show COH3."}>
-              <Title level={3} style={{ margin: 0 }}>Top COH2 Reddit Posts</Title>
+              <Title level={3} style={{ margin: 0 }}>
+                Top COH2 Reddit Posts
+              </Title>
             </Tooltip>
             <a
               href={"https://www.reddit.com/r/CompanyOfHeroes/"}

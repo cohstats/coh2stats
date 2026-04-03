@@ -1,6 +1,6 @@
 import React from "react";
-import { getAnalyzedMatches } from "../firebase/firebase-server";
-import { getRedditPosts } from "../utils/reddit";
+import { getAnalyzedMatches } from "@/firebase/firebase-server";
+import { getRedditPosts } from "@/utils/reddit";
 import { HomeContent } from "./_components/home-content";
 
 // Revalidate the page every hour (3600 seconds)
