@@ -1,11 +1,12 @@
-We are using nivo charts in this project. Analyze the project, analyze the changelog
-https://github.com/plouc/nivo https://github.com/plouc/nivo/releases and do an upgrade to the
-latest version of Nivo charts. 
+I want the live matches to be server side rendered.
 
-Keep in mind that we are in NExtJS, so we might need to have the charts client rendered - I think they don't
-work on server. 
+We will need to fetch 2 things server side:
 
-Write the steps of the analysis into file: instructions.md which will server as instructions 
-for the next AI doing upgrade. 
+- the firestore data - cache that for at least 30 minutes
+- the live matches data - cache that for 1.5 minute
 
-If you have any questions ask me before writing the instructions.ms
+We need to modify the component to be server side rendered and correctly fetch the data
+and pass it to displaying data.
+
+also keep in mind that there are dropboxes where you can change stuff which affects
+what we should fetch.
