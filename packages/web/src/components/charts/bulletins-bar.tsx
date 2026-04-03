@@ -13,9 +13,10 @@ import { Avatar, Card } from "antd";
 
 interface IProps {
   bulletins: Record<number, number>;
+  filterMode?: "first-half" | "second-half" | "all";
 }
 
-export const BulletinsBarChart: React.FC<IProps> = ({ bulletins }) => {
+export const BulletinsBarChart: React.FC<IProps> = ({ bulletins, filterMode = "first-half" }) => {
   const bulletinsData = useMemo(() => {
     const simpleBulletinData = [];
 
@@ -27,10 +28,25 @@ export const BulletinsBarChart: React.FC<IProps> = ({ bulletins }) => {
       });
     }
 
-    return sortArrayOfObjectsByTheirPropertyValue(
+    const sortedData = sortArrayOfObjectsByTheirPropertyValue(
       simpleBulletinData as unknown as Array<Record<string, string>>,
     );
-  }, [bulletins]);
+
+    // Apply filtering based on mode
+    if (filterMode === "all") {
+      return sortedData;
+    }
+
+    const halfLength = Math.ceil(sortedData.length / 2);
+
+    if (filterMode === "first-half") {
+      return sortedData.slice(halfLength);
+
+    } else {
+      // second-half
+      return sortedData.slice(0, halfLength);
+    }
+  }, [bulletins, filterMode]);
 
   const toolTipFunction = (toolTipData: Record<string, any>) => {
     const bulletinData = getBulletinData(toolTipData.data.bulletinId);

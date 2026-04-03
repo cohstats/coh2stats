@@ -1,7 +1,7 @@
 // @ts-nocheck
-import { Card } from "antd";
+import { Card, Button, Space } from "antd";
 import { BulletinsBarChart } from "../../../components/charts/bulletins-bar";
-import React from "react";
+import React, { useState } from "react";
 import { TypeAnalysisObject } from "../../../coh/types";
 
 interface IProps {
@@ -13,13 +13,41 @@ interface IProps {
 
 const BulletinCard: React.FC<IProps> = ({ data, type, race, bodyStyle }) => {
   const bulletinData = data["intelBulletins"][race as "soviet"];
+  const [filterMode, setFilterMode] = useState<"first-half" | "second-half" | "all">("first-half");
 
   // Here are all the bulletin data
   // console.log(bulletinData)
 
+  const buttonGroup = (
+    <Space.Compact>
+      <Button
+        type={filterMode === "first-half" ? "primary" : "default"}
+        onClick={() => setFilterMode("first-half")}
+      >
+        1/2
+      </Button>
+      <Button
+        type={filterMode === "second-half" ? "primary" : "default"}
+        onClick={() => setFilterMode("second-half")}
+      >
+        2/2
+      </Button>
+      <Button
+        type={filterMode === "all" ? "primary" : "default"}
+        onClick={() => setFilterMode("all")}
+      >
+        All
+      </Button>
+    </Space.Compact>
+  );
+
   return (
-    <Card title={`Intel Bulletins  ${type} - ${race}`} styles={{ body: bodyStyle }}>
-      <BulletinsBarChart bulletins={bulletinData} />
+    <Card
+      title={`Intel Bulletins  ${type} - ${race}`}
+      styles={{ body: bodyStyle }}
+      extra={buttonGroup}
+    >
+      <BulletinsBarChart bulletins={bulletinData} filterMode={filterMode} />
     </Card>
   );
 };
