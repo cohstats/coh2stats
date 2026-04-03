@@ -1,0 +1,181 @@
+// @ts-nocheck
+"use client";
+
+import React from "react";
+import { Card, Col, Row, Space, Typography } from "antd";
+import Link from "next/link";
+import routes from "../../routes";
+import { commanderAndBulletinDate, lastPatchName } from "../../config";
+import RedditCard from "../../components/reddit/reddit-card";
+import { RedditPost } from "../../utils/reddit";
+
+const { Title, Paragraph, Text } = Typography;
+
+interface HomeContentProps {
+  analyzedMatches: string;
+  redditPosts: RedditPost[];
+}
+
+export function HomeContent({ analyzedMatches, redditPosts }: HomeContentProps) {
+  const cardStyle = { width: 240, height: 275 };
+
+  return (
+    <Row>
+      <Col span={23} xs={24}>
+        <Row style={{ paddingTop: 10 }} justify={"center"}>
+          <Col style={{ marginRight: 20 }}>
+            <div style={{ textAlign: "center" }}>
+              <Space style={{ display: "flex", justifyContent: "center" }} wrap>
+                <Link href={"/stats"}>
+                  <Card
+                    hoverable
+                    style={cardStyle}
+                    styles={{ body: { padding: 12 } }}
+                    cover={
+                      <img
+                        alt="Game statistics"
+                        style={{ maxHeight: 110, objectFit: "contain" }}
+                        src="/resources/chart.png"
+                      />
+                    }
+                  >
+                    <Card.Meta
+                      title="Game Statistics"
+                      description={
+                        <>
+                          Analysis of all played matched. See{" "}
+                          <b>winrate for each faction, map, team composition</b> and most used{" "}
+                          <b>commanders</b> and <b>intel bulletins.</b>
+                        </>
+                      }
+                    />
+                  </Card>
+                </Link>
+                <Link href={"/players"}>
+                  <Card
+                    hoverable
+                    style={cardStyle}
+                    styles={{ body: { padding: 12 } }}
+                    cover={
+                      <img
+                        alt="Player Cards"
+                        style={{ maxHeight: 110, objectFit: "contain" }}
+                        src="/resources/player.png"
+                      />
+                    }
+                  >
+                    <Card.Meta
+                      title="Player Cards"
+                      description={
+                        <>
+                          See any player card with <b>player standings</b> and all recent matches.
+                          You can display <b>advanced match details</b> with never before seen
+                          stats and chart visualization.
+                        </>
+                      }
+                    />
+                  </Card>
+                </Link>
+                <Link href={"/desktop-app"}>
+                  <Card
+                    hoverable
+                    style={cardStyle}
+                    styles={{ body: { padding: 12 } }}
+                    cover={
+                      <img
+                        alt="Desktop App"
+                        style={{ maxHeight: 110, objectFit: "contain" }}
+                        src="/resources/desktop-app.png"
+                      />
+                    }
+                  >
+                    <Card.Meta
+                      title="Desktop App"
+                      description={
+                        <>
+                          Get intel on your current games with <b>Desktop App</b>. See if players
+                          are <b>playing in team</b>. What is their <b>rank</b> and much more!
+                        </>
+                      }
+                    />
+                  </Card>
+                </Link>
+              </Space>
+              <Title level={4}>So far analyzed {analyzedMatches} matches.</Title>
+              <Space style={{ marginBottom: 10, display: "flex", justifyContent: "center" }} wrap>
+                <Link href={routes.commanderBase()}>
+                  <Card
+                    hoverable
+                    style={cardStyle}
+                    styles={{ body: { padding: 12 } }}
+                    cover={
+                      <img
+                        style={{ maxHeight: 160, objectFit: "contain" }}
+                        alt="All commanders"
+                        src="/resources/commanders.png"
+                      />
+                    }
+                  >
+                    <Card.Meta
+                      title="Commanders"
+                      description="See the list of all the commanders in the current patch of the game."
+                    />
+                  </Card>
+                </Link>
+                <Link href={routes.bulletinsBase()}>
+                  <Card
+                    hoverable
+                    style={cardStyle}
+                    styles={{ body: { padding: 12 } }}
+                    cover={
+                      <img
+                        style={{ maxHeight: 160, objectFit: "contain" }}
+                        alt="All bulletins"
+                        src="/resources/bulletins.png"
+                      />
+                    }
+                  >
+                    <Card.Meta
+                      title="Intel Bulletins"
+                      description="See the list of all the intel bulletins in the current patch of the game."
+                    />
+                  </Card>
+                </Link>
+                <Link href={routes.liveMatchesBase()}>
+                  <Card
+                    hoverable
+                    style={cardStyle}
+                    styles={{ body: { padding: 12 } }}
+                    cover={
+                      <img
+                        style={{ maxHeight: 160, objectFit: "contain" }}
+                        alt="All bulletins"
+                        src="/resources/live-games.webp"
+                      />
+                    }
+                  >
+                    <Card.Meta
+                      title="Live games"
+                      description={
+                        <>
+                          See current <b>live games in progress</b> with player ranks.
+                        </>
+                      }
+                    />
+                  </Card>
+                </Link>
+              </Space>
+              <Paragraph>
+                Last patch data from <Text strong>{lastPatchName}</Text> extracted on{" "}
+                <Text strong>{commanderAndBulletinDate}</Text>
+              </Paragraph>
+            </div>
+          </Col>
+          <Col>
+            <RedditCard width={550} data={redditPosts} />
+          </Col>
+        </Row>
+      </Col>
+    </Row>
+  );
+}
