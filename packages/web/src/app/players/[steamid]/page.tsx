@@ -1,12 +1,12 @@
 // @ts-nocheck
 "use client";
 
-import React, { useContext, useEffect, useState, Suspense } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 
 import { Col, Row, Tooltip, Typography, Avatar, Tabs, Badge, notification } from "antd";
 import { LaddersDataObject } from "../../../coh/types";
 import firebaseAnalytics from "../../../analytics";
-import { capitalize, getAPIUrl, timeAgo } from "../../../utils/helpers";
+import { capitalize, timeAgo, API_URL } from "../../../utils/helpers";
 
 import { CountryFlag } from "../../../components/country-flag";
 import { playerCardBase } from "../../../titles";
@@ -20,9 +20,7 @@ import PlayerStandingsTables from "./_components/player-standings";
 import config from "../../../config";
 import { AlertBox } from "../../../components/alert-box";
 import AllMatchesTable from "../../../components/matches/all-matches-table";
-import { ConfigContext } from "../../../config-context";
 import { Space } from "antd";
-import { AlertBoxChina } from "../../../components/alert-box-china";
 
 // Force dynamic rendering
 export const dynamic = "force-dynamic";
@@ -54,8 +52,6 @@ const PlayerCardContent = () => {
 
   const steamid = params.steamid as string;
   const steamidParsed = steamid?.split("-")[0] || "";
-
-  const { userConfig } = useContext(ConfigContext);
 
   const tabView = searchParams?.get("view") || "stats";
 
@@ -97,9 +93,7 @@ const PlayerCardContent = () => {
     (async () => {
       try {
         const response = await fetch(
-          `${getAPIUrl(
-            userConfig,
-          )}getPlayerCardEverythingHttp?steamid=${steamidParsed}&includeMatches=false`,
+          `${API_URL}getPlayerCardEverythingHttp?steamid=${steamidParsed}&includeMatches=false`,
           {},
         );
         if (!response.ok) {
@@ -133,7 +127,7 @@ const PlayerCardContent = () => {
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [steamidParsed, userConfig]);
+  }, [steamidParsed]);
 
   const onTabChange = (key: string) => {
     router.push(`/players/${steamid}?view=${key}`);
@@ -152,14 +146,11 @@ const PlayerCardContent = () => {
   if (!isLoading && error != null) {
     return (
       <Row justify="center" style={{ paddingTop: "10px" }}>
-        <Space orientation={"vertical"}>
-          <AlertBox
-            type={"error"}
-            message={"There was an error loading the player card. Try refreshing the page."}
-            description={`${JSON.stringify(error)}`}
-          />
-          <AlertBoxChina />
-        </Space>
+        <AlertBox
+          type={"error"}
+          message={"There was an error loading the player card. Try refreshing the page."}
+          description={`${JSON.stringify(error)}`}
+        />
       </Row>
     );
   }

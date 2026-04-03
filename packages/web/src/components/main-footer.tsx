@@ -5,8 +5,6 @@ import React from "react";
 import { Layout, Divider, Typography } from "antd";
 import NextLink from "next/link";
 import config from "../config";
-import { RegionSelector } from "./region-selector";
-import { Helper } from "./helper";
 
 const { Footer } = Layout;
 const { Link, Text } = Typography;
@@ -49,16 +47,8 @@ export const MainFooter: React.FC = () => {
         />
         Donate
       </Link>
-      <div style={{ padding: 10 }}>
-        <RegionSelector />{" "}
-        <Helper
-          text={
-            <>
-              Learn more about region selector <Link href={"/about/regions"}>here</Link>
-            </>
-          }
-        />
-      </div>
+      <br />
+      <br />
       <Text type="secondary" style={{ fontSize: "12px" }}>
         The Company of Heroes is registered trademark of SEGA Holdings. Co
         <br />

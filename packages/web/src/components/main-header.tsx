@@ -47,10 +47,6 @@ const menuItems: ItemType[] = [
         label: <Link href={routes.openData()}>Open Data</Link>,
       },
       {
-        key: `${routes.regionsBase()}`,
-        label: <Link href={`${routes.regionsBase()}`}>Regions Settings</Link>,
-      },
-      {
         key: "relic-api-status",
         label: (
           <a href="https://stats.uptimerobot.com/03lN1ckr5j" target="_blank" rel={"noreferrer"}>
@@ -95,7 +91,6 @@ export const MainHeader: React.FC = () => {
   let currentPath = "";
   if (matchesRoute(routes.commanderBase())) currentPath = routes.commanderBase();
   else if (matchesRoute(routes.statsBase())) currentPath = routes.statsBase();
-  else if (matchesRoute(routes.regionsBase())) currentPath = routes.regionsBase();
   else if (matchesRoute(routes.aboutBase())) currentPath = routes.aboutBase();
   else if (matchesRoute(routes.bulletinsBase())) currentPath = routes.bulletinsBase();
   else if (matchesRoute(routes.mapStats())) currentPath = routes.mapStats();

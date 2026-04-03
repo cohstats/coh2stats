@@ -1,10 +1,10 @@
 // @ts-nocheck
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Col, Row, Tooltip, Typography, Avatar, Tabs, Badge, notification } from "antd";
 import { LaddersDataObject } from "../../../coh/types";
 import firebaseAnalytics from "../../../analytics";
-import { capitalize, getAPIUrl, timeAgo, useQuery } from "../../../utils/helpers";
+import { capitalize, API_URL, timeAgo, useQuery } from "../../../utils/helpers";
 
 import { CountryFlag } from "../../../components/country-flag";
 import { playerCardBase } from "../../../titles";
@@ -20,9 +20,7 @@ import PlayerStandingsTables from "./player-standings";
 import config from "../../../../config";
 import { AlertBox } from "../../../../components/alert-box";
 import AllMatchesTable from "../../../../components/matches/all-matches-table";
-import { ConfigContext } from "../../../config-context";
 import { Space } from "antd/es";
-import { AlertBoxChina } from "../../../components/alert-box-china";
 
 const { Text } = Typography;
 
@@ -52,8 +50,6 @@ const PlayerCard = () => {
   }>();
 
   const steamidParsed = steamid?.split("-")[0] || "";
-
-  const { userConfig } = useContext(ConfigContext);
 
   const query = useQuery();
   const tabView = query.get("view") || "stats";
@@ -95,9 +91,7 @@ const PlayerCard = () => {
     (async () => {
       try {
         const response = await fetch(
-          `${getAPIUrl(
-            userConfig,
-          )}getPlayerCardEverythingHttp?steamid=${steamidParsed}&includeMatches=false`,
+          `${API_URL}getPlayerCardEverythingHttp?steamid=${steamidParsed}&includeMatches=false`,
           {},
         );
         if (!response.ok) {
@@ -122,19 +116,16 @@ const PlayerCard = () => {
         setIsLoading(false);
       }
     })();
-  }, [steamidParsed, replace, userConfig]);
+  }, [steamidParsed, replace]);
 
   if (!isLoading && error != null) {
     return (
       <Row justify="center" style={{ paddingTop: "10px" }}>
-        <Space orientation={"vertical"}>
-          <AlertBox
-            type={"error"}
-            message={"There was an error loading the player card. Try refreshing the page."}
-            description={`${JSON.stringify(error)}`}
-          />
-          <AlertBoxChina />
-        </Space>
+        <AlertBox
+          type={"error"}
+          message={"There was an error loading the player card. Try refreshing the page."}
+          description={`${JSON.stringify(error)}`}
+        />
       </Row>
     );
   }

@@ -3,7 +3,8 @@
 import React, { createContext, useState, FC } from "react";
 
 type userConfigType = {
-  api: "gcp" | "cf";
+  // @deprecated - Region selection has been removed, this property is no longer used
+  api?: "gcp" | "cf";
 };
 
 const localStorageKey = "coh2UserConfig";

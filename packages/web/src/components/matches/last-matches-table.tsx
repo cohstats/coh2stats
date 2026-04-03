@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Image, Row, Table, Tag, Tooltip, TableColumnsType, Space } from "antd";
 import {
   formatMatchTime,
@@ -21,10 +21,8 @@ import { RelicIcon } from "../relic-icon";
 import { useMediaQuery } from "react-responsive";
 import firebaseAnalytics from "../../analytics";
 import { getMapIconPath } from "../../coh/maps";
-import { ConfigContext } from "../../config-context";
-import { getAPIUrl } from "../../utils/helpers";
+import { API_URL } from "../../utils/helpers";
 import { AlertBox } from "../alert-box";
-import { AlertBoxChina } from "../alert-box-china";
 
 type ColumnsType<T> = TableColumnsType<T>;
 
@@ -39,8 +37,6 @@ const renderExpandedMatch = (record: any) => {
 const LastMatchesTable: React.FC<IProps> = ({ steamID }) => {
   const isMobile = useMediaQuery({ query: isMobileMediaQuery });
 
-  const { userConfig } = useContext(ConfigContext);
-
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState<undefined | Array<Record<string, any>>>();
   const [error, setError] = useState<string | undefined>();
@@ -53,7 +49,7 @@ const LastMatchesTable: React.FC<IProps> = ({ steamID }) => {
 
       try {
         const response = await fetch(
-          `${getAPIUrl(userConfig)}getPlayerMatchesRelicHttp?steamid=${steamID}`,
+          `${API_URL}getPlayerMatchesRelicHttp?steamid=${steamID}`,
           {},
         );
         if (!response.ok) {
@@ -81,19 +77,16 @@ const LastMatchesTable: React.FC<IProps> = ({ steamID }) => {
         setIsLoading(false);
       }
     })();
-  }, [steamID, userConfig]);
+  }, [steamID]);
 
   if (error) {
     return (
       <Row justify="center" style={{ paddingTop: "10px" }}>
-        <Space orientation={"vertical"}>
-          <AlertBox
-            type={"error"}
-            message={"There was an error loading the player matches. Try refreshing the page."}
-            description={`${JSON.stringify(error)}`}
-          />
-          <AlertBoxChina />
-        </Space>
+        <AlertBox
+          type={"error"}
+          message={"There was an error loading the player matches. Try refreshing the page."}
+          description={`${JSON.stringify(error)}`}
+        />
       </Row>
     );
   }

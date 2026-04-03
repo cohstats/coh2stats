@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useContext, useEffect, useState, Suspense } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 
 import {
   Table,
@@ -22,7 +22,7 @@ import firebaseAnalytics from "../../../analytics";
 import {
   capitalize,
   convertDateToDayTimestamp,
-  getAPIUrl,
+  API_URL,
   getYesterdayDateTimestamp,
   timeAgo,
 } from "../../../utils/helpers";
@@ -44,12 +44,10 @@ import { Helper } from "../../../components/helper";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { disabledDate, generateIconsForTitle } from "./leaderboard-components";
 import { leaderboardsID } from "../../../coh/coh2-api";
-import { ConfigContext } from "../../../config-context";
 
 const { Text } = Typography;
 
 const LeaderboardsContent = () => {
-  const { userConfig } = useContext(ConfigContext);
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -102,9 +100,7 @@ const LeaderboardsContent = () => {
           const leaderboardID = leaderboardsID[selectedType][selectedRace];
           if (leaderboardID) {
             const response = await fetch(
-              `${getAPIUrl(
-                userConfig,
-              )}getCOHLaddersHttpV2?leaderBoardID=${leaderboardID}&start=0`,
+              `${API_URL}getCOHLaddersHttpV2?leaderBoardID=${leaderboardID}&start=0`,
               {},
             );
             const finalData = await response.json();
@@ -132,7 +128,7 @@ const LeaderboardsContent = () => {
       console.error("Failed to get the leaderboards", e);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedTimeStamp, selectedHistoricTimeStamp, selectedRace, selectedType, userConfig]);
+  }, [selectedTimeStamp, selectedHistoricTimeStamp, selectedRace, selectedType]);
 
   const divStyle = {
     backgroundImage: `url(${getGeneralIconPath(race)})`,

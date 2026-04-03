@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Search from "antd/es/input/Search";
 import { useRouter, useParams } from "next/navigation";
 import routes from "../../routes";
@@ -12,9 +12,7 @@ import { searchCommanders } from "../../coh/commanders";
 import { searchBulletins } from "../../coh/bulletins";
 import SearchCommanderCard from "./search-commander-card";
 import SearchBulletinCard from "./search-bulletin-card";
-import { getAPIUrl } from "../../utils/helpers";
-import { ConfigContext } from "../../config-context";
-import { AlertBoxChina } from "../alert-box-china";
+import { API_URL } from "../../utils/helpers";
 import { userAPIObject } from "./types";
 import SearchUserCard from "./search-user-card";
 import { Tip } from "../tip";
@@ -31,8 +29,6 @@ const sortByXP = (array: Array<userAPIObject>) => {
 
 const CustomSearch: React.FC = () => {
   const router = useRouter();
-
-  const { userConfig } = useContext(ConfigContext);
 
   // We should use normal query params and not / in the path
   const params = useParams();
@@ -149,7 +145,7 @@ const CustomSearch: React.FC = () => {
         firebaseAnalytics.searchUsed(searchParam);
 
         try {
-          const response = await fetch(`${getAPIUrl(userConfig)}searchPlayers`, {
+          const response = await fetch(`${API_URL}searchPlayers`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -183,7 +179,7 @@ const CustomSearch: React.FC = () => {
         }
       }
     })();
-  }, [searchParam, router, userConfig]);
+  }, [searchParam, router]);
 
   const onSearch = async (value: string) => {
     router.push(routes.searchWithParam(value));
@@ -222,7 +218,6 @@ const CustomSearch: React.FC = () => {
               </div>
             }
           />
-          <AlertBoxChina />
         </div>
       </Row>
     );

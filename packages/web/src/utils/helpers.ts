@@ -7,7 +7,6 @@ import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en.json";
 import config from "../config";
 import { axisRaceIds, FirebaseTimeStampObject, ProcessedMatch, resultType } from "../coh/types";
-import { userConfigType } from "../config-context";
 
 // Something like this is not currently support by create-react-app
 // Jesus that lib is such a shit https://github.com/facebook/create-react-app/issues/9127 ...
@@ -158,14 +157,8 @@ const getDatesInRange = (startDate: Date | number, endDate: Date | number): Arra
   });
 };
 
-const getAPIUrl = (userConfig: userConfigType) => {
-  if (userConfig.api !== "gcp") {
-    return config.api.cf;
-  } else {
-    // By default return GCP API
-    return config.api.gcp;
-  }
-};
+// API URL for all requests - always uses GCP endpoint
+export const API_URL = config.apiUrl;
 
 export {
   getYesterdayDateTimestamp,
@@ -183,7 +176,6 @@ export {
   timeAgo,
   isDev,
   determineMatchWinner,
-  getAPIUrl,
   firebaseTimeStampObjectToDate,
   getDatesInRange,
 };

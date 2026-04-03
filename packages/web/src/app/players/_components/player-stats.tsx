@@ -76,12 +76,7 @@ const PlayerStats: React.FC = () => {
           <AlertBox
             type={"warning"}
             message={"There was error loading overall player stats"}
-            description={
-              <>
-                If you are from China - this feature is not supported. See{" "}
-                <Link href={routes.regionsBase()}>Regions page</Link> to learn more
-              </>
-            }
+            description={"Please try refreshing the page. If the error persists, please report it on our GitHub."}
           />
         </Row>
       </>

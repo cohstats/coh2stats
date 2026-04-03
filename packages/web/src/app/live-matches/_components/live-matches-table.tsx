@@ -1,8 +1,8 @@
 // @ts-nocheck
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Table, Typography } from "antd";
 import { LiveGame, StatsCurrentLiveGames } from "../../../coh/types";
-import { getAPIUrl, isDev } from "../../../utils/helpers";
+import { API_URL, isDev } from "../../../utils/helpers";
 import { TeamOutlined } from "@ant-design/icons";
 import firebaseAnalytics from "../../../analytics";
 import { AlertBox } from "../../../components/alert-box";
@@ -16,8 +16,6 @@ import { convertSteamNameToID, getGeneralIconPath } from "../../../coh/helpers";
 import Link from "next/link";
 import routes from "../../../routes";
 import { TableColumnsType, Space } from "antd";
-import { ConfigContext } from "../../../config-context";
-import { AlertBoxChina } from "../../../components/alert-box-china";
 import { useSearchParams } from "next/navigation";
 
 type ColumnsType<T> = TableColumnsType<T>;
@@ -62,7 +60,6 @@ const LiveMatchesTable: React.FC<{
   currentLiveGamesData: StatsCurrentLiveGames | undefined;
 }> = ({ changeRoute, currentLiveGamesData }) => {
   const searchParams = useSearchParams();
-  const { userConfig } = useContext(ConfigContext);
 
   const playerGroup = searchParams?.get("playerGroup") || "1";
   const startQuery = searchParams?.get("start") || "0";
@@ -110,9 +107,7 @@ const LiveMatchesTable: React.FC<{
     (async () => {
       try {
         const response = await fetch(
-          `${getAPIUrl(
-            userConfig,
-          )}getLiveGamesHttp?playerGroup=${playerGroup}&start=${startQuery}&count=${count}&sortOrder=${orderByQuery}&apiKey=c2sXe4zguRtYMBY`,
+          `${API_URL}getLiveGamesHttp?playerGroup=${playerGroup}&start=${startQuery}&count=${count}&sortOrder=${orderByQuery}&apiKey=c2sXe4zguRtYMBY`,
           {},
         );
         if (!response.ok) {
@@ -157,7 +152,7 @@ const LiveMatchesTable: React.FC<{
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [playerGroup, startQuery, orderByQuery, userConfig]);
+  }, [playerGroup, startQuery, orderByQuery]);
 
   if (isDev()) {
     console.debug("re-render");
@@ -174,19 +169,16 @@ const LiveMatchesTable: React.FC<{
   if (error) {
     content = (
       <Row justify="center" style={{ paddingTop: "10px" }}>
-        <Space orientation={"vertical"}>
-          <AlertBox
-            type={"error"}
-            message={
-              <>
-                There was an error loading the live matches.
-                <br /> Please try again.
-              </>
-            }
-            description={`${JSON.stringify(error)}`}
-          />
-          <AlertBoxChina />
-        </Space>
+        <AlertBox
+          type={"error"}
+          message={
+            <>
+              There was an error loading the live matches.
+              <br /> Please try again.
+            </>
+          }
+          description={`${JSON.stringify(error)}`}
+        />
       </Row>
     );
   }
