@@ -14,10 +14,10 @@ const calculateWinrateSingleFaction = ({
 }: {
   wins: number;
   losses: number;
-}): string => {
+}): number => {
   const result = ((0.5 - wins / (wins + losses)) * -100).toFixed(2);
 
-  return !isNaN(parseFloat(result)) ? result : "0";
+  return !isNaN(parseFloat(result)) ? parseFloat(result) : 0;
 };
 
 export const MapsFactionWinRateChart: React.FC<IProps> = ({ data }) => {
@@ -55,8 +55,7 @@ export const MapsFactionWinRateChart: React.FC<IProps> = ({ data }) => {
       keys={["wehrmacht", "wgerman", "british", "soviet", "usf"]}
       indexBy="mapName"
       colors={{ scheme: "nivo" }}
-      minValue={-25}
-      maxValue={25}
+      valueScale={{ type: "linear", min: -25, max: 25, clamp: true }}
       enableGridX={true}
       gridXValues={50}
       innerPadding={2}

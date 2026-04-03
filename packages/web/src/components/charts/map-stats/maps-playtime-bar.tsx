@@ -17,7 +17,7 @@ export const MapsPlayTime: React.FC<IProps> = ({ data, average = true }) => {
 
   for (const [key, value] of Object.entries(data)) {
     const averageTime = average
-      ? (value.gameTime / value.matchCount / 60).toFixed(2)
+      ? parseFloat((value.gameTime / value.matchCount / 60).toFixed(2))
       : value.gameTime;
     if (isNaN(averageTime)) {
       nodata = true;
@@ -55,8 +55,7 @@ export const MapsPlayTime: React.FC<IProps> = ({ data, average = true }) => {
       indexBy="mapName"
       colors={{ scheme: "nivo" }}
       colorBy={"indexValue"}
-      minValue={0}
-      maxValue={"auto"}
+      valueScale={{ type: "linear" }}
       innerPadding={2}
       axisLeft={{
         tickSize: 5,
