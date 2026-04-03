@@ -41,7 +41,6 @@ export const BulletinsBarChart: React.FC<IProps> = ({ bulletins, filterMode = "f
 
     if (filterMode === "first-half") {
       return sortedData.slice(halfLength);
-
     } else {
       // second-half
       return sortedData.slice(0, halfLength);

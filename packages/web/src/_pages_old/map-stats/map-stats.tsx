@@ -97,9 +97,13 @@ const MapStatsContent: React.FC = () => {
                 style.borderRadius = "50%";
               }
             }
+            // For month picker, show month name; for other pickers, show date
+            const displayValue = pickerType === "month"
+              ? current.toLocaleString('default', { month: 'short' })
+              : current.getDate();
             return (
               <div className="ant-picker-cell-inner" style={style}>
-                {current.getDate()}
+                {displayValue}
               </div>
             );
           }}

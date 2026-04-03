@@ -13,7 +13,9 @@ interface IProps {
 
 const BulletinCard: React.FC<IProps> = ({ data, type, race, bodyStyle }) => {
   const bulletinData = data["intelBulletins"][race as "soviet"];
-  const [filterMode, setFilterMode] = useState<"first-half" | "second-half" | "all">("first-half");
+  const [filterMode, setFilterMode] = useState<"first-half" | "second-half" | "all">(
+    "first-half",
+  );
 
   // Here are all the bulletin data
   // console.log(bulletinData)
