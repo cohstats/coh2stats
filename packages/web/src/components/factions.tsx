@@ -170,7 +170,16 @@ const _FactionVsFactionCard: React.FC<IProps> = ({ title, data, style }) => {
     }
     return 0;
   });
-  const keysForHeatMap = [...keysForHeatMapSet].sort();
+
+  // Sort keys, but ensure "sum" is always at the end
+  const keysForHeatMap = [...keysForHeatMapSet].sort((a, b) => {
+    // If 'a' is "sum", it should come after 'b'
+    if (a === "sum") return 1;
+    // If 'b' is "sum", 'a' should come before 'b'
+    if (b === "sum") return -1;
+    // Otherwise, sort alphabetically
+    return a < b ? -1 : a > b ? 1 : 0;
+  });
 
   // Allies are added after transformation cos it's easier (on the bottom side of the heatmap)
   if (factionWinRate === "allies") {
@@ -204,9 +213,10 @@ const _FactionVsFactionCard: React.FC<IProps> = ({ title, data, style }) => {
     const { leftAxis, ...rest } = row;
     return {
       id: leftAxis,
-      data: Object.entries(rest).map(([key, value]) => ({
+      // Use keysForHeatMap order to ensure proper sorting
+      data: keysForHeatMap.map((key) => ({
         x: key,
-        y: value,
+        y: rest[key] !== undefined ? rest[key] : 0,
       })),
     };
   });
