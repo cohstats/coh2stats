@@ -76,7 +76,9 @@ const PlayerStats: React.FC = () => {
           <AlertBox
             type={"warning"}
             message={"There was error loading overall player stats"}
-            description={"Please try refreshing the page. If the error persists, please report it on our GitHub."}
+            description={
+              "Please try refreshing the page. If the error persists, please report it on our GitHub."
+            }
           />
         </Row>
       </>

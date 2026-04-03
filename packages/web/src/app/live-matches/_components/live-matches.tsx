@@ -1,13 +1,13 @@
-// @ts-nocheck
-import React, { useEffect, useState, Suspense } from "react";
+"use client";
+
+import React, { useEffect } from "react";
 import LiveMatchesCard from "./live-matches-card";
 import { Col, Row, Select, Space } from "antd";
 import routes from "../../../routes";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import LiveMatchesTable from "./live-matches-table";
 import firebaseAnalytics from "../../../analytics";
-import { doc, getDoc, getFirestore } from "firebase/firestore";
-import { StatsCurrentLiveGames } from "../../../coh/types";
+import { StatsCurrentLiveGames, LiveGame } from "../../../coh/types";
 // import { AlertBox } from "../../../components/alert-box";
 
 // const warningUnavailable = (
@@ -20,39 +20,31 @@ import { StatsCurrentLiveGames } from "../../../coh/types";
 //   />
 // );
 
-const LiveMatchesContent: React.FC = () => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
+interface LiveMatchesProps {
+  firestoreData: StatsCurrentLiveGames | null;
+  initialLiveGamesData: LiveGame[] | null;
+  playerGroup: string;
+  orderBy: string;
+  start: string;
+}
 
-  const playerGroup = searchParams?.get("playerGroup") || "1";
-  const startQuery = searchParams?.get("start") || 0;
-  const orderByQuery = searchParams?.get("orderBy") || "0";
+const LiveMatches: React.FC<LiveMatchesProps> = ({
+  firestoreData,
+  initialLiveGamesData,
+  playerGroup,
+  orderBy,
+  start,
+}) => {
+  const router = useRouter();
 
   useEffect(() => {
     firebaseAnalytics.liveMatchesDisplayed();
   }, []);
 
-  const [data, setData] = useState<StatsCurrentLiveGames>();
-
-  useEffect(() => {
-    try {
-      (async () => {
-        const docRef = doc(getFirestore(), "stats", "inGamePlayers");
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-          setData(docSnap.data() as StatsCurrentLiveGames);
-        }
-      })();
-    } catch (e) {
-      console.error("Failed to get amount of analyzed matchess", e);
-    }
-  }, []);
-
-  const changeRoute = (params: Record<string, any>) => {
+  const changeRoute = (params: Record<string, string | number | undefined>) => {
     let { playerGroupToLoad, orderByToLoad, startToLoad } = params;
 
-    if ((playerGroupToLoad === "5" || playerGroupToLoad === "0") && orderByQuery === "0") {
+    if ((playerGroupToLoad === "5" || playerGroupToLoad === "0") && orderBy === "0") {
       orderByToLoad = "1";
     }
 
@@ -62,10 +54,10 @@ const LiveMatchesContent: React.FC = () => {
     }
 
     const searchValue = `?${new URLSearchParams({
-      playerGroup: playerGroupToLoad || playerGroup,
-      orderBy: orderByToLoad || orderByQuery,
+      playerGroup: (playerGroupToLoad || playerGroup).toString(),
+      orderBy: (orderByToLoad || orderBy).toString(),
       // We need special handling for 0 as it's false, lol
-      start: startToLoad === 0 ? 0 : startToLoad || startQuery,
+      start: (startToLoad === 0 ? 0 : startToLoad || start).toString(),
     })}`;
 
     router.push(`${routes.liveMatchesBase()}${searchValue}`);
@@ -117,7 +109,7 @@ const LiveMatchesContent: React.FC = () => {
                   />
                   <h3> sort by </h3>
                   <Select
-                    value={orderByQuery}
+                    value={orderBy}
                     onChange={(value) => changeRoute({ orderByToLoad: value })}
                     style={{ width: 120 }}
                     size="large"
@@ -134,26 +126,25 @@ const LiveMatchesContent: React.FC = () => {
                 </Space>
               </div>
               <div style={{ width: "100%", maxWidth: "480px" }}>
-                <LiveMatchesCard data={data} />
+                <LiveMatchesCard data={firestoreData} />
               </div>
             </div>
           </Col>
         </Row>
         <Row justify="center" style={{ paddingTop: 10, minHeight: "1500px" }}>
           <Col span={24}>
-            <LiveMatchesTable changeRoute={changeRoute} currentLiveGamesData={data} />
+            <LiveMatchesTable
+              changeRoute={changeRoute}
+              currentLiveGamesData={firestoreData}
+              initialData={initialLiveGamesData}
+              playerGroup={playerGroup}
+              start={start}
+              orderBy={orderBy}
+            />
           </Col>
         </Row>
       </Col>
     </Row>
-  );
-};
-
-const LiveMatches: React.FC = () => {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <LiveMatchesContent />
-    </Suspense>
   );
 };
 

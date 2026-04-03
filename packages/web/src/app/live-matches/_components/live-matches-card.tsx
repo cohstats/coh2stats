@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from "react";
 import { Card, Row, Col, Typography } from "antd";
 import { StatsCurrentLiveGames } from "../../../coh/types";
@@ -8,10 +7,11 @@ import { Helper } from "../../../components/helper";
 const { Text } = Typography;
 
 const LiveMatchesCard: React.FC<{
-  data: StatsCurrentLiveGames | undefined;
+  data: StatsCurrentLiveGames | null;
 }> = ({ data }) => {
-  // @ts-ignore
-  const timeStamp = data ? data?.timeStamp?.toDate().toLocaleString() : "";
+  // Convert timestamp (milliseconds) to locale string
+  // Only create Date if timeStamp exists and is a valid number
+  const timeStamp = data?.timeStamp ? new Date(data.timeStamp).toLocaleString() : "N/A";
 
   return (
     <Card
