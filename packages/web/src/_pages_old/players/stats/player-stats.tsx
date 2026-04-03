@@ -105,14 +105,14 @@ const PlayerStats: React.FC = () => {
           <Col span={16} xs={24}>
             <div
               style={{
-                display: "grid",
-                gridTemplateColumns: " [col1] 57% [col2] 40%",
-                gridColumnGap: "20px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: "8px",
               }}
             >
-              <div style={{ gridColumn: 1, textAlign: "right" }}>
-                {" "}
-                <Title level={5}>
+              <div style={{ textAlign: "center" }}>
+                <Title level={5} style={{ marginBottom: 0, display: "inline" }}>
                   Total amount of tracked players{" "}
                   <Helper
                     text={
@@ -124,37 +124,25 @@ const PlayerStats: React.FC = () => {
                       </>
                     }
                   />
-                </Title>
-              </div>
-              <div style={{ gridColumn: 2 }}>
-                {" "}
+                </Title>{" "}
                 <Text strong>
                   <UserOutlined /> {count.toLocaleString()}
                 </Text>
               </div>
-              <div style={{ gridColumn: 1, textAlign: "right" }}>
-                <Title level={5}>Automatch players in the last 30 days</Title>
-              </div>
-              <div style={{ gridColumn: 2 }}>
-                {" "}
+              <div style={{ textAlign: "center" }}>
+                <Title level={5} style={{ marginBottom: 0, display: "inline" }}>Automatch players in the last 30 days</Title>{" "}
                 <Text strong>
                   <UserOutlined /> {last30days.toLocaleString()}
                 </Text>
               </div>
-              <div style={{ gridColumn: 1, textAlign: "right" }}>
-                <Title level={5}>Automatch players in the last &nbsp;7 days</Title>
-              </div>
-              <div style={{ gridColumn: 2 }}>
-                {" "}
+              <div style={{ textAlign: "center" }}>
+                <Title level={5} style={{ marginBottom: 0, display: "inline" }}>Automatch players in the last 7 days</Title>{" "}
                 <Text strong>
                   <UserOutlined /> {last7days.toLocaleString()}
                 </Text>
               </div>
-              <div style={{ gridColumn: 1, textAlign: "right" }}>
-                <Title level={5}>Automatch players in the last 24 hours</Title>
-              </div>
-              <div style={{ gridColumn: 2 }}>
-                {" "}
+              <div style={{ textAlign: "center" }}>
+                <Title level={5} style={{ marginBottom: 0, display: "inline" }}>Automatch players in the last 24 hours</Title>{" "}
                 <Text strong>
                   <UserOutlined /> {last24hours.toLocaleString()}
                 </Text>
