@@ -85,7 +85,7 @@ const CustomStatsContent: React.FC = () => {
           defaultValue={dateValue}
           disabledDate={disabledDate}
           size={"large"}
-          dateRender={(current) => {
+          cellRender={(current) => {
             const style = {
               border: "",
               borderRadius: "",
@@ -140,7 +140,7 @@ const CustomStatsContent: React.FC = () => {
           disabledDate={disabledDate}
           onChange={onRangePickerChange}
           size={"large"}
-          dateRender={(current) => {
+          cellRender={(current) => {
             const style = {
               border: "",
               borderRadius: "",

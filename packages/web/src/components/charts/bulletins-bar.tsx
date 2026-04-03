@@ -39,7 +39,7 @@ export const BulletinsBarChart: React.FC<IProps> = ({ bulletins }) => {
     const iconPath = getBulletinIconPath(bulletinData?.icon);
 
     return (
-      <Card styles={{ body: { padding: 5 } }}>
+      <Card styles={{ body: { padding: 5, width: 500 } }}>
         <Avatar
           size={54}
           shape="square"
