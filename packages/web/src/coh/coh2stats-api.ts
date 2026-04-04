@@ -5,7 +5,7 @@
  * All functions return Promise<T> and throw errors for component-level handling.
  */
 
-import { API_URL } from "../utils/helpers";
+import { API_URL } from "@/utils/helpers";
 import type {
   LaddersDataObject,
   PlayerCardAPIObject,
