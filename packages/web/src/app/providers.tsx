@@ -6,6 +6,7 @@ import { ConfigProvider } from "antd";
 import { ConfigsProvider } from "../config-context";
 import { usePathname, useSearchParams } from "next/navigation";
 import analytics from "../analytics";
+import { ProgressProvider } from "@bprogress/next/app";
 
 function AnalyticsTracker() {
   const pathname = usePathname();
@@ -31,10 +32,18 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <ConfigsProvider configJson={{}}>
       <ConfigProvider>
-        <Suspense fallback={null}>
-          <AnalyticsTracker />
-        </Suspense>
-        {children}
+        <ProgressProvider
+          height="4px"
+          // antd blue
+          color="#1577FF"
+          options={{ showSpinner: false }}
+          shallowRouting
+        >
+          <Suspense fallback={null}>
+            <AnalyticsTracker />
+          </Suspense>
+          {children}
+        </ProgressProvider>
       </ConfigProvider>
     </ConfigsProvider>
   );

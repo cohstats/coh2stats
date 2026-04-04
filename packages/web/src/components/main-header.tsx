@@ -113,6 +113,7 @@ export const MainHeader: React.FC = () => {
                 fontWeight: "bold",
                 cursor: "pointer",
                 whiteSpace: "nowrap",
+                paddingRight: 10,
               }}
             >
               COH2 Stats
