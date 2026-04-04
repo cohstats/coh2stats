@@ -1,8 +1,17 @@
 import { initializeApp, getApps } from "firebase/app";
-import { getFirestore, doc, getDoc, collection, getDocs, query, orderBy, limit } from "firebase/firestore";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  collection,
+  getDocs,
+  query,
+  orderBy,
+  limit,
+} from "firebase/firestore";
 import { unstable_cache } from "next/cache";
 import config from "../config";
-import { StatsCurrentLiveGames, LiveGame } from "../coh/types";
+import { StatsCurrentLiveGames, LiveGame } from "@/coh/types";
 
 // Initialize Firebase for server-side operations
 // We use the client SDK as it works on both client and server in Next.js

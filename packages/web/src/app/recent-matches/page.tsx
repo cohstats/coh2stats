@@ -11,12 +11,7 @@ const RecentMatchesPage = async () => {
     getTotalStoredMatches(),
   ]);
 
-  return (
-    <RecentMatches
-      initialMatchRecords={matchRecords || []}
-      totalMatches={totalMatches}
-    />
-  );
+  return <RecentMatches initialMatchRecords={matchRecords || []} totalMatches={totalMatches} />;
 };
 
 export default RecentMatchesPage;

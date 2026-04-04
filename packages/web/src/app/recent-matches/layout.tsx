@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { mostRecentGamesAppBase } from "../../titles";
+import { mostRecentGamesAppBase } from "@/titles";
 
 export const metadata: Metadata = {
   title: mostRecentGamesAppBase.replace("COH2 ", ""),

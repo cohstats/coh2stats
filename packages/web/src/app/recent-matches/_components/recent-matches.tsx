@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import React, { useCallback, useEffect, useState } from "react";
@@ -11,29 +10,26 @@ import {
   getMatchPlayersByFaction,
   isMobileMediaQuery,
   raceIds,
-} from "../../../utils/table-functions";
-import { convertSteamNameToID, getGeneralIconPath } from "../../../coh/helpers";
+} from "@/utils/table-functions";
+import { convertSteamNameToID, getGeneralIconPath } from "@/coh/helpers";
 import Link from "next/link";
 import routes from "../../../routes";
-import { getMapIconPath } from "../../../coh/maps";
-import { AlertBox } from "../../../components/alert-box";
+import { getMapIconPath } from "@/coh/maps";
+import { AlertBox } from "@/components/alert-box";
 import { useMediaQuery } from "react-responsive";
 
 type ColumnsType<T> = TableColumnsType<T>;
 
 const { Title } = Typography;
 import firebaseAnalytics from "../../../analytics";
-import { determineMatchWinner } from "../../../utils/helpers";
+import { determineMatchWinner } from "@/utils/helpers";
 
 interface RecentMatchesProps {
   initialMatchRecords: Array<Record<string, any>>;
   totalMatches: string;
 }
 
-const RecentMatches: React.FC<RecentMatchesProps> = ({
-  initialMatchRecords,
-  totalMatches
-}) => {
+const RecentMatches: React.FC<RecentMatchesProps> = ({ initialMatchRecords, totalMatches }) => {
   const [matchRecords] = useState<Array<Record<string, any>>>(initialMatchRecords);
   const [error] = useState<null | string>(null);
 
