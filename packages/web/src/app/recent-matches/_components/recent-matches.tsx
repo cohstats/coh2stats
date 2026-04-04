@@ -1,16 +1,8 @@
 // @ts-nocheck
+"use client";
+
 import React, { useCallback, useEffect, useState } from "react";
 import { Image, Table, TableColumnsType, Col, Row, Typography } from "antd";
-import {
-  collection,
-  getDocs,
-  getFirestore,
-  limit,
-  orderBy,
-  query,
-  doc,
-  getDoc,
-} from "firebase/firestore";
 import {
   ExpandedMatch,
   formatMatchTime,
@@ -33,48 +25,22 @@ const { Title } = Typography;
 import firebaseAnalytics from "../../../analytics";
 import { determineMatchWinner } from "../../../utils/helpers";
 
-const RecentMatches: React.FC = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [matchRecords, setMatchRecords] = useState<Array<Record<string, any>>>([]);
-  const [error, setError] = useState<null | string>(null);
-  const [totalMatches, setTotalMatches] = useState<string | number>("200,000");
+interface RecentMatchesProps {
+  initialMatchRecords: Array<Record<string, any>>;
+  totalMatches: string;
+}
+
+const RecentMatches: React.FC<RecentMatchesProps> = ({
+  initialMatchRecords,
+  totalMatches
+}) => {
+  const [matchRecords] = useState<Array<Record<string, any>>>(initialMatchRecords);
+  const [error] = useState<null | string>(null);
 
   const isMobile = useMediaQuery({ query: isMobileMediaQuery });
 
   useEffect(() => {
     firebaseAnalytics.mostRecentGamesPageDisplayed();
-
-    (async () => {
-      setIsLoading(true);
-
-      try {
-        const matchesRef = collection(getFirestore(), "matches");
-        const docTotalMatchesRef = doc(getFirestore(), "stats", "totalStoredMatches");
-
-        const q = query(matchesRef, orderBy("completiontime", "desc"), limit(20));
-
-        const [docSnapTotalMatches, querySnapshot] = await Promise.all([
-          getDoc(docTotalMatchesRef),
-          getDocs(q),
-        ]);
-
-        const gamesData: Array<Record<string, any>> = [];
-        querySnapshot.forEach((doc) => {
-          gamesData.push(doc.data());
-        });
-
-        if (docSnapTotalMatches.exists()) {
-          setTotalMatches(docSnapTotalMatches.data()?.count.toLocaleString());
-        }
-
-        setMatchRecords(gamesData);
-      } catch (e) {
-        console.error(e);
-        setError("There was error getting matches from COH2Stats DB, please report the issue.");
-      } finally {
-        setIsLoading(false);
-      }
-    })();
   }, []);
 
   const renderExpandedMatch = useCallback((record: any) => {
@@ -231,7 +197,6 @@ const RecentMatches: React.FC = () => {
       return (
         <Table
           style={{ paddingTop: 5, overflow: "auto" }}
-          loading={isLoading}
           // @ts-ignore
           //onChange={handleTableChange}
           pagination={false}

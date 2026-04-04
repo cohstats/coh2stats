@@ -1,13 +1,22 @@
-// @ts-nocheck
-"use client";
-
 import RecentMatches from "./_components/recent-matches";
+import { getRecentMatches, getTotalStoredMatches } from "@/firebase/firebase-server";
 
-// Force dynamic rendering
-export const dynamic = "force-dynamic";
+// Revalidate every 5 minutes (300 seconds)
+export const revalidate = 300;
 
-const RecentMatchesPage = () => {
-  return <RecentMatches />;
+const RecentMatchesPage = async () => {
+  // Fetch data server-side
+  const [matchRecords, totalMatches] = await Promise.all([
+    getRecentMatches(),
+    getTotalStoredMatches(),
+  ]);
+
+  return (
+    <RecentMatches
+      initialMatchRecords={matchRecords || []}
+      totalMatches={totalMatches}
+    />
+  );
 };
 
 export default RecentMatchesPage;

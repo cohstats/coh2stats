@@ -1,5 +1,5 @@
 import { initializeApp, getApps } from "firebase/app";
-import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { getFirestore, doc, getDoc, collection, getDocs, query, orderBy, limit } from "firebase/firestore";
 import { unstable_cache } from "next/cache";
 import config from "../config";
 import { StatsCurrentLiveGames, LiveGame } from "../coh/types";
@@ -140,5 +140,57 @@ export async function getLiveGamesFromAPI(
   } catch (error) {
     console.error("Failed to fetch live games from API:", error);
     return null;
+  }
+}
+
+/**
+ * Fetch recent matches from Firestore
+ * Returns the 20 most recent matches ordered by completion time
+ * @returns Array<Record<string, any>> | null
+ */
+export async function getRecentMatches(): Promise<Array<Record<string, any>> | null> {
+  try {
+    const app = initializeFirebaseServer();
+    const db = getFirestore(app);
+    const matchesRef = collection(db, "matches");
+
+    const q = query(matchesRef, orderBy("completiontime", "desc"), limit(20));
+
+    console.log("Fetching recent matches from Firestore");
+
+    const querySnapshot = await getDocs(q);
+
+    const gamesData: Array<Record<string, any>> = [];
+    querySnapshot.forEach((doc) => {
+      gamesData.push(doc.data());
+    });
+
+    console.log(`Successfully fetched ${gamesData.length} recent matches`);
+    return gamesData;
+  } catch (error) {
+    console.error("Failed to fetch recent matches:", error);
+    return null;
+  }
+}
+
+/**
+ * Fetch total stored matches count from Firestore
+ * @returns string - formatted count or default value
+ */
+export async function getTotalStoredMatches(): Promise<string> {
+  try {
+    const app = initializeFirebaseServer();
+    const db = getFirestore(app);
+    const docRef = doc(db, "stats", "totalStoredMatches");
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+      return data?.count?.toLocaleString() || "200,000";
+    }
+    return "200,000";
+  } catch (error) {
+    console.error("Failed to get total stored matches:", error);
+    return "200,000";
   }
 }
