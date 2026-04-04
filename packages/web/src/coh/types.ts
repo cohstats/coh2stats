@@ -241,6 +241,33 @@ interface PlayerReport {
   profile: Record<string, any>;
 }
 
+/**
+ * API response type for player card endpoint
+ */
+interface PlayerCardAPIObject {
+  relicPersonalStats: Record<string, any>;
+  steamProfile: Record<string, any>;
+  playerMatches: Array<Record<string, any>>;
+  playTime: null | number;
+  playerInfo: null | Record<string, any>;
+}
+
+/**
+ * API response type for player matches endpoint
+ */
+interface PlayerMatchesResponse {
+  playerMatches: Array<ProcessedMatch>;
+}
+
+/**
+ * API response type for search players endpoint
+ */
+interface SearchPlayersResponse {
+  result: {
+    foundProfiles: Record<string, any>;
+  };
+}
+
 export type {
   ProcessedMatch,
   StatsCurrentLiveGames,
@@ -258,6 +285,9 @@ export type {
   LiveGame,
   HistoricLeaderBoardStats,
   FirebaseTimeStampObject,
+  PlayerCardAPIObject,
+  PlayerMatchesResponse,
+  SearchPlayersResponse,
 };
 export {
   validRaceNames,

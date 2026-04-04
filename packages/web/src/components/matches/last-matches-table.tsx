@@ -21,8 +21,8 @@ import { RelicIcon } from "../relic-icon";
 import { useMediaQuery } from "react-responsive";
 import firebaseAnalytics from "../../analytics";
 import { getMapIconPath } from "../../coh/maps";
-import { API_URL } from "../../utils/helpers";
 import { AlertBox } from "../alert-box";
+import { getPlayerMatches } from "../../coh/coh2stats-api";
 
 type ColumnsType<T> = TableColumnsType<T>;
 
@@ -48,16 +48,7 @@ const LastMatchesTable: React.FC<IProps> = ({ steamID }) => {
       setIsLoading(true);
 
       try {
-        const response = await fetch(
-          `${API_URL}getPlayerMatchesRelicHttp?steamid=${steamID}`,
-          {},
-        );
-        if (!response.ok) {
-          throw new Error(
-            `API request failed with code: ${response.status}, res: ${await response.text()}`,
-          );
-        }
-        const finalData = await response.json();
+        const finalData = await getPlayerMatches(steamID);
         // Filter out incorrect data
         const matchData = finalData.playerMatches
           .filter(

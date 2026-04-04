@@ -22,10 +22,10 @@ import firebaseAnalytics from "../../../analytics";
 import {
   capitalize,
   convertDateToDayTimestamp,
-  API_URL,
   getYesterdayDateTimestamp,
   timeAgo,
 } from "../../../utils/helpers";
+import { getLeaderboards } from "../../../coh/coh2stats-api";
 import { CountryFlag } from "../../../components/country-flag";
 import { leaderBoardsBase } from "../../../titles";
 import enGB from "antd/locale/en_GB";
@@ -99,11 +99,7 @@ const LeaderboardsContent = () => {
         } else {
           const leaderboardID = leaderboardsID[selectedType][selectedRace];
           if (leaderboardID) {
-            const response = await fetch(
-              `${API_URL}getCOHLaddersHttpV2?leaderBoardID=${leaderboardID}&start=0`,
-              {},
-            );
-            const finalData = await response.json();
+            const finalData = await getLeaderboards(leaderboardID, 0);
             setData(finalData);
             // Disable the loading to fix the Chinese players
             setTimeout(() => {

@@ -4,9 +4,10 @@
 import React, { useEffect, useState, Suspense } from "react";
 
 import { Col, Row, Tooltip, Typography, Avatar, Tabs, Badge, notification } from "antd";
-import { LaddersDataObject } from "../../../coh/types";
+import { LaddersDataObject, PlayerCardAPIObject } from "../../../coh/types";
 import firebaseAnalytics from "../../../analytics";
-import { capitalize, timeAgo, API_URL } from "../../../utils/helpers";
+import { capitalize, timeAgo } from "../../../utils/helpers";
+import { getPlayerCard } from "../../../coh/coh2stats-api";
 
 import { CountryFlag } from "../../../components/country-flag";
 import { playerCardBase } from "../../../titles";
@@ -26,14 +27,6 @@ import { Space } from "antd";
 export const dynamic = "force-dynamic";
 
 const { Text, Title } = Typography;
-
-type playerCardAPIObject = {
-  relicPersonalStats: Record<string, any>;
-  steamProfile: Record<string, any>;
-  playerMatches: Array<Record<string, any>>;
-  playTime: null | number;
-  playerInfo: null | Record<string, any>;
-};
 
 type statGroupsType = Array<Record<string, any>>;
 
@@ -92,17 +85,7 @@ const PlayerCardContent = () => {
 
     (async () => {
       try {
-        const response = await fetch(
-          `${API_URL}getPlayerCardEverythingHttp?steamid=${steamidParsed}&includeMatches=false`,
-          {},
-        );
-        if (!response.ok) {
-          throw new Error(
-            `API request failed with code: ${response.status}, res: ${await response.text()}`,
-          );
-        }
-
-        const finalData: playerCardAPIObject = await response.json();
+        const finalData = await getPlayerCard(steamidParsed, false);
         setData(finalData);
         if (finalData.steamProfile && Object.values(finalData.steamProfile)[0].personaname) {
           addNameToUrl(Object.values(finalData.steamProfile)[0].personaname);

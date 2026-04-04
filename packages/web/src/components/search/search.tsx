@@ -12,10 +12,10 @@ import { searchCommanders } from "../../coh/commanders";
 import { searchBulletins } from "../../coh/bulletins";
 import SearchCommanderCard from "./search-commander-card";
 import SearchBulletinCard from "./search-bulletin-card";
-import { API_URL } from "../../utils/helpers";
 import { userAPIObject } from "./types";
 import SearchUserCard from "./search-user-card";
 import { Tip } from "../tip";
+import { searchPlayers } from "../../coh/coh2stats-api";
 
 const sortByXP = (array: Array<userAPIObject>) => {
   return array.sort((a, b) => {
@@ -145,17 +145,9 @@ const CustomSearch: React.FC = () => {
         firebaseAnalytics.searchUsed(searchParam);
 
         try {
-          const response = await fetch(`${API_URL}searchPlayers`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ data: { name: searchParam } }),
-          });
-
-          const { result } = await response.json();
+          const response = await searchPlayers(searchParam);
           // @ts-ignore
-          const foundProfiles: Record<string, any> = result["foundProfiles"];
+          const foundProfiles: Record<string, any> = response.result["foundProfiles"];
           const resultHtml = buildSearchResults(foundProfiles);
 
           // Search Intel Bulletins from defined Function
