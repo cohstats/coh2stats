@@ -6,6 +6,7 @@ import { Avatar } from "antd";
 import Text from "antd/es/typography/Text";
 import Paragraph from "antd/es/typography/Paragraph";
 import { useRouter } from "next/navigation";
+import styles from "./search.module.css";
 
 interface IProps {
   serverID: string;
@@ -36,7 +37,7 @@ const SearchCommanderCard: React.FC<IProps> = ({
   return (
     <div
       style={{ backgroundColor: "white", height: 67, padding: 1 }}
-      className={"resultBox"}
+      className={styles.resultBox}
       key={serverID}
       onClick={() => {
         onCommanderClick(commanderRace, serverID);

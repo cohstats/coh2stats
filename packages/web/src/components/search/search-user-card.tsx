@@ -4,6 +4,7 @@ import routes from "../../routes";
 import { Avatar } from "antd";
 import { CountryFlag } from "../country-flag";
 import { userAPIObject } from "./types";
+import styles from "./search.module.css";
 
 const SearchUserCard = (userObject: userAPIObject, push: (path: string) => void) => {
   const steamProfile = userObject.steamProfile;
@@ -21,7 +22,7 @@ const SearchUserCard = (userObject: userAPIObject, push: (path: string) => void)
   return (
     <div
       key={steamProfile?.["steamid"]}
-      className={"player resultBox"}
+      className={`${styles.player} ${styles.resultBox}`}
       onClick={() => {
         onProfileClick(steamProfile?.["steamid"]);
       }}

@@ -7,6 +7,7 @@ import Paragraph from "antd/es/typography/Paragraph";
 import { useRouter } from "next/navigation";
 import { getBulletinIconPath } from "../../coh/bulletins";
 import { IntelBulletinData } from "../../coh/types";
+import styles from "./search.module.css";
 
 interface IProps {
   bulletinData: IntelBulletinData;
@@ -29,7 +30,7 @@ const SearchBulletinCard: React.FC<IProps> = ({ bulletinData }) => {
   return (
     <div
       style={{ backgroundColor: "white", height: 67, padding: 1 }}
-      className={"resultBox"}
+      className={styles.resultBox}
       key={bulletinData.serverID}
       onClick={() => onBulletinClick()}
     >
