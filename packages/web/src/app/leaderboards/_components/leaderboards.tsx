@@ -25,7 +25,6 @@ import {
   getYesterdayDateTimestamp,
   timeAgo,
 } from "../../../utils/helpers";
-import { getLeaderboards } from "../../../coh/coh2stats-api";
 import { CountryFlag } from "../../../components/country-flag";
 import { leaderBoardsBase } from "../../../titles";
 import enGB from "antd/locale/en_GB";
@@ -44,6 +43,7 @@ import { Helper } from "../../../components/helper";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { disabledDate, generateIconsForTitle } from "./leaderboard-components";
 import { leaderboardsID } from "../../../coh/coh2-api";
+import { fetchLiveLeaderboardData } from "../actions";
 
 const { Text } = Typography;
 
@@ -97,9 +97,10 @@ const LeaderboardsContent = () => {
             setData(undefined);
           }
         } else {
+          // Fetch live data using server action with internal API
           const leaderboardID = leaderboardsID[selectedType][selectedRace];
           if (leaderboardID) {
-            const finalData = await getLeaderboards(leaderboardID, 0);
+            const finalData = await fetchLiveLeaderboardData(leaderboardID);
             setData(finalData);
             // Disable the loading to fix the Chinese players
             setTimeout(() => {
