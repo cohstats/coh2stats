@@ -1,12 +1,40 @@
-I want the live matches to be server side rendered.
+I want to add COH2 relic APIs into packages/web/src/coh/coh2-api.ts
 
-We will need to fetch 2 things server side:
+First I want to add function to fetch the leaderbaords.
 
-- the firestore data - cache that for at least 30 minutes
-- the live matches data - cache that for 1.5 minute
+Instead of axios, use fetch
+Here are pieces of the code ho we do it in our BE
 
-We need to modify the component to be server side rendered and correctly fetch the data
-and pass it to displaying data.
+const leaderBoardID = `${req.query[leaderBoardIDQuery]}`;
+const start = `${req.query[startQuery]}`;
+const count = `${req.query[countQuery]}`;
 
-also keep in mind that there are dropboxes where you can change stuff which affects
-what we should fetch.
+const laddersData = await fetchLadderStats(
+parseInt(leaderBoardID) || 1,
+parseInt(start) || 1,
+parseInt(count) || 200,
+);
+
+const fetchLadderStats = async (
+leaderboardID: number,
+start = 1,
+count = AMOUNT_OF_QUERIED_PLAYERS,
+): Promise<RawLaddersObject> => {
+const response = await axios.get(getLadderUrl(leaderboardID, count, start), { httpsAgent });
+
+if (response.status == 200) {
+return response.data;
+} else {
+throw Error(`Failed to received the ladder stats, response: ${response}`);
+}
+};
+
+const getLadderUrl = (leaderboardID: number, count = 40, start = 1): string => {
+// sortBy 1 means by ranking
+return encodeURI(
+baseRelicAPIUrl +
+`/community/leaderboard/getLeaderBoard2?leaderboard_id=${leaderboardID}&title=coh2&platform=PC_STEAM&sortBy=1&start=${start}&count=${count}`,
+);
+};
+
+export const baseRelicAPIUrl = "https://coh2-api.reliclink.com";
