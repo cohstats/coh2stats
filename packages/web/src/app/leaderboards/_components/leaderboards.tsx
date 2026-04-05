@@ -15,8 +15,8 @@ import {
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 
-import { LaddersDataArrayObject, LaddersDataObject } from "../../../coh/types";
-import { getAllPatchDates } from "../../../coh/patches";
+import { LaddersDataArrayObject, LaddersDataObject } from "@/coh/types";
+import { getAllPatchDates } from "@/coh/patches";
 import { TableColumnsType } from "antd";
 import firebaseAnalytics from "../../../analytics";
 import {
@@ -24,9 +24,8 @@ import {
   convertDateToDayTimestamp,
   getYesterdayDateTimestamp,
   timeAgo,
-} from "../../../utils/helpers";
-import { CountryFlag } from "../../../components/country-flag";
-import { leaderBoardsBase } from "../../../titles";
+} from "@/utils/helpers";
+import { CountryFlag } from "@/components/country-flag";
 import enGB from "antd/locale/en_GB";
 
 type ColumnsType<T> = TableColumnsType<T>;
@@ -38,11 +37,11 @@ import {
   findAndMergeStatGroups,
   getGeneralIconPath,
   isTeamGame,
-} from "../../../coh/helpers";
-import { Helper } from "../../../components/helper";
+} from "@/coh/helpers";
+import { Helper } from "@/components/helper";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { disabledDate, generateIconsForTitle } from "./leaderboard-components";
-import { leaderboardsID } from "../../../coh/coh2-api";
+import { leaderboardsID } from "@/coh/coh2-api";
 import { fetchLiveLeaderboardData } from "../actions";
 
 const { Text } = Typography;
