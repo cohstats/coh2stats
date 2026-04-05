@@ -68,6 +68,10 @@ const LeaderboardsContent = () => {
   const [data, setData] = useState<LaddersDataObject>();
   const [dataHistoric, setDataHistoric] = useState<LaddersDataObject>();
 
+  // Pagination state - only for live leaderboards
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(60);
+
   useEffect(() => {
     firebaseAnalytics.leaderboardsDisplayed();
   }, []);
@@ -97,10 +101,12 @@ const LeaderboardsContent = () => {
             setData(undefined);
           }
         } else {
-          // Fetch live data using server action with internal API
+          // Fetch live data using server action with internal API and pagination
           const leaderboardID = leaderboardsID[selectedType][selectedRace];
           if (leaderboardID) {
-            const finalData = await fetchLiveLeaderboardData(leaderboardID);
+            // Calculate start position: Relic API uses 1-based indexing
+            const start = (currentPage - 1) * pageSize + 1;
+            const finalData = await fetchLiveLeaderboardData(leaderboardID, start, pageSize);
             setData(finalData);
             // Disable the loading to fix the Chinese players
             setTimeout(() => {
@@ -125,7 +131,7 @@ const LeaderboardsContent = () => {
       console.error("Failed to get the leaderboards", e);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedTimeStamp, selectedHistoricTimeStamp, selectedRace, selectedType]);
+  }, [selectedTimeStamp, selectedHistoricTimeStamp, selectedRace, selectedType, currentPage, pageSize]);
 
   const divStyle = {
     backgroundImage: `url(${getGeneralIconPath(race)})`,
@@ -150,6 +156,8 @@ const LeaderboardsContent = () => {
   };
 
   const onSwitchChange = (liveGames: boolean) => {
+    // Reset pagination when switching between live and historic
+    setCurrentPage(1);
     if (liveGames) {
       changeLeaderBoardsRoute({ timeStampToLoad: "now" });
       setSelectedTimeStamp("now");
@@ -380,6 +388,9 @@ const LeaderboardsContent = () => {
               />
               <CustomDatePicker
                 onChange={(value: any) => {
+                  // Reset pagination when changing date
+                  setCurrentPage(1);
+
                   setSelectedTimeStamp(convertDateToDayTimestamp(value).toString());
                   changeLeaderBoardsRoute({
                     timeStampToLoad: convertDateToDayTimestamp(value),
@@ -392,6 +403,9 @@ const LeaderboardsContent = () => {
               <Select
                 value={selectedType}
                 onChange={(value) => {
+                  // Reset pagination when changing leaderboard type
+                  setCurrentPage(1);
+
                   let raceToLoad = selectedRace;
                   if (
                     (value === "team2" || value === "team3" || value === "team4") &&
@@ -433,6 +447,9 @@ const LeaderboardsContent = () => {
               <Select
                 value={selectedRace}
                 onChange={(value) => {
+                  // Reset pagination when changing race
+                  setCurrentPage(1);
+
                   changeLeaderBoardsRoute({ raceToLoad: value });
                   setSelectedRace(value);
                   firebaseAnalytics.leaderboardsTypeInteraction(selectedType, value);
@@ -507,10 +524,31 @@ const LeaderboardsContent = () => {
               style={{ minHeight: 600, overflow: "auto" }}
               columns={TableColumns}
               size={"middle"}
-              pagination={{
-                defaultPageSize: 60,
-                pageSizeOptions: ["40", "60", "100", "200"],
-              }}
+              pagination={
+                selectedTimeStamp === "now"
+                  ? {
+                      // Server-side pagination for live leaderboards
+                      current: currentPage,
+                      pageSize: pageSize,
+                      total: data?.rankTotal || 0,
+                      showSizeChanger: true,
+                      pageSizeOptions: ["40", "60", "100", "200"],
+                      showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
+                      onChange: (page, newPageSize) => {
+                        setCurrentPage(page);
+                        if (newPageSize !== pageSize) {
+                          setPageSize(newPageSize);
+                          setCurrentPage(1); // Reset to first page when page size changes
+                        }
+                      },
+                    }
+                  : {
+                      // Client-side pagination for historic leaderboards (limited to 200 items)
+                      defaultPageSize: 60,
+                      pageSizeOptions: ["40", "60", "100", "200"],
+                      showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
+                    }
+              }
               rowKey={(record) => record?.rank}
               dataSource={findAndMergeStatGroups(data, dataHistoric)}
               loading={isLoadingData}
