@@ -1,5 +1,6 @@
 import LiveMatches from "./_components/live-matches";
-import { getCachedLiveGamesFirestoreData, getLiveGamesFromAPI } from "@/firebase/firebase-server";
+import { getCachedLiveGamesFirestoreData } from "@/firebase/firebase-server";
+import { getLiveGames } from "@/coh/coh2stats-api";
 
 // Revalidate every 90 seconds for API data
 // Note: Firestore data has its own cache (30 minutes) via unstable_cache
@@ -30,7 +31,7 @@ const LiveMatchesPage = async ({ searchParams }: LiveMatchesPageProps) => {
   // Firestore data cached for 30 minutes, API data cached for 90 seconds (page revalidate)
   const [firestoreData, liveGamesData] = await Promise.all([
     getCachedLiveGamesFirestoreData(),
-    getLiveGamesFromAPI(playerGroup, start, 40, orderBy),
+    getLiveGames(playerGroup, start, 40, orderBy),
   ]);
 
   return (

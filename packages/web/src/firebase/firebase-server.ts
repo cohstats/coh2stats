@@ -11,7 +11,7 @@ import {
 } from "firebase/firestore";
 import { unstable_cache } from "next/cache";
 import config from "../config";
-import { StatsCurrentLiveGames, LiveGame } from "@/coh/types";
+import { StatsCurrentLiveGames } from "@/coh/types";
 
 // Initialize Firebase for server-side operations
 // We use the client SDK as it works on both client and server in Next.js
@@ -105,52 +105,6 @@ export const getCachedLiveGamesFirestoreData = unstable_cache(
     tags: ['live-games-firestore']
   }
 );
-
-/**
- * Fetch live games from API
- * @param playerGroup - "1" (1v1), "2" (2v2), "3" (3v3), "4" (4v4), "5" (vs AI), "0" (custom)
- * @param start - Pagination offset (0, 40, 80, etc.)
- * @param count - Number of games to fetch (default: 40)
- * @param sortOrder - "0" (Rank), "1" (Start Time), "2" (Viewers)
- * @returns LiveGame[] | null
- *
- * Note: This function does NOT use unstable_cache.
- * The page-level revalidate (90 seconds) applies to this data.
- * This allows us to have different cache times for Firestore (30 min) vs API (90 sec).
- */
-export async function getLiveGamesFromAPI(
-  playerGroup: string,
-  start: string,
-  count: number = 40,
-  sortOrder: string
-): Promise<LiveGame[] | null> {
-  try {
-    const apiUrl = config.apiUrl;
-    const url = `${apiUrl}getLiveGamesHttp?playerGroup=${playerGroup}&start=${start}&count=${count}&sortOrder=${sortOrder}&apiKey=c2sXe4zguRtYMBY`;
-
-    console.log(`Fetching live games from API: playerGroup=${playerGroup}, start=${start}, sortOrder=${sortOrder}`);
-
-    const response = await fetch(url, {
-      // No cache option here - we'll use Next.js revalidate at page level (90 seconds)
-      headers: {
-        "Origin": "https://coh2stats.com",
-      }
-    });
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error(`API request failed with status ${response.status}: ${errorText}`);
-      return null;
-    }
-
-    const data = await response.json();
-    console.log(`Successfully fetched ${data?.length || 0} live games from API`);
-    return data as LiveGame[];
-  } catch (error) {
-    console.error("Failed to fetch live games from API:", error);
-    return null;
-  }
-}
 
 /**
  * Fetch recent matches from Firestore
