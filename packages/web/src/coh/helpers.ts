@@ -70,14 +70,20 @@ const findAndMergeStatGroups = (
     let change: number | string = 0;
 
     if (laddersHistoryObject) {
-      const oldHistoryObject = laddersHistoryObject.leaderboardStats.find((statsObject) => {
-        return statsObject.statgroup_id === stat.statgroup_id;
-      });
-
-      if (oldHistoryObject) {
-        change = oldHistoryObject.rank - stat.rank;
+      // If current rank is greater than 200, we can't calculate change
+      // because historic data only includes top 200
+      if (stat.rank > 200) {
+        change = "N/A";
       } else {
-        change = "new";
+        const oldHistoryObject = laddersHistoryObject.leaderboardStats.find((statsObject) => {
+          return statsObject.statgroup_id === stat.statgroup_id;
+        });
+
+        if (oldHistoryObject) {
+          change = oldHistoryObject.rank - stat.rank;
+        } else {
+          change = "new";
+        }
       }
     }
 

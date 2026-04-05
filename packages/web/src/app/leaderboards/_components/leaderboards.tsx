@@ -131,7 +131,14 @@ const LeaderboardsContent = () => {
       console.error("Failed to get the leaderboards", e);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedTimeStamp, selectedHistoricTimeStamp, selectedRace, selectedType, currentPage, pageSize]);
+  }, [
+    selectedTimeStamp,
+    selectedHistoricTimeStamp,
+    selectedRace,
+    selectedType,
+    currentPage,
+    pageSize,
+  ]);
 
   const divStyle = {
     backgroundImage: `url(${getGeneralIconPath(race)})`,
@@ -197,6 +204,8 @@ const LeaderboardsContent = () => {
           return <div style={{ color: "red" }}>{data}</div>;
         } else if (data === "new") {
           return "new";
+        } else if (data === "N/A") {
+          return "N/A";
         }
       },
       sorter: (a: LaddersDataArrayObject, b: LaddersDataArrayObject) => {
@@ -480,6 +489,9 @@ const LeaderboardsContent = () => {
                       <br />
                       <Text mark>new</Text> means the player was not in top 200 on the selected
                       historic date
+                      <br />
+                      <Text mark>N/A</Text> means the current rank is beyond 200 (historic data only
+                      includes top 200)
                     </>
                   }
                 />
