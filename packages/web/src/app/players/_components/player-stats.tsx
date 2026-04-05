@@ -7,8 +7,6 @@ import { GeoWorldMap } from "../../../components/charts/geo-map/geo-world-map";
 import { Helper } from "../../../components/helper";
 import { Loading } from "../../../components/loading";
 import { AlertBox } from "../../../components/alert-box";
-import Link from "next/link";
-import routes from "../../../routes";
 import firebaseAnalytics from "../../../analytics";
 
 const { Text, Title } = Typography;

@@ -5,9 +5,6 @@ import CustomSearch from "../../components/search/search";
 import PlayerStats from "./_components/player-stats";
 import { Col, Row } from "antd";
 
-// Force dynamic rendering
-export const dynamic = "force-dynamic";
-
 const PlayersPage = () => {
   return (
     <>
