@@ -11,7 +11,7 @@ import {
 } from "firebase/firestore";
 import { unstable_cache } from "next/cache";
 import config from "../config";
-import { StatsCurrentLiveGames } from "@/coh/types";
+import { StatsCurrentLiveGames, LaddersDataObject } from "@/coh/types";
 
 // Initialize Firebase for server-side operations
 // We use the client SDK as it works on both client and server in Next.js
@@ -156,4 +156,74 @@ export async function getTotalStoredMatches(): Promise<string> {
     console.error("Failed to get total stored matches:", error);
     return "200,000";
   }
+}
+
+/**
+ * Fetch historic leaderboard data from Firestore
+ *
+ * @param timestamp - Unix timestamp for the leaderboard date (e.g., "1640995200" or "now")
+ * @param type - Type of leaderboard (e.g., "1v1", "2v2", "3v3", "4v4", "team2", "team3", "team4")
+ * @param race - Race/faction (e.g., "soviet", "wehrmacht", "wgerman", "usf", "british", "axis", "allies")
+ * @returns Promise<LaddersDataObject | null> - The leaderboard data or null if not found
+ *
+ * @example
+ * ```typescript
+ * const data = await getHistoricLeaderboardData("1640995200", "1v1", "soviet");
+ * ```
+ */
+async function getHistoricLeaderboardDataInternal(
+  timestamp: string,
+  type: string,
+  race: string
+): Promise<LaddersDataObject | null> {
+  try {
+    const app = initializeFirebaseServer();
+    const db = getFirestore(app);
+    const docRef = doc(db, `ladders/${timestamp}/${type}`, race);
+
+    console.log(`Fetching historic leaderboard: ladders/${timestamp}/${type}/${race}`);
+
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      console.log(`Successfully fetched historic leaderboard data for ${race} ${type}`);
+      return docSnap.data() as LaddersDataObject;
+    }
+
+    console.log(`Historic leaderboard document does not exist: ladders/${timestamp}/${type}/${race}`);
+    return null;
+  } catch (error) {
+    console.error(`Failed to fetch historic leaderboard data for ${race} ${type}:`, error);
+    return null;
+  }
+}
+
+/**
+ * Cached wrapper for getHistoricLeaderboardData with 48-hour revalidation
+ * Only caches successful results (non-null data)
+ */
+export async function getHistoricLeaderboardData(
+  timestamp: string,
+  type: string,
+  race: string
+): Promise<LaddersDataObject | null> {
+  const cachedFn = unstable_cache(
+    async () => getHistoricLeaderboardDataInternal(timestamp, type, race),
+    [`historic-leaderboard-${timestamp}-${type}-${race}`],
+    {
+      revalidate: 172800, // 48 hours = 172800 seconds
+      tags: [`historic-leaderboard-${timestamp}-${type}-${race}`]
+    }
+  );
+
+  const result = await cachedFn();
+
+  // Only return cached result if it's successful (non-null)
+  // If null (document doesn't exist or error), bypass cache and try again
+  if (result !== null) {
+    return result;
+  }
+
+  // On null result, fetch without cache to get fresh error/missing status
+  return getHistoricLeaderboardDataInternal(timestamp, type, race);
 }

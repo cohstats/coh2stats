@@ -39,10 +39,9 @@ import {
   isTeamGame,
 } from "@/coh/helpers";
 import { Helper } from "@/components/helper";
-import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { disabledDate, generateIconsForTitle } from "./leaderboard-components";
 import { leaderboardsID } from "@/coh/coh2-api";
-import { fetchLiveLeaderboardData } from "../actions";
+import { fetchLiveLeaderboardData, fetchHistoricLeaderboardData } from "../actions";
 
 const { Text } = Typography;
 
@@ -80,25 +79,15 @@ const LeaderboardsContent = () => {
 
     try {
       (async () => {
-        const ladderDocRef = doc(
-          getFirestore(),
-          `ladders/${selectedTimeStamp}/${selectedType}`,
-          selectedRace,
-        );
-        const historicLadderDocRef = doc(
-          getFirestore(),
-          `ladders/${selectedHistoricTimeStamp}/${selectedType}`,
-          selectedRace,
-        );
-
-        let ladderDocSnap;
+        // Fetch main leaderboard data
         if (selectedTimeStamp !== "now") {
-          ladderDocSnap = await getDoc(ladderDocRef);
-          if (ladderDocSnap && ladderDocSnap.exists()) {
-            setData(ladderDocSnap.data() as LaddersDataObject);
-          } else {
-            setData(undefined);
-          }
+          // Fetch historic data from Firestore using server action
+          const ladderData = await fetchHistoricLeaderboardData(
+            selectedTimeStamp,
+            selectedType,
+            selectedRace,
+          );
+          setData(ladderData);
         } else {
           // Fetch live data using server action with internal API and pagination
           const leaderboardID = leaderboardsID[selectedType][selectedRace];
@@ -116,13 +105,14 @@ const LeaderboardsContent = () => {
           }
         }
 
-        const historicLadderDocSnap = await getDoc(historicLadderDocRef);
+        // Fetch historic comparison data from Firestore using server action
+        const historicData = await fetchHistoricLeaderboardData(
+          selectedHistoricTimeStamp,
+          selectedType,
+          selectedRace,
+        );
+        setDataHistoric(historicData);
 
-        if (historicLadderDocSnap.exists()) {
-          setDataHistoric(historicLadderDocSnap.data() as LaddersDataObject);
-        } else {
-          setDataHistoric(undefined);
-        }
         setIsLoadingData(false);
       })();
     } catch (e) {
