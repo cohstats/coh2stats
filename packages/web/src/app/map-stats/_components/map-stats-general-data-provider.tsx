@@ -6,7 +6,7 @@ import { StatsDataObject, validStatsTypes } from "../../../coh/types";
 import { useSearchParams } from "next/navigation";
 import firebaseAnalytics from "../../../analytics";
 import MapStatsDetails from "./map-stats-details";
-import { doc, getDoc, getFirestore } from "firebase/firestore";
+import { fetchMapStatsData } from "../actions";
 
 const { Title } = Typography;
 
@@ -30,21 +30,22 @@ const MapStatsGeneralDataProvider: React.FC<IProps> = ({ urlChanger }) => {
   useEffect(() => {
     setIsLoading(true);
 
-    try {
-      (async () => {
-        const statsDocRef = doc(getFirestore(), `stats/${frequency}/${timestamp}`, "mapStats");
-        const statsDocSnap = await getDoc(statsDocRef);
+    (async () => {
+      try {
+        const statsData = await fetchMapStatsData(frequency, timestamp);
 
-        if (statsDocSnap.exists()) {
-          setData(statsDocSnap.data() as StatsDataObject);
+        if (statsData) {
+          setData(statsData as StatsDataObject);
         } else {
           setData(undefined);
         }
+      } catch (e) {
+        console.error("Failed to get stats from firestore", e);
+        setData(undefined);
+      } finally {
         setIsLoading(false);
-      })();
-    } catch (e) {
-      console.error("Failed to get stats from firestore", e);
-    }
+      }
+    })();
   }, [frequency, timestamp]);
 
   if (isLoading) return <Loading />;

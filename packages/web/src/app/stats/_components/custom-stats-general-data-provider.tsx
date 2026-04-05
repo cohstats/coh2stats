@@ -8,7 +8,7 @@ import CustomStatsDetails from "./custom-stats-details";
 import firebaseAnalytics from "../../../analytics";
 import GeneralStats from "./general-stats";
 import { StatsHeader } from "./stats-header";
-import { doc, getDoc, getFirestore } from "firebase/firestore";
+import { fetchStatsData } from "../actions";
 
 const { Title } = Typography;
 
@@ -41,25 +41,22 @@ const CustomStatsGeneralDataProvider: React.FC<IProps> = ({ urlChanger }) => {
   useEffect(() => {
     setIsLoading(true);
 
-    try {
-      (async () => {
-        const statsDocRef = doc(
-          getFirestore(),
-          `stats/${frequency}/${timestamp}`,
-          statDocToBeLoaded,
-        );
-        const statsDocSnap = await getDoc(statsDocRef);
+    (async () => {
+      try {
+        const statsData = await fetchStatsData(frequency, timestamp, statDocToBeLoaded);
 
-        if (statsDocSnap.exists()) {
-          setData(statsDocSnap.data() as StatsDataObject);
+        if (statsData) {
+          setData(statsData as StatsDataObject);
         } else {
           setData(undefined);
         }
+      } catch (e) {
+        console.error("Failed to get stats from firestore", e);
+        setData(undefined);
+      } finally {
         setIsLoading(false);
-      })();
-    } catch (e) {
-      console.error("Failed to get stats from firestore", e);
-    }
+      }
+    })();
   }, [frequency, timestamp, statDocToBeLoaded]);
 
   if (isLoading) return <Loading />;

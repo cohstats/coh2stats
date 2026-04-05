@@ -1,7 +1,6 @@
 // @ts-nocheck
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { Loading } from "../../../../components/loading";
 import MatchDetails from "../../../../components/matches/match-details";
 import { Col, Empty, Image, Row, Tooltip, Typography } from "antd";
@@ -15,6 +14,7 @@ import config from "../../../../config";
 import { getMapIconPath } from "../../../../coh/maps";
 import { AlertBox } from "../../../../components/alert-box";
 import firebaseAnalytics from "../../../../analytics";
+import { fetchMatchData } from "../../actions";
 import { DatabaseOutlined } from "@ant-design/icons";
 import { COHStatsIcon } from "../../../../components/cohstats-icon";
 import { differenceInDays } from "date-fns";
@@ -32,18 +32,24 @@ const SingleMatch: React.FC = () => {
     firebaseAnalytics.singleMatchPageDisplayed();
 
     (async () => {
+      if (!matchID) return;
+
       setIsLoading(true);
 
-      const matchDocRef = doc(getFirestore(), `matches/${matchID}/`);
+      try {
+        const matchData = await fetchMatchData(matchID);
 
-      const matchDoc = await getDoc(matchDocRef);
-
-      if (matchDoc.exists()) {
-        setMatchData(matchDoc.data() as ProcessedMatch);
-      } else {
+        if (matchData) {
+          setMatchData(matchData as ProcessedMatch);
+        } else {
+          setMatchData(undefined);
+        }
+      } catch (error) {
+        console.error("Failed to fetch match data:", error);
         setMatchData(undefined);
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false);
     })();
   }, [matchID]);
 

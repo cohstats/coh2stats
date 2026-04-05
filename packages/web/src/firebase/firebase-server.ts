@@ -227,3 +227,147 @@ export async function getHistoricLeaderboardData(
   // On null result, fetch without cache to get fresh error/missing status
   return getHistoricLeaderboardDataInternal(timestamp, type, race);
 }
+
+/**
+ * Fetch stats data from Firestore for a given frequency, timestamp, and stat type
+ *
+ * @param frequency - The time frequency (e.g., "daily", "week", "month")
+ * @param timestamp - Unix timestamp for the stats date
+ * @param statType - Type of stat document (e.g., "1v1-soviet", "4v4-wermacht", "mapStats")
+ * @returns Promise<Record<string, any> | null> - The stats data or null if not found
+ *
+ * @example
+ * ```typescript
+ * const data = await getStatsData("month", "1640995200", "1v1-soviet");
+ * ```
+ */
+async function getStatsDataInternal(
+  frequency: string,
+  timestamp: string,
+  statType: string
+): Promise<Record<string, any> | null> {
+  try {
+    const app = initializeFirebaseServer();
+    const db = getFirestore(app);
+    const docRef = doc(db, `stats/${frequency}/${timestamp}`, statType);
+
+    console.log(`Fetching stats: stats/${frequency}/${timestamp}/${statType}`);
+
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      console.log(`Successfully fetched stats data for ${statType}`);
+      return docSnap.data();
+    }
+
+    console.log(`Stats document does not exist: stats/${frequency}/${timestamp}/${statType}`);
+    return null;
+  } catch (error) {
+    console.error(`Failed to fetch stats data for ${statType}:`, error);
+    return null;
+  }
+}
+
+/**
+ * Cached wrapper for getStatsData with 24-hour revalidation
+ */
+export async function getStatsData(
+  frequency: string,
+  timestamp: string,
+  statType: string
+): Promise<Record<string, any> | null> {
+  const cachedFn = unstable_cache(
+    async () => getStatsDataInternal(frequency, timestamp, statType),
+    [`stats-${frequency}-${timestamp}-${statType}`],
+    {
+      revalidate: 86400, // 24 hours = 86400 seconds
+      tags: [`stats-${frequency}-${timestamp}-${statType}`]
+    }
+  );
+
+  return cachedFn();
+}
+
+/**
+ * Fetch player stats from Firestore
+ * Returns player count statistics and country distribution
+ * @returns Promise<Record<string, any> | null>
+ */
+async function getPlayerStatsInternal(): Promise<Record<string, any> | null> {
+  try {
+    const app = initializeFirebaseServer();
+    const db = getFirestore(app);
+    const docRef = doc(db, "stats", "playerStats");
+
+    console.log("Fetching player stats");
+
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+      console.log("Successfully fetched player stats");
+
+      // Convert Firestore Timestamp to plain object for serialization
+      return {
+        count: data.count,
+        last24hours: data.last24hours,
+        last30days: data.last30days,
+        last7days: data.last7days,
+        countries: data.countries,
+        // Convert Timestamp to milliseconds (number) if it exists
+        timeStamp: data.timeStamp?.toMillis ? data.timeStamp.toMillis() : undefined,
+      };
+    }
+
+    console.log("Player stats document does not exist");
+    return null;
+  } catch (error) {
+    console.error("Failed to fetch player stats:", error);
+    return null;
+  }
+}
+
+/**
+ * Cached wrapper for getPlayerStats with 1-hour revalidation
+ */
+export async function getPlayerStats(): Promise<Record<string, any> | null> {
+  const cachedFn = unstable_cache(
+    async () => getPlayerStatsInternal(),
+    ['player-stats'],
+    {
+      revalidate: 3600, // 1 hour = 3600 seconds
+      tags: ['player-stats']
+    }
+  );
+
+  return cachedFn();
+}
+
+/**
+ * Fetch a single match from Firestore by match ID
+ *
+ * @param matchId - The match ID
+ * @returns Promise<Record<string, any> | null> - The match data or null if not found
+ */
+export async function getMatchData(matchId: string): Promise<Record<string, any> | null> {
+  try {
+    const app = initializeFirebaseServer();
+    const db = getFirestore(app);
+    const docRef = doc(db, "matches", matchId);
+
+    console.log(`Fetching match: ${matchId}`);
+
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      console.log(`Successfully fetched match data for ${matchId}`);
+      return docSnap.data();
+    }
+
+    console.log(`Match document does not exist: ${matchId}`);
+    return null;
+  } catch (error) {
+    console.error(`Failed to fetch match data for ${matchId}:`, error);
+    return null;
+  }
+}

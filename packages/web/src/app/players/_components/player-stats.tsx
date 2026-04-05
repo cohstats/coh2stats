@@ -1,6 +1,5 @@
 // @ts-nocheck
 import React, { useEffect, useState } from "react";
-import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { Col, Typography, Row } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { GeoWorldMap } from "../../../components/charts/geo-map/geo-world-map";
@@ -8,6 +7,7 @@ import { Helper } from "../../../components/helper";
 import { Loading } from "../../../components/loading";
 import { AlertBox } from "../../../components/alert-box";
 import firebaseAnalytics from "../../../analytics";
+import { fetchPlayerStats } from "../actions";
 
 const { Text, Title } = Typography;
 
@@ -28,14 +28,13 @@ const PlayerStats: React.FC = () => {
   useEffect(() => {
     firebaseAnalytics.playersPageDisplayed();
 
-    try {
-      (async () => {
+    (async () => {
+      try {
         setIsLoading(true);
-        const docRef = doc(getFirestore(), "stats", "playerStats");
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          const { count, last24hours, last30days, last7days, timeStamp, countries } =
-            docSnap.data();
+        const statsData = await fetchPlayerStats();
+
+        if (statsData) {
+          const { count, last24hours, last30days, last7days, timeStamp, countries } = statsData;
 
           setData({
             count,
@@ -43,17 +42,17 @@ const PlayerStats: React.FC = () => {
             last24hours,
             last30days,
             countries,
-            // Convert the FB timestamp to regular date
-            timeStamp: timeStamp.toDate(),
+            // Convert the timestamp from milliseconds to Date
+            timeStamp: timeStamp ? new Date(timeStamp) : new Date(),
           });
         }
-      })();
-    } catch (e) {
-      setError("Failed to load player stats");
-      console.error("Failed to load player stats from firebase", e);
-    } finally {
-      setIsLoading(false);
-    }
+      } catch (e) {
+        setError("Failed to load player stats");
+        console.error("Failed to load player stats from firebase", e);
+      } finally {
+        setIsLoading(false);
+      }
+    })();
   }, []);
 
   if (isLoading || data === null) {
