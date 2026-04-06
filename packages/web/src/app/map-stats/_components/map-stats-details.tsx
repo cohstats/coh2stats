@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { Row, Card, Radio, RadioChangeEvent, Space, Typography, Tooltip, Select } from "antd";
 import { MapBarChart } from "../../../components/charts/maps-bar";
 import { useSearchParams } from "next/navigation";
@@ -18,7 +18,7 @@ const { Text, Link } = Typography;
 const MapSelectorComponent: React.FC<{
   map: string;
   data: Record<string, any>;
-  changer: Function;
+  changer: (params: Record<string, string>) => void;
 }> = ({ map, data, changer }) => {
   const mapNames = Object.keys(data).sort().reverse();
 
@@ -46,7 +46,7 @@ const MapSelectorComponent: React.FC<{
 };
 
 interface IProps {
-  urlChanger: Function;
+  urlChanger: (params: Record<string, string | number | undefined>) => void;
   specificData: Record<string, any>;
 }
 
@@ -261,7 +261,7 @@ const MapStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
               <FactionVsFactionCard
                 title={`${map} - ${type} team composition matrix`}
                 data={data[map]}
-                style={useMemo(() => ({ marginTop: 10, width: 1155 }), [])}
+                style={{ marginTop: 10, width: 1155 }}
               />
             </Space>
           </Row>

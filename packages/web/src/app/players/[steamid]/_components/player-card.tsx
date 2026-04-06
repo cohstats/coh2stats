@@ -69,8 +69,9 @@ const PlayerCard = () => {
         // This means there is already a name, but it was changed!
         if (window.location.pathname.match(/.+\/\d+-/)) {
           // There is already name in url let's replace it with a new one
+          const newPath = window.location.pathname.replace(/(.+\/\d+-)(.+)/, `$1${cleanName}`);
           replace({
-            pathname: `${window.location.pathname.replace(/(.+\/\d+-)(.+)/, `$1${cleanName}`)}`,
+            pathname: newPath,
           });
         } else {
           // No name in the url let's just push a new one

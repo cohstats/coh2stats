@@ -19,7 +19,7 @@ import { httpsCallable } from "firebase/functions";
 const { Title } = Typography;
 
 interface IProps {
-  urlChanger: Function;
+  urlChanger: (params: Record<string, string | number | undefined>) => void;
 }
 
 const CustomStatsRangeDataProvider: React.FC<IProps> = ({ urlChanger }) => {
@@ -28,7 +28,7 @@ const CustomStatsRangeDataProvider: React.FC<IProps> = ({ urlChanger }) => {
     ? searchParams?.get("statsSource")
     : "";
 
-  const [fullData, setFullData] = useState<StatsDataObject | {}>({});
+  const [fullData, setFullData] = useState<StatsDataObject | Record<string, never>>({});
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 

@@ -68,7 +68,7 @@ const LiveMatchesTable: React.FC<{
   const initialCurrent = Math.floor(parseInt(start) / count) + 1;
   const initialTotal = calculatePagination(playerGroup, overViewData);
 
-  const [isLoading, setIsLoading] = useState(false); // Start with false since we have initial data
+  const [isLoading] = useState(false); // Start with false since we have initial data
   const [error, setError] = useState<null | string>(null);
   const [data, setData] = useState<{
     pagination: { current: number; pageSize: number; total: number; pageSizeOptions: ["40"] };

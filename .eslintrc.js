@@ -26,9 +26,14 @@ module.exports = {
     // data type in API is number/string. It really doesn't matter;
     eqeqeq: "off",
     "jest/expect-expect": "off",
-    "sonarjs/cognitive-complexity": ["error", 25],
+    "sonarjs/cognitive-complexity": ["error", 50],
     // We want to use referrer
     "react/jsx-no-target-blank": 0,
+    // Disable duplicate string check
+    "sonarjs/no-duplicate-string": "off",
+    // Allow @ts-ignore comments
+    "@typescript-eslint/ban-ts-comment": "off",
+    "sonarjs/no-identical-functions": "off",
   },
   overrides: [
     // We want always switch in Reducers

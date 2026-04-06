@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { Row, Card, Radio, RadioChangeEvent, Space } from "antd";
 import { MapBarChart } from "../../../components/charts/maps-bar";
 import { WinsChart } from "../../../components/charts/wins-bar";
@@ -13,7 +13,7 @@ import { useSearchParams } from "next/navigation";
 import BulletinCard from "./bulletin-card";
 
 interface IProps {
-  urlChanger: Function;
+  urlChanger: (params: Record<string, string | number | undefined>) => void;
   specificData: {
     generalData: TypeAnalysisObject;
   };
@@ -129,7 +129,7 @@ const CustomStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
           <FactionVsFactionCard
             title={`Team composition matrix ${type}`}
             data={data}
-            style={useMemo(() => ({ marginTop: 20 }), [])}
+            style={{ marginTop: 20 }}
           />
         </Row>
       )}

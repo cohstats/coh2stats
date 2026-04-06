@@ -406,15 +406,11 @@ const LeaderboardsContent = () => {
                   let raceToLoad = selectedRace;
                   if (
                     (value === "team2" || value === "team3" || value === "team4") &&
-                    selectedRace !== "allies"
+                    selectedRace !== "allies" &&
+                    selectedRace !== "axis"
                   ) {
-                    if (
-                      (value === "team2" || value === "team3" || value === "team4") &&
-                      selectedRace !== "axis"
-                    ) {
-                      setSelectedRace("axis");
-                      raceToLoad = "axis";
-                    }
+                    setSelectedRace("axis");
+                    raceToLoad = "axis";
                   }
 
                   if (

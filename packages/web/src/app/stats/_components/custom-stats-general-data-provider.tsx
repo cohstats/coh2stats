@@ -12,7 +12,7 @@ import { fetchStatsData } from "../actions";
 const { Title } = Typography;
 
 interface IProps {
-  urlChanger: Function;
+  urlChanger: (params: Record<string, string | number | undefined>) => void;
 }
 
 const CustomStatsGeneralDataProvider: React.FC<IProps> = ({ urlChanger }) => {

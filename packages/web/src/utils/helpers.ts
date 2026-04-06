@@ -117,7 +117,7 @@ const sumValuesOfObjects = (
       }
       // Not in master object => put new
     } else {
-      debugger;
+      console.log("Adding new key to master object:", key);
       masterObject[key] = newObject[key];
     }
   }

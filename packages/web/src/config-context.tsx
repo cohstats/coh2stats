@@ -13,7 +13,9 @@ const ConfigContext = createContext<{
   userConfig: userConfigType;
   updateUserConfig: (newConfig: Record<string, string>) => void;
 }>({
-  updateUserConfig(newConfig: any): void {},
+  updateUserConfig: () => {
+    // Default implementation does nothing - will be overridden by provider
+  },
   userConfig: { api: "gcp" },
 });
 

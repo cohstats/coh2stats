@@ -48,7 +48,7 @@ const PlayerCardContent = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<null | string>(null);
   const [data, setData] = useState<null | PlayerCardAPIObject>(null);
-  const [playerName, setPlayerName] = useState<string>("");
+
 
   useEffect(() => {
     firebaseAnalytics.playerCardDisplayed();
@@ -70,9 +70,8 @@ const PlayerCardContent = () => {
         // This means there is already a name, but it was changed!
         if (window.location.pathname.match(/.+\/\d+-/)) {
           // There is already name in url let's replace it with a new one
-          router.replace(
-            `${window.location.pathname.replace(/(.+\/\d+-)(.+)/, `$1${cleanName}`)}`,
-          );
+          const newPath = window.location.pathname.replace(/(.+\/\d+-)(.+)/, `$1${cleanName}`);
+          router.replace(newPath);
         } else {
           // No name in the url let's just push a new one
           router.replace(`${window.location.pathname}-${cleanName}`);
@@ -92,13 +91,6 @@ const PlayerCardContent = () => {
           addNameToUrl(Object.values(finalData.steamProfile)[0].personaname);
         }
 
-        // Extract player name for title update
-        if (finalData && finalData.relicPersonalStats?.statGroups) {
-          const profile = findPlayerProfile(finalData.relicPersonalStats.statGroups);
-          if (profile?.alias) {
-            setPlayerName(profile.alias);
-          }
-        }
       } catch (e) {
         let errorMessage = "Failed to do something exceptional";
         if (e instanceof Error) {

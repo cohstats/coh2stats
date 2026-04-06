@@ -186,8 +186,8 @@ export const formatMatchtypeID = (matchType: number): string => {
       formattedMatchType = "4v4 AI Easy";
       break;
     case 0:
-    // This is empty on purpose, lol case
-
+    // This is empty on purpose, lol case - falls through to case 22
+    // falls through
     case 22:
       formattedMatchType = "Custom Game";
       break;

@@ -12,7 +12,7 @@ import MapStatsDetails from "./map-stats-details";
 const { Title } = Typography;
 
 interface IProps {
-  urlChanger: Function;
+  urlChanger: (params: Record<string, string | number | undefined>) => void;
 }
 
 const CustomMapStatsRangeDataProvider: React.FC<IProps> = ({ urlChanger }) => {

@@ -39,5 +39,3 @@ describe("findByLeaderBoardID", () => {
   });
 });
 /* eslint-enable */
-
-export {};

@@ -9,7 +9,7 @@ import { useSearchParams } from "next/navigation";
 const { Text } = Typography;
 
 interface IProps {
-  urlChanger: Function;
+  urlChanger: (params: Record<string, string | number | undefined>) => void;
   data: StatsDataObject;
   type?: statTypesInDbAsType;
 }

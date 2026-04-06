@@ -42,7 +42,8 @@ const LiveMatches: React.FC<LiveMatchesProps> = ({
   }, []);
 
   const changeRoute = (params: Record<string, string | number | undefined>) => {
-    let { playerGroupToLoad, orderByToLoad, startToLoad } = params;
+    const { playerGroupToLoad } = params;
+    let { orderByToLoad, startToLoad } = params;
 
     if ((playerGroupToLoad === "5" || playerGroupToLoad === "0") && orderBy === "0") {
       orderByToLoad = "1";
