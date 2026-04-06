@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 import { PlayerSearchInput } from "./header-search";
 import Link from "next/link";
 import OnlinePlayers from "./online-players";
+import config from "../config";
 
 const { Header } = Layout;
 
@@ -70,6 +71,21 @@ const menuItems: ItemType[] = [
         label: <Link href={`${routes.aboutBase()}#donations`}>Donation</Link>,
       },
     ],
+  },
+  {
+    key: "support-us",
+    label: (
+      <a href={config.donationLink} target="_blank" rel="noreferrer">
+        <img
+          width={24}
+          height={24}
+          src={"/resources/kofi_s_logo_nolabel.webp"}
+          alt={"Ko-fi support button"}
+          style={{ marginRight: 4, verticalAlign: "middle" }}
+        />
+        Support Us
+      </a>
+    ),
   },
 ];
 
