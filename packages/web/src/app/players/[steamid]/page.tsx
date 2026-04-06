@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import React, { useEffect, useState, Suspense } from "react";
@@ -10,7 +9,6 @@ import { capitalize, timeAgo } from "../../../utils/helpers";
 import { fetchPlayerCardData } from "./actions";
 
 import { CountryFlag } from "../../../components/country-flag";
-import { playerCardBase } from "../../../titles";
 import { useRouter, useParams, useSearchParams } from "next/navigation";
 import { getGeneralIconPath } from "../../../coh/helpers";
 import { Loading } from "../../../components/loading";
@@ -21,7 +19,6 @@ import PlayerStandingsTables from "./_components/player-standings";
 import config from "../../../config";
 import { AlertBox } from "../../../components/alert-box";
 import AllMatchesTable from "../../../components/matches/all-matches-table";
-import { Space } from "antd";
 
 // Force dynamic rendering
 export const dynamic = "force-dynamic";
@@ -50,7 +47,7 @@ const PlayerCardContent = () => {
 
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<null | string>(null);
-  const [data, setData] = useState<null | playerCardAPIObject>(null);
+  const [data, setData] = useState<null | PlayerCardAPIObject>(null);
   const [playerName, setPlayerName] = useState<string>("");
 
   useEffect(() => {
@@ -87,12 +84,12 @@ const PlayerCardContent = () => {
       try {
         const finalData = await fetchPlayerCardData(steamidParsed);
         setData(finalData);
-        if (finalData.steamProfile && Object.values(finalData.steamProfile)[0].personaname) {
+        if (finalData && finalData.steamProfile && Object.values(finalData.steamProfile)[0]?.personaname) {
           addNameToUrl(Object.values(finalData.steamProfile)[0].personaname);
         }
 
         // Extract player name for title update
-        if (finalData.relicPersonalStats?.statGroups) {
+        if (finalData && finalData.relicPersonalStats?.statGroups) {
           const profile = findPlayerProfile(finalData.relicPersonalStats.statGroups);
           if (profile?.alias) {
             setPlayerName(profile.alias);

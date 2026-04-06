@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from "react";
 import { ColumnsType } from "antd/es/table";
 import { PlayerCardDataArrayObject } from "../../../../coh/types";

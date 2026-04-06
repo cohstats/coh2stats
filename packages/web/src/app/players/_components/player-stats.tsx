@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useEffect, useState } from "react";
 import { Col, Typography, Row } from "antd";
 import { UserOutlined } from "@ant-design/icons";

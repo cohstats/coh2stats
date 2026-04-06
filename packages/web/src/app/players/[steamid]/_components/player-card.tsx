@@ -1,25 +1,26 @@
-// @ts-nocheck
 import React, { useEffect, useState } from "react";
 
 import { Col, Row, Tooltip, Typography, Avatar, Tabs, Badge, notification } from "antd";
-import { LaddersDataObject, PlayerCardAPIObject } from "../../../coh/types";
-import firebaseAnalytics from "../../../analytics";
-import { capitalize, timeAgo, useQuery } from "../../../utils/helpers";
-import { getPlayerCard } from "../../../coh/coh2stats-api";
+import { LaddersDataObject, PlayerCardAPIObject } from "../../../../coh/types";
+import firebaseAnalytics from "../../../../analytics";
+import { capitalize, timeAgo, useQuery } from "../../../../utils/helpers";
+import { getPlayerCard } from "../../../../coh/coh2stats-api";
 
-import { CountryFlag } from "../../../components/country-flag";
-import { playerCardBase } from "../../../titles";
+import { CountryFlag } from "../../../../components/country-flag";
+import { playerCardBase } from "../../../../titles";
+// @ts-expect-error - Legacy file using react-router, not actually used
 import { useHistory } from "react-router";
+// @ts-expect-error - Legacy file using react-router, not actually used
 import { useParams } from "react-router-dom-v5-compat";
-import { getGeneralIconPath } from "../../../coh/helpers";
-import { Loading } from "../../../components/loading";
+import { getGeneralIconPath } from "../../../../coh/helpers";
+import { Loading } from "../../../../components/loading";
 import Title from "antd/es/typography/Title";
 import { calculateOverallStatsForPlayerCard } from "./data-processing";
 import { convertTeamNames } from "./helpers";
 import LastMatchesTable from "../../../../components/matches/last-matches-table";
 import PlayerStandingsTables from "./player-standings";
 import config from "../../../../config";
-import { AlertBox } from "@/components/alert-box";
+import { AlertBox } from "../../../../components/alert-box";
 import AllMatchesTable from "../../../../components/matches/all-matches-table";
 
 const { Text } = Typography;
@@ -48,7 +49,7 @@ const PlayerCard = () => {
 
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<null | string>(null);
-  const [data, setData] = useState<null | playerCardAPIObject>(null);
+  const [data, setData] = useState<null | PlayerCardAPIObject>(null);
   // Set page title
   if (typeof window !== "undefined") document.title = `${playerCardBase}`;
 
@@ -84,7 +85,7 @@ const PlayerCard = () => {
       try {
         const finalData = await getPlayerCard(steamidParsed, false);
         setData(finalData);
-        if (finalData.steamProfile && Object.values(finalData.steamProfile)[0].personaname) {
+        if (finalData.steamProfile && Object.values(finalData.steamProfile)[0]?.personaname) {
           addNameToUrl(Object.values(finalData.steamProfile)[0].personaname);
         }
       } catch (e) {

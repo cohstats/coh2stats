@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useState } from "react";
 import { ColumnsType } from "antd/es/table";
 import sub from "date-fns/sub";

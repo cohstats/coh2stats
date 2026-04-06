@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import CustomSearch from "../../components/search/search";
