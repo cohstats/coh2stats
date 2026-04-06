@@ -15,7 +15,7 @@ import {
 import { convertSteamNameToID, getGeneralIconPath } from "../../../coh/helpers";
 import Link from "next/link";
 import routes from "../../../routes";
-import { TableColumnsType, Space, TablePaginationConfig } from "antd";
+import { TableColumnsType, TablePaginationConfig } from "antd";
 
 type ColumnsType<T> = TableColumnsType<T>;
 

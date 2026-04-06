@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Row, Card, Radio, RadioChangeEvent, Space } from "antd";
 import { MapBarChart } from "../../../components/charts/maps-bar";
 import { WinsChart } from "../../../components/charts/wins-bar";
@@ -129,7 +129,7 @@ const CustomStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
           <FactionVsFactionCard
             title={`Team composition matrix ${type}`}
             data={data}
-            style={{ marginTop: 20 }}
+            style={useMemo(() => ({ marginTop: 20 }), [])}
           />
         </Row>
       )}

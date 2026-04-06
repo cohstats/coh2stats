@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
-import { statsBase } from "../../../titles";
-import { capitalize, isDev } from "../../../utils/helpers";
+import React from "react";
+import { isDev } from "../../../utils/helpers";
 import { Radio, RadioChangeEvent, Row, Tooltip, Typography } from "antd";
 import PatchNotification from "../../../components/patch-notifications";
 import { StatsDataObject, statTypesInDbAsType } from "../../../coh/types";
@@ -19,7 +18,6 @@ const StatsHeader: React.FC<IProps> = ({ urlChanger, data }) => {
   const searchParams = useSearchParams();
 
   const type = (searchParams?.get("type") as "1v1" | "2v2" | "3v3" | "4v4" | "general") || "4v4";
-  const race = searchParams?.get("race") || "wermacht";
   const sourceIsAll = searchParams?.get("statsSource") !== "top200";
 
   const timestamp = searchParams?.get("timeStamp") || "";

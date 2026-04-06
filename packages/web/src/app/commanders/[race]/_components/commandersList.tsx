@@ -58,37 +58,52 @@ export const CommandersList = ({ race }: CommandersListProps) => {
           </div>
           <Flex vertical gap="large" style={{ paddingTop: 10 }}>
             {myData.map((item) => (
-              <Flex
+              <Link
                 key={item.serverID}
-                gap="middle"
-                align="start"
-                style={{
-                  padding: "12px 0",
-                  borderBottom: "1px solid rgba(5, 5, 5, 0.06)",
-                }}
+                href={routes.commanderByID(race, item.serverID)}
+                style={{ textDecoration: "none", color: "inherit" }}
               >
-                <Link href={routes.commanderByID(race, item.serverID)}>
+                <Flex
+                  gap="middle"
+                  align="start"
+                  style={{
+                    padding: "12px",
+                    borderBottom: "1px solid rgba(5, 5, 5, 0.06)",
+                    borderRadius: "8px",
+                    cursor: "pointer",
+                    transition: "all 0.3s ease",
+                    backgroundColor: "transparent",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = "rgba(0, 0, 0, 0.02)";
+                    e.currentTarget.style.boxShadow = "0 2px 8px rgba(0, 0, 0, 0.09)";
+                    e.currentTarget.style.transform = "translateY(-2px)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = "transparent";
+                    e.currentTarget.style.boxShadow = "none";
+                    e.currentTarget.style.transform = "translateY(0)";
+                  }}
+                >
                   <Avatar
                     src={getCommanderIconPath(item.iconlarge)}
                     shape="square"
                     size={192}
                     style={{ height: "192px", width: "144px" }}
                   />
-                </Link>
-                <Flex vertical gap="small" style={{ flex: 1 }}>
-                  <Link href={routes.commanderByID(race, item.serverID)}>
+                  <Flex vertical gap="small" style={{ flex: 1 }}>
                     <Title level={3} style={{ margin: 0 }}>
                       {item.commanderName}
                     </Title>
-                  </Link>
-                  <div>
-                    <CommanderAbilitiesComponent
-                      commanderDescription={item.description}
-                      commanderAbilities={item.abilities}
-                    />
-                  </div>
+                    <div>
+                      <CommanderAbilitiesComponent
+                        commanderDescription={item.description}
+                        commanderAbilities={item.abilities}
+                      />
+                    </div>
+                  </Flex>
                 </Flex>
-              </Flex>
+              </Link>
             ))}
           </Flex>
           <ExportDate typeOfData={"Commander"} />

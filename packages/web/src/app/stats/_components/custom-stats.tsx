@@ -1,7 +1,7 @@
 import React, { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import routes from "../../../routes";
-import { ConfigProvider, Select, Space, Radio, Typography } from "antd";
+import { ConfigProvider, Select, Space, Radio } from "antd";
 import DatePicker from "../../../components/date-picker";
 import {
   convertDateToDayTimestamp,

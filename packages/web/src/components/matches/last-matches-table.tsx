@@ -1,6 +1,6 @@
 // @ts-nocheck
 import React, { useEffect, useState } from "react";
-import { Image, Row, Table, Tag, Tooltip, TableColumnsType, Space } from "antd";
+import { Image, Row, Table, Tag, Tooltip, TableColumnsType } from "antd";
 import {
   formatMatchTime,
   formatMatchtypeID,

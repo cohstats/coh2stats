@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useMemo } from "react";
 import { Row, Card, Radio, RadioChangeEvent, Space, Typography, Tooltip, Select } from "antd";
 import { MapBarChart } from "../../../components/charts/maps-bar";
-import { mapStatsBase } from "../../../titles";
 import { useSearchParams } from "next/navigation";
 import { FactionVsFactionCard } from "../../../components/factions";
 import { useMediaQuery } from "react-responsive";
@@ -262,7 +261,7 @@ const MapStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
               <FactionVsFactionCard
                 title={`${map} - ${type} team composition matrix`}
                 data={data[map]}
-                style={{ marginTop: 10, width: 1155 }}
+                style={useMemo(() => ({ marginTop: 10, width: 1155 }), [])}
               />
             </Space>
           </Row>
