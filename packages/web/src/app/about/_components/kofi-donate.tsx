@@ -1,25 +1,24 @@
-// @ts-nocheck
 import React from "react";
 
-import "./kofi-donate.module.css";
+import styles from "./kofi-donate.module.css";
 
 export const KofiDonate: React.FC = () => {
   return (
-    <div className={"btn-container"}>
+    <div className={styles["btn-container"]}>
       <a
         title="Support COHStats on ko-fi.com"
-        className="kofi-button"
+        className={styles["kofi-button"]}
         style={{ backgroundColor: "#74c6f8" }}
         href="https://ko-fi.com/cohstats"
         target="_blank"
         rel={"noreferrer"}
       >
         {" "}
-        <span className="kofitext">
+        <span className={styles.kofitext}>
           <img
             src="https://storage.ko-fi.com/cdn/cup-border.png"
             alt="Ko-fi donations"
-            className="kofiimg"
+            className={styles.kofiimg}
           />
           Donate
         </span>
