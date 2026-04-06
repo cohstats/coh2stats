@@ -84,7 +84,11 @@ const PlayerCardContent = () => {
       try {
         const finalData = await fetchPlayerCardData(steamidParsed);
         setData(finalData);
-        if (finalData && finalData.steamProfile && Object.values(finalData.steamProfile)[0]?.personaname) {
+        if (
+          finalData &&
+          finalData.steamProfile &&
+          Object.values(finalData.steamProfile)[0]?.personaname
+        ) {
           addNameToUrl(Object.values(finalData.steamProfile)[0].personaname);
         }
 

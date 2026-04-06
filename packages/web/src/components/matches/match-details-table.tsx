@@ -156,7 +156,7 @@ const ExpandedPlayer: React.FC<{
             );
           })}
         </Col>
-        <Col span={0} />
+        <Col key={"spacer"} span={0} />
       </Row>
     </div>
   );
@@ -360,9 +360,9 @@ export const MatchPlayerDetailsTable: React.FC<MatchPlayerDetailsTableProps> = (
     },
     {
       title: (
-        <>
+        <span>
           <img src={getGeneralIconPath("mp")} height="20px" alt={"Man power"} /> Spent / Max Float
-        </>
+        </span>
       ),
       dataIndex: "manmax",
       key: "manmax",
@@ -386,9 +386,9 @@ export const MatchPlayerDetailsTable: React.FC<MatchPlayerDetailsTableProps> = (
     },
     {
       title: (
-        <>
+        <span>
           <img src={getGeneralIconPath("fuel")} height="20px" alt={"fuel"} /> Spent / Max Float
-        </>
+        </span>
       ),
       dataIndex: "fuelmax",
       key: "fuelmax",
@@ -406,9 +406,9 @@ export const MatchPlayerDetailsTable: React.FC<MatchPlayerDetailsTableProps> = (
     },
     {
       title: (
-        <>
+        <span>
           <img src={getGeneralIconPath("mun")} height="20px" alt={"mun"} /> Spent / Max Float
-        </>
+        </span>
       ),
       dataIndex: "munmax",
       key: "munmax",
@@ -478,7 +478,7 @@ export const MatchPlayerDetailsTable: React.FC<MatchPlayerDetailsTableProps> = (
         columns={finalColumns}
         dataSource={convertedData}
         showSorterTooltip={{ title: "Click to cycle sorting modes" }}
-        rowKey={(record) => record.id}
+        rowKey={(record) => record.profile_id}
         rowClassName={(record) => showFactionResultColor(record, smallView)}
         size="small"
         expandable={{
