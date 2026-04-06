@@ -1,7 +1,7 @@
 import {
   findByLeaderBoardID,
   prepareLeaderBoardDataForSinglePlayer,
-} from "../../../pages/players/player-card/data-processing";
+} from "../../../app/players/[steamid]/_components/data-processing";
 import { relicProfile } from "../../assets/relic-profile";
 
 describe("prepareLeaderBoardData", () => {
