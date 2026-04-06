@@ -57,8 +57,7 @@ const capitalize = (s: string) => {
 };
 
 function useQuery() {
-  const searchParams = useSearchParams();
-  return searchParams;
+  return useSearchParams();
 }
 
 const formatFactionName = (name: string) => {

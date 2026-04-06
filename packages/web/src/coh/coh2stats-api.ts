@@ -32,7 +32,7 @@ const API_URL = config.apiUrl;
  */
 export async function getLeaderboards(
   leaderBoardID: number,
-  start: number = 0,
+  start = 0,
 ): Promise<LaddersDataObject> {
   const response = await fetch(
     `${API_URL}getCOHLaddersHttpV2?leaderBoardID=${leaderBoardID}&start=${start}`,
@@ -162,7 +162,7 @@ export async function searchPlayers(name: string): Promise<SearchPlayersResponse
 export async function getLiveGames(
   playerGroup: string,
   start: string,
-  count: number = 40,
+  count = 40,
   sortOrder: string,
 ): Promise<LiveGame[] | null> {
   try {

@@ -124,7 +124,7 @@ const AllMatchesTable: React.FC<IProps> = ({ steamID }) => {
   };
 
   function getPlayerMatchHistoryResult(matchRecord: any) {
-    let player = matchRecord.matchhistoryreportresults.filter(
+    const player = matchRecord.matchhistoryreportresults.filter(
       (result: any) => result.profile.name === profileID,
     );
     return player[0];
@@ -133,7 +133,7 @@ const AllMatchesTable: React.FC<IProps> = ({ steamID }) => {
   function isPlayerVictorious(matchRecord: any): boolean {
     if (!matchRecord) return false;
 
-    let resultItem = matchRecord.matchhistoryreportresults.filter(
+    const resultItem = matchRecord.matchhistoryreportresults.filter(
       (result: any) => result.profile.name === profileID,
     );
     return resultItem[0]?.resulttype === 1;
@@ -148,9 +148,9 @@ const AllMatchesTable: React.FC<IProps> = ({ steamID }) => {
       title: "Played",
       dataIndex: "id",
       key: "id",
-      align: "center" as "center",
+      align: "center" as const,
       render: (_text: any, record: any) => {
-        let player = getPlayerMatchHistoryResult(record);
+        const player = getPlayerMatchHistoryResult(record);
         return (
           <>
             <div>
@@ -175,7 +175,7 @@ const AllMatchesTable: React.FC<IProps> = ({ steamID }) => {
       title: "Result",
       dataIndex: "matchhistoryreportresults",
       key: "result",
-      align: "center" as "center",
+      align: "center" as const,
       responsive: ["xl"],
       render: (data: any, record: any) => {
         if (isPlayerVictorious(record)) {
@@ -190,7 +190,7 @@ const AllMatchesTable: React.FC<IProps> = ({ steamID }) => {
       key: "axis_players",
       dataIndex: "matchhistoryreportresults",
       render: (data: any, record: any) => {
-        let axisPlayers = getMatchPlayersByFaction(data, "axis");
+        const axisPlayers = getMatchPlayersByFaction(data, "axis");
         return (
           <div>
             {axisPlayers.map((playerInfo: Record<string, any>) => {
@@ -227,7 +227,7 @@ const AllMatchesTable: React.FC<IProps> = ({ steamID }) => {
       key: "allies_players",
       dataIndex: "matchhistoryreportresults",
       render: (data: any, record: any) => {
-        let alliesPlayers = getMatchPlayersByFaction(data, "allies");
+        const alliesPlayers = getMatchPlayersByFaction(data, "allies");
         return (
           <div>
             {alliesPlayers.map((playerInfo: Record<string, any>) => {
@@ -263,7 +263,7 @@ const AllMatchesTable: React.FC<IProps> = ({ steamID }) => {
       title: "Map",
       dataIndex: "mapname",
       key: "mapname",
-      align: "left" as "left",
+      align: "left" as const,
       responsive: ["lg"],
       render: (text: any, record: any) => {
         return (
@@ -288,7 +288,7 @@ const AllMatchesTable: React.FC<IProps> = ({ steamID }) => {
       title: "Mode",
       dataIndex: "matchtype_id",
       key: "matchtype_id",
-      align: "center" as "center",
+      align: "center" as const,
       responsive: ["xl"],
       filters: [
         {
@@ -323,7 +323,7 @@ const AllMatchesTable: React.FC<IProps> = ({ steamID }) => {
       title: "Match duration",
       dataIndex: "matchduration",
       key: "matchduration",
-      align: "center" as "center",
+      align: "center" as const,
       responsive: ["xl"],
       render: (_text: any, record: any) => {
         return <p>{getMatchDuration(record.startgametime, record.completiontime)}</p>;

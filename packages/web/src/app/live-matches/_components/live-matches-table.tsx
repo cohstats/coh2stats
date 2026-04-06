@@ -98,7 +98,6 @@ const LiveMatchesTable: React.FC<{
       data: initialData,
     });
     setError(null);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialData, playerGroup, start, orderBy, overViewData]);
 
   if (isDev()) {
@@ -153,7 +152,7 @@ const LiveMatchesTable: React.FC<{
     {
       title: <TeamOutlined />,
       key: "nmbOfPlayers",
-      align: "center" as "center",
+      align: "center" as const,
       responsive: ["md"],
       render: (data: LiveGame) => {
         return `${data.players?.length}/${data.maxplayers}`;
@@ -173,7 +172,7 @@ const LiveMatchesTable: React.FC<{
       key: "axis_players",
       dataIndex: "players",
       render: (players: LiveGame["players"]) => {
-        let axisPlayers = getMatchPlayersByFaction(players || [], "axis");
+        const axisPlayers = getMatchPlayersByFaction(players || [], "axis");
 
         return (
           <div>
@@ -216,7 +215,7 @@ const LiveMatchesTable: React.FC<{
       key: "allies_players",
       dataIndex: "players",
       render: (players: LiveGame["players"]) => {
-        let alliesPlayers = getMatchPlayersByFaction(players || [], "allies");
+        const alliesPlayers = getMatchPlayersByFaction(players || [], "allies");
 
         return (
           <div>
@@ -260,7 +259,7 @@ const LiveMatchesTable: React.FC<{
     },
     {
       title: "Observers",
-      align: "center" as "center",
+      align: "center" as const,
       key: "observers",
       render: (data: LiveGame) => {
         return `${data.current_observers}`;
@@ -268,7 +267,7 @@ const LiveMatchesTable: React.FC<{
     },
     {
       title: "Gametime",
-      align: "center" as "center",
+      align: "center" as const,
       dataIndex: "startgametime",
       render: (data: number) => {
         return getMatchDuration(data, Date.now() / 1000);

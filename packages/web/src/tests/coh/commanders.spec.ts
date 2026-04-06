@@ -11,7 +11,7 @@ import * as data from "../../coh/data/cu2021/commanderData.json";
 
 describe("convertCommanderIDToName", () => {
   test("Returns commanderID when commanderID not in commanderData", () => {
-    const testId: string = "random string for testing";
+    const testId = "random string for testing";
     const actual = convertCommanderIDToName(testId);
     expect(actual).toEqual(testId);
   });
@@ -25,7 +25,7 @@ describe("convertCommanderIDToName", () => {
 
 describe("getCommanderData", () => {
   test("Returns null when bulletinID not in commanderData", () => {
-    const testId: string = "random string for testing";
+    const testId = "random string for testing";
     const actual = getCommanderData(testId);
     expect(actual).toBeNull();
   });
@@ -81,7 +81,7 @@ describe("getCommanderByRaces", () => {
     commanders
       .map((commander) => commander.abilities)
       .forEach((abilities) => {
-        let expectedCommandPoints = abilities
+        const expectedCommandPoints = abilities
           .map((ability) => ability.commandPoints)
           .sort((c1, c2) => +c1 - +c2);
         expect(abilities.map((ability) => ability.commandPoints)).toEqual(expectedCommandPoints);

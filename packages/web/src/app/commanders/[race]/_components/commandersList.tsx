@@ -97,4 +97,3 @@ export const CommandersList = ({ race }: CommandersListProps) => {
     </div>
   );
 };
-

@@ -30,7 +30,7 @@ const PlayerTeamMatchesTable: React.FC<IProps> = ({ title, data }) => {
   }
 
   // Sort by total games
-  let sortedData = data.sort((a, b) => {
+  const sortedData = data.sort((a, b) => {
     if (a.wins + a.losses > b.wins + b.losses) {
       return -1;
     } else {
@@ -43,7 +43,7 @@ const PlayerTeamMatchesTable: React.FC<IProps> = ({ title, data }) => {
       title: "Mode",
       dataIndex: "mode",
       key: "mode",
-      align: "left" as "left",
+      align: "left" as const,
       width: 180,
       render: (mode: string, data) => {
         return (
@@ -80,7 +80,7 @@ const PlayerTeamMatchesTable: React.FC<IProps> = ({ title, data }) => {
     {
       title: "Rank",
       key: "rank",
-      align: "center" as "center",
+      align: "center" as const,
       width: 70,
       render: (data: PlayerCardDataArrayObject) => {
         if (data.rank < 0) {
@@ -122,7 +122,7 @@ const PlayerTeamMatchesTable: React.FC<IProps> = ({ title, data }) => {
         </div>
       ),
       key: "ranklevel",
-      align: "center" as "center",
+      align: "center" as const,
       width: 70,
       render: (data: PlayerCardDataArrayObject) => {
         if (data.ranklevel <= 0) {
@@ -155,7 +155,7 @@ const PlayerTeamMatchesTable: React.FC<IProps> = ({ title, data }) => {
       title: "Streak",
       dataIndex: "streak",
       key: "streak",
-      align: "center" as "center",
+      align: "center" as const,
       width: 70,
       render: (data: any) => {
         if (data > 0) {
@@ -169,20 +169,20 @@ const PlayerTeamMatchesTable: React.FC<IProps> = ({ title, data }) => {
       title: "Wins",
       dataIndex: "wins",
       key: "wins",
-      align: "center" as "center",
+      align: "center" as const,
       width: 70,
     },
     {
       title: "Losses",
       dataIndex: "losses",
       key: "losses",
-      align: "center" as "center",
+      align: "center" as const,
       width: 70,
     },
     {
       title: "Ratio",
       key: "ratio",
-      align: "center" as "center",
+      align: "center" as const,
       width: 70,
       render: (data: any) => {
         return <div>{percentageFormat(data.wins, data.losses)}%</div>;
@@ -191,7 +191,7 @@ const PlayerTeamMatchesTable: React.FC<IProps> = ({ title, data }) => {
     {
       title: "Total",
       key: "total",
-      align: "center" as "center",
+      align: "center" as const,
       width: 70,
       render: (data: any) => {
         return <>{data.wins + data.losses}</>;
@@ -201,21 +201,21 @@ const PlayerTeamMatchesTable: React.FC<IProps> = ({ title, data }) => {
       title: "Drops",
       dataIndex: "drops",
       key: "drops",
-      align: "center" as "center",
+      align: "center" as const,
       width: 70,
     },
     {
       title: "Disputes",
       dataIndex: "disputes",
       key: "disputes",
-      align: "center" as "center",
+      align: "center" as const,
       width: 70,
     },
     {
       title: "Last Game",
       dataIndex: "lastmatchdate",
       key: "lastmatchdate",
-      align: "right" as "right",
+      align: "right" as const,
       width: 120,
       sorter: (a: LaddersDataArrayObject, b: LaddersDataArrayObject) =>
         a.lastmatchdate - b.lastmatchdate,

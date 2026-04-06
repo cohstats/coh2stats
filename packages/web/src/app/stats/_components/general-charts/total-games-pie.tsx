@@ -12,7 +12,7 @@ export const TotalGamesPieChart: React.FC<FactionsPlayedPieChartProps> = ({ data
   const chartData = [];
 
   // "1v1", "2v2", "3v3" ...
-  for (let type of statsTypesInDB) {
+  for (const type of statsTypesInDB) {
     chartData.push({
       id: type,
       label: type,
@@ -20,7 +20,7 @@ export const TotalGamesPieChart: React.FC<FactionsPlayedPieChartProps> = ({ data
     });
   }
 
-  if (!data["1v1"].totalGames && !((data["1v1"].totalGames || 0) > data["1v1"].matchCount)) {
+  if ((!data["1v1"].totalGames && data["1v1"].totalGames) || 0 <= data["1v1"].matchCount) {
     return <Empty description={"We started tracking total games from June 2022"} />;
   }
 

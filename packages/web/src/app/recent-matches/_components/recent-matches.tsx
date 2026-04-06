@@ -17,12 +17,12 @@ import routes from "../../../routes";
 import { getMapIconPath } from "@/coh/maps";
 import { AlertBox } from "@/components/alert-box";
 import { useMediaQuery } from "react-responsive";
+import firebaseAnalytics from "../../../analytics";
+import { determineMatchWinner } from "@/utils/helpers";
 
 type ColumnsType<T> = TableColumnsType<T>;
 
 const { Title } = Typography;
-import firebaseAnalytics from "../../../analytics";
-import { determineMatchWinner } from "@/utils/helpers";
 
 interface RecentMatchesProps {
   initialMatchRecords: Array<Record<string, any>>;
@@ -48,7 +48,7 @@ const RecentMatches: React.FC<RecentMatchesProps> = ({ initialMatchRecords, tota
       title: "Played",
       dataIndex: "id",
       key: "id",
-      align: "center" as "center",
+      align: "center" as const,
       render: (_text: any, record: any) => {
         return <>{formatMatchTime(record.completiontime)}</>;
       },
@@ -57,7 +57,7 @@ const RecentMatches: React.FC<RecentMatchesProps> = ({ initialMatchRecords, tota
       title: "Result",
       dataIndex: "matchhistoryreportresults",
       key: "result",
-      align: "center" as "center",
+      align: "center" as const,
       responsive: ["xl"],
       render: (data: any, record: any) => {
         return <>{determineMatchWinner(record).toUpperCase()}</>;
@@ -68,7 +68,7 @@ const RecentMatches: React.FC<RecentMatchesProps> = ({ initialMatchRecords, tota
       key: "axis_players",
       dataIndex: "matchhistoryreportresults",
       render: (data: any, record: any) => {
-        let axisPlayers = getMatchPlayersByFaction(data, "axis");
+        const axisPlayers = getMatchPlayersByFaction(data, "axis");
         return (
           <div>
             {axisPlayers.map((playerInfo: Record<string, any>) => {
@@ -101,7 +101,7 @@ const RecentMatches: React.FC<RecentMatchesProps> = ({ initialMatchRecords, tota
       key: "allies_players",
       dataIndex: "matchhistoryreportresults",
       render: (data: any, record: any) => {
-        let alliesPlayers = getMatchPlayersByFaction(data, "allies");
+        const alliesPlayers = getMatchPlayersByFaction(data, "allies");
         return (
           <div>
             {alliesPlayers.map((playerInfo: Record<string, any>) => {
@@ -133,7 +133,7 @@ const RecentMatches: React.FC<RecentMatchesProps> = ({ initialMatchRecords, tota
       title: "Map",
       dataIndex: "mapname",
       key: "mapname",
-      align: "left" as "left",
+      align: "left" as const,
       responsive: ["lg"],
       render: (text: any, record: any) => {
         return (
@@ -156,7 +156,7 @@ const RecentMatches: React.FC<RecentMatchesProps> = ({ initialMatchRecords, tota
       title: "Mode",
       dataIndex: "matchtype_id",
       key: "matchtype_id",
-      align: "center" as "center",
+      align: "center" as const,
       responsive: ["xl"],
       render: (_text: any, record: any) => {
         return (
@@ -173,7 +173,7 @@ const RecentMatches: React.FC<RecentMatchesProps> = ({ initialMatchRecords, tota
       title: "Match duration",
       dataIndex: "matchduration",
       key: "matchduration",
-      align: "center" as "center",
+      align: "center" as const,
       responsive: ["xl"],
       render: (_text: any, record: any) => {
         return <p>{getMatchDuration(record.startgametime, record.completiontime)}</p>;

@@ -15,11 +15,11 @@ export const FactionsBarStackedChart: React.FC<IProps> = ({ data }) => {
 
   // "1v1" ,"2v2
   let amountOfPlayers = 2;
-  for (let type of statsTypesInDB) {
+  for (const type of statsTypesInDB) {
     const result: Record<string, number | string> = {
       type: type,
     };
-    for (let faction of validRaceNames) {
+    for (const faction of validRaceNames) {
       result[faction] = (
         ((data[type][faction].wins + data[type][faction].losses) /
           data[type].matchCount /
@@ -77,4 +77,3 @@ export const FactionsBarStackedChart: React.FC<IProps> = ({ data }) => {
     />
   );
 };
-

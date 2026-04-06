@@ -28,7 +28,7 @@ const splitAIGames = (keys: Array<string>) => {
   const alliesAIGames = [];
   const axisAIGames = [];
 
-  for (let key of keys) {
+  for (const key of keys) {
     if (key.endsWith("Allies")) {
       alliesAIGames.push(key);
     } else {

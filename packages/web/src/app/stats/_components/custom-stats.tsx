@@ -69,7 +69,7 @@ const CustomStatsContent: React.FC = () => {
 
   const PickerWithType = ({ type, onChange }: { type: DatePickerType; onChange: any }) => {
     // @ts-ignore
-    let pickerType = type === "daily" ? "date" : type;
+    const pickerType = type === "daily" ? "date" : type;
 
     if (pickerType === "range") {
       return <>ERROR</>;

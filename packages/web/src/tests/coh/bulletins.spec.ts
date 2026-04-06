@@ -11,7 +11,7 @@ import * as data from "../../coh/data/cu2021/bulletinData.json";
 
 describe("convertBulletinIDToName", () => {
   test("Returns bulletinID when bulletinID not in bulletinsData", () => {
-    const testId: string = "random string for testing";
+    const testId = "random string for testing";
     const actual = convertBulletinIDToName(testId);
     expect(actual).toEqual(testId);
   });
@@ -25,7 +25,7 @@ describe("convertBulletinIDToName", () => {
 
 describe("getBulletinData", () => {
   test("Returns null when bulletinID not in bulletinsData", () => {
-    const testId: string = "random string for testing";
+    const testId = "random string for testing";
     const actual = getBulletinData(testId);
     expect(actual).toBeNull();
   });

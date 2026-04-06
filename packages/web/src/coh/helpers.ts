@@ -119,11 +119,11 @@ const levelToText = (level: string | number): string => {
  * ```
  */
 export const mapRelicResponseToLaddersData = (
-  relicResponse: RelicLeaderboardResponse
+  relicResponse: RelicLeaderboardResponse,
 ): LaddersDataObject => {
   if (relicResponse.result.code !== 0) {
     throw new Error(
-      `Relic API returned error code ${relicResponse.result.code}: ${relicResponse.result.message}`
+      `Relic API returned error code ${relicResponse.result.code}: ${relicResponse.result.message}`,
     );
   }
 

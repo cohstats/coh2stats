@@ -25,10 +25,10 @@ const findByLeaderBoardID = (
 const prepareLeaderBoardDataForSinglePlayer = (
   data: Array<LeaderBoardStats>,
 ): Record<string, any> => {
-  let finalStatsSingleGame: Record<string, any> = {};
-  let finalStatsTeamGames: Record<string, any> = { axis: [], allies: [] };
-  let finalStatsCustomGames: Array<Record<string, any>> = [];
-  let finalStatsAIGame: Record<string, any> = {};
+  const finalStatsSingleGame: Record<string, any> = {};
+  const finalStatsTeamGames: Record<string, any> = { axis: [], allies: [] };
+  const finalStatsCustomGames: Array<Record<string, any>> = [];
+  const finalStatsAIGame: Record<string, any> = {};
 
   for (const stat of data) {
     const { mode, race } = findByLeaderBoardID(stat.leaderboard_id);

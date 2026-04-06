@@ -16,10 +16,10 @@ export const FactionsPlayedPieChart: React.FC<FactionsPlayedPieChartProps> = ({ 
   const factionGames: Record<string, number> = {};
 
   // "1v1", "2v2", "3v3" ...
-  for (let type of statsTypesInDB) {
+  for (const type of statsTypesInDB) {
     const typeObject = data[type as statTypesInDbAsType];
 
-    for (let faction of validRaceNames) {
+    for (const faction of validRaceNames) {
       let totalAmountOfGames =
         typeObject[faction as RaceName].wins + typeObject[faction as RaceName].losses;
       totalAmountOfGames = isNaN(totalAmountOfGames) ? 0 : totalAmountOfGames;

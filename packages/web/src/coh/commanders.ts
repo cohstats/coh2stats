@@ -5,7 +5,7 @@ const allCommanders: Record<string, any> = (allCommandersJSON as Record<string, 
 
 const searchCommanders = (search: string, searchAbilities = false): Array<CommanderData> => {
   const searchRegExp = new RegExp(search.toLowerCase(), "g");
-  const foundCommanders = Object.values(allCommanders).filter((commanderData) => {
+  return Object.values(allCommanders).filter((commanderData) => {
     const evalPerName: boolean =
       commanderData["commanderName"].toLowerCase().match(searchRegExp) != null;
     let evalPerAbility =
@@ -17,7 +17,6 @@ const searchCommanders = (search: string, searchAbilities = false): Array<Comman
 
     return evalPerAbility || evalPerName;
   });
-  return foundCommanders;
 };
 
 const convertCommanderIDToName = (commanderID: string): string => {
@@ -31,7 +30,7 @@ const convertCommanderIDToName = (commanderID: string): string => {
 
 const getCommanderData = (commanderID: string): CommanderData | null => {
   if (Object.prototype.hasOwnProperty.call(allCommanders, commanderID)) {
-    let commander = allCommanders[commanderID] as CommanderData;
+    const commander = allCommanders[commanderID] as CommanderData;
     return decorateCommanderData(commander);
   } else {
     return null;

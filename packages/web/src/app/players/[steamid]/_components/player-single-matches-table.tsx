@@ -31,13 +31,13 @@ const PlayerSingleMatchesTable: React.FC<IProps> = ({ title, data }) => {
       title: "Mode",
       dataIndex: "mode",
       key: "mode",
-      align: "center" as "center",
+      align: "center" as const,
       width: 70,
     },
     {
       title: "Rank",
       key: "rank",
-      align: "center" as "center",
+      align: "center" as const,
       width: 70,
       render: (data: PlayerCardDataArrayObject) => {
         if (data.rank < 0) {
@@ -79,7 +79,7 @@ const PlayerSingleMatchesTable: React.FC<IProps> = ({ title, data }) => {
         </>
       ),
       key: "ranklevel",
-      align: "center" as "center",
+      align: "center" as const,
       width: 90,
       render: (data: PlayerCardDataArrayObject) => {
         if (data.ranklevel <= 0) {
@@ -112,7 +112,7 @@ const PlayerSingleMatchesTable: React.FC<IProps> = ({ title, data }) => {
       title: "Streak",
       dataIndex: "streak",
       key: "streak",
-      align: "center" as "center",
+      align: "center" as const,
       width: 90,
       render: (data: number) => {
         if (data > 0) {
@@ -126,20 +126,20 @@ const PlayerSingleMatchesTable: React.FC<IProps> = ({ title, data }) => {
       title: "Wins",
       dataIndex: "wins",
       key: "wins",
-      align: "center" as "center",
+      align: "center" as const,
       width: 90,
     },
     {
       title: "Losses",
       dataIndex: "losses",
       key: "losses",
-      align: "center" as "center",
+      align: "center" as const,
       width: 90,
     },
     {
       title: "Ratio",
       key: "ratio",
-      align: "center" as "center",
+      align: "center" as const,
       width: 90,
       render: (data: PlayerCardDataArrayObject) => {
         return <div>{percentageFormat(data.wins, data.losses)}%</div>;
@@ -148,7 +148,7 @@ const PlayerSingleMatchesTable: React.FC<IProps> = ({ title, data }) => {
     {
       title: "Total",
       key: "total",
-      align: "center" as "center",
+      align: "center" as const,
       width: 90,
       render: (data: any) => {
         return <>{data.wins + data.losses}</>;
@@ -158,21 +158,21 @@ const PlayerSingleMatchesTable: React.FC<IProps> = ({ title, data }) => {
       title: "Drops",
       dataIndex: "drops",
       key: "drops",
-      align: "center" as "center",
+      align: "center" as const,
       width: 70,
     },
     {
       title: "Disputes",
       dataIndex: "disputes",
       key: "disputes",
-      align: "center" as "center",
+      align: "center" as const,
       width: 70,
     },
     {
       title: "Last Game",
       dataIndex: "lastmatchdate",
       key: "lastmatchdate",
-      align: "right" as "right",
+      align: "right" as const,
       width: 120,
       render: (data: any) => {
         if (data) {

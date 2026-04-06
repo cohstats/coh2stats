@@ -47,7 +47,7 @@ const init = (): void => {
 };
 
 // Initialize Firebase immediately on client-side
-if (typeof window !== 'undefined') {
+if (typeof window !== "undefined") {
   init();
 }
 

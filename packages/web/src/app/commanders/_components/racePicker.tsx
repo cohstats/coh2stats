@@ -10,7 +10,7 @@ const imageWidth = 220;
 const imageHeight = 220;
 
 export const RacePicker = () => {
-  let myCenterStyle = {
+  const myCenterStyle = {
     justifyContent: "center",
     padding: "10px",
   };
@@ -101,4 +101,3 @@ export const RacePicker = () => {
     </>
   );
 };
-

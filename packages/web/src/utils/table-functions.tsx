@@ -46,7 +46,7 @@ export function formatMapName(mapname: any) {
  */
 export function formatMatchTime(startTime: number, onlyDate = false) {
   const hourMillis = 3600 * 1000; // one day in a miliseconds range
-  let difference = Date.now() - startTime * 1000; // start match vs NOW time difference in miliseconds
+  const difference = Date.now() - startTime * 1000; // start match vs NOW time difference in miliseconds
   const options: Intl.DateTimeFormatOptions = {
     //weekday: "long",
     year: "numeric",
@@ -80,9 +80,9 @@ export function getMatchPlayersByFaction(
   reportedPlayerResults: Array<any>,
   faction: "axis" | "allies",
 ) {
-  let factions = [];
+  const factions = [];
   // loop through all players
-  for (let playerResult of reportedPlayerResults) {
+  for (const playerResult of reportedPlayerResults) {
     switch (faction) {
       // search for all axis players
       case "axis":
@@ -105,11 +105,11 @@ export function getMatchPlayersByFaction(
  * Returns Antd element <Tag> [Axis victory] or [Allies victory]
  */
 export function getMatchResult(reportedPlayerResults: Array<any>) {
-  let winner: string = "";
+  let winner = "";
   let color = "#108ee9";
 
   // loop thru all players
-  for (let index of reportedPlayerResults) {
+  for (const index of reportedPlayerResults) {
     // find a winner
     if (reportedPlayerResults[index].resulttype === 1) {
       // if its a axis player by race
@@ -187,7 +187,7 @@ export const formatMatchtypeID = (matchType: number): string => {
       break;
     case 0:
     // This is empty on purpose, lol case
-    // eslint-disable-next-line no-fallthrough
+
     case 22:
       formattedMatchType = "Custom Game";
       break;
@@ -216,7 +216,7 @@ export const raceIds: Record<number, RaceName> = {
  */
 export function getAliasFromName(matchRecord: any, name: string) {
   if (!matchRecord) return "unknown";
-  let resultItem = matchRecord.matchhistoryreportresults.filter(
+  const resultItem = matchRecord.matchhistoryreportresults.filter(
     (result: any) => result.profile.name === name,
   );
   return resultItem[0].profile.alias;
@@ -256,8 +256,8 @@ export const ExpandedMatch: React.FC<{ record: any }> = ({ record }) => {
     document.body.removeChild(link);
   };
 
-  let axisPlayers = getMatchPlayersByFaction(record.matchhistoryreportresults, "axis");
-  let alliesPlayers = getMatchPlayersByFaction(record.matchhistoryreportresults, "allies");
+  const axisPlayers = getMatchPlayersByFaction(record.matchhistoryreportresults, "axis");
+  const alliesPlayers = getMatchPlayersByFaction(record.matchhistoryreportresults, "allies");
 
   const simplifiedDmgDataChartAxis = axisPlayers.map((stats) => {
     return {
@@ -404,14 +404,14 @@ export function getPlayerMapListFilter(matches: any) {
       },
     ];
 
-  let mapSet = new Set();
-  let filterSettings: any[] = [];
+  const mapSet = new Set();
+  const filterSettings: any[] = [];
   for (const map of matches) {
     mapSet.add(map.mapname);
   }
 
   // sort maps alphabetically
-  let sortedMapsArray = Array.from(mapSet).sort((a: any, b: any) => {
+  const sortedMapsArray = Array.from(mapSet).sort((a: any, b: any) => {
     return a.localeCompare(b);
   });
 

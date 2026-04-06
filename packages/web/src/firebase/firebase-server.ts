@@ -101,11 +101,11 @@ export async function getLiveGamesFirestoreData(): Promise<StatsCurrentLiveGames
  */
 export const getCachedLiveGamesFirestoreData = unstable_cache(
   async () => getLiveGamesFirestoreData(),
-  ['live-games-firestore'],
+  ["live-games-firestore"],
   {
     revalidate: 1800, // 30 minutes = 1800 seconds
-    tags: ['live-games-firestore']
-  }
+    tags: ["live-games-firestore"],
+  },
 );
 
 /**
@@ -176,7 +176,7 @@ export async function getTotalStoredMatches(): Promise<string> {
 async function getHistoricLeaderboardDataInternal(
   timestamp: string,
   type: string,
-  race: string
+  race: string,
 ): Promise<LaddersDataObject | null> {
   try {
     const app = initializeFirebaseServer();
@@ -192,7 +192,9 @@ async function getHistoricLeaderboardDataInternal(
       return docSnap.data() as LaddersDataObject;
     }
 
-    console.log(`Historic leaderboard document does not exist: ladders/${timestamp}/${type}/${race}`);
+    console.log(
+      `Historic leaderboard document does not exist: ladders/${timestamp}/${type}/${race}`,
+    );
     return null;
   } catch (error) {
     console.error(`Failed to fetch historic leaderboard data for ${race} ${type}:`, error);
@@ -207,15 +209,15 @@ async function getHistoricLeaderboardDataInternal(
 export async function getHistoricLeaderboardData(
   timestamp: string,
   type: string,
-  race: string
+  race: string,
 ): Promise<LaddersDataObject | null> {
   const cachedFn = unstable_cache(
     async () => getHistoricLeaderboardDataInternal(timestamp, type, race),
     [`historic-leaderboard-${timestamp}-${type}-${race}`],
     {
       revalidate: 172800, // 48 hours = 172800 seconds
-      tags: [`historic-leaderboard-${timestamp}-${type}-${race}`]
-    }
+      tags: [`historic-leaderboard-${timestamp}-${type}-${race}`],
+    },
   );
 
   const result = await cachedFn();
@@ -246,7 +248,7 @@ export async function getHistoricLeaderboardData(
 async function getStatsDataInternal(
   frequency: string,
   timestamp: string,
-  statType: string
+  statType: string,
 ): Promise<Record<string, any> | null> {
   try {
     const app = initializeFirebaseServer();
@@ -276,15 +278,15 @@ async function getStatsDataInternal(
 export async function getStatsData(
   frequency: string,
   timestamp: string,
-  statType: string
+  statType: string,
 ): Promise<Record<string, any> | null> {
   const cachedFn = unstable_cache(
     async () => getStatsDataInternal(frequency, timestamp, statType),
     [`stats-${frequency}-${timestamp}-${statType}`],
     {
       revalidate: 86400, // 24 hours = 86400 seconds
-      tags: [`stats-${frequency}-${timestamp}-${statType}`]
-    }
+      tags: [`stats-${frequency}-${timestamp}-${statType}`],
+    },
   );
 
   return cachedFn();
@@ -333,14 +335,10 @@ async function getPlayerStatsInternal(): Promise<Record<string, any> | null> {
  * Cached wrapper for getPlayerStats with 1-hour revalidation
  */
 export async function getPlayerStats(): Promise<Record<string, any> | null> {
-  const cachedFn = unstable_cache(
-    async () => getPlayerStatsInternal(),
-    ['player-stats'],
-    {
-      revalidate: 3600, // 1 hour = 3600 seconds
-      tags: ['player-stats']
-    }
-  );
+  const cachedFn = unstable_cache(async () => getPlayerStatsInternal(), ["player-stats"], {
+    revalidate: 3600, // 1 hour = 3600 seconds
+    tags: ["player-stats"],
+  });
 
   return cachedFn();
 }
@@ -411,7 +409,7 @@ export async function getPlayerFirestoreMatches(params: {
             orderBy("startgametime", "desc"),
             where("steam_ids", "array-contains", params.steamid),
             startAfter(cursorDocSnap),
-            limit(params.perPage)
+            limit(params.perPage),
           );
         } else {
           // Cursor document doesn't exist, fetch from beginning
@@ -419,7 +417,7 @@ export async function getPlayerFirestoreMatches(params: {
             matchesRef,
             orderBy("startgametime", "desc"),
             where("steam_ids", "array-contains", params.steamid),
-            limit(params.perPage)
+            limit(params.perPage),
           );
         }
       } else {
@@ -428,7 +426,7 @@ export async function getPlayerFirestoreMatches(params: {
           matchesRef,
           orderBy("startgametime", "desc"),
           where("steam_ids", "array-contains", params.steamid),
-          limit(params.perPage)
+          limit(params.perPage),
         );
       }
     } else {
@@ -445,7 +443,7 @@ export async function getPlayerFirestoreMatches(params: {
             where("steam_ids", "array-contains", params.steamid),
             where("matchtype_id", "in", params.filterMatchType),
             startAfter(cursorDocSnap),
-            limit(params.perPage)
+            limit(params.perPage),
           );
         } else {
           // Cursor document doesn't exist, fetch from beginning
@@ -454,7 +452,7 @@ export async function getPlayerFirestoreMatches(params: {
             orderBy("startgametime", "desc"),
             where("steam_ids", "array-contains", params.steamid),
             where("matchtype_id", "in", params.filterMatchType),
-            limit(params.perPage)
+            limit(params.perPage),
           );
         }
       } else {
@@ -464,7 +462,7 @@ export async function getPlayerFirestoreMatches(params: {
           orderBy("startgametime", "desc"),
           where("steam_ids", "array-contains", params.steamid),
           where("matchtype_id", "in", params.filterMatchType),
-          limit(params.perPage)
+          limit(params.perPage),
         );
       }
     }

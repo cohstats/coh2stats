@@ -7,7 +7,7 @@ import { Empty } from "antd";
 
 interface IProps {
   data: Record<string, any>;
-  average: Boolean;
+  average: boolean;
 }
 
 export const MapsPlayTime: React.FC<IProps> = ({ data, average = true }) => {

@@ -17,7 +17,7 @@ export const AverageGameTimeBarChart: React.FC<IProps> = ({ data }) => {
     return <Empty />;
   }
 
-  for (let type of statsTypesInDB) {
+  for (const type of statsTypesInDB) {
     chartData.push({
       type: type,
       gameTime: (data[type].gameTime / data[type].matchCount / 60).toFixed(1),
@@ -47,4 +47,3 @@ export const AverageGameTimeBarChart: React.FC<IProps> = ({ data }) => {
     />
   );
 };
-

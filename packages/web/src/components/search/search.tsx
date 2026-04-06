@@ -151,12 +151,12 @@ const CustomSearch: React.FC = () => {
           const resultHtml = buildSearchResults(foundProfiles);
 
           // Search Intel Bulletins from defined Function
-          let bulletinData = searchBulletins(searchParam);
+          const bulletinData = searchBulletins(searchParam);
           // Parse Data into html
           const resultBulletinHtml = buildBulletinSearchResults(bulletinData);
 
           // Search Commanders from defined function
-          let commanderData = searchCommanders(searchParam);
+          const commanderData = searchCommanders(searchParam);
           // Parse Data into html
           const resultCommanderHtml = buildCommandersSearchResults(commanderData);
 

@@ -61,7 +61,7 @@ const MapStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
   const fromTimeStamp = searchParams?.get("fromTimeStamp") || "";
   const toTimeStamp = searchParams?.get("toTimeStamp") || "";
   const frequency = searchParams?.get("range") || "";
-  let map = searchParams?.get("map") || "8p_redball_express";
+  const map = searchParams?.get("map") || "8p_redball_express";
 
   const totalGames = specificData.totalGames || null;
   // We added total games to the object with the maps / we need to remove it

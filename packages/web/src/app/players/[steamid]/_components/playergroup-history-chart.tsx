@@ -79,7 +79,7 @@ export const PlayerGroupHistoryChart: React.FC<IProps> = ({ record }) => {
 
   const chartConfig = {
     data: [chartData, chartData],
-    padding: "auto" as "auto",
+    padding: "auto" as const,
     xField: "time",
     yField: ["rank", "level"],
     geometryOptions: [{ connectNulls: true }, { connectNulls: true }],

@@ -127,14 +127,10 @@ export const RELIC_API_BASE_URL = "https://coh2-api.reliclink.com";
  * @param start - Starting position for pagination (default: 1)
  * @returns Encoded URL string
  */
-const buildLeaderboardUrl = (
-  leaderboardID: number,
-  count: number,
-  start: number
-): string => {
+const buildLeaderboardUrl = (leaderboardID: number, count: number, start: number): string => {
   // sortBy=1 means sort by ranking
   return encodeURI(
-    `${RELIC_API_BASE_URL}/community/leaderboard/getLeaderBoard2?leaderboard_id=${leaderboardID}&title=coh2&platform=PC_STEAM&sortBy=1&start=${start}&count=${count}`
+    `${RELIC_API_BASE_URL}/community/leaderboard/getLeaderBoard2?leaderboard_id=${leaderboardID}&title=coh2&platform=PC_STEAM&sortBy=1&start=${start}&count=${count}`,
   );
 };
 
@@ -159,14 +155,16 @@ const buildLeaderboardUrl = (
 export const fetchLeaderboardStats = async (
   leaderboardID: number,
   start = 1,
-  count = 200
+  count = 200,
 ): Promise<RelicLeaderboardResponse> => {
   const url = buildLeaderboardUrl(leaderboardID, count, start);
   const response = await fetch(url);
 
   if (!response.ok) {
     throw new Error(
-      `Failed to fetch leaderboard stats from Relic API. Status: ${response.status}, Response: ${await response.text()}`
+      `Failed to fetch leaderboard stats from Relic API. Status: ${
+        response.status
+      }, Response: ${await response.text()}`,
     );
   }
 

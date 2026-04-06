@@ -26,8 +26,6 @@ import {
 } from "@/utils/helpers";
 import { CountryFlag } from "@/components/country-flag";
 import enGB from "antd/locale/en_GB";
-
-type ColumnsType<T> = TableColumnsType<T>;
 import DatePicker from "../../../components/date-picker";
 
 import routes from "../../../routes";
@@ -41,6 +39,8 @@ import { Helper } from "@/components/helper";
 import { disabledDate, generateIconsForTitle } from "./leaderboard-components";
 import { leaderboardsID } from "@/coh/coh2-api";
 import { fetchLiveLeaderboardData, fetchHistoricLeaderboardData } from "../actions";
+
+type ColumnsType<T> = TableColumnsType<T>;
 
 const { Text } = Typography;
 
@@ -118,7 +118,6 @@ const LeaderboardsContent = () => {
       setIsLoadingData(false);
       console.error("Failed to get the leaderboards", e);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     selectedTimeStamp,
     selectedHistoricTimeStamp,
@@ -138,7 +137,7 @@ const LeaderboardsContent = () => {
   };
 
   const changeLeaderBoardsRoute = (params: Record<string, any>) => {
-    let { timeStampToLoad, typeToLoad, raceToLoad, historicTimeStampToLoad } = params;
+    const { timeStampToLoad, typeToLoad, raceToLoad, historicTimeStampToLoad } = params;
 
     const searchValue = `?${new URLSearchParams({
       timeStamp: timeStampToLoad || selectedTimeStamp,
@@ -167,7 +166,7 @@ const LeaderboardsContent = () => {
       title: "Rank",
       dataIndex: "rank",
       key: "rank",
-      align: "center" as "center",
+      align: "center" as const,
       width: 20,
       sorter: (a: LaddersDataArrayObject, b: LaddersDataArrayObject) => a.rank - b.rank,
     },
@@ -175,14 +174,14 @@ const LeaderboardsContent = () => {
       title: "Level",
       dataIndex: "ranklevel",
       key: "ranklevel",
-      align: "center" as "center",
+      align: "center" as const,
       responsive: ["xl"],
     },
     {
       title: "Change",
       dataIndex: "change",
       key: "change",
-      align: "center" as "center",
+      align: "center" as const,
       width: 110,
       responsive: ["xl"],
       render: (data: any) => {
@@ -236,7 +235,7 @@ const LeaderboardsContent = () => {
       title: "Streak",
       dataIndex: "streak",
       key: "streak",
-      align: "center" as "center",
+      align: "center" as const,
       sorter: (a: LaddersDataArrayObject, b: LaddersDataArrayObject) => a.streak - b.streak,
       render: (data: any) => {
         if (data > 0) {
@@ -250,20 +249,20 @@ const LeaderboardsContent = () => {
       title: "Wins",
       dataIndex: "wins",
       key: "wins",
-      align: "center" as "center",
+      align: "center" as const,
       sorter: (a: LaddersDataArrayObject, b: LaddersDataArrayObject) => a.wins - b.wins,
     },
     {
       title: "Losses",
       dataIndex: "losses",
       key: "losses",
-      align: "center" as "center",
+      align: "center" as const,
       sorter: (a: LaddersDataArrayObject, b: LaddersDataArrayObject) => a.losses - b.losses,
     },
     {
       title: "Ratio",
       key: "ratio",
-      align: "center" as "center",
+      align: "center" as const,
       width: 20,
       sorter: (a: LaddersDataArrayObject, b: LaddersDataArrayObject) => {
         return (
@@ -278,7 +277,7 @@ const LeaderboardsContent = () => {
     {
       title: "Total",
       key: "total",
-      align: "center" as "center",
+      align: "center" as const,
       sorter: (a: LaddersDataArrayObject, b: LaddersDataArrayObject) => {
         return a.wins + a.losses - (b.wins + b.losses);
       },
@@ -290,7 +289,7 @@ const LeaderboardsContent = () => {
       title: "Drops",
       dataIndex: "drops",
       key: "drops",
-      align: "center" as "center",
+      align: "center" as const,
       width: 20,
       responsive: ["xl"],
       sorter: (a: LaddersDataArrayObject, b: LaddersDataArrayObject) => a.drops - b.drops,
@@ -299,7 +298,7 @@ const LeaderboardsContent = () => {
       title: "Disputes",
       dataIndex: "disputes",
       key: "disputes",
-      align: "center" as "center",
+      align: "center" as const,
       responsive: ["xl"],
       sorter: (a: LaddersDataArrayObject, b: LaddersDataArrayObject) => a.disputes - b.disputes,
       width: 20,
@@ -308,7 +307,7 @@ const LeaderboardsContent = () => {
       title: "Last Game",
       dataIndex: "lastmatchdate",
       key: "lastmatchdate",
-      align: "right" as "right",
+      align: "right" as const,
       width: 120,
       sorter: (a: LaddersDataArrayObject, b: LaddersDataArrayObject) =>
         a.lastmatchdate - b.lastmatchdate,
@@ -479,8 +478,8 @@ const LeaderboardsContent = () => {
                       <Text mark>new</Text> means the player was not in top 200 on the selected
                       historic date
                       <br />
-                      <Text mark>N/A</Text> means the current rank is beyond 200 (historic data only
-                      includes top 200)
+                      <Text mark>N/A</Text> means the current rank is beyond 200 (historic data
+                      only includes top 200)
                     </>
                   }
                 />

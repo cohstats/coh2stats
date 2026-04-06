@@ -13,13 +13,13 @@ interface IProps {
 export const FactionWinRateStackedChart: React.FC<IProps> = ({ data }) => {
   const chartData = [];
 
-  for (let faction of validRaceNames) {
+  for (const faction of validRaceNames) {
     const result: Record<string, number | string> = {
       faction: faction,
     };
 
     // "1v1" ,"2v2
-    for (let type of statsTypesInDB) {
+    for (const type of statsTypesInDB) {
       result[type] = calculateWinRate(data[type][faction]).toFixed(2);
     }
 

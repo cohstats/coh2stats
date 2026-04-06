@@ -123,7 +123,7 @@ const _FactionVsFactionCard: React.FC<IProps> = ({ title, data, style }) => {
       if (heatmapValues !== "winRate") {
         return value["wins"] + value["losses"];
       } else {
-        let winRate: number = value["wins"] / (value["wins"] + value["losses"]);
+        const winRate: number = value["wins"] / (value["wins"] + value["losses"]);
         if (factionWinRate === "axis") {
           return winRate.toFixed(2);
         } else {

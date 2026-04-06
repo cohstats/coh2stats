@@ -19,14 +19,14 @@ export const TotalFactionWinRateChart: React.FC<IProps> = ({ data }) => {
 
   const result: Record<string, any> = {};
 
-  for (let type of statsTypesInDB) {
-    for (let faction of validRaceNames) {
+  for (const type of statsTypesInDB) {
+    for (const faction of validRaceNames) {
       const currrentWinrate = calculateWinRate(data[type][faction]);
       result[faction] = (result[faction] + currrentWinrate) / 2 || currrentWinrate;
     }
   }
 
-  for (let faction of validRaceNames) {
+  for (const faction of validRaceNames) {
     chartData.push({
       faction: formatFactionName(faction),
       winRate: result[faction].toFixed(2),
@@ -59,4 +59,3 @@ export const TotalFactionWinRateChart: React.FC<IProps> = ({ data }) => {
     />
   );
 };
-

@@ -17,17 +17,15 @@ import { getHistoricLeaderboardData } from "../../firebase/firebase-server";
  */
 async function fetchLiveLeaderboardDataInternal(
   leaderboardID: number,
-  start: number = 1,
-  count: number = 200,
+  start = 1,
+  count = 200,
 ): Promise<LaddersDataObject> {
   try {
     // Fetch data from Relic API with pagination parameters
     const relicResponse = await fetchLeaderboardStats(leaderboardID, start, count);
 
     // Map the response to our app's data format
-    const mappedData = mapRelicResponseToLaddersData(relicResponse);
-
-    return mappedData;
+    return mapRelicResponseToLaddersData(relicResponse);
   } catch (error) {
     console.error("Failed to fetch live leaderboard data:", error);
     throw new Error(
@@ -57,14 +55,14 @@ async function fetchLiveLeaderboardDataInternal(
  * is cached separately to support pagination.
  */
 export const fetchLiveLeaderboardData = unstable_cache(
-  async (leaderboardID: number, start: number = 1, count: number = 200) => {
+  async (leaderboardID: number, start = 1, count = 200) => {
     return fetchLiveLeaderboardDataInternal(leaderboardID, start, count);
   },
   ["live-leaderboard"],
   {
     revalidate: 30, // 30 seconds
     tags: ["live-leaderboard"],
-  }
+  },
 );
 
 /**
@@ -84,7 +82,7 @@ export const fetchLiveLeaderboardData = unstable_cache(
 export async function fetchHistoricLeaderboardData(
   timestamp: string,
   type: string,
-  race: string
+  race: string,
 ): Promise<LaddersDataObject | undefined> {
   try {
     const data = await getHistoricLeaderboardData(timestamp, type, race);

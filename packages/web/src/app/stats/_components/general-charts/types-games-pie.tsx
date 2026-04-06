@@ -10,7 +10,7 @@ export const TypeOfGamesPieChart: React.FC<FactionsPlayedPieChartProps> = ({ dat
   const chartData = [];
 
   // "1v1", "2v2", "3v3" ...
-  for (let type of statsTypesInDB) {
+  for (const type of statsTypesInDB) {
     chartData.push({
       id: type,
       label: type,

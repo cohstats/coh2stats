@@ -16,7 +16,6 @@ describe("prepareLeaderBoardData", () => {
   });
 });
 
-/* eslint-disable */
 describe("findByLeaderBoardID", () => {
   test("Finds the british", () => {
     const result = findByLeaderBoardID(52);
