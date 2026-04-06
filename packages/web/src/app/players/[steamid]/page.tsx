@@ -5,23 +5,20 @@ import React, { useEffect, useState, Suspense } from "react";
 import { Col, Row, Tooltip, Typography, Avatar, Tabs, Badge, notification } from "antd";
 import { LaddersDataObject, PlayerCardAPIObject } from "../../../coh/types";
 import firebaseAnalytics from "../../../analytics";
-import { capitalize, timeAgo } from "../../../utils/helpers";
+import { capitalize, timeAgo } from "@/utils/helpers";
 import { fetchPlayerCardData } from "./actions";
 
-import { CountryFlag } from "../../../components/country-flag";
+import { CountryFlag } from "@/components/country-flag";
 import { useRouter, useParams, useSearchParams } from "next/navigation";
-import { getGeneralIconPath } from "../../../coh/helpers";
-import { Loading } from "../../../components/loading";
+import { getGeneralIconPath } from "@/coh/helpers";
+import { Loading } from "@/components/loading";
 import { calculateOverallStatsForPlayerCard } from "./_components/data-processing";
 import { convertTeamNames } from "./_components/helpers";
 import LastMatchesTable from "../../../components/matches/last-matches-table";
 import PlayerStandingsTables from "./_components/player-standings";
 import config from "../../../config";
-import { AlertBox } from "../../../components/alert-box";
+import { AlertBox } from "@/components/alert-box";
 import AllMatchesTable from "../../../components/matches/all-matches-table";
-
-// Force dynamic rendering
-export const dynamic = "force-dynamic";
 
 const { Text, Title } = Typography;
 
@@ -48,7 +45,6 @@ const PlayerCardContent = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<null | string>(null);
   const [data, setData] = useState<null | PlayerCardAPIObject>(null);
-
 
   useEffect(() => {
     firebaseAnalytics.playerCardDisplayed();
@@ -90,7 +86,6 @@ const PlayerCardContent = () => {
         ) {
           addNameToUrl(Object.values(finalData.steamProfile)[0].personaname);
         }
-
       } catch (e) {
         let errorMessage = "Failed to do something exceptional";
         if (e instanceof Error) {
