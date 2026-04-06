@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import React from "react";
@@ -44,8 +43,9 @@ export const MainFooter: React.FC = () => {
           height={30}
           src={"/resources/kofi_s_logo_nolabel.webp"}
           alt={"Ko-fi support button"}
+          style={{ marginRight: 2 }}
         />
-        Donate
+        <span style={{ verticalAlign: "top" }}>Donate</span>
       </Link>
       <br />
       <br />
