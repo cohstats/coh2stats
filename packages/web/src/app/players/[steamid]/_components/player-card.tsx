@@ -19,9 +19,8 @@ import { convertTeamNames } from "./helpers";
 import LastMatchesTable from "../../../../components/matches/last-matches-table";
 import PlayerStandingsTables from "./player-standings";
 import config from "../../../../config";
-import { AlertBox } from "../../../../components/alert-box";
+import { AlertBox } from "@/components/alert-box";
 import AllMatchesTable from "../../../../components/matches/all-matches-table";
-import { Space } from "antd/es";
 
 const { Text } = Typography;
 

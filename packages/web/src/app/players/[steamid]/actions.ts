@@ -28,10 +28,11 @@ export async function fetchPlayerCardData(steamid: string): Promise<PlayerCardAP
  * @param steamid - The Steam ID of the player
  * @returns Promise<PlayerMatchesResponse | null> - Player matches or null on failure
  */
-export async function fetchPlayerMatchesData(steamid: string): Promise<PlayerMatchesResponse | null> {
+export async function fetchPlayerMatchesData(
+  steamid: string,
+): Promise<PlayerMatchesResponse | null> {
   try {
-    const data = await getPlayerMatches(steamid);
-    return data;
+    return await getPlayerMatches(steamid);
   } catch (error) {
     console.error("Failed to fetch player matches data:", error);
     return null;
@@ -64,7 +65,9 @@ export async function fetchPlayerFirestoreMatches(params: {
  * @param steamid - The Steam ID of the player
  * @returns Promise<{ playerName: string } | null> - Player name or null on failure
  */
-export async function fetchPlayerCardMetadata(steamid: string): Promise<{ playerName: string } | null> {
+export async function fetchPlayerCardMetadata(
+  steamid: string,
+): Promise<{ playerName: string } | null> {
   try {
     const data = await getPlayerCard(steamid, false);
     const playerName = data?.steamProfile?.[steamid]?.name || null;
