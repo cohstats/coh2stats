@@ -37,7 +37,7 @@ jobs:
           yarn lint:prettier
       - name: Run web tests
         run: |
-          yarn web test
+          yarn web test:ci
       - name: Run web build
         run: |
-          CI=false yarn web build
+          yarn web build
