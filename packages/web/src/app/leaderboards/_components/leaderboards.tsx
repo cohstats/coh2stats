@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useEffect, useState, Suspense } from "react";
 
 import {
@@ -341,16 +340,17 @@ const LeaderboardsContent = () => {
           disabledDate={disabledDate}
           size={"large"}
           disabled={disabled}
-          cellRender={(current) => {
+          cellRender={(current: string | number | Date) => {
+            const currentDate = current instanceof Date ? current : new Date(current);
             const style = {
               border: "",
               borderRadius: "",
             };
             for (const date of patchDates) {
               if (
-                date.getDate() === current.getDate() &&
-                date.getMonth() === current.getMonth() &&
-                date.getFullYear() === current.getFullYear()
+                date.getDate() === currentDate.getDate() &&
+                date.getMonth() === currentDate.getMonth() &&
+                date.getFullYear() === currentDate.getFullYear()
               ) {
                 style.border = "1px solid #1890ff";
                 style.borderRadius = "50%";
@@ -358,7 +358,7 @@ const LeaderboardsContent = () => {
             }
             return (
               <div className="ant-picker-cell-inner" style={style}>
-                {current.getDate()}
+                {currentDate.getDate()}
               </div>
             );
           }}

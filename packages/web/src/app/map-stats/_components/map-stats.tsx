@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import routes from "../../../routes";
@@ -82,16 +81,17 @@ const MapStatsContent: React.FC = () => {
           defaultValue={dateValue}
           disabledDate={disabledDate}
           size={"large"}
-          cellRender={(current) => {
+          cellRender={(current: string | number | Date) => {
+            const currentDate = current instanceof Date ? current : new Date(current);
             const style = {
               border: "",
               borderRadius: "",
             };
             for (const date of patchDates) {
               if (
-                date.getDate() === current.getDate() &&
-                date.getMonth() === current.getMonth() &&
-                date.getFullYear() === current.getFullYear()
+                date.getDate() === currentDate.getDate() &&
+                date.getMonth() === currentDate.getMonth() &&
+                date.getFullYear() === currentDate.getFullYear()
               ) {
                 style.border = "1px solid #1890ff";
                 style.borderRadius = "50%";
@@ -100,8 +100,8 @@ const MapStatsContent: React.FC = () => {
             // For month picker, show month name; for other pickers, show date
             const displayValue =
               pickerType === "month"
-                ? current.toLocaleString("default", { month: "short" })
-                : current.getDate();
+                ? currentDate.toLocaleString("default", { month: "short" })
+                : currentDate.getDate();
             return (
               <div className="ant-picker-cell-inner" style={style}>
                 {displayValue}
@@ -141,16 +141,17 @@ const MapStatsContent: React.FC = () => {
           disabledDate={disabledDate}
           onChange={onRangePickerChange}
           size={"large"}
-          cellRender={(current) => {
+          cellRender={(current: string | number | Date) => {
+            const currentDate = current instanceof Date ? current : new Date(current);
             const style = {
               border: "",
               borderRadius: "",
             };
             for (const date of patchDates) {
               if (
-                date.getDate() === current.getDate() &&
-                date.getMonth() === current.getMonth() &&
-                date.getFullYear() === current.getFullYear()
+                date.getDate() === currentDate.getDate() &&
+                date.getMonth() === currentDate.getMonth() &&
+                date.getFullYear() === currentDate.getFullYear()
               ) {
                 style.border = "1px solid #1890ff";
                 style.borderRadius = "50%";
@@ -158,7 +159,7 @@ const MapStatsContent: React.FC = () => {
             }
             return (
               <div className="ant-picker-cell-inner" style={style}>
-                {current.getDate()}
+                {currentDate.getDate()}
               </div>
             );
           }}

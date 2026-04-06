@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { Card, Button, Space } from "antd";
 import { BulletinsBarChart } from "../../../components/charts/bulletins-bar";
 import React, { useState } from "react";

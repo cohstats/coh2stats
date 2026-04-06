@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useEffect } from "react";
 import { statsBase } from "../../../titles";
 import { capitalize, isDev } from "../../../utils/helpers";

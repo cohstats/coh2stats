@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useEffect, useState } from "react";
 import { Typography } from "antd";
 import { firebase } from "../../../firebase";

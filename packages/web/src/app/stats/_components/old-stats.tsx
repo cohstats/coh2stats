@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useEffect } from "react";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import routes from "../../../routes";

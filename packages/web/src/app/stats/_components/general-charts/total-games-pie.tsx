@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { ResponsivePie } from "@nivo/pie";
 import React from "react";
 import { Empty } from "antd";

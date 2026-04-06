@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import UserProfile from "./_components/user-profile";

@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import React, { useEffect, Suspense } from "react";
@@ -6,6 +5,7 @@ import { ConfigProvider } from "antd";
 import { ConfigsProvider } from "../config-context";
 import { usePathname, useSearchParams } from "next/navigation";
 import analytics from "../analytics";
+// @ts-ignore
 import { ProgressProvider } from "@bprogress/next/app";
 
 function AnalyticsTracker() {

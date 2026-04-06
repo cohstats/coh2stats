@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from "react";
 import { Row, Card, Radio, RadioChangeEvent, Space } from "antd";
 import { MapBarChart } from "../../../components/charts/maps-bar";

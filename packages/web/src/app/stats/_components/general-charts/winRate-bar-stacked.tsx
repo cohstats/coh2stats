@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { ResponsiveBar } from "@nivo/bar";
 import React from "react";
 import { StatsDataObject, statsTypesInDB, validRaceNames } from "../../../../coh/types";

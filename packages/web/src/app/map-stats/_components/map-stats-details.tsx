@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useEffect } from "react";
 import { Row, Card, Radio, RadioChangeEvent, Space, Typography, Tooltip, Select } from "antd";
 import { MapBarChart } from "../../../components/charts/maps-bar";

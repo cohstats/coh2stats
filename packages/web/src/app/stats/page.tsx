@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import CustomStats from "./_components/custom-stats";

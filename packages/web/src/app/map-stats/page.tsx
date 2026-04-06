@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import MapStats from "./_components/map-stats";
