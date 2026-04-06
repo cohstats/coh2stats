@@ -8,6 +8,8 @@ import {
   query,
   orderBy,
   limit,
+  where,
+  startAfter,
 } from "firebase/firestore";
 import { unstable_cache } from "next/cache";
 import config from "../config";
@@ -369,5 +371,130 @@ export async function getMatchData(matchId: string): Promise<Record<string, any>
   } catch (error) {
     console.error(`Failed to fetch match data for ${matchId}:`, error);
     return null;
+  }
+}
+
+/**
+ * Fetch player matches from Firestore with cursor-based pagination
+ *
+ * @param params - Query parameters
+ * @returns Promise with matches array and next cursor
+ */
+export async function getPlayerFirestoreMatches(params: {
+  steamid: string;
+  filterMatchType: number[] | null;
+  perPage: number;
+  cursorDocId?: string;
+  cursorTimestamp?: number;
+}): Promise<{
+  matches: Array<Record<string, any>>;
+  nextCursor: { docId: string; timestamp: number } | null;
+}> {
+  try {
+    const app = initializeFirebaseServer();
+    const db = getFirestore(app);
+    const matchesRef = collection(db, "matches");
+
+    // Build query based on filters
+    let q;
+
+    if (params.filterMatchType === null) {
+      // No match type filter
+      if (params.cursorDocId && params.cursorTimestamp !== undefined) {
+        // With cursor - need to get the cursor document first
+        const cursorDocRef = doc(db, "matches", params.cursorDocId);
+        const cursorDocSnap = await getDoc(cursorDocRef);
+
+        if (cursorDocSnap.exists()) {
+          q = query(
+            matchesRef,
+            orderBy("startgametime", "desc"),
+            where("steam_ids", "array-contains", params.steamid),
+            startAfter(cursorDocSnap),
+            limit(params.perPage)
+          );
+        } else {
+          // Cursor document doesn't exist, fetch from beginning
+          q = query(
+            matchesRef,
+            orderBy("startgametime", "desc"),
+            where("steam_ids", "array-contains", params.steamid),
+            limit(params.perPage)
+          );
+        }
+      } else {
+        // Initial query without cursor
+        q = query(
+          matchesRef,
+          orderBy("startgametime", "desc"),
+          where("steam_ids", "array-contains", params.steamid),
+          limit(params.perPage)
+        );
+      }
+    } else {
+      // With match type filter
+      if (params.cursorDocId && params.cursorTimestamp !== undefined) {
+        // With cursor - need to get the cursor document first
+        const cursorDocRef = doc(db, "matches", params.cursorDocId);
+        const cursorDocSnap = await getDoc(cursorDocRef);
+
+        if (cursorDocSnap.exists()) {
+          q = query(
+            matchesRef,
+            orderBy("startgametime", "desc"),
+            where("steam_ids", "array-contains", params.steamid),
+            where("matchtype_id", "in", params.filterMatchType),
+            startAfter(cursorDocSnap),
+            limit(params.perPage)
+          );
+        } else {
+          // Cursor document doesn't exist, fetch from beginning
+          q = query(
+            matchesRef,
+            orderBy("startgametime", "desc"),
+            where("steam_ids", "array-contains", params.steamid),
+            where("matchtype_id", "in", params.filterMatchType),
+            limit(params.perPage)
+          );
+        }
+      } else {
+        // Initial query without cursor
+        q = query(
+          matchesRef,
+          orderBy("startgametime", "desc"),
+          where("steam_ids", "array-contains", params.steamid),
+          where("matchtype_id", "in", params.filterMatchType),
+          limit(params.perPage)
+        );
+      }
+    }
+
+    const querySnapshot = await getDocs(q);
+
+    // Extract matches data
+    const matches: Array<Record<string, any>> = [];
+    querySnapshot.forEach((doc) => {
+      matches.push(doc.data());
+    });
+
+    // Build next cursor from last document
+    let nextCursor: { docId: string; timestamp: number } | null = null;
+    if (querySnapshot.docs.length > 0) {
+      const lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1];
+      const lastDocData = lastDoc.data();
+
+      // Only set cursor if we got a full page (meaning there might be more)
+      if (querySnapshot.docs.length === params.perPage) {
+        nextCursor = {
+          docId: lastDoc.id,
+          timestamp: lastDocData.startgametime,
+        };
+      }
+    }
+
+    return { matches, nextCursor };
+  } catch (error) {
+    console.error("Failed to fetch player Firestore matches:", error);
+    return { matches: [], nextCursor: null };
   }
 }

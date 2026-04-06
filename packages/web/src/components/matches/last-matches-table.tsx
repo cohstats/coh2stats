@@ -22,7 +22,7 @@ import { useMediaQuery } from "react-responsive";
 import firebaseAnalytics from "../../analytics";
 import { getMapIconPath } from "../../coh/maps";
 import { AlertBox } from "../alert-box";
-import { getPlayerMatches } from "../../coh/coh2stats-api";
+import { fetchPlayerMatchesData } from "@/app/players/[steamid]/actions";
 
 type ColumnsType<T> = TableColumnsType<T>;
 
@@ -48,7 +48,12 @@ const LastMatchesTable: React.FC<IProps> = ({ steamID }) => {
       setIsLoading(true);
 
       try {
-        const finalData = await getPlayerMatches(steamID);
+        const finalData = await fetchPlayerMatchesData(steamID);
+
+        if (!finalData) {
+          throw new Error("Failed to fetch player matches");
+        }
+
         // Filter out incorrect data
         const matchData = finalData.playerMatches
           .filter(

@@ -1,16 +1,6 @@
 // @ts-nocheck
 import React, { useCallback, useEffect, useState } from "react";
-import {
-  getFirestore,
-  collection,
-  query,
-  where,
-  getDocs,
-  limit,
-  orderBy,
-  startAfter,
-  DocumentData,
-} from "firebase/firestore";
+import { fetchPlayerFirestoreMatches } from "@/app/players/[steamid]/actions";
 import {
   Button,
   Image,
@@ -62,7 +52,7 @@ const AllMatchesTable: React.FC<IProps> = ({ steamID }) => {
 
   const [isLoading, setIsLoading] = useState(true);
   const [matchRecords, setMatchRecords] = useState<Array<Record<string, any>>>([]);
-  const [lastVisibleDocRef, setLastVisibleDocRef] = useState<DocumentData | undefined>();
+  const [cursor, setCursor] = useState<{ docId: string; timestamp: number } | null>(null);
   const [error, setError] = useState<null | string>(null);
   const [amountOfNewGamesLoaded, setAmountOfNewGamesLoaded] = useState(-1);
 
@@ -77,38 +67,16 @@ const AllMatchesTable: React.FC<IProps> = ({ steamID }) => {
       // Reset the state
       setAmountOfNewGamesLoaded(-1);
       try {
-        const matchesRef = collection(getFirestore(), "matches");
-
-        const q = (() => {
-          if (filterMatchType === null)
-            return query(
-              matchesRef,
-              orderBy("startgametime", "desc"),
-              where("steam_ids", "array-contains", `${steamID}`),
-              limit(perPage),
-            );
-          else {
-            return query(
-              matchesRef,
-              orderBy("startgametime", "desc"),
-              where("steam_ids", "array-contains", `${steamID}`),
-              where("matchtype_id", "in", filterMatchType),
-              limit(perPage),
-            );
-          }
-        })();
-
-        const querySnapshot = await getDocs(q);
-
-        // Last visible document for pagination
-        setLastVisibleDocRef(querySnapshot.docs[querySnapshot.docs.length - 1]);
-
-        const gamesData: Array<Record<string, any>> = [];
-        querySnapshot.forEach((doc) => {
-          gamesData.push(doc.data());
+        const result = await fetchPlayerFirestoreMatches({
+          steamid: steamID,
+          filterMatchType: filterMatchType,
+          perPage: perPage,
+          cursorDocId: undefined,
+          cursorTimestamp: undefined,
         });
 
-        setMatchRecords(gamesData);
+        setMatchRecords(result.matches);
+        setCursor(result.nextCursor);
       } catch (e) {
         console.error(e);
         setError(
@@ -124,42 +92,18 @@ const AllMatchesTable: React.FC<IProps> = ({ steamID }) => {
     setIsLoading(true);
     firebaseAnalytics.playerCardCOHStatsMatchesMoreGames();
     try {
-      if (lastVisibleDocRef) {
-        const matchesRef = collection(getFirestore(), "matches");
-
-        const q = (() => {
-          if (filterMatchType === null)
-            return query(
-              matchesRef,
-              orderBy("startgametime", "desc"),
-              where("steam_ids", "array-contains", `${steamID}`),
-              startAfter(lastVisibleDocRef),
-              limit(perPage),
-            );
-          else {
-            return query(
-              matchesRef,
-              orderBy("startgametime", "desc"),
-              where("steam_ids", "array-contains", `${steamID}`),
-              where("matchtype_id", "in", filterMatchType),
-              startAfter(lastVisibleDocRef),
-              limit(perPage),
-            );
-          }
-        })();
-
-        const querySnapshot = await getDocs(q);
-        // Last visible document for pagination
-        setLastVisibleDocRef(querySnapshot.docs[querySnapshot.docs.length - 1]);
-        setAmountOfNewGamesLoaded(querySnapshot.docs.length);
-
-        // We need to create a new reference
-        const gamesData = matchRecords.slice();
-        querySnapshot.forEach((doc) => {
-          gamesData.push(doc.data());
+      if (cursor) {
+        const result = await fetchPlayerFirestoreMatches({
+          steamid: steamID,
+          filterMatchType: filterMatchType,
+          perPage: perPage,
+          cursorDocId: cursor.docId,
+          cursorTimestamp: cursor.timestamp,
         });
 
-        setMatchRecords(gamesData);
+        setAmountOfNewGamesLoaded(result.matches.length);
+        setMatchRecords([...matchRecords, ...result.matches]);
+        setCursor(result.nextCursor);
       }
     } catch (e) {
       console.error(e);
@@ -443,7 +387,7 @@ const AllMatchesTable: React.FC<IProps> = ({ steamID }) => {
                     </div>
                     <div>
                       {" "}
-                      {amountOfNewGamesLoaded !== 0 && (
+                      {amountOfNewGamesLoaded !== 0 && cursor && (
                         <Button
                           type={"primary"}
                           icon={<PlusCircleOutlined />}

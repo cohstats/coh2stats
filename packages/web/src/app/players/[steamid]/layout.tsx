@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { fetchPlayerCardMetadata } from "./actions";
 
 export async function generateMetadata({
   params,
@@ -10,11 +11,8 @@ export async function generateMetadata({
 
   // Fetch player data to get the name
   try {
-    const response = await fetch(`https://coh2stats.com/api/getPlayerCard?steamid=${steamid}`, {
-      next: { revalidate: 3600 },
-    });
-    const data = await response.json();
-    const playerName = data?.steamProfile?.[steamid]?.name || "Unknown Player";
+    const data = await fetchPlayerCardMetadata(steamid);
+    const playerName = data?.playerName || "Unknown Player";
 
     return {
       title: `${playerName} - Player Card`,

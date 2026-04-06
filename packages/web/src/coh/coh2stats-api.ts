@@ -67,7 +67,11 @@ export async function getPlayerCard(
 ): Promise<PlayerCardAPIObject> {
   const response = await fetch(
     `${API_URL}getPlayerCardEverythingHttp?steamid=${steamid}&includeMatches=${includeMatches}`,
-    {},
+    {
+      headers: {
+        Origin: "https://coh2stats.com",
+      }
+    },
   );
 
   if (!response.ok) {
@@ -92,7 +96,11 @@ export async function getPlayerCard(
  * ```
  */
 export async function getPlayerMatches(steamid: string): Promise<PlayerMatchesResponse> {
-  const response = await fetch(`${API_URL}getPlayerMatchesRelicHttp?steamid=${steamid}`, {});
+  const response = await fetch(`${API_URL}getPlayerMatchesRelicHttp?steamid=${steamid}`, {
+    headers: {
+      Origin: "https://coh2stats.com",
+    },
+  });
 
   if (!response.ok) {
     throw new Error(

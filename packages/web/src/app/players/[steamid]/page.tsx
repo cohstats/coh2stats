@@ -7,7 +7,7 @@ import { Col, Row, Tooltip, Typography, Avatar, Tabs, Badge, notification } from
 import { LaddersDataObject, PlayerCardAPIObject } from "../../../coh/types";
 import firebaseAnalytics from "../../../analytics";
 import { capitalize, timeAgo } from "../../../utils/helpers";
-import { getPlayerCard } from "../../../coh/coh2stats-api";
+import { fetchPlayerCardData } from "./actions";
 
 import { CountryFlag } from "../../../components/country-flag";
 import { playerCardBase } from "../../../titles";
@@ -85,7 +85,7 @@ const PlayerCardContent = () => {
 
     (async () => {
       try {
-        const finalData = await getPlayerCard(steamidParsed, false);
+        const finalData = await fetchPlayerCardData(steamidParsed);
         setData(finalData);
         if (finalData.steamProfile && Object.values(finalData.steamProfile)[0].personaname) {
           addNameToUrl(Object.values(finalData.steamProfile)[0].personaname);
