@@ -18,6 +18,7 @@ import { ExclamationCircleOutlined, LoadingOutlined } from "@ant-design/icons";
 import WindowTitlebar from "../../titlebar/window-titlebar";
 import config from "../../../main/config";
 import { debounce } from "lodash";
+import ErrorBoundary from "../../components/error-boundary";
 
 const { Text } = Typography;
 
@@ -147,7 +148,8 @@ const App = (): JSX.Element => {
             banner
           />
         ) : null}
-        <Form
+        <ErrorBoundary>
+          <Form
           labelCol={{ span: 8 }}
           wrapperCol={{ span: 10 }}
           layout="horizontal"
@@ -545,6 +547,7 @@ const App = (): JSX.Element => {
             </Collapse.Panel>
           </Collapse>
         </Form>
+        </ErrorBoundary>
       </WindowTitlebar>
     </>
   );

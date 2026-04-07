@@ -6,6 +6,7 @@ const config = {
   twitchExtensionUpdateURL:
     "https://us-east4-coh2-ladders-prod.cloudfunctions.net/updateTwitchExtData",
   extensionURL: "https://dashboard.twitch.tv/extensions/6x9q2nzzv9wewklo7gt7hz2vypdgg7",
+  githubIssuesURL: "https://github.com/cohstats/coh2stats/issues",
 };
 
 export default config;
