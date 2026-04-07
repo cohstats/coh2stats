@@ -69,7 +69,11 @@ p.kofi-button {
   overflow-wrap: break-word;
   vertical-align: middle;
   border: 0 none #fff !important;
-  font-family: "Quicksand", Helvetica, Century Gothic, sans-serif !important;
+  font-family:
+    "Quicksand",
+    Helvetica,
+    Century Gothic,
+    sans-serif !important;
   text-decoration: none;
   text-shadow: none;
   font-weight: 700 !important;

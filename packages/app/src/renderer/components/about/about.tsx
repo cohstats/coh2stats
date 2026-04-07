@@ -96,7 +96,9 @@ const AboutModal: React.FC<Props> = ({ modalState, setModalState }) => {
               <Text>
                 Want to help?{" "}
                 <Link
-                  onClick={() => window.electron.ipcRenderer.openInBrowser(config.githubIssuesURL)}
+                  onClick={() =>
+                    window.electron.ipcRenderer.openInBrowser(config.githubIssuesURL)
+                  }
                 >
                   Report a bug
                 </Link>
