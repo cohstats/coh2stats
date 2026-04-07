@@ -20,7 +20,6 @@
   "scripts": {
     "web": "yarn workspace @coh2stats/web",
     "app": "yarn workspace @coh2stats/app",
-    "shared": "yarn workspace @coh2stats/shared",
     "fix": "run-s fix:*",
     "fix:eslint": "eslint --fix packages/**/*.{ts,tsx,js}",
     "fix:prettier": "prettier --loglevel warn --write .",

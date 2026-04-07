@@ -2,7 +2,7 @@
   "name": "@coh2stats/app",
   "productName": "coh2-game-stats",
   "version": "1.5.15",
-  "description": "Displays stats of players in the current Coh2 game",
+  "description": "Displays stats of players in the current COH2 game",
   "main": ".webpack/main",
   "private": true,
   "scripts": {
@@ -15,7 +15,7 @@
   },
   "keywords": [],
   "author": {
-    "name": "Johannes Merkt"
+    "name": "Johannes Merkt, Petr Vecera"
   },
   "license": "MIT",
   "config": {
@@ -60,14 +60,14 @@
     "firebase": "9.14.0",
     "javascript-time-ago": "2.5.10",
     "mixpanel": "0.18.0",
-    "lodash": "4.17.21",
+    "lodash": "4.18.1",
     "node-machine-id": "1.1.12",
     "react": "17.0.2",
     "react-country-flag": "3.0.2",
     "react-dom": "17.0.2",
     "react-redux": "7.2.6",
     "reverse-line-reader": "0.2.6",
-    "socket.io": "4.4.1",
+    "socket.io": "4.8.3",
     "sound-play": "1.1.0",
     "tcp-port-used": "1.0.2",
     "uuid": "8.3.2"
