@@ -1,12 +1,12 @@
-import React from "react";
-import { Footer } from "antd/es/layout/layout";
-import { Divider, Typography } from "antd";
-import { Link as RouterLink } from "react-router-dom-v5-compat";
-import config from "../config";
-import { RegionSelector } from "./region-selector";
-import { Helper } from "./helper";
+"use client";
 
-const { Link } = Typography;
+import React from "react";
+import { Layout, Divider, Typography } from "antd";
+import NextLink from "next/link";
+import config from "../config";
+
+const { Footer } = Layout;
+const { Link, Text } = Typography;
 
 export const MainFooter: React.FC = () => {
   return (
@@ -17,7 +17,7 @@ export const MainFooter: React.FC = () => {
       <br />
       The data display here are not accurate and do not represent the actual state of the game.
       <br />
-      See <RouterLink to={"/about"}>about page</RouterLink> for more info.
+      See <NextLink href={"/about"}>about page</NextLink> for more info.
       <br />
       © 2021 - 2026 COH2stats.com
       <br />
@@ -43,24 +43,17 @@ export const MainFooter: React.FC = () => {
           height={30}
           src={"/resources/kofi_s_logo_nolabel.webp"}
           alt={"Ko-fi support button"}
+          style={{ marginRight: 2 }}
         />
-        Donate
+        <span style={{ verticalAlign: "top" }}>Donate</span>
       </Link>
-      <div style={{ padding: 10 }}>
-        <RegionSelector />{" "}
-        <Helper
-          text={
-            <>
-              Learn more about region selector <Link href={"/about/regions"}>here</Link>
-            </>
-          }
-        />
-      </div>
-      <Typography.Text type="secondary" style={{ fontSize: "12px" }}>
+      <br />
+      <br />
+      <Text type="secondary" style={{ fontSize: "12px" }}>
         The Company of Heroes is registered trademark of SEGA Holdings. Co
         <br />
         The COH2 Images and other assets are owned by Relic Entertainment and/or SEGA
-      </Typography.Text>
+      </Text>
       <br />
       <br />
       Visit{" "}

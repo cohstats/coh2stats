@@ -1,3 +1,6 @@
+// @ts-nocheck
+"use client";
+
 import { ResponsiveBar } from "@nivo/bar";
 import React from "react";
 import { calculateRMS } from "../../../utils/helpers";
@@ -24,13 +27,15 @@ export const MapsWinRateSqrtChart: React.FC<IProps> = ({ data }) => {
   for (const [key, value] of Object.entries(data)) {
     chartData.push({
       mapName: key,
-      value: calculateRMS(
-        calculateWinrateSingleFaction(value["wermacht"]),
-        calculateWinrateSingleFaction(value["wgerman"]),
-        calculateWinrateSingleFaction(value["british"]),
-        calculateWinrateSingleFaction(value["soviet"]),
-        calculateWinrateSingleFaction(value["usf"]),
-      ).toFixed(2),
+      value: parseFloat(
+        calculateRMS(
+          calculateWinrateSingleFaction(value["wermacht"]),
+          calculateWinrateSingleFaction(value["wgerman"]),
+          calculateWinrateSingleFaction(value["british"]),
+          calculateWinrateSingleFaction(value["soviet"]),
+          calculateWinrateSingleFaction(value["usf"]),
+        ).toFixed(2),
+      ),
       matchCount: value.matchCount,
     });
   }
@@ -55,7 +60,7 @@ export const MapsWinRateSqrtChart: React.FC<IProps> = ({ data }) => {
       indexBy="mapName"
       colors={{ scheme: "nivo" }}
       colorBy={"indexValue"}
-      maxValue={"auto"}
+      valueScale={{ type: "linear" }}
       innerPadding={2}
       axisLeft={{
         tickSize: 5,

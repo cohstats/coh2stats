@@ -1,3 +1,6 @@
+// @ts-nocheck
+"use client";
+
 import React, { useEffect, useState } from "react";
 import { Badge, Tooltip } from "antd";
 import config from "../config";

@@ -7,7 +7,7 @@ import React from "react";
 import { GameData, SideData, LadderStats } from "../../redux/state";
 import { FactionIcon } from "./faction-icon";
 import Table from "antd/es/table/Table";
-import { Helper } from "@coh2stats/shared/src/components/helper";
+import { Helper } from "./helper";
 import { Typography } from "antd";
 import InfoCircleOutlined from "@ant-design/icons/InfoCircleOutlined";
 

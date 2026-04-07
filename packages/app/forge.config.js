@@ -83,12 +83,18 @@ module.exports = {
       if (!fs.existsSync(libDest)) {
         fs.mkdirSync(libDest, { recursive: true });
       }
-      const modules = path.join(rootDir, "..", "..", "node_modules");
+      // Check local node_modules first (for nohoist packages), then fallback to root
+      const localModules = path.join(rootDir, "node_modules");
+      const rootModules = path.join(rootDir, "..", "..", "node_modules");
       const externalEntries = Object.entries(webpackMainSettings.externals);
       // append antd to have access to the newest css minified files for the stream overlay
       externalEntries.push(["antd", "antd"]);
       for (const [key, value] of externalEntries) {
-        const libPath = path.join(modules, key);
+        // Try local node_modules first, then root node_modules
+        let libPath = path.join(localModules, key);
+        if (!fs.existsSync(libPath)) {
+          libPath = path.join(rootModules, key);
+        }
         if (fs.existsSync(libPath)) {
           copyFolderRecursiveSync(libPath, libDest);
           // remove node_modules in lib folder

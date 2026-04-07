@@ -5,7 +5,13 @@
       "packages/*"
     ],
     "nohoist": [
-      "**/firebase/**"
+      "**/firebase/**",
+      "**/react",
+      "**/react-dom",
+      "**/antd",
+      "**/antd/**",
+      "**/@ant-design/**",
+      "**/date-fns"
     ]
   },
   "engines": {
@@ -14,7 +20,6 @@
   "scripts": {
     "web": "yarn workspace @coh2stats/web",
     "app": "yarn workspace @coh2stats/app",
-    "shared": "yarn workspace @coh2stats/shared",
     "fix": "run-s fix:*",
     "fix:eslint": "eslint --fix packages/**/*.{ts,tsx,js}",
     "fix:prettier": "prettier --loglevel warn --write .",
@@ -48,7 +53,7 @@
     "eslint-plugin-sonarjs": "0.11.0",
     "firebase-tools": "13.7.2",
     "npm-run-all2": "6.2.0",
-    "prettier": "2.8.8",
+    "prettier": "3.8.1",
     "source-map-explorer": "2.5.3",
     "typescript": "4.9.5"
   },

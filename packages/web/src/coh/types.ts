@@ -241,6 +241,80 @@ interface PlayerReport {
   profile: Record<string, any>;
 }
 
+/**
+ * API response type for player card endpoint
+ */
+interface PlayerCardAPIObject {
+  relicPersonalStats: Record<string, any>;
+  steamProfile: Record<string, any>;
+  playerMatches: Array<Record<string, any>>;
+  playTime: null | number;
+  playerInfo: null | Record<string, any>;
+}
+
+/**
+ * API response type for player matches endpoint
+ */
+interface PlayerMatchesResponse {
+  playerMatches: Array<ProcessedMatch>;
+}
+
+/**
+ * API response type for search players endpoint
+ */
+interface SearchPlayersResponse {
+  result: {
+    foundProfiles: Record<string, any>;
+  };
+}
+
+/**
+ * Relic API Types - Raw responses from Relic's COH2 API
+ */
+
+interface RelicLeaderboardStat {
+  statgroup_id: number;
+  leaderboard_id: number;
+  wins: number;
+  losses: number;
+  streak: number;
+  disputes: number;
+  drops: number;
+  rank: number;
+  ranktotal: number;
+  ranklevel: number;
+  regionrank: number;
+  regionranktotal: number;
+  lastmatchdate: number;
+}
+
+interface RelicStatGroupMember {
+  profile_id: number;
+  name: string;
+  alias: string;
+  personal_statgroup_id: number;
+  xp: number;
+  level: number;
+  leaderboardregion_id: number;
+  country: string;
+}
+
+interface RelicStatGroup {
+  id: number;
+  type: number;
+  name: string;
+  members: RelicStatGroupMember[];
+}
+
+interface RelicLeaderboardResponse {
+  result: {
+    code: number;
+    message: string;
+  };
+  statGroups: RelicStatGroup[];
+  leaderboardStats: RelicLeaderboardStat[];
+}
+
 export type {
   ProcessedMatch,
   StatsCurrentLiveGames,
@@ -258,6 +332,13 @@ export type {
   LiveGame,
   HistoricLeaderBoardStats,
   FirebaseTimeStampObject,
+  PlayerCardAPIObject,
+  PlayerMatchesResponse,
+  SearchPlayersResponse,
+  RelicLeaderboardStat,
+  RelicStatGroupMember,
+  RelicStatGroup,
+  RelicLeaderboardResponse,
 };
 export {
   validRaceNames,

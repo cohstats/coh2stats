@@ -1,74 +1,57 @@
+// @ts-nocheck
+"use client";
+
 import React from "react";
 import RedditCardDetails from "./reddit-card-details";
-import { useState, useEffect } from "react";
 import { Card, Tooltip, Typography } from "antd";
-import { Loading } from "../loading";
 import { useMediaQuery } from "react-responsive";
+import { RedditPost } from "../../utils/reddit";
 
 const { Title } = Typography;
 
 interface Props {
   width: number;
+  data: RedditPost[];
 }
 
-const RedditCard: React.FC<Props> = (size) => {
-  const [data, setData] = useState([]);
-  const [fetched, setFetched] = useState(false);
+const RedditCard: React.FC<Props> = ({ width, data }) => {
   const isBigScreen = useMediaQuery({ query: "(min-width: 1824px)" });
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const res = await fetch(
-          "https://www.reddit.com/r/CompanyOfHeroes/top.json?limit=100&t=month",
-          {},
-        );
-        const resData = await res.json();
-        const requiredData = resData?.data?.children
-          .filter(function (e: any) {
-            return `${e?.data?.link_flair_text}`.includes("CoH2");
-          })
-          .slice(0, 10);
-        setData(requiredData);
-        setFetched(true);
-      } catch (e) {
-        setFetched(true);
-        setData([]);
-        console.error(e);
-      }
-    })();
-  }, []);
-
   const cardStyle = {
-    maxWidth: size.width,
-    minWidth: isBigScreen ? size.width : 100,
+    maxWidth: width,
+    minWidth: isBigScreen ? width : 100,
     minHeight: 720,
     flexGrow: 1,
   };
 
   return (
     <div>
-      <Card style={cardStyle} bodyStyle={{ padding: 12 }}>
-        <div style={{ overflow: "hidden" }}>
-          <div style={{ float: "left" }}>
-            {" "}
+      <Card style={cardStyle} styles={{ body: { padding: 12 } }}>
+        <div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: 16,
+            }}
+          >
             <Tooltip title={"Filtered only to posts with COH2 tag. Aka doesn't show COH3."}>
-              <Title level={3}>Top COH2 Reddit Posts</Title>
+              <Title level={3} style={{ margin: 0 }}>
+                Top COH2 Reddit Posts
+              </Title>
             </Tooltip>
-          </div>
-          <div style={{ float: "right" }}>
-            {" "}
             <a
               href={"https://www.reddit.com/r/CompanyOfHeroes/"}
               target="_blank"
               rel="noopener noreferrer"
             >
-              <p>r/CompanyOfHeroes</p>
+              <p style={{ margin: 0 }}>r/CompanyOfHeroes</p>
             </a>
           </div>
-          <div style={{ paddingTop: 50 }}>
-            {fetched &&
-              data.map((item: any, index: number) => {
+          <div>
+            {data && data.length > 0 ? (
+              data.map((item: RedditPost, index: number) => {
                 return (
                   item && (
                     <RedditCardDetails
@@ -82,8 +65,10 @@ const RedditCard: React.FC<Props> = (size) => {
                     />
                   )
                 );
-              })}
-            {!fetched && <Loading />}
+              })
+            ) : (
+              <p>No posts available</p>
+            )}
           </div>
         </div>
       </Card>

@@ -12,7 +12,12 @@ export interface FirebaseConfig {
 /**
  * Get current firebase config
  */
-const firebase = (): FirebaseConfig => JSON.parse(process.env.REACT_APP_FIREBASE_CONFIG || "{}");
+const firebase = (): FirebaseConfig => {
+  // Next.js uses NEXT_PUBLIC_ prefix for client-side env vars
+  const configString =
+    process.env.NEXT_PUBLIC_FIREBASE_CONFIG || process.env.REACT_APP_FIREBASE_CONFIG || "{}";
+  return JSON.parse(configString);
+};
 
 const firebaseFunctions = {
   location: "us-east4",
@@ -27,14 +32,17 @@ const config = {
   discordInviteLink: "https://discord.gg/4Bj2y84WAR",
   donationLink: "https://ko-fi.com/cohstats",
   coh2steamGameId: 231430,
-  api: {
-    gcp: `https://${firebaseFunctions.location}-coh2-ladders-prod.cloudfunctions.net/`,
-    cf: "https://coh2stats.com/api-cf/",
-  },
+  apiUrl: `https://${firebaseFunctions.location}-coh2-ladders-prod.cloudfunctions.net/`,
   // this is just for info
   matchAreStoredForDays: 30,
   scrapeFrequencyMinutes: 5,
   defaultTimeoutRequestMs: 30000,
+  DesktopAppVersionFile: {
+    version: "1.5.15",
+    link: "https://github.com/cohstats/coh2stats/releases/tag/v1.5.15",
+    downloadLink:
+      "https://github.com/cohstats/coh2stats/releases/download/v1.5.15/Coh2.Game.Stats-1.5.15.Setup.exe",
+  },
 };
 
 // The date when we exported the data for the bulletins and commanders

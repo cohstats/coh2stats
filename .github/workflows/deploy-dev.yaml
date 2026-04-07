@@ -1,62 +1,62 @@
-name: Build and Deploy Web - DEV
-on:
-  push:
-    branches:
-      - master
-    paths-ignore:
-      - packages/functions/**
-      - packages/app/**
-
-env:
-  FB_PROJECT: coh2-ladders-prod
-  FB_HOSTING: hosting:coh2-ladders-dev
-
-jobs:
-  build-deploy-web:
-    name: Deploy Web Dev
-    environment:
-      name: dev
-      url: https://dev.coh2stats.com
-    runs-on: ubuntu-latest
-
-    concurrency:
-      group: deploy-dev-${{ github.ref }}
-      cancel-in-progress: true
-
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v4
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20.x"
-      - name: Cache node modules
-        uses: actions/cache@v4
-        env:
-          cache-name: cache-node-modules-v2
-        with:
-          path: |
-            node_modules
-            */*/node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-      - name: Get the version
-        id: get_version
-        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
-      - name: Install Deps
-        run: yarn --prefer-offline --frozen-lockfile install
-      - name: Fix the bug ISSUE 1078
-        run: yarn run "react-spring-issue-1078"
-      - name: Build the app
-        run: |
-          export NODE_OPTIONS=--max_old_space_size=4096
-          CI=false yarn web build
-      - name: Deploy to Firebase
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: "${{ secrets.GITHUB_TOKEN }}"
-          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_COH2_LADDERS_PROD }}"
-          target: coh2-ladders-dev
-          channelId: live
-          projectId: coh2-ladders-prod
+#name: Build and Deploy Web - DEV
+#on:
+#  push:
+#    branches:
+#      - master
+#    paths-ignore:
+#      - packages/functions/**
+#      - packages/app/**
+#
+#env:
+#  FB_PROJECT: coh2-ladders-prod
+#  FB_HOSTING: hosting:coh2-ladders-dev
+#
+#jobs:
+#  build-deploy-web:
+#    name: Deploy Web Dev
+#    environment:
+#      name: dev
+#      url: https://dev.coh2stats.com
+#    runs-on: ubuntu-latest
+#
+#    concurrency:
+#      group: deploy-dev-${{ github.ref }}
+#      cancel-in-progress: true
+#
+#    steps:
+#      - name: Checkout Repo
+#        uses: actions/checkout@v6
+#      - name: Setup Node
+#        uses: actions/setup-node@v6
+#        with:
+#          node-version: "20.x"
+#      - name: Cache node modules
+#        uses: actions/cache@v4
+#        env:
+#          cache-name: cache-node-modules-v2
+#        with:
+#          path: |
+#            node_modules
+#            */*/node_modules
+#          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('yarn.lock') }}
+#          restore-keys: |
+#            ${{ runner.os }}-build-${{ env.cache-name }}-
+#      - name: Get the version
+#        id: get_version
+#        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+#      - name: Install Deps
+#        run: yarn --prefer-offline --frozen-lockfile install
+#      - name: Fix the bug ISSUE 1078
+#        run: yarn run "react-spring-issue-1078"
+#      - name: Build the app
+#        run: |
+#          export NODE_OPTIONS=--max_old_space_size=4096
+#          CI=false yarn web build
+#      - name: Deploy to Firebase
+#        uses: FirebaseExtended/action-hosting-deploy@v0
+#        with:
+#          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+#          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_COH2_LADDERS_PROD }}"
+#          target: coh2-ladders-dev
+#          channelId: live
+#          projectId: coh2-ladders-prod

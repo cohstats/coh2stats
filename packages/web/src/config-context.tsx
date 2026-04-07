@@ -1,7 +1,10 @@
+"use client";
+
 import React, { createContext, useState, FC } from "react";
 
 type userConfigType = {
-  api: "gcp" | "cf";
+  // @deprecated - Region selection has been removed, this property is no longer used
+  api?: "gcp" | "cf";
 };
 
 const localStorageKey = "coh2UserConfig";
@@ -10,11 +13,17 @@ const ConfigContext = createContext<{
   userConfig: userConfigType;
   updateUserConfig: (newConfig: Record<string, string>) => void;
 }>({
-  updateUserConfig(newConfig: any): void {},
+  updateUserConfig: () => {
+    // Default implementation does nothing - will be overridden by provider
+  },
   userConfig: { api: "gcp" },
 });
 
 const getLocalStorageConfig = () => {
+  // Check if we're in the browser before accessing localStorage
+  if (typeof window === "undefined") {
+    return { api: "gcp" };
+  }
   try {
     return JSON.parse(localStorage.getItem(localStorageKey) || "");
   } catch (e) {
@@ -23,7 +32,10 @@ const getLocalStorageConfig = () => {
 };
 
 const setLocalStorageConfig = (config: any) => {
-  localStorage.setItem(localStorageKey, JSON.stringify(config));
+  // Check if we're in the browser before accessing localStorage
+  if (typeof window !== "undefined") {
+    localStorage.setItem(localStorageKey, JSON.stringify(config));
+  }
 };
 
 const ConfigsProvider: FC<any> = (props) => {

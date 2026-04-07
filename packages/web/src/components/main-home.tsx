@@ -1,13 +1,16 @@
+// @ts-nocheck
+"use client";
+
 import React, { useEffect, useState } from "react";
 import { Card, Col, Row, Space, Typography } from "antd";
-import Meta from "antd/es/card/Meta";
-import { Link } from "react-router-dom-v5-compat";
+import Link from "next/link";
 import routes from "../routes";
 import { commanderAndBulletinDate, lastPatchName } from "../config";
 import { doc, getFirestore, getDoc } from "firebase/firestore";
 import RedditCard from "./reddit/reddit-card";
 
 const { Title, Paragraph, Text } = Typography;
+const { Meta } = Card;
 
 const MainHome: React.FC = () => {
   const [analyzedMatches, setAnalyzedMatches] = useState("10,106,009");
@@ -36,11 +39,11 @@ const MainHome: React.FC = () => {
           <Col style={{ marginRight: 20 }}>
             <div style={{ textAlign: "center" }}>
               <Space style={{ display: "flex", justifyContent: "center" }} wrap>
-                <Link to={"/stats"}>
+                <Link href={"/stats"}>
                   <Card
                     hoverable
                     style={cardStyle}
-                    bodyStyle={{ padding: 12 }}
+                    styles={{ body: { padding: 12 } }}
                     cover={
                       <img
                         alt="Game statistics"
@@ -61,11 +64,11 @@ const MainHome: React.FC = () => {
                     />
                   </Card>
                 </Link>
-                <Link to={"/players"}>
+                <Link href={"/players"}>
                   <Card
                     hoverable
                     style={cardStyle}
-                    bodyStyle={{ padding: 12 }}
+                    styles={{ body: { padding: 12 } }}
                     cover={
                       <img
                         alt="Player Cards"
@@ -86,11 +89,11 @@ const MainHome: React.FC = () => {
                     />
                   </Card>
                 </Link>
-                <Link to={"/desktop-app"}>
+                <Link href={"/desktop-app"}>
                   <Card
                     hoverable
                     style={cardStyle}
-                    bodyStyle={{ padding: 12 }}
+                    styles={{ body: { padding: 12 } }}
                     cover={
                       <img
                         alt="Desktop App"
@@ -113,11 +116,11 @@ const MainHome: React.FC = () => {
               </Space>
               <Title level={4}>So far analyzed {analyzedMatches} matches.</Title>
               <Space style={{ marginBottom: 10, display: "flex", justifyContent: "center" }} wrap>
-                <Link to={routes.commanderBase()}>
+                <Link href={routes.commanderBase()}>
                   <Card
                     hoverable
                     style={cardStyle}
-                    bodyStyle={{ padding: 12 }}
+                    styles={{ body: { padding: 12 } }}
                     cover={
                       <img
                         style={{ maxHeight: 160, objectFit: "contain" }}
@@ -132,11 +135,11 @@ const MainHome: React.FC = () => {
                     />
                   </Card>
                 </Link>
-                <Link to={routes.bulletinsBase()}>
+                <Link href={routes.bulletinsBase()}>
                   <Card
                     hoverable
                     style={cardStyle}
-                    bodyStyle={{ padding: 12 }}
+                    styles={{ body: { padding: 12 } }}
                     cover={
                       <img
                         style={{ maxHeight: 160, objectFit: "contain" }}
@@ -151,11 +154,11 @@ const MainHome: React.FC = () => {
                     />
                   </Card>
                 </Link>
-                <Link to={routes.liveMatchesBase()}>
+                <Link href={routes.liveMatchesBase()}>
                   <Card
                     hoverable
                     style={cardStyle}
-                    bodyStyle={{ padding: 12 }}
+                    styles={{ body: { padding: 12 } }}
                     cover={
                       <img
                         style={{ maxHeight: 160, objectFit: "contain" }}

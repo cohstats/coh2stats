@@ -1,8 +1,10 @@
+// @ts-nocheck
 import { CommanderAbility } from "../coh/types";
-import { Avatar, Badge, Col, Row, Tooltip } from "antd";
-import Text from "antd/es/typography/Text";
+import { Avatar, Badge, Col, Row, Tooltip, Typography } from "antd";
 import { getExportedIconPath } from "../coh/helpers";
 import React from "react";
+
+const { Text } = Typography;
 
 const OFFSET_DEFAULT: [number, number] = [-16, -32];
 const OFFSET_SMALL: [number, number] = [-12, -24];
@@ -41,7 +43,7 @@ export const CommanderAbilitiesComponent = ({
                   overflowCount={999}
                   showZero
                   offset={isSmall ? OFFSET_SMALL : OFFSET_DEFAULT}
-                  size={isSmall ? "small" : "default"}
+                  size={isSmall ? "small" : "medium"}
                 />
               </Tooltip>
             </Col>

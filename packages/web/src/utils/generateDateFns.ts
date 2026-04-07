@@ -22,9 +22,11 @@ import {
   startOfWeek,
   format as formatDate,
   parse as parseDate,
+  getMilliseconds,
+  setMilliseconds,
 } from "date-fns";
 import enGB from "date-fns/locale/en-GB";
-import type { GenerateConfig } from "rc-picker/lib/generate";
+import type { GenerateConfig } from "@rc-component/picker/lib/generate";
 
 const localeParse = (format: string) => {
   return format
@@ -47,6 +49,7 @@ const generateConfig: GenerateConfig<Date> = {
   getHour: (date) => getHours(date),
   getMinute: (date) => getMinutes(date),
   getSecond: (date) => getSeconds(date),
+  getMillisecond: (date) => getMilliseconds(date),
 
   // set
   addYear: (date, diff) => addYears(date, diff),
@@ -58,6 +61,7 @@ const generateConfig: GenerateConfig<Date> = {
   setHour: (date, hour) => setHours(date, hour),
   setMinute: (date, minute) => setMinutes(date, minute),
   setSecond: (date, second) => setSeconds(date, second),
+  setMillisecond: (date, millisecond) => setMilliseconds(date, millisecond),
 
   // Compare
   isAfter: (date1, date2) => isAfter(date1, date2),

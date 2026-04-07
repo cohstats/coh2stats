@@ -13,14 +13,14 @@ jobs:
 
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: "20.x"
+          node-version: "22.x"
           cache: "yarn"
       - name: Cache node modules
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         env:
           cache-name: cache-node-modules-v2
         with:
@@ -37,7 +37,7 @@ jobs:
           yarn lint:prettier
       - name: Run web tests
         run: |
-          yarn web test
+          yarn web test:ci
       - name: Run web build
         run: |
-          CI=false yarn web build
+          yarn web build

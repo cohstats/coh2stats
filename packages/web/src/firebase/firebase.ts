@@ -15,15 +15,23 @@ import config from "../config";
 
 let performance;
 let app: FirebaseApp | undefined;
-let analytics: Analytics;
+let analytics: Analytics | undefined;
 let db: Firestore | undefined;
 
-const useEmulators = process.env.REACT_APP_EMULATOR && process.env.REACT_APP_EMULATOR !== "false";
+const useEmulators =
+  (process.env.NEXT_PUBLIC_EMULATOR || process.env.REACT_APP_EMULATOR) &&
+  process.env.NEXT_PUBLIC_EMULATOR !== "false" &&
+  process.env.REACT_APP_EMULATOR !== "false";
 
 /**
  * Initialize Firebase
  */
 const init = (): void => {
+  // Prevent double initialization
+  if (app) {
+    return;
+  }
+
   app = initializeApp(config.firebase());
   analytics = getAnalytics(app);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -38,6 +46,11 @@ const init = (): void => {
   }
 };
 
+// Initialize Firebase immediately on client-side
+if (typeof window !== "undefined") {
+  init();
+}
+
 /**
  * Instance of the FB functions
  */
@@ -51,6 +64,19 @@ export const functions = () =>
  * @param params parameters of the event
  */
 const logEvent = (name: string, params?: Record<string, string | boolean>): void => {
+  if (!analytics) {
+    console.warn("Firebase Analytics not initialized");
+    return;
+  }
+
+  // Skip logging events on localhost
+  if (
+    typeof window !== "undefined" &&
+    (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
+  ) {
+    return;
+  }
+
   logFirebaseEvent(analytics, name, params);
 };
 
@@ -59,12 +85,30 @@ const logEvent = (name: string, params?: Record<string, string | boolean>): void
  *
  * @param id User ID to add to analytics
  */
-const setUserId = (id: string): void => setFirebaseUserID(analytics, id);
+const setUserId = (id: string): void => {
+  if (!analytics) {
+    console.warn("Firebase Analytics not initialized");
+    return;
+  }
+  setFirebaseUserID(analytics, id);
+};
 
 /**
  * Reset user ID
  */
 const resetUserId = (): void => setUserId("");
+
+/**
+ * Get Firestore instance
+ * @returns Firestore instance or undefined if not initialized
+ */
+const getDb = (): Firestore | undefined => db;
+
+/**
+ * Get Firebase App instance
+ * @returns Firebase App instance or undefined if not initialized
+ */
+const getApp = (): FirebaseApp | undefined => app;
 
 const firebaseExport = {
   init,
@@ -73,6 +117,8 @@ const firebaseExport = {
   logEvent,
   setUserId,
   resetUserId,
+  getDb,
+  getApp,
 };
 
 export default firebaseExport;

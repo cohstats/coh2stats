@@ -1,4 +1,4 @@
-import { LaddersDataArrayObject, LaddersDataObject } from "./types";
+import { LaddersDataArrayObject, LaddersDataObject, RelicLeaderboardResponse } from "./types";
 import { levels } from "./coh2-api";
 
 const sortArrayOfObjectsByTheirPropertyValue = (
@@ -70,14 +70,20 @@ const findAndMergeStatGroups = (
     let change: number | string = 0;
 
     if (laddersHistoryObject) {
-      const oldHistoryObject = laddersHistoryObject.leaderboardStats.find((statsObject) => {
-        return statsObject.statgroup_id === stat.statgroup_id;
-      });
-
-      if (oldHistoryObject) {
-        change = oldHistoryObject.rank - stat.rank;
+      // If current rank is greater than 200, we can't calculate change
+      // because historic data only includes top 200
+      if (stat.rank > 200) {
+        change = "N/A";
       } else {
-        change = "new";
+        const oldHistoryObject = laddersHistoryObject.leaderboardStats.find((statsObject) => {
+          return statsObject.statgroup_id === stat.statgroup_id;
+        });
+
+        if (oldHistoryObject) {
+          change = oldHistoryObject.rank - stat.rank;
+        } else {
+          change = "new";
+        }
       }
     }
 
@@ -97,6 +103,54 @@ const levelToText = (level: string | number): string => {
   level = `${level}`;
 
   return levels[level] || "unknown level";
+};
+
+/**
+ * Maps Relic's raw leaderboard response to the app's LaddersDataObject format
+ *
+ * @param relicResponse - Raw response from Relic API
+ * @returns Mapped leaderboard data in app format
+ * @throws Error if the Relic response indicates failure (result.code !== 0)
+ *
+ * @example
+ * ```typescript
+ * const relicData = await fetchLeaderboardStats(4);
+ * const appData = mapRelicResponseToLaddersData(relicData);
+ * ```
+ */
+export const mapRelicResponseToLaddersData = (
+  relicResponse: RelicLeaderboardResponse,
+): LaddersDataObject => {
+  if (relicResponse.result.code !== 0) {
+    throw new Error(
+      `Relic API returned error code ${relicResponse.result.code}: ${relicResponse.result.message}`,
+    );
+  }
+
+  return {
+    leaderboardStats: relicResponse.leaderboardStats.map((stat) => ({
+      wins: stat.wins,
+      streak: stat.streak,
+      regionranktotal: stat.regionranktotal,
+      drops: stat.drops,
+      statgroup_id: stat.statgroup_id,
+      regionrank: stat.regionrank,
+      rank: stat.rank,
+      disputes: stat.disputes,
+      ranklevel: stat.ranklevel,
+      leaderboard_id: stat.leaderboard_id,
+      lastmatchdate: stat.lastmatchdate,
+      ranktotal: stat.ranktotal,
+      losses: stat.losses,
+    })),
+    statGroups: relicResponse.statGroups.map((group) => ({
+      type: group.type,
+      name: group.name,
+      members: group.members,
+      id: group.id,
+    })),
+    rankTotal: relicResponse.leaderboardStats[0]?.ranktotal ?? 0,
+  };
 };
 
 export {

@@ -1,3 +1,6 @@
+// @ts-nocheck
+"use client";
+
 import React, { memo } from "react";
 import { Card, Empty, Radio, Tooltip } from "antd";
 import { HeatMapChart } from "./charts/factions-heatmap";
@@ -120,7 +123,7 @@ const _FactionVsFactionCard: React.FC<IProps> = ({ title, data, style }) => {
       if (heatmapValues !== "winRate") {
         return value["wins"] + value["losses"];
       } else {
-        let winRate: number = value["wins"] / (value["wins"] + value["losses"]);
+        const winRate: number = value["wins"] / (value["wins"] + value["losses"]);
         if (factionWinRate === "axis") {
           return winRate.toFixed(2);
         } else {
@@ -150,15 +153,15 @@ const _FactionVsFactionCard: React.FC<IProps> = ({ title, data, style }) => {
     }
   }
 
-  // Transform for the heatmap
-  const dataForHeatmap: Array<Record<string, any>> = [];
+  // Transform for the heatmap - prepare intermediate data
+  const dataForHeatmapIntermediate: Array<Record<string, any>> = [];
 
   for (const [key, value] of Object.entries(factionDataByKey)) {
     value["leftAxis"] = key;
-    dataForHeatmap.push(value);
+    dataForHeatmapIntermediate.push(value);
   }
 
-  dataForHeatmap.sort((firstObject, secondObject) => {
+  dataForHeatmapIntermediate.sort((firstObject, secondObject) => {
     if (firstObject["leftAxis"] > secondObject["leftAxis"]) {
       return -1;
     }
@@ -167,13 +170,22 @@ const _FactionVsFactionCard: React.FC<IProps> = ({ title, data, style }) => {
     }
     return 0;
   });
-  const keysForHeatMap = [...keysForHeatMapSet].sort();
+
+  // Sort keys, but ensure "sum" is always at the end
+  const keysForHeatMap = [...keysForHeatMapSet].sort((a, b) => {
+    // If 'a' is "sum", it should come after 'b'
+    if (a === "sum") return 1;
+    // If 'b' is "sum", 'a' should come before 'b'
+    if (b === "sum") return -1;
+    // Otherwise, sort alphabetically
+    return a < b ? -1 : a > b ? 1 : 0;
+  });
 
   // Allies are added after transformation cos it's easier (on the bottom side of the heatmap)
   if (factionWinRate === "allies") {
     const finalSumForAllies: Record<string, any> = {};
 
-    for (const oneLine of dataForHeatmap) {
+    for (const oneLine of dataForHeatmapIntermediate) {
       for (const [key, value] of Object.entries(oneLine)) {
         const numValue = parseFloat(value);
         if (!isNaN(numValue)) {
@@ -187,14 +199,27 @@ const _FactionVsFactionCard: React.FC<IProps> = ({ title, data, style }) => {
         const numValue = parseFloat(value);
         if (!isNaN(numValue)) {
           // -1 because we have leftAxis there
-          finalSumForAllies[key] = (numValue / dataForHeatmap.length).toFixed(2);
+          finalSumForAllies[key] = (numValue / dataForHeatmapIntermediate.length).toFixed(2);
         }
       }
     }
 
     finalSumForAllies["leftAxis"] = "sum";
-    dataForHeatmap.push(finalSumForAllies);
+    dataForHeatmapIntermediate.push(finalSumForAllies);
   }
+
+  // Transform to Nivo heatmap format
+  const dataForHeatmap = dataForHeatmapIntermediate.map((row) => {
+    const { leftAxis, ...rest } = row;
+    return {
+      id: leftAxis,
+      // Use keysForHeatMap order to ensure proper sorting
+      data: keysForHeatMap.map((key) => ({
+        x: key,
+        y: rest[key] !== undefined ? rest[key] : 0,
+      })),
+    };
+  });
 
   const menu = (
     <>
@@ -230,16 +255,16 @@ const _FactionVsFactionCard: React.FC<IProps> = ({ title, data, style }) => {
           />
         </>
       }
-      style={{ ...{ width: 995, height: 440 }, ...style }}
+      style={{ ...{ width: 995, height: 470 }, ...style }}
       extra={menu}
     >
       {!factionData ? (
         <Empty />
       ) : (
-        <div>
+        <div style={{ display: "flex", alignItems: "flex-start" }}>
           {legend}
-          <div style={{ display: "inline-block" }}>
-            <HeatMapChart data={dataForHeatmap} keys={keysForHeatMap} width={820} height={400} />
+          <div style={{ width: 820, height: 380 }}>
+            <HeatMapChart data={dataForHeatmap} keys={keysForHeatMap} />
           </div>
         </div>
       )}

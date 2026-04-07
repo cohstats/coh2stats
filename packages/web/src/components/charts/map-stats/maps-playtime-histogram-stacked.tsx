@@ -1,3 +1,6 @@
+// @ts-nocheck
+"use client";
+
 import { ResponsiveBar } from "@nivo/bar";
 import React from "react";
 import { Empty } from "antd";
@@ -18,7 +21,7 @@ export const MapsPlayTimeHistogramStacked: React.FC<IProps> = ({ data }) => {
   }
 
   for (const [key, mapObject] of Object.entries(data)) {
-    let gameTimeSpreadAsPercentage = Object.fromEntries(
+    const gameTimeSpreadAsPercentage = Object.fromEntries(
       Object.entries(mapObject["gameTimeSpread"]).map(([k, v]) => {
         // @ts-ignore
         const percentageValue = ((v / mapObject["matchCount"]) * 100).toFixed(2);

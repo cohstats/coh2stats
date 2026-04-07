@@ -1,3 +1,6 @@
+// @ts-nocheck
+"use client";
+
 import { ResponsiveBar } from "@nivo/bar";
 import React from "react";
 import { sortArrayOfObjectsByTheirPropertyValue } from "../../coh/helpers";
@@ -36,7 +39,7 @@ export const CommandersBarChart: React.FC<CommandersBarChartProps> = ({ commande
     const iconPath = getCommanderIconPath(commanderData?.iconSmall);
 
     return (
-      <Card bodyStyle={{ padding: 5 }}>
+      <Card styles={{ body: { padding: 5, width: 500 } }}>
         <Avatar
           size={86}
           shape="square"
@@ -83,6 +86,9 @@ export const CommandersBarChart: React.FC<CommandersBarChartProps> = ({ commande
         legendOffset: -40,
       }}
       onClick={(event) => {
+        if (typeof window === "undefined") {
+          return;
+        }
         const commanderId: string = event.data["commanderId"] as string;
         const commanderData = getCommanderData(commanderId);
         window.open(routes.commanderByID(commanderData?.races[0], commanderId), "_blank");

@@ -1,7 +1,7 @@
 import {
   findByLeaderBoardID,
   prepareLeaderBoardDataForSinglePlayer,
-} from "../../../pages/players/player-card/data-processing";
+} from "../../../app/players/[steamid]/_components/data-processing";
 import { relicProfile } from "../../assets/relic-profile";
 
 describe("prepareLeaderBoardData", () => {
@@ -16,7 +16,6 @@ describe("prepareLeaderBoardData", () => {
   });
 });
 
-/* eslint-disable */
 describe("findByLeaderBoardID", () => {
   test("Finds the british", () => {
     const result = findByLeaderBoardID(52);
@@ -40,5 +39,3 @@ describe("findByLeaderBoardID", () => {
   });
 });
 /* eslint-enable */
-
-export {};

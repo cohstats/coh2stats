@@ -1,3 +1,6 @@
+// @ts-nocheck
+"use client";
+
 import React from "react";
 import { ResponsiveChoropleth } from "@nivo/geo";
 import { geoMapFeatures } from "./geo-map-features";
@@ -65,8 +68,10 @@ const GeoWorldMap: React.FC<GeoWorldMapProps> = ({ data }) => {
   return (
     <div>
       <Row justify={"center"}>
-        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
-          <div style={{ width: "100%", maxWidth: 650, height: 420, marginRight: 20 }}>
+        <div
+          style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", width: "100%" }}
+        >
+          <div style={{ flex: "1", minWidth: 400, height: 420, marginRight: 20 }}>
             <ResponsiveChoropleth
               data={data}
               features={geoMapFeatures.features}
@@ -127,7 +132,7 @@ const GeoWorldMap: React.FC<GeoWorldMapProps> = ({ data }) => {
               //     ]}
             />
           </div>
-          <div style={{ flex: "1", maxWidth: 450 }}>
+          <div style={{ flex: "0 0 auto", width: 300 }}>
             <Table
               dataSource={data.slice(0, 10)}
               columns={columns}

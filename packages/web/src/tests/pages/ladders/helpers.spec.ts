@@ -8,5 +8,3 @@ describe("findAndMergeStatGroups", () => {
     expect(resultArray[0]["members"]).toHaveLength(2);
   });
 });
-
-export {};

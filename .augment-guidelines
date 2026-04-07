@@ -1,2 +1,7 @@
-- Use Yarn as package manager
+- Use Yarn as package manager. Don't use NPM
 - Test the build of the web app
+- **DO NOT** touch `packages/app` or `packages/shared`
+
+- When working in NextJS, utilize /_components/ folder when we want to keep the components
+next to the page they are used in. Only when they are not used elsewhere.
+- Prefer arrow functions over function declarations

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from "react";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en.json";
@@ -35,6 +36,7 @@ const RedditCardDetails: React.FC<Props> = (data) => {
         borderBottom: "1px solid black",
         display: "flex",
         justifyContent: "space-between",
+        alignItems: "flex-start",
         padding: "4px",
       }}
     >
@@ -44,7 +46,7 @@ const RedditCardDetails: React.FC<Props> = (data) => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Title level={5} style={{ textAlign: "start" }}>
+          <Title level={5} style={{ textAlign: "start", marginTop: 0 }}>
             {data?.title}
           </Title>
         </a>

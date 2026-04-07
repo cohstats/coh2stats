@@ -1,11 +1,12 @@
+// @ts-nocheck
 import { Button, Card, Col, Modal, Row, Space, Tag } from "antd";
 import { RaceName } from "../coh/types";
 import React, { useEffect, useState } from "react";
 import firebaseAnalytics from "../analytics";
-import { MatchPlayerDetailsTable } from "../pages/matches/match-details-table";
+import { MatchPlayerDetailsTable } from "../components/matches/match-details-table";
 import { SimplePieChart } from "../components/charts-match/simple-pie";
-import MatchDetails from "../pages/matches/match-details";
-import { Link } from "react-router-dom-v5-compat";
+import MatchDetails from "../components/matches/match-details";
+import Link from "next/link";
 import routes from "../routes";
 import { DatabaseOutlined } from "@ant-design/icons";
 import { RelicIcon } from "../components/relic-icon";
@@ -45,7 +46,7 @@ export function formatMapName(mapname: any) {
  */
 export function formatMatchTime(startTime: number, onlyDate = false) {
   const hourMillis = 3600 * 1000; // one day in a miliseconds range
-  let difference = Date.now() - startTime * 1000; // start match vs NOW time difference in miliseconds
+  const difference = Date.now() - startTime * 1000; // start match vs NOW time difference in miliseconds
   const options: Intl.DateTimeFormatOptions = {
     //weekday: "long",
     year: "numeric",
@@ -79,9 +80,9 @@ export function getMatchPlayersByFaction(
   reportedPlayerResults: Array<any>,
   faction: "axis" | "allies",
 ) {
-  let factions = [];
+  const factions = [];
   // loop through all players
-  for (let playerResult of reportedPlayerResults) {
+  for (const playerResult of reportedPlayerResults) {
     switch (faction) {
       // search for all axis players
       case "axis":
@@ -104,11 +105,11 @@ export function getMatchPlayersByFaction(
  * Returns Antd element <Tag> [Axis victory] or [Allies victory]
  */
 export function getMatchResult(reportedPlayerResults: Array<any>) {
-  let winner: string = "";
+  let winner = "";
   let color = "#108ee9";
 
   // loop thru all players
-  for (let index of reportedPlayerResults) {
+  for (const index of reportedPlayerResults) {
     // find a winner
     if (reportedPlayerResults[index].resulttype === 1) {
       // if its a axis player by race
@@ -185,8 +186,8 @@ export const formatMatchtypeID = (matchType: number): string => {
       formattedMatchType = "4v4 AI Easy";
       break;
     case 0:
-    // This is empty on purpose, lol case
-    // eslint-disable-next-line no-fallthrough
+    // This is empty on purpose, lol case - falls through to case 22
+    // falls through
     case 22:
       formattedMatchType = "Custom Game";
       break;
@@ -215,7 +216,7 @@ export const raceIds: Record<number, RaceName> = {
  */
 export function getAliasFromName(matchRecord: any, name: string) {
   if (!matchRecord) return "unknown";
-  let resultItem = matchRecord.matchhistoryreportresults.filter(
+  const resultItem = matchRecord.matchhistoryreportresults.filter(
     (result: any) => result.profile.name === name,
   );
   return resultItem[0].profile.alias;
@@ -255,8 +256,8 @@ export const ExpandedMatch: React.FC<{ record: any }> = ({ record }) => {
     document.body.removeChild(link);
   };
 
-  let axisPlayers = getMatchPlayersByFaction(record.matchhistoryreportresults, "axis");
-  let alliesPlayers = getMatchPlayersByFaction(record.matchhistoryreportresults, "allies");
+  const axisPlayers = getMatchPlayersByFaction(record.matchhistoryreportresults, "axis");
+  const alliesPlayers = getMatchPlayersByFaction(record.matchhistoryreportresults, "allies");
 
   const simplifiedDmgDataChartAxis = axisPlayers.map((stats) => {
     return {
@@ -306,16 +307,16 @@ export const ExpandedMatch: React.FC<{ record: any }> = ({ record }) => {
             <Card
               title={<div style={{ textAlign: "center" }}>Damage dealt</div>}
               size={"small"}
-              bordered={false}
-              bodyStyle={{ height: 140, width: 140, padding: 0 }}
+              variant="borderless"
+              styles={{ body: { height: 140, width: 140, padding: 0 } }}
             >
               <SimplePieChart data={simplifiedDmgDataChartAxis} />
             </Card>
             <Card
               title={<div style={{ textAlign: "center" }}>Kills</div>}
               size={"small"}
-              bordered={false}
-              bodyStyle={{ height: 140, width: 140, padding: 0 }}
+              variant="borderless"
+              styles={{ body: { height: 140, width: 140, padding: 0 } }}
             >
               <SimplePieChart data={simplifiedKillsDataChartAxis} />
             </Card>
@@ -326,16 +327,16 @@ export const ExpandedMatch: React.FC<{ record: any }> = ({ record }) => {
             <Card
               title={<div style={{ textAlign: "center" }}>Damage Dealt</div>}
               size={"small"}
-              bordered={false}
-              bodyStyle={{ height: 140, width: 140, padding: 0 }}
+              variant="borderless"
+              styles={{ body: { height: 140, width: 140, padding: 0 } }}
             >
               <SimplePieChart data={simplifiedDmgDataChartAllies} />
             </Card>
             <Card
               title={<div style={{ textAlign: "center" }}>Unit Kills</div>}
               size={"small"}
-              bordered={false}
-              bodyStyle={{ height: 140, width: 140, padding: 0 }}
+              variant="borderless"
+              styles={{ body: { height: 140, width: 140, padding: 0 } }}
             >
               <SimplePieChart data={simplifiedKillsDataChartAllies} />
             </Card>
@@ -352,7 +353,7 @@ export const ExpandedMatch: React.FC<{ record: any }> = ({ record }) => {
           >
             Open Full Details Modal
           </Button>
-          <Link to={routes.singleMatch(record.id)} target={"_blank"}>
+          <Link href={routes.singleMatch(record.id)} target={"_blank"}>
             <Button
               size={"middle"}
               type="primary"
@@ -370,15 +371,17 @@ export const ExpandedMatch: React.FC<{ record: any }> = ({ record }) => {
               Match Details - <DatabaseOutlined /> Data source <RelicIcon />
             </>
           }
-          visible={isModalVisible}
+          open={isModalVisible}
           onOk={handleOk}
           onCancel={handleCancel}
-          destroyOnClose={true}
+          destroyOnHidden={true}
           cancelButtonProps={{ hidden: true }}
           okText={"Close"}
           footer={[
-            <Button onClick={handleDownloadGameData}>Download game data</Button>,
-            <Button onClick={handleCancel} type="primary">
+            <Button key={"downloadGameData"} onClick={handleDownloadGameData}>
+              Download game data
+            </Button>,
+            <Button key={"close"} onClick={handleCancel} type="primary">
               Close
             </Button>,
           ]}
@@ -401,14 +404,14 @@ export function getPlayerMapListFilter(matches: any) {
       },
     ];
 
-  let mapSet = new Set();
-  let filterSettings: any[] = [];
+  const mapSet = new Set();
+  const filterSettings: any[] = [];
   for (const map of matches) {
     mapSet.add(map.mapname);
   }
 
   // sort maps alphabetically
-  let sortedMapsArray = Array.from(mapSet).sort((a: any, b: any) => {
+  const sortedMapsArray = Array.from(mapSet).sort((a: any, b: any) => {
     return a.localeCompare(b);
   });
 

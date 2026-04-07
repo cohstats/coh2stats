@@ -1,75 +1,43 @@
-/**
- * This component can also change the title of the pages.
- * Some pages which have dynamic title - such as stats / map stats / player cards handle the title
- * in their components.
- *
- * Other which are static are handled here.
- */
-import React from "react";
-import { Header } from "antd/es/layout/layout";
-import { Menu, Space } from "antd";
-import routes from "../routes";
-import { useRouteMatch } from "react-router";
-import { PlayerSearchInput } from "./header-search";
-import {
-  aboutBase,
-  bulletinsBase,
-  commanderBase,
-  desktopAppBase,
-  liveMatchesAppBase,
-  mostRecentGamesAppBase,
-  regionsBase,
-} from "../titles";
-import { Link } from "react-router-dom-v5-compat";
-import { ItemType } from "antd/lib/menu/hooks/useItems";
-import OnlinePlayers from "./online-players";
+// @ts-nocheck
+"use client";
 
-const pageTitleSwitch = (path: string) => {
-  switch (path) {
-    case routes.commanderBase():
-      document.title = commanderBase;
-      break;
-    case routes.statsBase():
-      // we are setting up this in the stats page component
-      break;
-    case routes.bulletinsBase():
-      document.title = bulletinsBase;
-      break;
-    case routes.aboutBase():
-      document.title = aboutBase;
-      break;
-    case routes.desktopAppBase():
-      document.title = desktopAppBase;
-      break;
-    case routes.liveMatchesBase():
-      document.title = liveMatchesAppBase;
-      break;
-    case routes.recentMatchesBase():
-      document.title = mostRecentGamesAppBase;
-      break;
-    case routes.regionsBase():
-      document.title = regionsBase;
-  }
-};
+import React from "react";
+import { Layout, Menu, Space, MenuProps } from "antd";
+import routes from "../routes";
+import { usePathname } from "next/navigation";
+import { PlayerSearchInput } from "./header-search";
+import Link from "next/link";
+import OnlinePlayers from "./online-players";
+import config from "../config";
+
+const { Header } = Layout;
+
+type ItemType = MenuProps["items"][number];
 
 const menuItems: ItemType[] = [
-  { key: routes.playerCardBase(), label: <Link to={routes.playerCardBase()}>Players</Link> },
-  { key: routes.statsBase(), label: <Link to={routes.statsBase()}>Stats</Link> },
-  { key: routes.mapStats(), label: <Link to={routes.mapStats()}>Map Stats</Link> },
+  { key: routes.playerCardBase(), label: <Link href={routes.playerCardBase()}>Players</Link> },
+  { key: routes.statsBase(), label: <Link href={routes.statsBase()}>Stats</Link> },
+  { key: routes.mapStats(), label: <Link href={routes.mapStats()}>Map Stats</Link> },
   {
     key: routes.leaderboardsBase(),
-    label: <Link to={routes.leaderboardsBase()}>Leaderboards</Link>,
+    label: <Link href={routes.leaderboardsBase()}>Leaderboards</Link>,
   },
-  { key: routes.liveMatchesBase(), label: <Link to={routes.liveMatchesBase()}>Live Games</Link> },
-  { key: routes.commanderBase(), label: <Link to={routes.commanderBase()}>Commanders</Link> },
+  {
+    key: routes.liveMatchesBase(),
+    label: <Link href={routes.liveMatchesBase()}>Live Games</Link>,
+  },
+  { key: routes.commanderBase(), label: <Link href={routes.commanderBase()}>Commanders</Link> },
   {
     key: routes.bulletinsBase(),
-    label: <Link to={routes.bulletinsBase()}>Intel Bulletins</Link>,
+    label: <Link href={routes.bulletinsBase()}>Intel Bulletins</Link>,
   },
-  { key: routes.desktopAppBase(), label: <Link to={routes.desktopAppBase()}>Desktop App</Link> },
+  {
+    key: routes.desktopAppBase(),
+    label: <Link href={routes.desktopAppBase()}>Desktop App</Link>,
+  },
   {
     key: routes.recentMatchesBase(),
-    label: <Link to={routes.recentMatchesBase()}>Recent Games</Link>,
+    label: <Link href={routes.recentMatchesBase()}>Recent Games</Link>,
   },
   {
     label: "Other",
@@ -77,11 +45,7 @@ const menuItems: ItemType[] = [
     children: [
       {
         key: routes.openData(),
-        label: <Link to={routes.openData()}>Open Data</Link>,
-      },
-      {
-        key: `${routes.regionsBase()}`,
-        label: <Link to={`${routes.regionsBase()}`}>Regions Settings</Link>,
+        label: <Link href={routes.openData()}>Open Data</Link>,
       },
       {
         key: "relic-api-status",
@@ -97,16 +61,31 @@ const menuItems: ItemType[] = [
     label: "About",
     key: routes.aboutBase(),
     children: [
-      { key: `${routes.aboutBase()}#base`, label: <Link to={routes.aboutBase()}>About</Link> },
+      { key: `${routes.aboutBase()}#base`, label: <Link href={routes.aboutBase()}>About</Link> },
       {
         key: `${routes.aboutBase()}#bugs`,
-        label: <Link to={`${routes.aboutBase()}#bugs`}>Contribution</Link>,
+        label: <Link href={`${routes.aboutBase()}#bugs`}>Contribution</Link>,
       },
       {
         key: `${routes.aboutBase()}#donations`,
-        label: <Link to={`${routes.aboutBase()}#donations`}>Donation</Link>,
+        label: <Link href={`${routes.aboutBase()}#donations`}>Donation</Link>,
       },
     ],
+  },
+  {
+    key: "support-us",
+    label: (
+      <a href={config.donationLink} target="_blank" rel="noreferrer">
+        <img
+          width={24}
+          height={24}
+          src={"/resources/kofi_s_logo_nolabel.webp"}
+          alt={"Ko-fi support button"}
+          style={{ marginRight: 4, verticalAlign: "middle" }}
+        />
+        Support Us
+      </a>
+    ),
   },
 ];
 
@@ -115,66 +94,33 @@ export const MainHeader: React.FC = () => {
    * It would be great if we could re-write this code as it has a lot of hard-coded stuff
    */
 
-  const commandersMatch = useRouteMatch({
-    path: routes.commanderBase(),
-  });
+  const pathname = usePathname();
 
-  const statsMatch = useRouteMatch({
-    path: routes.statsBase(),
-  });
+  // Helper function to check if pathname matches a route
+  const matchesRoute = (route: string): boolean => {
+    if (route === pathname) return true;
+    if (pathname.startsWith(route + "/")) return true;
+    return false;
+  };
 
-  const mapStatsMatch = useRouteMatch({
-    path: routes.mapStats(),
-  });
-
-  const leaderboardsMatch = useRouteMatch({
-    path: routes.leaderboardsBase(),
-  });
-
-  const regionMatch = useRouteMatch({
-    path: routes.regionsBase(),
-  });
-
-  const aboutMatch = useRouteMatch({
-    path: routes.aboutBase(),
-  });
-
-  const bulletinsMatch = useRouteMatch({
-    path: routes.bulletinsBase(),
-  });
-
-  const desktopAppMatch = useRouteMatch({
-    path: routes.desktopAppBase(),
-  });
-
-  const liveMatchesMatch = useRouteMatch({
-    path: routes.liveMatchesBase(),
-  });
-
-  const recentMatches = useRouteMatch({
-    path: routes.recentMatchesBase(),
-  });
-
-  let pathMatch =
-    commandersMatch ||
-    statsMatch ||
-    // needs to be before about match
-    regionMatch ||
-    aboutMatch ||
-    bulletinsMatch ||
-    mapStatsMatch ||
-    desktopAppMatch ||
-    liveMatchesMatch ||
-    recentMatches ||
-    leaderboardsMatch;
-  const currentPath = pathMatch?.path || "";
-  pageTitleSwitch(currentPath);
+  // Determine current path for menu selection
+  let currentPath = "";
+  if (matchesRoute(routes.commanderBase())) currentPath = routes.commanderBase();
+  else if (matchesRoute(routes.statsBase())) currentPath = routes.statsBase();
+  else if (matchesRoute(routes.aboutBase())) currentPath = routes.aboutBase();
+  else if (matchesRoute(routes.bulletinsBase())) currentPath = routes.bulletinsBase();
+  else if (matchesRoute(routes.mapStats())) currentPath = routes.mapStats();
+  else if (matchesRoute(routes.desktopAppBase())) currentPath = routes.desktopAppBase();
+  else if (matchesRoute(routes.liveMatchesBase())) currentPath = routes.liveMatchesBase();
+  else if (matchesRoute(routes.recentMatchesBase())) currentPath = routes.recentMatchesBase();
+  else if (matchesRoute(routes.leaderboardsBase())) currentPath = routes.leaderboardsBase();
+  else if (matchesRoute(routes.playerCardBase())) currentPath = routes.playerCardBase();
 
   return (
     <Header style={{ height: "auto" }}>
       <div>
         <div style={{ float: "left" }}>
-          <Link to={"/"}>
+          <Link href={"/"}>
             <div
               style={{
                 color: "whitesmoke",
@@ -183,6 +129,7 @@ export const MainHeader: React.FC = () => {
                 fontWeight: "bold",
                 cursor: "pointer",
                 whiteSpace: "nowrap",
+                paddingRight: 10,
               }}
             >
               COH2 Stats
@@ -195,7 +142,7 @@ export const MainHeader: React.FC = () => {
           }}
         >
           <Space
-            direction={"horizontal"}
+            orientation={"horizontal"}
             size={"small"}
             wrap
             style={{ display: "flex", justifyContent: "center" }}

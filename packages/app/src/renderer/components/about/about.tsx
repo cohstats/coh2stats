@@ -12,6 +12,7 @@ import { KofiDonate } from "../donate/kofi-donate";
 import compareVersions from "compare-versions";
 import { useSelector } from "react-redux";
 import { selectSettings } from "../../../redux/slice";
+import config from "../../../main/config";
 
 interface Props {
   modalState: boolean;
@@ -96,9 +97,7 @@ const AboutModal: React.FC<Props> = ({ modalState, setModalState }) => {
                 Want to help?{" "}
                 <Link
                   onClick={() =>
-                    window.electron.ipcRenderer.openInBrowser(
-                      "https://github.com/cohstats/coh2stats/issues",
-                    )
+                    window.electron.ipcRenderer.openInBrowser(config.githubIssuesURL)
                   }
                 >
                   Report a bug

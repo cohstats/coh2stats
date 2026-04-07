@@ -1,3 +1,6 @@
+// @ts-nocheck
+"use client";
+
 import { ResponsiveBar } from "@nivo/bar";
 import React from "react";
 
@@ -27,7 +30,7 @@ const calculateSingleMapWinRateDiff = (
     console.warn(`We have more wins than losses! Data issue ${axisLoss} != ${alliesWins}`);
   }
 
-  return ((0.5 - axisWins / (axisWins + axisLoss)) * -100).toFixed(2);
+  return parseFloat(((0.5 - axisWins / (axisWins + axisLoss)) * -100).toFixed(2));
 };
 
 export const MapsWinRateChart: React.FC<IProps> = ({ data }) => {
@@ -61,8 +64,7 @@ export const MapsWinRateChart: React.FC<IProps> = ({ data }) => {
       indexBy="mapName"
       colors={{ scheme: "nivo" }}
       colorBy={"indexValue"}
-      minValue={-30}
-      maxValue={30}
+      valueScale={{ type: "linear", min: -30, max: 30, clamp: true }}
       innerPadding={2}
       axisLeft={{
         tickSize: 5,

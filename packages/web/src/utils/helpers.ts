@@ -1,11 +1,12 @@
-import { useLocation } from "react-router-dom-v5-compat";
+"use client";
+
+import { useSearchParams } from "next/navigation";
 import { eachDayOfInterval, format } from "date-fns";
 
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en.json";
 import config from "../config";
 import { axisRaceIds, FirebaseTimeStampObject, ProcessedMatch, resultType } from "../coh/types";
-import { userConfigType } from "../config-context";
 
 // Something like this is not currently support by create-react-app
 // Jesus that lib is such a shit https://github.com/facebook/create-react-app/issues/9127 ...
@@ -56,7 +57,7 @@ const capitalize = (s: string) => {
 };
 
 function useQuery() {
-  return new URLSearchParams(useLocation().search);
+  return useSearchParams();
 }
 
 const formatFactionName = (name: string) => {
@@ -116,7 +117,7 @@ const sumValuesOfObjects = (
       }
       // Not in master object => put new
     } else {
-      debugger;
+      console.log("Adding new key to master object:", key);
       masterObject[key] = newObject[key];
     }
   }
@@ -124,6 +125,9 @@ const sumValuesOfObjects = (
 };
 
 const isDev = () => {
+  if (typeof window === "undefined") {
+    return false;
+  }
   const hostName = window.location.hostname;
   return config.devHostnames.includes(hostName);
 };
@@ -152,14 +156,8 @@ const getDatesInRange = (startDate: Date | number, endDate: Date | number): Arra
   });
 };
 
-const getAPIUrl = (userConfig: userConfigType) => {
-  if (userConfig.api !== "gcp") {
-    return config.api.cf;
-  } else {
-    // By default return GCP API
-    return config.api.gcp;
-  }
-};
+// API URL for all requests - always uses GCP endpoint
+export const API_URL = config.apiUrl;
 
 export {
   getYesterdayDateTimestamp,
@@ -177,7 +175,6 @@ export {
   timeAgo,
   isDev,
   determineMatchWinner,
-  getAPIUrl,
   firebaseTimeStampObjectToDate,
   getDatesInRange,
 };

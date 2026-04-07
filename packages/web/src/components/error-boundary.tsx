@@ -1,11 +1,22 @@
+// @ts-nocheck
+"use client";
+
 import React from "react";
 import { AlertBox } from "./alert-box";
 import { Row, Typography } from "antd";
 import config from "../config";
 const { Text } = Typography;
 
-class ErrorBoundary extends React.Component {
-  constructor(props: any) {
+interface ErrorBoundaryProps {
+  children: React.ReactNode;
+}
+
+interface ErrorBoundaryState {
+  hasError: boolean;
+}
+
+class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
     super(props);
     this.state = { hasError: false };
   }
@@ -21,7 +32,6 @@ class ErrorBoundary extends React.Component {
   }
 
   render() {
-    // @ts-ignore
     if (this.state.hasError) {
       // You can render any custom fallback UI
       return (

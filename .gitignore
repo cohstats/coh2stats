@@ -29,6 +29,7 @@ node_modules/
 # Cache
 /.firebase/
 packages/web/.eslintcache
+packages/web/.next/
 
 # WebStorm - user-specific stuff
 .idea
