@@ -8,7 +8,7 @@ import { LadderStats, Member, SideData } from "../../redux/state";
 import { CountryFlag } from "./country-flag";
 import { timeAgo } from "../utils/helpers";
 import { FactionIcon } from "./faction-icon";
-import { Helper } from "@coh2stats/shared/src/components/helper";
+import { Helper } from "./helper";
 import { levelToText } from "@coh2stats/shared/src/coh/helpers";
 import ExtraPLayerInfo from "./extra-info";
 import InfoCircleOutlined from "@ant-design/icons/InfoCircleOutlined";

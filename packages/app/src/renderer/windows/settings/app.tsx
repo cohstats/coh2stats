@@ -12,7 +12,7 @@ import { StreamOverlayPositions } from "../../../redux/state";
 import { actions, selectSettings } from "../../../redux/slice";
 import { useCallback, useEffect, useState } from "react";
 import { events, firebaseInit } from "../../firebase/firebase";
-import { Helper } from "@coh2stats/shared/src/components/helper";
+import { Helper } from "../../components/helper";
 import { Collapse, Divider, Result, Slider, Spin, Steps, Tooltip, Typography } from "antd";
 import { ExclamationCircleOutlined, LoadingOutlined } from "@ant-design/icons";
 import WindowTitlebar from "../../titlebar/window-titlebar";
