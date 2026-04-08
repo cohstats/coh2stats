@@ -17,7 +17,7 @@ export const MainFooter: React.FC = () => {
       <br />
       The data display here are not accurate and do not represent the actual state of the game.
       <br />
-      See <NextLink href={"/about"}>about page</NextLink> for more info.
+      See <NextLink href={"/about"} prefetch={false}>about page</NextLink> for more info.
       <br />
       © 2021 - 2026 COH2stats.com
       <br />

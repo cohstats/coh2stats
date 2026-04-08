@@ -209,7 +209,6 @@ export const MatchPlayerDetailsTable: React.FC<MatchPlayerDetailsTableProps> = (
             <Tooltip title={profile.alias}>
               <RouterLink
                 href={routes.playerCardWithId(convertSteamNameToID(profile["name"]))}
-                prefetch={false}
               >
                 {profile["alias"]}
               </RouterLink>

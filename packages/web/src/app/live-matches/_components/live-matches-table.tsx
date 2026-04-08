@@ -203,7 +203,6 @@ const LiveMatchesTable: React.FC<{
                       convertSteamNameToID(playerInfo?.player_profile?.name || ""),
                     )}
                     rel="nofollow noindex"
-                    prefetch={false}
                   >
                     {playerInfo?.player_profile?.alias}
                   </Link>
@@ -247,7 +246,6 @@ const LiveMatchesTable: React.FC<{
                       convertSteamNameToID(playerInfo?.player_profile?.name || ""),
                     )}
                     rel="nofollow noindex"
-                    prefetch={false}
                   >
                     {playerInfo?.player_profile?.alias}
                   </Link>

@@ -90,7 +90,6 @@ const RecentMatches: React.FC<RecentMatchesProps> = ({ initialMatchRecords, tota
                       convertSteamNameToID(playerInfo.profile["name"]),
                     )}
                     rel="nofollow noindex"
-                    prefetch={false}
                   >
                     {playerInfo.profile["alias"]}
                   </Link>
@@ -126,7 +125,6 @@ const RecentMatches: React.FC<RecentMatchesProps> = ({ initialMatchRecords, tota
                       convertSteamNameToID(playerInfo.profile["name"]),
                     )}
                     rel="nofollow noindex"
-                    prefetch={false}
                   >
                     {playerInfo.profile["alias"]}
                   </Link>

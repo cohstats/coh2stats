@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import React from "react";
@@ -7,37 +6,40 @@ import routes from "../routes";
 import { usePathname } from "next/navigation";
 import { PlayerSearchInput } from "./header-search";
 import Link from "next/link";
+import Image from "next/image";
 import OnlinePlayers from "./online-players";
 import config from "../config";
+import kofiLogo from "../../public/resources/kofi_s_logo_nolabel.webp";
 
 const { Header } = Layout;
 
+// @ts-ignore
 type ItemType = MenuProps["items"][number];
 
 const menuItems: ItemType[] = [
-  { key: routes.playerCardBase(), label: <Link href={routes.playerCardBase()}>Players</Link> },
-  { key: routes.statsBase(), label: <Link href={routes.statsBase()}>Stats</Link> },
-  { key: routes.mapStats(), label: <Link href={routes.mapStats()}>Map Stats</Link> },
+  { key: routes.playerCardBase(), label: <Link href={routes.playerCardBase()} prefetch={false}>Players</Link> },
+  { key: routes.statsBase(), label: <Link href={routes.statsBase()} prefetch={false}>Stats</Link> },
+  { key: routes.mapStats(), label: <Link href={routes.mapStats()} prefetch={false}>Map Stats</Link> },
   {
     key: routes.leaderboardsBase(),
-    label: <Link href={routes.leaderboardsBase()}>Leaderboards</Link>,
+    label: <Link href={routes.leaderboardsBase()} prefetch={false}>Leaderboards</Link>,
   },
   {
     key: routes.liveMatchesBase(),
-    label: <Link href={routes.liveMatchesBase()}>Live Games</Link>,
+    label: <Link href={routes.liveMatchesBase()} prefetch={false}>Live Games</Link>,
   },
-  { key: routes.commanderBase(), label: <Link href={routes.commanderBase()}>Commanders</Link> },
+  { key: routes.commanderBase(), label: <Link href={routes.commanderBase()} prefetch={false}>Commanders</Link> },
   {
     key: routes.bulletinsBase(),
-    label: <Link href={routes.bulletinsBase()}>Intel Bulletins</Link>,
+    label: <Link href={routes.bulletinsBase()} prefetch={false}>Intel Bulletins</Link>,
   },
   {
     key: routes.desktopAppBase(),
-    label: <Link href={routes.desktopAppBase()}>Desktop App</Link>,
+    label: <Link href={routes.desktopAppBase()} prefetch={false}>Desktop App</Link>,
   },
   {
     key: routes.recentMatchesBase(),
-    label: <Link href={routes.recentMatchesBase()}>Recent Games</Link>,
+    label: <Link href={routes.recentMatchesBase()} prefetch={false}>Recent Games</Link>,
   },
   {
     label: "Other",
@@ -45,7 +47,7 @@ const menuItems: ItemType[] = [
     children: [
       {
         key: routes.openData(),
-        label: <Link href={routes.openData()}>Open Data</Link>,
+        label: <Link href={routes.openData()} prefetch={false}>Open Data</Link>,
       },
       {
         key: "relic-api-status",
@@ -61,14 +63,14 @@ const menuItems: ItemType[] = [
     label: "About",
     key: routes.aboutBase(),
     children: [
-      { key: `${routes.aboutBase()}#base`, label: <Link href={routes.aboutBase()}>About</Link> },
+      { key: `${routes.aboutBase()}#base`, label: <Link href={routes.aboutBase()} prefetch={false}>About</Link> },
       {
         key: `${routes.aboutBase()}#bugs`,
-        label: <Link href={`${routes.aboutBase()}#bugs`}>Contribution</Link>,
+        label: <Link href={`${routes.aboutBase()}#bugs`} prefetch={false}>Contribution</Link>,
       },
       {
         key: `${routes.aboutBase()}#donations`,
-        label: <Link href={`${routes.aboutBase()}#donations`}>Donation</Link>,
+        label: <Link href={`${routes.aboutBase()}#donations`} prefetch={false}>Donation</Link>,
       },
     ],
   },
@@ -76,10 +78,10 @@ const menuItems: ItemType[] = [
     key: "support-us",
     label: (
       <a href={config.donationLink} target="_blank" rel="noreferrer">
-        <img
+        <Image
           width={24}
           height={24}
-          src={"/resources/kofi_s_logo_nolabel.webp"}
+          src={kofiLogo}
           alt={"Ko-fi support button"}
           style={{ marginRight: 4, verticalAlign: "middle" }}
         />
@@ -120,7 +122,7 @@ export const MainHeader: React.FC = () => {
     <Header style={{ height: "auto" }}>
       <div>
         <div style={{ float: "left" }}>
-          <Link href={"/"}>
+          <Link href={"/"} prefetch={false}>
             <div
               style={{
                 color: "whitesmoke",
