@@ -28,13 +28,14 @@ type ColumnsType<T> = TableColumnsType<T>;
 
 interface IProps {
   steamID: string;
+  profileID: number;
 }
 
 const renderExpandedMatch = (record: any) => {
   return <ExpandedMatch record={record} />;
 };
 
-const LastMatchesTable: React.FC<IProps> = ({ steamID }) => {
+const LastMatchesTable: React.FC<IProps> = ({ steamID, profileID }) => {
   const isMobile = useMediaQuery({ query: isMobileMediaQuery });
 
   const [isLoading, setIsLoading] = useState(true);
@@ -48,7 +49,7 @@ const LastMatchesTable: React.FC<IProps> = ({ steamID }) => {
       setIsLoading(true);
 
       try {
-        const finalData = await fetchPlayerMatchesData(steamID);
+        const finalData = await fetchPlayerMatchesData(profileID);
 
         if (!finalData) {
           throw new Error("Failed to fetch player matches");
@@ -73,7 +74,7 @@ const LastMatchesTable: React.FC<IProps> = ({ steamID }) => {
         setIsLoading(false);
       }
     })();
-  }, [steamID]);
+  }, [profileID]);
 
   if (error) {
     return (
@@ -87,7 +88,7 @@ const LastMatchesTable: React.FC<IProps> = ({ steamID }) => {
     );
   }
 
-  const profileID = `/steam/${steamID}`;
+  const steamProfileName = `/steam/${steamID}`;
 
   // set state variable for map filter options
   const playerMaps = getPlayerMapListFilter(data);
@@ -98,14 +99,14 @@ const LastMatchesTable: React.FC<IProps> = ({ steamID }) => {
     if (!matchRecord) return false;
 
     const resultItem = matchRecord.matchhistoryreportresults.filter(
-      (result: any) => result.profile.name === profileID,
+      (result: any) => result.profile.name === steamProfileName,
     );
     return resultItem[0]?.resulttype === 1;
   }
 
   function getPlayerMatchHistoryResult(matchRecord: any) {
     const player = matchRecord.matchhistoryreportresults.filter(
-      (result: any) => result.profile.name === profileID,
+      (result: any) => result.profile.name === steamProfileName,
     );
     return player[0];
   }
@@ -212,7 +213,7 @@ const LastMatchesTable: React.FC<IProps> = ({ steamID }) => {
                     )}
                     rel="nofollow noindex"
                   >
-                    {playerInfo.profile.name === profileID ? (
+                    {playerInfo.profile.name === steamProfileName ? (
                       <b>{playerInfo.profile["alias"]}</b>
                     ) : (
                       playerInfo.profile["alias"]

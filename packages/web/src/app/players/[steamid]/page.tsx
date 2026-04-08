@@ -177,7 +177,12 @@ const PlayerCardContent = () => {
     {
       label: "Recent Matches",
       key: "recentMatches",
-      children: <LastMatchesTable steamID={`${steamidParsed}`} />,
+      children: (
+        <LastMatchesTable
+          steamID={`${steamidParsed}`}
+          profileID={playerRelicProfile.profile_id}
+        />
+      ),
     },
     {
       label: "Matches",

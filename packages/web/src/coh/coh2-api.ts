@@ -1,4 +1,4 @@
-import type { RelicLeaderboardResponse } from "./types";
+import type { ProcessedMatch, RelicLeaderboardResponse } from "./types";
 
 /**
  * The names are important, can't be changed
@@ -169,6 +169,231 @@ export const fetchLeaderboardStats = async (
   }
 
   return await response.json();
+};
+
+/**
+ * Fetches player match stats from Relic API
+ *
+ * @param relicProfileID - The Relic profile ID of the player
+ * @returns Promise resolving to match data including matchHistoryStats and profiles
+ * @throws Error if the API request fails
+ *
+ * @example
+ * ```typescript
+ * const data = await fetchPlayerMatchStats(12345);
+ * ```
+ */
+const fetchPlayerMatchStats = async (relicProfileID: number): Promise<Record<string, any>> => {
+  const url = buildRecentMatchHistoryUrl(relicProfileID);
+
+  const response = await fetch(url);
+
+  if (response.status == 200) {
+    const data = await response.json();
+
+    if (data["result"]["message"] == "SUCCESS") {
+      // Do we want to transform the data before we save them?
+      delete data["result"]; // We don't need the result
+      return data;
+    } else if (data["result"]["message"] == "UNREGISTERED_PROFILE_NAME") {
+      throw new Error(
+        `Tried to get matches for non existing player id ${relicProfileID}. Response: UNREGISTERED_PROFILE_NAME`,
+      );
+    } else {
+      throw new Error(`Failed to received the player stats. Response: ${JSON.stringify(data)}`);
+    }
+  } else {
+    throw new Error(
+      `Failed to fetch player match stats from Relic API. Status: ${
+        response.status
+      }, Response: ${await response.text()}`,
+    );
+  }
+};
+
+/**
+ * Fetches and prepares matches for a player
+ *
+ * @param relicProfileID - The Relic profile ID of the player
+ * @returns Promise resolving to an array of ProcessedMatch objects
+ * @throws Error if the API request fails
+ *
+ * @example
+ * ```typescript
+ * const matches = await getAndPrepareMatchesForPlayer(12345);
+ * ```
+ */
+export const getAndPrepareMatchesForPlayer = async (
+  relicProfileID: number,
+): Promise<Array<ProcessedMatch>> => {
+  const data = await fetchPlayerMatchStats(relicProfileID);
+
+  const allMatches = data["matchHistoryStats"];
+  const profiles = data["profiles"];
+
+  // Transform the match objects, this removes unnecessary data, prepares additional information in single match object
+  return allMatches.map((match: Record<string, any>) =>
+    prepareMatchDBObject(match, profiles),
+  );
+};
+
+/**
+ * Builds the URL for fetching recent match history by profile ID from Relic API
+ * @param relicProfileId - The Relic profile ID of the player
+ * @returns Encoded URL string
+ */
+const buildRecentMatchHistoryUrl = (relicProfileId: number): string => {
+  return encodeURI(
+    `${RELIC_API_BASE_URL}/community/leaderboard/getRecentMatchHistoryByProfileId?title=coh2&profile_id=${relicProfileId}`,
+  );
+};
+
+/**
+ * Extracts just the string ID from the steam name used in the results of API.
+ * Some could be in format "/steam/76561198131099369"
+ * Some could be "/feral/97200"
+ *
+ * @param name - In format "/steam/76561198131099369"
+ * @returns The extracted Steam ID as a string
+ */
+const convertSteamNameToID = (name: string): string => {
+  const res = name.match(/\/steam\/(\d+)/);
+  if (res) return res[1];
+  const feral = name.match(/\/feral\/(\d+)/);
+  if (feral) return feral[1];
+  return "";
+};
+
+/**
+ * We want to filter out items we don't need to store.
+ *  "itemlocation_id":3 = commander
+ *  "itemlocation_id":4 = intel bulletin
+ *
+ * @param singleMatchData - The match data object
+ */
+const filterOutItems = (singleMatchData: Record<string, any>): Record<string, any> => {
+  singleMatchData["matchhistoryitems"] = singleMatchData["matchhistoryitems"].filter(
+    (item: Record<string, any>) => {
+      return item["itemlocation_id"] == 3 || item["itemlocation_id"] == 4;
+    },
+  );
+  return singleMatchData;
+};
+
+/**
+ * Removes unnecessary items from the items info.
+ *
+ * @param singleMatchData - The match data object
+ */
+const removeExtraDataFromItems = (singleMatchData: Record<string, any>): Record<string, any> => {
+  for (const item of singleMatchData["matchhistoryitems"]) {
+    delete item["durabilitytype"];
+    delete item["durability"];
+    delete item["metadata"];
+    delete item["matchhistory_id"]; // We don't need because the object is nested under the match itself
+  }
+
+  return singleMatchData;
+};
+
+/**
+ * Process a single match data object
+ *
+ * @param singleMatchData - The match data object
+ */
+const processSingleMatch = (singleMatchData: Record<string, any>): Record<string, any> => {
+  // delete fields we don't need to track
+  delete singleMatchData["options"]; // Don't know what this field does, probably don't need it
+  delete singleMatchData["slotinfo"]; // Don't know what this field does, probably don't need it
+  delete singleMatchData["observertotal"]; // We don't care about this
+  delete singleMatchData["matchurls"]; // Don't know, don't care
+
+  singleMatchData = filterOutItems(singleMatchData);
+  singleMatchData = removeExtraDataFromItems(singleMatchData);
+
+  return singleMatchData;
+};
+
+/**
+ * Returns array of player IDs who played in this match.
+ * Also removes unnecessary data in the player report.
+ *
+ * @param singleMatchData - The match data object
+ */
+const extractPlayerIDsInMatch = (singleMatchData: Record<string, any>): Array<number> => {
+  const playerIds = [];
+
+  for (const player of singleMatchData["matchhistoryreportresults"]) {
+    playerIds.push(player["profile_id"]);
+    // Also delete these 2 fields we don't need them
+    delete player["xpgained"];
+    delete player["matchstartdate"];
+  }
+
+  return playerIds;
+};
+
+/**
+ * Returns the profile based on it's ID from the list of profiles
+ *
+ * @param profileId - The profile ID to find
+ * @param profiles - Array of profile objects
+ */
+const findProfile = (
+  profileId: number,
+  profiles: Array<Record<string, any>>,
+): Record<string, any> | undefined => {
+  return profiles.find((profile: Record<string, any>) => {
+    return profile["profile_id"] == profileId;
+  });
+};
+
+/**
+ * This function transforms the objects in the profiles for them to be possible to
+ * better process / analyze and search in in the DB.
+ *
+ * Returns steam IDs. This should be theoretically put into the separate function
+ * but we can calculate it in one way to save some time.
+ *
+ * @param singleMatchObject - The match data object
+ * @param profiles - Array of profile objects
+ */
+const transformProfilesInMatch = (
+  singleMatchObject: Record<string, any>,
+  profiles: Array<Record<string, any>>,
+): Array<string> => {
+  const steamIDs = [];
+
+  for (const playerResult of singleMatchObject["matchhistoryreportresults"]) {
+    const profile = findProfile(playerResult["profile_id"], profiles);
+    playerResult["profile"] = profile;
+    steamIDs.push(convertSteamNameToID(profile?.name || ""));
+  }
+
+  return steamIDs;
+};
+
+/**
+ * This is the main function for processing and preparing the single match to be saved in the DB.
+ *
+ * @param singleMatchData - The match data object
+ * @param profiles - Array of profile objects
+ */
+export const prepareMatchDBObject = (
+  singleMatchData: Record<string, any>,
+  profiles: Array<Record<string, any>>,
+): ProcessedMatch => {
+  const profileIDs = extractPlayerIDsInMatch(singleMatchData);
+
+  // Do all the transformations on the single match object
+  singleMatchData = processSingleMatch(singleMatchData);
+  const steamIDs = transformProfilesInMatch(singleMatchData, profiles);
+
+  // This is important we are storing profile IDs on the main object so we can filter in DB based on this
+  singleMatchData["profile_ids"] = profileIDs;
+  singleMatchData["steam_ids"] = steamIDs;
+
+  return singleMatchData as ProcessedMatch;
 };
 
 export { leaderboardsID, levels };

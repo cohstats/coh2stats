@@ -1,6 +1,7 @@
 "use server";
 
-import { getPlayerCard, getPlayerMatches } from "@/coh/coh2stats-api";
+import { getPlayerCard } from "@/coh/coh2stats-api";
+import { getAndPrepareMatchesForPlayer } from "@/coh/coh2-api";
 import { PlayerCardAPIObject, PlayerMatchesResponse } from "@/coh/types";
 import { getPlayerFirestoreMatches } from "@/firebase/firebase-server";
 
@@ -22,16 +23,17 @@ export async function fetchPlayerCardData(steamid: string): Promise<PlayerCardAP
 
 /**
  * Server action to fetch player matches from Relic API
- * Wraps getPlayerMatches() from @/coh/coh2stats-api
+ * Wraps getAndPrepareMatchesForPlayer() from @/coh/coh2-api
  *
- * @param steamid - The Steam ID of the player
+ * @param profileId - The Relic profile ID of the player
  * @returns Promise<PlayerMatchesResponse | null> - Player matches or null on failure
  */
 export async function fetchPlayerMatchesData(
-  steamid: string,
+  profileId: number,
 ): Promise<PlayerMatchesResponse | null> {
   try {
-    return await getPlayerMatches(steamid);
+    const playerMatches = await getAndPrepareMatchesForPlayer(profileId);
+    return { playerMatches };
   } catch (error) {
     console.error("Failed to fetch player matches data:", error);
     return null;
