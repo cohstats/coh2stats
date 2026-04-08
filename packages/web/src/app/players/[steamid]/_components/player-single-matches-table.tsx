@@ -2,12 +2,14 @@ import React from "react";
 import { ColumnsType } from "antd/es/table";
 import { PlayerCardDataArrayObject } from "../../../../coh/types";
 import { Table, Tooltip, Typography } from "antd";
-import { getGeneralIconPath, levelToText } from "../../../../coh/helpers";
+import { levelToText } from "../../../../coh/helpers";
 import { Helper } from "../../../../components/helper";
 import { formatTimeAgo, latestDate, percentageFormat } from "./helpers";
 import { HistoryOutlined } from "@ant-design/icons";
 import { firebaseTimeStampObjectToDate } from "../../../../utils/helpers";
 import { PlayerGroupHistoryChart } from "./playergroup-history-chart";
+import { getGeneralIconImport } from "../../../../coh/generalIconImports";
+import Image from "next/image";
 const { Text } = Typography;
 
 interface IProps {
@@ -197,18 +199,19 @@ const PlayerSingleMatchesTable: React.FC<IProps> = ({ title, data }) => {
 
   const imageSource = (() => {
     if (isAIGame) {
-      return getGeneralIconPath("Multiplayer_AICallout");
+      return getGeneralIconImport("Multiplayer_AICallout");
     } else if (title === "Custom Games") {
-      return getGeneralIconPath("Multiplayer_Gears");
+      return getGeneralIconImport("Multiplayer_Gears");
     } else {
-      return getGeneralIconPath(title);
+      return getGeneralIconImport(title);
     }
   })();
 
   return (
     <div key={title}>
       <div style={{ fontSize: "large", paddingBottom: 4, paddingLeft: 4 }}>
-        <img src={imageSource} height="24px" alt={title} /> <Text strong>{tableTitle}</Text>{" "}
+        <Image src={imageSource} height={24} width={24} alt={title} />{" "}
+        <Text strong>{tableTitle}</Text>{" "}
       </div>
       <Table
         key={title}
@@ -240,17 +243,29 @@ const PlayerSingleMatchesTable: React.FC<IProps> = ({ title, data }) => {
           return (
             <Table.Summary>
               <Table.Summary.Row>
-                <Table.Summary.Cell index={0}>Summary</Table.Summary.Cell>
+                <Table.Summary.Cell index={0} align="center">
+                  Summary
+                </Table.Summary.Cell>
                 <Table.Summary.Cell index={1} colSpan={3} />
-                <Table.Summary.Cell index={2}>{totalWins}</Table.Summary.Cell>
-                <Table.Summary.Cell index={3}>{totalLosses}</Table.Summary.Cell>
-                <Table.Summary.Cell index={4}>
+                <Table.Summary.Cell index={2} align="center">
+                  {totalWins}
+                </Table.Summary.Cell>
+                <Table.Summary.Cell index={3} align="center">
+                  {totalLosses}
+                </Table.Summary.Cell>
+                <Table.Summary.Cell index={4} align="center">
                   {percentageFormat(totalWins, totalLosses)}%
                 </Table.Summary.Cell>
-                <Table.Summary.Cell index={5}>{totalWins + totalLosses}</Table.Summary.Cell>
-                <Table.Summary.Cell index={6}>{totalDrops}</Table.Summary.Cell>
-                <Table.Summary.Cell index={7}>{totalDisputes}</Table.Summary.Cell>
-                <Table.Summary.Cell index={8}>
+                <Table.Summary.Cell index={5} align="center">
+                  {totalWins + totalLosses}
+                </Table.Summary.Cell>
+                <Table.Summary.Cell index={6} align="center">
+                  {totalDrops}
+                </Table.Summary.Cell>
+                <Table.Summary.Cell index={7} align="center">
+                  {totalDisputes}
+                </Table.Summary.Cell>
+                <Table.Summary.Cell index={8} align="right">
                   <Tooltip title={`Last game as ${title.toUpperCase()}`}>
                     {lastDate !== 0 && formatTimeAgo(lastDate)}
                   </Tooltip>

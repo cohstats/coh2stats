@@ -69,7 +69,7 @@ export async function fetchPlayerCardMetadata(
 ): Promise<{ playerName: string } | null> {
   try {
     const data = await getPlayerCard(steamid, false);
-    const playerName = data?.steamProfile?.[steamid]?.name || null;
+    const playerName = data?.steamProfile?.[steamid]?.personaname || null;
 
     if (playerName) {
       return { playerName };

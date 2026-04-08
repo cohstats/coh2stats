@@ -271,21 +271,31 @@ const PlayerTeamMatchesTable: React.FC<IProps> = ({ title, data }) => {
           return (
             <Table.Summary>
               <Table.Summary.Row>
-                <Table.Summary.Cell index={0} align={"left"}>
+                <Table.Summary.Cell index={0} align="left">
                   Summary
                 </Table.Summary.Cell>
                 <Table.Summary.Cell index={1} colSpan={3} />
-                <Table.Summary.Cell index={2}>{totalWins}</Table.Summary.Cell>
-                <Table.Summary.Cell index={3}>{totalLosses}</Table.Summary.Cell>
-                <Table.Summary.Cell index={4}>
+                <Table.Summary.Cell index={2} align="center">
+                  {totalWins}
+                </Table.Summary.Cell>
+                <Table.Summary.Cell index={3} align="center">
+                  {totalLosses}
+                </Table.Summary.Cell>
+                <Table.Summary.Cell index={4} align="center">
                   {!isNaN(percentageFormat(totalWins, totalLosses)) && (
                     <>{percentageFormat(totalWins, totalLosses)}%</>
                   )}
                 </Table.Summary.Cell>
-                <Table.Summary.Cell index={5}>{totalWins + totalLosses}</Table.Summary.Cell>
-                <Table.Summary.Cell index={6}>{totalDrops}</Table.Summary.Cell>
-                <Table.Summary.Cell index={7}>{totalDisputes}</Table.Summary.Cell>
-                <Table.Summary.Cell index={8}>
+                <Table.Summary.Cell index={5} align="center">
+                  {totalWins + totalLosses}
+                </Table.Summary.Cell>
+                <Table.Summary.Cell index={6} align="center">
+                  {totalDrops}
+                </Table.Summary.Cell>
+                <Table.Summary.Cell index={7} align="center">
+                  {totalDisputes}
+                </Table.Summary.Cell>
+                <Table.Summary.Cell index={8} align="right">
                   {latestDate(sortedData) !== 0 && (
                     <Tooltip title={`Last game as ${title.toUpperCase()}`}>
                       {formatTimeAgo(latestDate(sortedData))}

@@ -14,6 +14,10 @@ interface FactionsPlayedPieChartProps {
 export const TotalGamesPieChart: React.FC<FactionsPlayedPieChartProps> = ({ data }) => {
   const chartData = [];
 
+  if (!data || !Object.prototype.hasOwnProperty.call(data["1v1"], "totalGames")) {
+    return <Empty description={"We started tracking total games from June 2022"} />;
+  }
+
   // "1v1", "2v2", "3v3" ...
   for (const type of statsTypesInDB) {
     chartData.push({
@@ -21,10 +25,6 @@ export const TotalGamesPieChart: React.FC<FactionsPlayedPieChartProps> = ({ data
       label: type,
       value: data[type as "1v1" | "2v2" | "3v3" | "4v4"].totalGames,
     });
-  }
-
-  if ((!data["1v1"].totalGames && data["1v1"].totalGames) || 0 <= data["1v1"].matchCount) {
-    return <Empty description={"We started tracking total games from June 2022"} />;
   }
 
   return (
