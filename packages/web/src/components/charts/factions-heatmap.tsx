@@ -6,9 +6,10 @@ import React, { memo } from "react";
 interface IProps {
   data: Array<{ id: string; data: Array<{ x: string; y: number }> }>;
   keys: Array<string>;
+  heatmapValues?: string;
 }
 
-export const _HeatMapChart: React.FC<IProps> = ({ data, keys }) => {
+export const _HeatMapChart: React.FC<IProps> = ({ data, keys, heatmapValues = "winRate" }) => {
   // Data is already transformed to Nivo format in factions.tsx
   // Determine colors based on data - assuming winRate type data (0-1 range)
   const colorsDefinition = {
@@ -43,9 +44,16 @@ export const _HeatMapChart: React.FC<IProps> = ({ data, keys }) => {
         legendOffset: -60,
       }}
       borderColor={{ from: "color", modifiers: [["darker", 0.4]] }}
-      label={(cell) => (cell.value !== null ? `${(cell.value * 100).toFixed(1)}%` : "N/A")}
+      label={(cell) => {
+        if (cell.value === null) return "N/A";
+        if (heatmapValues === "winRate") {
+          return `${(cell.value * 100).toFixed(1)}%`;
+        } else {
+          return `${cell.value}`;
+        }
+      }}
       labelTextColor={{ from: "color", modifiers: [["darker", 1.8]] }}
-      valueFormat=">-.2%"
+      valueFormat={heatmapValues === "winRate" ? ">-.2%" : ",.0f"}
       animate={false}
       hoverTarget="cell"
     />

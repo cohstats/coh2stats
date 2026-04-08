@@ -34,7 +34,6 @@ const findPlayerProfile = (statGroups: statGroupsType) => {
 };
 
 const PlayerCardContent = () => {
-  const router = useRouter();
   const params = useParams();
   const searchParams = useSearchParams();
 

@@ -264,7 +264,7 @@ const _FactionVsFactionCard: React.FC<IProps> = ({ title, data, style }) => {
         <div style={{ display: "flex", alignItems: "flex-start" }}>
           {legend}
           <div style={{ width: 820, height: 380 }}>
-            <HeatMapChart data={dataForHeatmap} keys={keysForHeatMap} />
+            <HeatMapChart data={dataForHeatmap} keys={keysForHeatMap} heatmapValues={heatmapValues} />
           </div>
         </div>
       )}
