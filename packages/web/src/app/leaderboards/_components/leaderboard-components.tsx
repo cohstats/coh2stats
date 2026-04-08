@@ -1,29 +1,49 @@
-import { getGeneralIconPath, isTeamGame } from "../../../coh/helpers";
-import { RaceName } from "../../../coh/types";
+import { isTeamGame } from "../../../coh/helpers";
 import React from "react";
+import Image from "next/image";
 import { isAfter, isBefore, isMonday } from "date-fns";
 import subDays from "date-fns/subDays";
+
+// Import race icons
+import wermachtIcon from "../../../../public/resources/generalIcons/wermacht.png";
+import wgermanIcon from "../../../../public/resources/generalIcons/wgerman.png";
+import sovietIcon from "../../../../public/resources/generalIcons/soviet.png";
+import britishIcon from "../../../../public/resources/generalIcons/british.png";
+import usfIcon from "../../../../public/resources/generalIcons/usf.png";
+
+// Create a mapping for race icons
+const raceIconMap = {
+  wermacht: wermachtIcon,
+  wehrmacht: wermachtIcon, // Handle the typo variant
+  wgerman: wgermanIcon,
+  soviet: sovietIcon,
+  british: britishIcon,
+  usf: usfIcon,
+} as const;
 
 const generateIconsForTitle = (race: string, type: string) => {
   if (isTeamGame(type)) {
     if (race === "axis") {
       return (
         <>
-          <img src={getGeneralIconPath("wehrmacht")} height="24px" alt={race} />
-          <img src={getGeneralIconPath("wgerman")} height="24px" alt={race} />
+          <Image src={wermachtIcon} height={24} alt={race} />
+          <Image src={wgermanIcon} height={24} alt={race} />
         </>
       );
     } else {
       return (
         <>
-          <img src={getGeneralIconPath("soviet")} height="24px" alt={race} />
-          <img src={getGeneralIconPath("british")} height="24px" alt={race} />
-          <img src={getGeneralIconPath("usf")} height="24px" alt={race} />
+          <Image src={sovietIcon} height={24} alt={race} />
+          <Image src={britishIcon} height={24} alt={race} />
+          <Image src={usfIcon} height={24} alt={race} />
         </>
       );
     }
   } else if (race !== "axis" && race !== "allies") {
-    return <img src={getGeneralIconPath(race as RaceName)} height="24px" alt={race} />;
+    const iconSrc = raceIconMap[race as keyof typeof raceIconMap];
+    if (iconSrc) {
+      return <Image src={iconSrc} height={24} alt={race} />;
+    }
   }
 };
 
