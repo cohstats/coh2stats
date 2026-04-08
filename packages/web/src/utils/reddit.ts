@@ -11,12 +11,10 @@ export interface RedditPost {
 
 export async function getRedditPosts(): Promise<RedditPost[]> {
   try {
-    const res = await fetch(
-      "https://www.reddit.com/r/CompanyOfHeroes/top.json?limit=100&t=month",
-      {
-        next: { revalidate: 3600 }, // Cache for 1 hour
-      },
-    );
+    // "https://www.reddit.com/r/CompanyOfHeroes/top.json?limit=100&t=month"
+    const res = await fetch("https://https://coh2stats.com/api/redditCF", {
+      next: { revalidate: 3600 }, // Cache for 1 hour
+    });
 
     if (!res.ok) {
       throw new Error(`Reddit API failed: ${res.status}`);
