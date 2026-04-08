@@ -10,8 +10,9 @@ import { fetchPlayerCardData } from "./actions";
 
 import { CountryFlag } from "@/components/country-flag";
 import { useRouter, useParams, useSearchParams } from "next/navigation";
-import { getGeneralIconPath } from "@/coh/helpers";
+import { getGeneralIconImport } from "@/coh/generalIconImports";
 import { Loading } from "@/components/loading";
+import Image from "next/image";
 import { calculateOverallStatsForPlayerCard } from "./_components/data-processing";
 import { convertTeamNames } from "./_components/helpers";
 import LastMatchesTable from "../../../components/matches/last-matches-table";
@@ -67,10 +68,10 @@ const PlayerCardContent = () => {
         if (window.location.pathname.match(/.+\/\d+-/)) {
           // There is already name in url let's replace it with a new one
           const newPath = window.location.pathname.replace(/(.+\/\d+-)(.+)/, `$1${cleanName}`);
-          router.replace(newPath);
+          window.history.replaceState(null, "", newPath);
         } else {
           // No name in the url let's just push a new one
-          router.replace(`${window.location.pathname}-${cleanName}`);
+          window.history.replaceState(null, "", `${window.location.pathname}-${cleanName}`);
         }
       }
     };
@@ -269,9 +270,10 @@ const PlayerCardContent = () => {
                   mostPlayed.mode,
                 )} with ${mostPlayed.games} games`}
               >
-                <img
-                  src={getGeneralIconPath(mostPlayed.race)}
-                  height="120px"
+                <Image
+                  src={getGeneralIconImport(mostPlayed.race)}
+                  height={120}
+                  width={120}
                   alt={mostPlayed.race}
                 />
               </Tooltip>

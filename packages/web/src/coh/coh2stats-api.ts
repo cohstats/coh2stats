@@ -71,6 +71,7 @@ export async function getPlayerCard(
       headers: {
         Origin: "https://coh2stats.com",
       },
+      next: { revalidate: 30 },
     },
   );
 
