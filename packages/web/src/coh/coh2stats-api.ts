@@ -85,34 +85,6 @@ export async function getPlayerCard(
 }
 
 /**
- * Fetches player match history from Relic API
- *
- * @param steamid - The Steam ID of the player
- * @returns Promise resolving to player matches data
- * @throws Error if the API request fails
- *
- * @example
- * ```typescript
- * const data = await getPlayerMatches('/steam/76561198131099369');
- * ```
- */
-export async function getPlayerMatches(steamid: string): Promise<PlayerMatchesResponse> {
-  const response = await fetch(`${API_URL}getPlayerMatchesRelicHttp?steamid=${steamid}`, {
-    headers: {
-      Origin: "https://coh2stats.com",
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error(
-      `API request failed with code: ${response.status}, res: ${await response.text()}`,
-    );
-  }
-
-  return await response.json();
-}
-
-/**
  * Searches for players by name
  *
  * @param name - The player name to search for
