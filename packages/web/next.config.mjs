@@ -16,6 +16,7 @@ const nextConfig = {
 
   // Image optimization
   images: {
+    minimumCacheTTL: 86400, // 24 hours
     unoptimized: false,
   },
 };

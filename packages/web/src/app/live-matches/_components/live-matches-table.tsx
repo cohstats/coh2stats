@@ -12,8 +12,10 @@ import {
   getMatchPlayersByFaction,
   raceIds,
 } from "../../../utils/table-functions";
-import { convertSteamNameToID, getGeneralIconPath } from "../../../coh/helpers";
+import { convertSteamNameToID } from "../../../coh/helpers";
+import { getGeneralIconImport } from "../../../coh/generalIconImports";
 import Link from "next/link";
+import NextImage from "next/image";
 import routes from "../../../routes";
 import { TableColumnsType, TablePaginationConfig } from "antd";
 
@@ -179,16 +181,18 @@ const LiveMatchesTable: React.FC<{
             {axisPlayers.map((playerInfo: any) => {
               // WTF The rank is from 0 :D
               const rank = playerInfo?.rank === -1 ? "N/A" : playerInfo?.rank + 1;
+              const raceName = raceIds[playerInfo?.race_id];
 
               return (
                 <div key={playerInfo?.profile_id}>
-                  <img
-                    key={playerInfo?.profile_id}
-                    src={getGeneralIconPath(raceIds[playerInfo?.race_id], "small")}
-                    height="20px"
-                    width="20px"
-                    alt={playerInfo?.race_id}
-                  />{" "}
+                  {raceName && (
+                    <NextImage
+                      src={getGeneralIconImport(raceName, "small")}
+                      height={20}
+                      width={20}
+                      alt={playerInfo?.race_id}
+                    />
+                  )}{" "}
                   {displayRank && (
                     <>
                       <Text strong>R</Text> {rank}{" "}
@@ -221,16 +225,18 @@ const LiveMatchesTable: React.FC<{
           <div>
             {alliesPlayers.map((playerInfo: any) => {
               const rank = playerInfo?.rank === -1 ? "N/A" : playerInfo?.rank + 1;
+              const raceName = raceIds[playerInfo?.race_id];
 
               return (
                 <div key={playerInfo?.profile_id}>
-                  <img
-                    key={playerInfo?.profile_id}
-                    src={getGeneralIconPath(raceIds[playerInfo?.race_id], "small")}
-                    height="20px"
-                    width="20px"
-                    alt={playerInfo?.race_id}
-                  />{" "}
+                  {raceName && (
+                    <NextImage
+                      src={getGeneralIconImport(raceName, "small")}
+                      height={20}
+                      width={20}
+                      alt={playerInfo?.race_id}
+                    />
+                  )}{" "}
                   {displayRank && (
                     <>
                       <Text strong>R</Text> {rank}{" "}

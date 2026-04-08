@@ -11,8 +11,10 @@ import {
   isMobileMediaQuery,
   raceIds,
 } from "@/utils/table-functions";
-import { convertSteamNameToID, getGeneralIconPath } from "@/coh/helpers";
+import { convertSteamNameToID } from "@/coh/helpers";
+import { getGeneralIconImport } from "@/coh/generalIconImports";
 import Link from "next/link";
+import NextImage from "next/image";
 import routes from "../../../routes";
 import { getMapIconPath } from "@/coh/maps";
 import { AlertBox } from "@/components/alert-box";
@@ -72,14 +74,17 @@ const RecentMatches: React.FC<RecentMatchesProps> = ({ initialMatchRecords, tota
         return (
           <div>
             {axisPlayers.map((playerInfo: Record<string, any>) => {
+              const raceName = raceIds[playerInfo.race_id];
               return (
                 <div key={playerInfo.profile_id}>
-                  <img
-                    key={playerInfo.profile_id}
-                    src={getGeneralIconPath(raceIds[playerInfo.race_id], "small")}
-                    height="20px"
-                    alt={playerInfo.race_id}
-                  />{" "}
+                  {raceName && (
+                    <NextImage
+                      src={getGeneralIconImport(raceName, "small")}
+                      height={20}
+                      width={20}
+                      alt={playerInfo.race_id}
+                    />
+                  )}{" "}
                   <Link
                     href={routes.playerCardWithId(
                       convertSteamNameToID(playerInfo.profile["name"]),
@@ -105,14 +110,17 @@ const RecentMatches: React.FC<RecentMatchesProps> = ({ initialMatchRecords, tota
         return (
           <div>
             {alliesPlayers.map((playerInfo: Record<string, any>) => {
+              const raceName = raceIds[playerInfo.race_id];
               return (
                 <div key={playerInfo.profile_id}>
-                  <img
-                    key={playerInfo.profile_id}
-                    src={getGeneralIconPath(raceIds[playerInfo.race_id], "small")}
-                    height="20px"
-                    alt={playerInfo.race_id}
-                  />{" "}
+                  {raceName && (
+                    <NextImage
+                      src={getGeneralIconImport(raceName, "small")}
+                      height={20}
+                      width={20}
+                      alt={playerInfo.race_id}
+                    />
+                  )}{" "}
                   <Link
                     href={routes.playerCardWithId(
                       convertSteamNameToID(playerInfo.profile["name"]),

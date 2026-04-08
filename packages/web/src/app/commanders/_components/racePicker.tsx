@@ -4,7 +4,8 @@ import { Col, Row } from "antd";
 import routes from "../../../routes";
 import Link from "next/link";
 import { Tip } from "../../../components/tip";
-import { getGeneralIconPath } from "../../../coh/helpers";
+import { getGeneralIconImport } from "../../../coh/generalIconImports";
+import Image from "next/image";
 
 const imageWidth = 220;
 const imageHeight = 220;
@@ -32,11 +33,11 @@ export const RacePicker = () => {
           <Col flex="none">
             <Link href={routes.commanderList("wermacht")}>
               <div style={myCenterStyle}>
-                <img
+                <Image
                   width={imageWidth}
                   height={imageHeight}
                   style={myCenterStyle}
-                  src={getGeneralIconPath("wermacht")}
+                  src={getGeneralIconImport("wermacht")}
                   alt="wermacht"
                 />
               </div>
@@ -45,11 +46,11 @@ export const RacePicker = () => {
           <Col flex="none">
             <Link href={routes.commanderList("wgerman")}>
               <div style={myCenterStyle}>
-                <img
+                <Image
                   width={imageWidth}
                   height={imageHeight}
                   style={myCenterStyle}
-                  src={getGeneralIconPath("wgerman")}
+                  src={getGeneralIconImport("wgerman")}
                   alt="wgerman"
                 />
               </div>
@@ -60,11 +61,11 @@ export const RacePicker = () => {
           <Col flex="none">
             <Link href={routes.commanderList("soviet")}>
               <div style={myCenterStyle}>
-                <img
+                <Image
                   width={imageWidth}
                   height={imageHeight}
                   style={myCenterStyle}
-                  src={getGeneralIconPath("soviet")}
+                  src={getGeneralIconImport("soviet")}
                   alt="soviet"
                 />
               </div>
@@ -73,11 +74,11 @@ export const RacePicker = () => {
           <Col flex="none">
             <Link href={routes.commanderList("british")}>
               <div style={myCenterStyle}>
-                <img
+                <Image
                   width={imageWidth}
                   height={imageHeight}
                   style={myCenterStyle}
-                  src={getGeneralIconPath("british")}
+                  src={getGeneralIconImport("british")}
                   alt="british"
                 />
               </div>
@@ -86,11 +87,11 @@ export const RacePicker = () => {
           <Col flex="none">
             <Link href={routes.commanderList("usf")}>
               <div style={myCenterStyle}>
-                <img
+                <Image
                   width={imageWidth}
                   height={imageHeight}
                   style={myCenterStyle}
-                  src={getGeneralIconPath("usf")}
+                  src={getGeneralIconImport("usf")}
                   alt="usf"
                 />
               </div>
