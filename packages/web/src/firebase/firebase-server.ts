@@ -345,12 +345,12 @@ export async function getPlayerStats(): Promise<Record<string, any> | null> {
 }
 
 /**
- * Fetch a single match from Firestore by match ID
+ * Internal function to fetch a single match from Firestore by match ID
  *
  * @param matchId - The match ID
  * @returns Promise<Record<string, any> | null> - The match data or null if not found
  */
-export async function getMatchData(matchId: string): Promise<Record<string, any> | null> {
+async function getMatchDataInternal(matchId: string): Promise<Record<string, any> | null> {
   try {
     const app = initializeFirebaseServer();
     const db = getFirestore(app);
@@ -371,6 +371,22 @@ export async function getMatchData(matchId: string): Promise<Record<string, any>
     console.error(`Failed to fetch match data for ${matchId}:`, error);
     return null;
   }
+}
+
+/**
+ * Cached wrapper for getMatchData with 24-hour revalidation
+ */
+export async function getMatchData(matchId: string): Promise<Record<string, any> | null> {
+  const cachedFn = unstable_cache(
+    async () => getMatchDataInternal(matchId),
+    [`match-${matchId}`],
+    {
+      revalidate: 86400, // 24 hours = 86400 seconds
+      tags: [`match-${matchId}`],
+    },
+  );
+
+  return cachedFn();
 }
 
 /**

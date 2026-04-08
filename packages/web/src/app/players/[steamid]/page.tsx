@@ -102,7 +102,9 @@ const PlayerCardContent = () => {
   }, [steamidParsed]);
 
   const onTabChange = (key: string) => {
-    router.push(`/players/${steamid}?view=${key}`);
+    const searchParams = new URLSearchParams(window.location.search);
+    searchParams.set('view', key);
+    window.history.pushState(null, "", `${window.location.pathname}?${searchParams.toString()}`);
   };
 
   if (isLoading || data === null) {
