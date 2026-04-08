@@ -1,10 +1,10 @@
-# Getting Started with Create React App
+# COH2Stats Web
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is the web package for COH2Stats, built with Next.js.
 
 ## Available Scripts
 
-In the project directory, you can run:
+In the project directory (or from root using `yarn web <command>`), you can run:
 
 ### `yarn start`
 
@@ -44,3 +44,44 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+
+## Docker Build
+
+This project is part of a Yarn workspaces monorepo. The Dockerfile is located at the repository root and handles the monorepo structure automatically.
+
+### Building the Docker Image
+
+From the repository root (`C:/Git/cohstats/coh2stats` or `/path/to/coh2stats`), run:
+
+```bash
+docker build -t coh2stats-web .
+```
+
+Or use the convenience script:
+
+```bash
+yarn docker:build
+```
+
+### Running the Docker Container
+
+```bash
+docker run -p 3000:3000 coh2stats-web
+```
+
+Or use the convenience script:
+
+```bash
+yarn docker:run
+```
+
+The application will be available at [http://localhost:3000](http://localhost:3000).
+
+### Technical Details
+
+The Dockerfile at the repository root:
+- Handles the Yarn workspaces monorepo structure
+- Uses the `yarn.lock` from the root directory
+- Builds the web package specifically
+- Creates a production-ready Next.js standalone build

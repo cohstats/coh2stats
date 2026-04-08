@@ -20,6 +20,8 @@
   "scripts": {
     "web": "yarn workspace @coh2stats/web",
     "app": "yarn workspace @coh2stats/app",
+    "docker:build": "docker build -t coh2stats-web .",
+    "docker:run": "docker run -p 3000:3000 coh2stats-web",
     "fix": "run-s fix:*",
     "fix:eslint": "eslint --fix packages/**/*.{ts,tsx,js}",
     "fix:prettier": "prettier --loglevel warn --write .",

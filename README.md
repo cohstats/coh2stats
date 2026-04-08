@@ -76,9 +76,27 @@ Use Node version 16.x or as described in `/packages/functions/package.json`
 
 #### Web
 
-- To start local web dev: `yarn web start`
+- To start local web dev: `yarn web dev`
 - Test: `yarn web test` (located in `packages/web/src/tests`)
 - Build: `yarn web build`
+
+#### Docker
+
+The project includes a Dockerfile at the root for containerized deployment:
+
+```bash
+# Build the Docker image
+yarn docker:build
+# or
+docker build -t coh2stats-web .
+
+# Run the container
+yarn docker:run
+# or
+docker run -p 3000:3000 coh2stats-web
+```
+
+The Dockerfile handles the Yarn workspaces monorepo structure and uses the root `yarn.lock` file.
 
 #### Functions
 
