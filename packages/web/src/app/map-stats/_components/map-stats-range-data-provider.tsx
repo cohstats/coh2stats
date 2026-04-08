@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { httpsCallable } from "firebase/functions";
 import { Typography } from "antd";
-import { firebase } from "../../../firebase";
 
 import { Loading } from "../../../components/loading";
 
 import { validStatsTypes } from "../../../coh/types";
 import { useSearchParams } from "next/navigation";
 import MapStatsDetails from "./map-stats-details";
+import { fetchCustomMapAnalysis } from "../actions";
 
 const { Title } = Typography;
 
@@ -40,26 +39,18 @@ const CustomMapStatsRangeDataProvider: React.FC<IProps> = ({ urlChanger }) => {
       setIsLoading(true);
 
       try {
-        const customAnalysis = httpsCallable(firebase.functions(), "getCustomAnalysis");
+        const data = await fetchCustomMapAnalysis(
+          parseInt(fromTimeStamp),
+          parseInt(toTimeStamp),
+        );
 
-        // const customAnalysis = firebase.functions().httpsCallable("getCustomAnalysis");
-
-        // Debug
-        // console.log("CC-FROM", fromTimeStamp, new Date(parseInt(fromTimeStamp) * 1000));
-        // console.log("CC-TO", toTimeStamp, new Date(parseInt(toTimeStamp) * 1000));
-
-        const { data } = await customAnalysis({
-          startDate: parseInt(fromTimeStamp),
-          endDate: parseInt(toTimeStamp),
-          type: "map",
-        });
+        if (!data) {
+          setError("There was an error generating the analysis");
+          return;
+        }
 
         // @ts-ignore
         const analysis = data["analysis"];
-
-        // Debug
-        // console.log("RE-FROM", fromTimeStamp, new Date(parseInt(data["fromTimeStamp"]) * 1000));
-        // console.log("RE-TO", toTimeStamp, new Date(parseInt(data["toTimeStamp"]) * 1000));
 
         if (Object.keys(analysis).length < 1) {
           setError("Analysis found 0 records");

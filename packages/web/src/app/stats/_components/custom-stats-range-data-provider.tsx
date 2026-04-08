@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Typography } from "antd";
-import { firebase } from "../../../firebase";
 import { Loading } from "../../../components/loading";
 import firebaseAnalytics from "../../../analytics";
 
@@ -14,7 +13,7 @@ import { useSearchParams } from "next/navigation";
 import CustomStatsDetails from "./custom-stats-details";
 import { StatsHeader } from "./stats-header";
 import GeneralStats from "./general-stats";
-import { httpsCallable } from "firebase/functions";
+import { fetchCustomAnalysis } from "../actions";
 
 const { Title } = Typography;
 
@@ -47,25 +46,19 @@ const CustomStatsRangeDataProvider: React.FC<IProps> = ({ urlChanger }) => {
       firebaseAnalytics.rangeStatsDisplayed(statsSource || "");
 
       try {
-        const customAnalysis = httpsCallable(firebase.functions(), "getCustomAnalysis");
-        // const customAnalysis = firebase.functions().httpsCallable("getCustomAnalysis");
+        const data = await fetchCustomAnalysis(
+          parseInt(fromTimeStamp),
+          parseInt(toTimeStamp),
+          statsSource === "top200" ? "top" : "normal",
+        );
 
-        // Debug
-        // console.log("CC-FROM", fromTimeStamp, new Date(parseInt(fromTimeStamp) * 1000));
-        // console.log("CC-TO", toTimeStamp, new Date(parseInt(toTimeStamp) * 1000));
-
-        const { data } = await customAnalysis({
-          startDate: parseInt(fromTimeStamp),
-          endDate: parseInt(toTimeStamp),
-          type: statsSource === "top200" ? "top" : "normal",
-        });
+        if (!data) {
+          setError("There was an error generating the analysis");
+          return;
+        }
 
         // @ts-ignore
         const analysis = data["analysis"];
-
-        // Debug
-        // console.log("RE-FROM", fromTimeStamp, new Date(parseInt(data["fromTimeStamp"]) * 1000));
-        // console.log("RE-TO", toTimeStamp, new Date(parseInt(data["toTimeStamp"]) * 1000));
 
         if (Object.keys(analysis).length < 1) {
           setError("Analysis found 0 records");

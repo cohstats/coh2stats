@@ -11,6 +11,7 @@ import {
   where,
   startAfter,
 } from "firebase/firestore";
+import { getFunctions, httpsCallable } from "firebase/functions";
 import { unstable_cache } from "next/cache";
 import config from "../config";
 import { StatsCurrentLiveGames, LaddersDataObject } from "@/coh/types";
@@ -496,3 +497,39 @@ export async function getPlayerFirestoreMatches(params: {
     return { matches: [], nextCursor: null };
   }
 }
+
+/**
+ * Call the getCustomAnalysis Firebase Cloud Function
+ * This function is used to generate custom stats analysis for date ranges
+ *
+ * @param startDate - Unix timestamp for the start date
+ * @param endDate - Unix timestamp for the end date
+ * @param type - Type of analysis: "normal", "top", or "map"
+ * @returns Promise<Record<string, any> | null> - The analysis data or null if error
+ */
+export async function getCustomAnalysis(
+  startDate: number,
+  endDate: number,
+  type: "normal" | "top" | "map",
+): Promise<Record<string, any> | null> {
+  try {
+    const app = initializeFirebaseServer();
+    const functions = getFunctions(app, config.firebaseFunctions.location);
+    const customAnalysisFunction = httpsCallable(functions, "getCustomAnalysis");
+
+    console.log(`Calling getCustomAnalysis: startDate=${startDate}, endDate=${endDate}, type=${type}`);
+
+    const result = await customAnalysisFunction({
+      startDate,
+      endDate,
+      type,
+    });
+
+    console.log("Successfully called getCustomAnalysis");
+    return result.data as Record<string, any>;
+  } catch (error) {
+    console.error("Failed to call getCustomAnalysis:", error);
+    return null;
+  }
+}
+

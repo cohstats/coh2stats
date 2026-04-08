@@ -1,6 +1,6 @@
 "use server";
 
-import { getStatsData } from "@/firebase/firebase-server";
+import { getStatsData, getCustomAnalysis } from "@/firebase/firebase-server";
 
 /**
  * Server action to fetch map stats data
@@ -16,3 +16,19 @@ export async function fetchMapStatsData(
 ): Promise<Record<string, any> | null> {
   return getStatsData(frequency, timestamp, "mapStats");
 }
+
+/**
+ * Server action to fetch custom map analysis data for a date range
+ * This is called from client components to fetch custom map stats analysis
+ *
+ * @param startDate - Unix timestamp for the start date
+ * @param endDate - Unix timestamp for the end date
+ * @returns Promise<Record<string, any> | null> - The analysis data or null if not found
+ */
+export async function fetchCustomMapAnalysis(
+  startDate: number,
+  endDate: number,
+): Promise<Record<string, any> | null> {
+  return getCustomAnalysis(startDate, endDate, "map");
+}
+

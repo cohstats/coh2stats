@@ -1,6 +1,6 @@
 "use server";
 
-import { getStatsData } from "@/firebase/firebase-server";
+import { getStatsData, getCustomAnalysis } from "@/firebase/firebase-server";
 
 /**
  * Server action to fetch stats data
@@ -18,3 +18,21 @@ export async function fetchStatsData(
 ): Promise<Record<string, any> | null> {
   return getStatsData(frequency, timestamp, statType);
 }
+
+/**
+ * Server action to fetch custom analysis data for a date range
+ * This is called from client components to fetch custom stats analysis
+ *
+ * @param startDate - Unix timestamp for the start date
+ * @param endDate - Unix timestamp for the end date
+ * @param type - Type of analysis: "normal" for regular stats, "top" for top 200 stats
+ * @returns Promise<Record<string, any> | null> - The analysis data or null if not found
+ */
+export async function fetchCustomAnalysis(
+  startDate: number,
+  endDate: number,
+  type: "normal" | "top",
+): Promise<Record<string, any> | null> {
+  return getCustomAnalysis(startDate, endDate, type);
+}
+
