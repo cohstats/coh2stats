@@ -7,46 +7,13 @@
 
 import config from "@/config";
 import type {
-  LaddersDataObject,
   LiveGame,
   PlayerCardAPIObject,
-  PlayerMatchesResponse,
   SearchPlayersResponse,
 } from "./types";
 
 // Use config.apiUrl directly to avoid client/server boundary issues
 const API_URL = config.apiUrl;
-
-/**
- * Fetches leaderboard data for a specific leaderboard ID
- *
- * @param leaderBoardID - The ID of the leaderboard to fetch
- * @param start - The starting index for pagination (default: 0)
- * @returns Promise resolving to leaderboard data
- * @throws Error if the API request fails
- *
- * @example
- * ```typescript
- * const data = await getLeaderboards(4, 0);
- * ```
- */
-export async function getLeaderboards(
-  leaderBoardID: number,
-  start = 0,
-): Promise<LaddersDataObject> {
-  const response = await fetch(
-    `${API_URL}getCOHLaddersHttpV2?leaderBoardID=${leaderBoardID}&start=${start}`,
-    {},
-  );
-
-  if (!response.ok) {
-    throw new Error(
-      `API request failed with code: ${response.status}, res: ${await response.text()}`,
-    );
-  }
-
-  return await response.json();
-}
 
 /**
  * Fetches player card data including stats, matches, and profile information
