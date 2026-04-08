@@ -12,7 +12,7 @@ export interface RedditPost {
 export async function getRedditPosts(): Promise<RedditPost[]> {
   try {
     // "https://www.reddit.com/r/CompanyOfHeroes/top.json?limit=100&t=month"
-    const res = await fetch("https://https://coh2stats.com/api/redditCF", {
+    const res = await fetch("https://coh2stats.com/api/redditCF", {
       next: { revalidate: 3600 }, // Cache for 1 hour
     });
 

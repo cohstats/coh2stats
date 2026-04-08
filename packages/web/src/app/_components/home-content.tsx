@@ -3,10 +3,19 @@
 import React from "react";
 import { Card, Col, Row, Space, Typography } from "antd";
 import Link from "next/link";
+import Image from "next/image";
 import routes from "../../routes";
 import { commanderAndBulletinDate, lastPatchName } from "../../config";
 import RedditCard from "../../components/reddit/reddit-card";
 import { RedditPost } from "../../utils/reddit";
+
+// Import images
+import chartImage from "../../../public/resources/chart.png";
+import playerImage from "../../../public/resources/player.png";
+import desktopAppImage from "../../../public/resources/desktop-app.png";
+import commandersImage from "../../../public/resources/commanders.png";
+import bulletinsImage from "../../../public/resources/bulletins.png";
+import liveGamesImage from "../../../public/resources/live-games.webp";
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -31,11 +40,13 @@ export function HomeContent({ analyzedMatches, redditPosts }: HomeContentProps) 
                     style={cardStyle}
                     styles={{ body: { padding: 12 } }}
                     cover={
-                      <img
-                        alt="Game statistics"
-                        style={{ maxHeight: 110, objectFit: "contain" }}
-                        src="/resources/chart.png"
-                      />
+                      <div style={{ height: 110, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <Image
+                          alt="Game statistics"
+                          src={chartImage}
+                          style={{ maxHeight: 110, objectFit: "contain", width: "auto", height: "auto" }}
+                        />
+                      </div>
                     }
                   >
                     <Card.Meta
@@ -56,11 +67,13 @@ export function HomeContent({ analyzedMatches, redditPosts }: HomeContentProps) 
                     style={cardStyle}
                     styles={{ body: { padding: 12 } }}
                     cover={
-                      <img
-                        alt="Player Cards"
-                        style={{ maxHeight: 110, objectFit: "contain" }}
-                        src="/resources/player.png"
-                      />
+                      <div style={{ height: 110, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <Image
+                          alt="Player Cards"
+                          src={playerImage}
+                          style={{ maxHeight: 110, objectFit: "contain", width: "auto", height: "auto" }}
+                        />
+                      </div>
                     }
                   >
                     <Card.Meta
@@ -81,11 +94,13 @@ export function HomeContent({ analyzedMatches, redditPosts }: HomeContentProps) 
                     style={cardStyle}
                     styles={{ body: { padding: 12 } }}
                     cover={
-                      <img
-                        alt="Desktop App"
-                        style={{ maxHeight: 110, objectFit: "contain" }}
-                        src="/resources/desktop-app.png"
-                      />
+                      <div style={{ height: 110, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <Image
+                          alt="Desktop App"
+                          src={desktopAppImage}
+                          style={{ maxHeight: 110, objectFit: "contain", width: "auto", height: "auto" }}
+                        />
+                      </div>
                     }
                   >
                     <Card.Meta
@@ -108,11 +123,13 @@ export function HomeContent({ analyzedMatches, redditPosts }: HomeContentProps) 
                     style={cardStyle}
                     styles={{ body: { padding: 12 } }}
                     cover={
-                      <img
-                        style={{ maxHeight: 160, objectFit: "contain" }}
-                        alt="All commanders"
-                        src="/resources/commanders.png"
-                      />
+                      <div style={{ height: 160, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <Image
+                          alt="All commanders"
+                          src={commandersImage}
+                          style={{ maxHeight: 160, objectFit: "contain", width: "auto", height: "auto" }}
+                        />
+                      </div>
                     }
                   >
                     <Card.Meta
@@ -127,11 +144,13 @@ export function HomeContent({ analyzedMatches, redditPosts }: HomeContentProps) 
                     style={cardStyle}
                     styles={{ body: { padding: 12 } }}
                     cover={
-                      <img
-                        style={{ maxHeight: 160, objectFit: "contain" }}
-                        alt="All bulletins"
-                        src="/resources/bulletins.png"
-                      />
+                      <div style={{ height: 160, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <Image
+                          alt="All bulletins"
+                          src={bulletinsImage}
+                          style={{ maxHeight: 160, objectFit: "contain", width: "auto", height: "auto" }}
+                        />
+                      </div>
                     }
                   >
                     <Card.Meta
@@ -146,11 +165,13 @@ export function HomeContent({ analyzedMatches, redditPosts }: HomeContentProps) 
                     style={cardStyle}
                     styles={{ body: { padding: 12 } }}
                     cover={
-                      <img
-                        style={{ maxHeight: 160, objectFit: "contain" }}
-                        alt="All bulletins"
-                        src="/resources/live-games.webp"
-                      />
+                      <div style={{ height: 160, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <Image
+                          alt="Live games"
+                          src={liveGamesImage}
+                          style={{ maxHeight: 160, objectFit: "contain", width: "auto", height: "auto" }}
+                        />
+                      </div>
                     }
                   >
                     <Card.Meta
