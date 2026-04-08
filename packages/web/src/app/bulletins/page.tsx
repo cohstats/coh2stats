@@ -3,6 +3,7 @@
 import React, { useEffect, Suspense } from "react";
 import { Table, Tag, Space, Col, Row, Input } from "antd";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import { IntelBulletinData } from "@/coh/types";
@@ -82,10 +83,10 @@ function BulletinListContent() {
       render: (_text: any, record: any) => {
         return (
           <div>
-            <img
+            <Image
               src={getBulletinIconPath(record.icon)}
-              height="64px"
-              width="64px"
+              height={64}
+              width={64}
               alt={record.bulletinName}
             />
           </div>

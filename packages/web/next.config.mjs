@@ -18,11 +18,6 @@ const nextConfig = {
   images: {
     unoptimized: false,
   },
-
-  // Disable link prefetching
-  experimental: {
-    prefetching: false,
-  },
 };
 
 export default nextConfig;
