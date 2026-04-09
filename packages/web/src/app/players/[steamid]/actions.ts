@@ -1,5 +1,6 @@
 "use server";
 
+import { unstable_cache } from "next/cache";
 import { getPlayerCard } from "@/coh/coh2stats-api";
 import { getAndPrepareMatchesForPlayer } from "@/coh/coh2-api";
 import { PlayerCardAPIObject, PlayerMatchesResponse } from "@/coh/types";
@@ -22,7 +23,7 @@ export async function fetchPlayerCardData(steamid: string): Promise<PlayerCardAP
 }
 
 /**
- * Server action to fetch player matches from Relic API
+ * Server action to fetch player matches from Relic API with 60 second cache
  * Wraps getAndPrepareMatchesForPlayer() from @/coh/coh2-api
  *
  * @param profileId - The Relic profile ID of the player
@@ -31,13 +32,24 @@ export async function fetchPlayerCardData(steamid: string): Promise<PlayerCardAP
 export async function fetchPlayerMatchesData(
   profileId: number,
 ): Promise<PlayerMatchesResponse | null> {
-  try {
-    const playerMatches = await getAndPrepareMatchesForPlayer(profileId);
-    return { playerMatches };
-  } catch (error) {
-    console.error("Failed to fetch player matches data:", error);
-    return null;
-  }
+  const cachedFn = unstable_cache(
+    async () => {
+      try {
+        const playerMatches = await getAndPrepareMatchesForPlayer(profileId);
+        return { playerMatches };
+      } catch (error) {
+        console.error("Failed to fetch player matches data:", error);
+        return null;
+      }
+    },
+    [`player-matches-${profileId}`],
+    {
+      revalidate: 60, // 60 seconds
+      tags: [`player-matches-${profileId}`],
+    },
+  );
+
+  return cachedFn();
 }
 
 /**

@@ -5,7 +5,7 @@ import React from "react";
 import RedditCardDetails from "./reddit-card-details";
 import { Card, Tooltip, Typography } from "antd";
 import { useMediaQuery } from "react-responsive";
-import { RedditPost } from "../../utils/reddit";
+import { RedditPost } from "@/utils/reddit";
 
 const { Title } = Typography;
 
@@ -20,7 +20,7 @@ const RedditCard: React.FC<Props> = ({ width, data }) => {
   const cardStyle = {
     maxWidth: width,
     minWidth: isBigScreen ? width : 100,
-    minHeight: 720,
+    minHeight: 800,
     flexGrow: 1,
   };
 

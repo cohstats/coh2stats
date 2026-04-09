@@ -23,7 +23,7 @@ export async function getRedditPosts(): Promise<RedditPost[]> {
     const resData = await res.json();
     const requiredData = resData?.data?.children
       .filter((e: any) => `${e?.data?.link_flair_text}`.includes("CoH2"))
-      .slice(0, 10);
+      .slice(0, 15);
 
     return requiredData || [];
   } catch (error) {

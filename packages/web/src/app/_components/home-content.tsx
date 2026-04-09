@@ -5,9 +5,9 @@ import { Card, Col, Row, Space, Typography } from "antd";
 import Link from "next/link";
 import Image from "next/image";
 import routes from "../../routes";
-import { commanderAndBulletinDate, lastPatchName } from "../../config";
+import { commanderAndBulletinDate, lastPatchName } from "@/config";
 import RedditCard from "../../components/reddit/reddit-card";
-import { RedditPost } from "../../utils/reddit";
+import { RedditPost } from "@/utils/reddit";
 
 // Import images
 import chartImage from "../../../public/resources/chart.png";
@@ -17,7 +17,7 @@ import commandersImage from "../../../public/resources/commanders.png";
 import bulletinsImage from "../../../public/resources/bulletins.png";
 import liveGamesImage from "../../../public/resources/live-games.webp";
 
-const { Title, Paragraph, Text } = Typography;
+const { Paragraph, Text } = Typography;
 
 interface HomeContentProps {
   analyzedMatches: string;
@@ -25,7 +25,7 @@ interface HomeContentProps {
 }
 
 export function HomeContent({ analyzedMatches, redditPosts }: HomeContentProps) {
-  const cardStyle = { width: 240, height: 275 };
+  const cardStyle = { width: 240, height: 255 };
 
   return (
     <Row>
@@ -33,18 +33,30 @@ export function HomeContent({ analyzedMatches, redditPosts }: HomeContentProps) 
         <Row style={{ paddingTop: 10 }} justify={"center"}>
           <Col style={{ marginRight: 20 }}>
             <div style={{ textAlign: "center" }}>
-              <Space style={{ display: "flex", justifyContent: "center" }} wrap>
+              <Space style={{ display: "flex", marginBottom: 10, justifyContent: "center" }} wrap>
                 <Link href={"/stats"}>
                   <Card
                     hoverable
                     style={cardStyle}
-                    styles={{ body: { padding: 12 } }}
+                    styles={{ body: { padding: 10 } }}
                     cover={
-                      <div style={{ height: 110, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      <div
+                        style={{
+                          height: 100,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
                         <Image
                           alt="Game statistics"
                           src={chartImage}
-                          style={{ maxHeight: 110, objectFit: "contain", width: "auto", height: "auto" }}
+                          style={{
+                            maxHeight: 100,
+                            objectFit: "contain",
+                            width: "auto",
+                            height: "auto",
+                          }}
                         />
                       </div>
                     }
@@ -53,7 +65,7 @@ export function HomeContent({ analyzedMatches, redditPosts }: HomeContentProps) 
                       title="Game Statistics"
                       description={
                         <>
-                          Analysis of all played matched. See{" "}
+                          Analyzed <b>{analyzedMatches}</b> matches. See{" "}
                           <b>winrate for each faction, map, team composition</b> and most used{" "}
                           <b>commanders</b> and <b>intel bulletins.</b>
                         </>
@@ -65,13 +77,25 @@ export function HomeContent({ analyzedMatches, redditPosts }: HomeContentProps) 
                   <Card
                     hoverable
                     style={cardStyle}
-                    styles={{ body: { padding: 12 } }}
+                    styles={{ body: { padding: 10 } }}
                     cover={
-                      <div style={{ height: 110, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      <div
+                        style={{
+                          height: 100,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
                         <Image
                           alt="Player Cards"
                           src={playerImage}
-                          style={{ maxHeight: 110, objectFit: "contain", width: "auto", height: "auto" }}
+                          style={{
+                            maxHeight: 100,
+                            objectFit: "contain",
+                            width: "auto",
+                            height: "auto",
+                          }}
                         />
                       </div>
                     }
@@ -92,13 +116,25 @@ export function HomeContent({ analyzedMatches, redditPosts }: HomeContentProps) 
                   <Card
                     hoverable
                     style={cardStyle}
-                    styles={{ body: { padding: 12 } }}
+                    styles={{ body: { padding: 10 } }}
                     cover={
-                      <div style={{ height: 110, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      <div
+                        style={{
+                          height: 100,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
                         <Image
                           alt="Desktop App"
                           src={desktopAppImage}
-                          style={{ maxHeight: 110, objectFit: "contain", width: "auto", height: "auto" }}
+                          style={{
+                            maxHeight: 100,
+                            objectFit: "contain",
+                            width: "auto",
+                            height: "auto",
+                          }}
                         />
                       </div>
                     }
@@ -115,19 +151,30 @@ export function HomeContent({ analyzedMatches, redditPosts }: HomeContentProps) 
                   </Card>
                 </Link>
               </Space>
-              <Title level={4}>So far analyzed {analyzedMatches} matches.</Title>
               <Space style={{ marginBottom: 10, display: "flex", justifyContent: "center" }} wrap>
                 <Link href={routes.commanderBase()}>
                   <Card
                     hoverable
                     style={cardStyle}
-                    styles={{ body: { padding: 12 } }}
+                    styles={{ body: { padding: 10 } }}
                     cover={
-                      <div style={{ height: 160, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      <div
+                        style={{
+                          height: 150,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
                         <Image
                           alt="All commanders"
                           src={commandersImage}
-                          style={{ maxHeight: 160, objectFit: "contain", width: "auto", height: "auto" }}
+                          style={{
+                            maxHeight: 150,
+                            objectFit: "contain",
+                            width: "auto",
+                            height: "auto",
+                          }}
                         />
                       </div>
                     }
@@ -142,13 +189,25 @@ export function HomeContent({ analyzedMatches, redditPosts }: HomeContentProps) 
                   <Card
                     hoverable
                     style={cardStyle}
-                    styles={{ body: { padding: 12 } }}
+                    styles={{ body: { padding: 10 } }}
                     cover={
-                      <div style={{ height: 160, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      <div
+                        style={{
+                          height: 150,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
                         <Image
                           alt="All bulletins"
                           src={bulletinsImage}
-                          style={{ maxHeight: 160, objectFit: "contain", width: "auto", height: "auto" }}
+                          style={{
+                            maxHeight: 150,
+                            objectFit: "contain",
+                            width: "auto",
+                            height: "auto",
+                          }}
                         />
                       </div>
                     }
@@ -163,13 +222,25 @@ export function HomeContent({ analyzedMatches, redditPosts }: HomeContentProps) 
                   <Card
                     hoverable
                     style={cardStyle}
-                    styles={{ body: { padding: 12 } }}
+                    styles={{ body: { padding: 10 } }}
                     cover={
-                      <div style={{ height: 160, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      <div
+                        style={{
+                          height: 150,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
                         <Image
                           alt="Live games"
                           src={liveGamesImage}
-                          style={{ maxHeight: 160, objectFit: "contain", width: "auto", height: "auto" }}
+                          style={{
+                            maxHeight: 150,
+                            objectFit: "contain",
+                            width: "auto",
+                            height: "auto",
+                          }}
                         />
                       </div>
                     }
