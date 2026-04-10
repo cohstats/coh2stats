@@ -1,10 +1,28 @@
 div.player {
-  background-color: white;
-  border: 0.1em solid #fafafa;
+  background-color: #ffffff;
+  border: 0.1em solid #f0f0f0;
   cursor: pointer;
 }
 
+[data-theme="dark"] div.player {
+  background-color: #1f1f1f;
+  border: 0.1em solid #303030;
+}
+
+div.resultBox {
+  background-color: #ffffff;
+}
+
+[data-theme="dark"] div.resultBox {
+  background-color: #1f1f1f;
+}
+
 div.resultBox:hover {
-  background-color: #fafafa;
+  background-color: #f5f5f5;
+  cursor: pointer;
+}
+
+[data-theme="dark"] div.resultBox:hover {
+  background-color: #2a2a2a;
   cursor: pointer;
 }

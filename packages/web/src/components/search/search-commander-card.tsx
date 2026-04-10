@@ -35,7 +35,7 @@ const SearchCommanderCard: React.FC<IProps> = ({
 
   return (
     <div
-      style={{ backgroundColor: "white", height: 67, padding: 1 }}
+      style={{ height: 67, padding: 1 }}
       className={styles.resultBox}
       key={serverID}
       onClick={() => {

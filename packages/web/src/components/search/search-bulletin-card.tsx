@@ -28,7 +28,7 @@ const SearchBulletinCard: React.FC<IProps> = ({ bulletinData }) => {
 
   return (
     <div
-      style={{ backgroundColor: "white", height: 67, padding: 1 }}
+      style={{ height: 70, padding: 2 }}
       className={styles.resultBox}
       key={bulletinData.serverID}
       onClick={() => onBulletinClick()}
