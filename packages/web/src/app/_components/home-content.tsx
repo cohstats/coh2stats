@@ -34,7 +34,7 @@ interface HomeContentProps {
 }
 
 export function HomeContent({ analyzedMatches, redditPosts, leaderboardData }: HomeContentProps) {
-  const cardStyle = { width: 240, height: 255 };
+  const cardStyle = { width: 240, height: 240 };
 
   return (
     <Row>
@@ -114,8 +114,7 @@ export function HomeContent({ analyzedMatches, redditPosts, leaderboardData }: H
                       description={
                         <>
                           See any player card with <b>player standings</b> and all recent matches.
-                          You can display <b>advanced match details</b> with never before seen
-                          stats and chart visualization.
+                          Includes <b>advanced match details</b> with unique stats and charts.
                         </>
                       }
                     />
@@ -265,11 +264,8 @@ export function HomeContent({ analyzedMatches, redditPosts, leaderboardData }: H
                   </Card>
                 </Link>
               </Space>
-              <Paragraph>
-                Last patch data from <Text strong>{lastPatchName}</Text> extracted on{" "}
-                <Text strong>{commanderAndBulletinDate}</Text>
-              </Paragraph>
-              <div style={{ marginTop: 20 }}>
+
+              <div style={{ marginTop: 10, marginBottom: 10 }}>
                 <TopLeaderboard leaderboardData={leaderboardData} />
               </div>
             </div>
@@ -277,6 +273,12 @@ export function HomeContent({ analyzedMatches, redditPosts, leaderboardData }: H
           <Col>
             <RedditCard width={550} data={redditPosts} />
           </Col>
+        </Row>
+        <Row justify={"center"} style={{ paddingTop: 10 }}>
+          <Paragraph>
+            Last patch data from <Text strong>{lastPatchName}</Text> extracted on{" "}
+            <Text strong>{commanderAndBulletinDate}</Text>
+          </Paragraph>
         </Row>
       </Col>
     </Row>
