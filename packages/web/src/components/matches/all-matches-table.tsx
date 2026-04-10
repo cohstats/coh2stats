@@ -18,12 +18,13 @@ import {
   formatMatchtypeID,
   getMatchDuration,
   getMatchPlayersByFaction,
-  getRaceImage,
   isMobileMediaQuery,
   raceIds,
 } from "../../utils/table-functions";
 import { convertSteamNameToID, getGeneralIconPath } from "../../coh/helpers";
+import { getGeneralIconImport } from "../../coh/generalIconImports";
 import Link from "next/link";
+import NextImage from "next/image";
 import routes from "../../routes";
 import { useMediaQuery } from "react-responsive";
 import { BulbOutlined, DatabaseOutlined, PlusCircleOutlined } from "@ant-design/icons";
@@ -155,11 +156,11 @@ const AllMatchesTable: React.FC<IProps> = ({ steamID }) => {
           <>
             <div>
               <Tooltip title={player.profile.alias} key={player.profile.alias}>
-                <img
+                <NextImage
                   key={player.profile_id}
-                  src={getRaceImage(raceIds[player.race_id])}
-                  height="48px"
-                  width="48px"
+                  src={getGeneralIconImport(raceIds[player.race_id])}
+                  height={48}
+                  width={48}
                   alt={player.race_id}
                 />
               </Tooltip>
@@ -195,7 +196,9 @@ const AllMatchesTable: React.FC<IProps> = ({ steamID }) => {
           <div>
             {axisPlayers.map((playerInfo: Record<string, any>) => {
               return (
-                <div key={playerInfo.profile_id}>
+                <div key={playerInfo.profile_id}
+                  style={{ display: "flex", alignItems: "center", gap: "6px" }}
+                >
                   <img
                     key={playerInfo.profile_id}
                     src={getGeneralIconPath(raceIds[playerInfo.race_id], "small")}
@@ -232,7 +235,10 @@ const AllMatchesTable: React.FC<IProps> = ({ steamID }) => {
           <div>
             {alliesPlayers.map((playerInfo: Record<string, any>) => {
               return (
-                <div key={playerInfo.profile_id}>
+                <div
+                  key={playerInfo.profile_id}
+                  style={{ display: "flex", alignItems: "center", gap: "6px" }}
+                >
                   <img
                     key={playerInfo.profile_id}
                     src={getGeneralIconPath(raceIds[playerInfo.race_id], "small")}
@@ -363,7 +369,13 @@ const AllMatchesTable: React.FC<IProps> = ({ steamID }) => {
           dataSource={matchRecords}
           rowKey={(record) => record.id}
           size="middle"
-          rowClassName={(record) => (isPlayerVictorious(record) ? "green" : "red")}
+          onRow={(record) => ({
+            style: {
+              backgroundColor: isPlayerVictorious(record)
+                ? "rgba(0, 170, 0, 0.19)"
+                : "rgba(170, 0, 0, 0.19)",
+            },
+          })}
           expandable={{
             expandedRowRender: renderExpandedMatch,
             rowExpandable: (_) => !isMobile,

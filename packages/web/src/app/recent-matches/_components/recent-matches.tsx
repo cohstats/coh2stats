@@ -76,7 +76,10 @@ const RecentMatches: React.FC<RecentMatchesProps> = ({ initialMatchRecords, tota
             {axisPlayers.map((playerInfo: Record<string, any>) => {
               const raceName = raceIds[playerInfo.race_id];
               return (
-                <div key={playerInfo.profile_id}>
+                <div
+                  key={playerInfo.profile_id}
+                  style={{ display: "flex", alignItems: "center", gap: "6px" }}
+                >
                   {raceName && (
                     <NextImage
                       src={getGeneralIconImport(raceName, "small")}
@@ -112,7 +115,10 @@ const RecentMatches: React.FC<RecentMatchesProps> = ({ initialMatchRecords, tota
             {alliesPlayers.map((playerInfo: Record<string, any>) => {
               const raceName = raceIds[playerInfo.race_id];
               return (
-                <div key={playerInfo.profile_id}>
+                <div
+                  key={playerInfo.profile_id}
+                  style={{ display: "flex", alignItems: "center", gap: "6px" }}
+                >
                   {raceName && (
                     <NextImage
                       src={getGeneralIconImport(raceName, "small")}

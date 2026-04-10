@@ -1,15 +1,17 @@
 // @ts-nocheck
 import React from "react";
 import { Tooltip } from "antd";
+import Image from "next/image";
+import { faviconIcon } from "../coh/commonIconImports";
 
 export const COHStatsIcon: React.FC = () => {
   return (
     <Tooltip title={"coh2stats.com"}>
-      <img
-        // style={{ backgroundColor: "#011529" }}
-        src={"/logo/favicon-32x32.png"}
-        height="20px"
-        alt={"COH2 Icon"}
+      <Image
+        src={faviconIcon}
+        height={20}
+        width={20}
+        alt="COH2 Icon"
       />
     </Tooltip>
   );

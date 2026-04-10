@@ -11,6 +11,7 @@ import { fetchPlayerCardData } from "./actions";
 import { CountryFlag } from "@/components/country-flag";
 import { useRouter, useParams, useSearchParams } from "next/navigation";
 import { getGeneralIconImport } from "@/coh/generalIconImports";
+import { infoIcon, steamIcon, coh2Icon } from "@/coh/commonIconImports";
 import { Loading } from "@/components/loading";
 import Image from "next/image";
 import { calculateOverallStatsForPlayerCard } from "./_components/data-processing";
@@ -237,17 +238,22 @@ const PlayerCardContent = () => {
                     </>
                   }
                 >
-                  <Avatar
-                    size={24}
-                    alt={"info icon"}
-                    style={{ backgroundColor: "#162452" }}
-                    // Yeah, we should use svg icon, but I just didn't have the strength to properly format it
-                    src={"/resources/icons/info_i.webp"}
-                  />
+                  <div
+                    style={{
+                      display: "inline-block",
+                      backgroundColor: "#162452",
+                      borderRadius: "50%",
+                      width: 24,
+                      height: 24,
+                      position: "relative",
+                    }}
+                  >
+                    <Image src={infoIcon} width={24} height={24} alt="info icon" />
+                  </div>
                 </Tooltip>{" "}
                 <a href={steamProfile?.profileurl || ""} target={"_blank"} rel="noreferrer">
                   <Badge dot={steamProfile?.personastate >= 1} color={"green"} offset={[-2, 22]}>
-                    <Avatar size={24} src={"/resources/steam_icon.png"} alt={"steam icon"} />
+                    <Image src={steamIcon} width={24} height={24} alt="steam icon" />
                   </Badge>
                 </a>
                 {`${config.coh2steamGameId}` === steamProfile?.gameid && (
@@ -258,12 +264,7 @@ const PlayerCardContent = () => {
                       color={"green"}
                       offset={[-2, 22]}
                     >
-                      {" "}
-                      <Avatar
-                        size={24}
-                        src={"/resources/coh2-icon-32.png"}
-                        alt={"Is online in COH2"}
-                      />{" "}
+                      <Image src={coh2Icon} width={24} height={24} alt="Is online in COH2" />
                     </Badge>{" "}
                   </>
                 )}

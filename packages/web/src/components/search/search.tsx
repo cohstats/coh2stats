@@ -15,7 +15,7 @@ import SearchBulletinCard from "./search-bulletin-card";
 import { userAPIObject } from "./types";
 import SearchUserCard from "./search-user-card";
 import { Tip } from "../tip";
-import { searchPlayers } from "../../coh/coh2stats-api";
+import { searchPlayersAction } from "../../app/search/actions";
 
 const sortByXP = (array: Array<userAPIObject>) => {
   return array.sort((a, b) => {
@@ -145,7 +145,12 @@ const CustomSearch: React.FC = () => {
         firebaseAnalytics.searchUsed(searchParam);
 
         try {
-          const response = await searchPlayers(searchParam);
+          const response = await searchPlayersAction(searchParam);
+
+          if (!response) {
+            throw new Error("Failed to search for players");
+          }
+
           // @ts-ignore
           const foundProfiles: Record<string, any> = response.result["foundProfiles"];
           const resultHtml = buildSearchResults(foundProfiles);

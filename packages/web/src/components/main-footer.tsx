@@ -3,7 +3,9 @@
 import React from "react";
 import { Layout, Divider, Typography } from "antd";
 import NextLink from "next/link";
+import Image from "next/image";
 import config from "../config";
+import { githubIcon, discordIcon, kofiLogo } from "../coh/commonIconImports";
 
 const { Footer } = Layout;
 const { Link, Text } = Typography;
@@ -27,7 +29,7 @@ export const MainFooter: React.FC = () => {
         rel="noopener noreferrer"
         style={{ marginRight: 15 }}
       >
-        <img width={30} height={30} src={"/resources/github-dark.png"} alt={"GitHub Logo"} />
+        <Image src={githubIcon} width={30} height={30} alt="GitHub Logo" />
       </Link>
       <Link
         href={config.discordInviteLink}
@@ -35,14 +37,14 @@ export const MainFooter: React.FC = () => {
         rel="noopener noreferrer"
         style={{ marginRight: 15 }}
       >
-        <img width={30} height={30} src={"/resources/discord-icon.svg"} alt={"Discord Logo"} />
+        <Image src={discordIcon} width={30} height={30} alt="Discord Logo" />
       </Link>
       <Link href={config.donationLink} target="_blank" rel="noopener noreferrer" strong>
-        <img
+        <Image
+          src={kofiLogo}
           width={30}
           height={30}
-          src={"/resources/kofi_s_logo_nolabel.webp"}
-          alt={"Ko-fi support button"}
+          alt="Ko-fi support button"
           style={{ marginRight: 2 }}
         />
         <span style={{ verticalAlign: "top" }}>Donate</span>

@@ -6,6 +6,14 @@ import { Card, Empty, Radio, Tooltip } from "antd";
 import { HeatMapChart } from "./charts/factions-heatmap";
 import { Helper } from "./helper";
 import { Typography } from "antd";
+import Image from "next/image";
+import {
+  wermachtSmallIcon,
+  wgermanSmallIcon,
+  britishSmallIcon,
+  sovietSmallIcon,
+  usfSmallIcon,
+} from "../coh/generalIconImports";
 import firebaseAnalytics from "../analytics";
 const { Text } = Typography;
 
@@ -28,47 +36,32 @@ const legend = (
   <div style={{ display: "inline-block", width: 125, verticalAlign: "top", paddingTop: 40 }}>
     <Tooltip title={"W - (Wehrmacht, Ostheer, German)"}>
       <div>
-        <img
-          width={18}
-          height={18}
-          src={"/resources/generalIcons/wermacht_small.png"}
-          alt="wermacht"
-        />{" "}
+        <Image src={wermachtSmallIcon} width={18} height={18} alt="Wehrmacht" />{" "}
         <Text strong>W</Text> - Wehrmacht
       </div>
     </Tooltip>
     <Tooltip title={"O - (OKW, West German, Oberkommando West)"}>
       <div>
-        <img width={18} height={18} src={"/resources/generalIcons/wgerman_small.png"} alt="OKW" />{" "}
+        <Image src={wgermanSmallIcon} width={18} height={18} alt="OKW" />{" "}
         <Text strong>O</Text> - OKW
       </div>
     </Tooltip>
     <br />
     <Tooltip title={"B - (British, UKF)"}>
       <div>
-        <img
-          width={18}
-          height={18}
-          src={"/resources/generalIcons/british_small.png"}
-          alt="British"
-        />{" "}
+        <Image src={britishSmallIcon} width={18} height={18} alt="British" />{" "}
         <Text strong>B</Text> - British
       </div>
     </Tooltip>
     <Tooltip title={"S - (Soviet)"}>
       <div>
-        <img
-          width={18}
-          height={18}
-          src={"/resources/generalIcons/soviet_small.png"}
-          alt="Soviet"
-        />{" "}
+        <Image src={sovietSmallIcon} width={18} height={18} alt="Soviet" />{" "}
         <Text strong>S</Text> - Soviet
       </div>
     </Tooltip>
     <Tooltip title={"U - (USF, US Forces, USA)"}>
       <div>
-        <img width={18} height={18} src={"/resources/generalIcons/usf_small.png"} alt="USF" />{" "}
+        <Image src={usfSmallIcon} width={18} height={18} alt="USF" />{" "}
         <Text strong>U</Text> - USF
       </div>
     </Tooltip>

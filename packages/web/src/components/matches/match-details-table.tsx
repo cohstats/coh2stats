@@ -1,15 +1,18 @@
 // @ts-nocheck
 import React, { useCallback, useEffect } from "react";
 import { ColumnsType } from "antd/es/table";
-import { convertSteamNameToID, getExportedIconPath, getGeneralIconPath } from "../../coh/helpers";
-import { raceIds } from "../../utils/table-functions";
+import { convertSteamNameToID, getExportedIconPath } from "@/coh/helpers";
+import { raceIds } from "@/utils/table-functions";
 import { Avatar, Badge, Card, Col, Row, Table, Tooltip, Typography } from "antd";
 import { Helper } from "../helper";
 import routes from "../../routes";
+import Image from "next/image";
 import firebaseAnalytics from "../../analytics";
-import { getBulletinData, getBulletinIconPath } from "../../coh/bulletins";
-import { getCommanderData, getCommanderIconPath } from "../../coh/commanders";
-import { CommanderAbility } from "../../coh/types";
+import { getBulletinData, getBulletinIconPath } from "@/coh/bulletins";
+import { getCommanderData, getCommanderIconPath } from "@/coh/commanders";
+import { CommanderAbility } from "@/coh/types";
+import { mpIcon, fuelIcon, munIcon } from "../../coh/generalIconImports";
+import { getGeneralIconImport } from "@/coh/generalIconImports";
 import RouterLink from "next/link";
 import { BulbOutlined } from "@ant-design/icons";
 
@@ -200,10 +203,11 @@ export const MatchPlayerDetailsTable: React.FC<MatchPlayerDetailsTableProps> = (
               whiteSpace: "nowrap",
             }}
           >
-            <img
+            <Image
               key={record.profile_id}
-              src={getGeneralIconPath(raceIds[record.race_id], "small")}
-              height="20px"
+              src={getGeneralIconImport(raceIds[record.race_id], "small")}
+              height={20}
+              width={20}
               alt={record.race_id}
             />{" "}
             <Tooltip title={profile.alias}>
@@ -361,7 +365,7 @@ export const MatchPlayerDetailsTable: React.FC<MatchPlayerDetailsTableProps> = (
     {
       title: (
         <span>
-          <img src={getGeneralIconPath("mp")} height="20px" alt={"Man power"} /> Spent / Max Float
+          <Image src={mpIcon} height={20} width={20} alt="Man power" /> Spent / Max Float
         </span>
       ),
       dataIndex: "manmax",
@@ -387,7 +391,7 @@ export const MatchPlayerDetailsTable: React.FC<MatchPlayerDetailsTableProps> = (
     {
       title: (
         <span>
-          <img src={getGeneralIconPath("fuel")} height="20px" alt={"fuel"} /> Spent / Max Float
+          <Image src={fuelIcon} height={20} width={20} alt="fuel" /> Spent / Max Float
         </span>
       ),
       dataIndex: "fuelmax",
@@ -407,7 +411,7 @@ export const MatchPlayerDetailsTable: React.FC<MatchPlayerDetailsTableProps> = (
     {
       title: (
         <span>
-          <img src={getGeneralIconPath("mun")} height="20px" alt={"mun"} /> Spent / Max Float
+          <Image src={munIcon} height={20} width={20} alt="mun" /> Spent / Max Float
         </span>
       ),
       dataIndex: "munmax",

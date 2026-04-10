@@ -81,6 +81,7 @@ async function searchPlayersInternal(name: string): Promise<SearchPlayersRespons
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "Origin": "https://coh2stats.com",
     },
     body: JSON.stringify({ data: { name } }),
   });
