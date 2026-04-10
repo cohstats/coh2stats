@@ -1,5 +1,16 @@
 /* Ant Design 5 uses CSS-in-JS, no need to import CSS file */
 
+/* CSS Variables for theming */
+:root {
+  --bg-color: #f0f2f5;
+  --text-color: rgba(0, 0, 0, 0.88);
+}
+
+[data-theme="dark"] {
+  --bg-color: #141414;
+  --text-color: rgba(255, 255, 255, 0.85);
+}
+
 body {
   margin: 0;
   font-family:
@@ -7,7 +18,9 @@ body {
     "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f0f2f5;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 code {

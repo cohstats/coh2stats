@@ -10,6 +10,7 @@ import Image from "next/image";
 import OnlinePlayers from "./online-players";
 import config from "../config";
 import kofiLogo from "../../public/resources/kofi_s_logo_nolabel.webp";
+import { ThemeToggle } from "./theme-toggle";
 
 const { Header } = Layout;
 
@@ -153,8 +154,8 @@ export const MainHeader: React.FC = () => {
             <div style={{ minHeight: 64, minWidth: 125 }}>
               <OnlinePlayers />
             </div>
-
             <PlayerSearchInput />
+            <ThemeToggle />
           </Space>
         </div>
         <div>

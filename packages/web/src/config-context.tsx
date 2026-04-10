@@ -55,4 +55,3 @@ const ConfigsProvider: FC<any> = (props) => {
 };
 
 export { ConfigsProvider, ConfigContext };
-export type { userConfigType };
