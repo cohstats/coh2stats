@@ -36,6 +36,7 @@ const findPlayerProfile = (statGroups: statGroupsType) => {
 const PlayerCardContent = () => {
   const params = useParams();
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   const steamid = params.steamid as string;
   const steamidParsed = steamid?.split("-")[0] || "";
@@ -101,9 +102,9 @@ const PlayerCardContent = () => {
   }, [steamidParsed]);
 
   const onTabChange = (key: string) => {
-    const searchParams = new URLSearchParams(window.location.search);
-    searchParams.set('view', key);
-    window.history.pushState(null, "", `${window.location.pathname}?${searchParams.toString()}`);
+    const newSearchParams = new URLSearchParams(window.location.search);
+    newSearchParams.set('view', key);
+    router.push(`${window.location.pathname}?${newSearchParams.toString()}`, undefined,  { scroll: false, shallow: true });
   };
 
   if (isLoading || data === null) {
@@ -140,7 +141,7 @@ const PlayerCardContent = () => {
       Object.values(data?.relicPersonalStats?.statGroups).length > 0
     ) {
       notification["warning"]({
-        message: "Steam API is not responding",
+        title: "Steam API is not responding",
         description:
           "The player card might not work correctly, please try again later or report it to our Discord.",
       });
@@ -326,7 +327,7 @@ const PlayerCardContent = () => {
         <Col xs={24} md={22} xxl={15}>
           <Tabs
             items={playerTabItems}
-            defaultActiveKey={tabView}
+            activeKey={tabView}
             size={"large"}
             centered
             onChange={onTabChange}
