@@ -51,7 +51,7 @@ export const CommandersList = ({ race }: CommandersListProps) => {
               text={
                 <>
                   You can see the most picked Commanders over at{" "}
-                  <Link href={routes.statsBase()}>stats page</Link>.
+                  <Link href={routes.statsBase()} prefetch={false}>stats page</Link>.
                 </>
               }
             />
@@ -62,6 +62,7 @@ export const CommandersList = ({ race }: CommandersListProps) => {
                 key={item.serverID}
                 href={routes.commanderByID(race, item.serverID)}
                 style={{ textDecoration: "none", color: "inherit" }}
+                prefetch={false}
               >
                 <Flex
                   gap="middle"

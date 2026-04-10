@@ -220,6 +220,7 @@ const LeaderboardsContent = () => {
                   <Link
                     href={routes.playerCardWithId(convertSteamNameToID(playerInfo["name"]))}
                     rel="nofollow noindex"
+                    prefetch={false}
                   >
                     {playerInfo["alias"]}
                   </Link>

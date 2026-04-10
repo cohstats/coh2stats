@@ -167,7 +167,7 @@ function BulletinListContent() {
               text={
                 <>
                   You can see the most picked Intel Bulletins over at{" "}
-                  <Link href={routes.statsBase()}>stats page</Link>.
+                  <Link href={routes.statsBase()} prefetch={false}>stats page</Link>.
                 </>
               }
             />

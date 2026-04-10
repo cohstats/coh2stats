@@ -311,7 +311,7 @@ const CustomStatsContent: React.FC = () => {
                   <>
                     Includes only matches where all players have at least rank 200 for that
                     particular mode. For example 1v1, 2v2, 3v3, 4v4. See{" "}
-                    <Link href={"/about#top200"} target="_blank">
+                    <Link href={"/about#top200"} target="_blank" prefetch={false}>
                       about page
                     </Link>{" "}
                     to fully understand which matches are included in this statistics.

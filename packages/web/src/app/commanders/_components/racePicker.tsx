@@ -24,14 +24,14 @@ export const RacePicker = () => {
             text={
               <>
                 You can see the most picked Commanders over at{" "}
-                <Link href={routes.statsBase()}>stats page</Link>.
+                <Link href={routes.statsBase()} prefetch={false}>stats page</Link>.
               </>
             }
           />
         </div>
         <Row justify="center" style={{ padding: "20px" }}>
           <Col flex="none">
-            <Link href={routes.commanderList("wermacht")}>
+            <Link href={routes.commanderList("wermacht")} prefetch={false}>
               <div style={myCenterStyle}>
                 <Image
                   width={imageWidth}
@@ -44,7 +44,7 @@ export const RacePicker = () => {
             </Link>
           </Col>
           <Col flex="none">
-            <Link href={routes.commanderList("wgerman")}>
+            <Link href={routes.commanderList("wgerman")} prefetch={false}>
               <div style={myCenterStyle}>
                 <Image
                   width={imageWidth}
@@ -59,7 +59,7 @@ export const RacePicker = () => {
         </Row>
         <Row justify="center" style={{ padding: "20px" }}>
           <Col flex="none">
-            <Link href={routes.commanderList("soviet")}>
+            <Link href={routes.commanderList("soviet")} prefetch={false}>
               <div style={myCenterStyle}>
                 <Image
                   width={imageWidth}
@@ -72,7 +72,7 @@ export const RacePicker = () => {
             </Link>
           </Col>
           <Col flex="none">
-            <Link href={routes.commanderList("british")}>
+            <Link href={routes.commanderList("british")} prefetch={false}>
               <div style={myCenterStyle}>
                 <Image
                   width={imageWidth}
@@ -85,7 +85,7 @@ export const RacePicker = () => {
             </Link>
           </Col>
           <Col flex="none">
-            <Link href={routes.commanderList("usf")}>
+            <Link href={routes.commanderList("usf")} prefetch={false}>
               <div style={myCenterStyle}>
                 <Image
                   width={imageWidth}

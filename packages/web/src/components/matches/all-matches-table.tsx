@@ -207,6 +207,7 @@ const AllMatchesTable: React.FC<IProps> = ({ steamID }) => {
                       convertSteamNameToID(playerInfo.profile["name"]),
                     )}
                     rel="nofollow noindex"
+                    prefetch={false}
                   >
                     {playerInfo.profile.name === profileID ? (
                       <b>{playerInfo.profile["alias"]}</b>
@@ -243,6 +244,7 @@ const AllMatchesTable: React.FC<IProps> = ({ steamID }) => {
                       convertSteamNameToID(playerInfo.profile["name"]),
                     )}
                     rel="nofollow noindex"
+                    prefetch={false}
                   >
                     {playerInfo.profile.name === profileID ? (
                       <b>{playerInfo.profile["alias"]}</b>

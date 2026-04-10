@@ -43,7 +43,7 @@ export function HomeContent({ analyzedMatches, redditPosts, leaderboardData }: H
           <Col style={{ marginRight: 20 }}>
             <div style={{ textAlign: "center" }}>
               <Space style={{ display: "flex", marginBottom: 10, justifyContent: "center" }} wrap>
-                <Link href={"/stats"}>
+                <Link href={"/stats"} prefetch={false}>
                   <Card
                     hoverable
                     style={cardStyle}
@@ -82,7 +82,7 @@ export function HomeContent({ analyzedMatches, redditPosts, leaderboardData }: H
                     />
                   </Card>
                 </Link>
-                <Link href={"/players"}>
+                <Link href={"/players"} prefetch={false}>
                   <Card
                     hoverable
                     style={cardStyle}
@@ -120,7 +120,7 @@ export function HomeContent({ analyzedMatches, redditPosts, leaderboardData }: H
                     />
                   </Card>
                 </Link>
-                <Link href={"/desktop-app"}>
+                <Link href={"/desktop-app"} prefetch={false}>
                   <Card
                     hoverable
                     style={cardStyle}
@@ -160,7 +160,7 @@ export function HomeContent({ analyzedMatches, redditPosts, leaderboardData }: H
                 </Link>
               </Space>
               <Space style={{ marginBottom: 10, display: "flex", justifyContent: "center" }} wrap>
-                <Link href={routes.commanderBase()}>
+                <Link href={routes.commanderBase()} prefetch={false}>
                   <Card
                     hoverable
                     style={cardStyle}
@@ -193,7 +193,7 @@ export function HomeContent({ analyzedMatches, redditPosts, leaderboardData }: H
                     />
                   </Card>
                 </Link>
-                <Link href={routes.bulletinsBase()}>
+                <Link href={routes.bulletinsBase()} prefetch={false}>
                   <Card
                     hoverable
                     style={cardStyle}
@@ -226,7 +226,7 @@ export function HomeContent({ analyzedMatches, redditPosts, leaderboardData }: H
                     />
                   </Card>
                 </Link>
-                <Link href={routes.liveMatchesBase()}>
+                <Link href={routes.liveMatchesBase()} prefetch={false}>
                   <Card
                     hoverable
                     style={cardStyle}
