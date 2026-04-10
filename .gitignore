@@ -43,3 +43,4 @@ packages/web/.next/
 
 fbexport
 packages/migrations/*.json
+goal.md
