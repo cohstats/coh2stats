@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Col, Row, Flex, Avatar, Typography } from "antd";
+import { useTheme } from "next-themes";
 import { getCommanderByRaces, getCommanderIconPath } from "../../../../coh/commanders";
 import { RaceName } from "../../../../coh/types";
 import routes from "../../../../routes";
@@ -17,6 +18,8 @@ interface CommandersListProps {
 }
 
 export const CommandersList = ({ race }: CommandersListProps) => {
+  const { theme: currentTheme } = useTheme();
+
   let myData = getCommanderByRaces(race as RaceName);
   myData = myData.filter((commanderData) => {
     return (
@@ -25,13 +28,16 @@ export const CommandersList = ({ race }: CommandersListProps) => {
     );
   });
 
+  // Use different opacity for light vs dark theme to keep the image visible
+  const bgOpacity = currentTheme === "dark" ? 0.15 : 0.8;
+
   const divStyle = {
     backgroundImage: "url(/resources/generalIcons/" + race + ".png)",
     backgroundRepeat: "no-repeat",
     backgroundSize: "350px",
     backgroundPosition: "left top 200px",
     backgroundBlendMode: "overlay",
-    backgroundColor: "rgba(255,255,255,0.8)",
+    backgroundColor: `rgba(${currentTheme === "dark" ? "20, 20, 20" : "240, 242, 245"}, ${bgOpacity})`,
   };
 
   if (myData.length === 0) {

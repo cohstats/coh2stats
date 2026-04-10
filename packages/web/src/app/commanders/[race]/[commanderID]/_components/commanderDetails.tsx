@@ -2,6 +2,7 @@
 
 import React, { useEffect } from "react";
 import { Col, Row, Flex, Divider, Avatar, Badge, Typography } from "antd";
+import { useTheme } from "next-themes";
 import { getCommanderData, getCommanderIconPath } from "@/coh/commanders";
 import { ExportDate } from "@/components/export-date";
 import firebaseAnalytics from "../../../../../analytics";
@@ -16,6 +17,7 @@ interface CommanderDetailsProps {
 }
 
 export const CommanderDetails = ({ race, commanderID }: CommanderDetailsProps) => {
+  const { theme: currentTheme } = useTheme();
   const commanderData = getCommanderData(commanderID || "");
 
   // We want to scroll top when we go to this page from the stats page
@@ -29,13 +31,16 @@ export const CommanderDetails = ({ race, commanderID }: CommanderDetailsProps) =
     );
   }, [commanderData]);
 
+  // Use different opacity for light vs dark theme to keep the image visible
+  const bgOpacity = currentTheme === "dark" ? 0.15 : 0.8;
+
   const divStyle = {
     backgroundImage: `url(${getGeneralIconPath(race || "")})`,
     backgroundRepeat: "no-repeat",
     backgroundSize: "350px",
     backgroundPosition: "left top 200px",
     backgroundBlendMode: "overlay",
-    backgroundColor: "rgba(255,255,255,0.8)",
+    backgroundColor: `rgba(${currentTheme === "dark" ? "20, 20, 20" : "240, 242, 245"}, ${bgOpacity})`,
   };
 
   if (!commanderData) {

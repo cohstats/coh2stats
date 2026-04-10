@@ -10,9 +10,11 @@ import {
   Select,
   Typography,
   Switch,
+  theme,
 } from "antd";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useTheme } from "next-themes";
 
 import { LaddersDataArrayObject, LaddersDataObject } from "@/coh/types";
 import { getAllPatchDates } from "@/coh/patches";
@@ -47,6 +49,8 @@ const { Text } = Typography;
 const LeaderboardsContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { token } = theme.useToken();
+  const { theme: currentTheme } = useTheme();
 
   const timestamp = searchParams?.get("timeStamp") || `now`;
   const historicTimestamp =
@@ -127,13 +131,16 @@ const LeaderboardsContent = () => {
     pageSize,
   ]);
 
+  // Use different opacity for light vs dark theme to keep the image visible
+  const bgOpacity = currentTheme === "dark" ? 0.15 : 0.8;
+
   const divStyle = {
     backgroundImage: `url(${getGeneralIconPath(race)})`,
     backgroundRepeat: "no-repeat",
     backgroundSize: "350px",
     backgroundPosition: "left top 200px",
     backgroundBlendMode: "overlay",
-    backgroundColor: "rgba(255,255,255,0.8)",
+    backgroundColor: `rgba(${currentTheme === "dark" ? "20, 20, 20" : "240, 242, 245"}, ${bgOpacity})`,
   };
 
   const changeLeaderBoardsRoute = (params: Record<string, any>) => {
