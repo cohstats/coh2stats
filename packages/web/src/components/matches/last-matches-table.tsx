@@ -148,9 +148,13 @@ const LastMatchesTable: React.FC<IProps> = ({ steamID, profileID }) => {
       responsive: ["xl"],
       render: (data: any, record: any) => {
         if (isPlayerVictorious(record)) {
-          return <Tag color={"#108ee9"}>VICTORY</Tag>;
+          return <Tag variant={"solid"} color={"#108ee9"}>VICTORY</Tag>;
         } else {
-          return <Tag color={"#f50"}>DEFEAT</Tag>;
+          return (
+            <Tag variant={"solid"} color={"#f50"}>
+              DEFEAT
+            </Tag>
+          );
         }
       },
     },
