@@ -21,11 +21,10 @@ const API_URL = config.apiUrl;
  */
 async function getPlayerCardInternal(
   steamid: string,
-  includeMatches: boolean,
 ): Promise<PlayerCardAPIObject> {
   console.log("[COH2Stats BE API] Fetching player card data for", steamid);
   const response = await fetch(
-    `${API_URL}getPlayerCardEverythingHttp?steamid=${steamid}&includeMatches=${includeMatches}`,
+    `${API_URL}getPlayerCardEverythingHttp?steamid=${steamid}&includeMatches=false`,
     {
       headers: {
         Origin: "https://coh2stats.com",
@@ -43,29 +42,27 @@ async function getPlayerCardInternal(
 }
 
 /**
- * Fetches player card data including stats, matches, and profile information
+ * Fetches player card data including stats and profile information
  * Cached for 30 seconds using unstable_cache
  *
  * @param steamid - The Steam ID of the player
- * @param includeMatches - Whether to include match history in the response
  * @returns Promise resolving to player card data
  * @throws Error if the API request fails
  *
  * @example
  * ```typescript
- * const data = await getPlayerCard('/steam/76561198131099369', false);
+ * const data = await getPlayerCard('/steam/76561198131099369');
  * ```
  */
 export async function getPlayerCard(
   steamid: string,
-  includeMatches: boolean,
 ): Promise<PlayerCardAPIObject> {
   const cachedFn = unstable_cache(
-    async () => getPlayerCardInternal(steamid, includeMatches),
-    [`player-card-${steamid}-${includeMatches}`],
+    async () => getPlayerCardInternal(steamid),
+    [`player-card-${steamid}`],
     {
       revalidate: 30, // 30 seconds
-      tags: [`player-card-${steamid}-${includeMatches}`],
+      tags: [`player-card-${steamid}`],
     },
   );
 

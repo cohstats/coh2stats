@@ -16,7 +16,7 @@ import { getPlayerFirestoreMatches } from "@/firebase/firebase-server";
 export async function fetchPlayerCardData(steamid: string): Promise<PlayerCardAPIObject | null> {
   console.log("[Server Action] fetchPlayerCardData called", { steamid });
   try {
-    return await getPlayerCard(steamid, false);
+    return await getPlayerCard(steamid);
   } catch (error) {
     console.error("Failed to fetch player card data:", error);
     return null;
@@ -86,7 +86,7 @@ export async function fetchPlayerCardMetadata(
 ): Promise<{ playerName: string } | null> {
   console.log("[Server Action] fetchPlayerCardMetadata called", { steamid });
   try {
-    const data = await getPlayerCard(steamid, false);
+    const data = await getPlayerCard(steamid);
     const playerName = data?.steamProfile?.[steamid]?.personaname || null;
 
     if (playerName) {
