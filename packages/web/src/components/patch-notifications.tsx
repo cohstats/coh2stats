@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { isTimeStampInPatches } from "../coh/patches";
 import { formatDate } from "../utils/helpers";
 import { Col, Row, Typography } from "antd";

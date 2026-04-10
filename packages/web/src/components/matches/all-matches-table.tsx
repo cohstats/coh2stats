@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useCallback, useEffect, useState } from "react";
 import { fetchPlayerFirestoreMatches } from "@/app/players/[steamid]/actions";
 import {

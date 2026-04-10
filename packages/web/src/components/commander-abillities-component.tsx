@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { CommanderAbility } from "../coh/types";
 import { Avatar, Badge, Col, Row, Tooltip, Typography } from "antd";
 import { getExportedIconPath } from "../coh/helpers";

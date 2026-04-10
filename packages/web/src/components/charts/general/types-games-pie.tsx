@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import { ResponsivePie } from "@nivo/pie";

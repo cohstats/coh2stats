@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useEffect, useState } from "react";
 import Search from "antd/es/input/Search";
 import { useRouter, useParams } from "next/navigation";

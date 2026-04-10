@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import React from "react";
@@ -25,11 +24,10 @@ export const AlertBox: React.FC<AlertEvent> = (event: AlertEvent) => {
     <Alert
       data-testid="alert-box"
       title={event.message}
+      description={event.description}
       type={event.type}
       closable={event.closable ?? defaultCloseable}
       style={finalStyle}
-    >
-      {event.description}
-    </Alert>
+    />
   );
 };

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useCallback, useEffect } from "react";
 import { ColumnsType } from "antd/es/table";
 import { convertSteamNameToID, getExportedIconPath } from "@/coh/helpers";
@@ -476,7 +475,6 @@ export const MatchPlayerDetailsTable: React.FC<MatchPlayerDetailsTableProps> = (
       )}
       <Table
         style={{ margin: "0 !important" }}
-        variant="borderless"
         pagination={false}
         sortDirections={simpleSorting}
         columns={finalColumns}

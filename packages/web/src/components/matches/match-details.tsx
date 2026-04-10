@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { ReactNode, useEffect } from "react";
 import { getMatchPlayersByFaction } from "../../utils/table-functions";
 import { Card, Image, Space, Empty } from "antd";
