@@ -8,6 +8,8 @@ import routes from "../../routes";
 import { commanderAndBulletinDate, lastPatchName } from "@/config";
 import RedditCard from "../../components/reddit/reddit-card";
 import { RedditPost } from "@/utils/reddit";
+import type { RelicLeaderboardResponse, LaddersDataObject } from "@/coh/types";
+import { TopLeaderboard } from "./top-leaderboard";
 
 // Import images
 import chartImage from "../../../public/resources/chart.png";
@@ -22,9 +24,16 @@ const { Paragraph, Text } = Typography;
 interface HomeContentProps {
   analyzedMatches: string;
   redditPosts: RedditPost[];
+  leaderboardData: Record<
+    string,
+    {
+      current: RelicLeaderboardResponse | null;
+      historic: LaddersDataObject | null;
+    }
+  >;
 }
 
-export function HomeContent({ analyzedMatches, redditPosts }: HomeContentProps) {
+export function HomeContent({ analyzedMatches, redditPosts, leaderboardData }: HomeContentProps) {
   const cardStyle = { width: 240, height: 255 };
 
   return (
@@ -260,6 +269,9 @@ export function HomeContent({ analyzedMatches, redditPosts }: HomeContentProps) 
                 Last patch data from <Text strong>{lastPatchName}</Text> extracted on{" "}
                 <Text strong>{commanderAndBulletinDate}</Text>
               </Paragraph>
+              <div style={{ marginTop: 20 }}>
+                <TopLeaderboard leaderboardData={leaderboardData} />
+              </div>
             </div>
           </Col>
           <Col>
