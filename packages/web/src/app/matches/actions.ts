@@ -10,5 +10,6 @@ import { getMatchData } from "@/firebase/firebase-server";
  * @returns Promise<Record<string, any> | null> - The match data or null if not found
  */
 export async function fetchMatchData(matchId: string): Promise<Record<string, any> | null> {
+  console.log("[Server Action] fetchMatchData called", { matchId });
   return getMatchData(matchId);
 }

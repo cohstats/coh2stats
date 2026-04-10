@@ -158,6 +158,7 @@ export const fetchLeaderboardStats = async (
   count = 200,
 ): Promise<RelicLeaderboardResponse> => {
   const url = buildLeaderboardUrl(leaderboardID, count, start);
+  console.debug("[Relic API] Fetching leaderboard stats from", url);
   const response = await fetch(url);
 
   if (!response.ok) {
@@ -186,6 +187,7 @@ export const fetchLeaderboardStats = async (
 const fetchPlayerMatchStats = async (relicProfileID: number): Promise<Record<string, any>> => {
   const url = buildRecentMatchHistoryUrl(relicProfileID);
 
+  console.debug("[Relic API] Fetching player match stats from", url);
   const response = await fetch(url);
 
   if (response.status == 200) {

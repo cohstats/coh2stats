@@ -20,6 +20,7 @@ async function fetchLiveLeaderboardDataInternal(
   start = 1,
   count = 200,
 ): Promise<LaddersDataObject> {
+  console.log("[Server Action] fetchLiveLeaderboardDataInternal called", { leaderboardID, start, count });
   try {
     // Fetch data from Relic API with pagination parameters
     const relicResponse = await fetchLeaderboardStats(leaderboardID, start, count);
@@ -84,6 +85,7 @@ export async function fetchHistoricLeaderboardData(
   type: string,
   race: string,
 ): Promise<LaddersDataObject | undefined> {
+  console.log("[Server Action] fetchHistoricLeaderboardData called", { timestamp, type, race });
   try {
     const data = await getHistoricLeaderboardData(timestamp, type, race);
     return data || undefined;

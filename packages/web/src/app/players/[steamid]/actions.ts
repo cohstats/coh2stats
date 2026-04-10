@@ -14,6 +14,7 @@ import { getPlayerFirestoreMatches } from "@/firebase/firebase-server";
  * @returns Promise<PlayerCardAPIObject | null> - Player card data or null on failure
  */
 export async function fetchPlayerCardData(steamid: string): Promise<PlayerCardAPIObject | null> {
+  console.log("[Server Action] fetchPlayerCardData called", { steamid });
   try {
     return await getPlayerCard(steamid, false);
   } catch (error) {
@@ -32,6 +33,7 @@ export async function fetchPlayerCardData(steamid: string): Promise<PlayerCardAP
 export async function fetchPlayerMatchesData(
   profileId: number,
 ): Promise<PlayerMatchesResponse | null> {
+  console.log("[Server Action] fetchPlayerMatchesData called", { profileId });
   const cachedFn = unstable_cache(
     async () => {
       try {
@@ -68,6 +70,7 @@ export async function fetchPlayerFirestoreMatches(params: {
   matches: Array<Record<string, any>>;
   nextCursor: { docId: string; timestamp: number } | null;
 }> {
+  console.log("[Server Action] fetchPlayerFirestoreMatches called", { steamid: params.steamid });
   return getPlayerFirestoreMatches(params);
 }
 
@@ -81,6 +84,7 @@ export async function fetchPlayerFirestoreMatches(params: {
 export async function fetchPlayerCardMetadata(
   steamid: string,
 ): Promise<{ playerName: string } | null> {
+  console.log("[Server Action] fetchPlayerCardMetadata called", { steamid });
   try {
     const data = await getPlayerCard(steamid, false);
     const playerName = data?.steamProfile?.[steamid]?.personaname || null;

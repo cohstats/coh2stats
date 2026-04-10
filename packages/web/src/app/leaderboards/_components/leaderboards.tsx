@@ -10,7 +10,6 @@ import {
   Select,
   Typography,
   Switch,
-  theme,
 } from "antd";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -49,7 +48,6 @@ const { Text } = Typography;
 const LeaderboardsContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { token } = theme.useToken();
   const { theme: currentTheme } = useTheme();
 
   const timestamp = searchParams?.get("timeStamp") || `now`;

@@ -5,6 +5,7 @@
  * All functions return Promise<T> and throw errors for component-level handling.
  */
 
+import { unstable_cache } from "next/cache";
 import config from "@/config";
 import type {
   LiveGame,
@@ -16,7 +17,34 @@ import type {
 const API_URL = config.apiUrl;
 
 /**
+ * Internal function to fetch player card data
+ */
+async function getPlayerCardInternal(
+  steamid: string,
+  includeMatches: boolean,
+): Promise<PlayerCardAPIObject> {
+  console.log("[COH2Stats BE API] Fetching player card data for", steamid);
+  const response = await fetch(
+    `${API_URL}getPlayerCardEverythingHttp?steamid=${steamid}&includeMatches=${includeMatches}`,
+    {
+      headers: {
+        Origin: "https://coh2stats.com",
+      },
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error(
+      `API request failed with code: ${response.status}, res: ${await response.text()}`,
+    );
+  }
+
+  return await response.json();
+}
+
+/**
  * Fetches player card data including stats, matches, and profile information
+ * Cached for 30 seconds using unstable_cache
  *
  * @param steamid - The Steam ID of the player
  * @param includeMatches - Whether to include match history in the response
@@ -32,38 +60,23 @@ export async function getPlayerCard(
   steamid: string,
   includeMatches: boolean,
 ): Promise<PlayerCardAPIObject> {
-  const response = await fetch(
-    `${API_URL}getPlayerCardEverythingHttp?steamid=${steamid}&includeMatches=${includeMatches}`,
+  const cachedFn = unstable_cache(
+    async () => getPlayerCardInternal(steamid, includeMatches),
+    [`player-card-${steamid}-${includeMatches}`],
     {
-      headers: {
-        Origin: "https://coh2stats.com",
-      },
-      next: { revalidate: 30 },
+      revalidate: 30, // 30 seconds
+      tags: [`player-card-${steamid}-${includeMatches}`],
     },
   );
 
-  if (!response.ok) {
-    throw new Error(
-      `API request failed with code: ${response.status}, res: ${await response.text()}`,
-    );
-  }
-
-  return await response.json();
+  return cachedFn();
 }
 
 /**
- * Searches for players by name
- *
- * @param name - The player name to search for
- * @returns Promise resolving to search results
- * @throws Error if the API request fails
- *
- * @example
- * ```typescript
- * const data = await searchPlayers('playerName');
- * ```
+ * Internal function to search for players by name
  */
-export async function searchPlayers(name: string): Promise<SearchPlayersResponse> {
+async function searchPlayersInternal(name: string): Promise<SearchPlayersResponse> {
+  console.log("[COH2Stats BE API] Searching for players with name", name);
   const response = await fetch(`${API_URL}searchPlayers`, {
     method: "POST",
     headers: {
@@ -79,6 +92,32 @@ export async function searchPlayers(name: string): Promise<SearchPlayersResponse
   }
 
   return await response.json();
+}
+
+/**
+ * Searches for players by name
+ * Cached for 24 hours using unstable_cache
+ *
+ * @param name - The player name to search for
+ * @returns Promise resolving to search results
+ * @throws Error if the API request fails
+ *
+ * @example
+ * ```typescript
+ * const data = await searchPlayers('playerName');
+ * ```
+ */
+export async function searchPlayers(name: string): Promise<SearchPlayersResponse> {
+  const cachedFn = unstable_cache(
+    async () => searchPlayersInternal(name),
+    [`search-players-${name}`],
+    {
+      revalidate: 86400, // 24 hours = 86400 seconds
+      tags: [`search-players-${name}`],
+    },
+  );
+
+  return cachedFn();
 }
 
 /**
@@ -108,10 +147,7 @@ export async function getLiveGames(
   try {
     const url = `${API_URL}getLiveGamesHttp?playerGroup=${playerGroup}&start=${start}&count=${count}&sortOrder=${sortOrder}&apiKey=c2sXe4zguRtYMBY`;
 
-    console.log(
-      `Fetching live games from API: playerGroup=${playerGroup}, start=${start}, sortOrder=${sortOrder}`,
-    );
-
+    console.log("[COH2Stats BE API] Fetching live games data from", url);
     const response = await fetch(url, {
       // No cache option here - we'll use Next.js revalidate at page level (90 seconds)
       headers: {

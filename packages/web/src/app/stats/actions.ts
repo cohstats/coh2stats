@@ -16,6 +16,7 @@ export async function fetchStatsData(
   timestamp: string,
   statType: string,
 ): Promise<Record<string, any> | null> {
+  console.log("[Server Action] fetchStatsData called", { frequency, timestamp, statType });
   return getStatsData(frequency, timestamp, statType);
 }
 
@@ -33,6 +34,7 @@ export async function fetchCustomAnalysis(
   endDate: number,
   type: "normal" | "top",
 ): Promise<Record<string, any> | null> {
+  console.log("[Server Action] fetchCustomAnalysis called", { startDate, endDate, type });
   return getCustomAnalysis(startDate, endDate, type);
 }
 

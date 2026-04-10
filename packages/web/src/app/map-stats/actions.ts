@@ -14,6 +14,7 @@ export async function fetchMapStatsData(
   frequency: string,
   timestamp: string,
 ): Promise<Record<string, any> | null> {
+  console.log("[Server Action] fetchMapStatsData called", { frequency, timestamp });
   return getStatsData(frequency, timestamp, "mapStats");
 }
 
@@ -29,6 +30,7 @@ export async function fetchCustomMapAnalysis(
   startDate: number,
   endDate: number,
 ): Promise<Record<string, any> | null> {
+  console.log("[Server Action] fetchCustomMapAnalysis called", { startDate, endDate });
   return getCustomAnalysis(startDate, endDate, "map");
 }
 
