@@ -19,7 +19,11 @@ export const MainFooter: React.FC = () => {
       <br />
       The data display here are not accurate and do not represent the actual state of the game.
       <br />
-      See <NextLink href={"/about"} prefetch={false}>about page</NextLink> for more info.
+      See{" "}
+      <NextLink href={"/about"} prefetch={false}>
+        about page
+      </NextLink>{" "}
+      for more info.
       <br />
       © 2021 - 2026 COH2stats.com
       <br />
@@ -40,14 +44,10 @@ export const MainFooter: React.FC = () => {
         <Image src={discordIcon} width={30} height={30} alt="Discord Logo" />
       </Link>
       <Link href={config.donationLink} target="_blank" rel="noopener noreferrer" strong>
-        <Image
-          src={kofiLogo}
-          width={30}
-          height={30}
-          alt="Ko-fi support button"
-          style={{ marginRight: 2 }}
-        />
-        <span style={{ verticalAlign: "top" }}>Donate</span>
+        <div style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+          <Image src={kofiLogo} width={30} height={30} alt="Ko-fi support button" />
+          <span>Donate</span>
+        </div>
       </Link>
       <br />
       <br />

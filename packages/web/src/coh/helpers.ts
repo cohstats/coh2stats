@@ -39,16 +39,37 @@ const getGeneralIconPath = (name: string, size: "normal" | "small" = "normal"): 
 
 /**
  * Extracts just the string ID from the steam name used in the results of API.
- * @param name In format "/steam/76561198131099369"
+ * Some could be in format "/steam/76561198131099369"
+ * Some could be "/feral/97200"
+ *
+ * @param name - In format "/steam/76561198131099369" or "/feral/97200"
+ * @returns The extracted Steam ID as a string
  */
 const convertSteamNameToID = (name: string): string => {
   const res = name.match(/\/steam\/(\d+)/);
   if (res) return res[1];
+  const feral = name.match(/\/feral\/(\d+)/);
+  if (feral) return feral[1];
   return "";
 };
 
 const isTeamGame = (type: string) => {
   return !["1v1", "2v2", "3v3", "4v4"].includes(type);
+};
+
+/**
+ * Returns the profile based on its ID from the list of profiles
+ *
+ * @param profileId - The profile ID to find
+ * @param profiles - Array of profile objects
+ */
+const findProfile = (
+  profileId: number,
+  profiles: Array<Record<string, any>>,
+): Record<string, any> | undefined => {
+  return profiles.find((profile: Record<string, any>) => {
+    return profile["profile_id"] == profileId;
+  });
 };
 
 const findAndMergeStatGroups = (
@@ -159,6 +180,7 @@ export {
   getGeneralIconPath,
   convertSteamNameToID,
   isTeamGame,
+  findProfile,
   findAndMergeStatGroups,
   levelToText,
 };

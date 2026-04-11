@@ -1,70 +1,11 @@
 "use server";
 
-import { unstable_cache } from "next/cache";
-import { fetchLeaderboardStats } from "../../coh/coh2-api";
-import { mapRelicResponseToLaddersData } from "../../coh/helpers";
+import { fetchLiveLeaderboardData } from "../../coh/coh2-api";
 import type { LaddersDataObject } from "../../coh/types";
 import { getHistoricLeaderboardData } from "../../firebase/firebase-server";
 
-/**
- * Internal function to fetch live leaderboard data
- * Uses the internal Relic API instead of the GCP function
- *
- * @param leaderboardID - The ID of the leaderboard to fetch
- * @param start - Starting position for pagination (default: 1)
- * @param count - Number of entries to fetch (default: 200)
- * @returns Promise resolving to leaderboard data in app format
- */
-async function fetchLiveLeaderboardDataInternal(
-  leaderboardID: number,
-  start = 1,
-  count = 200,
-): Promise<LaddersDataObject> {
-  console.log("[Server Action] fetchLiveLeaderboardDataInternal called", { leaderboardID, start, count });
-  try {
-    // Fetch data from Relic API with pagination parameters
-    const relicResponse = await fetchLeaderboardStats(leaderboardID, start, count);
-
-    // Map the response to our app's data format
-    return mapRelicResponseToLaddersData(relicResponse);
-  } catch (error) {
-    console.error("Failed to fetch live leaderboard data:", error);
-    throw new Error(
-      `Failed to fetch leaderboard data: ${
-        error instanceof Error ? error.message : "Unknown error"
-      }`,
-    );
-  }
-}
-
-/**
- * Server action to fetch live leaderboard data with 30 second cache
- * Uses the internal Relic API instead of the GCP function
- *
- * @param leaderboardID - The ID of the leaderboard to fetch
- * @param start - Starting position for pagination (default: 1)
- * @param count - Number of entries to fetch (default: 200)
- * @returns Promise resolving to leaderboard data in app format
- *
- * @example
- * ```typescript
- * const data = await fetchLiveLeaderboardData(4, 1, 200); // Wehrmacht 1v1
- * const page2 = await fetchLiveLeaderboardData(4, 201, 200); // Next 200 entries
- * ```
- *
- * Note: This function is cached for 30 seconds. Each combination of leaderboardID, start, and count
- * is cached separately to support pagination.
- */
-export const fetchLiveLeaderboardData = unstable_cache(
-  async (leaderboardID: number, start = 1, count = 200) => {
-    return fetchLiveLeaderboardDataInternal(leaderboardID, start, count);
-  },
-  ["live-leaderboard"],
-  {
-    revalidate: 30, // 30 seconds
-    tags: ["live-leaderboard"],
-  },
-);
+// Re-export fetchLiveLeaderboardData for backward compatibility
+export { fetchLiveLeaderboardData };
 
 /**
  * Server action to fetch historic leaderboard data from Firestore

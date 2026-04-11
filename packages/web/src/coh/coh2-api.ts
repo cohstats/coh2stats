@@ -1,4 +1,11 @@
-import type { ProcessedMatch, RelicLeaderboardResponse } from "./types";
+import { unstable_cache } from "next/cache";
+import type { ProcessedMatch, RelicLeaderboardResponse, LaddersDataObject } from "./types";
+import {
+  extractPlayerIDsInMatch,
+  processSingleMatch,
+  transformProfilesInMatch,
+} from "./match-utils";
+import { mapRelicResponseToLaddersData } from "./helpers";
 
 /**
  * The names are important, can't be changed
@@ -253,131 +260,6 @@ const buildRecentMatchHistoryUrl = (relicProfileId: number): string => {
 };
 
 /**
- * Extracts just the string ID from the steam name used in the results of API.
- * Some could be in format "/steam/76561198131099369"
- * Some could be "/feral/97200"
- *
- * @param name - In format "/steam/76561198131099369"
- * @returns The extracted Steam ID as a string
- */
-const convertSteamNameToID = (name: string): string => {
-  const res = name.match(/\/steam\/(\d+)/);
-  if (res) return res[1];
-  const feral = name.match(/\/feral\/(\d+)/);
-  if (feral) return feral[1];
-  return "";
-};
-
-/**
- * We want to filter out items we don't need to store.
- *  "itemlocation_id":3 = commander
- *  "itemlocation_id":4 = intel bulletin
- *
- * @param singleMatchData - The match data object
- */
-const filterOutItems = (singleMatchData: Record<string, any>): Record<string, any> => {
-  singleMatchData["matchhistoryitems"] = singleMatchData["matchhistoryitems"].filter(
-    (item: Record<string, any>) => {
-      return item["itemlocation_id"] == 3 || item["itemlocation_id"] == 4;
-    },
-  );
-  return singleMatchData;
-};
-
-/**
- * Removes unnecessary items from the items info.
- *
- * @param singleMatchData - The match data object
- */
-const removeExtraDataFromItems = (singleMatchData: Record<string, any>): Record<string, any> => {
-  for (const item of singleMatchData["matchhistoryitems"]) {
-    delete item["durabilitytype"];
-    delete item["durability"];
-    delete item["metadata"];
-    delete item["matchhistory_id"]; // We don't need because the object is nested under the match itself
-  }
-
-  return singleMatchData;
-};
-
-/**
- * Process a single match data object
- *
- * @param singleMatchData - The match data object
- */
-const processSingleMatch = (singleMatchData: Record<string, any>): Record<string, any> => {
-  // delete fields we don't need to track
-  delete singleMatchData["options"]; // Don't know what this field does, probably don't need it
-  delete singleMatchData["slotinfo"]; // Don't know what this field does, probably don't need it
-  delete singleMatchData["observertotal"]; // We don't care about this
-  delete singleMatchData["matchurls"]; // Don't know, don't care
-
-  singleMatchData = filterOutItems(singleMatchData);
-  singleMatchData = removeExtraDataFromItems(singleMatchData);
-
-  return singleMatchData;
-};
-
-/**
- * Returns array of player IDs who played in this match.
- * Also removes unnecessary data in the player report.
- *
- * @param singleMatchData - The match data object
- */
-const extractPlayerIDsInMatch = (singleMatchData: Record<string, any>): Array<number> => {
-  const playerIds = [];
-
-  for (const player of singleMatchData["matchhistoryreportresults"]) {
-    playerIds.push(player["profile_id"]);
-    // Also delete these 2 fields we don't need them
-    delete player["xpgained"];
-    delete player["matchstartdate"];
-  }
-
-  return playerIds;
-};
-
-/**
- * Returns the profile based on it's ID from the list of profiles
- *
- * @param profileId - The profile ID to find
- * @param profiles - Array of profile objects
- */
-const findProfile = (
-  profileId: number,
-  profiles: Array<Record<string, any>>,
-): Record<string, any> | undefined => {
-  return profiles.find((profile: Record<string, any>) => {
-    return profile["profile_id"] == profileId;
-  });
-};
-
-/**
- * This function transforms the objects in the profiles for them to be possible to
- * better process / analyze and search in in the DB.
- *
- * Returns steam IDs. This should be theoretically put into the separate function
- * but we can calculate it in one way to save some time.
- *
- * @param singleMatchObject - The match data object
- * @param profiles - Array of profile objects
- */
-const transformProfilesInMatch = (
-  singleMatchObject: Record<string, any>,
-  profiles: Array<Record<string, any>>,
-): Array<string> => {
-  const steamIDs = [];
-
-  for (const playerResult of singleMatchObject["matchhistoryreportresults"]) {
-    const profile = findProfile(playerResult["profile_id"], profiles);
-    playerResult["profile"] = profile;
-    steamIDs.push(convertSteamNameToID(profile?.name || ""));
-  }
-
-  return steamIDs;
-};
-
-/**
  * This is the main function for processing and preparing the single match to be saved in the DB.
  *
  * @param singleMatchData - The match data object
@@ -399,5 +281,65 @@ export const prepareMatchDBObject = (
 
   return singleMatchData as ProcessedMatch;
 };
+
+/**
+ * Internal function to fetch live leaderboard data with mapping
+ * Uses the internal Relic API and maps to app format
+ *
+ * @param leaderboardID - The ID of the leaderboard to fetch
+ * @param start - Starting position for pagination (default: 1)
+ * @param count - Number of entries to fetch (default: 200)
+ * @returns Promise resolving to leaderboard data in app format
+ */
+async function fetchLiveLeaderboardDataInternal(
+  leaderboardID: number,
+  start = 1,
+  count = 200,
+): Promise<LaddersDataObject> {
+  console.log("[coh2-api] fetchLiveLeaderboardDataInternal called", { leaderboardID, start, count });
+  try {
+    // Fetch data from Relic API with pagination parameters
+    const relicResponse = await fetchLeaderboardStats(leaderboardID, start, count);
+
+    // Map the response to our app's data format
+    return mapRelicResponseToLaddersData(relicResponse);
+  } catch (error) {
+    console.error("Failed to fetch live leaderboard data:", error);
+    throw new Error(
+      `Failed to fetch leaderboard data: ${
+        error instanceof Error ? error.message : "Unknown error"
+      }`,
+    );
+  }
+}
+
+/**
+ * Fetch live leaderboard data with 30 second cache
+ * Uses the internal Relic API and maps to app format
+ *
+ * @param leaderboardID - The ID of the leaderboard to fetch
+ * @param start - Starting position for pagination (default: 1)
+ * @param count - Number of entries to fetch (default: 200)
+ * @returns Promise resolving to leaderboard data in app format
+ *
+ * @example
+ * ```typescript
+ * const data = await fetchLiveLeaderboardData(4, 1, 200); // Wehrmacht 1v1
+ * const page2 = await fetchLiveLeaderboardData(4, 201, 200); // Next 200 entries
+ * ```
+ *
+ * Note: This function is cached for 30 seconds. Each combination of leaderboardID, start, and count
+ * is cached separately to support pagination.
+ */
+export const fetchLiveLeaderboardData = unstable_cache(
+  async (leaderboardID: number, start = 1, count = 200) => {
+    return fetchLiveLeaderboardDataInternal(leaderboardID, start, count);
+  },
+  ["live-leaderboard"],
+  {
+    revalidate: 30, // 30 seconds
+    tags: ["live-leaderboard"],
+  },
+);
 
 export { leaderboardsID, levels };
