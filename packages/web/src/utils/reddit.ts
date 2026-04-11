@@ -10,6 +10,7 @@ export interface RedditPost {
 }
 
 export async function getRedditPosts(): Promise<RedditPost[]> {
+  console.log("[Reddit] Fetching Reddit posts");
   try {
     // "https://www.reddit.com/r/CompanyOfHeroes/top.json?limit=100&t=month"
     const res = await fetch("https://coh2stats.com/api/redditCF", {
@@ -17,6 +18,7 @@ export async function getRedditPosts(): Promise<RedditPost[]> {
     });
 
     if (!res.ok) {
+      console.error("Failed to fetch Reddit posts:", res.status);
       throw new Error(`Reddit API failed: ${res.status}`);
     }
 
