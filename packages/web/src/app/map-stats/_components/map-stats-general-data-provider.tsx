@@ -27,6 +27,13 @@ const MapStatsGeneralDataProvider: React.FC<IProps> = ({ urlChanger }) => {
   }, [frequency, timestamp, type]);
 
   useEffect(() => {
+    // Skip fetching if timestamp is the default placeholder "0000"
+    // This prevents unnecessary fetches before the parent component sets a valid timestamp
+    if (timestamp === "0000") {
+      setIsLoading(false);
+      return;
+    }
+
     setIsLoading(true);
 
     (async () => {
