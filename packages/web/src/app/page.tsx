@@ -5,8 +5,8 @@ import { HomeContent } from "./_components/home-content";
 import { fetchLeaderboardStats } from "@/coh/coh2-api";
 import type { RelicLeaderboardResponse, LaddersDataObject } from "@/coh/types";
 
-// Revalidate the page every hour (3600 seconds)
-export const revalidate = 3600;
+// Revalidate every 30 minutes for API data
+export const revalidate = 1800;
 
 export default async function Home() {
   // Define leaderboard IDs for 1v1 mode
