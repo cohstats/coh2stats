@@ -22,15 +22,16 @@ const API_URL = config.apiUrl;
 async function getPlayerCardInternal(
   steamid: string,
 ): Promise<PlayerCardAPIObject> {
-  console.log("[COH2Stats BE API] Fetching player card data for", steamid);
+  const url = `${API_URL}getPlayerCardEverythingHttp?steamid=${steamid}&includeMatches=false`;
   const response = await fetch(
-    `${API_URL}getPlayerCardEverythingHttp?steamid=${steamid}&includeMatches=false`,
+    url,
     {
       headers: {
         Origin: "https://coh2stats.com",
       },
     },
   );
+  console.log("[COH2Stats BE API] Fetching player card data", url);
 
   if (!response.ok) {
     throw new Error(
