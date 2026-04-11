@@ -33,7 +33,7 @@
     "reinstall": "yarn run clean && yarn install",
     "test-build": "yarn workspace @coh2stats/web build && yarn workspace @coh2stats/app make"
   },
-  "version": "0.1.2",
+  "version": "2.0.0",
   "description": "FB Project for COH2 ladders",
   "main": "index.js",
   "author": "Petr Vecera",

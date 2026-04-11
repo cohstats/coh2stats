@@ -179,9 +179,17 @@ const AllMatchesTable: React.FC<IProps> = ({ steamID }) => {
       responsive: ["xl"],
       render: (data: any, record: any) => {
         if (isPlayerVictorious(record)) {
-          return <Tag variant={"solid"} color={"#108ee9"}>VICTORY</Tag>;
+          return (
+            <Tag variant={"solid"} color={"#108ee9"}>
+              VICTORY
+            </Tag>
+          );
         } else {
-          return <Tag variant={"solid"} color={"#f50"}>DEFEAT</Tag>;
+          return (
+            <Tag variant={"solid"} color={"#f50"}>
+              DEFEAT
+            </Tag>
+          );
         }
       },
     },
@@ -195,7 +203,8 @@ const AllMatchesTable: React.FC<IProps> = ({ steamID }) => {
           <div>
             {axisPlayers.map((playerInfo: Record<string, any>) => {
               return (
-                <div key={playerInfo.profile_id}
+                <div
+                  key={playerInfo.profile_id}
                   style={{ display: "flex", alignItems: "center", gap: "6px" }}
                 >
                   <img

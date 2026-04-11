@@ -37,4 +37,3 @@ export async function fetchCustomAnalysis(
   console.log("[Server Action] fetchCustomAnalysis called", { startDate, endDate, type });
   return getCustomAnalysis(startDate, endDate, type);
 }
-

@@ -69,7 +69,7 @@ const generalIconSmallMap: Record<string, StaticImageData> = {
  */
 export const getGeneralIconImport = (
   name: string,
-  size: "normal" | "small" = "normal"
+  size: "normal" | "small" = "normal",
 ): StaticImageData | string => {
   // We have typo in the system and DB, sometimes it's wermacht and sometimes wehrmacht
   if (name === "wehrmacht") {

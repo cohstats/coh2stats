@@ -103,9 +103,12 @@ const PlayerCardContent = () => {
 
   const onTabChange = (key: string) => {
     const newSearchParams = new URLSearchParams(window.location.search);
-    newSearchParams.set('view', key);
+    newSearchParams.set("view", key);
     // @ts-ignore
-    router.push(`${window.location.pathname}?${newSearchParams.toString()}`, undefined,  { scroll: false, shallow: true });
+    router.push(`${window.location.pathname}?${newSearchParams.toString()}`, undefined, {
+      scroll: false,
+      shallow: true,
+    });
   };
 
   if (isLoading || data === null) {

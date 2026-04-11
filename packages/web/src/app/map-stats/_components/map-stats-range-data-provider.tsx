@@ -39,10 +39,7 @@ const CustomMapStatsRangeDataProvider: React.FC<IProps> = ({ urlChanger }) => {
       setIsLoading(true);
 
       try {
-        const data = await fetchCustomMapAnalysis(
-          parseInt(fromTimeStamp),
-          parseInt(toTimeStamp),
-        );
+        const data = await fetchCustomMapAnalysis(parseInt(fromTimeStamp), parseInt(toTimeStamp));
 
         if (!data) {
           setError("There was an error generating the analysis");

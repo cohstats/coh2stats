@@ -15,15 +15,7 @@ import kofiLogo from "../../public/resources/kofi_s_logo_nolabel.webp";
 import faviconIcon from "../../public/logo/favicon-32x32.png";
 
 // Export individual icons for direct imports
-export {
-  steamIcon,
-  coh2Icon,
-  infoIcon,
-  githubIcon,
-  discordIcon,
-  kofiLogo,
-  faviconIcon,
-};
+export { steamIcon, coh2Icon, infoIcon, githubIcon, discordIcon, kofiLogo, faviconIcon };
 
 // Create mapping for common icons
 const commonIconMap: Record<string, StaticImageData> = {

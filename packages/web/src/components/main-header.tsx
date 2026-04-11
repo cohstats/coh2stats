@@ -18,29 +18,77 @@ const { Header } = Layout;
 type ItemType = MenuProps["items"][number];
 
 const menuItems: ItemType[] = [
-  { key: routes.playerCardBase(), label: <Link href={routes.playerCardBase()} prefetch={false}>Players</Link> },
-  { key: routes.statsBase(), label: <Link href={routes.statsBase()} prefetch={false}>Stats</Link> },
-  { key: routes.mapStats(), label: <Link href={routes.mapStats()} prefetch={false}>Map Stats</Link> },
+  {
+    key: routes.playerCardBase(),
+    label: (
+      <Link href={routes.playerCardBase()} prefetch={false}>
+        Players
+      </Link>
+    ),
+  },
+  {
+    key: routes.statsBase(),
+    label: (
+      <Link href={routes.statsBase()} prefetch={false}>
+        Stats
+      </Link>
+    ),
+  },
+  {
+    key: routes.mapStats(),
+    label: (
+      <Link href={routes.mapStats()} prefetch={false}>
+        Map Stats
+      </Link>
+    ),
+  },
   {
     key: routes.leaderboardsBase(),
-    label: <Link href={routes.leaderboardsBase()} prefetch={false}>Leaderboards</Link>,
+    label: (
+      <Link href={routes.leaderboardsBase()} prefetch={false}>
+        Leaderboards
+      </Link>
+    ),
   },
   {
     key: routes.liveMatchesBase(),
-    label: <Link href={routes.liveMatchesBase()} prefetch={false}>Live Games</Link>,
+    label: (
+      <Link href={routes.liveMatchesBase()} prefetch={false}>
+        Live Games
+      </Link>
+    ),
   },
-  { key: routes.commanderBase(), label: <Link href={routes.commanderBase()} prefetch={false}>Commanders</Link> },
+  {
+    key: routes.commanderBase(),
+    label: (
+      <Link href={routes.commanderBase()} prefetch={false}>
+        Commanders
+      </Link>
+    ),
+  },
   {
     key: routes.bulletinsBase(),
-    label: <Link href={routes.bulletinsBase()} prefetch={false}>Intel Bulletins</Link>,
+    label: (
+      <Link href={routes.bulletinsBase()} prefetch={false}>
+        Intel Bulletins
+      </Link>
+    ),
   },
   {
     key: routes.desktopAppBase(),
-    label: <Link href={routes.desktopAppBase()} prefetch={false}>Desktop App</Link>,
+    label: (
+      <Link href={routes.desktopAppBase()} prefetch={false}>
+        Desktop App
+      </Link>
+    ),
   },
   {
     key: routes.recentMatchesBase(),
-    label: <Link href={routes.recentMatchesBase()} prefetch={false}>Recent Games</Link>,
+    label: (
+      <Link href={routes.recentMatchesBase()} prefetch={false}>
+        Recent Games
+      </Link>
+    ),
   },
   {
     label: "Other",
@@ -48,7 +96,11 @@ const menuItems: ItemType[] = [
     children: [
       {
         key: routes.openData(),
-        label: <Link href={routes.openData()} prefetch={false}>Open Data</Link>,
+        label: (
+          <Link href={routes.openData()} prefetch={false}>
+            Open Data
+          </Link>
+        ),
       },
       {
         key: "relic-api-status",
@@ -64,14 +116,29 @@ const menuItems: ItemType[] = [
     label: "About",
     key: routes.aboutBase(),
     children: [
-      { key: `${routes.aboutBase()}#base`, label: <Link href={routes.aboutBase()} prefetch={false}>About</Link> },
+      {
+        key: `${routes.aboutBase()}#base`,
+        label: (
+          <Link href={routes.aboutBase()} prefetch={false}>
+            About
+          </Link>
+        ),
+      },
       {
         key: `${routes.aboutBase()}#bugs`,
-        label: <Link href={`${routes.aboutBase()}#bugs`} prefetch={false}>Contribution</Link>,
+        label: (
+          <Link href={`${routes.aboutBase()}#bugs`} prefetch={false}>
+            Contribution
+          </Link>
+        ),
       },
       {
         key: `${routes.aboutBase()}#donations`,
-        label: <Link href={`${routes.aboutBase()}#donations`} prefetch={false}>Donation</Link>,
+        label: (
+          <Link href={`${routes.aboutBase()}#donations`} prefetch={false}>
+            Donation
+          </Link>
+        ),
       },
     ],
   },

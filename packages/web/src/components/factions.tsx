@@ -41,8 +41,8 @@ const legend = (
     </Tooltip>
     <Tooltip title={"O - (OKW, West German, Oberkommando West)"}>
       <div>
-        <Image src={wgermanSmallIcon} width={18} height={18} alt="OKW" />{" "}
-        <Text strong>O</Text> - OKW
+        <Image src={wgermanSmallIcon} width={18} height={18} alt="OKW" /> <Text strong>O</Text> -
+        OKW
       </div>
     </Tooltip>
     <br />
@@ -54,14 +54,13 @@ const legend = (
     </Tooltip>
     <Tooltip title={"S - (Soviet)"}>
       <div>
-        <Image src={sovietSmallIcon} width={18} height={18} alt="Soviet" />{" "}
-        <Text strong>S</Text> - Soviet
+        <Image src={sovietSmallIcon} width={18} height={18} alt="Soviet" /> <Text strong>S</Text>{" "}
+        - Soviet
       </div>
     </Tooltip>
     <Tooltip title={"U - (USF, US Forces, USA)"}>
       <div>
-        <Image src={usfSmallIcon} width={18} height={18} alt="USF" />{" "}
-        <Text strong>U</Text> - USF
+        <Image src={usfSmallIcon} width={18} height={18} alt="USF" /> <Text strong>U</Text> - USF
       </div>
     </Tooltip>
   </div>
@@ -256,7 +255,11 @@ const _FactionVsFactionCard: React.FC<IProps> = ({ title, data, style }) => {
         <div style={{ display: "flex", alignItems: "flex-start" }}>
           {legend}
           <div style={{ width: 820, height: 380 }}>
-            <HeatMapChart data={dataForHeatmap} keys={keysForHeatMap} heatmapValues={heatmapValues} />
+            <HeatMapChart
+              data={dataForHeatmap}
+              keys={keysForHeatMap}
+              heatmapValues={heatmapValues}
+            />
           </div>
         </div>
       )}

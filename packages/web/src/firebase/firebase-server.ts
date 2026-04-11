@@ -533,7 +533,9 @@ export async function getCustomAnalysis(
     const functions = getFunctions(app, config.firebaseFunctions.location);
     const customAnalysisFunction = httpsCallable(functions, "getCustomAnalysis");
 
-    console.log(`Calling getCustomAnalysis: startDate=${startDate}, endDate=${endDate}, type=${type}`);
+    console.log(
+      `Calling getCustomAnalysis: startDate=${startDate}, endDate=${endDate}, type=${type}`,
+    );
 
     const result = await customAnalysisFunction({
       startDate,
@@ -548,4 +550,3 @@ export async function getCustomAnalysis(
     return null;
   }
 }
-

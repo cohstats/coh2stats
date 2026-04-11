@@ -243,9 +243,7 @@ export const getAndPrepareMatchesForPlayer = async (
   const profiles = data["profiles"];
 
   // Transform the match objects, this removes unnecessary data, prepares additional information in single match object
-  return allMatches.map((match: Record<string, any>) =>
-    prepareMatchDBObject(match, profiles),
-  );
+  return allMatches.map((match: Record<string, any>) => prepareMatchDBObject(match, profiles));
 };
 
 /**
@@ -296,7 +294,11 @@ async function fetchLiveLeaderboardDataInternal(
   start = 1,
   count = 200,
 ): Promise<LaddersDataObject> {
-  console.log("[coh2-api] fetchLiveLeaderboardDataInternal called", { leaderboardID, start, count });
+  console.log("[coh2-api] fetchLiveLeaderboardDataInternal called", {
+    leaderboardID,
+    start,
+    count,
+  });
   try {
     // Fetch data from Relic API with pagination parameters
     const relicResponse = await fetchLeaderboardStats(leaderboardID, start, count);

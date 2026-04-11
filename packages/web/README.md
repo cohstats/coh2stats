@@ -45,7 +45,6 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
-
 ## Docker Build
 
 This project is part of a Yarn workspaces monorepo. The Dockerfile is located at the repository root and handles the monorepo structure automatically.
@@ -81,6 +80,7 @@ The application will be available at [http://localhost:3000](http://localhost:30
 ### Technical Details
 
 The Dockerfile at the repository root:
+
 - Handles the Yarn workspaces monorepo structure
 - Uses the `yarn.lock` from the root directory
 - Builds the web package specifically
@@ -93,6 +93,7 @@ The web application supports light and dark themes that can be toggled by the us
 ### Implementation Overview
 
 The theme system uses:
+
 - **next-themes**: Industry-standard theme management library for Next.js with zero-flash SSR support
 - **Ant Design 6.x**: Built-in theme algorithms (`theme.defaultAlgorithm` for light, `theme.darkAlgorithm` for dark)
 - **localStorage**: Theme preference persists across sessions (via next-themes)
@@ -145,7 +146,7 @@ const themeConfig = {
   algorithm: currentTheme === "dark" ? theme.darkAlgorithm : theme.defaultAlgorithm,
   token: {
     // Override specific design tokens
-    colorPrimary: '#1577FF',
+    colorPrimary: "#1577FF",
     borderRadius: 4,
     // Add more customizations
   },

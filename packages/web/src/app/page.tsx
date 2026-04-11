@@ -22,7 +22,8 @@ export default async function Home() {
 
   // Calculate yesterday's timestamp (server-side)
   const date = new Date();
-  const yesterdayTimestamp = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() - 1) / 1000;
+  const yesterdayTimestamp =
+    Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() - 1) / 1000;
 
   // Fetch all data server-side in parallel
   const [analyzedMatches, redditPosts, ...leaderboardResults] = await Promise.all([

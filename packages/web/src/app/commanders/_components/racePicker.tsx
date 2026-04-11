@@ -24,7 +24,10 @@ export const RacePicker = () => {
             text={
               <>
                 You can see the most picked Commanders over at{" "}
-                <Link href={routes.statsBase()} prefetch={false}>stats page</Link>.
+                <Link href={routes.statsBase()} prefetch={false}>
+                  stats page
+                </Link>
+                .
               </>
             }
           />

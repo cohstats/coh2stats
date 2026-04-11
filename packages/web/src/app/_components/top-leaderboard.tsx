@@ -137,9 +137,8 @@ export function TopLeaderboard({ leaderboardData }: TopLeaderboardProps) {
               countryCode={record.country}
               style={{ width: "1.2em", height: "1.2em", paddingRight: 0 }}
             />{" "}
-
-              {record.alias}
-            </Link>
+            {record.alias}
+          </Link>
         );
       },
     },

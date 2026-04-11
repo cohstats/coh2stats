@@ -7,11 +7,7 @@
 
 import { unstable_cache } from "next/cache";
 import config from "@/config";
-import type {
-  LiveGame,
-  PlayerCardAPIObject,
-  SearchPlayersResponse,
-} from "./types";
+import type { LiveGame, PlayerCardAPIObject, SearchPlayersResponse } from "./types";
 
 // Use config.apiUrl directly to avoid client/server boundary issues
 const API_URL = config.apiUrl;
@@ -19,18 +15,13 @@ const API_URL = config.apiUrl;
 /**
  * Internal function to fetch player card data
  */
-async function getPlayerCardInternal(
-  steamid: string,
-): Promise<PlayerCardAPIObject> {
+async function getPlayerCardInternal(steamid: string): Promise<PlayerCardAPIObject> {
   const url = `${API_URL}getPlayerCardEverythingHttp?steamid=${steamid}&includeMatches=false`;
-  const response = await fetch(
-    url,
-    {
-      headers: {
-        Origin: "https://coh2stats.com",
-      },
+  const response = await fetch(url, {
+    headers: {
+      Origin: "https://coh2stats.com",
     },
-  );
+  });
   console.log("[COH2Stats BE API] Fetching player card data", url);
 
   if (!response.ok) {
@@ -55,9 +46,7 @@ async function getPlayerCardInternal(
  * const data = await getPlayerCard('/steam/76561198131099369');
  * ```
  */
-export async function getPlayerCard(
-  steamid: string,
-): Promise<PlayerCardAPIObject> {
+export async function getPlayerCard(steamid: string): Promise<PlayerCardAPIObject> {
   const cachedFn = unstable_cache(
     async () => getPlayerCardInternal(steamid),
     [`player-card-${steamid}`],
@@ -79,7 +68,7 @@ async function searchPlayersInternal(name: string): Promise<SearchPlayersRespons
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Origin": "https://coh2stats.com",
+      Origin: "https://coh2stats.com",
     },
     body: JSON.stringify({ data: { name } }),
   });

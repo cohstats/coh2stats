@@ -17,7 +17,12 @@ export const ThemeToggle: React.FC = () => {
   if (!mounted) {
     // Return a placeholder to avoid layout shift
     return (
-      <Button type="text" shape="circle" icon={<MoonOutlined />} style={{ visibility: "hidden" }} />
+      <Button
+        type="text"
+        shape="circle"
+        icon={<MoonOutlined />}
+        style={{ visibility: "hidden" }}
+      />
     );
   }
 

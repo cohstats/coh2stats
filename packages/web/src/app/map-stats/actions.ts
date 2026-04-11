@@ -33,4 +33,3 @@ export async function fetchCustomMapAnalysis(
   console.log("[Server Action] fetchCustomMapAnalysis called", { startDate, endDate });
   return getCustomAnalysis(startDate, endDate, "map");
 }
-
