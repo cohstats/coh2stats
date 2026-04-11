@@ -21,6 +21,7 @@ async function getPlayerCardInternal(steamid: string): Promise<PlayerCardAPIObje
     headers: {
       Origin: "https://coh2stats.com",
     },
+    next: { revalidate: 30 }, // 30 seconds
   });
   console.log("[COH2Stats BE API] Fetching player card data", url);
 
@@ -141,6 +142,7 @@ export async function getLiveGames(
       headers: {
         Origin: "https://coh2stats.com",
       },
+      next: { revalidate: 90 },
     });
 
     if (!response.ok) {
