@@ -4,12 +4,11 @@ on:
     tags:
       - v*
     paths-ignore:
-      - packages/functions/**
       - packages/app/**
 
 env:
-  FB_PROJECT: coh2-ladders-prod
-  FB_HOSTING: hosting:coh2-ladders-prod
+  COOLIFY_BASE_URL: https://coolify.coh3stats.com
+  COOLIFY_UUID_PROD: jp124nyfu6drmvbxxbi6pcno
 
 jobs:
   build-deploy-web:
@@ -19,44 +18,9 @@ jobs:
       url: https://coh2stats.com/
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v6
-      - name: Setup Node
-        uses: actions/setup-node@v6
-        with:
-          node-version: "20.x"
-      - name: Cache node modules
-        uses: actions/cache@v4
-        env:
-          cache-name: cache-node-modules-v2
-        with:
-          path: |
-            node_modules
-            */*/node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-      - name: Get the version
-        id: get_version
-        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
-      - name: Install Deps
-        run: yarn --prefer-offline --frozen-lockfile install
-      - name: Fix the bug ISSUE 1078
-        run: yarn run "react-spring-issue-1078"
-      - name: Build the app
+      - name: Deploy to Coolify
         run: |
-          export NODE_OPTIONS=--max_old_space_size=4096
-          CI=false yarn web build
-        # When we release the electron app - it's build slower than the web release, we should probably have something better than this
-        # probably we can merge it together into one deploy job/release.
-      - name: Sleep for 240 seconds
-        run: sleep 240s
-        shell: bash
-      - name: Deploy to Firebase
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: "${{ secrets.GITHUB_TOKEN }}"
-          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_COH2_LADDERS_PROD }}"
-          target: coh2-ladders-prod
-          channelId: live
-          projectId: coh2-ladders-prod
+          curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.COOLIFY_DEPLOY_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            "${{ env.COOLIFY_BASE_URL }}/api/v1/deploy?uuid=${{ env.COOLIFY_UUID_PROD }}&force=false"

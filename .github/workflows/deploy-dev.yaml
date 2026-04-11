@@ -1,3 +1,15 @@
+name: Build and Deploy Web - DEV
+on:
+  workflow_dispatch:
+
+jobs:
+  disabled:
+    name: Workflow Disabled
+    runs-on: ubuntu-latest
+    steps:
+      - name: No-op
+        run: echo "This workflow is currently disabled"
+
 #name: Build and Deploy Web - DEV
 #on:
 #  push:
