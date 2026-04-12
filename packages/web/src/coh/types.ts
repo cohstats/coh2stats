@@ -269,6 +269,19 @@ interface SearchPlayersResponse {
 }
 
 /**
+ * Player stats data from Firestore
+ * Contains overall player count and activity statistics
+ */
+interface PlayerStatsData {
+  count: number;
+  last24hours: number;
+  last30days: number;
+  last7days: number;
+  countries: Record<string, number>;
+  timeStamp: number; // Timestamp in milliseconds
+}
+
+/**
  * Relic API Types - Raw responses from Relic's COH2 API
  */
 
@@ -335,6 +348,7 @@ export type {
   PlayerCardAPIObject,
   PlayerMatchesResponse,
   SearchPlayersResponse,
+  PlayerStatsData,
   RelicLeaderboardStat,
   RelicStatGroupMember,
   RelicStatGroup,

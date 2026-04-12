@@ -14,11 +14,15 @@ import {
 import { getFunctions, httpsCallable } from "firebase/functions";
 import { unstable_cache } from "next/cache";
 import config from "../config";
-import { StatsCurrentLiveGames, LaddersDataObject } from "@/coh/types";
+import { StatsCurrentLiveGames, LaddersDataObject, PlayerStatsData } from "@/coh/types";
 
 // Initialize Firebase for server-side operations
 // We use the client SDK as it works on both client and server in Next.js
 let firebaseApp: any = undefined;
+
+// In-memory cache for getTotalStoredMatches
+let totalStoredMatchesCache: { value: string; timestamp: number } | null = null;
+const TOTAL_STORED_MATCHES_CACHE_DURATION_MS = 4 * 60 * 60 * 1000; // 4 hours in milliseconds
 
 function initializeFirebaseServer() {
   if (firebaseApp) {
@@ -141,23 +145,42 @@ export async function getRecentMatches(): Promise<Array<Record<string, any>> | n
 
 /**
  * Fetch total stored matches count from Firestore
+ * Uses in-memory cache with 4-hour expiration
  * @returns string - formatted count or default value
  */
 export async function getTotalStoredMatches(): Promise<string> {
+  // Check if cache is valid
+  const now = Date.now();
+  if (totalStoredMatchesCache && now - totalStoredMatchesCache.timestamp < TOTAL_STORED_MATCHES_CACHE_DURATION_MS) {
+    console.log("Returning cached total stored matches");
+    return totalStoredMatchesCache.value;
+  }
+
   try {
     const app = initializeFirebaseServer();
     const db = getFirestore(app);
     const docRef = doc(db, "stats", "totalStoredMatches");
     const docSnap = await getDoc(docRef);
 
+    let result: string;
     if (docSnap.exists()) {
       const data = docSnap.data();
-      return data?.count?.toLocaleString() || "200,000";
+      result = data?.count?.toLocaleString() || "200,000";
+    } else {
+      result = "200,000";
     }
-    return "200,000";
+
+    // Update cache
+    totalStoredMatchesCache = {
+      value: result,
+      timestamp: now,
+    };
+
+    return result;
   } catch (error) {
     console.error("Failed to get total stored matches:", error);
-    return "200,000";
+    // Return cached value if available, otherwise default
+    return totalStoredMatchesCache?.value || "200,000";
   }
 }
 
@@ -296,9 +319,9 @@ export async function getStatsData(
 /**
  * Fetch player stats from Firestore
  * Returns player count statistics and country distribution
- * @returns Promise<Record<string, any> | null>
+ * @returns Promise<PlayerStatsData | null>
  */
-async function getPlayerStatsInternal(): Promise<Record<string, any> | null> {
+async function getPlayerStatsInternal(): Promise<PlayerStatsData | null> {
   try {
     const app = initializeFirebaseServer();
     const db = getFirestore(app);
@@ -320,7 +343,7 @@ async function getPlayerStatsInternal(): Promise<Record<string, any> | null> {
         last7days: data.last7days,
         countries: data.countries,
         // Convert Timestamp to milliseconds (number) if it exists
-        timeStamp: data.timeStamp?.toMillis ? data.timeStamp.toMillis() : undefined,
+        timeStamp: data.timeStamp?.toMillis ? data.timeStamp.toMillis() : 0,
       };
     }
 
@@ -335,7 +358,7 @@ async function getPlayerStatsInternal(): Promise<Record<string, any> | null> {
 /**
  * Cached wrapper for getPlayerStats with 1-hour revalidation
  */
-export async function getPlayerStats(): Promise<Record<string, any> | null> {
+export async function getPlayerStats(): Promise<PlayerStatsData | null> {
   const cachedFn = unstable_cache(async () => getPlayerStatsInternal(), ["player-stats"], {
     revalidate: 3600, // 1 hour = 3600 seconds
     tags: ["player-stats"],

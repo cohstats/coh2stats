@@ -1,3 +1,11 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+
+# Disallow all player pages
+Disallow: /players/
+
+# Disallow live matches pages
+Disallow: /live-matches
+
+# Disallow leaderboards
+Disallow: /leaderboards

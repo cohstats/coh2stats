@@ -138,7 +138,6 @@ export async function getLiveGames(
 
     console.log("[COH2Stats BE API] Fetching live games data from", url);
     const response = await fetch(url, {
-      // No cache option here - we'll use Next.js revalidate at page level (90 seconds)
       headers: {
         Origin: "https://coh2stats.com",
       },

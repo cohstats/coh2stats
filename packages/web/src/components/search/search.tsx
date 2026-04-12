@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useState } from "react";
 import Search from "antd/es/input/Search";
 import { useRouter, useParams } from "next/navigation";
@@ -7,14 +9,14 @@ import { Divider, Empty, Row, Space } from "antd";
 import "./search.module.css";
 import firebaseAnalytics from "../../analytics";
 import { AlertBox } from "../alert-box";
-import { searchCommanders } from "../../coh/commanders";
-import { searchBulletins } from "../../coh/bulletins";
+import { searchCommanders } from "@/coh/commanders";
+import { searchBulletins } from "@/coh/bulletins";
 import SearchCommanderCard from "./search-commander-card";
 import SearchBulletinCard from "./search-bulletin-card";
 import { userAPIObject } from "./types";
 import SearchUserCard from "./search-user-card";
 import { Tip } from "../tip";
-import { searchPlayersAction } from "../../app/search/actions";
+import { searchPlayersAction } from "@/app/search/actions";
 
 const sortByXP = (array: Array<userAPIObject>) => {
   return array.sort((a, b) => {

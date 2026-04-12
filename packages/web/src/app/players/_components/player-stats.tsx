@@ -1,71 +1,26 @@
-import React, { useEffect, useState } from "react";
+"use client";
+
+import React, { useEffect } from "react";
 import { Col, Typography, Row } from "antd";
 import { UserOutlined } from "@ant-design/icons";
-import { GeoWorldMap } from "../../../components/charts/geo-map/geo-world-map";
-import { Helper } from "../../../components/helper";
-import { Loading } from "../../../components/loading";
-import { AlertBox } from "../../../components/alert-box";
+import { GeoWorldMap } from "@/components/charts/geo-map/geo-world-map";
+import { Helper } from "@/components/helper";
+import { AlertBox } from "@/components/alert-box";
 import firebaseAnalytics from "../../../analytics";
-import { fetchPlayerStats } from "../actions";
+import { PlayerStatsData } from "../../../coh/types";
 
 const { Text, Title } = Typography;
 
-type PlayerStatsType = {
-  count: number;
-  last24hours: number;
-  last30days: number;
-  last7days: number;
-  timeStamp: Date;
-  countries: Record<string, number>;
-};
+interface PlayerStatsProps {
+  initialData: PlayerStatsData | null;
+}
 
-const PlayerStats: React.FC = () => {
-  const [data, setData] = useState<null | PlayerStatsType>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState("");
-
+const PlayerStats: React.FC<PlayerStatsProps> = ({ initialData }) => {
   useEffect(() => {
     firebaseAnalytics.playersPageDisplayed();
-
-    (async () => {
-      try {
-        setIsLoading(true);
-        const statsData = await fetchPlayerStats();
-
-        if (statsData) {
-          const { count, last24hours, last30days, last7days, timeStamp, countries } = statsData;
-
-          setData({
-            count,
-            last7days,
-            last24hours,
-            last30days,
-            countries,
-            // Convert the timestamp from milliseconds to Date
-            timeStamp: timeStamp ? new Date(timeStamp) : new Date(),
-          });
-        }
-      } catch (e) {
-        setError("Failed to load player stats");
-        console.error("Failed to load player stats from firebase", e);
-      } finally {
-        setIsLoading(false);
-      }
-    })();
   }, []);
 
-  if (isLoading || data === null) {
-    return (
-      <>
-        <Row justify={"center"} style={{ paddingTop: 30 }}>
-          <Loading />
-        </Row>
-      </>
-    );
-  }
-
-  if (error || isLoading) {
-    console.error(error);
+  if (!initialData) {
     return (
       <>
         <Row justify={"center"}>
@@ -81,7 +36,10 @@ const PlayerStats: React.FC = () => {
     );
   }
 
-  const { count, last7days, last24hours, last30days, timeStamp, countries } = data;
+  const { count, last7days, last24hours, last30days, timeStamp, countries } = initialData;
+
+  // Convert the timestamp from milliseconds to Date
+  const timeStampDate = timeStamp ? new Date(timeStamp) : new Date();
 
   const convertedGeoData = [];
   for (const [key, value] of Object.entries(countries)) {
@@ -113,7 +71,7 @@ const PlayerStats: React.FC = () => {
                         We are tracking only players who played at least 1 automatch game. Players
                         who play only AI/Custom games are not tracked. Tracking from{" "}
                         {new Date(Date.UTC(2023, 0, 1, 0, 0)).toLocaleString()}. Data are
-                        refreshed once a day. Current data timestamp {timeStamp.toLocaleString()}
+                        refreshed once a day. Current data timestamp {timeStampDate.toLocaleString()}
                       </>
                     }
                   />
