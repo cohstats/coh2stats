@@ -151,7 +151,10 @@ export async function getRecentMatches(): Promise<Array<Record<string, any>> | n
 export async function getTotalStoredMatches(): Promise<string> {
   // Check if cache is valid
   const now = Date.now();
-  if (totalStoredMatchesCache && now - totalStoredMatchesCache.timestamp < TOTAL_STORED_MATCHES_CACHE_DURATION_MS) {
+  if (
+    totalStoredMatchesCache &&
+    now - totalStoredMatchesCache.timestamp < TOTAL_STORED_MATCHES_CACHE_DURATION_MS
+  ) {
     console.log("Returning cached total stored matches");
     return totalStoredMatchesCache.value;
   }
