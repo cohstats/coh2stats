@@ -86,7 +86,9 @@ const PlayerCardContent = () => {
           finalData.steamProfile &&
           Object.values(finalData.steamProfile)[0]?.personaname
         ) {
-          addNameToUrl(Object.values(finalData.steamProfile)[0].personaname);
+          const playerName = Object.values(finalData.steamProfile)[0].personaname;
+          addNameToUrl(playerName);
+          document.title = `${playerName} Player Card | COH2 Stats`;
         }
       } catch (e) {
         let errorMessage = "Failed to do something exceptional";

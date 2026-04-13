@@ -31,18 +31,22 @@ const init = (): void => {
   if (app) {
     return;
   }
+  try{
+    app = initializeApp(config.firebase());
+    analytics = getAnalytics(app);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    performance = getPerformance(app);
+    db = getFirestore(app);
 
-  app = initializeApp(config.firebase());
-  analytics = getAnalytics(app);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  performance = getPerformance(app);
-  db = getFirestore(app);
+    setUserProperties(analytics, { custom_platform: "web_app" });
 
-  setUserProperties(analytics, { custom_platform: "web_app" });
-
-  if (useEmulators) {
-    connectFirestoreEmulator(db, "localhost", 8080);
-    connectFunctionsEmulator(functions(), "localhost", 5001);
+    if (useEmulators) {
+      connectFirestoreEmulator(db, "localhost", 8080);
+      connectFunctionsEmulator(functions(), "localhost", 5001);
+    }
+  } catch (e) {
+    console.error("Firebase initialization error", e);
+    return;
   }
 };
 
