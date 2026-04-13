@@ -54,26 +54,29 @@ const PlayerCardContent = () => {
     setIsLoading(true);
 
     const addNameToUrl = (playerName: string) => {
-      if (!playerName) {
-        return;
-      }
-
-      if (typeof window === "undefined") {
+      if (!playerName && typeof window === "undefined") {
         return;
       }
 
       const cleanName = playerName.replace(/[^a-zA-Z0-9-_]/g, "");
+      const currentPath = window.location.pathname;
+
       // If it's not in the path, let's push it there
-      if (!window.location.pathname.includes(cleanName)) {
+      if (!currentPath.includes(cleanName)) {
+        let newPath: string;
+
         // This means there is already a name, but it was changed!
-        if (window.location.pathname.match(/.+\/\d+-/)) {
+        if (currentPath.match(/.+\/\d+-/)) {
           // There is already name in url let's replace it with a new one
-          const newPath = window.location.pathname.replace(/(.+\/\d+-)(.+)/, `$1${cleanName}`);
-          window.history.replaceState(null, "", newPath);
+          newPath = currentPath.replace(/(.+\/\d+-)(.+)/, `$1${cleanName}`);
         } else {
           // No name in the url let's just push a new one
-          window.history.replaceState(null, "", `${window.location.pathname}-${cleanName}`);
+          newPath = `${currentPath}-${cleanName}`;
         }
+
+        // Preserve query parameters and update URL without reload
+        const search = window.location.search;
+        window.history.replaceState(null, "", newPath + search);
       }
     };
 
@@ -104,13 +107,12 @@ const PlayerCardContent = () => {
   }, [steamidParsed]);
 
   const onTabChange = (key: string) => {
-    const newSearchParams = new URLSearchParams(window.location.search);
+    const newSearchParams = new URLSearchParams(searchParams?.toString());
     newSearchParams.set("view", key);
-    // @ts-ignore
-    router.push(`${window.location.pathname}?${newSearchParams.toString()}`, undefined, {
-      scroll: false,
-      shallow: true,
-    });
+    const newUrl = `${window.location.pathname}?${newSearchParams.toString()}`;
+
+    // Use window.history.replaceState to update URL without reload (shallow routing)
+    window.history.replaceState(null, "", newUrl);
   };
 
   if (isLoading || data === null) {
