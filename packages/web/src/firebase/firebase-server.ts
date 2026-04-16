@@ -40,7 +40,7 @@ function initializeFirebaseServer() {
     firebaseApp = initializeApp(firebaseConfig);
     return firebaseApp;
   } catch (error) {
-    console.error("Failed to initialize Firebase on server:", error);
+    console.error("[Firestore] Failed to initialize Firebase on server:", error);
     throw error;
   }
 }
@@ -58,7 +58,7 @@ export async function getAnalyzedMatches(): Promise<string> {
     }
     return "12,106,009";
   } catch (error) {
-    console.error("Failed to get analyzed matches:", error);
+    console.error("[Firestore] Failed to get analyzed matches:", error);
     return "12,106,009";
   }
 }
@@ -88,14 +88,14 @@ export async function getLiveGamesFirestoreData(): Promise<StatsCurrentLiveGames
         timeStamp: rawData.timeStamp?.toMillis ? rawData.timeStamp.toMillis() : undefined,
       };
 
-      console.log("Successfully fetched live games Firestore data");
+      console.log("[Firestore] Successfully fetched live games Firestore data");
       return data;
     }
 
-    console.log("Live games Firestore document does not exist");
+    console.log("[Firestore] Live games Firestore document does not exist");
     return null;
   } catch (error) {
-    console.error("Failed to get live games Firestore data:", error);
+    console.error("[Firestore] Failed to get live games Firestore data:", error);
     return null;
   }
 }
@@ -126,7 +126,7 @@ export async function getRecentMatches(): Promise<Array<Record<string, any>> | n
 
     const q = query(matchesRef, orderBy("completiontime", "desc"), limit(20));
 
-    console.log("Fetching recent matches from Firestore");
+    console.log("[Firestore] Fetching recent matches from Firestore");
 
     const querySnapshot = await getDocs(q);
 
@@ -135,10 +135,10 @@ export async function getRecentMatches(): Promise<Array<Record<string, any>> | n
       gamesData.push(doc.data());
     });
 
-    console.log(`Successfully fetched ${gamesData.length} recent matches`);
+    console.log(`[Firestore] Successfully fetched ${gamesData.length} recent matches`);
     return gamesData;
   } catch (error) {
-    console.error("Failed to fetch recent matches:", error);
+    console.error("[Firestore] Failed to fetch recent matches:", error);
     return null;
   }
 }
@@ -155,7 +155,7 @@ export async function getTotalStoredMatches(): Promise<string> {
     totalStoredMatchesCache &&
     now - totalStoredMatchesCache.timestamp < TOTAL_STORED_MATCHES_CACHE_DURATION_MS
   ) {
-    console.log("Returning cached total stored matches");
+    console.log("[Firestore] Returning cached total stored matches");
     return totalStoredMatchesCache.value;
   }
 
@@ -181,7 +181,7 @@ export async function getTotalStoredMatches(): Promise<string> {
 
     return result;
   } catch (error) {
-    console.error("Failed to get total stored matches:", error);
+    console.error("[Firestore] Failed to get total stored matches:", error);
     // Return cached value if available, otherwise default
     return totalStoredMatchesCache?.value || "200,000";
   }
@@ -210,21 +210,28 @@ async function getHistoricLeaderboardDataInternal(
     const db = getFirestore(app);
     const docRef = doc(db, `ladders/${timestamp}/${type}`, race);
 
-    console.log(`Fetching historic leaderboard: ladders/${timestamp}/${type}/${race}`);
+    console.log(
+      `[Firestore] Fetching historic leaderboard: ladders/${timestamp}/${type}/${race}`,
+    );
 
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      console.log(`Successfully fetched historic leaderboard data for ${race} ${type}`);
+      console.log(
+        `[Firestore] Successfully fetched historic leaderboard data for ${race} ${type}`,
+      );
       return docSnap.data() as LaddersDataObject;
     }
 
     console.log(
-      `Historic leaderboard document does not exist: ladders/${timestamp}/${type}/${race}`,
+      `[Firestore] Historic leaderboard document does not exist: ladders/${timestamp}/${type}/${race}`,
     );
     return null;
   } catch (error) {
-    console.error(`Failed to fetch historic leaderboard data for ${race} ${type}:`, error);
+    console.error(
+      `[Firestore] Failed to fetch historic leaderboard data for ${race} ${type}:`,
+      error,
+    );
     return null;
   }
 }
@@ -282,19 +289,21 @@ async function getStatsDataInternal(
     const db = getFirestore(app);
     const docRef = doc(db, `stats/${frequency}/${timestamp}`, statType);
 
-    console.log(`Fetching stats: stats/${frequency}/${timestamp}/${statType}`);
+    console.log(`[Firestore] Fetching stats: stats/${frequency}/${timestamp}/${statType}`);
 
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      console.log(`Successfully fetched stats data for ${statType}`);
+      console.log(`[Firestore] Successfully fetched stats data for ${statType}`);
       return docSnap.data();
     }
 
-    console.log(`Stats document does not exist: stats/${frequency}/${timestamp}/${statType}`);
+    console.log(
+      `[Firestore] Stats document does not exist: stats/${frequency}/${timestamp}/${statType}`,
+    );
     return null;
   } catch (error) {
-    console.error(`Failed to fetch stats data for ${statType}:`, error);
+    console.error(`[Firestore] Failed to fetch stats data for ${statType}:`, error);
     return null;
   }
 }
@@ -330,13 +339,13 @@ async function getPlayerStatsInternal(): Promise<PlayerStatsData | null> {
     const db = getFirestore(app);
     const docRef = doc(db, "stats", "playerStats");
 
-    console.log("Fetching player stats");
+    console.log("[Firestore] Fetching player stats");
 
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
       const data = docSnap.data();
-      console.log("Successfully fetched player stats");
+      console.log("[Firestore] Successfully fetched player stats");
 
       // Convert Firestore Timestamp to plain object for serialization
       return {
@@ -350,10 +359,10 @@ async function getPlayerStatsInternal(): Promise<PlayerStatsData | null> {
       };
     }
 
-    console.log("Player stats document does not exist");
+    console.log("[Firestore] Player stats document does not exist");
     return null;
   } catch (error) {
-    console.error("Failed to fetch player stats:", error);
+    console.error("[Firestore] Failed to fetch player stats:", error);
     return null;
   }
 }
@@ -382,19 +391,19 @@ async function getMatchDataInternal(matchId: string): Promise<Record<string, any
     const db = getFirestore(app);
     const docRef = doc(db, "matches", matchId);
 
-    console.log(`Fetching match: ${matchId}`);
+    console.log(`[Firestore] Fetching match: ${matchId}`);
 
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      console.log(`Successfully fetched match data for ${matchId}`);
+      console.log(`[Firestore] Successfully fetched match data for ${matchId}`);
       return docSnap.data();
     }
 
-    console.log(`Match document does not exist: ${matchId}`);
+    console.log(`[Firestore] Match document does not exist: ${matchId}`);
     return null;
   } catch (error) {
-    console.error(`Failed to fetch match data for ${matchId}:`, error);
+    console.error(`[Firestore] Failed to fetch match data for ${matchId}:`, error);
     return null;
   }
 }
@@ -535,7 +544,7 @@ export async function getPlayerFirestoreMatches(params: {
 
     return { matches, nextCursor };
   } catch (error) {
-    console.error("Failed to fetch player Firestore matches:", error);
+    console.error("[Firestore] Failed to fetch player Firestore matches:", error);
     return { matches: [], nextCursor: null };
   }
 }
@@ -560,7 +569,7 @@ export async function getCustomAnalysis(
     const customAnalysisFunction = httpsCallable(functions, "getCustomAnalysis");
 
     console.log(
-      `Calling getCustomAnalysis: startDate=${startDate}, endDate=${endDate}, type=${type}`,
+      `[Firestore] Calling getCustomAnalysis: startDate=${startDate}, endDate=${endDate}, type=${type}`,
     );
 
     const result = await customAnalysisFunction({
@@ -569,10 +578,10 @@ export async function getCustomAnalysis(
       type,
     });
 
-    console.log("Successfully called getCustomAnalysis");
+    console.log("[Firestore] Successfully called getCustomAnalysis");
     return result.data as Record<string, any>;
   } catch (error) {
-    console.error("Failed to call getCustomAnalysis:", error);
+    console.error("[Firestore] Failed to call getCustomAnalysis:", error);
     return null;
   }
 }
