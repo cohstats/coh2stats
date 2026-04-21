@@ -3,5 +3,5 @@
     <ShortName>COH2 Players</ShortName>
     <Description>Search for player cards and matches</Description>
     <InputEncoding>[UTF-8]</InputEncoding>
-    <Url type="text/html" template="https://coh2stats.com/search/{searchTerms}"/>
+    <Url type="text/html" template="https://coh2stats.com/search?q={searchTerms}"/>
 </OpenSearchDescription>

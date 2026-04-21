@@ -48,6 +48,10 @@ const searchWithParam = (param = ":searchParam") => {
   return `${searchBase()}/${param}`;
 };
 
+const searchWithQuery = (query: string) => {
+  return `${searchBase()}?q=${encodeURIComponent(query)}`;
+};
+
 const leaderboardsBase = () => {
   return "/leaderboards";
 };
@@ -88,6 +92,7 @@ const routes = {
   bulletinsBase,
   searchBase,
   searchWithParam,
+  searchWithQuery,
   leaderboardsBase,
   playerCardBase,
   playerCardWithId,

@@ -2,9 +2,9 @@
 
 import React, { useEffect, useState } from "react";
 import Search from "antd/es/input/Search";
-import { useRouter, useParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import routes from "../../routes";
-import { Divider, Empty, Row, Space } from "antd";
+import { Col, Divider, Empty, Row } from "antd";
 
 import "./search.module.css";
 import firebaseAnalytics from "../../analytics";
@@ -30,10 +30,8 @@ const sortByXP = (array: Array<userAPIObject>) => {
 
 const CustomSearch: React.FC = () => {
   const router = useRouter();
-
-  // We should use normal query params and not / in the path
-  const params = useParams();
-  const searchParam = params?.searchParam as string | undefined;
+  const searchParams = useSearchParams();
+  const searchParam = searchParams.get("q") || undefined;
 
   const [error, setError] = useState("");
   const [loading, setIsLoading] = useState(false);
@@ -44,6 +42,8 @@ const CustomSearch: React.FC = () => {
   const [searchIntelBulletin, setSearchIntelBulletin] = useState<JSX.Element | undefined>(
     undefined,
   );
+  const [searchValue, setSearchValue] = useState(searchParam || "");
+  const [validationStatus, setValidationStatus] = useState<"" | "error" | "warning">("");
 
   useEffect(() => {
     const buildSearchResults = (data: Record<string, any>): JSX.Element => {
@@ -58,14 +58,18 @@ const CustomSearch: React.FC = () => {
         const userCards = [];
         const foundProfiles = Object.values(data);
         for (const value of sortByXP(foundProfiles)) {
-          userCards.push(SearchUserCard(value, router.push));
+          userCards.push(
+            <Col key={value.relicProfile.members[0].profile_id}>
+              {SearchUserCard(value, router.push)}
+            </Col>,
+          );
         }
 
         return (
           <div>
-            <Space wrap size={10} style={{ maxWidth: 720 }} align={"center"}>
+            <Row gutter={[8, 8]} justify="center">
               {userCards}
-            </Space>
+            </Row>
             {userCards.length > 50 && (
               <div style={{ paddingTop: 15 }}>
                 <Tip
@@ -95,13 +99,17 @@ const CustomSearch: React.FC = () => {
         const bulletinCards = [];
         const foundBulletins = Object.values(data);
         for (const value of foundBulletins) {
-          bulletinCards.push(<SearchBulletinCard bulletinData={value} key={value.serverID} />);
+          bulletinCards.push(
+            <Col key={value.serverID}>
+              <SearchBulletinCard bulletinData={value} />
+            </Col>,
+          );
         }
 
         return (
-          <Space wrap size={10} style={{ maxWidth: 540 }} align={"center"}>
+          <Row gutter={[8, 8]} justify="center">
             {bulletinCards}
-          </Space>
+          </Row>
         );
       }
     };
@@ -121,20 +129,21 @@ const CustomSearch: React.FC = () => {
         const foundCommanders = Object.values(data);
         for (const value of foundCommanders) {
           commanders.push(
-            <SearchCommanderCard
-              serverID={value.serverID}
-              iconSmall={value.iconSmall}
-              commanderName={value.commanderName}
-              description={value.description}
-              races={value.races}
-              key={value.serverID}
-            />,
+            <Col key={value.serverID}>
+              <SearchCommanderCard
+                serverID={value.serverID}
+                iconSmall={value.iconSmall}
+                commanderName={value.commanderName}
+                description={value.description}
+                races={value.races}
+              />
+            </Col>,
           );
         }
         return (
-          <Space wrap size={10} style={{ maxWidth: 540 }} align={"center"}>
+          <Row gutter={[8, 8]} justify="center">
             {commanders}
-          </Space>
+          </Row>
         );
       }
     };
@@ -179,7 +188,22 @@ const CustomSearch: React.FC = () => {
   }, [searchParam, router]);
 
   const onSearch = async (value: string) => {
+    const trimmedValue = value.trim();
+    if (trimmedValue.length < 2) {
+      setValidationStatus("error");
+      return;
+    }
+    setValidationStatus("");
     router.push(routes.searchWithParam(value));
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchValue(value);
+    // Clear validation status when user starts typing
+    if (validationStatus && value.trim().length >= 2) {
+      setValidationStatus("");
+    }
   };
 
   if (error) {
@@ -222,15 +246,24 @@ const CustomSearch: React.FC = () => {
 
   return (
     <div style={{ textAlign: "center", maxWidth: 900, margin: "auto", paddingBottom: 20 }}>
-      <Search
-        placeholder="Steam name, steam id, commander, bulletin"
-        defaultValue={searchParam}
-        onSearch={onSearch}
-        style={{ width: 320, padding: 20 }}
-        loading={loading}
-        enterButton
-        allowClear
-      />
+      <div style={{ padding: 20 }}>
+        <Search
+          placeholder="Steam name, steam id, commander, bulletin"
+          value={searchValue}
+          onSearch={onSearch}
+          onChange={handleChange}
+          style={{ width: 320 }}
+          status={validationStatus}
+          loading={loading}
+          enterButton
+          allowClear
+        />
+        {validationStatus === "error" && (
+          <div style={{ color: "#ff4d4f", fontSize: "14px", marginTop: "8px" }}>
+            Please enter at least 2 characters
+          </div>
+        )}
+      </div>
       {!loading && searchParam && (
         <>
           <Divider orientation="horizontal" plain>

@@ -8,6 +8,17 @@ const nextConfig = {
     minimumCacheTTL: 86400, // 24 hours
     unoptimized: false,
   },
+
+  // Redirects for backward compatibility
+  async redirects() {
+    return [
+      {
+        source: "/search/:searchParam",
+        destination: "/search?q=:searchParam",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

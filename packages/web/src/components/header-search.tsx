@@ -11,7 +11,7 @@ export const PlayerSearchInput: React.FC = () => {
   const router = useRouter();
 
   const onSearch = async (value: string) => {
-    router.push(routes.searchWithParam(value));
+    router.push(routes.searchWithQuery(value));
   };
 
   return (
