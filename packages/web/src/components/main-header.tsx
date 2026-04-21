@@ -60,26 +60,21 @@ const menuItems: ItemType[] = [
   },
   {
     key: routes.commanderBase(),
-    label: (
-      <Link href={routes.commanderBase()} prefetch={false}>
-        Commanders
-      </Link>
-    ),
+    // We want to have prefetch on this url
+    label: <Link href={routes.commanderBase()}>Commanders</Link>,
   },
   {
     key: routes.bulletinsBase(),
     label: (
-      <Link href={routes.bulletinsBase()} prefetch={false}>
-        Intel Bulletins
-      </Link>
+      // We want to have prefetch on this url
+      <Link href={routes.bulletinsBase()}>Intel Bulletins</Link>
     ),
   },
   {
     key: routes.desktopAppBase(),
     label: (
-      <Link href={routes.desktopAppBase()} prefetch={false}>
-        Desktop App
-      </Link>
+      // We want to have prefetch on this url
+      <Link href={routes.desktopAppBase()}>Desktop App</Link>
     ),
   },
   {
@@ -97,7 +92,7 @@ const menuItems: ItemType[] = [
       {
         key: routes.openData(),
         label: (
-          <Link href={routes.openData()} prefetch={false}>
+          <Link href={routes.openData()}>
             Open Data
           </Link>
         ),
@@ -119,7 +114,7 @@ const menuItems: ItemType[] = [
       {
         key: `${routes.aboutBase()}#base`,
         label: (
-          <Link href={routes.aboutBase()} prefetch={false}>
+          <Link href={routes.aboutBase()}>
             About
           </Link>
         ),
@@ -127,7 +122,7 @@ const menuItems: ItemType[] = [
       {
         key: `${routes.aboutBase()}#bugs`,
         label: (
-          <Link href={`${routes.aboutBase()}#bugs`} prefetch={false}>
+          <Link href={`${routes.aboutBase()}#bugs`}>
             Contribution
           </Link>
         ),
@@ -135,7 +130,7 @@ const menuItems: ItemType[] = [
       {
         key: `${routes.aboutBase()}#donations`,
         label: (
-          <Link href={`${routes.aboutBase()}#donations`} prefetch={false}>
+          <Link href={`${routes.aboutBase()}#donations`}>
             Donation
           </Link>
         ),
@@ -169,8 +164,7 @@ export const MainHeader: React.FC = () => {
   // Helper function to check if pathname matches a route
   const matchesRoute = (route: string): boolean => {
     if (route === pathname) return true;
-    if (pathname.startsWith(route + "/")) return true;
-    return false;
+    return pathname.startsWith(route + "/");
   };
 
   // Determine current path for menu selection
