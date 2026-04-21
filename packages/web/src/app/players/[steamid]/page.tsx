@@ -3,13 +3,13 @@
 import React, { useEffect, useState, Suspense } from "react";
 
 import { Col, Row, Tooltip, Typography, Avatar, Tabs, Badge, notification } from "antd";
-import { LaddersDataObject, PlayerCardAPIObject } from "../../../coh/types";
+import { LaddersDataObject, PlayerCardAPIObject } from "@/coh/types";
 import firebaseAnalytics from "../../../analytics";
 import { capitalize, timeAgo } from "@/utils/helpers";
 import { fetchPlayerCardData } from "./actions";
 
 import { CountryFlag } from "@/components/country-flag";
-import { useRouter, useParams, useSearchParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import { getGeneralIconImport } from "@/coh/generalIconImports";
 import { infoIcon, steamIcon, coh2Icon } from "@/coh/commonIconImports";
 import { Loading } from "@/components/loading";
@@ -37,7 +37,6 @@ const findPlayerProfile = (statGroups: statGroupsType) => {
 const PlayerCardContent = () => {
   const params = useParams();
   const searchParams = useSearchParams();
-  const router = useRouter();
 
   const steamid = params.steamid as string;
   const steamidParsed = steamid?.split("-")[0] || "";
