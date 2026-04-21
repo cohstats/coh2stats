@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { PlayerCardDataArrayObject } from "../../../../coh/types";
+import { PlayerCardDataArrayObject } from "@/coh/types";
 import { Card, Empty, Switch } from "antd";
 import { DualAxes } from "@ant-design/plots";
-import { firebaseTimeStampObjectToDate, getDatesInRange } from "../../../../utils/helpers";
-import { getDefaultSliderPosition } from "../../../../utils/charts-utils";
-import { Helper } from "../../../../components/helper";
+import { firebaseTimeStampObjectToDate, getDatesInRange } from "@/utils/helpers";
+import { getDefaultSliderPosition } from "@/utils/charts-utils";
+import { Helper } from "@/components/helper";
 
 const DATA_CHART_WIDTH = 60;
 
