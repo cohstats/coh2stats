@@ -117,9 +117,9 @@ const PlayerCardContent = () => {
   if (isLoading || data === null) {
     return (
       <>
-        <Row justify={"center"} style={{ paddingTop: 30 }}>
+        <div style={{ paddingTop: 350, minHeight: "1500px" }}>
           <Loading />
-        </Row>
+        </div>
       </>
     );
   }
@@ -154,7 +154,7 @@ const PlayerCardContent = () => {
       });
     } else {
       return (
-        <div style={{ paddingTop: 250, minHeight: "1500px" }}>
+        <div style={{ paddingTop: 350, minHeight: "1500px" }}>
           <Loading />
         </div>
       );
@@ -331,7 +331,7 @@ const PlayerCardContent = () => {
         </Col>
       </Row>
       <Row justify="center">
-        <Col xs={24} md={22} xxl={15}>
+        <Col xs={24} md={22} xxl={15} style={{ minHeight: "1500px" }}>
           <Tabs
             items={playerTabItems}
             activeKey={tabView}
@@ -347,7 +347,7 @@ const PlayerCardContent = () => {
 
 const PlayerCard = () => {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div style={{ paddingTop: 100, textAlign: "center" }}>Loading...</div>}>
       <PlayerCardContent />
     </Suspense>
   );

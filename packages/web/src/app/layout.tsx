@@ -55,7 +55,6 @@ export const metadata: Metadata = {
     ],
     other: [{ url: "/logo/android-icon-192x192.png", sizes: "192x192", type: "image/png" }],
   },
-  manifest: "/manifest.json",
   other: {
     "msapplication-TileColor": "#001529",
     "msapplication-TileImage": "/logo/ms-icon-144x144.png",
