@@ -152,8 +152,7 @@ const CustomSearch: React.FC = () => {
             throw new Error("Failed to search for players");
           }
 
-          // @ts-ignore
-          const foundProfiles: Record<string, any> = response.result["foundProfiles"];
+          const foundProfiles: Record<string, any> = response["foundProfiles"];
           const resultHtml = buildSearchResults(foundProfiles);
 
           // Search Intel Bulletins from defined Function

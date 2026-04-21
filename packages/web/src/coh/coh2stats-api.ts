@@ -16,7 +16,7 @@ const API_URL = config.apiUrl;
  * Internal function to fetch player card data
  */
 async function getPlayerCardInternal(steamid: string): Promise<PlayerCardAPIObject> {
-  const url = `${API_URL}getPlayerCardEverythingHttp?steamid=${steamid}&includeMatches=false`;
+  const url = `${API_URL}sharedAPIGen2/players/${steamid}?includeMatches=false`;
   const response = await fetch(url, {
     headers: {
       Origin: "https://coh2stats.com",
@@ -65,13 +65,12 @@ export async function getPlayerCard(steamid: string): Promise<PlayerCardAPIObjec
  */
 async function searchPlayersInternal(name: string): Promise<SearchPlayersResponse> {
   console.log("[COH2Stats BE API] Searching for players with name", name);
-  const response = await fetch(`${API_URL}searchPlayers`, {
-    method: "POST",
+  const url = `${API_URL}sharedAPIGen2/players?search=${name}`;
+  const response = await fetch(url, {
     headers: {
-      "Content-Type": "application/json",
       Origin: "https://coh2stats.com",
     },
-    body: JSON.stringify({ data: { name } }),
+    next: { revalidate: 1800 }, // 30 seconds
   });
 
   if (!response.ok) {

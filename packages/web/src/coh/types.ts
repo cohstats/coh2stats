@@ -263,9 +263,7 @@ interface PlayerMatchesResponse {
  * API response type for search players endpoint
  */
 interface SearchPlayersResponse {
-  result: {
-    foundProfiles: Record<string, any>;
-  };
+  foundProfiles: Record<string, any>;
 }
 
 /**
