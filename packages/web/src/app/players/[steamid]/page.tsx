@@ -4,8 +4,8 @@ import { getPlayerCard } from "@/coh/coh2stats-api";
 import { AlertBox } from "@/components/alert-box";
 import { PlayerCardContent } from "./_components/player-card-content";
 
-// Revalidate every 30 seconds for player card data
-export const revalidate = 30;
+// Force SSR
+export const dynamic = "force-dynamic";
 
 interface PlayerCardPageProps {
   params: Promise<{ steamid: string }>;

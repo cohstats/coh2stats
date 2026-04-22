@@ -19,6 +19,23 @@ const nextConfig = {
       },
     ];
   },
+
+  // Note: I fucking hate Next 15+, this is so fucking stupid
+  // that you can't set up headers directly on the page.
+  // Custom headers for CDN caching
+  async headers() {
+    return [
+      {
+        source: "/players/:steamid*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=60, stale-while-revalidate=180",
+          },
+        ],
+      },
+    ];
+  },
 };
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
