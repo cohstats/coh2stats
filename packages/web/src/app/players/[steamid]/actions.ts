@@ -1,27 +1,9 @@
 "use server";
 
 import { unstable_cache } from "next/cache";
-import { getPlayerCard } from "@/coh/coh2stats-api";
 import { getAndPrepareMatchesForPlayer } from "@/coh/coh2-api";
-import { PlayerCardAPIObject, PlayerMatchesResponse } from "@/coh/types";
+import { PlayerMatchesResponse } from "@/coh/types";
 import { getPlayerFirestoreMatches } from "@/firebase/firebase-server";
-
-/**
- * Server action to fetch player card data
- * Wraps getPlayerCard() from @/coh/coh2stats-api
- *
- * @param steamid - The Steam ID of the player
- * @returns Promise<PlayerCardAPIObject | null> - Player card data or null on failure
- */
-export async function fetchPlayerCardData(steamid: string): Promise<PlayerCardAPIObject | null> {
-  console.log("[Server Action] fetchPlayerCardData called", { steamid });
-  try {
-    return await getPlayerCard(steamid);
-  } catch (error) {
-    console.error("Failed to fetch player card data:", error);
-    return null;
-  }
-}
 
 /**
  * Server action to fetch player matches from Relic API with 60 second cache
@@ -72,30 +54,4 @@ export async function fetchPlayerFirestoreMatches(params: {
 }> {
   console.log("[Server Action] fetchPlayerFirestoreMatches called", { steamid: params.steamid });
   return getPlayerFirestoreMatches(params);
-}
-
-/**
- * Server action to fetch minimal player data for metadata/SEO
- * Used by generateMetadata() in layout.tsx
- *
- * @param steamid - The Steam ID of the player
- * @returns Promise<{ playerName: string } | null> - Player name or null on failure
- */
-export async function fetchPlayerCardMetadata(
-  steamid: string,
-): Promise<{ playerName: string } | null> {
-  console.log("[Server Action] fetchPlayerCardMetadata called", { steamid });
-  try {
-    const data = await getPlayerCard(steamid);
-    const playerName = data?.steamProfile?.[steamid]?.personaname || null;
-
-    if (playerName) {
-      return { playerName };
-    }
-
-    return null;
-  } catch (error) {
-    console.error("Failed to fetch player card metadata:", error);
-    return null;
-  }
 }

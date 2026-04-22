@@ -91,11 +91,7 @@ const menuItems: ItemType[] = [
     children: [
       {
         key: routes.openData(),
-        label: (
-          <Link href={routes.openData()}>
-            Open Data
-          </Link>
-        ),
+        label: <Link href={routes.openData()}>Open Data</Link>,
       },
       {
         key: "relic-api-status",
@@ -113,27 +109,15 @@ const menuItems: ItemType[] = [
     children: [
       {
         key: `${routes.aboutBase()}#base`,
-        label: (
-          <Link href={routes.aboutBase()}>
-            About
-          </Link>
-        ),
+        label: <Link href={routes.aboutBase()}>About</Link>,
       },
       {
         key: `${routes.aboutBase()}#bugs`,
-        label: (
-          <Link href={`${routes.aboutBase()}#bugs`}>
-            Contribution
-          </Link>
-        ),
+        label: <Link href={`${routes.aboutBase()}#bugs`}>Contribution</Link>,
       },
       {
         key: `${routes.aboutBase()}#donations`,
-        label: (
-          <Link href={`${routes.aboutBase()}#donations`}>
-            Donation
-          </Link>
-        ),
+        label: <Link href={`${routes.aboutBase()}#donations`}>Donation</Link>,
       },
     ],
   },

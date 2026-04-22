@@ -21,11 +21,10 @@ const init = (): void => {
   if (app) {
     return;
   }
-  try{
+  try {
     app = initializeApp(config.firebase());
     analytics = getAnalytics(app);
     setUserProperties(analytics, { custom_platform: "web_app" });
-
   } catch (e) {
     console.error("Firebase initialization error", e);
     return;
@@ -84,7 +83,6 @@ const firebaseExport = {
   logEvent,
   setUserId,
   resetUserId,
-
 };
 
 export default firebaseExport;

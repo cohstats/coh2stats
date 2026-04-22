@@ -1,6 +1,6 @@
-import { CommanderAbility } from "../coh/types";
+import { CommanderAbility } from "@/coh/types";
 import { Badge, Col, Row, Tooltip, Typography } from "antd";
-import { getExportedIconPath } from "../coh/helpers";
+import { getExportedIconPath } from "@/coh/helpers";
 import React from "react";
 import Image from "next/image";
 
@@ -31,7 +31,7 @@ export const CommanderAbilitiesComponent = ({
         {commanderAbilities.map((item: CommanderAbility) => {
           const size = isSmall ? 48 : 64;
           return (
-            <Col key={item.name} >
+            <Col key={item.name}>
               <Tooltip placement={"bottom"} title={item.description}>
                 <>
                   <Badge
@@ -52,7 +52,6 @@ export const CommanderAbilitiesComponent = ({
                       }}
                     />
                   </Badge>
-
                 </>
               </Tooltip>
             </Col>
