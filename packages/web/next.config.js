@@ -35,14 +35,23 @@ const nextConfig = {
         ],
       },
       {
-        source: "/live-matches/*",
+        source: "/live-matches/:path*",
         headers: [
           {
             key: "Cache-Control",
             value: "public, max-age=90, stale-while-revalidate=120",
           },
         ],
-      }
+      },
+      {
+        source: "/live-matches",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=90, stale-while-revalidate=120",
+          },
+        ],
+      },
     ];
   },
 };
