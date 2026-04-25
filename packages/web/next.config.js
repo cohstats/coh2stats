@@ -34,6 +34,15 @@ const nextConfig = {
           },
         ],
       },
+      {
+        source: "/live-matches/*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=90, stale-while-revalidate=120",
+          },
+        ],
+      }
     ];
   },
 };
