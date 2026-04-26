@@ -12,9 +12,9 @@ import {
   startAfter,
 } from "firebase/firestore";
 import { getFunctions, httpsCallable } from "firebase/functions";
-import { unstable_cache } from "next/cache";
 import config from "../config";
 import { StatsCurrentLiveGames, LaddersDataObject, PlayerStatsData } from "@/coh/types";
+import { firestoreCache, getCacheKey, fetchWithCache } from "@/utils/cache";
 
 // Initialize Firebase for server-side operations
 // We use the client SDK as it works on both client and server in Next.js
@@ -104,14 +104,12 @@ export async function getLiveGamesFirestoreData(): Promise<StatsCurrentLiveGames
  * Cached wrapper for getLiveGamesFirestoreData with 30 minute revalidation
  * This caches the Firestore data separately from the API data
  */
-export const getCachedLiveGamesFirestoreData = unstable_cache(
-  async () => getLiveGamesFirestoreData(),
-  ["live-games-firestore"],
-  {
-    revalidate: 1800, // 30 minutes = 1800 seconds
-    tags: ["live-games-firestore"],
-  },
-);
+export async function getCachedLiveGamesFirestoreData(): Promise<StatsCurrentLiveGames | null> {
+  const cacheKey = "live-games-firestore";
+  const ttl = 30 * 60 * 1000; // 30 minutes in milliseconds
+
+  return fetchWithCache(firestoreCache, cacheKey, () => getLiveGamesFirestoreData(), ttl);
+}
 
 /**
  * Fetch recent matches from Firestore
@@ -245,25 +243,24 @@ export async function getHistoricLeaderboardData(
   type: string,
   race: string,
 ): Promise<LaddersDataObject | null> {
-  const cachedFn = unstable_cache(
-    async () => getHistoricLeaderboardDataInternal(timestamp, type, race),
-    [`historic-leaderboard-${timestamp}-${type}-${race}`],
-    {
-      revalidate: 172800, // 48 hours = 172800 seconds
-      tags: [`historic-leaderboard-${timestamp}-${type}-${race}`],
-    },
-  );
+  const cacheKey = getCacheKey({ timestamp, type, race });
+  const ttl = 172800 * 1000; // 48 hours in milliseconds
 
-  const result = await cachedFn();
-
-  // Only return cached result if it's successful (non-null)
-  // If null (document doesn't exist or error), bypass cache and try again
-  if (result !== null) {
-    return result;
+  // Try to get from cache first
+  const cached = firestoreCache.get(cacheKey);
+  if (cached !== undefined) {
+    return cached;
   }
 
-  // On null result, fetch without cache to get fresh error/missing status
-  return getHistoricLeaderboardDataInternal(timestamp, type, race);
+  // Fetch fresh data
+  const result = await getHistoricLeaderboardDataInternal(timestamp, type, race);
+
+  // Only cache successful results (non-null)
+  if (result !== null) {
+    firestoreCache.set(cacheKey, result, { ttl });
+  }
+
+  return result;
 }
 
 /**
@@ -316,16 +313,15 @@ export async function getStatsData(
   timestamp: string,
   statType: string,
 ): Promise<Record<string, any> | null> {
-  const cachedFn = unstable_cache(
-    async () => getStatsDataInternal(frequency, timestamp, statType),
-    [`stats-${frequency}-${timestamp}-${statType}`],
-    {
-      revalidate: 86400, // 24 hours = 86400 seconds
-      tags: [`stats-${frequency}-${timestamp}-${statType}`],
-    },
-  );
+  const cacheKey = getCacheKey({ frequency, timestamp, statType });
+  const ttl = 86400 * 1000; // 24 hours in milliseconds
 
-  return cachedFn();
+  return fetchWithCache(
+    firestoreCache,
+    cacheKey,
+    () => getStatsDataInternal(frequency, timestamp, statType),
+    ttl,
+  );
 }
 
 /**
@@ -371,12 +367,10 @@ async function getPlayerStatsInternal(): Promise<PlayerStatsData | null> {
  * Cached wrapper for getPlayerStats with 1-hour revalidation
  */
 export async function getPlayerStats(): Promise<PlayerStatsData | null> {
-  const cachedFn = unstable_cache(async () => getPlayerStatsInternal(), ["player-stats"], {
-    revalidate: 3600, // 1 hour = 3600 seconds
-    tags: ["player-stats"],
-  });
+  const cacheKey = "player-stats";
+  const ttl = 3600 * 1000; // 1 hour in milliseconds
 
-  return cachedFn();
+  return fetchWithCache(firestoreCache, cacheKey, () => getPlayerStatsInternal(), ttl);
 }
 
 /**
@@ -412,16 +406,10 @@ async function getMatchDataInternal(matchId: string): Promise<Record<string, any
  * Cached wrapper for getMatchData with 24-hour revalidation
  */
 export async function getMatchData(matchId: string): Promise<Record<string, any> | null> {
-  const cachedFn = unstable_cache(
-    async () => getMatchDataInternal(matchId),
-    [`match-${matchId}`],
-    {
-      revalidate: 86400, // 24 hours = 86400 seconds
-      tags: [`match-${matchId}`],
-    },
-  );
+  const cacheKey = getCacheKey({ matchId });
+  const ttl = 86400 * 1000; // 24 hours in milliseconds
 
-  return cachedFn();
+  return fetchWithCache(firestoreCache, cacheKey, () => getMatchDataInternal(matchId), ttl);
 }
 
 /**

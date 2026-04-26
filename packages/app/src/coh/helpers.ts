@@ -1,5 +1,4 @@
-import { LaddersDataArrayObject, LaddersDataObject } from "./types";
-import { levels } from "./coh2-api";
+import { LaddersDataArrayObject, LaddersDataObject, levels } from "./types";
 
 const sortArrayOfObjectsByTheirPropertyValue = (
   mapsData: Array<Record<string, string>>,
