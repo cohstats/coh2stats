@@ -5,9 +5,9 @@
  * All functions return Promise<T> and throw errors for component-level handling.
  */
 
-import { unstable_cache } from "next/cache";
 import config from "@/config";
 import type { LiveGame, PlayerCardAPIObject, SearchPlayersResponse } from "./types";
+import { cohStatsApiCache, getCacheKey, fetchWithCache } from "@/utils/cache";
 
 // Use config.apiUrl directly to avoid client/server boundary issues
 const API_URL = config.apiUrl;
@@ -36,7 +36,7 @@ async function getPlayerCardInternal(steamid: string): Promise<PlayerCardAPIObje
 
 /**
  * Fetches player card data including stats and profile information
- * Cached for 30 seconds using unstable_cache
+ * Cached for 30 seconds using TTLCache
  *
  * @param steamid - The Steam ID of the player
  * @returns Promise resolving to player card data
@@ -48,16 +48,10 @@ async function getPlayerCardInternal(steamid: string): Promise<PlayerCardAPIObje
  * ```
  */
 export async function getPlayerCard(steamid: string): Promise<PlayerCardAPIObject> {
-  const cachedFn = unstable_cache(
-    async () => getPlayerCardInternal(steamid),
-    [`player-card-${steamid}`],
-    {
-      revalidate: 30, // 30 seconds
-      tags: [`player-card-${steamid}`],
-    },
-  );
+  const cacheKey = getCacheKey({ getPlayerCard: "getPlayerCard", steamid });
+  const ttl = 30 * 1000; // 30 seconds in milliseconds
 
-  return cachedFn();
+  return fetchWithCache(cohStatsApiCache, cacheKey, () => getPlayerCardInternal(steamid), ttl);
 }
 
 /**
@@ -84,7 +78,7 @@ async function searchPlayersInternal(name: string): Promise<SearchPlayersRespons
 
 /**
  * Searches for players by name
- * Cached for 24 hours using unstable_cache
+ * Cached for 24 hours using TTLCache
  *
  * @param name - The player name to search for
  * @returns Promise resolving to search results
@@ -96,16 +90,10 @@ async function searchPlayersInternal(name: string): Promise<SearchPlayersRespons
  * ```
  */
 export async function searchPlayers(name: string): Promise<SearchPlayersResponse> {
-  const cachedFn = unstable_cache(
-    async () => searchPlayersInternal(name),
-    [`search-players-${name}`],
-    {
-      revalidate: 86400, // 24 hours = 86400 seconds
-      tags: [`search-players-${name}`],
-    },
-  );
+  const cacheKey = getCacheKey({ name });
+  const ttl = 86400 * 1000; // 24 hours in milliseconds
 
-  return cachedFn();
+  return fetchWithCache(cohStatsApiCache, cacheKey, () => searchPlayersInternal(name), ttl);
 }
 
 /**

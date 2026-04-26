@@ -1,9 +1,9 @@
 "use server";
 
-import { unstable_cache } from "next/cache";
 import { getAndPrepareMatchesForPlayer } from "@/coh/coh2-api";
 import { PlayerMatchesResponse } from "@/coh/types";
 import { getPlayerFirestoreMatches } from "@/firebase/firebase-server";
+import { playersCache, getCacheKey, fetchWithCache } from "@/utils/cache";
 
 /**
  * Server action to fetch player matches from Relic API with 60 second cache
@@ -16,7 +16,12 @@ export async function fetchPlayerMatchesData(
   profileId: number,
 ): Promise<PlayerMatchesResponse | null> {
   console.log("[Server Action] fetchPlayerMatchesData called", { profileId });
-  const cachedFn = unstable_cache(
+  const cacheKey = getCacheKey({ profileId });
+  const ttl = 60 * 1000; // 60 seconds in milliseconds
+
+  return fetchWithCache(
+    playersCache,
+    cacheKey,
     async () => {
       try {
         const playerMatches = await getAndPrepareMatchesForPlayer(profileId);
@@ -26,14 +31,8 @@ export async function fetchPlayerMatchesData(
         return null;
       }
     },
-    [`player-matches-${profileId}`],
-    {
-      revalidate: 60, // 60 seconds
-      tags: [`player-matches-${profileId}`],
-    },
+    ttl,
   );
-
-  return cachedFn();
 }
 
 /**

@@ -1,4 +1,3 @@
-import { unstable_cache } from "next/cache";
 import type { ProcessedMatch, RelicLeaderboardResponse, LaddersDataObject } from "./types";
 import {
   extractPlayerIDsInMatch,
@@ -6,6 +5,7 @@ import {
   transformProfilesInMatch,
 } from "./match-utils";
 import { mapRelicResponseToLaddersData } from "./helpers";
+import { RelicApiCache, getCacheKey, fetchWithCache } from "@/utils/cache";
 
 /**
  * The names are important, can't be changed
@@ -294,7 +294,7 @@ async function fetchLiveLeaderboardDataInternal(
   start = 1,
   count = 200,
 ): Promise<LaddersDataObject> {
-  console.log("[coh2-api] fetchLiveLeaderboardDataInternal called", {
+  console.log("[Relic API] fetchLiveLeaderboardDataInternal called", {
     leaderboardID,
     start,
     count,
@@ -333,15 +333,20 @@ async function fetchLiveLeaderboardDataInternal(
  * Note: This function is cached for 30 seconds. Each combination of leaderboardID, start, and count
  * is cached separately to support pagination.
  */
-export const fetchLiveLeaderboardData = unstable_cache(
-  async (leaderboardID: number, start = 1, count = 200) => {
-    return fetchLiveLeaderboardDataInternal(leaderboardID, start, count);
-  },
-  ["live-leaderboard"],
-  {
-    revalidate: 30, // 30 seconds
-    tags: ["live-leaderboard"],
-  },
-);
+export async function fetchLiveLeaderboardData(
+  leaderboardID: number,
+  start = 1,
+  count = 200,
+): Promise<LaddersDataObject> {
+  const cacheKey = getCacheKey({ leaderboardID, start, count });
+  const ttl = 30 * 1000; // 30 seconds in milliseconds
+
+  return fetchWithCache(
+    RelicApiCache,
+    cacheKey,
+    () => fetchLiveLeaderboardDataInternal(leaderboardID, start, count),
+    ttl,
+  );
+}
 
 export { leaderboardsID, levels };
