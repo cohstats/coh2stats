@@ -1,5 +1,9 @@
-import { LaddersDataArrayObject, LaddersDataObject, RelicLeaderboardResponse } from "./types";
-import { levels } from "./coh2-api";
+import {
+  LaddersDataArrayObject,
+  LaddersDataObject,
+  RelicLeaderboardResponse,
+  levels,
+} from "./types";
 
 const sortArrayOfObjectsByTheirPropertyValue = (
   mapsData: Array<Record<string, string>>,

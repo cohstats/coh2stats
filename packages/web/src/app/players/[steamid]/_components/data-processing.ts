@@ -1,5 +1,4 @@
-import { leaderboardsID } from "../../../../coh/coh2-api";
-import { LeaderBoardStats, validStatsTypes } from "../../../../coh/types";
+import { LeaderBoardStats, validStatsTypes, leaderboardsID } from "../../../../coh/types";
 import { capitalize } from "../../../../utils/helpers";
 
 const findByLeaderBoardID = (

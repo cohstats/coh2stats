@@ -15,7 +15,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useTheme } from "next-themes";
 
-import { LaddersDataArrayObject, LaddersDataObject } from "@/coh/types";
+import { LaddersDataArrayObject, LaddersDataObject, leaderboardsID } from "@/coh/types";
 import { getAllPatchDates } from "@/coh/patches";
 import { TableColumnsType } from "antd";
 import firebaseAnalytics from "../../../analytics";
@@ -38,7 +38,6 @@ import {
 } from "@/coh/helpers";
 import { Helper } from "@/components/helper";
 import { disabledDate, generateIconsForTitle } from "./leaderboard-components";
-import { leaderboardsID } from "@/coh/coh2-api";
 import { fetchLiveLeaderboardData, fetchHistoricLeaderboardData } from "../actions";
 
 type ColumnsType<T> = TableColumnsType<T>;

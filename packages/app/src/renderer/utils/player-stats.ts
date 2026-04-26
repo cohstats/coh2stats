@@ -1,4 +1,5 @@
-import { leaderboardsID, LeaderboardStat } from "../../coh/coh2-api";
+import { LeaderboardStat } from "../../coh/coh2-api";
+import { leaderboardsID } from "../../coh/types";
 
 /**
  * Finds the mode and race for a given leaderboard ID

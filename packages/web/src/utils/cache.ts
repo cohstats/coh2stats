@@ -57,14 +57,6 @@ export function getCacheKey(params: Record<string, any>): string {
 }
 
 /**
- * Type definition for cache configuration
- */
-export interface CacheConfig {
-  /** Time-to-live in milliseconds */
-  ttl: number;
-}
-
-/**
  * Helper function to fetch data with caching.
  * If the data is in the cache and not expired, return it.
  * Otherwise, fetch fresh data, cache it, and return it.
