@@ -54,6 +54,11 @@ export const fetchLeaderboardStats = async (
   const response = await fetch(url);
 
   if (!response.ok) {
+    console.error(
+      `Failed to fetch leaderboard stats from Relic API. Status: ${
+        response.status
+      }, Response: ${await response.text()}`,
+    );
     throw new Error(
       `Failed to fetch leaderboard stats from Relic API. Status: ${
         response.status
@@ -99,6 +104,11 @@ const fetchPlayerMatchStats = async (relicProfileID: number): Promise<Record<str
       throw new Error(`Failed to received the player stats. Response: ${JSON.stringify(data)}`);
     }
   } else {
+    console.error(
+      `Failed to fetch player match stats from Relic API. Status: ${
+        response.status
+      }, Response: ${await response.text()}`,
+    );
     throw new Error(
       `Failed to fetch player match stats from Relic API. Status: ${
         response.status
