@@ -316,7 +316,12 @@ export async function getStatsData(
   const cacheKey = getCacheKey({ frequency, timestamp, statType });
   const ttl = 86400 * 1000; // 24 hours in milliseconds
 
-  return fetchWithCache(firestoreCache, cacheKey, () => getStatsDataInternal(frequency, timestamp, statType), ttl);
+  return fetchWithCache(
+    firestoreCache,
+    cacheKey,
+    () => getStatsDataInternal(frequency, timestamp, statType),
+    ttl,
+  );
 }
 
 /**
