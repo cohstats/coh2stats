@@ -85,9 +85,7 @@ const fetchPlayerMatchStats = async (relicProfileID: number): Promise<Record<str
   const url = buildRecentMatchHistoryUrl(relicProfileID);
 
   console.debug("[Relic API] Fetching player match stats from", url);
-  const response = await fetch(url, {
-    next: { revalidate: 90 }, // 90 seconds
-  });
+  const response = await fetch(url);
 
   if (response.status == 200) {
     const data = await response.json();

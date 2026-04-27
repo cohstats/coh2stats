@@ -20,8 +20,7 @@ async function getPlayerCardInternal(steamid: string): Promise<PlayerCardAPIObje
   const response = await fetch(url, {
     headers: {
       Origin: "https://coh2stats.com",
-    },
-    next: { revalidate: 30 }, // 30 seconds
+    }
   });
   console.log("[COH2Stats BE API] Fetching player card data", url);
 
