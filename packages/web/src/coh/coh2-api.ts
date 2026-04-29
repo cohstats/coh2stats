@@ -231,7 +231,7 @@ export async function fetchLiveLeaderboardData(
   start = 1,
   count = 200,
 ): Promise<LaddersDataObject> {
-  const cacheKey = getCacheKey({ leaderboardID, start, count });
+  const cacheKey = getCacheKey("fetchLiveLeaderboardData", { leaderboardID, start, count });
   const ttl = 30 * 1000; // 30 seconds in milliseconds
 
   return fetchWithCache(

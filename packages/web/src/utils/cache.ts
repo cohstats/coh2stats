@@ -45,6 +45,7 @@ export const RelicApiCache = new TTLCache<string, any>({
  * Generates a cache key from an object by converting it to JSON.
  * This ensures consistent cache keys for objects with the same properties.
  *
+ * @param cacheGroup
  * @param params - Object containing the parameters to create a cache key from
  * @returns A string cache key
  *
@@ -52,8 +53,8 @@ export const RelicApiCache = new TTLCache<string, any>({
  * getCacheKey({ steamid: "123", type: "player" })
  * // Returns: '{"steamid":"123","type":"player"}'
  */
-export function getCacheKey(params: Record<string, any>): string {
-  return JSON.stringify(params);
+export function getCacheKey(cacheGroup: string, params: Record<string, any>): string {
+  return `${cacheGroup}-${JSON.stringify(params)}`;
 }
 
 /**

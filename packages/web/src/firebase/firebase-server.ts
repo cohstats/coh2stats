@@ -243,7 +243,7 @@ export async function getHistoricLeaderboardData(
   type: string,
   race: string,
 ): Promise<LaddersDataObject | null> {
-  const cacheKey = getCacheKey({ timestamp, type, race });
+  const cacheKey = getCacheKey("getHistoricLeaderboardData",{ timestamp, type, race });
   const ttl = 172800 * 1000; // 48 hours in milliseconds
 
   // Try to get from cache first
@@ -313,7 +313,7 @@ export async function getStatsData(
   timestamp: string,
   statType: string,
 ): Promise<Record<string, any> | null> {
-  const cacheKey = getCacheKey({ frequency, timestamp, statType });
+  const cacheKey = getCacheKey("getStatsData", { frequency, timestamp, statType });
   const ttl = 86400 * 1000; // 24 hours in milliseconds
 
   return fetchWithCache(
@@ -406,7 +406,7 @@ async function getMatchDataInternal(matchId: string): Promise<Record<string, any
  * Cached wrapper for getMatchData with 24-hour revalidation
  */
 export async function getMatchData(matchId: string): Promise<Record<string, any> | null> {
-  const cacheKey = getCacheKey({ matchId });
+  const cacheKey = getCacheKey("match-data", { matchId });
   const ttl = 86400 * 1000; // 24 hours in milliseconds
 
   return fetchWithCache(firestoreCache, cacheKey, () => getMatchDataInternal(matchId), ttl);

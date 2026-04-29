@@ -47,7 +47,7 @@ async function getPlayerCardInternal(steamid: string): Promise<PlayerCardAPIObje
  * ```
  */
 export async function getPlayerCard(steamid: string): Promise<PlayerCardAPIObject> {
-  const cacheKey = getCacheKey({ getPlayerCard: "getPlayerCard", steamid });
+  const cacheKey = getCacheKey("playerCard", { getPlayerCard: "getPlayerCard", steamid });
   const ttl = 30 * 1000; // 30 seconds in milliseconds
 
   return fetchWithCache(cohStatsApiCache, cacheKey, () => getPlayerCardInternal(steamid), ttl);
@@ -89,7 +89,7 @@ async function searchPlayersInternal(name: string): Promise<SearchPlayersRespons
  * ```
  */
 export async function searchPlayers(name: string): Promise<SearchPlayersResponse> {
-  const cacheKey = getCacheKey({ name });
+  const cacheKey = getCacheKey("searchPlayers", { name });
   const ttl = 86400 * 1000; // 24 hours in milliseconds
 
   return fetchWithCache(cohStatsApiCache, cacheKey, () => searchPlayersInternal(name), ttl);
@@ -126,8 +126,7 @@ export async function getLiveGames(
     const response = await fetch(url, {
       headers: {
         Origin: "https://coh2stats.com",
-      },
-      next: { revalidate: 90 },
+      }
     });
 
     if (!response.ok) {
@@ -143,4 +142,36 @@ export async function getLiveGames(
     console.error("Failed to fetch live games from API:", error);
     return null;
   }
+}
+
+/**
+ * Fetches live games from API with 90 second cache
+ * Cached wrapper for getLiveGames using TTLCache
+ *
+ * @param playerGroup - "1" (1v1), "2" (2v2), "3" (3v3), "4" (4v4), "5" (vs AI), "0" (custom)
+ * @param start - Pagination offset (0, 40, 80, etc.)
+ * @param count - Number of games to fetch (default: 40)
+ * @param sortOrder - "0" (Rank), "1" (Start Time), "2" (Viewers)
+ * @returns Promise resolving to live games data, or null if the request fails
+ *
+ * @example
+ * ```typescript
+ * const games = await getLiveGamesCached("1", "0", 40, "0");
+ * ```
+ */
+export async function getLiveGamesCached(
+  playerGroup: string,
+  start: string,
+  count = 40,
+  sortOrder: string,
+): Promise<LiveGame[] | null> {
+  const cacheKey = getCacheKey("liveGames", { playerGroup, start, count, sortOrder });
+  const ttl = 90 * 1000; // 90 seconds in milliseconds
+
+  return fetchWithCache(
+    cohStatsApiCache,
+    cacheKey,
+    () => getLiveGames(playerGroup, start, count, sortOrder),
+    ttl,
+  );
 }

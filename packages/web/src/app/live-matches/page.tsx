@@ -1,13 +1,7 @@
 import LiveMatches from "./_components/live-matches";
 import { getCachedLiveGamesFirestoreData } from "@/firebase/firebase-server";
-import { getLiveGames } from "@/coh/coh2stats-api";
+import { getLiveGamesCached } from "@/coh/coh2stats-api";
 
-// Revalidate every 90 seconds for API data
-// Note: Firestore data has its own cache (30 minutes) via TTLCache
-// This also sets Cache-Control headers for CDN caching:
-// - Next.js automatically sets s-maxage to match revalidate value
-// - CDN will cache the page for 90 seconds
-// - stale-while-revalidate allows serving stale content while revalidating
 export const revalidate = 90;
 
 interface LiveMatchesPageProps {
@@ -31,7 +25,7 @@ const LiveMatchesPage = async ({ searchParams }: LiveMatchesPageProps) => {
   // Firestore data cached for 30 minutes, API data cached for 90 seconds (page revalidate)
   const [firestoreData, liveGamesData] = await Promise.all([
     getCachedLiveGamesFirestoreData(),
-    getLiveGames(playerGroup, start, 40, orderBy),
+    getLiveGamesCached(playerGroup, start, 40, orderBy),
   ]);
 
   return (

@@ -16,7 +16,7 @@ export async function fetchPlayerMatchesData(
   profileId: number,
 ): Promise<PlayerMatchesResponse | null> {
   console.log("[Server Action] fetchPlayerMatchesData called", { profileId });
-  const cacheKey = getCacheKey({ profileId });
+  const cacheKey = getCacheKey("playerMatches", { profileId });
   const ttl = 60 * 1000; // 60 seconds in milliseconds
 
   return fetchWithCache(
