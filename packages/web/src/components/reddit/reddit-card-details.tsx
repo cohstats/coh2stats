@@ -81,6 +81,7 @@ const RedditCardDetails: React.FC<Props> = (data) => {
               src={data?.imgs}
               alt="cover_img"
               style={{ height: "60px", width: "80px", objectFit: "cover", borderRadius: "2px" }}
+              preview={false}
             />
           ) : (
             ""
