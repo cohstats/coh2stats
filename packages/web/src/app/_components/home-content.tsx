@@ -34,7 +34,7 @@ interface HomeContentProps {
 }
 
 export function HomeContent({ analyzedMatches, redditPosts, leaderboardData }: HomeContentProps) {
-  const cardStyle = { width: 240, height: 245 };
+  const cardStyle = { width: 240, height: 250 };
 
   return (
     <Row>

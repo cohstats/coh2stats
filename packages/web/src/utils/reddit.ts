@@ -17,13 +17,14 @@ interface CacheEntry {
 
 // In-memory cache with 1-hour TTL (60 * 60 * 1000 ms)
 const CACHE_TTL = 60 * 60 * 1000;
+const AMOUNT_OF_POSTS = 13;
 let cache: CacheEntry | null = null;
 
 // Helper function to fetch fresh data from Reddit API
 const fetchRedditPosts = async (): Promise<RedditPost[]> => {
   try {
     // "https://www.reddit.com/r/CompanyOfHeroes/top.json?limit=100&t=month"
-    const res = await fetch("https://coh2stats.com/api/redditCF", {
+    const res = await fetch("https://storage.coh3stats.com/reddit/reddit_coh2_monthly_top.json", {
       next: { revalidate: 3600 }, // Cache for 1 hour
     });
 
@@ -35,7 +36,7 @@ const fetchRedditPosts = async (): Promise<RedditPost[]> => {
     const resData = await res.json();
     const requiredData = resData?.data?.children
       .filter((e: any) => `${e?.data?.link_flair_text}`.includes("CoH2"))
-      .slice(0, 15);
+      .slice(0, AMOUNT_OF_POSTS);
 
     return requiredData || [];
   } catch (error) {
