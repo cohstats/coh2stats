@@ -96,7 +96,7 @@ const menuItems: ItemType[] = [
       {
         key: "relic-api-status",
         label: (
-          <a href="https://stats.uptimerobot.com/03lN1ckr5j" target="_blank" rel={"noreferrer"}>
+          <a href={config.statusPageLink} target="_blank" rel={"noreferrer"}>
             Relic API Status
           </a>
         ),

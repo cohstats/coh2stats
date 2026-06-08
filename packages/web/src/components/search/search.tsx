@@ -17,6 +17,7 @@ import { userAPIObject } from "./types";
 import SearchUserCard from "./search-user-card";
 import { Tip } from "../tip";
 import { searchPlayersAction } from "@/app/search/actions";
+import config from "@/config";
 
 const sortByXP = (array: Array<userAPIObject>) => {
   return array.sort((a, b) => {
@@ -222,7 +223,7 @@ const CustomSearch: React.FC = () => {
               <div>
                 You can check Relic API status{" "}
                 <a
-                  href="https://stats.uptimerobot.com/03lN1ckr5j"
+                  href={config.statusPageLink}
                   target="_blank"
                   rel={"noreferrer"}
                 >
