@@ -38,7 +38,9 @@ const setLocalStorageConfig = (config: any) => {
   }
 };
 
-const ConfigsProvider: FC<any> = (props) => {
+const ConfigsProvider: FC<{ children: React.ReactNode; configJson: Record<string, unknown> }> = ({
+  children,
+}) => {
   const [userConfig, setUserConfig] = useState<any>(getLocalStorageConfig());
 
   const updateUserConfig = (newConfig: any) => {
@@ -49,7 +51,7 @@ const ConfigsProvider: FC<any> = (props) => {
 
   return (
     <ConfigContext.Provider value={{ userConfig, updateUserConfig }}>
-      {props.children}
+      {children}
     </ConfigContext.Provider>
   );
 };

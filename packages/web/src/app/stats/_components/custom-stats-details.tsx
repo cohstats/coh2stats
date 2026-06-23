@@ -83,20 +83,8 @@ const CustomStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
   };
 
   const RegularStatsCards = (props: {
-    title:
-      | boolean
-      | React.ReactChild
-      | React.ReactFragment
-      | React.ReactPortal
-      | null
-      | undefined;
-    children:
-      | boolean
-      | React.ReactChild
-      | React.ReactFragment
-      | React.ReactPortal
-      | null
-      | undefined;
+    title: React.ReactNode;
+    children: React.ReactNode;
   }) => {
     return (
       <Card
