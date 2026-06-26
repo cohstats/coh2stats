@@ -11,6 +11,7 @@
       "**/antd",
       "**/antd/**",
       "**/@ant-design/**",
+      "**/@rc-component/**",
       "**/date-fns"
     ]
   },

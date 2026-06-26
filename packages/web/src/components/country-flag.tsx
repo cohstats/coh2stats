@@ -1,7 +1,10 @@
 import React from "react";
 
 // @ts-ignore
-import ReactCountryFlag from "react-country-flag";
+import ReactCountryFlagLib from "react-country-flag";
+
+// Wrapper to ensure type compatibility with React 19
+const ReactCountryFlag = ReactCountryFlagLib as React.FC<any>;
 
 interface IProps {
   countryCode: string | any;

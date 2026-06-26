@@ -52,7 +52,7 @@ const SingleMatch: React.FC = () => {
     })();
   }, [matchID]);
 
-  let content: JSX.Element;
+  let content: React.ReactNode;
 
   if (isLoading) {
     content = (
