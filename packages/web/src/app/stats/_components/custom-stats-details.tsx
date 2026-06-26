@@ -82,10 +82,7 @@ const CustomStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
     );
   };
 
-  const RegularStatsCards = (props: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-  }) => {
+  const RegularStatsCards = (props: { title: React.ReactNode; children: React.ReactNode }) => {
     return (
       <Card
         title={props.title}

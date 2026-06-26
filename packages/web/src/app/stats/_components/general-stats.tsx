@@ -18,10 +18,7 @@ interface IProps {
 const GeneralStats: React.FC<IProps> = ({ data }) => {
   const isMobile = useMediaQuery({ query: "(max-width: 1023px)" });
 
-  const RegularStatsCards = (props: {
-    title: React.ReactNode;
-    children: React.ReactNode;
-  }) => {
+  const RegularStatsCards = (props: { title: React.ReactNode; children: React.ReactNode }) => {
     return (
       <Card
         title={props.title}

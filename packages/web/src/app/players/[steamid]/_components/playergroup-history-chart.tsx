@@ -78,7 +78,9 @@ export const PlayerGroupHistoryChart: React.FC<IProps> = ({ record }) => {
                 legendPosition: "middle",
                 tickValues:
                   chartData.length > 30
-                    ? chartData.filter((_, index) => index % Math.ceil(chartData.length / 15) === 0).map((d) => d.x)
+                    ? chartData
+                        .filter((_, index) => index % Math.ceil(chartData.length / 15) === 0)
+                        .map((d) => d.x)
                     : undefined,
               }}
               axisLeft={{
@@ -124,7 +126,9 @@ export const PlayerGroupHistoryChart: React.FC<IProps> = ({ record }) => {
                 legendPosition: "middle",
                 tickValues:
                   levelData.length > 30
-                    ? levelData.filter((_, index) => index % Math.ceil(levelData.length / 15) === 0).map((d) => d.x)
+                    ? levelData
+                        .filter((_, index) => index % Math.ceil(levelData.length / 15) === 0)
+                        .map((d) => d.x)
                     : undefined,
               }}
               axisLeft={{

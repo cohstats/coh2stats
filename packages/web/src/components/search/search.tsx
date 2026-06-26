@@ -37,12 +37,8 @@ const CustomSearch: React.FC = () => {
   const [error, setError] = useState("");
   const [loading, setIsLoading] = useState(false);
   const [searchData, setSearchData] = useState<React.ReactNode>(undefined);
-  const [searchDataCommanders, setSearchDataCommanders] = useState<React.ReactNode>(
-    undefined,
-  );
-  const [searchIntelBulletin, setSearchIntelBulletin] = useState<React.ReactNode>(
-    undefined,
-  );
+  const [searchDataCommanders, setSearchDataCommanders] = useState<React.ReactNode>(undefined);
+  const [searchIntelBulletin, setSearchIntelBulletin] = useState<React.ReactNode>(undefined);
   const [searchValue, setSearchValue] = useState(searchParam || "");
   const [validationStatus, setValidationStatus] = useState<"" | "error" | "warning">("");
 
@@ -222,11 +218,7 @@ const CustomSearch: React.FC = () => {
             description={
               <div>
                 You can check Relic API status{" "}
-                <a
-                  href={config.statusPageLink}
-                  target="_blank"
-                  rel={"noreferrer"}
-                >
+                <a href={config.statusPageLink} target="_blank" rel={"noreferrer"}>
                   here
                 </a>
                 . If the error persists, please report it{" "}

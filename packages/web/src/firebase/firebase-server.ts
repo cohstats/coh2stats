@@ -243,7 +243,7 @@ export async function getHistoricLeaderboardData(
   type: string,
   race: string,
 ): Promise<LaddersDataObject | null> {
-  const cacheKey = getCacheKey("getHistoricLeaderboardData",{ timestamp, type, race });
+  const cacheKey = getCacheKey("getHistoricLeaderboardData", { timestamp, type, race });
   const ttl = 172800 * 1000; // 48 hours in milliseconds
 
   // Try to get from cache first
