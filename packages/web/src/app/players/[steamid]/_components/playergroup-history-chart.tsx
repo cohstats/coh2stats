@@ -1,21 +1,16 @@
-import React, { useState } from "react";
-import { PlayerCardDataArrayObject } from "@/coh/types";
-import { Card, Empty, Switch } from "antd";
-import { DualAxes } from "@ant-design/plots";
-import { firebaseTimeStampObjectToDate, getDatesInRange } from "@/utils/helpers";
-import { getDefaultSliderPosition } from "@/utils/charts-utils";
-import { Helper } from "@/components/helper";
+"use client";
 
-const DATA_CHART_WIDTH = 60;
+import React from "react";
+import { PlayerCardDataArrayObject } from "@/coh/types";
+import { Card, Empty, Row, Col } from "antd";
+import { ResponsiveLine } from "@nivo/line";
+import { firebaseTimeStampObjectToDate } from "@/utils/helpers";
 
 interface IProps {
   record: PlayerCardDataArrayObject;
 }
 
 export const PlayerGroupHistoryChart: React.FC<IProps> = ({ record }) => {
-  // If all dates are set we will generate data points for each date
-  const [allDates, setAllDates] = useState(false);
-
   const data = record.historic?.history;
 
   if (!data) {
@@ -27,105 +22,135 @@ export const PlayerGroupHistoryChart: React.FC<IProps> = ({ record }) => {
     );
   }
 
-  let chartData: string | any[] = [];
+  const chartData: Array<{ x: string; y: number | null }> = data.map((record) => {
+    return {
+      x: firebaseTimeStampObjectToDate(record.ts).toLocaleDateString(),
+      y: -record.r,
+    };
+  });
 
-  if (allDates) {
-    let dataArray: Array<{ time: Date; rank: number | null; level: number | null }> =
-      getDatesInRange(firebaseTimeStampObjectToDate(data[0].ts), new Date()).map((d) => {
-        return { time: d, rank: null, level: null };
-      });
-    const dateData = data.map((record) => {
-      return {
-        time: firebaseTimeStampObjectToDate(record.ts),
-        rank: -record.r,
-        level: record.rl,
-      };
-    });
+  const levelData: Array<{ x: string; y: number | null }> = data.map((record) => {
+    return {
+      x: firebaseTimeStampObjectToDate(record.ts).toLocaleDateString(),
+      y: record.rl,
+    };
+  });
 
-    // console.log("DATADATA", dateData)
-    dataArray = dataArray.concat(dateData);
-
-    // console.log("DATAARRAY", dataArray)
-
-    chartData = dataArray.sort((a, b) => {
-      if (a.time < b.time) {
-        return -1;
-      } else {
-        return 1;
-      }
-    });
-
-    chartData = chartData.map((data) => {
-      return {
-        time: data.time.toLocaleDateString(),
-        rank: data.rank,
-        level: data.level,
-      };
-    });
-  } else {
-    chartData = data.map((record) => {
-      return {
-        time: firebaseTimeStampObjectToDate(record.ts).toLocaleDateString(),
-        rank: -record.r,
-        level: record.rl,
-      };
-    });
-  }
-
-  // @ts-ignore
-  // chartData[4] = {...chartData[4], ...{rank: null}}
-
-  // console.log(chartData)
-
-  const chartConfig = {
-    data: [chartData, chartData],
-    padding: "auto" as const,
-    xField: "time",
-    yField: ["rank", "level"],
-    geometryOptions: [{ connectNulls: true }, { connectNulls: true }],
-    yAxis: {
-      rank: {
-        // connectNulls: true,
-        // maxLimit: -1,
-        label: {
-          formatter: (record: any) => {
-            return `${Math.round(Math.abs(record))}`;
-          },
-        },
-      },
-      level: {
-        min: 1,
-        max: 20,
-      },
+  const rankChartData = [
+    {
+      id: "rank",
+      data: chartData,
     },
-    slider: getDefaultSliderPosition(chartData.length, DATA_CHART_WIDTH),
-  };
+  ];
 
-  const onSwitchChange = (all: boolean) => {
-    setAllDates(all);
-  };
-
-  const extra = (
-    <>
-      Display calendar dates{" "}
-      <Helper
-        text={
-          "By default we chart only days when the playergroup played. All you can display all calendar days."
-        }
-      />{" "}
-      <Switch
-        // checkedChildren="All"
-        // unCheckedChildren="Record"
-        // style={{ width: 75 }}
-        onChange={onSwitchChange}
-        // defaultChecked={timestamp === "now"}
-      />
-    </>
-  );
+  const levelChartData = [
+    {
+      id: "level",
+      data: levelData,
+    },
+  ];
 
   return (
-    <Card title={"History of Rank and Level"} extra={extra}>
-      <DualAxes {...chartConfig} />
+    <Card title={"History of Rank and Level"}>
+      <Row gutter={[16, 16]}>
+        <Col xs={24}>
+          <div style={{ height: 300 }}>
+            <h4 style={{ textAlign: "center", marginBottom: 8 }}>Rank</h4>
+            <ResponsiveLine
+              data={rankChartData}
+              margin={{ top: 5, right: 20, bottom: 80, left: 60 }}
+              xScale={{ type: "point" }}
+              yScale={{
+                type: "linear",
+                min: "auto",
+                max: "auto",
+                reverse: false,
+              }}
+              yFormat={(value) => Math.abs(Number(value)).toString()}
+              axisTop={null}
+              axisRight={null}
+              axisBottom={{
+                tickSize: 5,
+                tickPadding: 5,
+                tickRotation: -25,
+                legend: "Date",
+                legendOffset: 40,
+                legendPosition: "middle",
+                tickValues:
+                  chartData.length > 30
+                    ? chartData
+                        .filter((_, index) => index % Math.ceil(chartData.length / 15) === 0)
+                        .map((d) => d.x)
+                    : undefined,
+              }}
+              axisLeft={{
+                tickSize: 5,
+                tickPadding: 5,
+                tickRotation: 0,
+                legend: "Rank",
+                legendOffset: -50,
+                legendPosition: "middle",
+                format: (value) => Math.abs(Number(value)).toString(),
+              }}
+              colors={{ scheme: "nivo" }}
+              pointSize={6}
+              pointColor={{ theme: "background" }}
+              pointBorderWidth={2}
+              pointBorderColor={{ from: "serieColor" }}
+              enableArea={false}
+              useMesh={true}
+              legends={[]}
+            />
+          </div>
+        </Col>
+        <Col xs={24}>
+          <div style={{ height: 300 }}>
+            <h4 style={{ textAlign: "center", marginBottom: 8 }}>Level</h4>
+            <ResponsiveLine
+              data={levelChartData}
+              margin={{ top: 5, right: 20, bottom: 80, left: 60 }}
+              xScale={{ type: "point" }}
+              yScale={{
+                type: "linear",
+                min: 1,
+                max: 20,
+              }}
+              axisTop={null}
+              axisRight={null}
+              axisBottom={{
+                tickSize: 5,
+                tickPadding: 5,
+                tickRotation: -25,
+                legend: "Date",
+                legendOffset: 40,
+                legendPosition: "middle",
+                tickValues:
+                  levelData.length > 30
+                    ? levelData
+                        .filter((_, index) => index % Math.ceil(levelData.length / 15) === 0)
+                        .map((d) => d.x)
+                    : undefined,
+              }}
+              axisLeft={{
+                tickSize: 5,
+                tickPadding: 5,
+                tickRotation: 0,
+                legend: "Level",
+                legendOffset: -50,
+                legendPosition: "middle",
+              }}
+              colors={{ scheme: "category10" }}
+              pointSize={6}
+              pointColor={{ theme: "background" }}
+              pointBorderWidth={2}
+              pointBorderColor={{ from: "serieColor" }}
+              enableArea={false}
+              useMesh={true}
+              legends={[]}
+            />
+          </div>
+        </Col>
+      </Row>
     </Card>
   );
 };

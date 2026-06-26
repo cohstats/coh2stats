@@ -20,7 +20,7 @@ async function getPlayerCardInternal(steamid: string): Promise<PlayerCardAPIObje
   const response = await fetch(url, {
     headers: {
       Origin: "https://coh2stats.com",
-    }
+    },
   });
   console.log("[COH2Stats BE API] Fetching player card data", url);
 
@@ -126,7 +126,7 @@ export async function getLiveGames(
     const response = await fetch(url, {
       headers: {
         Origin: "https://coh2stats.com",
-      }
+      },
     });
 
     if (!response.ok) {

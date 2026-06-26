@@ -3,6 +3,9 @@ const nextConfig = {
   // Standalone output for Node.js deployment
   output: "standalone",
 
+  // Enable React Compiler
+  reactCompiler: true,
+
   // Image optimization
   images: {
     minimumCacheTTL: 86400, // 24 hours

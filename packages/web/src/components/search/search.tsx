@@ -36,18 +36,14 @@ const CustomSearch: React.FC = () => {
 
   const [error, setError] = useState("");
   const [loading, setIsLoading] = useState(false);
-  const [searchData, setSearchData] = useState<JSX.Element | undefined>(undefined);
-  const [searchDataCommanders, setSearchDataCommanders] = useState<JSX.Element | undefined>(
-    undefined,
-  );
-  const [searchIntelBulletin, setSearchIntelBulletin] = useState<JSX.Element | undefined>(
-    undefined,
-  );
+  const [searchData, setSearchData] = useState<React.ReactNode>(undefined);
+  const [searchDataCommanders, setSearchDataCommanders] = useState<React.ReactNode>(undefined);
+  const [searchIntelBulletin, setSearchIntelBulletin] = useState<React.ReactNode>(undefined);
   const [searchValue, setSearchValue] = useState(searchParam || "");
   const [validationStatus, setValidationStatus] = useState<"" | "error" | "warning">("");
 
   useEffect(() => {
-    const buildSearchResults = (data: Record<string, any>): JSX.Element => {
+    const buildSearchResults = (data: Record<string, any>): React.ReactElement => {
       if (Object.entries(data).length === 0) {
         return (
           <Empty
@@ -88,7 +84,7 @@ const CustomSearch: React.FC = () => {
       }
     };
 
-    const buildBulletinSearchResults = (data: Record<string, any>): JSX.Element => {
+    const buildBulletinSearchResults = (data: Record<string, any>): React.ReactElement => {
       if (Object.entries(data).length === 0) {
         return (
           <Empty
@@ -115,7 +111,7 @@ const CustomSearch: React.FC = () => {
       }
     };
 
-    const buildCommandersSearchResults = (data: Record<string, any>): JSX.Element => {
+    const buildCommandersSearchResults = (data: Record<string, any>): React.ReactElement => {
       if (Object.entries(data).length === 0) {
         return (
           <div>
@@ -222,11 +218,7 @@ const CustomSearch: React.FC = () => {
             description={
               <div>
                 You can check Relic API status{" "}
-                <a
-                  href={config.statusPageLink}
-                  target="_blank"
-                  rel={"noreferrer"}
-                >
+                <a href={config.statusPageLink} target="_blank" rel={"noreferrer"}>
                   here
                 </a>
                 . If the error persists, please report it{" "}
