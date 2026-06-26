@@ -136,7 +136,14 @@ export async function getLiveGames(
     }
 
     const data = await response.json();
-    console.log(`Successfully fetched ${data?.length || 0} live games from API`);
+
+    // Validate that the response is an array
+    if (!Array.isArray(data)) {
+      console.error(`API returned non-array data:`, data);
+      return null;
+    }
+
+    console.log(`Successfully fetched ${data.length} live games from API`);
     return data as LiveGame[];
   } catch (error) {
     console.error("Failed to fetch live games from API:", error);

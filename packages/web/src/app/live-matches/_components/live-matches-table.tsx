@@ -147,7 +147,8 @@ const LiveMatchesTable: React.FC<{
     );
   }
 
-  const dataSource = data.data || [];
+  // Ensure dataSource is always an array (defensive programming)
+  const dataSource = Array.isArray(data.data) ? data.data : [];
   const displayRank = !(playerGroup === "5" || playerGroup === "0");
 
   const columns: ColumnsType<LiveGame> = [
