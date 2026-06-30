@@ -88,8 +88,8 @@ const CustomStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
         title={props.title}
         styles={{
           body: isMobile
-            ? { width: "90vw", maxWidth: 480, height: 300 }
-            : { width: "48vw", maxWidth: 480, height: 410 },
+            ? { width: "90vw", maxWidth: 440, height: 300 }
+            : { width: "48vw", maxWidth: 340, height: 320 },
         }}
       >
         {props.children}

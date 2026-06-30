@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Typography } from "antd";
-import { Loading } from "../../../components/loading";
+import { Loading } from "@/components/loading";
 import firebaseAnalytics from "../../../analytics";
 
 import {
@@ -8,7 +8,7 @@ import {
   statTypesInDbAsType,
   TypeAnalysisObject,
   validStatsTypes,
-} from "../../../coh/types";
+} from "@/coh/types";
 import { useSearchParams } from "next/navigation";
 import CustomStatsDetails from "./custom-stats-details";
 import { StatsHeader } from "./stats-header";

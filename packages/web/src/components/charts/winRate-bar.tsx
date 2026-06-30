@@ -26,7 +26,7 @@ export const WinRateChart: React.FC<IProps> = ({ data }) => {
 
   return (
     <ResponsiveBar
-      margin={{ top: 0, right: 30, bottom: 40, left: 70 }}
+      margin={{ top: 0, right: 10, bottom: 40, left: 65 }}
       // @ts-ignore
       data={chartData as data[] | undefined}
       layout={"horizontal"}
@@ -37,12 +37,25 @@ export const WinRateChart: React.FC<IProps> = ({ data }) => {
       minValue={0}
       maxValue={100}
       innerPadding={2}
+      valueScale={{
+        type: "linear",
+        min: 30,
+        max: 70,
+        clamp: true,
+      }}
+      enableGridX={true}
+      gridXValues={[50]}
       axisLeft={{
         tickSize: 5,
         tickPadding: 5,
         tickRotation: 0,
         legendPosition: "middle",
         legendOffset: -40,
+      }}
+      axisBottom={{
+        legend: "%",
+        legendPosition: "middle",
+        legendOffset: 32,
       }}
     />
   );

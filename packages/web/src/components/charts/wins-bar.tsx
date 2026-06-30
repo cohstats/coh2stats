@@ -20,7 +20,7 @@ export const WinsChart: React.FC<IProps> = ({ data }) => {
 
   return (
     <ResponsiveBar
-      margin={{ top: 10, right: 80, bottom: 40, left: 40 }}
+      margin={{ top: 10, right: 10, bottom: 40, left: 45 }}
       // @ts-ignore
       data={chartData as data[] | undefined}
       layout={"vertical"}
@@ -62,30 +62,9 @@ export const WinsChart: React.FC<IProps> = ({ data }) => {
         legendPosition: "middle",
         legendOffset: -40,
       }}
-      legends={[
-        {
-          dataFrom: "keys",
-          anchor: "bottom-right",
-          direction: "column",
-          justify: false,
-          translateX: 120,
-          translateY: 0,
-          itemsSpacing: 2,
-          itemWidth: 100,
-          itemHeight: 20,
-          itemDirection: "left-to-right",
-          itemOpacity: 0.85,
-          symbolSize: 20,
-          effects: [
-            {
-              on: "hover",
-              style: {
-                itemOpacity: 1,
-              },
-            },
-          ],
-        },
-      ]}
+      axisBottom={{
+        tickRotation: -25
+      }}
     />
   );
 };

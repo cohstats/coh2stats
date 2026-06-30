@@ -25,7 +25,7 @@ export const _MapBarChart: React.FC<IProps> = ({ maps }) => {
 
   return (
     <ResponsiveBar
-      margin={{ top: 0, right: 0, bottom: 40, left: 185 }}
+      margin={{ top: 0, right: 5, bottom: 40, left: 140 }}
       // @ts-ignore
       data={mapsData as data[] | undefined}
       layout={"horizontal"}
@@ -36,8 +36,9 @@ export const _MapBarChart: React.FC<IProps> = ({ maps }) => {
       axisBottom={{
         tickSize: 5,
         tickPadding: 5,
+        tickValues: 5,
         legend: "Number of games",
-        tickRotation: 0,
+        tickRotation: -35,
         legendPosition: "middle",
         legendOffset: 32,
       }}

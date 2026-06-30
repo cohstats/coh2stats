@@ -41,7 +41,7 @@ export const PlayTimeHistogram: React.FC<IProps> = ({ data }) => {
 
   return (
     <ResponsiveBar
-      margin={{ top: 0, right: 0, bottom: 40, left: 55 }}
+      margin={{ top: 5, right: 0, bottom: 40, left: 55 }}
       // @ts-ignore
       data={chartData as data[] | undefined}
       layout={"vertical"}
@@ -63,7 +63,8 @@ export const PlayTimeHistogram: React.FC<IProps> = ({ data }) => {
       axisBottom={{
         legend: "Minutes",
         legendPosition: "middle",
-        legendOffset: 30,
+        legendOffset: 35,
+        tickRotation: -25,
       }}
     />
   );
