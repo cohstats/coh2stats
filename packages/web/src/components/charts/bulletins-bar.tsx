@@ -87,10 +87,11 @@ export const BulletinsBarChart: React.FC<IProps> = ({ bulletins, filterMode = "f
       axisBottom={{
         tickSize: 5,
         tickPadding: 5,
+        tickValues: 7,
         legend: "No. equipped when match started",
         tickRotation: 0,
         legendPosition: "middle",
-        legendOffset: 32,
+        legendOffset: 35,
       }}
       axisLeft={{
         tickSize: 5,

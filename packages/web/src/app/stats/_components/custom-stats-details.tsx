@@ -149,7 +149,7 @@ const CustomStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
               </span>
             }
             styles={{
-              body: isMobile ? { width: "90vw", height: 600 } : { width: 800, height: 900 },
+              body: isMobile ? { width: "90vw", height: 600 } : { width: 700, height: 900 },
             }}
           >
             <CommandersBarChart commanders={data.commanders[race as "soviet"]} />
@@ -159,7 +159,7 @@ const CustomStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
             race={race}
             type={type}
             cardBodyStyles={
-              isMobile ? { width: "90vw", height: 1200 } : { width: 800, height: 900 }
+              isMobile ? { width: "90vw", height: 600 } : { width: 700, height: 900 }
             }
           />
         </Space>
