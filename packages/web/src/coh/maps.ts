@@ -72,7 +72,7 @@ const mapNames: Record<string, MapInfo> = {
   },
   "8p_whiteball_express": {
     type: ["4v4", "3v3"],
-    displayName: "White Ball Express",
+    displayName: "Whiteball Express",
   },
   // 3v3 Maps
   "6p_across_the_rhine": {
@@ -126,7 +126,7 @@ const mapNames: Record<string, MapInfo> = {
   },
   "4p_dreux_scout": {
     type: ["2v2"],
-    displayName: "Dreux",
+    displayName: "Dreux Scout",
   },
   "4p_elst_outskirts": {
     type: ["2v2"],
@@ -167,7 +167,7 @@ const mapNames: Record<string, MapInfo> = {
   // 1v1 Maps
   ploiesti: {
     type: ["1v1"],
-    displayName: "Ploiesti",
+    displayName: "Ploiesti Outskirts",
   },
   "2p_crossing_in_the_woods": {
     type: ["1v1"],
@@ -207,7 +207,7 @@ const mapNames: Record<string, MapInfo> = {
   },
   crossroadswx: {
     type: ["1v1"],
-    displayName: "Crossroads (Winter)",
+    displayName: "Crossroads Winter",
   },
   mill_road: {
     type: ["1v1"],
