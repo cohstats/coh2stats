@@ -56,7 +56,7 @@ export const MapsWinRateChart: React.FC<IProps> = ({ data }) => {
 
   return (
     <ResponsiveBar
-      margin={{ top: 0, right: 30, bottom: 40, left: 160 }}
+      margin={{ top: 0, right: 30, bottom: 40, left: 120 }}
       // @ts-ignore
       data={chartData as data[] | undefined}
       layout={"horizontal"}

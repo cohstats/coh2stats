@@ -26,7 +26,7 @@ export const _MapBarChart: React.FC<IProps> = ({ maps }) => {
 
   return (
     <ResponsiveBar
-      margin={{ top: 0, right: 5, bottom: 40, left: 140 }}
+      margin={{ top: 0, right: 5, bottom: 40, left: 120 }}
       // @ts-ignore
       data={mapsData as data[] | undefined}
       layout={"horizontal"}
