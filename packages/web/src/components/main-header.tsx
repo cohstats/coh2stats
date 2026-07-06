@@ -27,20 +27,42 @@ const menuItems: ItemType[] = [
     ),
   },
   {
-    key: routes.statsBase(),
-    label: (
-      <Link href={routes.statsBase()} prefetch={false}>
-        Stats
-      </Link>
-    ),
-  },
-  {
-    key: routes.mapStats(),
-    label: (
-      <Link href={routes.mapStats()} prefetch={false}>
-        Map Stats
-      </Link>
-    ),
+    label: "Stats",
+    key: "stats",
+    children: [
+      {
+        key: routes.statsBase(),
+        label: (
+          <Link href={routes.statsBase()} prefetch={false}>
+            Game Stats
+          </Link>
+        ),
+      },
+      {
+        key: routes.mapStats(),
+        label: (
+          <Link href={routes.mapStats()} prefetch={false}>
+            Map Stats
+          </Link>
+        ),
+      },
+      {
+        key: routes.playerCardBase(),
+        label: (
+          <Link href={routes.playerCardBase()} prefetch={false}>
+            Player Stats
+          </Link>
+        ),
+      },
+      {
+        key: routes.leaderboardStats(),
+        label: (
+          <Link href={routes.leaderboardStats()} prefetch={false}>
+            Leaderboard Stats
+          </Link>
+        ),
+      },
+    ],
   },
   {
     key: routes.leaderboardsBase(),
@@ -158,6 +180,7 @@ export const MainHeader: React.FC = () => {
   else if (matchesRoute(routes.aboutBase())) currentPath = routes.aboutBase();
   else if (matchesRoute(routes.bulletinsBase())) currentPath = routes.bulletinsBase();
   else if (matchesRoute(routes.mapStats())) currentPath = routes.mapStats();
+  else if (matchesRoute(routes.leaderboardStats())) currentPath = routes.leaderboardStats();
   else if (matchesRoute(routes.desktopAppBase())) currentPath = routes.desktopAppBase();
   else if (matchesRoute(routes.liveMatchesBase())) currentPath = routes.liveMatchesBase();
   else if (matchesRoute(routes.recentMatchesBase())) currentPath = routes.recentMatchesBase();
