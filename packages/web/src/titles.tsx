@@ -20,6 +20,8 @@ const liveMatchesAppBase = `${baseTitle} Games in progress`;
 
 const mostRecentGamesAppBase = `${baseTitle} Most recent games`;
 
+const leaderboardStatsBase = `${baseTitle} Leaderboard Stats`;
+
 export {
   baseTitle,
   statsBase,
@@ -32,4 +34,5 @@ export {
   desktopAppBase,
   liveMatchesAppBase,
   mostRecentGamesAppBase,
+  leaderboardStatsBase,
 };

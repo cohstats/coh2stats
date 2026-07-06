@@ -16,6 +16,10 @@ const mapStats = () => {
   return "/map-stats";
 };
 
+const leaderboardStats = () => {
+  return "/stats/leaderboards";
+};
+
 const commanderBase = () => {
   return "/commanders";
 };
@@ -89,6 +93,7 @@ const routes = {
   commanderByID,
   aboutBase,
   mapStats,
+  leaderboardStats,
   bulletinsBase,
   searchBase,
   searchWithParam,
