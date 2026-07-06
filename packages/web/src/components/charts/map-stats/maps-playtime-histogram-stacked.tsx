@@ -3,6 +3,7 @@
 import { ResponsiveBar } from "@nivo/bar";
 import React from "react";
 import { Empty } from "antd";
+import { getMapDisplayName } from "../../../coh/maps";
 
 interface IProps {
   data: Record<string, any>;
@@ -41,7 +42,7 @@ export const MapsPlayTimeHistogramStacked: React.FC<IProps> = ({ data }) => {
 
     chartData.push({
       ...{
-        mapName: key,
+        mapName: getMapDisplayName(key),
         matchCount: mapObject["matchCount"],
       },
       ...gameTimeSpreadAsPercentage,

@@ -3,6 +3,7 @@
 import { ResponsiveBar } from "@nivo/bar";
 import React, { useMemo } from "react";
 import { sortArrayOfObjectsByTheirPropertyValue } from "../../coh/helpers";
+import { getMapDisplayName } from "../../coh/maps";
 
 interface IProps {
   maps: Record<string, number>;
@@ -13,7 +14,7 @@ export const _MapBarChart: React.FC<IProps> = ({ maps }) => {
     const mapsDataUnsorted: { mapName: string; value: number }[] = Object.keys(maps).map(
       (mapName) => {
         return {
-          mapName: mapName,
+          mapName: getMapDisplayName(mapName),
           value: maps[mapName],
         };
       },

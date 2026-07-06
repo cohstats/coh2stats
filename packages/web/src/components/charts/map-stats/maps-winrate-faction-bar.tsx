@@ -2,6 +2,7 @@
 
 import { ResponsiveBar } from "@nivo/bar";
 import React from "react";
+import { getMapDisplayName } from "../../../coh/maps";
 
 interface IProps {
   data: Record<string, any>;
@@ -24,7 +25,7 @@ export const MapsFactionWinRateChart: React.FC<IProps> = ({ data }) => {
 
   for (const [key, value] of Object.entries(data)) {
     chartData.push({
-      mapName: key,
+      mapName: getMapDisplayName(key),
       wehrmacht: calculateWinrateSingleFaction(value["wermacht"]),
       wgerman: calculateWinrateSingleFaction(value["wgerman"]),
       british: calculateWinrateSingleFaction(value["british"]),

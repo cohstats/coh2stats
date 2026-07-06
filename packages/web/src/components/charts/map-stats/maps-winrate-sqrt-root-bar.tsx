@@ -3,6 +3,7 @@
 import { ResponsiveBar } from "@nivo/bar";
 import React from "react";
 import { calculateRMS } from "../../../utils/helpers";
+import { getMapDisplayName } from "../../../coh/maps";
 
 interface IProps {
   data: Record<string, any>;
@@ -25,7 +26,7 @@ export const MapsWinRateSqrtChart: React.FC<IProps> = ({ data }) => {
 
   for (const [key, value] of Object.entries(data)) {
     chartData.push({
-      mapName: key,
+      mapName: getMapDisplayName(key),
       value: parseFloat(
         calculateRMS(
           calculateWinrateSingleFaction(value["wermacht"]),

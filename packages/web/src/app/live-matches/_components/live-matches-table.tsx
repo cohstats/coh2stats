@@ -18,6 +18,7 @@ import Link from "next/link";
 import NextImage from "next/image";
 import routes from "../../../routes";
 import { TableColumnsType, TablePaginationConfig } from "antd";
+import { getMapDisplayName } from "../../../coh/maps";
 
 type ColumnsType<T> = TableColumnsType<T>;
 
@@ -263,6 +264,9 @@ const LiveMatchesTable: React.FC<{
       title: "Map",
       dataIndex: "mapname",
       key: "mapname",
+      render: (mapname: string) => {
+        return getMapDisplayName(mapname);
+      },
     },
     {
       title: "Observers",

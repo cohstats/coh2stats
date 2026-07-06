@@ -6,7 +6,7 @@ import { SimplePieChart } from "../charts-match/simple-pie";
 import { MatchPlayerDetailsTable } from "./match-details-table";
 import firebaseAnalytics from "../../analytics";
 import { ProcessedMatch } from "../../coh/types";
-import { getMapIconPath } from "../../coh/maps";
+import { getMapIconPath, getMapDisplayName } from "../../coh/maps";
 
 const generateSummaryChartData = (
   axisPlayers: Array<Record<string, any>>,
@@ -68,7 +68,7 @@ const ChartCard: React.FC<ChartCardProps> = ({ data, title }) => {
 const MapCard: React.FC<{ data: ProcessedMatch }> = ({ data }) => {
   return (
     <Card
-      title={<div style={{ textAlign: "center" }}>Map - {data.mapname}</div>}
+      title={<div style={{ textAlign: "center" }}>Map - {getMapDisplayName(data.mapname)}</div>}
       size={"small"}
       variant="borderless"
       styles={{ body: { width: 200, height: 200, padding: 7 } }}

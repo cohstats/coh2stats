@@ -3,6 +3,7 @@
 import { ResponsiveBar } from "@nivo/bar";
 import React from "react";
 import { Empty } from "antd";
+import { getMapDisplayName } from "../../../coh/maps";
 
 interface IProps {
   data: Record<string, any>;
@@ -24,7 +25,7 @@ export const MapsPlayTime: React.FC<IProps> = ({ data, average = true }) => {
     }
 
     chartData.push({
-      mapName: key,
+      mapName: getMapDisplayName(key),
       value: averageTime,
       matchCount: value.matchCount,
     });

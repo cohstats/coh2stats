@@ -10,7 +10,7 @@ import {
   getMatchDuration,
 } from "../../../../utils/table-functions";
 import config from "../../../../config";
-import { getMapIconPath } from "../../../../coh/maps";
+import { getMapIconPath, getMapDisplayName } from "../../../../coh/maps";
 import { AlertBox } from "../../../../components/alert-box";
 import firebaseAnalytics from "../../../../analytics";
 import { fetchMatchData } from "../../actions";
@@ -109,7 +109,7 @@ const SingleMatch: React.FC = () => {
         <div style={{ height: 40 }}>
           <div style={{ float: "left" }}>
             <Title level={2} style={{ marginBottom: 0, marginTop: "-7px" }}>
-              Match details - {matchData.mapname}
+              Match details - {getMapDisplayName(matchData.mapname)}
             </Title>
           </div>
           <div style={{ float: "right", textAlign: "right" }}>
@@ -125,7 +125,7 @@ const SingleMatch: React.FC = () => {
           <div style={{ float: "right", textAlign: "right" }}>
             Match type {formatMatchtypeID(matchData.matchtype_id)}
             <br />
-            Map {matchData.mapname}
+            Map {getMapDisplayName(matchData.mapname)}
             <br />
             Match duration {getMatchDuration(matchData.startgametime, matchData.completiontime)}
             <br />

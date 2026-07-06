@@ -25,13 +25,7 @@ export function getRaceImage(race: RaceName) {
   return `/resources/generalIcons/${race}.png`;
 }
 
-/**
- * Returns human readable mapname
- * TODO FINISH THIS / mapping of ugly relic mapname to a pretty mapname
- */
-export function formatMapName(mapname: any) {
-  return mapname.toUpperCase();
-}
+
 
 /**
  * Returns string based on how much time elapsed from the match start
@@ -399,7 +393,7 @@ export function getPlayerMapListFilter(matches: any) {
   if (!matches)
     return [
       {
-        text: "8p_redball_express",
+        text: "Red Ball Express",
         value: "8p_redball_express",
       },
     ];
@@ -410,14 +404,16 @@ export function getPlayerMapListFilter(matches: any) {
     mapSet.add(map.mapname);
   }
 
-  // sort maps alphabetically
+  // sort maps alphabetically by display name
   const sortedMapsArray = Array.from(mapSet).sort((a: any, b: any) => {
-    return a.localeCompare(b);
+    const { getMapDisplayName } = require("../coh/maps");
+    return getMapDisplayName(a).localeCompare(getMapDisplayName(b));
   });
 
   for (const map of sortedMapsArray) {
+    const { getMapDisplayName } = require("../coh/maps");
     filterSettings.push({
-      text: formatMapName(map),
+      text: getMapDisplayName(map),
       value: map,
     });
   }

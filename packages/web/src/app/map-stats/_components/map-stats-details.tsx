@@ -12,6 +12,7 @@ import { Helper } from "../../../components/helper";
 import { PlayTimeHistogram } from "../../../components/charts/map-stats/play-time-histogram";
 import { MapsPlayTimeHistogramStacked } from "../../../components/charts/map-stats/maps-playtime-histogram-stacked";
 import PatchNotification from "../../../components/patch-notifications";
+import { getMapDisplayName } from "../../../coh/maps";
 
 const { Text, Link } = Typography;
 
@@ -39,7 +40,7 @@ const MapSelectorComponent: React.FC<{
       size="large"
       options={mapNames.map((mapName) => ({
         value: mapName,
-        label: mapName,
+        label: getMapDisplayName(mapName),
       }))}
     />
   );
@@ -259,7 +260,7 @@ const MapStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
             <Space orientation={"vertical"}>
               <MapSelectorComponent data={data} map={map} changer={urlChanger} />
               <FactionVsFactionCard
-                title={`${map} - ${type} team composition matrix`}
+                title={`${getMapDisplayName(map)} - ${type} team composition matrix`}
                 data={data[map]}
                 style={{ marginTop: 10, width: 1155 }}
               />
@@ -270,7 +271,7 @@ const MapStatsDetails: React.FC<IProps> = ({ urlChanger, specificData }) => {
       <Row justify={"center"} style={{ paddingTop: 0 }}>
         <Space size={"large"} wrap style={{ display: "flex", justifyContent: "center" }}>
           <Card
-            title={`${map} - ${type} game time`}
+            title={`${getMapDisplayName(map)} - ${type} game time`}
             style={{ marginTop: 40 }}
             styles={{
               body: isMobile ? { width: "90vw", height: 300 } : { width: 480, height: 450 },
