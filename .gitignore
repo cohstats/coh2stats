@@ -45,3 +45,4 @@ fbexport
 packages/migrations/*.json
 goal.md
 /implementation-plan.md
+/packages/web/next-env.d.ts

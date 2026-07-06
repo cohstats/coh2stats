@@ -38,7 +38,7 @@ export const LeaderboardStatsContent = ({
   leaderboardData,
   normalModeMinMax,
   teamModeMinMax,
-}: LeaderboardStatsContentProps): JSX.Element => {
+}: LeaderboardStatsContentProps): React.ReactElement => {
   const normalModeData: NormalModeTableRow[] = useMemo(() => {
     const factionData: Record<string, Partial<NormalModeTableRow>> = {};
 
