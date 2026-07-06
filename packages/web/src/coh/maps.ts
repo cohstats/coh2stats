@@ -7,6 +7,15 @@ const getMapIconPath = (name: string, version: "x64" | "x300" = "x300"): string 
   return `/resources/map-images/${name}_${version}.webp`;
 };
 
+/**
+ * Get the display name for a map
+ * @param mapKey The map key (internal name)
+ * @returns The display name if found in mapNames, otherwise returns the mapKey itself
+ */
+const getMapDisplayName = (mapKey: string): string => {
+  return mapNames[mapKey]?.displayName ?? mapKey;
+};
+
 interface MapInfo {
   type: ("1v1" | "2v2" | "3v3" | "4v4")[];
   displayName: string;
@@ -838,4 +847,4 @@ const mapNames: Record<string, MapInfo> = {
 }
 
 
-export { getMapIconPath };
+export { getMapIconPath, getMapDisplayName };
