@@ -186,7 +186,7 @@ export const MainHeader: React.FC = () => {
   else if (matchesRoute(routes.liveMatchesBase())) currentPath = routes.liveMatchesBase();
   else if (matchesRoute(routes.recentMatchesBase())) currentPath = routes.recentMatchesBase();
   else if (matchesRoute(routes.leaderboardsBase())) currentPath = routes.leaderboardsBase();
-  else if (matchesRoute(routes.playerCardBase())) currentPath = routes.playerCardBase();
+  else if (pathname === routes.playerCardBase()) currentPath = routes.playerCardBase(); // Only match exact /players, not /players/:id
 
   return (
     <Header style={{ height: "auto" }}>

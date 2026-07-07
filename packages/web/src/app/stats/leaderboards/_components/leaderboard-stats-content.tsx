@@ -6,6 +6,8 @@ import type { ColumnsType } from "antd/es/table";
 import { LeaderboardPlayerCount, ModeMinMax } from "../page";
 import { formatFactionName } from "@/utils/helpers";
 import { LeaderboardPieCharts } from "./leaderboard-pie-charts";
+import Image from "next/image";
+import { getGeneralIconImport } from "@/coh/generalIconImports";
 
 const { Title, Text } = Typography;
 
@@ -89,7 +91,18 @@ export const LeaderboardStatsContent = ({
       title: "Faction",
       dataIndex: "faction",
       key: "faction",
-      render: (faction: string) => formatFactionName(faction),
+      render: (faction: string) => (
+        <>
+          <Image
+            src={getGeneralIconImport(faction, "small")}
+            width={18}
+            height={18}
+            alt={faction}
+            style={{ marginRight: 8, verticalAlign: "middle" }}
+          />
+          {formatFactionName(faction)}
+        </>
+      ),
       fixed: "left",
       width: 200,
     },
@@ -164,7 +177,58 @@ export const LeaderboardStatsContent = ({
       title: "Faction",
       dataIndex: "faction",
       key: "faction",
-      render: (faction: string) => formatFactionName(faction),
+      render: (faction: string) => {
+        // For team games, show multiple faction icons
+        if (faction === "axis") {
+          return (
+            <>
+              <Image
+                src={getGeneralIconImport("wehrmacht", "small")}
+                width={18}
+                height={18}
+                alt="Wehrmacht"
+                style={{ marginRight: 4, verticalAlign: "middle" }}
+              />
+              <Image
+                src={getGeneralIconImport("wgerman", "small")}
+                width={18}
+                height={18}
+                alt="WGerman"
+                style={{ marginRight: 8, verticalAlign: "middle" }}
+              />
+              {formatFactionName(faction)}
+            </>
+          );
+        } else if (faction === "allies") {
+          return (
+            <>
+              <Image
+                src={getGeneralIconImport("soviet", "small")}
+                width={18}
+                height={18}
+                alt="Soviet"
+                style={{ marginRight: 4, verticalAlign: "middle" }}
+              />
+              <Image
+                src={getGeneralIconImport("british", "small")}
+                width={18}
+                height={18}
+                alt="British"
+                style={{ marginRight: 4, verticalAlign: "middle" }}
+              />
+              <Image
+                src={getGeneralIconImport("usf", "small")}
+                width={18}
+                height={18}
+                alt="USF"
+                style={{ marginRight: 8, verticalAlign: "middle" }}
+              />
+              {formatFactionName(faction)}
+            </>
+          );
+        }
+        return formatFactionName(faction);
+      },
       fixed: "left",
       width: 200,
     },
