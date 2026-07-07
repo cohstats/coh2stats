@@ -9,7 +9,8 @@
     "analyze": "ANALYZE=true yarn build",
     "lint": "next lint",
     "test": "jest --watch",
-    "test:ci": "jest --ci"
+    "test:ci": "jest --ci",
+    "sitemap": "next-sitemap --config next-sitemap.config.js"
   },
   "dependencies": {
     "@ant-design/cssinjs": "2.1.2",
@@ -51,6 +52,7 @@
     "ignore-loader": "0.1.2",
     "jest": "30.3.0",
     "jest-environment-jsdom": "30.3.0",
+    "next-sitemap": "4.2.3",
     "ts-jest": "29.4.9",
     "typescript": "5.9.3"
   }
