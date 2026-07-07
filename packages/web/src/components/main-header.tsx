@@ -174,13 +174,14 @@ export const MainHeader: React.FC = () => {
   };
 
   // Determine current path for menu selection
+  // Check more specific routes first to avoid incorrect matches
   let currentPath = "";
   if (matchesRoute(routes.commanderBase())) currentPath = routes.commanderBase();
+  else if (matchesRoute(routes.leaderboardStats())) currentPath = routes.leaderboardStats();
+  else if (matchesRoute(routes.mapStats())) currentPath = routes.mapStats();
   else if (matchesRoute(routes.statsBase())) currentPath = routes.statsBase();
   else if (matchesRoute(routes.aboutBase())) currentPath = routes.aboutBase();
   else if (matchesRoute(routes.bulletinsBase())) currentPath = routes.bulletinsBase();
-  else if (matchesRoute(routes.mapStats())) currentPath = routes.mapStats();
-  else if (matchesRoute(routes.leaderboardStats())) currentPath = routes.leaderboardStats();
   else if (matchesRoute(routes.desktopAppBase())) currentPath = routes.desktopAppBase();
   else if (matchesRoute(routes.liveMatchesBase())) currentPath = routes.liveMatchesBase();
   else if (matchesRoute(routes.recentMatchesBase())) currentPath = routes.recentMatchesBase();

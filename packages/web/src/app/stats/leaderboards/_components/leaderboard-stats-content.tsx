@@ -5,6 +5,7 @@ import { Table, Typography } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { LeaderboardPlayerCount, ModeMinMax } from "../page";
 import { formatFactionName } from "@/utils/helpers";
+import { LeaderboardPieCharts } from "./leaderboard-pie-charts";
 
 const { Title, Text } = Typography;
 
@@ -218,48 +219,52 @@ export const LeaderboardStatsContent = ({
   ];
 
   return (
-    <div style={{ maxWidth: 600, margin: "0 auto" }}>
-      <Title level={2} style={{ textAlign: "center" }}>
-        Amount of players in leaderboards
-      </Title>
+    <>
+      <div style={{ maxWidth: 600, margin: "0 auto" }}>
+        <Title level={2} style={{ textAlign: "center" }}>
+          Amount of players in leaderboards
+        </Title>
 
-      <Table
-        columns={normalModeColumns}
-        dataSource={normalModeData}
-        pagination={false}
-        size="small"
-        bordered
-        footer={() => (
-          <Text
-            italic
-            type="secondary"
-            style={{ fontSize: 12, textAlign: "center", display: "block" }}
-          >
-            Keep in mind that one player is usually ranked in various modes. You can&apos;t sum up
-            all numbers.
-          </Text>
-        )}
-        style={{ marginBottom: 24 }}
-      />
+        <Table
+          columns={normalModeColumns}
+          dataSource={normalModeData}
+          pagination={false}
+          size="small"
+          bordered
+          footer={() => (
+            <Text
+              italic
+              type="secondary"
+              style={{ fontSize: 12, textAlign: "center", display: "block" }}
+            >
+              Keep in mind that one player is usually ranked in various modes. You can&apos;t sum up
+              all numbers.
+            </Text>
+          )}
+          style={{ marginBottom: 24 }}
+        />
 
-      <Table
-        columns={teamModeColumns}
-        dataSource={teamModeData}
-        pagination={false}
-        size="small"
-        bordered
-        title={() => <Text strong>Team Games</Text>}
-        footer={() => (
-          <Text
-            italic
-            type="secondary"
-            style={{ fontSize: 12, textAlign: "center", display: "block" }}
-          >
-            Keep in mind that one player is usually ranked in various modes. You can&apos;t sum up
-            all numbers.
-          </Text>
-        )}
-      />
-    </div>
+        <Table
+          columns={teamModeColumns}
+          dataSource={teamModeData}
+          pagination={false}
+          size="small"
+          bordered
+          title={() => <Text strong>Team Games</Text>}
+          footer={() => (
+            <Text
+              italic
+              type="secondary"
+              style={{ fontSize: 12, textAlign: "center", display: "block" }}
+            >
+              Keep in mind that one player is usually ranked in various modes. You can&apos;t sum up
+              all numbers.
+            </Text>
+          )}
+        />
+      </div>
+
+      <LeaderboardPieCharts leaderboardData={leaderboardData} />
+    </>
   );
 };
