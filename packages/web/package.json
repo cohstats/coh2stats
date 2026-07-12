@@ -28,7 +28,7 @@
     "@rc-component/picker": "1.9.1",
     "antd": "6.4.3",
     "date-fns": "2.29.3",
-    "dayjs": "1.11.11",
+    "dayjs": "1.11.21",
     "firebase": "10.14.1",
     "javascript-time-ago": "2.5.10",
     "next": "16.2.9",
