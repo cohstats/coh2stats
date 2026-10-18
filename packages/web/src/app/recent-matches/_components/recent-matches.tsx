@@ -17,6 +17,7 @@ import Link from "next/link";
 import NextImage from "next/image";
 import routes from "../../../routes";
 import { getMapIconPath, getMapDisplayName } from "@/coh/maps";
+import { getOptimizedImageUrl } from "@/utils/image-url";
 import { AlertBox } from "@/components/alert-box";
 import { useMediaQuery } from "react-responsive";
 import firebaseAnalytics from "../../../analytics";
@@ -153,7 +154,7 @@ const RecentMatches: React.FC<RecentMatchesProps> = ({ initialMatchRecords, tota
         return (
           <>
             <Image
-              src={getMapIconPath(record.mapname, "x64")}
+              src={getOptimizedImageUrl(getMapIconPath(record.mapname, "x64"), 64)}
               height={40}
               width={40}
               style={{ borderRadius: 4 }}

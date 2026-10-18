@@ -7,6 +7,7 @@ import { getCommanderData, getCommanderIconPath } from "@/coh/commanders";
 import { ExportDate } from "@/components/export-date";
 import firebaseAnalytics from "../../../../../analytics";
 import { getExportedIconPath, getGeneralIconPath } from "@/coh/helpers";
+import { getOptimizedImageUrl } from "@/utils/image-url";
 import { CommanderAbility } from "@/coh/types";
 
 const { Title, Text } = Typography;
@@ -64,7 +65,7 @@ export const CommanderDetails = ({ race, commanderID }: CommanderDetailsProps) =
             <Row>
               <Col flex="100px">
                 <img
-                  src={getCommanderIconPath(commanderData.iconlarge)}
+                  src={getOptimizedImageUrl(getCommanderIconPath(commanderData.iconlarge), 256)}
                   width="144"
                   height="192"
                   alt={commanderData.commanderName}
@@ -102,7 +103,7 @@ export const CommanderDetails = ({ race, commanderID }: CommanderDetailsProps) =
                   <div style={{ position: "relative" }}>
                     <Avatar
                       alt={item.name}
-                      src={getExportedIconPath(item.icon)}
+                      src={getOptimizedImageUrl(getExportedIconPath(item.icon), 64)}
                       shape="square"
                       size={64}
                     />

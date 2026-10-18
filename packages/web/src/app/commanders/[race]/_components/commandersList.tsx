@@ -4,6 +4,7 @@ import React from "react";
 import { Col, Row, Flex, Avatar, Typography } from "antd";
 import { useTheme } from "next-themes";
 import { getCommanderByRaces, getCommanderIconPath } from "../../../../coh/commanders";
+import { getOptimizedImageUrl } from "@/utils/image-url";
 import { RaceName } from "../../../../coh/types";
 import routes from "../../../../routes";
 import { ExportDate } from "../../../../components/export-date";
@@ -96,7 +97,7 @@ export const CommandersList = ({ race }: CommandersListProps) => {
                   }}
                 >
                   <Avatar
-                    src={getCommanderIconPath(item.iconlarge)}
+                    src={getOptimizedImageUrl(getCommanderIconPath(item.iconlarge), 256)}
                     shape="square"
                     size={192}
                     style={{ height: "192px", width: "144px" }}

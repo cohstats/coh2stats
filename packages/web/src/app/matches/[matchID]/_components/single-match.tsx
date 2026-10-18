@@ -11,6 +11,7 @@ import {
 } from "../../../../utils/table-functions";
 import config from "../../../../config";
 import { getMapIconPath, getMapDisplayName } from "../../../../coh/maps";
+import { getOptimizedImageUrl } from "@/utils/image-url";
 import { AlertBox } from "../../../../components/alert-box";
 import firebaseAnalytics from "../../../../analytics";
 import { fetchMatchData } from "../../actions";
@@ -114,7 +115,7 @@ const SingleMatch: React.FC = () => {
           </div>
           <div style={{ float: "right", textAlign: "right" }}>
             <Image
-              src={getMapIconPath(matchData.mapname)}
+              src={getOptimizedImageUrl(getMapIconPath(matchData.mapname), 384)}
               height={100}
               style={{ paddingBottom: 10, paddingLeft: 10, borderRadius: 4 }}
               alt={matchData.mapname}

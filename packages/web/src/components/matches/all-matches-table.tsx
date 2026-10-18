@@ -31,6 +31,7 @@ import { COHStatsIcon } from "../cohstats-icon";
 import { AlertBox } from "../alert-box";
 import firebaseAnalytics from "../../analytics";
 import { getMapIconPath, getMapDisplayName } from "../../coh/maps";
+import { getOptimizedImageUrl } from "@/utils/image-url";
 import config from "../../config";
 
 type ColumnsType<T> = TableColumnsType<T>;
@@ -284,7 +285,7 @@ const AllMatchesTable: React.FC<IProps> = ({ steamID }) => {
           <>
             {renderMapImage && (
               <Image
-                src={getMapIconPath(record.mapname, "x64")}
+                src={getOptimizedImageUrl(getMapIconPath(record.mapname, "x64"), 64)}
                 height={40}
                 width={40}
                 style={{ borderRadius: 4 }}
