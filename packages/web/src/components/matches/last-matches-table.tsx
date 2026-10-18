@@ -21,6 +21,7 @@ import { RelicIcon } from "../relic-icon";
 import { useMediaQuery } from "react-responsive";
 import firebaseAnalytics from "../../analytics";
 import { getMapIconPath, getMapDisplayName } from "../../coh/maps";
+import { getOptimizedImageUrl } from "@/utils/image-url";
 import { AlertBox } from "../alert-box";
 import { fetchPlayerMatchesData } from "@/app/players/[steamid]/actions";
 
@@ -254,7 +255,7 @@ const LastMatchesTable: React.FC<IProps> = ({ steamID, profileID }) => {
         return (
           <>
             <Image
-              src={getMapIconPath(record.mapname, "x64")}
+              src={getOptimizedImageUrl(getMapIconPath(record.mapname, "x64"), 64)}
               height={40}
               width={40}
               style={{ borderRadius: 4 }}
