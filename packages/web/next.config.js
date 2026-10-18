@@ -9,6 +9,8 @@ const nextConfig = {
   // Image optimization
   images: {
     minimumCacheTTL: 86400, // 24 hours
+    // Only allowed quality; next/image snaps to the closest one. Keep in sync with src/utils/image-url.ts
+    qualities: [85],
     unoptimized: false,
   },
 

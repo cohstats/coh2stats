@@ -9,7 +9,7 @@
  * @param width Must be one of Next's images.imageSizes / deviceSizes. The image is never upscaled.
  */
 const getOptimizedImageUrl = (src: string, width: 64 | 128 | 256 | 384): string => {
-  return `/_next/image?url=${encodeURIComponent(src)}&w=${width}&q=75`;
+  return `/_next/image?url=${encodeURIComponent(src)}&w=${width}&q=85`;
 };
 
 export { getOptimizedImageUrl };
