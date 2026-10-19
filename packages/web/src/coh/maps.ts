@@ -844,7 +844,6 @@ const mapNames: Record<string, MapInfo> = {
     autoMatch: false,
     maxPlayers: 2,
   },
-}
-
+};
 
 export { getMapIconPath, getMapDisplayName };

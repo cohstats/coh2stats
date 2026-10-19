@@ -25,8 +25,6 @@ export function getRaceImage(race: RaceName) {
   return `/resources/generalIcons/${race}.png`;
 }
 
-
-
 /**
  * Returns string based on how much time elapsed from the match start
  *

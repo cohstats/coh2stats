@@ -51,7 +51,7 @@ export default async function LeaderboardStatsPage() {
           faction,
           playerCount: response.leaderboardStats[0]?.ranktotal || 0,
           leaderboardId,
-        }))
+        })),
       );
     }
   }

@@ -53,8 +53,7 @@ export const LeaderboardStatsContent = ({
             faction: item.faction,
           };
         }
-        factionData[item.faction][item.mode as "1v1" | "2v2" | "3v3" | "4v4"] =
-          item.playerCount;
+        factionData[item.faction][item.mode as "1v1" | "2v2" | "3v3" | "4v4"] = item.playerCount;
       }
     });
 
@@ -114,12 +113,17 @@ export const LeaderboardStatsContent = ({
       render: (count: number) => {
         if (!count) return "-";
         const minMax = normalModeMinMax["1v1"];
-        const color = minMax && count === minMax.max
-          ? "#52c41a" // green
-          : minMax && count === minMax.min
-          ? "#ff4d4f" // red
-          : undefined;
-        return <span style={{ color, fontWeight: color ? "bold" : "normal" }}>{count.toLocaleString()}</span>;
+        const color =
+          minMax && count === minMax.max
+            ? "#52c41a" // green
+            : minMax && count === minMax.min
+              ? "#ff4d4f" // red
+              : undefined;
+        return (
+          <span style={{ color, fontWeight: color ? "bold" : "normal" }}>
+            {count.toLocaleString()}
+          </span>
+        );
       },
     },
     {
@@ -130,12 +134,17 @@ export const LeaderboardStatsContent = ({
       render: (count: number) => {
         if (!count) return "-";
         const minMax = normalModeMinMax["2v2"];
-        const color = minMax && count === minMax.max
-          ? "#52c41a" // green
-          : minMax && count === minMax.min
-          ? "#ff4d4f" // red
-          : undefined;
-        return <span style={{ color, fontWeight: color ? "bold" : "normal" }}>{count.toLocaleString()}</span>;
+        const color =
+          minMax && count === minMax.max
+            ? "#52c41a" // green
+            : minMax && count === minMax.min
+              ? "#ff4d4f" // red
+              : undefined;
+        return (
+          <span style={{ color, fontWeight: color ? "bold" : "normal" }}>
+            {count.toLocaleString()}
+          </span>
+        );
       },
     },
     {
@@ -146,12 +155,17 @@ export const LeaderboardStatsContent = ({
       render: (count: number) => {
         if (!count) return "-";
         const minMax = normalModeMinMax["3v3"];
-        const color = minMax && count === minMax.max
-          ? "#52c41a" // green
-          : minMax && count === minMax.min
-          ? "#ff4d4f" // red
-          : undefined;
-        return <span style={{ color, fontWeight: color ? "bold" : "normal" }}>{count.toLocaleString()}</span>;
+        const color =
+          minMax && count === minMax.max
+            ? "#52c41a" // green
+            : minMax && count === minMax.min
+              ? "#ff4d4f" // red
+              : undefined;
+        return (
+          <span style={{ color, fontWeight: color ? "bold" : "normal" }}>
+            {count.toLocaleString()}
+          </span>
+        );
       },
     },
     {
@@ -162,12 +176,17 @@ export const LeaderboardStatsContent = ({
       render: (count: number) => {
         if (!count) return "-";
         const minMax = normalModeMinMax["4v4"];
-        const color = minMax && count === minMax.max
-          ? "#52c41a" // green
-          : minMax && count === minMax.min
-          ? "#ff4d4f" // red
-          : undefined;
-        return <span style={{ color, fontWeight: color ? "bold" : "normal" }}>{count.toLocaleString()}</span>;
+        const color =
+          minMax && count === minMax.max
+            ? "#52c41a" // green
+            : minMax && count === minMax.min
+              ? "#ff4d4f" // red
+              : undefined;
+        return (
+          <span style={{ color, fontWeight: color ? "bold" : "normal" }}>
+            {count.toLocaleString()}
+          </span>
+        );
       },
     },
   ];
@@ -240,12 +259,17 @@ export const LeaderboardStatsContent = ({
       render: (count: number) => {
         if (!count) return "-";
         const minMax = teamModeMinMax["2v2"];
-        const color = minMax && count === minMax.max
-          ? "#52c41a" // green
-          : minMax && count === minMax.min
-          ? "#ff4d4f" // red
-          : undefined;
-        return <span style={{ color, fontWeight: color ? "bold" : "normal" }}>{count.toLocaleString()}</span>;
+        const color =
+          minMax && count === minMax.max
+            ? "#52c41a" // green
+            : minMax && count === minMax.min
+              ? "#ff4d4f" // red
+              : undefined;
+        return (
+          <span style={{ color, fontWeight: color ? "bold" : "normal" }}>
+            {count.toLocaleString()}
+          </span>
+        );
       },
     },
     {
@@ -256,12 +280,17 @@ export const LeaderboardStatsContent = ({
       render: (count: number) => {
         if (!count) return "-";
         const minMax = teamModeMinMax["3v3"];
-        const color = minMax && count === minMax.max
-          ? "#52c41a" // green
-          : minMax && count === minMax.min
-          ? "#ff4d4f" // red
-          : undefined;
-        return <span style={{ color, fontWeight: color ? "bold" : "normal" }}>{count.toLocaleString()}</span>;
+        const color =
+          minMax && count === minMax.max
+            ? "#52c41a" // green
+            : minMax && count === minMax.min
+              ? "#ff4d4f" // red
+              : undefined;
+        return (
+          <span style={{ color, fontWeight: color ? "bold" : "normal" }}>
+            {count.toLocaleString()}
+          </span>
+        );
       },
     },
     {
@@ -272,12 +301,17 @@ export const LeaderboardStatsContent = ({
       render: (count: number) => {
         if (!count) return "-";
         const minMax = teamModeMinMax["4v4"];
-        const color = minMax && count === minMax.max
-          ? "#52c41a" // green
-          : minMax && count === minMax.min
-          ? "#ff4d4f" // red
-          : undefined;
-        return <span style={{ color, fontWeight: color ? "bold" : "normal" }}>{count.toLocaleString()}</span>;
+        const color =
+          minMax && count === minMax.max
+            ? "#52c41a" // green
+            : minMax && count === minMax.min
+              ? "#ff4d4f" // red
+              : undefined;
+        return (
+          <span style={{ color, fontWeight: color ? "bold" : "normal" }}>
+            {count.toLocaleString()}
+          </span>
+        );
       },
     },
   ];
@@ -301,8 +335,8 @@ export const LeaderboardStatsContent = ({
               type="secondary"
               style={{ fontSize: 12, textAlign: "center", display: "block" }}
             >
-              Keep in mind that one player is usually ranked in various modes. You can&apos;t sum up
-              all numbers.
+              Keep in mind that one player is usually ranked in various modes. You can&apos;t sum
+              up all numbers.
             </Text>
           )}
           style={{ marginBottom: 24 }}
@@ -321,8 +355,8 @@ export const LeaderboardStatsContent = ({
               type="secondary"
               style={{ fontSize: 12, textAlign: "center", display: "block" }}
             >
-              Keep in mind that one player is usually ranked in various modes. You can&apos;t sum up
-              all numbers.
+              Keep in mind that one player is usually ranked in various modes. You can&apos;t sum
+              up all numbers.
             </Text>
           )}
         />

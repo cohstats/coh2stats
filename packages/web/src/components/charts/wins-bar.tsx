@@ -63,7 +63,7 @@ export const WinsChart: React.FC<IProps> = ({ data }) => {
         legendOffset: -40,
       }}
       axisBottom={{
-        tickRotation: -25
+        tickRotation: -25,
       }}
     />
   );

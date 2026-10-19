@@ -88,7 +88,7 @@ export const LeaderboardPieCharts = ({
 
   return (
     <div style={{ maxWidth: 800, margin: "40px auto 0", padding: "0 16px" }}>
-      <Title level={2} style={{ textAlign: "center"}}>
+      <Title level={2} style={{ textAlign: "center" }}>
         Faction Distribution by Game Mode
       </Title>
       <Paragraph style={{ textAlign: "center" }}>
@@ -96,7 +96,11 @@ export const LeaderboardPieCharts = ({
       </Paragraph>
 
       <Row justify="center" gutter={[24, 24]}>
-        <Space size="large" wrap style={{ display: "flex", justifyContent: "center", maxWidth: "100%" }}>
+        <Space
+          size="large"
+          wrap
+          style={{ display: "flex", justifyContent: "center", maxWidth: "100%" }}
+        >
           <PieChart data={getFactionDataForMode("1v1")} title="1v1 Factions" />
           <PieChart data={getFactionDataForMode("2v2")} title="2v2 Factions" />
           <PieChart data={getFactionDataForMode("3v3")} title="3v3 Factions" />
